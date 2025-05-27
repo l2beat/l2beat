@@ -5,7 +5,12 @@ import { z } from 'zod'
  * Known cookie definitions.
  */
 export const knownCookies = {
-  example: knownCookie('example', z.string(), 'example'),
+  // example: knownCookie('example', z.string(), 'example'),
+  recategorisationPreview: knownCookie(
+    'recategorisationPreview',
+    z.boolean(),
+    false,
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**

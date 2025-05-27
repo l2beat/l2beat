@@ -1,4 +1,110 @@
-Generated with discovered.json: 0xde3c7469d5805194653e04267b4f7eaec4b1dea7
+Generated with discovered.json: 0x93daf58e916eb2d677c10ffa26f819de736a21ac
+
+# Diff at Mon, 26 May 2025 14:31:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22174829
+- current block number: 22567567
+
+## Description
+
+common dvn fee lib verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB) {
+    +++ description: None
+      name:
+-        ""
++        "DVNFeeLib"
+      unverified:
+-        true
+      values.owner:
++        "0xB52Fa54FC261398058c3Ac7B8dD442D7d8B9F0B6"
+      implementationNames.0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB:
+-        ""
++        "DVNFeeLib"
+      sourceHashes:
++        ["0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"]
+    }
+```
+
+```diff
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b) {
+    +++ description: None
+      name:
+-        ""
++        "DVNFeeLib"
+      unverified:
+-        true
+      values.owner:
++        "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+      implementationNames.0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b:
+-        ""
++        "DVNFeeLib"
+      sourceHashes:
++        ["0x6ec0f4e740bc8ed51419c1f4c51da9549aaa3185e6ecc9e613470b90854e4830"]
+    }
+```
+
+Generated with discovered.json: 0x6e02d898be8eec9cb7813626fa85fcbddc076b66
+
+# Diff at Fri, 23 May 2025 09:40:58 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22174829
+- current block number: 22174829
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22174829 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x77a791f0fc886d26edf7f4abba6ce1b93fc6138d
 
 # Diff at Tue, 06 May 2025 13:32:00 GMT:
 

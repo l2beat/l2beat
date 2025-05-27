@@ -1,4 +1,235 @@
-Generated with discovered.json: 0x499c3e27e84b4869f0e9cbb78c5382412c3287f4
+Generated with discovered.json: 0xaa15d757b8a9e08a2e0b3d018acf255c673080e9
+
+# Diff at Tue, 27 May 2025 08:31:04 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 319332430
+- current block number: 319332430
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 319332430 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
++        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
+    }
+```
+
+Generated with discovered.json: 0x6851c4f9be2bbfcb60d029f563d428478c01158b
+
+# Diff at Fri, 23 May 2025 09:41:12 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 319332430
+- current block number: 319332430
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 319332430 (main branch discovery), not current.
+
+```diff
+    EOA  (0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A) {
+    +++ description: None
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA  (0x834999E1D729Ead48Ae1Db1dAa11463102EccB77) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x9132151475ACCf0662C545Bc81FbC1741d978EE0) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914"
++        "0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759"
+      receivedPermissions.6.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.6.via.1:
++        {"address":"0x9132151475ACCf0662C545Bc81FbC1741d978EE0"}
+      receivedPermissions.6.via.0.address:
+-        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
++        "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xDd7A9dEcBB0b16B37fE6777e245b18fC0aC63759"
++        "0x419e439e5c0B839d6e31d7C438939EEE1A4f4184"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0x419e439e5c0B839d6e31d7C438939EEE1A4f4184"
++        "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8"
++        "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.from:
+-        "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8"
++        "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.from:
+-        "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"
++        "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
++        "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914"
+      receivedPermissions.0.via.1:
+-        {"address":"0x9132151475ACCf0662C545Bc81FbC1741d978EE0"}
+      receivedPermissions.0.via.0.address:
+-        "0x79daC9c2deC3E4411a2cB2b0ecf654D27a4AFf0A"
++        "0x9132151475ACCf0662C545Bc81FbC1741d978EE0"
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    EOA  (0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    EOA  (0xedbFE5493367F8fBc340276503D3c18D2C02E9AE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    contract EduFastConfirmerMultisig (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "validate"
++        "fastconfirm"
+      receivedPermissions.1.description:
+-        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
++        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+      receivedPermissions.1.role:
++        ".anyTrustFastConfirmer"
+      receivedPermissions.0.permission:
+-        "fastconfirm"
++        "validate"
+      receivedPermissions.0.description:
+-        "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
++        "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+Generated with discovered.json: 0xc811fe07a966272382cff28bb6c259cea2fae409
 
 # Diff at Fri, 02 May 2025 17:25:17 GMT:
 

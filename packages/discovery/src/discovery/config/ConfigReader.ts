@@ -17,11 +17,14 @@ import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
+type JustImport = z.infer<typeof JustImport>
 const JustImport = z
   .object({ import: z.optional(z.array(z.string())) })
   .passthrough()
 
 export class ConfigReader {
+  private importedCache = new Map<string, JustImport>()
+
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
@@ -49,7 +52,7 @@ export class ConfigReader {
     if (rawConfig.import !== undefined) {
       const visited = new Set<string>()
       rawConfig = merge(
-        resolveImports(basePath, rawConfig.import, visited),
+        this.resolveImports(basePath, rawConfig.import, visited),
         rawConfig,
       )
     }
@@ -88,19 +91,22 @@ export class ConfigReader {
     return Hash160(`0x${hasher.digest('hex')}`)
   }
 
-  readAllChains(): string[] {
-    const folders = readdirSync(path.join(this.rootPath), {
-      withFileTypes: true,
-    }).filter((x) => x.isDirectory() && !x.name.startsWith('_'))
-    const chains = new Set<string>()
-    for (const folder of folders) {
-      readdirSync(path.join(this.rootPath, folder.name), {
-        withFileTypes: true,
+  readAllProjectChainPairs(): { project: string; chains: string[] }[] {
+    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
+      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
+      .map((projectDir) => {
+        const projectPath = path.join(this.rootPath, projectDir.name)
+        const chains = readdirSync(projectPath, { withFileTypes: true })
+          .filter((x) => x.isDirectory())
+          .map((x) => x.name)
+        return { project: projectDir.name, chains }
       })
-        .filter((x) => x.isDirectory())
-        .map((x) => x.name)
-        .forEach((x) => chains.add(x))
-    }
+  }
+
+  readAllChains(): string[] {
+    const chains = new Set(
+      this.readAllProjectChainPairs().flatMap((x) => x.chains),
+    )
     return [...chains]
   }
 
@@ -204,6 +210,45 @@ export class ConfigReader {
   getProjectChainPath(project: string, chain: string): string {
     return path.join(this.getProjectPath(project), chain)
   }
+
+  resolveImports(
+    basePath: string,
+    imports: string[],
+    visited: Set<string>,
+  ): json {
+    let result: json = {}
+    for (const importPath of imports) {
+      const resolvedPath = path.resolve(basePath, importPath)
+      if (visited.has(resolvedPath)) {
+        throw new Error(`Circular import detected: ${importPath}`)
+      }
+      visited.add(resolvedPath)
+
+      let rawConfig = this.importedCache.get(resolvedPath)
+      if (rawConfig === undefined) {
+        const contents = readJsonc(resolvedPath)
+        const parseResult = JustImport.safeParse(contents)
+        if (!parseResult.success) {
+          const message = formatZodParsingError(parseResult.error, importPath)
+          console.log(message)
+
+          throw new Error(`Cannot parse file ${importPath}`)
+        }
+        rawConfig = parseResult.data
+        this.importedCache.set(resolvedPath, rawConfig)
+      }
+
+      if (rawConfig.import !== undefined) {
+        const importBasePath = path.dirname(resolvedPath)
+        result = merge(
+          this.resolveImports(importBasePath, rawConfig.import, visited),
+          result,
+        )
+      }
+      result = merge(result, rawConfig)
+    }
+    return result
+  }
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {
@@ -225,38 +270,4 @@ function formatZodParsingError(error: ZodError, fileName: string): string {
     ...lines,
     chalk.red(`╚${'═'.repeat(maxLength - 1)}╝`),
   ].join('\n')
-}
-
-export function resolveImports(
-  basePath: string,
-  imports: string[],
-  visited: Set<string>,
-): json {
-  let result: json = {}
-  for (const importPath of imports) {
-    const resolvedPath = path.resolve(basePath, importPath)
-    if (visited.has(resolvedPath)) {
-      throw new Error(`Circular import detected: ${importPath}`)
-    }
-    visited.add(resolvedPath)
-
-    const contents = readJsonc(resolvedPath)
-    const parseResult = JustImport.safeParse(contents)
-    if (!parseResult.success) {
-      const message = formatZodParsingError(parseResult.error, importPath)
-      console.log(message)
-
-      throw new Error(`Cannot parse file ${importPath}`)
-    }
-    const rawConfig = parseResult.data
-    if (rawConfig.import !== undefined) {
-      const importBasePath = path.dirname(resolvedPath)
-      result = merge(
-        resolveImports(importBasePath, rawConfig.import, visited),
-        result,
-      )
-    }
-    result = merge(result, rawConfig)
-  }
-  return result
 }

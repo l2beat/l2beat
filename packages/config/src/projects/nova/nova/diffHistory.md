@@ -1,4 +1,152 @@
-Generated with discovered.json: 0x69517602bcbc3ef3d4113e9b436832a95251edb6
+Generated with discovered.json: 0x4574c35451456798379aeb7c5a2c87904df7f923
+
+# Diff at Mon, 26 May 2025 15:05:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 83508934
+- current block number: 83594372
+
+## Description
+
+two SC signers rotated in: 0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D (Certora) and 0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E (fred) (SC elections).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.8:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.$members.7:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.$members.6:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.$members.5:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.4:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.2:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83508934 (main branch discovery), not current.
+
+```diff
+    EOA fred - Arbitrum 1 (0x5DD2205C3aac13E592F0a3D85188c948D1781df1) {
+    +++ description: None
+      name:
+-        "fred-Arbitrum"
++        "fred - Arbitrum 1"
+    }
+```
+
+Generated with discovered.json: 0x3d95c982cbde632a2b3b344f4dfc653cc843cd79
+
+# Diff at Fri, 23 May 2025 09:41:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 83508934
+- current block number: 83508934
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83508934 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+Generated with discovered.json: 0xcb0c381313581777abe1d0e699cb433efe729ec7
 
 # Diff at Wed, 14 May 2025 14:02:12 GMT:
 

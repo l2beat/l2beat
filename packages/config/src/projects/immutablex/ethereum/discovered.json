@@ -108,13 +108,7 @@
       "template": "starkex/StarkExchange",
       "sourceHashes": [
         "0xc527211f14e6fa12809b6b7ec28c6757daa907478cefeb1b8835ee7d47139bf7",
-        "0x54407214d4211e41ecb742c3df7564e352844c1f5da38ef2e206b0465bd5345b",
-        "0x497eebe95d8d7611823ffcb6cc098a9c3c71e91941026f2b4c4989d6f9fa944d",
-        "0x452c4b92e2f090f2979fe1dec4ee28bf8b9c431b96b67966a3c2279f9e332684",
-        "0xf615d0291aa23f36d8cb749e3950b549d57d38bfef0c342331d0cedd7d769026",
-        "0x7e358cdedbf8af25ae12a5fe965db091c7751aafa68c2460ab43e81a8eb364b9",
-        "0x105353ea24f9e10459c2487f227bc285c4ca2317fac8e12a8b936bc92329aea5",
-        "0x93b21bfbef09c4e60d6a17309877245220508c54478159a8f2b9dbfb60576c4b"
+        "0xfaa0bf87cf9230ba5a3f5530b447f76606e0cd9fb9d1acd2f3b87d30884e63d1"
       ],
       "proxyType": "StarkWare diamond",
       "description": "Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.",
@@ -357,7 +351,8 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "role": ".operators"
         }
       ]
     },
@@ -394,17 +389,20 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"
+          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "manage the token admin role."
+          "description": "manage the token admin role.",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "delay": 1209600
+          "delay": 1209600,
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -447,7 +445,8 @@
         {
           "permission": "interact",
           "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
         }
       ]
     },
@@ -459,7 +458,8 @@
         {
           "permission": "interact",
           "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-          "description": "Can regsiter new tokens for deposits and withdrawals."
+          "description": "Can regsiter new tokens for deposits and withdrawals.",
+          "role": ".tokenAdmins"
         }
       ]
     },
@@ -837,11 +837,11 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "starkex/Committee": "0xea8d2e95c84337933f471b8c21505791bd94685784b7e5c407f5e7045403a683",
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "starkex/StarkExchange": "0xfb69f71d65a0752a2088fe51c43f8d06488cc2a465e19b649b9e317de103ab09"
+    "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0x5df8d312b786d577e718d33b96c1e33e2be2869aa30af1248ec68df7604c59cf"
+  "permissionsConfigHash": "0x8a0276a82bf2167be0445f8fe24f98a418e492eadf4c96629369119ad7f90ffb"
 }

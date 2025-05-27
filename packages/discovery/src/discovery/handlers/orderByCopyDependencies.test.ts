@@ -15,7 +15,7 @@ describe('orderByCopyDependencies', () => {
   it('should return an empty array for fields with no copy dependencies', () => {
     const fields: TestFields = {
       a: { template: 'some template' },
-      b: { permissions: [] },
+      b: {},
     }
     const result = orderByCopyDependencies(fields)
     expect(result).toEqual([])

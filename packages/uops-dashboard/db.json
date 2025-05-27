@@ -104,7 +104,11 @@
     ["0xf57e7e7c23978c3caec3c3548e3d615c346e79ff", "IMXToken"],
     ["0x3fa73f1e5d8a792c80f426fc8f84fbf7ce9bbcac", "AuraLocker"],
     ["0x1ae7e1d0ce06364ced9ad58225a1705b3e5db92b", "LMEOW"],
-    ["0x6a000f20005980200259b80c5102003040001068", "AugustusV6"]
+    ["0x6a000f20005980200259b80c5102003040001068", "AugustusV6"],
+    ["0x27a09b5de426a6f3ce12251c43dae670bad95a2e", "quantrobotics"],
+    ["0x000000000022d473030f116ddee9f6b43ac78ba3", "Permit2"],
+    ["0x66a9893cc07d91d95644aedd05d03f95e1dba8af", "UniversalRouter"],
+    ["0x8629bcd3b8a90fd7247f0c0e0e1434c69dadcca7", "Create2ForwarderFactory"]
   ],
   "METHODS": [
     ["0xfec93e49", "follow"],
@@ -189,7 +193,9 @@
     ["0x574caef3", "deployAccount"],
     ["0x5ae401dc", "multicall"],
     ["0x3dad0c9c", "cleanupERC20"],
-    ["0x04e45aaf", "exactInputSingle"]
+    ["0x04e45aaf", "exactInputSingle"],
+    ["0x87517c45", "approve"],
+    ["0x3593564c", "execute"]
   ],
   "IMPLEMENTATIONS": [
     [

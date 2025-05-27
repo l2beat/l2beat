@@ -1,4 +1,154 @@
-Generated with discovered.json: 0x240a4f4a3cfbc1a5e2fcac3f7ec83175b5ca29c6
+Generated with discovered.json: 0xfe847584e3c48c7f6640003fb42480776a6d928a
+
+# Diff at Tue, 27 May 2025 08:26:47 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 22046061
+- current block number: 22046061
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046061 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.2:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.1:
+-        "0xef94a66bd5339efd18fb9ca1f8031482e7ef7bbe6c5a0a10fae254ab83712406"
++        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
+      sourceHashes.0:
+-        "0x8b48118fe606012c0dcac2ccc1821785935aec89fab8f219f47b32c482b0017e"
++        "0xfbf01ed91f0ada67ada9da90349955390605db30f011c04fc849ea93d40d9587"
+    }
+```
+
+Generated with discovered.json: 0x703c9ce8918ef7c93a8128a22084341521843841
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22046061
+- current block number: 22046061
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22046061 (main branch discovery), not current.
+
+```diff
+    EOA  (0x101d02006885979D2F32284c5847dF8616C24436) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".validators"
+    }
+```
+
+```diff
+    EOA  (0x11AaeeDd19D4daf99925231b982CA0A35F77d812) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batchPosters"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3b7F26ED562e21277c86ea0Ce40BC914653a3555) {
+    +++ description: None
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"
++        "0x0D51c6664A773873971336850C51A5caE8e63e89"
+      receivedPermissions.1.description:
+-        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.1.via.1:
++        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      receivedPermissions.1.via.0.address:
+-        "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"
++        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x0D51c6664A773873971336850C51A5caE8e63e89"
++        "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90"
+      receivedPermissions.0.via.1:
+-        {"address":"0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"}
+      receivedPermissions.0.via.0.address:
+-        "0x3b7F26ED562e21277c86ea0Ce40BC914653a3555"
++        "0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C"
+      receivedPermissions.0.description:
++        "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".executors"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xe3826907ed4f0A4F3D05d6CF5B0B8dCde91d6e0C) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+Generated with discovered.json: 0xd8139d937442feab390690e6d47b087bf14d4046
 
 # Diff at Fri, 02 May 2025 17:23:32 GMT:
 

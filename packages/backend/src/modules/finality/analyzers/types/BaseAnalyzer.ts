@@ -8,9 +8,9 @@ import {
 import chunk from 'lodash/chunk'
 
 import type { Database } from '@l2beat/database'
-import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
 import type { RpcClient } from '@l2beat/shared'
+import { mapToRecordWithConfig } from '../../../tracked-txs/modules/liveness/utils/mapToRecordWithConfig'
 export type Transaction = {
   txHash: string
   timestamp: UnixTime
@@ -63,26 +63,26 @@ export abstract class BaseAnalyzer {
       `No configurations found for the project ${this.projectId}`,
     )
 
-    const livenessWithConfig = new LivenessWithConfigService(
-      projectConfigs,
-      this.db,
-    )
-
     // NOTE(radomski): We only want the range to be for a single day, but to
     // get ability to look back a single tx we need to query more. We're going
     // to assume that we will find at least one entry before our interval at
     // least one before.
     const fromSafe = from - 1 * UnixTime.DAY
-    const safeTransactions = await livenessWithConfig.getWithinTimeRange(
-      fromSafe,
-      to,
+    const livenessRecords =
+      await this.db.liveness.getByConfigurationIdWithinTimeRange(
+        projectConfigs.map((c) => c.id),
+        fromSafe,
+        to,
+      )
+    const recordsWithConfig = livenessRecords.map((r) =>
+      mapToRecordWithConfig(r, projectConfigs),
     )
 
-    if (!safeTransactions.length) {
+    if (!recordsWithConfig.length) {
       return undefined
     }
 
-    const sortedSafeTransactions = safeTransactions.sort(
+    const sortedSafeTransactions = recordsWithConfig.sort(
       (tx1, tx2) => tx1.timestamp - tx2.timestamp,
     )
     const firstInRange = sortedSafeTransactions.findIndex(

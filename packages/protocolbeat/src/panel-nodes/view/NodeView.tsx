@@ -10,6 +10,7 @@ import { getColor } from './colors/colors'
 export interface NodeViewProps {
   node: Node
   selected: boolean
+  isDimmed?: boolean
 }
 
 export function NodeView(props: NodeViewProps) {
@@ -25,6 +26,7 @@ export function NodeView(props: NodeViewProps) {
         top: props.node.box.y,
         width: props.node.box.width,
         height: props.node.box.height,
+        opacity: props.isDimmed ? 0.3 : 1,
       }}
       className={clsx(
         'absolute bg-black',
@@ -45,16 +47,22 @@ export function NodeView(props: NodeViewProps) {
       >
         <AddressIcon type={props.node.addressType} />
         <div className="truncate">{props.node.name}</div>
-        {props.node.isInitial ? (
-          <IconInitial className="text-aux-green" />
-        ) : (
-          <span></span>
-        )}
+        <div className="flex items-center">
+          {props.node.isInitial && <IconInitial className="text-aux-green" />}
+          {props.node.hasTemplate && (
+            <IconInitial className="text-aux-orange" />
+          )}
+        </div>
       </div>
       {props.node.fields
         .filter((field) => !props.node.hiddenFields.includes(field.name))
         .map((field, i) => (
-          <NodeField key={i} field={field} selected={props.selected} />
+          <NodeField
+            key={i}
+            field={field}
+            selected={props.selected}
+            isDimmed={props.isDimmed}
+          />
         ))}
     </div>
   )
@@ -82,6 +90,7 @@ function getTitleBackground(node: Node): string {
 function NodeField(props: {
   field: Field
   selected: boolean
+  isDimmed?: boolean
 }) {
   const isHighlighted = useStore((state) =>
     state.selected.includes(props.field.target),

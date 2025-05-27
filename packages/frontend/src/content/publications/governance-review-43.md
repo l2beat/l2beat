@@ -2,7 +2,7 @@
   title: "Governance Review #43"
   description: "A packed review with news across all DAOs we are actively participating in."
   publishedOn: "2025-03-17"
-  authorId: anastassis-oikonomopoulos
+  authorId: manuel-gonzalez
 ---
 
 ## **Optimism**

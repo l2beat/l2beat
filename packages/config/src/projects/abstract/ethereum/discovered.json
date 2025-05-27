@@ -2,7 +2,7 @@
   "name": "abstract",
   "chain": "ethereum",
   "blockNumber": 22496279,
-  "configHash": "0xedb8775e3eb75be5aafa4e3cb29e9fb49e5ab4c2d170041307cd656512a0b382",
+  "configHash": "0x421f56b1345b7114b25e528102645686164d794b8245093a282a994018d7b37e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -75,11 +75,13 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
         }
       ]
     },
@@ -136,10 +138,7 @@
       "template": "shared-zk-stack/v26/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25",
-        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f",
-        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486",
-        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
+        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "description": "The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.",
@@ -483,11 +482,13 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
         }
       ]
     },
@@ -575,7 +576,8 @@
         {
           "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
         }
       ],
       "sinceTimestamp": 1717520615,
@@ -653,13 +655,15 @@
           "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
           "via": [{ "address": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661"
+          "from": "0xA1f75f491f630037C4Ccaa2bFA22363CEC05a661",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -705,7 +709,8 @@
         {
           "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
-          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock."
+          "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
+          "role": ".validators"
         }
       ],
       "sinceTimestamp": 1739108999,
@@ -742,7 +747,8 @@
         {
           "permission": "interact",
           "from": "0x2EDc71E9991A962c7FE172212d1aA9E50480fBb9",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role)."
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin"
         }
       ],
       "sinceTimestamp": 1729083287,
@@ -1249,13 +1255,13 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "shared-zk-stack/ChainAdmin": "0xa5f3c8e5d247bd2b2811e9fb3bd547675aaed8726723a90aa7ec1e76643d850d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/v26/Diamond": "0x502b1a69d9ab72f372977cab16ba37c1ac624d47bc4345d251bc74608b440671",
+    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x035089e412f41045b91bea177f6c6b6f39221b60b35ba1dbb93bb903b590be10"
+  "permissionsConfigHash": "0x09c78f20df3b055782b6cb726902c7f8b596b8dec20cdc838b2379757c3be657"
 }

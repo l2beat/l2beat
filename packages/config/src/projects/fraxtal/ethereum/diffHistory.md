@@ -1,4 +1,265 @@
-Generated with discovered.json: 0xc0807344ce97929242b997559b83f768418923e2
+Generated with discovered.json: 0x5c75e1e441e3e6922665a8b2f75d6109d450649a
+
+# Diff at Mon, 26 May 2025 13:45:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22531170
+- current block number: 22567345
+
+## Description
+
+basefeescalar price discovery.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        5000
++        500000
+    }
+```
+
+Generated with discovered.json: 0x0dafdec63073b6b56f9f4290d3ba63835346155d
+
+# Diff at Fri, 23 May 2025 09:40:56 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22531170
+- current block number: 22531170
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22531170 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.from:
+-        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      directlyReceivedPermissions.3.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
++        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x6017f75108f251a488B045A7ce2a7C15b179d1f2) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract frxETH Minter (0x7Bc6bad540453360F744666D625fec0ee1320cA3) {
+    +++ description: Accepts user-supplied ETH to convert it to frxETH using auxiliary contracts like the EtherRouter.
+      receivedPermissions.0.role:
++        ".minters_array"
+    }
+```
+
+```diff
+    contract Frax Multisig  (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      receivedPermissions.3.role:
++        ".timelockAddress"
+      receivedPermissions.2.role:
++        ".operatorAddress"
+      receivedPermissions.1.role:
++        ".operatorAddress"
+      receivedPermissions.0.role:
++        ".timelockAddress"
+    }
+```
+
+```diff
+    contract FrxEthTimelock (0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA) {
+    +++ description: Allows for time-delayed execution of transactions. Current delay is 2d.
+      directlyReceivedPermissions.1.role:
++        ".timelock_address"
+      directlyReceivedPermissions.0.role:
++        ".timelock_address"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 2 (0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".timelock_address"
+      receivedPermissions.0.role:
++        ".timelock_address"
+      directlyReceivedPermissions.0.role:
++        ".admin"
+    }
+```
+
+```diff
+    contract frxETH Minter (0xbAFA44EFE7901E04E39Dad13167D089C559c1138) {
+    +++ description: Accepts user-supplied ETH and converts it to frxETH.
+      receivedPermissions.0.role:
++        ".minters_array"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4","role":"admin","via":[{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.11.from:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.from:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
++        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.permission:
+-        "challenge"
++        "upgrade"
+      receivedPermissions.9.from:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
++        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.9.via:
++        [{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+      receivedPermissions.8.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.8.via:
++        [{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+      receivedPermissions.7.from:
+-        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "challenge"
+      receivedPermissions.6.from:
+-        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      receivedPermissions.6.via:
+-        [{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+      receivedPermissions.6.role:
++        ".CHALLENGER"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "challenge"
+      receivedPermissions.5.from:
+-        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      receivedPermissions.5.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.5.via:
+-        [{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+      receivedPermissions.5.role:
++        ".challenger"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.4.from:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      receivedPermissions.4.via:
+-        [{"address":"0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]
+      receivedPermissions.4.role:
++        ".guardian"
+      receivedPermissions.3.from:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
++        "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2"
+      receivedPermissions.3.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.3.role:
++        ".$admin"
+      receivedPermissions.2.role:
++        ".guardian"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0xFb90465f3064fF63FC460F01A6307eC73d64bc50) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+Generated with discovered.json: 0x82d7507204e2db46f205585ddd6377188eab1489
+
+# Diff at Wed, 21 May 2025 12:09:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28ec750f325ec979450bcc4eaac304d60b8b1276 block: 22423720
+- current block number: 22531170
+
+## Description
+
+base fee increase of the blob-independent part by ~10x.
+
+post-ecotone fee calculator: https://docs.google.com/spreadsheets/d/12VIiXHaVECG2RUunDSVJpn67IQp9NHFJqUsma2PndpE/edit#gid=186414307
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        500
++        5000
+    }
+```
+
+Generated with discovered.json: 0x61fdc3fbb96fb65212ac10df30a1fcdc7ec4aac7
 
 # Diff at Tue, 06 May 2025 09:18:18 GMT:
 

@@ -1,9 +1,7 @@
 import type { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
-import type {
-  ContractFieldSeverity,
-  Permission,
-} from '../config/StructureConfig'
+import type { Permission } from '../config/PermissionConfig'
+import type { ContractFieldSeverity } from '../config/StructureConfig'
 
 export type ContractValue =
   | string
@@ -56,6 +54,7 @@ export interface ResolvedPermissionDetails {
   permission: Permission
   delay?: number
   description?: string
+  role?: string
   condition?: string
   via?: ResolvedPermissionPath[]
 }
@@ -128,5 +127,6 @@ export type PermissionsOutput = {
       condition?: string
     }[]
     isFinal: boolean
+    role?: string
   }[]
 }

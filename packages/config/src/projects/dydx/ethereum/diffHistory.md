@@ -1,3 +1,107 @@
+Generated with discovered.json: 0xb5f3ac7a691ea6bd3764cd8d7f3ee6ad0b4c2b02
+
+# Diff at Tue, 27 May 2025 08:26:46 GMT:
+
+- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
+- comparing to: main@fd658a9ed4bbd45fc5705d23b1906ca057d0d8b0 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract StarkPerpetual (0xD54f502e184B6B739d7D27a6410a67dc462D69c8) {
+    +++ description: None
+      sourceHashes.5:
+-        "0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6"
+      sourceHashes.4:
+-        "0x55d6a4cd67a46f33d25cf27c466b0794bf83409eefb65aa00799943d4519273f"
+      sourceHashes.3:
+-        "0x2ca4953b47f855531afeb05271bc0a2a40ef59696a328130b04419b2ffab757a"
+      sourceHashes.2:
+-        "0x74ee5c93d85e8e3f9a076d643a1f10dbc07160631e7b7ddf00cf54b7f4218bd8"
+      sourceHashes.1:
+-        "0x30ebdecf2dc34bef72c4db7e2fc3ed61f8f12fd248455fda41cadfc6076c4ab5"
++        "0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6"
+      sourceHashes.0:
+-        "0x78eb03e490fcb196d0b884db041c442d39699b0f0434493a89834ad53949e95d"
++        "0xbe20bbe6c3b6a691ea8198517ba23e844544647f6d12c96c2f69d20075251c3a"
+    }
+```
+
+Generated with discovered.json: 0xf3d246cc8594aa2ef313f20ec713092ee643d6d1
+
+# Diff at Fri, 23 May 2025 09:40:55 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21343041
+- current block number: 21343041
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21343041 (main branch discovery), not current.
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
 Generated with discovered.json: 0x902804af0206428a4b79e59b7dbe37c24d633d87
 
 # Diff at Tue, 29 Apr 2025 08:19:01 GMT:

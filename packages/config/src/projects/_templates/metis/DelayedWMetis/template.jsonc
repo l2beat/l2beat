@@ -1,0 +1,7 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "DelayedWMetis",
+  "description": "Delayed wrapped Metis token contract.",
+  "fields": {},
+  "ignoreInWatchMode": ["totalSupply"]
+}

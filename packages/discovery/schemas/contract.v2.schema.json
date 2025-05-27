@@ -3,17 +3,12 @@
   "properties": {
     "$schema": { "type": "string" },
     "extends": { "$ref": "#/definitions/DiscoveryContract/properties/extends" },
-    "canActIndependently": {
-      "$ref": "#/definitions/DiscoveryContract/properties/canActIndependently"
-    },
+    "canActIndependently": { "type": "boolean" },
     "ignoreDiscovery": {
       "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
     },
     "proxyType": {
       "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
-    },
-    "displayName": {
-      "$ref": "#/definitions/ColorContract/properties/displayName"
     },
     "ignoreInWatchMode": {
       "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
@@ -29,6 +24,9 @@
       "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
     },
     "types": { "$ref": "#/definitions/DiscoveryContract/properties/types" },
+    "displayName": {
+      "$ref": "#/definitions/ColorContract/properties/displayName"
+    },
     "categories": {
       "$ref": "#/definitions/ColorContract/properties/categories"
     },
@@ -44,6 +42,10 @@
       "additionalProperties": {
         "type": "object",
         "properties": {
+          "permissions": {
+            "type": "array",
+            "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
+          },
           "description": {
             "$ref": "#/definitions/ColorContractField/properties/description"
           },
@@ -59,11 +61,11 @@
           "template": {
             "$ref": "#/definitions/DiscoveryContractField/properties/template"
           },
-          "returnType": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/returnType"
+          "copy": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/copy"
           },
-          "permissions": {
-            "$ref": "#/definitions/DiscoveryContractField/properties/permissions"
+          "edit": {
+            "$ref": "#/definitions/DiscoveryContractField/properties/edit"
           }
         },
         "additionalProperties": false
@@ -155,7 +157,6 @@
             },
             "maxLength": { "type": "integer", "minimum": 0 },
             "startIndex": { "type": "integer", "minimum": 0 },
-            "pickFields": { "type": "array", "items": { "type": "string" } },
             "ignoreRelative": { "type": "boolean" }
           },
           "required": ["type"],
@@ -171,7 +172,6 @@
               "items": { "type": ["string", "number"] }
             },
             "ignoreRelative": { "type": "boolean" },
-            "pickFields": { "type": "array", "items": { "type": "string" } },
             "expectRevert": { "type": "boolean" },
             "address": { "type": "string" }
           },
@@ -530,7 +530,8 @@
         "type": { "$ref": "#/definitions/Permission" },
         "delay": { "type": ["number", "string"], "default": 0 },
         "description": { "type": "string" },
-        "condition": { "type": "string" }
+        "condition": { "type": "string" },
+        "role": { "type": "string" }
       },
       "required": ["type"],
       "additionalProperties": false
@@ -539,20 +540,14 @@
       "type": "string",
       "enum": ["CODE_CHANGE", "L2", "EXTERNAL", "RISK_PARAMETER", "PERMISSION"]
     },
-    "ContractFieldSeverity": {
-      "type": "string",
-      "enum": ["HIGH", "MEDIUM", "LOW"]
-    },
+    "ContractFieldSeverity": { "type": "string", "enum": ["HIGH", "LOW"] },
     "DiscoveryContractField": {
       "type": "object",
       "properties": {
         "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
         "template": { "type": "string" },
-        "returnType": { "type": "string" },
-        "permissions": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
-        }
+        "copy": { "type": "string" },
+        "edit": {}
       },
       "additionalProperties": false
     },
@@ -560,7 +555,7 @@
       "type": "object",
       "properties": {
         "description": { "type": "string" },
-        "severity": { "type": "string", "enum": ["HIGH", "MEDIUM", "LOW"] },
+        "severity": { "type": "string", "enum": ["HIGH", "LOW"] },
         "type": {
           "anyOf": [
             { "$ref": "#/definitions/ContractValueType" },
@@ -627,7 +622,6 @@
         "canActIndependently": { "type": "boolean" },
         "ignoreDiscovery": { "type": "boolean", "default": false },
         "proxyType": { "$ref": "#/definitions/ManualProxyType" },
-        "displayName": { "type": "string" },
         "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
         "ignoreMethods": {
           "type": "array",

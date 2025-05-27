@@ -1,4 +1,277 @@
-Generated with discovered.json: 0x9fccb5dcbfe9d055341a5f111fe0d5f887f7005e
+Generated with discovered.json: 0x86471c583a4338ea8da15c5704edd2660453896e
+
+# Diff at Fri, 23 May 2025 09:41:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22437752
+- current block number: 22437752
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437752 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".livenessGuard"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputy"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
+      receivedPermissions.8.description:
+-        "set and change address mappings."
+      receivedPermissions.8.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.7.via.0.address:
+-        "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0x7615032B5998714A056d5100f403666Be2C3AC15"
+      receivedPermissions.6.via.0.address:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.5.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.5.via:
++        [{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]
+      receivedPermissions.4.from:
+-        "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
++        "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
+      receivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x7615032B5998714A056d5100f403666Be2C3AC15"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.3.via.0.address:
+-        "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.3.description:
++        "set and change address mappings."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.from:
+-        "0xee6F71542e32930B44D6C208a15DE67E56F86087"
++        "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
+      receivedPermissions.2.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      receivedPermissions.2.role:
++        ".$admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
++        "0xee6F71542e32930B44D6C208a15DE67E56F86087"
+      receivedPermissions.1.via:
+-        [{"address":"0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"}]
+      receivedPermissions.1.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x625726c858dBF78c0125436C943Bf4b4bE9d9033) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".fallbackOwner"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputyGuardian"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Zora Multisig 1 (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49) {
+    +++ description: None
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.from:
+-        "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
++        "0x7615032B5998714A056d5100f403666Be2C3AC15"
+      directlyReceivedPermissions.4.description:
+-        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.from:
+-        "0x7615032B5998714A056d5100f403666Be2C3AC15"
++        "0xee6F71542e32930B44D6C208a15DE67E56F86087"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.from:
+-        "0xee6F71542e32930B44D6C208a15DE67E56F86087"
++        "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.from:
+-        "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86"
++        "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631"
+      directlyReceivedPermissions.1.description:
++        "upgrading the bridge implementation can give access to all funds escrowed therein."
+      directlyReceivedPermissions.1.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+Generated with discovered.json: 0x3ed5bf7b91ac744c953c7411423346c2da51b8e2
 
 # Diff at Fri, 09 May 2025 10:09:24 GMT:
 

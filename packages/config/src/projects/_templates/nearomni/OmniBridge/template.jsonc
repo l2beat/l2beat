@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow for all tokens of the NEAR Omnibridge.",
+  "ignoreMethods": ["paused", "proxiableUUID"],
+  "ignoreInWatchMode": ["currentOriginNonce"],
+  "category": "core",
+  "fields": {
+    "pausedFlags": {
+      "description": "0: UNPAUSED_ALL, 1: PAUSED_INIT_TRANSFER, 2: PAUSED_FIN_TRANSFER, 3: fully paused",
+      "severity": "HIGH"
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "defaultAdminAC": {
+      "copy": "accessControl",
+      "edit": ["get", "DEFAULT_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the pauser role and all pause flags (pause and unpause), manage token lists, claim ownership of token contracts and upgrade them, change the derived signer address for incoming message validation."
+        },
+        {
+          "type": "upgrade" // proxy handler fails here, manual override
+        }
+      ]
+    },
+    "pauseAdminAC": {
+      "copy": "accessControl",
+      "edit": ["get", "PAUSABLE_ADMIN_ROLE", "members"],
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the bridge escrow for deposits and withdrawals."
+        }
+      ]
+    },
+    "nearBridgeDerivedAddress": {
+      "description": "Derived EVM address of the signer for all incoming bridge messages. NEAR calls this chain signatures and it is supposed to use MPC.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "validate bridge transactions (derived address of the MPC setup)."
+        }
+      ]
+    }
+  }
+}

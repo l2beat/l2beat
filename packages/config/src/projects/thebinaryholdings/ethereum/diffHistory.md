@@ -1,4 +1,184 @@
-Generated with discovered.json: 0x8c057023a0e5c1e93fb4204e732e163216b38aca
+Generated with discovered.json: 0x04dd8822a1e79c9d1671fa1692ca9c77a2323de0
+
+# Diff at Fri, 23 May 2025 09:41:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 21429035
+- current block number: 21429035
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429035 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF) {
+    +++ description: None
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
++        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
+      directlyReceivedPermissions.1.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    contract TBHMultisig (0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x666372fEfB85dA96a1a56667638321605afe95bC) {
+    +++ description: None
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.3.from:
+-        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
++        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
+      receivedPermissions.2.description:
++        "set and change address mappings."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x68d5BBf3a01ECbB47CE38Cf64a7d6C0eA618040f) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA  (0x79DdF0745D14783cDC2a05624c585Ddce07F4A02) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e","role":".CHALLENGER"}
+      receivedPermissions.0.role:
++        ".challenger"
+    }
+```
+
+```diff
+    EOA  (0x87aab081Ac9F8ce80fb048f23280DF019036BA1d) {
+    +++ description: None
+      receivedPermissions.1.role:
++        ".guardian"
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0xE559cf25AE191566d4A2E1cd5A533475179672A0) {
+    +++ description: None
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.role:
++        "admin"
+      receivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.2.from:
+-        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
++        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      receivedPermissions.2.description:
+-        "set and change address mappings."
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "0x8173904703995c6BbA59a42B8bBf8405F978758a"
+      receivedPermissions.1.description:
++        "set and change address mappings."
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    EOA  (0xe615dC682b340e00c2d80472a281CbD5A2b68ae7) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"propose","from":"0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e","role":".proposer"}
+      receivedPermissions.0.role:
++        ".PROPOSER"
+    }
+```
+
+Generated with discovered.json: 0x1ff9d7f859e8ad38a4c6460c83c9baea73dddca3
 
 # Diff at Tue, 06 May 2025 10:56:58 GMT:
 

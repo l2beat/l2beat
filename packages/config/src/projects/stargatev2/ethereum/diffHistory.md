@@ -1,4 +1,70 @@
-Generated with discovered.json: 0x122b1d9add5d3ac5d7f7b0b68f7c03105bdcce0c
+Generated with discovered.json: 0x0388a334836b0255ef761ba48fed2c58e14b1a5b
+
+# Diff at Mon, 26 May 2025 15:50:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22425618
+- current block number: 22567916
+
+## Description
+
+deficitOffset removed (fee related).
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      values.deficitOffset:
+-        "1440000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      values.deficitOffset:
+-        4000000000000
++        0
+    }
+```
+
+Generated with discovered.json: 0x977f10cab527c052588ef16926fc12c30265c2ce
+
+# Diff at Fri, 23 May 2025 09:41:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22425618
+- current block number: 22425618
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22425618 (main branch discovery), not current.
+
+```diff
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x966b111145f2e370a641d0a8efd4ed39a893be7f
 
 # Diff at Tue, 06 May 2025 15:41:16 GMT:
 

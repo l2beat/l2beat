@@ -8,6 +8,8 @@ import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   EIP712_TX_TYPE,
   EIP712_methods,
+  EIP7821_methods,
+  EIP_7821_TRANSACTION_SELECTOR,
   ENTRY_POINT_ADDRESS_0_6_0,
   ENTRY_POINT_ADDRESS_0_7_0,
   ERC20ROUTER_TRANSACTION_SELECTOR,
@@ -329,6 +331,43 @@ describe(RpcCounter.name, () => {
       expect(result).toEqual({
         from: 'tx.from',
         type: 'ERC-20 Router',
+        hash: 'tx.hash',
+        operationsCount: 1,
+        includesBatch: false,
+        includesUnknown: false,
+        details: mockOperation,
+      })
+    })
+
+    it('should map EIP-7821 txs', () => {
+      const counter = new RpcCounter()
+
+      const mockOperation = {
+        id: 'id',
+        level: 0,
+        methodSelector: '0x123',
+        count: 1,
+        children: [],
+      } as CountedOperation
+
+      counter.countUserOperations = mockFn().returns(mockOperation)
+
+      counter.checkOperations = mockFn().returns({
+        includesBatch: false,
+        includesUnknown: false,
+      })
+
+      const result = counter.mapTransaction({
+        from: 'tx.from',
+        to: 'tx.to',
+        hash: 'tx.hash',
+        data: EIP_7821_TRANSACTION_SELECTOR + '12345',
+        type: '2',
+      })
+
+      expect(result).toEqual({
+        from: 'tx.from',
+        type: 'EIP-7821',
         hash: 'tx.hash',
         operationsCount: 1,
         includesBatch: false,
@@ -690,6 +729,393 @@ describe(RpcCounter.name, () => {
         calldata,
         'tx.to',
         ERC20ROUTER_methods,
+        () => 'id',
+      )
+
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('should count EIP-7821 user operations', () => {
+      const calldata =
+        '0xe9ae5c530100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000006600000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000026000000000000000000000000027a09b5de426a6f3ce12251c43dae670bad95a2e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600000000000000000000000000000000000000000000000000000000000000044095ea7b3000000000000000000000000000000000022d473030f116ddee9f6b43ac78ba3ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022d473030f116ddee9f6b43ac78ba300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000008487517c4500000000000000000000000027a09b5de426a6f3ce12251c43dae670bad95a2e00000000000000000000000066a9893cc07d91d95644aedd05d03f95e1dba8af000000000000000000000000ffffffffffffffffffffffffffffffffffffffff000000000000000000000000000000000000000000000000000000006853eaab0000000000000000000000000000000000000000000000000000000000000000000000000000000066a9893cc07d91d95644aedd05d03f95e1dba8af0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000003253593564c000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000682c64b7000000000000000000000000000000000000000000000000000000000000000308060c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000001800000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000011f0183c103440000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000001000000000000000000000000000000000000000000000000000000000000000200000000000000000000000027a09b5de426a6f3ce12251c43dae670bad95a2e000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc20000000000000000000000000000000000000000000000000000000000000060000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2000000000000000000000000000000fee13a103a10d593b9ae06b3e05f2e7e1c000000000000000000000000000000000000000000000000000000000000001900000000000000000000000000000000000000000000000000000000000000400000000000000000000000001897109ae285beafab575dd63b5ba6bd2ec4cf6300000000000000000000000000000000000000000000000001c5dedd85bd2c7b0c000000000000000000000000000000000000000000000000000000'
+
+      const expectedResult: CountedOperation = {
+        children: [
+          {
+            children: [],
+            contractAddress: '0x27A09B5DE426A6f3cE12251c43DaE670BAD95a2e',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x095ea7b3',
+          },
+          {
+            children: [],
+            contractAddress: '0x000000000022D473030F116dDEE9F6B43aC78BA3',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x87517c45',
+          },
+          {
+            children: [],
+            contractAddress: '0x66a9893cC07D91D95644AEDD05D03f95e1dBA8Af',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodSelector: '0x3593564c',
+          },
+        ],
+        contractAddress: 'to',
+        contractName: 'EIP-7821',
+        count: 3,
+        id: 'id',
+        level: 0,
+        methodName: 'execute',
+        methodSelector: '0xe9ae5c53',
+        methodSignature: 'execute(bytes32,bytes)',
+      }
+
+      const counter = new RpcCounter()
+
+      const result = counter.countUserOperations(
+        calldata,
+        'to',
+        EIP7821_methods,
+        () => 'id',
+      )
+
+      expect(result).toEqual(expectedResult)
+    })
+
+    it('should count WhiteBIT user operations', () => {
+      const calldata =
+        '0xaf71356622033527012829ff2a2b012c2d002e2f013031013233012634003e44014342004140003f3d00363c013b3a00393800372400251c012310000f0e000d02000c02000902000a0800070601050400110b00131200222100201f001e1d011b14001a19001817161545a0b86991c6218b36c1d19d4a2e9eb0ce3606eb48dac17f958d2ee523a2206206994597c13d831ec70000000000000000000000000000000059682f006b175474e89094c44da98b954eedeac495271d0f000000000000000000000000000000007d2b7500b55a6a5e1b1321538e4e7a5c8d01a757fb86605900000000000000000000000000000000566d3e80f0db441da78c401833e17e8b50f4bb6c30580f210000000000000000000000000000000057cc3240a07955c28ea8fb374a83f6578f061cb51df69da7a44f44868277689027de63f91bde618bed5176f0000000000000000000000000000000005116fd2c8edfdd3e4ce65506c191985fb14d9dc2f6b418e0eb596fb562b4e4d4f47c1fb508c69c26503a36a6000000000000000000000000000000005d6685c08cc527f2e1bcefe0bcc3ea82f8528bf2e031d5c60000000000000000000000000000000094e474802ca2792a05d07c7a7a1497d0ec05611fc73f7226000000000000000000000000000000004bb2a980f20133f486c6cdd58cccf002623454b89484810b00000000000000000000000000000000591be3c0bf8fc333043e1b67bf2496f2996706505ad4bfb09d1a7a3191102e9f900faa10540837ba84dcbae70000000000000000000000000000000038915a905be5b42dcc2840223ce6067d09e34ce959f12145000000000000000000000000000000003b9aca0095c9c2ac72388fcc30348049b47ca1d8561941f327437ba7532c0fc6f50ca272f4ce72ef1c1c9173000000000000000000000000000000006be26880000000000000000000000000000000003c07231c0804356690d649c78ac5c31925e56966dbb45c5a000000000000000000000000000000003e41386701385f667072a2a6673f20253fc2be4ff3c7048d000000000000000000000000000000003e773600078d039719975b34ff6f163f6a131a6420238676f05bc9ec00707bb6aba7cb74162ec51fc106d518000000000000000000000000000000007a09e758e207927008fd561e64b95a42ea0d304a48da0d0d95858373baf198b15c84ef871879bece69909ad400000000000000000000243224a8fd769a9cb8004822ae848ab3278961c5a8b882568d37845a0c9e0000000000000000000000000000001df7fca0201bd295733991425feebe34ae6bdeec91bae2d94e000000000000000000000001076f0f6024e20800cde51968a41d264e45873dde3598c911b300792b00000000000000000000000000000003f3e87640bb2718db5cd62d60c1fab7968b5a2a9abaac9b4b000000000000000000000000000000022368b80084780802481458de6671a683e01bfd00d9be35d400000000000000000000000000000002faf080007a2282970b32d42c84bba38fa34fdb92d526c82200000000000000000000000000000002a0b2b18000000000000000000000000000000002056d8c4018f769bbe80dbec50bf3a65638d0b89b990f0efa16ec4f1f5c9c9086355ea107a93cb50b6f02f413cd01be3bb2db19513ffd4a89b2c1693210f19733000000000000000000000000000000007cb63ec06a31e23ad5902d5fd7b286a3e0c6412c9a1158a700000000000000000000000000000000d6d84e20f7bf989b53f44670270ccf57a9355c7acc56dde000000000000000000000000000000000b2d05e0000000000000000000000000000000000cb8cc3c08a8db4f1609ff41564f984df87f2826220de0ceabdfea24a6e1dce929f06d7c1d0bfa5542ebee8ea00000000000000000000000000000000ee5be5c04de847b8a875a3d22e4cd9474c6187d559686cd50000000000000000000000000000000165b212b62ec5130b2ee5671673a8c572c7182d4ae05aa1cb000000000000000000000000000000012a05f200000000000000000000000001c0cec2a7c4220000'
+      const expectedResult: CountedOperation = {
+        children: [
+          {
+            children: [],
+            contractAddress: '0x18f769bbe80dbec50bf3a65638d0b89b990f0efa',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x4822ae848ab3278961c5a8b882568d37845a0c9e',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x1bd295733991425feebe34ae6bdeec91bae2d94e',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectETH()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xcde51968a41d264e45873dde3598c911b300792b',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xbb2718db5cd62d60c1fab7968b5a2a9abaac9b4b',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x84780802481458de6671a683e01bfd00d9be35d4',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x7a2282970b32d42c84bba38fa34fdb92d526c822',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x95858373baf198b15c84ef871879bece69909ad4',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x8a8db4f1609ff41564f984df87f2826220de0cea',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x2ec5130b2ee5671673a8c572c7182d4ae05aa1cb',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x4de847b8a875a3d22e4cd9474c6187d559686cd5',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xbdfea24a6e1dce929f06d7c1d0bfa5542ebee8ea',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x16ec4f1f5c9c9086355ea107a93cb50b6f02f413',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xf7bf989b53f44670270ccf57a9355c7acc56dde0',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x6a31e23ad5902d5fd7b286a3e0c6412c9a1158a7',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xcd01be3bb2db19513ffd4a89b2c1693210f19733',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xe207927008fd561e64b95a42ea0d304a48da0d0d',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xf05bc9ec00707bb6aba7cb74162ec51fc106d518',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x8cc527f2e1bcefe0bcc3ea82f8528bf2e031d5c6',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xeb596fb562b4e4d4f47c1fb508c69c26503a36a6',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x8edfdd3e4ce65506c191985fb14d9dc2f6b418e0',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xa07955c28ea8fb374a83f6578f061cb51df69da7',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xa44f44868277689027de63f91bde618bed5176f0',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xf0db441da78c401833e17e8b50f4bb6c30580f21',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xb55a6a5e1b1321538e4e7a5c8d01a757fb866059',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x2ca2792a05d07c7a7a1497d0ec05611fc73f7226',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xf20133f486c6cdd58cccf002623454b89484810b',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x078d039719975b34ff6f163f6a131a6420238676',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x01385f667072a2a6673f20253fc2be4ff3c7048d',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x0804356690d649c78ac5c31925e56966dbb45c5a',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x27437ba7532c0fc6f50ca272f4ce72ef1c1c9173',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x95c9c2ac72388fcc30348049b47ca1d8561941f3',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0x5be5b42dcc2840223ce6067d09e34ce959f12145',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+          {
+            children: [],
+            contractAddress: '0xbf8fc333043e1b67bf2496f2996706505ad4bfb0',
+            count: 1,
+            id: 'id',
+            level: 1,
+            methodName: 'collectERC20()',
+            methodSelector: '',
+          },
+        ],
+        contractAddress: 'to',
+        contractName: 'WhiteBIT sweeper',
+        count: 34,
+        id: 'id',
+        level: 0,
+        methodName: 'batch',
+        methodSelector: '0xaf713566',
+        methodSignature: 'batch()',
+      }
+
+      const counter = new RpcCounter()
+
+      const result = counter.countUserOperations(
+        calldata,
+        'to',
+        EIP7821_methods,
         () => 'id',
       )
 

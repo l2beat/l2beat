@@ -1,4 +1,50 @@
-Generated with discovered.json: 0x4215180b85067fbd8a03adc7475a9358bcdaa6ed
+Generated with discovered.json: 0x2bc8fd7962be9abdd98c98ddd618a7fe2544ff87
+
+# Diff at Fri, 23 May 2025 09:41:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 133041012
+- current block number: 133041012
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x1ca5426a409ba18a753aa6c5156106c19d80ec05
 
 # Diff at Tue, 29 Apr 2025 08:19:31 GMT:
 

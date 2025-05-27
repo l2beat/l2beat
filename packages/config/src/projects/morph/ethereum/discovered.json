@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 22466462,
-  "configHash": "0x52b0ef44bddf39a8e3b70dc69e3ae9fb48626a7112d69f1bd92c7247b29861d9",
+  "configHash": "0x3fbbcbacf8e4575beece1dc5e316d877b16c7b137baae682442943df78155d6f",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -16,7 +16,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -27,7 +28,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -114,7 +116,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -173,7 +176,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -189,35 +193,43 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7"
+          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68"
+          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF"
+          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8"
+          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
+          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7"
+          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304"
+          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1729306655,
@@ -237,7 +249,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -249,7 +262,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -379,7 +393,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -425,7 +440,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -468,7 +484,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -480,7 +497,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -492,7 +510,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -503,7 +522,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -514,7 +534,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -525,7 +546,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -683,7 +705,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -694,7 +717,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -705,7 +729,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -716,7 +741,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -727,7 +753,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -738,7 +765,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -750,7 +778,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -771,7 +800,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -783,7 +813,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -800,17 +831,20 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         },
         {
           "permission": "interact",
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
-          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers"
+          "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
-          "description": "can pause and unpause"
+          "description": "can pause and unpause",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -850,7 +884,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -861,7 +896,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -872,7 +908,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -883,7 +920,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -894,7 +932,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -953,7 +992,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -964,7 +1004,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -980,7 +1021,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1040,7 +1082,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1051,7 +1094,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1089,48 +1133,57 @@
         {
           "permission": "upgrade",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         },
         {
           "permission": "upgrade",
           "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "role": "admin",
           "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0"
+          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1169,7 +1222,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1185,7 +1239,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1196,7 +1251,8 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60"
+          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "role": ".challengers"
         }
       ]
     },
@@ -1208,7 +1264,8 @@
         {
           "permission": "sequence",
           "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots"
+          "description": "Actors allowed to commit transaction batches and propose state roots",
+          "role": ".getActiveStakers"
         }
       ]
     },
@@ -1713,8 +1770,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xf9b6dda9cdb8166d9a411caa03a83e369aefaba6ef79c1167e01c0318a3d9905"
+  "permissionsConfigHash": "0xc0dabbae9c2863b34af31edcb543c251e8a97126e2833677ae99c81b95f5e385"
 }

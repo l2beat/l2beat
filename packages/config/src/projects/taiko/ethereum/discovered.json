@@ -657,7 +657,8 @@
         {
           "permission": "interact",
           "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-          "description": "Minority guardians can prove blocks on the second highest tier."
+          "description": "Minority guardians can prove blocks on the second highest tier.",
+          "role": ".verifier_TIER_GUARDIAN_MINORITY"
         }
       ],
       "sinceTimestamp": 1714550627,
@@ -1139,59 +1140,73 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+          "from": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+          "from": "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+          "from": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x579f40D0BE111b823962043702cabe6Aaa290780"
+          "from": "0x579f40D0BE111b823962043702cabe6Aaa290780",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+          "from": "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+          "from": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+          "from": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+          "from": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+          "from": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+          "from": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1234,7 +1249,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1746111707,
@@ -1533,12 +1549,14 @@
         {
           "permission": "interact",
           "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-          "description": "as the chain watchdog, it can pause proving of blocks."
+          "description": "as the chain watchdog, it can pause proving of blocks.",
+          "role": ".chain_watchdog"
         },
         {
           "permission": "interact",
           "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-          "description": "Guardians, acting as a multisig, can prove blocks on the highest tier."
+          "description": "Guardians, acting as a multisig, can prove blocks on the highest tier.",
+          "role": ".verifier_TIER_GUARDIAN"
         }
       ],
       "sinceTimestamp": 1714550627,
@@ -2822,7 +2840,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/AutomataDcapV3Attestation": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
@@ -2842,8 +2860,8 @@
     "taiko/SP1Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
     "taiko/TaikoDAOController": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "taiko/TaikoL1Contract": "0xde92674e572f8b04073a30bc53199dda0763ff7a0967fdaf5ee9070a173b16e4",
+    "taiko/TaikoL1Contract": "0x86735ce2f1bc05e37466e66f7cb4684ac5ee64e3e0f4cfac4209152dfc90b72e",
     "taiko/TaikoToken": "0x1995b6ff08e9d6507add238bda6de7508f15484c51b465775c8044a2f429baeb"
   },
-  "permissionsConfigHash": "0xe400f3bee159c9b3009e20434661d6339df4782b0dd52578cedbbfe5909a41bd"
+  "permissionsConfigHash": "0xdddbc1acb3baabafa54e29f1a0fdee08378e702082818ac80115172ee2f2af2e"
 }

@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x96abfc9c2de70812464a8f56e6f1251e4d6fc525
+Generated with discovered.json: 0xf00d473d017ae0fb34135c01110a7a41cb195a00
+
+# Diff at Fri, 23 May 2025 09:41:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 16435499
+- current block number: 16435499
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16435499 (main branch discovery), not current.
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x44b22ad5e3b687214d9430b603a27cea1ccc6cb5
 
 # Diff at Tue, 29 Apr 2025 08:19:30 GMT:
 

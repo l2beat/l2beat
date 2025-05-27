@@ -1,11 +1,12 @@
 import type { NextFunction, Request, Response } from 'express'
-import { env } from '~/env'
 
 export function MetricsMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
+  console.log(`[${req.method}] ${req.originalUrl} - processing...`)
+
   const start = process.hrtime.bigint()
 
   const originalSend = res.send
@@ -30,11 +31,9 @@ export function MetricsMiddleware(
 
     res.setHeader('metrics-execution-time', durationMs.toFixed(2))
     res.setHeader('metrics-data-size', size)
-    if (env.NODE_ENV !== 'production') {
-      console.log(
-        `[${req.method}] ${req.originalUrl} - ${durationMs.toFixed(2)}ms - ${formatBytes(size)}`,
-      )
-    }
+    console.log(
+      `[${req.method}] ${req.originalUrl} - ${durationMs.toFixed(2)}ms - ${formatBytes(size)}`,
+    )
 
     return originalSend.call(this, body)
   }

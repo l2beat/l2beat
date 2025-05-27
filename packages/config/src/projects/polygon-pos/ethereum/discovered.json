@@ -1221,52 +1221,64 @@
         {
           "permission": "interact",
           "from": "0x401F6c983eA34274ec46f84D70b31C151321188b",
-          "description": "can update the root chain it references."
+          "description": "can update the root chain it references.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-          "description": "can delete arbitrary checkpoints."
+          "description": "can delete arbitrary checkpoints.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+          "from": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+          "from": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+          "from": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+          "from": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+          "from": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+          "from": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+          "from": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+          "from": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+          "from": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+          "from": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1630059303,
@@ -1514,7 +1526,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+          "from": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2698,17 +2711,17 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "polygonposbridge/DepositManager": "0x508d4444e3c21f1361f9b0948976412f48fe067c7d529bf6121ac18a4cabd004",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "polygonposbridge/DepositManager": "0x6f4da1313c9430a0d74b2b699e6c30210705857922f30262c4533dc9c0e2690e",
     "polygonposbridge/ExitNFT": "0x60ea045776cab9e4486806a9ce5a117ed68399ec7dc959eadd4b46a91b5531a1",
     "polygonposbridge/Governance": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygonposbridge/predicate": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "polygonposbridge/RootChain": "0xc5d595b4751aa7bad9f8fb8f08c661b78407e5794f5279461a7d497658d6fe1f",
+    "polygonposbridge/RootChain": "0x951f1afb2394ca6912e53ebaac34bb72e9a1c3b6e65eca9bdba31dfe0f8ff656",
     "polygonposbridge/RootChainManager": "0x50bcd0272aecc010cbde0bed943b6da88de3ffe1388773dd4691a0b4d4a0d8de",
     "polygonposbridge/StakingInfo": "0x472b4e99f38353920f0adb960c096ef2b8db88cfed76d97db017fff0a6c925fa",
     "polygonposbridge/StakingNFT": "0xb548c6f269123f0c23a2463c83cf000cda1a984eeeeb354a9a2af803b5245488",
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xefff9569e0e0e983031a205e00531e80e4b72d65db2da60f41dd3ab7cd808a95"
+  "permissionsConfigHash": "0x230c83377bc103ce22cfde119fb852928573309c41bf515f71af26b2a93dbb82"
 }

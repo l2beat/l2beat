@@ -254,6 +254,7 @@ export type ChainApiConfig =
   | ChainBasicApi<'loopring'>
   | ChainBasicApi<'degate3'>
   | ChainBasicApi<'fuel'>
+  | ChainBasicApi<'svm-rpc'>
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
@@ -290,7 +291,6 @@ export interface EtherscanApi {
 export interface ProjectBridgeInfo {
   category: BridgeCategory
   destination: string[]
-  validatedBy: string
 }
 
 export type BridgeCategory =
@@ -300,10 +300,14 @@ export type BridgeCategory =
   | 'Single-chain'
 
 export interface ProjectBridgeRisks {
-  validatedBy: TableReadyValue
+  validatedBy?: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
   livenessFailure?: TableReadyValue
+  governance?: {
+    upgrade?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+    pause?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+  }
 }
 
 export interface ProjectBridgeTechnology {
@@ -765,13 +769,23 @@ export interface ElasticChainEscrow {
   tokensToAssignFromL1?: string[]
 }
 
-export type ProjectActivityConfig = BlockActivityConfig | DayActivityConfig
+export type ProjectActivityConfig =
+  | BlockActivityConfig
+  | DayActivityConfig
+  | SlotActivityConfig
 
 export interface BlockActivityConfig {
   type: 'block'
   adjustCount?: AdjustCount
   startBlock?: number
   // how many blocks to fetch in single indexer tick
+  batchSize?: number
+}
+
+export interface SlotActivityConfig {
+  type: 'slot'
+  startSlot: number
+  // how many slots to fetch in single indexer tick
   batchSize?: number
 }
 

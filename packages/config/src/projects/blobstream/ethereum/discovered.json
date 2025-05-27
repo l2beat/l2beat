@@ -22,7 +22,8 @@
         {
           "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },
@@ -200,11 +201,13 @@
         {
           "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "can freeze the bridge contract and update the list of authorized relayers."
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "role": ".guardians"
         },
         {
           "permission": "upgrade",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -252,7 +255,8 @@
         {
           "permission": "interact",
           "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here."
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },
@@ -275,7 +279,8 @@
         {
           "permission": "interact",
           "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -470,10 +475,10 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "succinct/SP1Blobstream": "0x886e792aba1703e94c7eb1c129babcca484bd908a355b129879c543fdca7d523",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0xc9d414b5f37479a2be12907732d1edd17a8e8962f07ebad40721d2bf906a12cd"
+    "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
-  "permissionsConfigHash": "0x91ad5d6529b2e900dfaa22733cf080d3a154db4bcc3d18b661efa049a05925e8"
+  "permissionsConfigHash": "0x6ec093d9cc113aae532a5024d155d59fd2ce6143f5556c65eb6e8dfeec2efbd3"
 }

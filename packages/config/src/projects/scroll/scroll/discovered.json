@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 15285599,
-  "configHash": "0x188910b6828d3a124c04aace380e5f0a6ee7cb75393c4a2117654249feaf0e03",
+  "blockNumber": 15984224,
+  "configHash": "0x2d13b4e6c86dddff5b2947490faebdf1553c81a875acea9b5a2efc7ec523c43e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -61,18 +61,21 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         }
       ]
@@ -145,15 +148,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
+          "from": "0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81",
+          "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xA76acF000C890b0DD7AEEf57627d9899F955d026"
+          "from": "0xA76acF000C890b0DD7AEEf57627d9899F955d026",
+          "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"
+          "from": "0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1696918061,
@@ -276,50 +282,59 @@
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
           "description": "disable enforced batch mode.",
+          "role": ".scNoDelay",
           "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
         },
         {
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
           "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay",
           "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
         },
         {
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
           "description": "upgrade all core contracts of the system.",
+          "role": ".scNoDelay",
           "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4" }]
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
           "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "role": ".timelock",
           "via": [
             {
               "address": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
@@ -331,12 +346,14 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+          "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
+          "role": ".Proposer"
         },
         {
           "permission": "act",
           "from": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".timelockAdminAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -391,22 +408,26 @@
         {
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "disable enforced batch mode."
+          "description": "disable enforced batch mode.",
+          "role": ".scNoDelay"
         },
         {
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "update ScrollChain zk proof verifier."
+          "description": "update ScrollChain zk proof verifier.",
+          "role": ".scNoDelay"
         },
         {
           "permission": "interact",
           "from": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B",
-          "description": "upgrade all core contracts of the system."
+          "description": "upgrade all core contracts of the system.",
+          "role": ".scNoDelay"
         },
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1730295071,
@@ -484,17 +505,20 @@
         {
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -536,18 +560,21 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         }
       ]
@@ -566,7 +593,8 @@
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1696918064,
@@ -638,7 +666,8 @@
         {
           "permission": "interact",
           "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-          "description": "can propose new onchain governance proposals without the required threshold of votes."
+          "description": "can propose new onchain governance proposals without the required threshold of votes.",
+          "role": ".manager"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -784,9 +813,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x84c1797b0bb31bc4d43653ab084747da0e01580e0a42c8cc33220fce9b65e05e",
+        "messageRoot": "0x900a0b425903bd1701232802a48a4404a36848bccaf39f69b528e87719e4577a",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 204254,
+        "nextMessageIndex": 204658,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {
@@ -1050,12 +1079,14 @@
         {
           "permission": "act",
           "from": "0x79D83D1518e2eAA64cdc0631df01b06e2762CC14",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".timelockAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
-          "description": "can configure contract settings such as voting delay, quorum, contract manager."
+          "description": "can configure contract settings such as voting delay, quorum, contract manager.",
+          "role": ".timelock"
         }
       ],
       "sinceTimestamp": 1725377342,
@@ -1128,7 +1159,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
+          "from": "0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1725377322,
@@ -1258,35 +1290,43 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
+          "from": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
+          "from": "0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
+          "from": "0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
+          "from": "0x64CCBE37c9A82D85A1F2E74649b7A42923067988",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
+          "from": "0x6EA73e05AdC79974B931123675ea8F78FfdacDF0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
+          "from": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
+          "from": "0x7bC08E1c04fb41d75F1410363F0c5746Eae80582",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
+          "from": "0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1696917917,
@@ -1313,7 +1353,8 @@
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1730295517,
@@ -1426,29 +1467,34 @@
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f" }]
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+          "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
+          "role": ".Proposer"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1629,7 +1675,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xd29687c813D741E2F938F4aC377128810E217b1b"
+          "from": "0xd29687c813D741E2F938F4aC377128810E217b1b",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1725336741,
@@ -1711,18 +1758,21 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         }
       ]
@@ -1741,17 +1791,20 @@
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
           "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
@@ -1762,14 +1815,16 @@
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "description": "update the minimum delay and manage all access control roles of the timelock."
+          "description": "update the minimum delay and manage all access control roles of the timelock.",
+          "role": ".timelockAdminAC"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
-          "delay": 86400
+          "delay": 86400,
+          "role": ".Proposer"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1818,18 +1873,21 @@
           "permission": "interact",
           "from": "0x1f807E2E8ab2e61230a0A9C271F90242831278b4",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         },
         {
           "permission": "interact",
           "from": "0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f",
           "description": "execute transactions that are ready.",
+          "role": ".Executor",
           "via": [{ "address": "0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f" }]
         }
       ]
@@ -2843,11 +2901,11 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "scroll/L1Timelock": "0x97f0a624e955d4f357fdcb7966d3a68dfcccc1fcce33de3b85d52eab6a2400ef",
-    "scroll/ScrollOwnerL2": "0x3c12807fd2f2ec81f8f74667d689ec0e64269ae7f029ed22c4f43b89c6cc03a4",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "scroll/L1Timelock": "0xc4536a7cf375a15d151b85dc3ad86b0863657cead6f5cd7d03c28275c562df0b",
+    "scroll/ScrollOwnerL2": "0x7e77245231051fbc6f335852afd5305e4b1c493b1005a7826e24aa54340b2ad4",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x97f4366ea29d6ed8312c47392b878bf508ecf113b0d2c65475feee4e494cae74"
+  "permissionsConfigHash": "0x55305b222900b384bdf6a2f4cbcc55a2d54d9e15c0979af308b885ea53b47bdc"
 }

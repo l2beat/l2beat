@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "zksync2",
-  "blockNumber": 60151606,
-  "configHash": "0xb22ddbe07dfdda738c4fa251190b4120d7ac8065552cde39d5c9191a8a8d9102",
+  "blockNumber": 60946125,
+  "configHash": "0xd618827d051bc4b75242ffd466e62d24285ffac042735c2061625cc4be5dc369",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -18,7 +18,8 @@
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1738853604,
@@ -79,6 +80,7 @@
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
@@ -89,24 +91,28 @@
         {
           "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -121,7 +127,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -172,7 +178,8 @@
         {
           "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1723144916,
@@ -233,7 +240,8 @@
           "permission": "interact",
           "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1723145391,
@@ -295,6 +303,7 @@
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
@@ -305,24 +314,28 @@
         {
           "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -337,7 +350,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -426,16 +439,6 @@
               "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4",
               "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d",
               "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b",
-              "0xe546AEaaC57584da7554e7F88154DeDAD30A82b0",
-              "0x11791c6249631555cEb75CB39128789E3954c2EC",
-              "0x3BC3f64d084bE6d3336f10340DC8424290FFc4ab",
-              "0xDa2fBE31Fd47Af741bdB3dBC4eb662dA0107D33a",
-              "0x6b689B93B368c7C25E6e5ecaeAb23C11F8C2c392",
-              "0x2CC6c7b1a59A23fB3faCAFe4A3791C5c8A58Cbcc",
-              "0xD375A20d93C2F7C6a83B19C5ae153cF2C6e09ba9",
-              "0x2ADa5C15BC4FEE97EC2463ce4F8E4557174B8Dcf",
-              "0x4E86e74237Eb1f9432810eB5ab5861368d2f5964",
-              "0x178bFf5A197FB4499526D04Db602C45cEDCA40a9",
               "0x721b6d77a58FaaF540bE49F28D668a46214Ba44c",
               "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
             ]
@@ -444,7 +447,7 @@
         },
         "BURNER_ADMIN_ROLE": "0xc8d1ad9d415224b751d781cc8214ccfe7c47716e13229475443f04f1ebddadc6",
         "BURNER_ROLE": "0x3c11d16cbaffd01df69ce1c404f6340ee057498f5f00246190ea54220576a848",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -465,7 +468,7 @@
         "MinterAdmin": ["0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"],
         "name": "ZKsync",
         "symbol": "ZK",
-        "totalSupply": "13103157062315200000000000000"
+        "totalSupply": "13703157062315200000000000000"
       },
       "implementationNames": {
         "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E": "TransparentUpgradeableProxy",
@@ -481,12 +484,14 @@
         {
           "permission": "interact",
           "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
         },
         {
           "permission": "interact",
           "from": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
-          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period)."
+          "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
+          "role": ".VETO_GUARDIAN"
         }
       ]
     },
@@ -504,54 +509,64 @@
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714" }]
         },
         {
           "permission": "interact",
           "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         },
         {
           "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [{ "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }]
         },
         {
           "permission": "interact",
           "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714"
+          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "role": ".Executor"
         },
         {
           "permission": "act",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -566,7 +581,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -610,13 +625,15 @@
         {
           "permission": "upgrade",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin",
           "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "role": ".owner"
         }
       ]
     },
@@ -635,6 +652,7 @@
           "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "role": ".MinterAdmin",
           "via": [
             {
               "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
@@ -647,6 +665,7 @@
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
@@ -657,24 +676,28 @@
         {
           "permission": "interact",
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -689,7 +712,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -708,7 +731,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkTokenGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 0,
+        "proposalQueuedCount": 2,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "PROPOSE_GUARDIAN": "0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D",
@@ -741,7 +764,8 @@
           "permission": "interact",
           "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1723145510,
@@ -802,7 +826,8 @@
           "permission": "interact",
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1738971649,
@@ -856,7 +881,8 @@
         {
           "permission": "interact",
           "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
-          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false."
+          "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
+          "role": ".PROPOSE_GUARDIAN"
         }
       ]
     },
@@ -872,7 +898,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1716317321,
@@ -899,13 +926,15 @@
         {
           "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token."
+          "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
+          "role": ".MinterAdmin"
         },
         {
           "permission": "interact",
           "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
-          "description": "manage all access control roles and change the minimum delay."
+          "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC"
         }
       ],
       "sinceTimestamp": 1739000122,
@@ -972,6 +1001,7 @@
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
+          "role": ".timelockAdminAC",
           "via": [
             {
               "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
@@ -982,24 +1012,28 @@
         {
           "permission": "interact",
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "cancel queued transactions."
+          "description": "cancel queued transactions.",
+          "role": ".Canceller"
         },
         {
           "permission": "interact",
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "execute transactions that are ready."
+          "description": "execute transactions that are ready.",
+          "role": ".Executor"
         },
         {
           "permission": "interact",
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "description": "propose transactions."
+          "description": "propose transactions.",
+          "role": ".Proposer"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
           "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".Executor"
         }
       ],
       "ignoreInWatchMode": ["clock"],
@@ -1014,7 +1048,7 @@
           }
         },
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 1746789703,
+        "clock": 1748274359,
         "CLOCK_MODE": "mode=timestamp",
         "COUNTING_MODE": "support=bravo&quorum=for&params=fractional",
         "currentQuorum": "630000000000000000000000000",
@@ -1032,7 +1066,7 @@
         "lateQuorumVoteExtension": 604800,
         "name": "ZkGovOpsGovernor",
         "proposalCreatedCount": 0,
-        "proposalQueuedCount": 0,
+        "proposalQueuedCount": 1,
         "proposalThreshold": "21000000000000000000000000",
         "proposalThreshold_MTokens": "21",
         "state": [],
@@ -1058,7 +1092,8 @@
         {
           "permission": "interact",
           "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-          "description": "control all roles in the ZkToken access control, including the minter roles."
+          "description": "control all roles in the ZkToken access control, including the minter roles.",
+          "role": ".DefaultAdmin"
         }
       ]
     }
@@ -1728,10 +1763,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "shared-zk-stack/TimelockController": "0x9e70dcb39a5b49774d7cfdd3e9edbea022ddd1ed82db3313ebcd83bf0af88e43",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "shared-zk-stack/TimelockController": "0x88a31f2f805e380acd631322cde98aa81297a9600e66a23a68f7a0bcba65ff2e",
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
-    "shared-zk-stack/ZkToken": "0x10be13c3b1d138ac7962969b31c78e55aa0d45fc3133042d1457f930a120b6b8"
+    "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "permissionsConfigHash": "0x36d96cb7f70916d115e86b344284ac0f0ecb4f339f40da0a3b3cef7bde38a9c1"
+  "permissionsConfigHash": "0x72fdb64754369dd4fc01745069b3be6da00764d2ce1161b47311d50181c19db6"
 }

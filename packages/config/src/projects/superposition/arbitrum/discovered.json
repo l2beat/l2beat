@@ -52,12 +52,14 @@
         {
           "permission": "fastconfirm",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root."
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
         },
         {
           "permission": "validate",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -184,8 +186,7 @@
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
+        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",
@@ -349,16 +350,19 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E"
+          "from": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes."
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4"
+          "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1725644220,
@@ -439,7 +443,8 @@
         {
           "permission": "sequence",
           "from": "0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
-          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain."
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -536,11 +541,13 @@
           "permission": "interact",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "role": ".owner",
           "via": [{ "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }]
         },
         {
           "permission": "upgrade",
           "from": "0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -549,6 +556,7 @@
         {
           "permission": "upgrade",
           "from": "0x31F535A566FE1Ef994858cf4D97b1207fC7388A8",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -557,11 +565,13 @@
         {
           "permission": "upgrade",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
+          "role": "admin",
           "via": [{ "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }]
         },
         {
           "permission": "upgrade",
           "from": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -570,6 +580,7 @@
         {
           "permission": "upgrade",
           "from": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -578,6 +589,7 @@
         {
           "permission": "upgrade",
           "from": "0x665ADB1fF9D9C7535cf6A72d58c3Bc25F32D841d",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -586,6 +598,7 @@
         {
           "permission": "upgrade",
           "from": "0x9FE42A08751E8566A0918807bF2870594bf22806",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -594,6 +607,7 @@
         {
           "permission": "upgrade",
           "from": "0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -602,6 +616,7 @@
         {
           "permission": "upgrade",
           "from": "0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -610,6 +625,7 @@
         {
           "permission": "upgrade",
           "from": "0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
+          "role": "admin",
           "via": [
             { "address": "0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E" },
             { "address": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -619,7 +635,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8"
+          "from": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8",
+          "role": ".executors"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -670,39 +687,48 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55"
+          "from": "0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x31F535A566FE1Ef994858cf4D97b1207fC7388A8"
+          "from": "0x31F535A566FE1Ef994858cf4D97b1207fC7388A8",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8"
+          "from": "0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e"
+          "from": "0x62bEd4b862254789825Cd6F2352aa2b76B16145e",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x665ADB1fF9D9C7535cf6A72d58c3Bc25F32D841d"
+          "from": "0x665ADB1fF9D9C7535cf6A72d58c3Bc25F32D841d",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9FE42A08751E8566A0918807bF2870594bf22806"
+          "from": "0x9FE42A08751E8566A0918807bF2870594bf22806",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798"
+          "from": "0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0"
+          "from": "0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEca0fEB4aA6112a3923823559e7197294Bc49CC7"
+          "from": "0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1725644220,
@@ -729,18 +755,21 @@
           "permission": "fastconfirm",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
           "via": [{ "address": "0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43" }]
         },
         {
           "permission": "validate",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
           "via": [{ "address": "0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43" }]
         },
         {
           "permission": "validate",
           "from": "0x325Dd0279Ba31bC346BA80F3D00628deFa2EacD4",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain."
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
         }
       ]
     },
@@ -1756,8 +1785,8 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/ChallengeManager": "0x8760ed03abe46cb507ea6364ccb9aad7e04b5e32c39a48cb81efd7277e495054",
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -1770,10 +1799,10 @@
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxy_fastConfirm": "0x62bcdde440d51d7b36d2dc693743937bfe2d1c2b65d58eee1a50ce06e2c7eddf",
-    "orbitstack/SequencerInbox": "0x3fa38bb34cc216c88f30e3bff0ec1476b82eada0b9ea2cd9bae17f45353666b2",
-    "orbitstack/UpgradeExecutor": "0x5ccb1a24de22513543702981322da392ea6d43ef971ebf7144c29a5605174b25",
+    "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
+    "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
+    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xb8021c567d8b17e5dd21f075379c474b8ca6f67894313a3832ef2d77e2e1b2bb"
+  "permissionsConfigHash": "0x5536fc92f59b3bd45002a178ed6f15600d23d901734d8f30d7bb293c03615a42"
 }

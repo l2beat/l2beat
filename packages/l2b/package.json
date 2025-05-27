@@ -35,6 +35,7 @@
     "ethers": "^5.7.2",
     "express": "^4.21.1",
     "graphviz-wasm": "^3.0.2",
+    "redis": "^4.7.0",
     "node-fetch": "^2.6.7",
     "readline-sync": "^1.4.10",
     "rimraf": "^5.0.0",

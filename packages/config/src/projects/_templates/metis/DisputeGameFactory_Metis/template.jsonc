@@ -1,0 +1,42 @@
+{
+  "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "name": "DisputeGameFactory_Metis",
+  "description": "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.",
+  "fields": {
+    "gameImpls": {
+      "handler": {
+        "type": "array",
+        "length": 5
+      }
+    },
+    "initBonds": {
+      "handler": {
+        "type": "array",
+        "length": 5
+      }
+    },
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE",
+          "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02": "GAME_CREATOR_ROLE"
+        }
+      }
+    },
+    "gameCreator": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "GAME_CREATOR_ROLE",
+        "roleNames": {
+          "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02": "GAME_CREATOR_ROLE"
+        }
+      },
+      "permissions": [
+        {
+          "type": "metisGameCreator"
+        }
+      ]
+    }
+  }
+}

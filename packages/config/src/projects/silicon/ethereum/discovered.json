@@ -41,7 +41,8 @@
         {
           "permission": "interact",
           "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "sole address that can force batches."
+          "description": "sole address that can force batches.",
+          "role": ".forceBatchAddress"
         }
       ]
     },
@@ -107,7 +108,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A"
+          "from": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1724259347,
@@ -202,7 +204,8 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+          "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
+          "role": ".trustedSequencer"
         }
       ]
     },
@@ -220,23 +223,27 @@
         {
           "permission": "interact",
           "from": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
-          "description": "manage the members of the data availability committee and the threshold for valid commitments."
+          "description": "manage the members of the data availability committee and the threshold for valid commitments.",
+          "role": ".owner"
         },
         {
           "permission": "interact",
           "from": "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB",
-          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+          "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
+          "role": ".admin"
         },
         {
           "permission": "upgrade",
           "from": "0x24e09Ef4F69B6058E047EE5E709B345F3cA47F3A",
+          "role": "admin",
           "via": [{ "address": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1"
+          "from": "0x3F74698A4ADb075c0501DF739745ACA55Ae543a1",
+          "role": ".owner"
         }
       ]
     }
@@ -420,10 +427,10 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148",
-    "polygon-cdk/PolygonDataCommittee": "0xa2cd28aa0b94c4db5a20a0ca83c4a6212c40ef98308518c8cb16e762eb2b4e7f",
-    "polygon-cdk/PolygonZkEVM": "0x9975bbc516d977a470835e42b76f1c7fe70e39e6894f628432b4b5c5f9593834",
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "polygon-cdk/PolygonDataCommittee": "0x09dff653651e4e4f737268c33f60834e82e0b7640f4e80059ddbe9544dd978bb",
+    "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x70665ebc4b0d34fe2de9b40a7ca04b2f20c03dec4b341ee94a2fc16527a7b7c2"
+  "permissionsConfigHash": "0x63ef65c5d1243cf57519f02076f3ace23ea0916b45de8fa01f6d24b7182e4159"
 }

@@ -11,10 +11,12 @@ import { Discover } from './Discover'
 import { DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
+import { FetchDiscoveryCache } from './FetchDiscoveryCache'
 import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
+import { FindUnusedShapes } from './FindUnusedShapes'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { GetTokenMinters } from './GetTokenMinters'
@@ -28,7 +30,7 @@ import { DetectProxy } from './Proxy'
 import { RefreshDiscovery } from './RefreshDiscovery'
 import { ScanKintoAm } from './ScanKintoAm'
 import { SolFmt } from './SolFmt'
-import { StarknetEvents } from './StarknetEvents'
+import { StarknetAccessControl } from './StarknetAccessControl'
 import { StarknetProgramHashes } from './StarknetProgramHashes'
 import { TVL } from './TVL'
 import { UI } from './UI'
@@ -46,14 +48,21 @@ export function getSubcommands() {
     CountUserOperations,
     DeploymentTimestamp,
     DetectProxy,
-    DownloadShapes,
     Discover,
+    DownloadShapes,
     Events,
+    FetchAgglayer,
+    FetchDiscoveryCache,
     FetchFlatSources,
+    FetchZkStack,
+    FindCelestiaNamespace,
+    FindL2,
+    FindUnusedShapes,
     Flatten,
     FlattenAndDiff,
-    FindCelestiaNamespace,
     GetTokenMinters,
+    Init,
+    InitTemplate,
     MatchFlat,
     ModelPermissions,
     OPConfigs,
@@ -61,13 +70,8 @@ export function getSubcommands() {
     RefreshDiscovery,
     ScanKintoAm,
     SolFmt,
-    StarknetEvents,
+    StarknetAccessControl,
     StarknetProgramHashes,
-    FetchAgglayer,
-    FetchZkStack,
-    FindL2,
-    Init,
-    InitTemplate,
     TVL,
     UI,
     ZkGovProposal,

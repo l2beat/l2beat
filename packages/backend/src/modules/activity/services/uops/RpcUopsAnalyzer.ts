@@ -1,6 +1,7 @@
 import { assert, type Block, type Transaction } from '@l2beat/shared-pure'
 import {
   EIP712_methods,
+  EIP7821_methods,
   ERC20ROUTER_methods,
   ERC4337_methods,
   MULTICALLV3_methods,
@@ -8,6 +9,7 @@ import {
   type Operation,
   SAFE_methods,
   isEip712,
+  isEip7821,
   isErc20Router,
   isErc4337,
   isGnosisSafe,
@@ -30,13 +32,15 @@ export class RpcUopsAnalyzer implements UopsAnalyzer {
       .concat(EIP712_methods)
       .concat(MULTICALLV3_methods)
       .concat(ERC20ROUTER_methods)
+      .concat(EIP7821_methods)
 
     if (
       isErc4337(tx) ||
       isGnosisSafe(tx) ||
       isEip712(tx) ||
       isMulticallv3(tx) ||
-      isErc20Router(tx)
+      isErc20Router(tx) ||
+      isEip7821(tx)
     ) {
       assert(
         tx.data && !isArray(tx.data),
@@ -53,7 +57,7 @@ export class RpcUopsAnalyzer implements UopsAnalyzer {
       operation: Operation,
       methods: Method[],
     ): number => {
-      if (operation.type === 'static') {
+      if (operation.type === 'static' || operation.type === 'transfer') {
         return operation.count
       }
 

@@ -1,4 +1,38 @@
-Generated with discovered.json: 0x911e17f59acab37d2a08fdb2f09727c93cc05aed
+Generated with discovered.json: 0x78cc20bee80773250d92d66da554bc3f1876d933
+
+# Diff at Fri, 23 May 2025 09:41:03 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22346547
+- current block number: 22346547
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346547 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      receivedPermissions.0.role:
++        "admin"
+    }
+```
+
+Generated with discovered.json: 0x08ea67124df4760d1beaebe6fee9671915e0f834
 
 # Diff at Tue, 29 Apr 2025 08:19:10 GMT:
 

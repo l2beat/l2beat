@@ -101,7 +101,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+          "from": "0x4066D196A423b2b3B8B054f4F40efB47a74E200C",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1649432377,
@@ -253,7 +254,8 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xF140024969F6c76494a78518D9a99c8776B55f70"
+          "from": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1690520231,
@@ -424,13 +426,15 @@
         {
           "permission": "upgrade",
           "from": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+          "role": "admin",
           "via": [{ "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b" }]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+          "from": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nextProposalId"],
@@ -988,7 +992,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x72c050bdd9c641a0ef7530a5f17a4ec3e430e09978cdfe9ad65c94bfd56fc148"
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0xe37452469982e707cd693f7c5e37ac023574e202f90df5c8b903f4ad05386223"
+  "permissionsConfigHash": "0x20ad468cd8668210d0d2d946fe2bff907f9f3b75bf19fe33e8cb374fce5057d2"
 }

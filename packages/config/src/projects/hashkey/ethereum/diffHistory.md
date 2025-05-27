@@ -1,4 +1,166 @@
-Generated with discovered.json: 0xeba8858857026db129e7d038978d3db4399f8e0a
+Generated with discovered.json: 0x6eddaf651ba7b96b3ca045ae798410995e3bc51c
+
+# Diff at Fri, 23 May 2025 09:40:57 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22243976
+- current block number: 22243976
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243976 (main branch discovery), not current.
+
+```diff
+    contract Hashkey Multisig 3 (0x29Fbda675Fa5a07B621C2C1a6E3F874C14F612F3) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 1 (0x441F31C4cdf772558D4EA31f3114de59aE145E7c) {
+    +++ description: None
+      receivedPermissions.12.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.12.from:
+-        "0xBb70D595147A141e268532BFEF61A8c25054d26D"
++        "0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04"
+      receivedPermissions.12.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.12.role:
++        "admin"
+      receivedPermissions.12.via:
++        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.11.from:
+-        "0xd4C83D93c6fAE3E0804B785F9Cf465BE95449D04"
++        "0x0407af506d86bFA5e401099b2fC2355590638f19"
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.10.from:
+-        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
++        "0xBb70D595147A141e268532BFEF61A8c25054d26D"
+      receivedPermissions.10.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.10.via:
++        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.9.from:
+-        "0x0407af506d86bFA5e401099b2fC2355590638f19"
++        "0x43F8DeFe3E9286D152E91BB16a248808E7247198"
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.8.from:
+-        "0xBb70D595147A141e268532BFEF61A8c25054d26D"
++        "0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x43F8DeFe3E9286D152E91BB16a248808E7247198"
++        "0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x04Ec030f362CE5A0b5Fe2d4B4219f287C2EBDE50"
++        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xfd1255b6c09D939E7F3896A16C32CDBCD6F8B40A"
++        "0x4deC2aA521108d78d983c0c12656c6CF8631F2ED"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
++        "0xBb70D595147A141e268532BFEF61A8c25054d26D"
+      receivedPermissions.4.via:
+-        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.4.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.role:
++        ".owner"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.from:
+-        "0x4deC2aA521108d78d983c0c12656c6CF8631F2ED"
++        "0xd9c31D15f2c649e525C2574bC025b3CAafAaf6fe"
+      receivedPermissions.3.via:
+-        [{"address":"0x7986eD289935A0F47FC434C00cDE309fE2c51f1C"}]
+      receivedPermissions.3.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        ".owner"
+      receivedPermissions.0.role:
++        ".$admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7986eD289935A0F47FC434C00cDE309fE2c51f1C) {
+    +++ description: None
+      directlyReceivedPermissions.10.role:
++        "admin"
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    contract Hashkey Multisig 2 (0xC7fCbE26c1Db751d63869F72F782a56710f6be5A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    EOA  (0xf09ebb62b5ba0cf402b77aBA61691cBCf005206f) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+Generated with discovered.json: 0xff9e596b595c5ad1bf3593d048167abb96b1c7c3
 
 # Diff at Thu, 08 May 2025 10:03:00 GMT:
 

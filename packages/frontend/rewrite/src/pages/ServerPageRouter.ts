@@ -1,5 +1,6 @@
 import express from 'express'
 import type { Manifest } from '../../../src/utils/Manifest'
+import { InMemoryCache } from '../server/cache/InMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import { createAboutUsRouter } from './about/AboutUsRouter'
 import { createBridgesRouter } from './bridges/BridgesRouter'
@@ -19,6 +20,7 @@ export function createServerPageRouter(
   render: RenderFunction,
 ) {
   const router = express.Router()
+  const cache = new InMemoryCache()
 
   router.use('/', (_, res, next) => {
     const headers = new Headers({
@@ -48,7 +50,7 @@ export function createServerPageRouter(
   ]
 
   for (const createRouter of routers) {
-    router.use('/', createRouter(manifest, render))
+    router.use('/', createRouter(manifest, render, cache))
   }
 
   return router

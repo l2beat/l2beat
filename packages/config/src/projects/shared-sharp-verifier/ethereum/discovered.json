@@ -222,7 +222,8 @@
         {
           "permission": "upgrade",
           "from": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-          "delay": 691200
+          "delay": 691200,
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -2208,13 +2209,13 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-sharp-verifier/CairoBootloaderProgram": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/CpuFrilessVerifier": "0x472c63729146d653de2dafc032021def31a3227f6c7bcb2dfd6fb7cc96c442fa",
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",
-    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xc929e62e78117e1bf49dd633225c9442dddbbd8c8a0d88a05824a371ff0039d6"
+    "shared-sharp-verifier/SHARPVerifierCallProxy": "0xb722f821b03d51d507eb48a1dc2cde0313166b3320805356cd17128b9458ccfe"
   },
-  "permissionsConfigHash": "0x2bfa6b8834276a28da45828f978742062c9e520b53c3750c44c3f80959fb0859"
+  "permissionsConfigHash": "0xb484be91033771e88b5aa33fb048c7ef32369f3d24812584827f1968774df39e"
 }

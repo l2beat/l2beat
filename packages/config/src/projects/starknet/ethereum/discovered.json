@@ -19,180 +19,217 @@
         {
           "permission": "interact",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge."
+          "description": "enroll new tokens, deactivate existing ones (for deposits) or block tokens from being added to the Multibridge.",
+          "role": ".tokenAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
-          "description": "manage critical access control roles and the role that can upgrade the implementation.."
+          "description": "manage critical access control roles and the role that can upgrade the implementation..",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60"
+          "from": "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812"
+          "from": "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C"
+          "from": "0x66ba83ba3D3AD296424a2258145d9910E9E40B7C",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+          "from": "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb"
+          "from": "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+          "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "delay": 259200
+          "delay": 259200,
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"
+          "from": "0xf76e6bF9e2df09D0f854F045A3B724074dA1236B",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -252,36 +289,42 @@
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         }
       ]
@@ -335,7 +378,8 @@
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually)."
+          "description": "enroll new tokens or deactivate deposits into the escrow (for each token individually).",
+          "role": ".manager"
         }
       ],
       "sinceTimestamp": 1707308579,
@@ -503,29 +547,35 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
         },
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation."
+          "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
+          "role": ".govAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -750,7 +800,8 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".operators"
         }
       ]
     },
@@ -763,36 +814,42 @@
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
           "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC",
           "via": [{ "address": "0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5" }]
         }
       ]
@@ -804,7 +861,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5"
+          "from": "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "role": ".$admin"
         }
       ]
     },
@@ -977,32 +1035,38 @@
         {
           "permission": "interact",
           "from": "0x283751A21eafBFcD52297820D27C1f1963D9b5b4",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         },
         {
           "permission": "interact",
           "from": "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
-          "description": "enable the withdrawal limit."
+          "description": "enable the withdrawal limit.",
+          "role": ".secAgentAC"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1053,6 +1117,7 @@
         {
           "permission": "governStarknet",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin",
           "via": [
             {
               "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
@@ -1063,6 +1128,7 @@
         {
           "permission": "upgrade",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin",
           "via": [
             {
               "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
@@ -1073,6 +1139,7 @@
         {
           "permission": "upgrade",
           "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin",
           "via": [
             {
               "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
@@ -1083,6 +1150,7 @@
         {
           "permission": "upgrade",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin",
           "via": [
             {
               "address": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
@@ -1095,7 +1163,8 @@
         {
           "permission": "act",
           "from": "0xCA112018fEB729458b628AadC8f996f9deCbCa0c",
-          "delay": 691200
+          "delay": 691200,
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1820,19 +1889,23 @@
       "directlyReceivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+          "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+          "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
+          "role": ".$admin"
         }
       ],
       "sinceTimestamp": 1739989031,
@@ -2904,16 +2977,19 @@
         {
           "permission": "interact",
           "from": "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "interact",
           "from": "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
-          "description": "disable the withdrawal limit and manage the security agent role that can enable it."
+          "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
+          "role": ".secAdminAC"
         },
         {
           "permission": "operateStarknet",
-          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"
+          "from": "0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+          "role": ".operators"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -4186,17 +4262,17 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
-    "maker/L1Escrow": "0xb42f4a4e99cd96e0fdced856d5700812b16948444eb8bf9b0d9f41c6faec9de4",
-    "starknet/DelayedExecutor": "0xd487cb8f4fc40dae5f302c2e60f6841921dafce3fde8b3461e75549ced30f87f",
-    "starknet/L1EscrowDAI": "0x3e7ec24586a5b0460c26ec640c00e29df45f1d5f47ef6701a13cb7f6056bc6c1",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
+    "starknet/DelayedExecutor": "0x1d70f046977cad3193f749db59913730ae9cbcda2784f2c3652a60d53ff99e23",
+    "starknet/L1EscrowDAI": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
-    "starknet/StarkgateManager": "0x410a0924ea6e129cb543a6b1e2e682ba236c15e2718ed0f8e520ad74c09c19a9",
-    "starknet/StarkgateRegistry": "0xf97ce3e8949e1a09811b01712acc2c09b944bad3bb8505e4b5f817c75a11c3ae",
-    "starknet/Starknet": "0x4d186695fa036d6786a6c3c3f545b38c169d4aa289374d22e977b56c66c19c11",
-    "starknet/StarknetERC20Bridge": "0xc3489759a7d6cc51bf371412ce38269bf0ff4d6a41c64904199b48627f44768a",
-    "starknet/StarknetEthBridge": "0xc3489759a7d6cc51bf371412ce38269bf0ff4d6a41c64904199b48627f44768a",
-    "starknet/StarknetMultiBridge": "0x67604ab02358b8b743459e2924d81833857cd75617b983b33e8c3eece1560e27"
+    "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
+    "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
+    "starknet/Starknet": "0x94ec7824dea8f420d9b02624ccb3fee6ea169600cf6665c49d0c82cbc2651cc3",
+    "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
+    "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
+    "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b"
   },
-  "permissionsConfigHash": "0x77b8ea6231095ee6e267f5bf260931f9b571e579c7f2ebe108cde33deda92a98"
+  "permissionsConfigHash": "0x9fc62d01f081af2d75e1c6745c1b0f9562f84fc18e5ede26984fbc84a583c79e"
 }

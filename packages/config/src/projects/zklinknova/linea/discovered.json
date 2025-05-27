@@ -17,7 +17,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+          "from": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -464,7 +465,8 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"
+          "from": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1709218009,
@@ -768,8 +770,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908"
   },
-  "permissionsConfigHash": "0xeb4f195880e5279f749786c6b7ca776064ae03e466fb6c35376e531188a52d60"
+  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
 }

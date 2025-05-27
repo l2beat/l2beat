@@ -33,23 +33,6 @@ describe(getFunctionCallQuery.name, () => {
     )
 
     expect(query).toEqual(`
-    CREATE TEMP FUNCTION CalculateCalldataGasUsed(hexString STRING)
-    RETURNS INT64
-    LANGUAGE js AS """
-      var nonZeroBytes = 0;
-      var zeroBytes = 0;
-
-      for (var i = 2; i < hexString.length; i += 2) {
-        if(hexString.substr(i, 2)==='00') {
-          zeroBytes++;
-        } else {
-          nonZeroBytes++;
-        }
-      }
-
-      return 16 * nonZeroBytes + 4 * zeroBytes;
-    """;
-
     SELECT DISTINCT
       txs.hash,
       traces.to_address,
@@ -59,8 +42,8 @@ describe(getFunctionCallQuery.name, () => {
       txs.gas_price,
       txs.receipt_blob_gas_used,
       txs.receipt_blob_gas_price,
-      CalculateCalldataGasUsed(txs.input) AS calldata_gas_used,
       (LENGTH(SUBSTR(txs.input, 3)) / 2) AS data_length,
+      (LENGTH(REPLACE(REGEXP_REPLACE(SUBSTR(txs.input, 3), '([0-9A-Fa-f]{2})', '\\\\1x'), '00x', '')) / 3) AS non_zero_bytes,
       CASE
         WHEN traces.to_address IN UNNEST(?) THEN traces.input
       ELSE

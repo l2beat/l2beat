@@ -1,4 +1,301 @@
-Generated with discovered.json: 0x63bbe173fa2545d071853aa370208445a76f38fd
+Generated with discovered.json: 0x41894cef3b8e52617eef5b2594e48366b968e3ba
+
+# Diff at Fri, 23 May 2025 09:41:20 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 22437749
+- current block number: 22437749
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437749 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".livenessGuard"
+    }
+```
+
+```diff
+    EOA  (0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".batcherHash"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputy"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4) {
+    +++ description: None
+      directlyReceivedPermissions.9.role:
++        "admin"
+      directlyReceivedPermissions.8.role:
++        "admin"
+      directlyReceivedPermissions.7.role:
++        "admin"
+      directlyReceivedPermissions.6.role:
++        "admin"
+      directlyReceivedPermissions.5.role:
++        "admin"
+      directlyReceivedPermissions.4.role:
++        "admin"
+      directlyReceivedPermissions.3.role:
++        "admin"
+      directlyReceivedPermissions.2.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.2.from:
+-        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
++        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
+      directlyReceivedPermissions.2.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.2.role:
++        "admin"
+      directlyReceivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.1.from:
+-        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
++        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
+      directlyReceivedPermissions.1.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".$admin"
+    }
+```
+
+```diff
+    contract LivenessModule (0x4B4F1aF8d43C8c140D2355Fea663fC9f762067C2) {
+    +++ description: used to remove members inactive for 70d while making sure that the threshold remains above 60%. If the number of members falls below 1, the 0x0000000000000000000000000000000000000000 takes ownership of the multisig
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      directlyReceivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.1.description:
+-        "set and change address mappings."
+      directlyReceivedPermissions.1.role:
++        "admin"
+      directlyReceivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      directlyReceivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.0.description:
++        "set and change address mappings."
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.1.description:
+-        "set and change address mappings."
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.from:
+-        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.0.description:
++        "set and change address mappings."
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract UnichainProxyAdminOwner (0x6d5B183F538ABB8572F5cD17109c617b994D5833) {
+    +++ description: None
+      receivedPermissions.11.role:
++        "admin"
+      receivedPermissions.10.role:
++        "admin"
+      receivedPermissions.9.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.9.from:
+-        "0xc9edb4E340f4E9683B4557bD9db8f9d932177C86"
++        "0xD5D0e176be44E61eaB3Cf1FA8153758dF603376f"
+      receivedPermissions.9.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.9.role:
++        "admin"
+      receivedPermissions.9.via:
++        [{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]
+      receivedPermissions.8.from:
+-        "0xD5D0e176be44E61eaB3Cf1FA8153758dF603376f"
++        "0x84B268A4101A8c8e3CcB33004F81eD08202bA124"
+      receivedPermissions.8.role:
++        "admin"
+      receivedPermissions.7.from:
+-        "0x84B268A4101A8c8e3CcB33004F81eD08202bA124"
++        "0x2F12d621a16e2d3285929C9996f478508951dFe4"
+      receivedPermissions.7.role:
++        "admin"
+      receivedPermissions.6.from:
+-        "0x2F12d621a16e2d3285929C9996f478508951dFe4"
++        "0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad"
+      receivedPermissions.6.role:
++        "admin"
+      receivedPermissions.5.from:
+-        "0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad"
++        "0xc407398d063f942feBbcC6F80a156b47F3f1BDA6"
+      receivedPermissions.5.role:
++        "admin"
+      receivedPermissions.4.from:
+-        "0xc407398d063f942feBbcC6F80a156b47F3f1BDA6"
++        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
+      receivedPermissions.4.role:
++        "admin"
+      receivedPermissions.3.from:
+-        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
++        "0xc9edb4E340f4E9683B4557bD9db8f9d932177C86"
+      receivedPermissions.3.description:
+-        "set and change address mappings."
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.3.via:
+-        [{"address":"0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4"}]
+      receivedPermissions.3.role:
++        ".owner"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x0bd48f6B86a26D3a217d0Fa6FfE2B491B956A7a2"
++        "0x8098F676033A377b9Defe302e9fE6877cD63D575"
+      receivedPermissions.2.description:
++        "set and change address mappings."
+      receivedPermissions.2.role:
++        ".owner"
+      receivedPermissions.1.role:
++        ".$admin"
+      receivedPermissions.0.role:
++        ".owner"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".fallbackOwner"
+    }
+```
+
+```diff
+    contract Unichain Multisig 2 (0x9245d5D10AA8a842B31530De71EA86c0760Ca1b1) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x9343c452dec3251fe99D9Fd29b74c5b9CD1751a6) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".livenessGuard"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+      directlyReceivedPermissions.0.role:
++        ".deputyGuardian"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.role:
++        ".guardian"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.role:
++        ".GnosisSafe_modules"
+    }
+```
+
+Generated with discovered.json: 0x1f5f49e6f5d98ae2fdfc8ab06feaeee57d84cf65
 
 # Diff at Fri, 09 May 2025 10:09:23 GMT:
 

@@ -1,6 +1,8 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractPermission } from '../config/PermissionConfig'
-import type { RawPermissionConfiguration } from '../config/StructureConfig'
+import type {
+  ContractPermission,
+  RawPermissionConfiguration,
+} from '../config/PermissionConfig'
 import type { StructureEntry } from '../output/types'
 import type { ContractValue } from '../output/types'
 import { get$Admins, toAddressArray } from '../utils/extractors'
@@ -57,7 +59,8 @@ permission(
   "&permission.type",
   &permission.from,
   &permission.delay,
-  &permission.description|quote|orNil).`,
+  &permission.description|quote|orNil,
+  &permission.role|quote|orNil).`,
   when: () => true,
 }
 const permissionConditionTemplate: InlineTemplate = {
@@ -68,6 +71,7 @@ permissionCondition(
   &permission.from,
   &permission.delay,
   &permission.description|quote|orNil,
+  &permission.role|quote|orNil,
   "&permission.condition").`,
   when: (_c, _cp, p) => p?.condition !== undefined,
 }
@@ -140,6 +144,7 @@ export function buildPermissionsModel(
         permission.condition,
         structureEntry,
       ),
+      'permission.role': permission.role ?? '.' + permission.field,
     }
 
     for (const template of [permissionTemplate, permissionConditionTemplate]) {
@@ -163,7 +168,7 @@ export function buildPermissionsModel(
 export function getPermissionsDefinedOnFields(
   contractPermission: ContractPermission,
   structureEntry: StructureEntry,
-): (RawPermissionConfiguration & { to: EthereumAddress })[] {
+): (RawPermissionConfiguration & { to: EthereumAddress; field: string })[] {
   const issuedPermissions = Object.entries(
     contractPermission.fields ?? {},
   ).flatMap(([field, values]) => {
@@ -173,6 +178,7 @@ export function getPermissionsDefinedOnFields(
           return {
             ...permission,
             to,
+            field,
           }
         })
       }) ?? []
@@ -193,13 +199,15 @@ export function getPermissionsDefinedOnFields(
 
 export function getPermissionsForAdmins(
   structureEntry: StructureEntry,
-): (RawPermissionConfiguration & { to: EthereumAddress })[] {
+): (RawPermissionConfiguration & { to: EthereumAddress; field: string })[] {
   const admins = get$Admins(structureEntry.values)
   return admins.map((admin) => {
     return {
       to: admin,
       type: 'upgrade',
       delay: 0,
+      role: 'admin',
+      field: '$admin',
     }
   })
 }

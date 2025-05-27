@@ -15,7 +15,7 @@ export function getCommonBridgesEntry({
   project,
   changes,
 }: {
-  project: Project<'statuses' | 'bridgeInfo'>
+  project: Project<'statuses' | 'bridgeInfo' | 'bridgeRisks'>
   changes: ProjectChanges
 }): CommonBridgesEntry {
   return {
@@ -31,7 +31,7 @@ export function getCommonBridgesEntry({
       },
       {
         id: 'validatedBy',
-        value: project.bridgeInfo.validatedBy,
+        value: project.bridgeRisks.validatedBy?.value ?? 'Unknown',
       },
     ],
     statuses: {

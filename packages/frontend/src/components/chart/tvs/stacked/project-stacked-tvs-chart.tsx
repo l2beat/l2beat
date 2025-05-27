@@ -100,6 +100,7 @@ function DefaultChart({
     filter: { type: 'projects', projectIds: [projectId] },
     range: timeRange,
     excludeAssociatedTokens: false,
+    previewRecategorisation: false,
   })
 
   const chartData = useMemo(

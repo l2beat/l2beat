@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x0839ab6e6edd23e4d61d26fc71654a1bfdca199d
+Generated with discovered.json: 0xb4a2c53612dc4001f95709277409c00b544f222a
+
+# Diff at Fri, 23 May 2025 09:41:21 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@69cd181abbc3c830a6caf2f4429b37cae72ffdb8 block: 13963893
+- current block number: 13963893
+
+## Description
+
+Introduced .role field on each permission, defaulting to field name on which it was defined (with '.' prefix)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13963893 (main branch discovery), not current.
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      directlyReceivedPermissions.0.role:
++        "admin"
+    }
+```
+
+```diff
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      receivedPermissions.2.role:
++        "admin"
+      receivedPermissions.1.role:
++        "admin"
+      receivedPermissions.0.role:
++        "admin"
+      directlyReceivedPermissions.0.role:
++        ".owner"
+    }
+```
+
+Generated with discovered.json: 0x97bd1acb7e57852c4ce94378ee426b37362d8d89
 
 # Diff at Tue, 29 Apr 2025 08:19:31 GMT:
 

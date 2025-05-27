@@ -97,13 +97,13 @@ function Display({
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
-  const address = getAddressToCopy(selected)
+  const addresses = getAddressesToCopy(selected)
 
-  const dialog = address && canAddShape(selected) && !isReadOnly && (
+  const dialog = addresses && canAddShape(selected) && !isReadOnly && (
     <TemplateDialog.Root>
       <TemplateDialog.Trigger>Add shape</TemplateDialog.Trigger>
       <TemplateDialog.Body
-        address={address}
+        addresses={addresses}
         project={project}
         chain={chain}
         blockNumber={blockNumber}
@@ -235,21 +235,23 @@ function Display({
   )
 }
 
-function getAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
-  const address = findAddressToCopy(selected)
+function getAddressesToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+  const addresses = findAddressToCopy(selected)
 
-  if (!address) {
+  if (!addresses) {
     return
   }
   // biome-ignore lint/style/noNonNullAssertion: it's there
-  return address.split(':')[1]!
+  return addresses.map((a) => a.split(':')[1]!)
 }
 
-function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
+function findAddressToCopy(
+  selected: ApiProjectContract | ApiAddressEntry,
+): string[] {
   const hasFields = 'fields' in selected && selected.fields.length > 0
 
   if (!hasFields) {
-    return selected.address
+    return [selected.address]
   }
 
   const implementations = selected.fields.find(
@@ -257,25 +259,21 @@ function findAddressToCopy(selected: ApiProjectContract | ApiAddressEntry) {
   )
 
   if (!implementations) {
-    return selected.address
+    return [selected.address]
   }
 
   if (implementations.value.type === 'address') {
-    return implementations.value.address
+    return [implementations.value.address]
   }
 
   if (implementations.value.type === 'array') {
     // diamonds
-    const [first] = implementations.value.values
-
-    if (!first) {
-      return selected.address
-    }
-
-    return first.type === 'address' ? first.address : selected.address
+    return implementations.value.values
+      .filter((v) => v.type === 'address')
+      .map((v) => v.address)
   }
 
-  return selected.address
+  return [selected.address]
 }
 
 function canAddShape(selected: ApiProjectContract | ApiAddressEntry) {

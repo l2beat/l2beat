@@ -127,11 +127,13 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7"
+          "from": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816"
+          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "role": "admin"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -522,7 +524,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x62ebcf7ab79ebc3a7db30e84c423951d981b749397664ae678e312687409f5f0"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xe7bc819f20b988aeb8ee0ad0b2d7fb9a55c2c43dfc200e07e3720004cd776aac"
+  "permissionsConfigHash": "0xb72b3d399c322b88f0b38d5957a0350a0cb84f9f8bce4efee97fb643ff052179"
 }

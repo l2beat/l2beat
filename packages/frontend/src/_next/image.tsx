@@ -1,6 +1,9 @@
 import type { ImageProps } from 'next/image'
 
-export default function Image(props: ImageProps & { src: string }) {
+export default function Image({
+  fill: _,
+  ...props
+}: ImageProps & { src: string }) {
   if (!props.src) {
     console.error('Image src is undefined', props)
   }

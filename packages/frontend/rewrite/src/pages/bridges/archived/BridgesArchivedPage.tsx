@@ -9,11 +9,11 @@ interface Props extends AppLayoutProps {
   entries: TabbedBridgeEntries<BridgesArchivedEntry>
 }
 
-export function BridgesArchivedPage(props: Props) {
+export function BridgesArchivedPage({ entries, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
-        <NextArchivedPage entries={props.entries} />
+        <NextArchivedPage entries={entries} />
       </SideNavLayout>
     </AppLayout>
   )
