@@ -121,18 +121,24 @@ export class TemplateService {
 
     for (const { templateId, criteria } of candidates) {
       let score = 1 // implementation hash always matched
-      if (criteria?.validAddresses) {
-        if (!criteria.validAddresses.includes(address)) continue
+      if ((criteria?.validAddresses ?? []).includes(address)) {
         score++ // valid-address criterion matched
+      } else if (criteria?.validAddresses?.length ?? 0 > 0) {
+        continue // valid-address criterion not matched
       }
+
       max = Math.max(max, score)
       scored.push([templateId, score])
     }
 
-    return scored
-      .filter(([, s]) => s === max)
-      .map(([id]) => id)
-      .sort()
+    return [
+      ...new Set(
+        scored
+          .filter(([, s]) => s === max)
+          .map(([id]) => id)
+          .sort(),
+      ),
+    ]
   }
 
   loadContractTemplateBase<T extends z.ZodTypeAny>(
