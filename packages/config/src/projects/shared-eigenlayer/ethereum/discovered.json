@@ -1,7 +1,7 @@
 {
   "name": "shared-eigenlayer",
   "chain": "ethereum",
-  "blockNumber": 22438687,
+  "blockNumber": 22567898,
   "configHash": "0x0e48066ad5e3334bb9da307a2ca57ce167738bea2f0952b6976d6708d90cac97",
   "entries": [
     {
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x81371f0000000000",
-        "get_deposit_root": "0xeb6529e57b575643065055dd9e8fe677c8b1942bcef0fc7fb122a89a7e223c6f"
+        "get_deposit_count": "0x25b31f0000000000",
+        "get_deposit_root": "0x168e1620e6c0804e9650a2ac39cd11cfb074cabda5a147346da5aef3173e0fde"
       },
       "implementationNames": {
         "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -121,7 +121,7 @@
           "expirationTimestamp": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
         },
         "isExpired": false,
-        "latestPress": 1746669611,
+        "latestPress": 1747878227,
         "owner": "0xbb00DDa2832850a43840A3A86515E3Fe226865F2"
       },
       "fieldMeta": {
@@ -237,7 +237,9 @@
           "0x5Bf17dFaA1B76Bb6C5C47F568636877F94C09b65",
           "0x506D3bDef8C9E671928F1ffF135E0e0642B59AA4",
           "0x5b4AD76a6a2F4a0A8C7CBf499e6533B57da2eF2d",
-          "0x1d32272FfdA06e9EDE3CA854D8D9AaAe8328d795"
+          "0x1d32272FfdA06e9EDE3CA854D8D9AaAe8328d795",
+          "0x47806C11CA33BE2360bb2A5891C5D0D1BaFBE7Dc",
+          "0x902038d2D5278dd6504C135FFA49bf635D475f7e"
         ],
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "domainSeparator": "0xa376b8f73e544301999d5aabb44e4d306777f6f0f08bf031c1c4bbc027313aeb",
@@ -256,6 +258,11 @@
     },
     {
       "address": "0x17919FAC7024d5b770322E5Cb81607D247654116",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -778,17 +785,17 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x60bbde47423D62F6d7658bb3654869dfA397bF3D",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x65C4799061c0D1e3E87ADdB65b02E92a558F842F",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -862,11 +869,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "RewardsCoordinator",
       "address": "0x7750d328b314EfFa365A0402CcfD489B80B0adda",
       "type": "Contract",
@@ -927,11 +929,6 @@
         "0x7750d328b314EfFa365A0402CcfD489B80B0adda": "TransparentUpgradeableProxy",
         "0xa505c0116aD65071F0130061F94745b7853220aB": "RewardsCoordinator"
       }
-    },
-    {
-      "address": "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Safe",
@@ -1008,7 +1005,7 @@
         "name": "Backing Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "bEIGEN",
-        "totalSupply": "1723856068333199800000000041",
+        "totalSupply": "1726430909361330046153846197",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -1207,7 +1204,7 @@
         "delegationManager": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "eigenPodBeacon": "0x5a2a4F2F3C18f09179B6703e63D9eDD165909073",
         "ethPOS": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-        "numPods": 33566,
+        "numPods": 33660,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "paused": 0,
         "pauserRegistry": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
@@ -1309,6 +1306,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x985145F0f4dACe1387b856191C3574381B9DE524",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "RewardAllStakersActionGenerator",
       "address": "0x99E6a294349072F9873081Cde9AC9eeb7Fd1F9dE",
       "type": "Contract",
@@ -1360,11 +1362,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "PauserRegistry",
       "address": "0xB8765ed72235d279c3Fb53936E4606db0Ef12806",
       "type": "Contract",
@@ -1407,18 +1404,18 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0xc13Ce61C12C0eF93b4165400491A719918Af1c6c",
-          "0x60bbde47423D62F6d7658bb3654869dfA397bF3D",
-          "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
-          "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835",
+          "0x6ea7a8542045af8DD4ae10B1d1F285255cF63Ebc",
+          "0x985145F0f4dACe1387b856191C3574381B9DE524",
+          "0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
           "0x30dd80F21aD9222Ce8f33b429fC0Fe25655Fe88a",
-          "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
+          "0x1e6892dd9A25248daBEce4AF5363EeD1A732ac3F"
         ],
         "$threshold": 4,
         "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 83,
+        "nonce": 85,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1706,6 +1703,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xD21dBFe4bfAd1222A12b4F39286EEe6201d5d68E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xdC541e2B4adD96888b2C79006F49A9748A4f1bDF",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1825,7 +1827,7 @@
         "name": "Eigen",
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111",
         "symbol": "EIGEN",
-        "totalSupply": "1723856068333199800000000041",
+        "totalSupply": "1726430909361330046153846197",
         "transferRestrictionsDisabledAfter": 0
       },
       "fieldMeta": {
@@ -3182,5 +3184,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x6cea6e0c2f4c1f2a8583aa5894af94f0c4a761cb4efa2d4f3bc6c8c5b73d2ffe"
+  "permissionsConfigHash": "0x0acc7efd259b21c7329eeddc67c7dd7363b4445dbda6b1a8a117b74525b10673"
 }

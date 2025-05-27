@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb544c250b57c3391314e663f28fb02bc55eec943
+
+# Diff at Mon, 26 May 2025 15:09:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22437741
+- current block number: 22567759
+
+## Description
+
+config related: decoding bug in our opstackDA handler (see ancient disco).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xF41E72f55d9bE849ecCe3b7AEe2A07Ccdadb655d) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x11521e6115c598ce15a1a495272efa0618431904
 
 # Diff at Fri, 23 May 2025 09:41:01 GMT:

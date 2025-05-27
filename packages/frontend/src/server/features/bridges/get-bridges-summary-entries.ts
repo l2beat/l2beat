@@ -51,7 +51,7 @@ export async function getBridgesSummaryEntries() {
 export interface BridgesSummaryEntry extends CommonBridgesEntry {
   type: BridgeCategory
   tvs: TvsData
-  validatedBy: TableReadyValue
+  validatedBy?: TableReadyValue
   livenessFailure: TableReadyValue | undefined
   sourceUpgradeability: TableReadyValue | undefined
   tvsOrder: number

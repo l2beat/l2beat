@@ -378,7 +378,8 @@
       "type": "Contract",
       "sourceHashes": [
         "0xa4356b8fe23f3499a5494bac2e9e1588ba6976f987fff80e2261aa7ebaa20ce6",
-        "0x8f3d4519effa17873ea109f5921890111b59d96da635e3691d4a7a96192d8d25"
+        "0xa219a8a62191e08fe0803a9bee5d9b4cf73ae71a969ff2e1bcbc00330880de07",
+        "0x51cc7e771fc0a90a4ac4c584004569333b8e5355dea67cb3b6a5e19d602e4a7c"
       ],
       "proxyType": "zkSync Lite proxy",
       "sinceTimestamp": 1592218707,

@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x960dde2a9c2842589e69056999d377ba894c06b2
+Generated with discovered.json: 0x93daf58e916eb2d677c10ffa26f819de736a21ac
 
-# Diff at Mon, 26 May 2025 18:58:13 GMT:
+# Diff at Mon, 26 May 2025 14:31:03 GMT:
 
-- author: Michał Podsiadły (<michal.podsiadly@l2beat.com>)
-- comparing to: main@14a24072b88fe6b9a2bab667c3672c4f564c71db block: 22174829
-- current block number: 22174829
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22174829
+- current block number: 22567567
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+common dvn fee lib verified.
 
 ## Config/verification related changes
 

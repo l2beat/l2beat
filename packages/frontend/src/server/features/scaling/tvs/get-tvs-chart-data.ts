@@ -60,6 +60,9 @@ export const getCachedTvsChartData = cache(
       projectsFilter,
       previewRecategorisation,
     )
+    if (tvsProjects.length === 0) {
+      return []
+    }
     // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
     const forSummary =
       filter.type !== 'projects' || filter.projectIds.length !== 1

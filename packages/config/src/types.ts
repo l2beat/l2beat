@@ -291,7 +291,6 @@ export interface EtherscanApi {
 export interface ProjectBridgeInfo {
   category: BridgeCategory
   destination: string[]
-  validatedBy: string
 }
 
 export type BridgeCategory =
@@ -301,10 +300,14 @@ export type BridgeCategory =
   | 'Single-chain'
 
 export interface ProjectBridgeRisks {
-  validatedBy: TableReadyValue
+  validatedBy?: TableReadyValue
   sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
   livenessFailure?: TableReadyValue
+  governance?: {
+    upgrade?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+    pause?: Pick<TableReadyValue, 'value' | 'description' | 'sentiment'>
+  }
 }
 
 export interface ProjectBridgeTechnology {

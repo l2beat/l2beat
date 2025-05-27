@@ -1,7 +1,7 @@
 {
   "name": "layerzerov2oft",
   "chain": "ethereum",
-  "blockNumber": 22174829,
+  "blockNumber": 22567567,
   "configHash": "0x4ed7c6b756871ed3344b4f7cd7f5878e75149d064a97f9653d24737a5e48ff1c",
   "entries": [
     {
@@ -577,7 +577,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 40,
+        "nonce": 53,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1015,7 +1015,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 47,
+        "nonce": 50,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1249,7 +1249,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 250,
+        "nonce": 263,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

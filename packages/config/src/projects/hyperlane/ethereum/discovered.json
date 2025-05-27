@@ -1,8 +1,8 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 22323047,
-  "configHash": "0x92911bc71bf6eec3d86881d94f48f6567c2ad41ed400ba6ce84df4c22def216d",
+  "blockNumber": 22567365,
+  "configHash": "0x5f40c65d93afec85bab194b8fb340cca04e02dc5a576fd72d961f8e43ab0dce3",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -125,7 +125,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 53,
+        "nonce": 55,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -152,6 +152,48 @@
       "address": "0x3DE2da610996eA5A72B9Af7cB8740caC48A9329f",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "DomainRoutingIsm",
+      "address": "0x4085486acE416fce164f578b6e56eFC96dcf6e2E",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
+      ],
+      "proxyType": "immutable",
+      "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
+      "sinceTimestamp": 1747587071,
+      "sinceBlock": 22511174,
+      "values": {
+        "$immutable": true,
+        "domains": [
+          2741, 888888888, 1000041455, 33139, 466, 42161, 42170, 4278608, 11820,
+          10242, 592, 1313161554, 6001, 253368190, 43114, 8333, 8453, 80094,
+          200901, 81457, 60808, 288, 56, 223, 42220, 383353, 1000088888, 1030,
+          668668, 1116, 21000000, 2632500, 7560, 19880818, 666666666, 2000,
+          5545, 1408864445, 648, 25327, 9001, 250, 14, 1000000747, 9999999, 478,
+          252, 122, 2187, 1300, 100, 1625, 260, 1666600000, 177, 43111, 999,
+          1000013371, 2525, 1001032009, 57073, 6909546, 8217, 255, 1264145989,
+          59144, 1135, 42, 994873017, 1000073017, 169, 5000, 698, 4200,
+          1000001750, 1088, 1835625579, 185, 92278, 34443, 360, 1284, 2818,
+          1689, 1853125230, 6900, 970, 58, 204, 10, 291, 875, 3338, 98866, 137,
+          1101, 1000008008, 227, 70700, 1000012617, 1597, 111188, 690, 753,
+          2020, 1000000030, 1996, 534352, 1329, 109, 2192, 1399811149, 1868,
+          146, 507150715, 50075007, 50104, 1514, 745, 964, 5330, 1000055244,
+          574456, 1923, 167000, 5845, 40, 21000, 61166, 4547, 130, 88811, 1480,
+          88, 480, 660279, 196, 37, 543210, 7000, 48900, 810180, 324, 7777777
+        ],
+        "module": "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c",
+        "moduleType": 1,
+        "owner": "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "module": { "severity": "HIGH" }
+      },
+      "implementationNames": {
+        "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": "DomainRoutingIsm"
+      }
     },
     {
       "address": "0x478be6076f31E9666123B9721D0B6631baD944AF",
@@ -181,7 +223,7 @@
       ]
     },
     {
-      "name": "GnosisSafe",
+      "name": "Hyperlane Multisig",
       "address": "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -193,7 +235,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
+          "from": "0x4085486acE416fce164f578b6e56eFC96dcf6e2E",
           "description": "manage the domain -> ISM contract mapping.",
           "role": ".owner"
         },
@@ -264,7 +306,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 5,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -319,47 +361,6 @@
       "address": "0x5dd9a0814022A61777938263308EBB336174f13D",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "DomainRoutingIsm",
-      "address": "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
-      ],
-      "proxyType": "immutable",
-      "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
-      "sinceTimestamp": 1745057507,
-      "sinceBlock": 22302370,
-      "values": {
-        "$immutable": true,
-        "domains": [
-          2741, 888888888, 1000041455, 33139, 466, 42161, 42170, 4278608, 11820,
-          10242, 592, 1313161554, 6001, 253368190, 43114, 8333, 8453, 80094,
-          200901, 81457, 60808, 288, 56, 223, 42220, 383353, 1000088888, 1030,
-          668668, 1116, 21000000, 2632500, 7560, 19880818, 666666666, 2000,
-          5545, 1408864445, 648, 25327, 9001, 250, 14, 1000000747, 478, 252,
-          122, 1300, 100, 1625, 260, 1666600000, 43111, 999, 1000013371, 2525,
-          1032009, 57073, 6909546, 8217, 255, 59144, 1135, 42, 994873017,
-          1000073017, 169, 5000, 698, 4200, 1000001750, 1088, 185, 34443, 360,
-          1284, 2818, 1689, 1853125230, 6900, 970, 204, 10, 291, 875, 98866,
-          137, 1101, 1000008008, 227, 70700, 1000012617, 1597, 111188, 690, 753,
-          2020, 1000000030, 1996, 534352, 1329, 109, 2192, 1399811149, 1868,
-          146, 507150715, 50075007, 50104, 1514, 745, 964, 5330, 1000055244,
-          1923, 167000, 5845, 40, 21000, 61166, 4547, 130, 88811, 1480, 88, 480,
-          660279, 196, 37, 543210, 7000, 48900, 810180, 324, 7777777
-        ],
-        "module": "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c",
-        "moduleType": 1,
-        "owner": "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7"
-      },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "module": { "severity": "HIGH" }
-      },
-      "implementationNames": {
-        "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944": "DomainRoutingIsm"
-      }
     },
     {
       "name": "HypERC20Collateral",
@@ -602,7 +603,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 1978,
+        "nonce": 2017,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -621,16 +622,48 @@
       "proxyType": "EOA"
     },
     {
-      "name": "UnknownIsm",
-      "address": "0xb7d55490065c157352b2a560bb3eFf5d5c548563",
+      "name": "StaticAggregationIsm_default",
+      "address": "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F",
       "type": "Contract",
-      "unverified": true,
+      "template": "hyperlane/StaticAggregationIsm",
+      "sourceHashes": [
+        "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
+      ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1745057567,
-      "sinceBlock": 22302375,
-      "values": { "$immutable": true },
+      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "description": "verify messages for destination contracts that do not specify a custom ISM.",
+          "role": ".defaultIsm"
+        }
+      ],
+      "sinceTimestamp": 1747587143,
+      "sinceBlock": 22511180,
+      "values": {
+        "$immutable": true,
+        "modules": [
+          "0x4085486acE416fce164f578b6e56eFC96dcf6e2E",
+          "0xE08367b408C4E17aA517593ffff9fe291b396a69"
+        ],
+        "modulesAndThreshold": [
+          [
+            "0x4085486acE416fce164f578b6e56eFC96dcf6e2E",
+            "0xE08367b408C4E17aA517593ffff9fe291b396a69"
+          ],
+          2
+        ],
+        "moduleType": 2,
+        "threshold": 2
+      },
+      "fieldMeta": {
+        "modulesAndThreshold": {
+          "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
+        }
+      },
       "implementationNames": {
-        "0xb7d55490065c157352b2a560bb3eFf5d5c548563": ""
+        "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": "StaticAggregationIsm"
       }
     },
     {
@@ -698,7 +731,7 @@
         ],
         "$upgradeCount": 1,
         "defaultHook": "0x571f1435613381208477ac5d6974310d88AC7cB7",
-        "defaultIsm": "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751",
+        "defaultIsm": "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F",
         "deployedBlock": 18422581,
         "localDomain": 1,
         "owner": "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7",
@@ -812,7 +845,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 168,
+        "nonce": 186,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -864,54 +897,22 @@
       }
     },
     {
-      "name": "StaticAggregationIsm_default",
-      "address": "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751",
-      "type": "Contract",
-      "template": "hyperlane/StaticAggregationIsm",
-      "sourceHashes": [
-        "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
-      ],
-      "proxyType": "immutable",
-      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xc005dc82818d67AF737725bD4bf75435d065D239",
-          "description": "verify messages for destination contracts that do not specify a custom ISM.",
-          "role": ".defaultIsm"
-        }
-      ],
-      "sinceTimestamp": 1745057591,
-      "sinceBlock": 22302377,
-      "values": {
-        "$immutable": true,
-        "modules": [
-          "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
-          "0xb7d55490065c157352b2a560bb3eFf5d5c548563"
-        ],
-        "modulesAndThreshold": [
-          [
-            "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
-            "0xb7d55490065c157352b2a560bb3eFf5d5c548563"
-          ],
-          2
-        ],
-        "moduleType": 2,
-        "threshold": 2
-      },
-      "fieldMeta": {
-        "modulesAndThreshold": {
-          "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
-        }
-      },
-      "implementationNames": {
-        "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751": "StaticAggregationIsm"
-      }
-    },
-    {
       "address": "0xD5c0D17cCb9071D27a4F7eD8255F59989b9aee0d",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "UnknownIsm",
+      "address": "0xE08367b408C4E17aA517593ffff9fe291b396a69",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747587119,
+      "sinceBlock": 22511178,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xE08367b408C4E17aA517593ffff9fe291b396a69": ""
+      }
     },
     {
       "name": "HypERC20Collateral",
@@ -1125,6 +1126,22 @@
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": [
       "constructor(address _singleton)"
     ],
+    "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": [
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function domains() view returns (uint256[])",
+      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
+      "function initialize(address _owner)",
+      "function module(uint32 origin) view returns (address)",
+      "function moduleType() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function remove(uint32 _domain)",
+      "function renounceOwnership()",
+      "function route(bytes _message) view returns (address)",
+      "function set(uint32 _domain, address _module)",
+      "function transferOwnership(address newOwner)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
     "0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7": [
       "constructor(address erc20, address _mailbox)",
       "event GasSet(uint32 domain, uint256 gas)",
@@ -1201,22 +1218,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944": [
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function domains() view returns (uint256[])",
-      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
-      "function initialize(address _owner)",
-      "function module(uint32 origin) view returns (address)",
-      "function moduleType() view returns (uint8)",
-      "function owner() view returns (address)",
-      "function remove(uint32 _domain)",
-      "function renounceOwnership()",
-      "function route(bytes _message) view returns (address)",
-      "function set(uint32 _domain, address _module)",
-      "function transferOwnership(address newOwner)",
-      "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
     "0x647C621CEb36853Ef6A907E397Adf18568E70543": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1364,6 +1365,11 @@
     "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e": [
       "constructor(address _singleton)"
     ],
+    "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": [
+      "function moduleType() view returns (uint8)",
+      "function modulesAndThreshold(bytes) view returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
     "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": [
       "function moduleType() view returns (uint8)",
       "function validatorsAndThreshold(bytes) pure returns (address[], uint8)",
@@ -1394,11 +1400,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751": [
-      "function moduleType() view returns (uint8)",
-      "function modulesAndThreshold(bytes) view returns (address[], uint8)",
-      "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -1505,5 +1506,5 @@
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x7e2f852c63864f2a7273803964983321d88b6ba59944dc2128c8a0c19885156e"
+  "permissionsConfigHash": "0xb87d95f0e9f2cdcc5d396e0dcb2c658e0dc01d6833ebce4f5702623d928cfd86"
 }

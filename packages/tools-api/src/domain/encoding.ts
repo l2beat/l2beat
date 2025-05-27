@@ -56,7 +56,7 @@ function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
     let hasDynamic = false
     for (const element of elements) {
       const end = offset + element.size
-      const bytes = sliceBytes(encoded, offset * 32, (offset + 1) * 32)
+      const bytes = sliceBytes(encoded, offset * 32, end * 32)
       staticData.push(bytes)
       offset = end
       dynamicOffsets.push(element.dynamic ? parseInt(bytes) : undefined)

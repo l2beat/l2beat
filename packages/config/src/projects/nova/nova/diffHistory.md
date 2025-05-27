@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x4574c35451456798379aeb7c5a2c87904df7f923
+
+# Diff at Mon, 26 May 2025 15:05:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 83508934
+- current block number: 83594372
+
+## Description
+
+two SC signers rotated in: 0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D (Certora) and 0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E (fred) (SC elections).
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      values.$members.8:
+-        "0x444EDf8B90763bE7015F1F099a0dA0ef10250c71"
++        "0xeEe3Fb3B792C7DDbB6aEF0C440FBC621f4d6fe2D"
+      values.$members.7:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0xBBD2E01eFB88ce00F8f5b6B9a696966070089392"
+      values.$members.6:
+-        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.$members.5:
+-        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
++        "0x882c6FCb3D358b9d70B97c6999159cea64168B6F"
+      values.$members.4:
+-        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++        "0x78bB97d2F3811256D7F0041E81Aaf4B426eF3b67"
+      values.$members.3:
+-        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
++        "0xD8D4cEC103c0B6d7166405F0EbD7087C75a1528E"
+      values.$members.2:
+-        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++        "0x59c8535419BbCb8AdFFDB3C835435E907e3B183B"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83508934 (main branch discovery), not current.
+
+```diff
+    EOA fred - Arbitrum 1 (0x5DD2205C3aac13E592F0a3D85188c948D1781df1) {
+    +++ description: None
+      name:
+-        "fred-Arbitrum"
++        "fred - Arbitrum 1"
+    }
+```
+
 Generated with discovered.json: 0x3d95c982cbde632a2b3b344f4dfc653cc843cd79
 
 # Diff at Fri, 23 May 2025 09:41:18 GMT:
