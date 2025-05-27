@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from 'fs'
+import { join } from 'path'
 import {
   TemplateService,
   combineImplementationHashes,
@@ -9,9 +11,7 @@ import {
 } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
-import { join } from 'path'
 import { rimraf } from 'rimraf'
-import { mkdirSync, writeFileSync } from 'fs'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
