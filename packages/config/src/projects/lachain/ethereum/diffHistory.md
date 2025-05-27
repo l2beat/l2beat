@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x7a2448f1214526f0fa3a5bc7b95c0733ede067f5
+Generated with discovered.json: 0x4fa9f33be3d33d15a1d64c9d5adbc6443a979bd2
 
-# Diff at Fri, 23 May 2025 14:53:04 GMT:
+# Diff at Tue, 27 May 2025 14:34:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 22546241
+- current block number: 22574469
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery of a standard zk stack chain (v26).
 
 ## Initial discovery
 
@@ -15,6 +15,12 @@ Provide description of changes. This section will be preserved.
 +   Status: CREATED
     contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C)
     +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
 ```
 
 ```diff
