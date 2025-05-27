@@ -356,7 +356,7 @@
   "rewrite/static/icons/winr.png": "435fc41491bb57f9bdfa274398c2f047",
   "rewrite/static/icons/wirex.png": "9257045d5cf897e1b2cbeabf16deb914",
   "rewrite/static/icons/witness.png": "66306d6b6d9f02ae93315388544210bf",
-  "rewrite/static/icons/wonder.png": "3d194dcd2d170d445eb124557d0c76a9",
+  "rewrite/static/icons/wonder.png": "f5e1b2df6bfd80e90f11cd8bf3ad4ca3",
   "rewrite/static/icons/world.png": "701181ea57698d5982f913752653b4ad",
   "rewrite/static/icons/worldcoin-semaphore.png": "701181ea57698d5982f913752653b4ad",
   "rewrite/static/icons/worldcoin-smtb.png": "701181ea57698d5982f913752653b4ad",
@@ -1246,7 +1246,7 @@
   "rewrite/static/meta-images/scaling/projects/wirex/tvs-breakdown/opengraph-image.png": "60fd01ba71152144644be5eb7e793656",
   "rewrite/static/meta-images/scaling/projects/witness/opengraph-image.png": "3f46d38f7ecc74b8318142a335c47024",
   "rewrite/static/meta-images/scaling/projects/witness/tvs-breakdown/opengraph-image.png": "dac6a1de0de1f6c481ea82708485cd08",
-  "rewrite/static/meta-images/scaling/projects/wonder/opengraph-image.png": "e40d1d6d89cbabe4059f2274aafcb7eb",
+  "rewrite/static/meta-images/scaling/projects/wonder/opengraph-image.png": "ad837c9240d6628dd350a5aa65b164e6",
   "rewrite/static/meta-images/scaling/projects/wonder/tvs-breakdown/opengraph-image.png": "a6eb40cc9a4e95a93a027bdcd916c36f",
   "rewrite/static/meta-images/scaling/projects/world/opengraph-image.png": "5d677550b1262c97bc081752781553da",
   "rewrite/static/meta-images/scaling/projects/world/tvs-breakdown/opengraph-image.png": "15defe9f890a027f833632055fb596dc",
@@ -1339,8 +1339,8 @@
   "rewrite/static/images/disco-ui-mobile.png": "9814bff7f338d7111a020ac7e19a3bba",
   "rewrite/static/meta-images/governance/publications/governance-review-52.png": "4c63082e854b1ff759d82cb038050aef",
   "rewrite/static/images/architecture/nearomni.png": "20ee7fe8970a033714b1d977854b045f",
-  "rewrite/static/images/avatars/manuel-gonzalez.png": "94ce62f826a27f340a7ef0e5e8659de3",
-  "rewrite/static/images/disco-ui-desktop.png": "b0a56a4f7b11a9ad8c36c018f0c9169e",
-  "rewrite/static/images/disco-ui-mobile.png": "9814bff7f338d7111a020ac7e19a3bba",
-  "rewrite/static/meta-images/governance/publications/governance-review-52.png": "4c63082e854b1ff759d82cb038050aef"
+  "rewrite/static/meta-images/zk-catalog/projects/lachain/opengraph-image.png": "9840c2ae1defb3303b681f657bba96eb",
+  "rewrite/static/meta-images/zk-catalog/projects/sxt/opengraph-image.png": "c524c325dec2afaf18e2b803e1ad4a6b",
+  "rewrite/static/meta-images/zk-catalog/projects/wonder/opengraph-image.png": "8e1c30b7b4611ec648685372cc220cd1",
+  "rewrite/static/meta-images/governance/publications/governance-review-53.png": "aac02cb21324aaf179d2cc5f09b608ce"
 }
