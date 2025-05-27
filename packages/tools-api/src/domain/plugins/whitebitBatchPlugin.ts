@@ -1,9 +1,9 @@
 import { toFunctionSelector } from 'viem'
 import type { Address, Chain, TokenConfig } from '../../config/types'
 import type { DecodedCall, Value } from '../DecodedResult'
-import { BinaryReader } from './BinaryReader'
-import { tokenAmount } from './erc20'
 import type { NestedCall } from './types'
+import { BinaryReader } from './utils'
+import { tokenAmount } from './utils'
 
 const selectors = {
   batch: toFunctionSelector('function batch()'),
