@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5497a67969595c580d15fb9cb8117e2de4b8810e
+
+# Diff at Tue, 27 May 2025 17:01:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b768d5bb4529011ea2655a55b80a1c1f491da9cc block: 22466421
+- current block number: 22575475
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    EOA FirstAnvilAddress (0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266) {
+    +++ description: None
+      values.$implementation:
+-        "0x930FcC37d6042c79211EE18A02857Cb1Fd7F0D0b"
++        "0xB6785B782571980b3Ddb5d40659f4861fF15AA02"
+    }
+```
+
 Generated with discovered.json: 0xb46460f6fc92d9eb104af0ce3b5ad84a8d930376
 
 # Diff at Mon, 12 May 2025 09:57:13 GMT:

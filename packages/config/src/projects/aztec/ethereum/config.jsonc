@@ -13,7 +13,7 @@
   "overrides": {
     "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": {
       "proxyType": "immutable", // hack to prevent 7702 delegation spam (the private key of this EOA is known)
-      "ignoreInWatchMode": ["$implementation"]
+      "ignoreRelatives": ["$implementation"]
     }
   }
 }
