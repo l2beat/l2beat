@@ -23,6 +23,7 @@ export const UltimatePermissionToPrefix: {
   operateStarkEx: 'An Operator',
   governStarknet: 'A Governor',
   member: 'Is a member of',
+  metisGameCreator: 'A dispute game creator',
 }
 
 export const RoleDescriptions: {
@@ -113,5 +114,9 @@ export const RoleDescriptions: {
     name: 'Governor',
     description:
       'Permissioned to manage the Operator role, finalize state and change critical parameters like the programHash, configHash, or message cancellation delay in the core contract.',
+  },
+  metisGameCreator: {
+    name: 'Game Creator',
+    description: 'Can create new dispute games.',
   },
 }

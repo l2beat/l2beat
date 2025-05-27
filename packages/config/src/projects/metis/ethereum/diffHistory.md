@@ -1,3 +1,107 @@
+Generated with discovered.json: 0x52b6f31dc8eb045bff5979ae4f317317d6d10b3c
+
+# Diff at Mon, 26 May 2025 15:48:31 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22545767
+- current block number: 22567898
+
+## Description
+
+Added access control to DisputeGameFactory.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22545767 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1A9da0aedA630dDf2748a453BF6d92560762D914) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":".txChainBatcher"}]
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      description:
+-        "Factory contract for creating dispute games. Currently not used, no games are created."
++        "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise."
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]},"GAME_CREATOR_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]}}
+      values.gameCreator:
++        ["0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"]
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","role":"admin"}
+      receivedPermissions.6.from:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.5.from:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.4.from:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.3.from:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.from:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.2.via:
++        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.1.from:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "metisGameCreator"
+      receivedPermissions.0.from:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      receivedPermissions.0.role:
+-        "admin"
++        ".gameCreator"
+      receivedPermissions.0.via:
+-        [{"address":"0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.blobBatcher:
++        "0xae4d46bd9117cb017c5185844699c51107cb28a9"
+      values.txChainBatcher:
++        "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+    }
+```
+
+```diff
+    EOA  (0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"sequence","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":".blobBatcher"}]
+    }
+```
+
+```diff
+    EOA  (0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"0x918778e825747a892b17C66fe7D24C618262867d","role":"._1088_MVM_Proposer"}]
+    }
+```
+
 Generated with discovered.json: 0xac83b4b3d25472fc55c1908686ca00de7665f81b
 
 # Diff at Fri, 23 May 2025 13:41:14 GMT:
