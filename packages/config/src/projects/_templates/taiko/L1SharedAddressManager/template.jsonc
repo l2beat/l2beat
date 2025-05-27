@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "L1SharedAddressManager",
-  "description": "This contract manages the shared addresses for Taiko rollups.",
+  "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
   "fields": {
     "proxiableUUID": {
       "handler": {
@@ -10,6 +10,14 @@
         "args": [],
         "expectRevert": true
       }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the contract address for a given name"
+        }
+      ]
     }
   }
 }

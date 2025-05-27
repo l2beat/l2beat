@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x47b54e243f03c72d9ca69b19e587d2fe2c171f58
+Generated with discovered.json: 0x1b5a618115f2811813a72adceb75f41126cd3494
 
-# Diff at Mon, 26 May 2025 15:11:18 GMT:
+# Diff at Tue, 27 May 2025 07:24:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
@@ -420,133 +420,9 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```
 
 ```diff
-    contract DAOFallbackProposer (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
-    +++ description: None
-      template:
--        "taiko/DAOFallbackProposer"
-      sourceHashes.1:
--        "0x397ca5d98f464f3096b2ba95f9057ebbc27c56e4d878ebbae83c911594dd7c5b"
-+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
-      sourceHashes.0:
--        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
-+        "0x3ea52d6499eecde88b2ef9725bb22d9d0adb70d187cdfa89dfe3f63895d57ee4"
-      description:
--        "A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities."
-      values.$implementation:
--        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
-+        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
-      values.$pastUpgrades.11:
-+        ["2024-06-08T10:54:11.000Z","0xb4c23d57a1f0916180d0752c57726b634e7707bb7377c93d9e95d19e3695887a",["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]]
-      values.$pastUpgrades.10.2:
--        ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"]
-+        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
-      values.$pastUpgrades.10.1:
--        "0xb4c23d57a1f0916180d0752c57726b634e7707bb7377c93d9e95d19e3695887a"
-+        "2025-02-13T06:57:47.000Z"
-      values.$pastUpgrades.10.0:
--        "2024-06-08T10:54:11.000Z"
-+        ["0x280eAbfd252f017B78e15b69580F249F45FB55Fa"]
-      values.$pastUpgrades.9.2:
--        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
-+        "2024-11-01T09:20:35.000Z"
-      values.$pastUpgrades.9.1:
--        "2025-02-13T06:57:47.000Z"
-+        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
-      values.$pastUpgrades.9.0.0:
--        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
-+        "0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"
-      values.$pastUpgrades.8.2:
--        "2024-11-01T09:20:35.000Z"
-+        ["0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"]
-      values.$pastUpgrades.8.1:
--        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
-+        "0xf3b6af477112d0a8209506c8f310f4eb0713beebb1911ef5d11162d36d93c0ff"
-      values.$pastUpgrades.8.0:
--        ["0x3022Ed0346CCE0c08268c8ad081458AfD95E8763"]
-+        "2024-05-20T15:05:59.000Z"
-      values.$pastUpgrades.7.2.0:
--        "0x34f2B21107AfE3584949c184A1E6236FFDAC4f6F"
-+        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
-      values.$pastUpgrades.7.1:
--        "0xf3b6af477112d0a8209506c8f310f4eb0713beebb1911ef5d11162d36d93c0ff"
-+        "2024-07-13T12:34:35.000Z"
-      values.$pastUpgrades.7.0:
--        "2024-05-20T15:05:59.000Z"
-+        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
-      values.$pastUpgrades.6.2:
--        ["0x518845daA8870bE2C59E49620Fc262AD48953C9a"]
-+        "2024-12-23T02:45:11.000Z"
-      values.$pastUpgrades.6.1:
--        "2024-07-13T12:34:35.000Z"
-+        ["0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"]
-      values.$pastUpgrades.6.0:
--        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
-+        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
-      values.$pastUpgrades.5.2:
--        "2024-12-23T02:45:11.000Z"
-+        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
-      values.$pastUpgrades.5.1:
--        ["0xd0d3f025D83D7122de7eC43e86331C57c8A4F30B"]
-+        "2024-06-07T04:02:11.000Z"
-      values.$pastUpgrades.5.0:
--        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
-+        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
-      values.$pastUpgrades.4.2:
--        ["0x5D528253fA14cd7F637937de847BE8D5BE0Bf5fd"]
-+        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
-      values.$pastUpgrades.4.1:
--        "2024-06-07T04:02:11.000Z"
-+        "2024-06-06T08:51:11.000Z"
-      values.$pastUpgrades.4.0:
--        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
-+        ["0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"]
-      values.$pastUpgrades.3.2:
--        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
-+        "2024-07-17T06:19:35.000Z"
-      values.$pastUpgrades.3.1:
--        "2024-06-06T08:51:11.000Z"
-+        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
-      values.$pastUpgrades.3.0.0:
--        "0xd0AEe97712a4a88B75C31E3C61DD2Ce6E514D85F"
-+        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
-      values.$pastUpgrades.2.2:
--        "2024-07-17T06:19:35.000Z"
-+        "2025-05-15T08:40:47.000Z"
-      values.$pastUpgrades.2.1:
--        "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748"
-+        ["0xB8826B144eB895eFE2923b61b3b117B1298A9526"]
-      values.$pastUpgrades.2.0:
--        ["0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"]
-+        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
-      values.$upgradeCount:
--        11
-+        12
-      values.addressManager:
--        "0x579f40D0BE111b823962043702cabe6Aaa290780"
-      values.impl:
--        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
-+        "0xB8826B144eB895eFE2923b61b3b117B1298A9526"
-      values.lastUnpausedAt:
--        0
-      values.proxiableUUID:
--        "EXPECT_REVERT"
-      values.bondToken:
-+        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
-      values.entrypoint:
-+        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
-      values.inbox:
-+        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
-      values.resolver:
-+        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
-      implementationNames.0x280eAbfd252f017B78e15b69580F249F45FB55Fa:
--        "MainnetProverSet"
-      implementationNames.0xB8826B144eB895eFE2923b61b3b117B1298A9526:
-+        "ProverSet"
-      category:
--        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
-    }
+-   Status: DELETED
+    contract MainnetProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
 ```
 
 ```diff
@@ -600,51 +476,47 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "4 of 6 (67%)"
-      receivedPermissions.23:
-+        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.22:
-+        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
       receivedPermissions.21:
-+        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
       receivedPermissions.20:
-+        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
       receivedPermissions.19:
-+        {"permission":"upgrade","from":"0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
       receivedPermissions.18:
-+        {"permission":"upgrade","from":"0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
       receivedPermissions.17.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-+        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
       receivedPermissions.16.from:
 -        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-+        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
       receivedPermissions.15.from:
 -        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-+        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
       receivedPermissions.14.from:
 -        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
-+        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
       receivedPermissions.13.from:
 -        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
-+        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
       receivedPermissions.12.from:
 -        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
-+        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
       receivedPermissions.11.from:
 -        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-+        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
       receivedPermissions.10.from:
 -        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
-+        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
       receivedPermissions.9.from:
 -        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
-+        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
       receivedPermissions.8.from:
 -        "0x579f40D0BE111b823962043702cabe6Aaa290780"
-+        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
       receivedPermissions.7.from:
 -        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-+        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
       receivedPermissions.6.from:
 -        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
 +        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
@@ -774,12 +646,6 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 
 ```diff
 +   Status: CREATED
-    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
     +++ description: Entry contract to verify batches using RISC Zero.
 ```
@@ -827,25 +693,24 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
  .../ERC1967Proxy.p.sol                             |    0
  .../AutomataDcapV3Attestation.sol                  |    0
  .../ERC1967Proxy.p.sol                             |    0
- .../DAOFallbackProposer/ProverSet.sol}             |  962 ++---
- .../DefaultResolver.sol}                           |  807 ++---
- .../ERC1967Proxy.p.sol                             |    0
- .../DefaultResolver.sol}                           | 1404 ++------
- .../ERC1967Proxy.p.sol                             |    2 +-
+ .../DefaultResolver/DefaultResolver.sol}           |  807 ++---
+ .../DefaultResolver}/ERC1967Proxy.p.sol            |    0
  .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
  .../ForcedInclusionStore/ForcedInclusionStore.sol  | 1633 +++++++++
  .../MainnetGuardianProver.sol => /dev/null         | 2196 ------------
  .../MainnetTierRouter.sol => /dev/null             |  219 --
  .../MainnetVerifier}/ERC1967Proxy.p.sol            |    2 +-
- .../.flat/MainnetVerifier/MainnetVerifier.sol      | 1481 ++++++++
+ .../MainnetVerifier/MainnetVerifier.sol}           | 1453 ++------
  .../Risc0VerifierGateway}/ERC1967Proxy.p.sol       |    2 +-
  .../Risc0VerifierGateway}/Risc0Verifier.sol        |  907 ++---
- .../.flat/SP1VerifierGateway/ERC1967Proxy.p.sol    |  594 ++++
+ .../SP1VerifierGateway}/ERC1967Proxy.p.sol         |    2 +-
  .../SP1VerifierGateway}/SP1Verifier.sol            |  914 ++---
+ .../SgxVerifier/ERC1967Proxy.p.sol => /dev/null    |  594 ----
+ .../MainnetSgxVerifier.sol => /dev/null            | 2857 ---------------
  .../ERC1967Proxy.p.sol                             |  594 ++++
  .../SgxVerifier.sol}                               | 3349 ++++++++---------
  .../ERC1967Proxy.p.sol                             |  594 ++++
- .../SgxVerifier.sol}                               | 3447 ++++++++----------
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
  .../SignalService/MainnetSignalService.sol         |  822 ++---
  .../.flat/TaikoL1Contract/MainnetInbox.3.sol       | 2964 ++++++++++++++++
  .../TaikoL1Contract/MainnetTaikoL1.2.sol}          |    7 +
@@ -853,7 +718,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
  .../TaikoToken/TaikoToken.sol                      |  132 +-
  .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
  .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
- 30 files changed, 19785 insertions(+), 10237 deletions(-)
+ 29 files changed, 17516 insertions(+), 12871 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -1154,6 +1019,15 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
       description:
 -        "SP1Verifier is a contract used to verify proofs given public values and verification key."
 +        "Verifier contract for SP1 proofs."
+    }
+```
+
+```diff
+    contract MainnetProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+      name:
+-        "DAOFallbackProposer"
++        "MainnetProverSet"
     }
 ```
 
