@@ -13,7 +13,7 @@ export const novastro: ScalingProject = upcomingL3({
     description:
       'Novastro is a RWAfi Layer 3 for the EVM & Aptos ecosystem powered by AI. Tokenize, Trade, and Earn Yields on Real World Assets.',
     purposes: ['AI', 'RWA'],
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     stack: 'Arbitrum',
     links: {
       websites: ['https://novastro.xyz/'],
