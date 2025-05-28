@@ -82,7 +82,12 @@ export class ProxyDetector {
       ? await this.getManualProxy(provider, address, manualProxyType)
       : (eoaProxy ?? (await this.getAutoProxy(provider, address)))
 
-    return this.processProxyDetails(provider, address, proxy, eoaProxy !== undefined)
+    return this.processProxyDetails(
+      provider,
+      address,
+      proxy,
+      eoaProxy !== undefined,
+    )
   }
 
   async getEOAProxy(
