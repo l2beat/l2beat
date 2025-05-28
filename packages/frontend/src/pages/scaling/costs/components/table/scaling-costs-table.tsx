@@ -1,5 +1,3 @@
-'use client'
-
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'

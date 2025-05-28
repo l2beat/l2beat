@@ -1,5 +1,3 @@
-'use client'
-
 import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'

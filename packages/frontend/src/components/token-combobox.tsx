@@ -1,4 +1,3 @@
-'use client'
 import { useCommandState } from 'cmdk'
 import Image from 'next/image'
 import React from 'react'

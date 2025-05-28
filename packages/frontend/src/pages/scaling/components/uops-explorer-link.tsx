@@ -1,4 +1,3 @@
-'use client'
 import { useTracking } from '~/hooks/use-tracking'
 import { cn } from '~/utils/cn'
 

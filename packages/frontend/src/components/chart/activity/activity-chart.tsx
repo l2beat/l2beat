@@ -1,5 +1,3 @@
-'use client'
-
 import type { Milestone } from '@l2beat/config'
 import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'

@@ -1,5 +1,3 @@
-'use client'
-
 import { usePathname } from 'next/navigation'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import type { NavGroup } from '../types'

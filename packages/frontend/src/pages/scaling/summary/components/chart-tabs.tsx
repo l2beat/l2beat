@@ -1,4 +1,3 @@
-'use client'
 import * as Tabs from '@radix-ui/react-tabs'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/scaling-summary-tvs-chart'

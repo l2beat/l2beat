@@ -1,4 +1,3 @@
-'use client'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,

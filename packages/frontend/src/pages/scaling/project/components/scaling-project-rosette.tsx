@@ -1,4 +1,3 @@
-'use client'
 import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'

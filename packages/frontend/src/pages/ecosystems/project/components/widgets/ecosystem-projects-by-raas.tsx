@@ -1,5 +1,3 @@
-'use client'
-
 import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import Image from '~/_next/image'

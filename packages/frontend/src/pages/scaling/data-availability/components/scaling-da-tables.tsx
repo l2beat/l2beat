@@ -1,4 +1,3 @@
-'use client'
 import { useMemo } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {

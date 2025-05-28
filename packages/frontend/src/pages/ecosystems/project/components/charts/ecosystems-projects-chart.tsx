@@ -1,4 +1,3 @@
-'use client'
 import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'

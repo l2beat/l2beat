@@ -1,5 +1,3 @@
-'use client'
-
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'

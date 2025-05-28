@@ -1,4 +1,3 @@
-'use client'
 import { useCallback, useRef } from 'react'
 import type { CollectionEntry } from '~/content/get-collection'
 import { useCurrentSection } from '~/hooks/use-current-section'

@@ -1,4 +1,3 @@
-'use client'
 import MarkdownIt from 'markdown-it'
 
 import { cn } from '~/utils/cn'

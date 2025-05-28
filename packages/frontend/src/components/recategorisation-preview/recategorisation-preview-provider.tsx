@@ -1,5 +1,3 @@
-'use client'
-
 import { usePathname } from 'next/navigation'
 import { createContext, useContext, useState } from 'react'
 import { setCookie } from '~/utils/cookies/client'

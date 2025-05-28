@@ -1,4 +1,3 @@
-'use client'
 import { UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useMemo, useState } from 'react'

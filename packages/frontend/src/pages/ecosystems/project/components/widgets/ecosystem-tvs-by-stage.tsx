@@ -1,4 +1,3 @@
-'use client'
 import type { Stage } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'

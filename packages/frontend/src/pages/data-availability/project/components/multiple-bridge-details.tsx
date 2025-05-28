@@ -1,5 +1,3 @@
-'use client'
-
 import { useRouter } from 'next/navigation'
 import { Button, buttonVariants } from '~/components/core/button'
 import {

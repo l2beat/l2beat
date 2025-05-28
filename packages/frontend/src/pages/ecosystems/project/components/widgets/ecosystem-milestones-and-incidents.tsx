@@ -1,4 +1,3 @@
-'use client'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
 import { MilestoneDrawerContent } from '~/components/core/chart/chart-milestones'

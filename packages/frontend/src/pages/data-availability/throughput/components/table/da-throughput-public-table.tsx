@@ -1,4 +1,3 @@
-'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { useTable } from '~/hooks/use-table'

@@ -1,5 +1,3 @@
-'use client'
-
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { RollupsTable } from '~/components/table/rollups-table'

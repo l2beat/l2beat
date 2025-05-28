@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect, useMemo, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'
 import {

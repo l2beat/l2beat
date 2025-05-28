@@ -1,4 +1,3 @@
-'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTable } from '~/hooks/use-table'

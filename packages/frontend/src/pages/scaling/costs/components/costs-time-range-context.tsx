@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext, useState } from 'react'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 

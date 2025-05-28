@@ -1,4 +1,3 @@
-'use client'
 import { Checkbox } from '~/components/core/checkbox'
 import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 

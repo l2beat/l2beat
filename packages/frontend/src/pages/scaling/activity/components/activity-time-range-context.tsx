@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext, useState } from 'react'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 

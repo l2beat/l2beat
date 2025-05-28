@@ -1,5 +1,3 @@
-'use client'
-
 import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-breakpoint'

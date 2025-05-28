@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext } from 'react'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'

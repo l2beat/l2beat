@@ -1,5 +1,3 @@
-'use client'
-
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'

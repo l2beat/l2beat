@@ -1,5 +1,3 @@
-'use client'
-
 import NextPlausibleProvider from 'next-plausible'
 import { useTheme } from 'next-themes'
 import { env } from '~/env'

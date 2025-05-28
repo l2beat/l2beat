@@ -1,4 +1,3 @@
-'use client'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'

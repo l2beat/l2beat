@@ -1,5 +1,3 @@
-'use client'
-
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 

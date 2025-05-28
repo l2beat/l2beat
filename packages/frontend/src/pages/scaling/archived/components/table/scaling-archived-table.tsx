@@ -1,5 +1,3 @@
-'use client'
-
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'

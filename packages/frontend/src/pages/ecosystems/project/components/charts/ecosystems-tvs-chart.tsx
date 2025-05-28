@@ -1,4 +1,3 @@
-'use client'
 import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/tvs-chart'

@@ -1,4 +1,3 @@
-'use client'
 import type { Milestone } from '@l2beat/config'
 import { useEffect, useMemo, useState } from 'react'
 import { CountBadge } from '~/components/badge/count-badge'

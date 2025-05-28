@@ -1,4 +1,3 @@
-'use client'
 import type { ReactNode } from 'react'
 
 import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'

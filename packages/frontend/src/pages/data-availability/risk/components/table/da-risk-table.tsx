@@ -1,4 +1,3 @@
-'use client'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'

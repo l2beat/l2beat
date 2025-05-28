@@ -1,4 +1,3 @@
-'use client'
 import { useCallback, useRef } from 'react'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import type { FaqItemWithId } from '~/pages/faq/FaqPage'

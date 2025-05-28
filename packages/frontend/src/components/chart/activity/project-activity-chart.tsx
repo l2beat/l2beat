@@ -1,5 +1,3 @@
-'use client'
-
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'

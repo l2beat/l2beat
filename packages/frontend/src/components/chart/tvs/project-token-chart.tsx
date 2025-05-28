@@ -1,4 +1,3 @@
-'use client'
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'

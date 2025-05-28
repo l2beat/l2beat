@@ -1,5 +1,3 @@
-'use client'
-
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 

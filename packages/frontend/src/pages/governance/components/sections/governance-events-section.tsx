@@ -1,4 +1,3 @@
-'use client'
 import { Button } from '~/components/core/button'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'

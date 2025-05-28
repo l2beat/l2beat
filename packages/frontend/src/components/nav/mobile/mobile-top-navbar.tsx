@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '~/utils/cn'
 import { Logo } from '../../logo'
 import { useRecategorisationPreviewContext } from '../../recategorisation-preview/recategorisation-preview-provider'

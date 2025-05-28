@@ -1,4 +1,3 @@
-'use client'
 import type { RefCallback } from 'react'
 import { cn } from '~/utils/cn'
 

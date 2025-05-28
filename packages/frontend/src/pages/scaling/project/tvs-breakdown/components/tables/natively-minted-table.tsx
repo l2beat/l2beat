@@ -1,4 +1,3 @@
-'use client'
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { TokenTable } from '~/components/table/token-breakdown-table'
