@@ -11,7 +11,7 @@ import {
 } from '~/utils/number-format/format-bytes'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
-~/utils/number-format/format-bytes
+
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   throughput: DaLayerThroughput[]

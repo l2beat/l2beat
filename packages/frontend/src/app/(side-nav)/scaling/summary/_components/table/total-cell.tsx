@@ -15,7 +15,7 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'~/utils/number-format/format-dollar-value-number
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { TableLink } from '../../../../../../components/table/table-link'
 
 export interface TotalCellProps {

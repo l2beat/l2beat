@@ -13,7 +13,9 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -31,11 +33,9 @@ import type {
 } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
-import {~/server/features/scaling/tvs/tokens/get-tokens-for-projectcy'
-import { cn } from '~/utils/cn'~/server/features/scaling/tvs/utils/range
-import { formatTimest~/trpc/reacttes'
-import { ChartControlsWrapper } ~/utils/number-format/format-currency
-import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
+import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'

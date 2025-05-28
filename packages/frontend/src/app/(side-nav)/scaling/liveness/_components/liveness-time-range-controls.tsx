@@ -4,7 +4,7 @@ import { useIsClient } from '~/hooks/use-is-client'
 import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 
 interface Props {
-  timeRange: LivenessTimeRange~/server/features/scaling/liveness/types
+  timeRange: LivenessTimeRange
   setTimeRange: (timeRange: LivenessTimeRange) => void
   className?: string
 }

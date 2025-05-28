@@ -4,11 +4,7 @@ import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
 
 const config: Config = {
-  content: [
-    './src/**/*.{js,ts,jsx,tsx,mdx}',
-    './rewrite/src/**/*.{js,ts,jsx,tsx,mdx}',
-    './rewrite/index.html',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './index.html'],
   darkMode: 'class',
   future: {
     hoverOnlyWhenSupported: true,

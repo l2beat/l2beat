@@ -1,7 +1,6 @@
-import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { NumberCell } from '~/components/table/cells/number-cell'
-import { TwoRowCell } from '~/compone~/utils/number-format/format-activity-count
 import { formatTimestamp } from '~/utils/dates'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 
 interface Props {
   maxCount: number

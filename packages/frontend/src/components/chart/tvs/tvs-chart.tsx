@@ -3,7 +3,6 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -16,8 +15,9 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/pink-gradient-def'
-import { getCommonChartComponent~/utils/number-format/format-currencymon-chart-components'
+import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { formatTimestamp } from '~/utils/dates'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../types'
 
 export interface TvsChartDataPoint {

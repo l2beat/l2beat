@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
-import type { ImageParams } from '~/utils/project/get-image-params'
-import { CustomLink } from '~/comp~/utils/project/get-image-params
 import { cn } from '~/utils/cn'
+import type { ImageParams } from '~/utils/project/get-image-params'
 import { EcosystemWidget } from './ecosystem-widget'
 
 export interface EcosystemGovernanceLinks {

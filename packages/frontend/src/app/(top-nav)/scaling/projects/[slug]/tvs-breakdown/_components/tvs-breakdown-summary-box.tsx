@@ -10,7 +10,7 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 
 type ValueWithChange = {
-  value: number~/utils/number-format/format-currency
+  value: number
   change: number
 }
 

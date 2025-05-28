@@ -3,9 +3,6 @@ import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
 import { Fragment, type ReactNode } from 'react'
-import { InfoIcon } from '~/icons/info'
-import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { formatNumber } from '~/utils/number-format/format-number'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
@@ -15,8 +12,11 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
-import { ValueWithPercentageCh~/utils/number-format/format-numberith-percentage-change'
+import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
+import { InfoIcon } from '~/icons/info'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {

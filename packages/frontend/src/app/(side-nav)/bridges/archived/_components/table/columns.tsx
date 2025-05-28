@@ -1,7 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import compact from 'lodash/compact'
-import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TypeInfo } from '~/components/table/cells/type-info'
@@ -9,7 +7,9 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
-import { getBridgesCommonProject~/utils/number-format/format-currency-project-columns/bridges-common-project-columns'
+import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 const columnHelper = createColumnHelper<BridgesArchivedEntry>()
 

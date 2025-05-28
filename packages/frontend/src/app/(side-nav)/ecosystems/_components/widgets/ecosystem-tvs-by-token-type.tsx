@@ -3,9 +3,6 @@ import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
-import { useBreakpoint } from '~/hooks/use-breakpoint'
-import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-token-type'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartTooltip,
@@ -13,8 +10,11 @@ import {
   SimpleChartContainer,
   useChart,
 } from '~/components/core/chart/chart'
-import { ChartDataIndicator } fr~/utils/number-format/format-currencyr'
+import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
+import type { TvsByTokenType } from '~/server/features/ecosystems/get-tvs-by-token-type'
 import { formatPercent } from '~/utils/calculate-percentage-change'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 const chartMeta = {
