@@ -8,6 +8,7 @@ import { type RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { createApiRouter } from './routers/ApiRouter'
+import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -29,6 +30,7 @@ export function createServer() {
 
   app.use(MetricsMiddleware)
 
+  app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
