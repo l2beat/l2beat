@@ -1,8 +1,8 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { DataAvailabilityProjectPage as NextDataAvailabilityProjectPage } from '~/app/(top-nav)/data-availability/projects/[layer]/[bridge]/_page'
-import { TopNavLayout } from '~/app/(top-nav)/top-nav-layout'
-import { AppLayout, type AppLayoutProps } from '~/app/_layout'
+import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { TopNavLayout } from '~/layouts/top-nav-layout'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,

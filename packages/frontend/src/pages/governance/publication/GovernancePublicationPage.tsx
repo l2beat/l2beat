@@ -1,11 +1,11 @@
 import Image from 'next/image'
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Article } from '~/components/markdown/article'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 import type { GovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
 
 interface Props extends AppLayoutProps {

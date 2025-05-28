@@ -1,7 +1,7 @@
 import { MultisigReportPage as NextMultisigReportPage } from '~/app/(top-nav)/multisig-report/_page'
-import { TopNavLayout } from '~/app/(top-nav)/top-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { TopNavLayout } from '~/layouts/top-nav-layout'
 import type { ImageParams } from '~/utils/project/get-image-params'
 
 interface Props extends AppLayoutProps {

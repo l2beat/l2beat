@@ -1,9 +1,9 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { EcosystemProjectPage as NextEcosystemProjectPage } from '~/app/(side-nav)/ecosystems/[slug]/_page'
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry

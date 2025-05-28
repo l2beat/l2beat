@@ -1,6 +1,3 @@
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -9,6 +6,9 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import {

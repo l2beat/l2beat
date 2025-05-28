@@ -1,6 +1,6 @@
 import { getSearchBarProjects } from '~/components/search-bar/search-bar-projects'
 import { getCollection } from '~/content/get-collection'
-import type { AppLayoutProps } from '~/app/_layout'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
 
 export async function getAppLayoutProps(opts?: {
   recategorisationPreview?: boolean

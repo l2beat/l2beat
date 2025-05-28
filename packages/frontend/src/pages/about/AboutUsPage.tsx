@@ -1,8 +1,8 @@
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 
 export function AboutUsPage(props: AppLayoutProps) {
   return (

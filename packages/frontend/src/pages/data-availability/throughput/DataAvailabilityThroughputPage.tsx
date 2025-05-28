@@ -1,8 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
-import type { AppLayoutProps } from '~/app/_layout'
-import { AppLayout } from '~/app/_layout'
 import { CountBadge } from '~/components/badge/count-badge'
 import { DaThroughputChart } from '~/components/chart/data-availability/da-throughput-chart'
 import {
@@ -13,6 +10,9 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
+import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { AppLayout } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import { PublicSystemInfo } from '../components/da-category-info'
 import { IncludeScalingOnlyProvider } from './components/da-throughput-context'

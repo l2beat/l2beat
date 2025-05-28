@@ -1,7 +1,7 @@
+import { Banner } from '~/components/banner'
+import { Footer } from '~/components/footer'
+import { NavLayout } from '~/components/nav/nav-layout'
 import { RecategorisationPreviewBanner } from '~/components/recategorisation-preview/recategorisation-preview-banner'
-import { Banner } from '../../components/banner'
-import { Footer } from '../../components/footer'
-import { NavLayout } from '../../components/nav/nav-layout'
 
 export function TopNavLayout({ children }: { children: React.ReactNode }) {
   return (

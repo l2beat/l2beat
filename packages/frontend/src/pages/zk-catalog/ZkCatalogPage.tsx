@@ -1,7 +1,7 @@
-import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import { ZkCatalogPage as NextZkCatalogPage } from '~/app/(side-nav)/zk-catalog/_page'
 import type { ZkCatalogEntry } from '~/app/(side-nav)/zk-catalog/_utils/get-zk-catalog-entries'
-import { AppLayout, type AppLayoutProps } from '~/app/_layout'
+import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
+import { SideNavLayout } from '~/layouts/side-nav-layout'
 
 interface Props extends AppLayoutProps {
   entries: ZkCatalogEntry[]
