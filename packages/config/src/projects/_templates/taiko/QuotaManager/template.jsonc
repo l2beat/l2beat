@@ -31,9 +31,18 @@
         [
           "map",
           [
-            "shape",
-            ["name", ["format", "TokenAddressToName"]],
-            ["quota", ["format", "Undecimal18"]]
+            "pipe",
+            ["shape", ["name", ["format", "TokenAddressToName"]], "quota"],
+            [
+              "if",
+              [
+                "pipe",
+                ["get", "name"],
+                ["and", ["!=", "USDT"], ["!=", "USDC"]]
+              ],
+              ["set", "quota", ["format", "Undecimal18"]],
+              ["set", "quota", ["format", "Undecimal6"]]
+            ]
           ]
         ]
       ]

@@ -1046,8 +1046,8 @@
           { "name": "Ether", "quota": "1,000" },
           { "name": "WETH", "quota": "1,000" },
           { "name": "TAIKO", "quota": "2,000,000" },
-          { "name": "USDT", "quota": "0.000004" },
-          { "name": "USDC", "quota": "0.000004" }
+          { "name": "USDT", "quota": "4,000,000" },
+          { "name": "USDC", "quota": "4,000,000" }
         ]
       },
       "implementationNames": {
@@ -1065,7 +1065,8 @@
             "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
           }
         },
-        { "typeCaster": "Undecimal", "arg": { "decimals": 18 } }
+        { "typeCaster": "Undecimal", "arg": { "decimals": 18 } },
+        { "typeCaster": "Undecimal", "arg": { "decimals": 6 } }
       ]
     },
     {
@@ -3288,7 +3289,7 @@
     "taiko/ForcedInclusionStore": "0xe4a5ab65e9492a918778491a3551eb6d5788e45a0c040f4da6f6f53269925c97",
     "taiko/L1SharedAddressManager": "0x53e383d79bc5a05364962d3a986723394e3f04e839085710857c1b3a050bef18",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
-    "taiko/QuotaManager": "0x194cf0f821f8b8cf3c52962a1b75430d7be0250ec02bd41c70fb9e1d65e72e05",
+    "taiko/QuotaManager": "0x050ea145bf48fda4a12016c962d9df58643d999f99a23e03eb1233786e25162f",
     "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SgxVerifier": "0x76591e4af9aa17fa8b64070623f9f2599e0161de42b8c518384374ca652c644e",
