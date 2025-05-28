@@ -13,6 +13,9 @@ const stringArray = z.string().transform((val) => {
 const featureFlag = coerceBoolean.optional()
 
 const CLIENT_CONFIG = {
+  NODE_ENV: z
+    .enum(['development', 'test', 'production'])
+    .default('development'),
   NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
   NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
   NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
@@ -33,9 +36,6 @@ const SERVER_CONFIG = {
   DISABLE_CACHE: coerceBoolean.default('false'),
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default('false'),
-  NODE_ENV: z
-    .enum(['development', 'test', 'production'])
-    .default('development'),
   CRON_SECRET: z.string().optional(),
   VERCEL_GIT_COMMIT_REF: z.string().optional(),
   VERCEL_GIT_COMMIT_SHA: z.string().default('local'),

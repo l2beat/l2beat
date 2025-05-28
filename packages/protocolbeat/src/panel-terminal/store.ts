@@ -1,5 +1,9 @@
 import { create } from 'zustand'
-import { executeDiscover, executeMatchFlat } from '../api/api'
+import {
+  executeDiscover,
+  executeDownloadAllShapes,
+  executeMatchFlat,
+} from '../api/api'
 
 interface CommandState {
   inFlight: boolean
@@ -22,6 +26,7 @@ interface TerminalState {
   matchFlat: (project: string, address: string) => Promise<void>
   matchProject: (project: string, address: string) => Promise<void>
   discover: (project: string) => Promise<void>
+  downloadAllShapes: () => Promise<void>
 }
 
 export const useTerminalStore = create<TerminalState>((set, get) => ({
@@ -50,6 +55,9 @@ export const useTerminalStore = create<TerminalState>((set, get) => ({
   },
   matchProject: async (project: string, address: string) => {
     executeStreaming(set, () => executeMatchFlat(project, address, 'projects'))
+  },
+  downloadAllShapes: async () => {
+    executeStreaming(set, () => executeDownloadAllShapes())
   },
   discover: async (project: string) => {
     const chain = get().command.chain

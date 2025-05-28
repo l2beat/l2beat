@@ -96,6 +96,10 @@ export function executeMatchFlat(
   return new EventSource(`/api/terminal/match-flat?${params}`)
 }
 
+export function executeDownloadAllShapes(): EventSource {
+  return new EventSource(`/api/terminal/download-all-shapes`)
+}
+
 export async function listTemplates(): Promise<ApiListTemplatesResponse> {
   const res = await fetch('/api/templates')
   if (!res.ok) {

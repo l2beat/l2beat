@@ -66,6 +66,16 @@ model DataAvailability {
   @@id([timestamp, daLayer, projectId])
 }
 
+model DataAvailability2 {
+  timestamp       DateTime @db.Timestamp(6)
+  daLayer         String   @db.VarChar(255)
+  projectId       String   @db.VarChar(255)
+  configurationId String   @db.VarChar(12)
+  totalSize       BigInt
+
+  @@id([timestamp, daLayer, projectId, configurationId])
+}
+
 model DiscoveryCache {
   key   String @id
   value String
