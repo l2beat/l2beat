@@ -376,55 +376,38 @@ When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth(
    From `position` you can extract:
    - `level = position >> 192` (always 0 in Nitro)
    - `leafIndex = position & ((1<<192) - 1)`
+   - `arbBlockNum` - the L2 block number where the withdrawal was initiated.
 
-2. **Locate first inclusion on L1 (publication)**  
-   Watch the `SequencerInbox` contract for `SequencerBatchDelivered` events.  
-   Each event exposes  
-   `batchSequenceNumber` – the **leafIndex** of the *first* message in that batch.  
-
-   Let `b₀, b₁, …` be the `batchSequenceNumber`s ordered by appearance.  
-   Your withdrawal sits in the earliest batch that satisfies  
-   `bᵢ ≤ leafIndex < bᵢ₊₁`  
-   (or, equivalently, in the last batch whose `batchSequenceNumber` is  
-   not greater than `leafIndex`).  
-   The timestamp of the block that emitted that event is the publication time.  
-
-   *Delayed-inbox edge-case* — if the message travelled via the delayed inbox,  
-   apply the same check to `Bridge.MessageDelivered` events instead.
-
-3. **Detect when the withdrawal becomes executable**  
-   After the ~7-day fraud-proof window, a validator confirms the rollup
-   assertion. The Rollup contract writes the final send-root to the Outbox
-   and emits:
+2. **Detect when the withdrawal becomes executable**  
+   After the ≈7-day fraud-proof window a validator confirms the rollup
+   assertion.  The Rollup contract emits  
 
    ```solidity
-   event OutboxEntryCreated(
-       uint256 indexed leafIndex,
-       bytes32 outboxRoot
+   event NodeConfirmed(
+       uint256 indexed nodeNum,
+       bytes32 indexed blockHash,  // L2 block hash of the assertion's end
+       bytes32   sendRoot          // root of the Outbox tree
    );
-   ```
+   ```  
 
-   The block timestamp of this event is the earliest time the withdrawal
-   *can* be executed.
-
-4. **(Optional) Track the actual execution**  
-   When the message is executed, `Outbox.executeTransaction` emits:
+   The confirmation routine then calls `Outbox.updateSendRoot(sendRoot, l2ToL1Block)`, which emits:
 
    ```solidity
-   event OutboxTransactionExecuted(
-       uint256 indexed leafIndex,
-       bytes32 hash
+   event SendRootUpdated(
+       bytes32 indexed outputRoot,  // == sendRoot above
+       bytes32 indexed l2BlockHash  // L2 block hash corresponding to this root
    );
-   ```
-   
-   Its block timestamp gives the *real* execution time.
+   ```  
 
-5. **Compute the intervals**  
-   - *Time to publication*  
-     `SequencerBatchDelivered.timestamp − L2ToL1Tx.timestamp`
+   This `l2BlockHash` signifies that all L2-to-L1 messages initiated in L2 blocks up to and including the L2 block represented by this `l2BlockHash` are now covered by the `outputRoot` and are executable.
+
+   To check if the specific withdrawal (with `leafIndex` and `arbBlockNum` from Step 1) is executable:
+   - Find the `SendRootUpdated` event.
+   - Get the L2 block number corresponding to `SendRootUpdated.l2BlockHash`.
+   - If `your_withdrawal.arbBlockNum <= L2_block_number_of_SendRootUpdated_event`, then your withdrawal (identified by its `leafIndex`) can be executed.
+   The L1 timestamp of this `SendRootUpdated` event is the earliest time your withdrawal becomes executable.
+
+3. **Compute the intervals**  
 
    - *Earliest withdrawal time*  
-     `OutboxEntryCreated.timestamp − L2ToL1Tx.timestamp`
-
-   - *Actual withdrawal time* (optional)  
-     `OutboxTransactionExecuted.timestamp − L2ToL1Tx.timestamp`
+     `SendRootUpdated.timestamp − L2ToL1Tx.timestamp` (where SendRootUpdated meets the condition in Step 2)
