@@ -19,8 +19,8 @@ import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { getRecategorisedEntries } from '../../../../../pages/scaling/utils/get-recategorised-entries'
 import { ScalingArchivedTable } from './table/scaling-archived-table'
 
 export function ScalingArchivedTables(

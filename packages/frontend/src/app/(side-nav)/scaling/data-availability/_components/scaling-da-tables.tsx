@@ -19,8 +19,8 @@ import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { getRecategorisedEntries } from '../../../../../pages/scaling/utils/get-recategorised-entries'
 import { ScalingDaTable } from './table/scaling-da-table'
 
 type Props = TabbedScalingEntries<ScalingDaEntry>

@@ -15,8 +15,8 @@ import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { getRecategorisedEntries } from '../../../../../pages/scaling/utils/get-recategorised-entries'
 import { ScalingFinalityTable } from './table/scaling-finality-table'
 
 type Props = TabbedScalingEntries<ScalingFinalityEntry>

@@ -20,10 +20,10 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import { getRecategorisedEntries } from '../../utils/get-recategorised-entries'
 import { ScalingTvsTable } from './table/scaling-tvs-table'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {

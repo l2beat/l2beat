@@ -11,7 +11,7 @@ import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { getDaLayerRisks } from '../../data-availability/utils/get-da-layer-risks'
 import type { ProjectsEconomicSecurity } from '../../data-availability/utils/get-da-projects-economic-security'
 import { getDaProjectsEconomicSecurity } from '../../data-availability/utils/get-da-projects-economic-security'

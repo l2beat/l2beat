@@ -2,19 +2,19 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { RollupsTable } from '~/components/table/rollups-table'
+import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
+import { BasicTable } from '~/components/table/basic-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/scaling-associated-tokens-context'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { toTableRows } from '../../utils/to-table-rows'
-import { scalingSummaryColumns } from './columns'
+import { scalingSummaryOthersColumns } from './columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
 }
 
-export function ScalingSummaryRollupsTable({ entries }: Props) {
+export function ScalingSummaryOthersTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -29,7 +29,7 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingSummaryColumns,
+    columns: scalingSummaryOthersColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -44,5 +44,5 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
     },
   })
 
-  return <RollupsTable table={table} />
+  return <BasicTable table={table} />
 }

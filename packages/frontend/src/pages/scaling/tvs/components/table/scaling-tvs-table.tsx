@@ -1,24 +1,25 @@
 'use client'
-
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/scaling-associated-tokens-context'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import { useScalingAssociatedTokensContext } from '../../../components/scaling-associated-tokens-context'
 import { toTableRows } from '../../utils/to-table-rows'
-import { scalingSummaryColumns } from './columns'
+import { scalingTvsColumns } from './columns'
 
 interface Props {
-  entries: ScalingSummaryEntry[]
+  entries: ScalingTvsEntry[]
+  rollups?: boolean
 }
 
-export function ScalingSummaryRollupsTable({ entries }: Props) {
+export function ScalingTvsTable({ entries, rollups }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const tableEntries = useMemo(
+  const allProjects = useMemo(
     () =>
       toTableRows({
         projects: entries,
@@ -28,8 +29,8 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
   )
 
   const table = useTable({
-    data: tableEntries,
-    columns: scalingSummaryColumns,
+    data: allProjects,
+    columns: scalingTvsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -44,5 +45,9 @@ export function ScalingSummaryRollupsTable({ entries }: Props) {
     },
   })
 
-  return <RollupsTable table={table} />
+  return rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable table={table} insideMainPageCard />
+  )
 }

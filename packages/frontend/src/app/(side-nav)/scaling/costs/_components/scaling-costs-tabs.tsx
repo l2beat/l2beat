@@ -18,8 +18,8 @@ import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { compareCosts } from '~/server/features/scaling/costs/utils/compare-stage-and-cost'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { getRecategorisedEntries } from '../../../../../pages/scaling/utils/get-recategorised-entries'
 import { ScalingCostsTable } from './table/scaling-costs-table'
 
 type Props = TabbedScalingEntries<ScalingCostsEntry> & {

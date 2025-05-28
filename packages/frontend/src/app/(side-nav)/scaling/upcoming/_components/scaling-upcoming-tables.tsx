@@ -17,8 +17,8 @@ import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { getRecategorisedEntries } from '../../../../../pages/scaling/utils/get-recategorised-entries'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 
 export function ScalingUpcomingTables(

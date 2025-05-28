@@ -1,6 +1,6 @@
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
 import type { ScalingFinalityEntry } from '~/server/features/scaling/finality/get-scaling-finality-entries'
-import type { TabbedScalingEntries } from '../_utils/group-by-scaling-tabs'
+import type { TabbedScalingEntries } from '../../../../pages/scaling/utils/group-by-scaling-tabs'
 import { FinalityHeader } from './_components/finality-header'
 import { ScalingFinalityTables } from './_components/scaling-finality-tables'
 

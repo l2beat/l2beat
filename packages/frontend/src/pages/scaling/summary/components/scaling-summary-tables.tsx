@@ -1,8 +1,5 @@
 'use client'
 import { useMemo } from 'react'
-import { ExcludeAssociatedTokensCheckbox } from '~/app/(side-nav)/scaling/_components/exclude-associated-tokens-checkbox'
-import { getRecategorisedEntries } from '~/app/(side-nav)/scaling/_utils/get-recategorised-entries'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -21,8 +18,11 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import { ExcludeAssociatedTokensCheckbox } from '~/pages/scaling/components/exclude-associated-tokens-checkbox'
+import { getRecategorisedEntries } from '~/pages/scaling/utils/get-recategorised-entries'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
+import type { TabbedScalingEntries } from '../../utils/group-by-scaling-tabs'
 import { ScalingSummaryOthersTable } from './table/scaling-summary-others-table'
 import { ScalingSummaryRollupsTable } from './table/scaling-summary-rollups-table'
 import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/scaling-summary-validiums-and-optimiums-table'

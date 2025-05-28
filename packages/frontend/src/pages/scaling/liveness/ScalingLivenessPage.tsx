@@ -1,4 +1,4 @@
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ScalingLivenessPage as NextLivenessPage } from '~/app/(side-nav)/scaling/liveness/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
