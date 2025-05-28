@@ -2,7 +2,7 @@
   "name": "inevm",
   "chain": "arbitrum",
   "blockNumber": 334476220,
-  "configHash": "0x85c95c1caa36294cbdf417457f8644f45ddc7b751897d536ce7a9afb3333b893",
+  "configHash": "0xd212778be3ab94b0630daab965eb27c666f9587180f08b5718e921ab2af3ed5a",
   "entries": [
     {
       "name": "CustomGateway",

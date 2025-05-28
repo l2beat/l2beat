@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "molten",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": [
+        "0x235000876bd58336C802B3546Fc0250f285fCc79",
+        "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      ]
+    }
+  }
+}

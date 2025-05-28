@@ -1048,7 +1048,7 @@ function getTechnologyExitMechanism(
     references: [
       {
         title: 'Forced withdrawal from an OP Stack blockchain',
-        url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+        url: 'https://docs.optimism.io/stack/transactions/forced-transaction',
       },
     ],
   })

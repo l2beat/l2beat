@@ -510,7 +510,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
         {
           title: 'Prover Architecture',
           description:
-            'ZKsync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/docs/specs/prover).',
+            'ZKsync Era proof system Boojum can be found [here](https://github.com/matter-labs/era-boojum/tree/main) and contains essential tools like the Prover, the Verifier, and other backend components. The specs of the system can be found [here](https://github.com/matter-labs/zksync-era/tree/main/prover).',
         },
         {
           title: 'ZK Circuits',

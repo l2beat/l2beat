@@ -2,7 +2,7 @@
   "name": "hop",
   "chain": "ethereum",
   "blockNumber": 19531595,
-  "configHash": "0xe7d6a2186a3b8dd38955f460c14b3a3b2dc0956002516f65bfe9ff7509cf3676",
+  "configHash": "0xc2c04dd45265fba444e641e81fb0fccc9f145b3ae818621f946a23ed6e9bf051",
   "entries": [
     {
       "name": "Hop Multisig",

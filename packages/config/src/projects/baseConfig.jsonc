@@ -1,8 +1,0 @@
-{
-  "import": ["globalConfig.jsonc"],
-  "names": {
-    "0x871e290d5447b958131F6d44f915F10032436ee6": "AlchemyMultisig2",
-    "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "Conduit Multisig 3",
-    "0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d": "Caldera Multisig 2"
-  }
-}

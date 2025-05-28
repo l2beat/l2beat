@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 21736867,
-  "configHash": "0x82f0b6256198e3242d86a6ce578d8e692b1228fcf0b38f7c514dbd76a8587516",
+  "configHash": "0xa5b4e1ddc367c5debf5a7d27b45ca8f4f845f9d316d57a2a4b8ca7c2eeca6139",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

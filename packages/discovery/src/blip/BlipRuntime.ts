@@ -196,6 +196,11 @@ export class BlipRuntime {
 
         return result
       }
+      case 'to_entries': {
+        const copy = structuredClone(v)
+        assert(typeof copy === 'object')
+        return Object.entries(copy) as ContractValue
+      }
       default: {
         assert(false, 'unhandled')
       }

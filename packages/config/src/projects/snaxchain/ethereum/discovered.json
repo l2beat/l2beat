@@ -2,7 +2,7 @@
   "name": "snaxchain",
   "chain": "ethereum",
   "blockNumber": 22437745,
-  "configHash": "0xd93afc80b2cdfeb34362340deadca0208a4af0bf56c2062ce388878a6afd7958",
+  "configHash": "0x5125e56b0be18aabdcac1016d1cab7fa0a2c0641d3cd4885978fcba6bd1ab084",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

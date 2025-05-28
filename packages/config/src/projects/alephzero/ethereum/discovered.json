@@ -2,7 +2,7 @@
   "name": "alephzero",
   "chain": "ethereum",
   "blockNumber": 22122647,
-  "configHash": "0x8002fb7016c27fad30775dd16a4c2cdcea6040647eebf60825c712b139ca4b21",
+  "configHash": "0xd8d1c5321a9744e7457c9d8b8311da643442ce99d0c1a01b918c519143d02ee9",
   "entries": [
     {
       "name": "OneStepProverHostIo",

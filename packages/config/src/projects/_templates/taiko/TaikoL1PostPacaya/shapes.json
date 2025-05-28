@@ -1,0 +1,12 @@
+{
+  "TaikoL1": {
+    "hash": "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7",
+    "address": [
+      "0x4e030b19135869F6fd926614754B7F9c184E2B83",
+      "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
+      "0x497B13f9192B09244de9b5F0964830969FB26F07"
+    ],
+    "chain": "ethereum",
+    "blockNumber": 22565516
+  }
+}

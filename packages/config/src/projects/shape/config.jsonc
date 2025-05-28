@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "shape",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x62Edd5f4930Ea92dCa3fB81689bDD9b9d076b57B"],
+      "overrides": {
+        "0x2c03e8BF8b16Af89079852BE87f0e9eC674a5952": {
+          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+          "fields": {
+            "proposer": { "permissions": [{ "type": "propose" }] },
+            "challenger": { "permissions": [{ "type": "challenge" }] }
+          }
+        }
+      }
+    }
+  }
+}

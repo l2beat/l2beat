@@ -2,7 +2,7 @@
   "name": "ancient",
   "chain": "ethereum",
   "blockNumber": 22566407,
-  "configHash": "0xe134a48712488aa9c7c7b9ca5b2f28c239c79a241d0c936df42b1f16091a0f0b",
+  "configHash": "0x381ed22bdebe5658fb2a6019034b2fdb17be65052093bb6722aa8077f84c3f02",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

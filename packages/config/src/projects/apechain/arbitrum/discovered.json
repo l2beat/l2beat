@@ -2,7 +2,7 @@
   "name": "apechain",
   "chain": "arbitrum",
   "blockNumber": 287770407,
-  "configHash": "0x10fb09503b8b94cd861b089b414bc2d391ac27eea7d789dd5df91f6dcce83f52",
+  "configHash": "0x7d4bc484c1f8279c07ca9122bf2452f90d35eb0e88c6f12151d7330b52baa6d4",
   "entries": [
     {
       "name": "Inbox",

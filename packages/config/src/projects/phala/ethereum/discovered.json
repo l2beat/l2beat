@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22467145,
-  "configHash": "0x6bc4f523baa29bd659ba7beed2cc638ab5d690dad925ef31f188a8456fe941fd",
+  "configHash": "0x24c5004aaf6a239e6ed1926aca9fe5cda0346a6c4c6b75b8fe82e6b7be1393e4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1337,7 +1337,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {

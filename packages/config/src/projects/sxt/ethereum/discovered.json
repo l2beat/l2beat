@@ -2,7 +2,7 @@
   "name": "sxt",
   "chain": "ethereum",
   "blockNumber": 22574807,
-  "configHash": "0xad7ad3e77bc622adff69ee85e59611819d32531e576f7c900432def585850625",
+  "configHash": "0x6e5ffd52f1ec28cdee41f3461f79775455fafe750ef6a1feb47cd72c8b97663d",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

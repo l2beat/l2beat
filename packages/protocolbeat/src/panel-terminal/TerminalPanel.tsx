@@ -28,6 +28,7 @@ export function TerminalPanel() {
     command,
     matchFlat,
     matchProject,
+    downloadAllShapes,
     discover,
     clear,
     setChain,
@@ -120,6 +121,15 @@ export function TerminalPanel() {
             className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
           >
             Match projects
+          </button>
+          <button
+            onClick={() => {
+              downloadAllShapes()
+            }}
+            disabled={command.inFlight}
+            className="bg-autumn-300 px-4 py-1 text-black disabled:opacity-50"
+          >
+            Download all shapes
           </button>
         </div>
       </div>

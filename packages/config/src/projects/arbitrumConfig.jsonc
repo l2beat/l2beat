@@ -1,9 +1,0 @@
-{
-  "import": ["globalConfig.jsonc"],
-  "names": {
-    // mapping contracts in this chain-specific config instead of the global config (EOAs though are multichain in EVM)
-    "0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56": "Conduit Multisig 2",
-    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": "Gelato Multisig",
-    "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "Caldera Multisig 1"
-  }
-}

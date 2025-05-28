@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "taiko",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      ],
+      "names": {},
+      "overrides": {
+        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa": {
+          "description": "Implementation contract for DAOFallbackProposer",
+          "category": "spam"
+        },
+        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": {
+          "proxyType": "TaikoFork proxy"
+        }
+      }
+    }
+  }
+}

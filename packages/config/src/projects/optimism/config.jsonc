@@ -1,0 +1,281 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "optimism",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "optimism": {
+      "initialAddresses": [
+        "0x4200000000000000000000000000000000000010",
+        "0x4200000000000000000000000000000000000016",
+        "0x4200000000000000000000000000000000000014",
+        "0x4200000000000000000000000000000000000011",
+        "0x4200000000000000000000000000000000000012",
+        "0x4200000000000000000000000000000000000017",
+        "0x4200000000000000000000000000000000000015",
+        "0x420000000000000000000000000000000000000F",
+        "0x4200000000000000000000000000000000000002",
+        "0x4200000000000000000000000000000000000013",
+        "0x4200000000000000000000000000000000000019",
+        "0x420000000000000000000000000000000000001A",
+        "0x4200000000000000000000000000000000000042",
+        "0x4200000000000000000000000000000000000020",
+        "0x4200000000000000000000000000000000000021",
+        "0x420000000000000000000000000000000000001b"
+      ],
+      "names": {
+        "0x4200000000000000000000000000000000000042": "OPToken",
+        "0x28B1eE885034ccD2d5Fa228a9A3157390D27177C": "InternalProxyAdminOwnerMultisig1",
+        "0x2A82Ae142b2e62Cb7D10b55E323ACB1Cab663a26": "MintManagerOwner",
+        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
+        "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": "MintManager",
+        "0x4200000000000000000000000000000000000002": "DeployerWhitelist",
+        "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b": "SuperchainProxyAdminOwner - L2 Alias"
+      },
+      "overrides": {
+        "0x4200000000000000000000000000000000000002": {
+          "description": "Legacy contract that was originally used to act as a whitelist of addresses allowed to the Optimism network. Fully unused and deprecated since the Bedrock upgrade."
+        },
+        "0x5C4e7Ba1E219E47948e6e3F55019A647bA501005": {
+          "description": "Controls the OP inflation rate, which is currently hardcoded to 2% annually.",
+          "fields": {
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "change the OP token owner to a different MintManager and therefore change the inflation policy."
+                }
+              ]
+            }
+          }
+        },
+        "0x4200000000000000000000000000000000000042": {
+          "description": "The OP token contract. The minting policy is controlled by the {{ owner }}.",
+          "ignoreMethods": ["getPastTotalSupply"],
+          "ignoreInWatchMode": ["totalSupply"]
+        }
+      }
+    },
+    "ethereum": {
+      "initialAddresses": [
+        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+        "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f",
+        "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F",
+        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed",
+        "0x76943C0D61395d8F2edF9060e1533529cAe05dE6",
+        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa"
+      ],
+      "names": {
+        "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": "L1DAITokenBridge",
+        "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L1DAIEscrow",
+        "0x76943C0D61395d8F2edF9060e1533529cAe05dE6": "wstETHEscrow",
+        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "FeesCollector",
+        "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": "DelayedWETH_PermissionlessGames",
+        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": "DelayedWETH_PermissionedGames"
+      },
+      "overrides": {
+        "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": {
+          "description": "Stores DAI deposited from the attached L1DAITokenBridge."
+        },
+        "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": {
+          "references": [
+            {
+              "text": "Security Council members - Optimism Collective Governance Forum",
+              "href": "https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118"
+            }
+          ],
+          "fields": {
+            "isL2beatStillAnOwner": {
+              "handler": {
+                "type": "call",
+                "method": "isOwner",
+                "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"]
+              }
+            }
+          }
+        },
+        "0x24424336F04440b1c28685a38303aC33C9D14a25": {
+          "description": "Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.",
+          "ignoreInWatchMode": ["timeSinceLastL2beatInteraction"],
+          "fields": {
+            "timeSinceLastL2beatInteraction": {
+              "handler": {
+                "type": "call",
+                "method": "lastLive",
+                "args": ["0x4A7322258c9E690e4CB8Cea6e5251443E956e61E"]
+              },
+              "edit": ["format", "TimeSince"]
+            }
+          }
+        },
+        "0x5Fd79D46EBA7F351fe49BFF9E87cdeA6c821eF9f": {
+          "description": "Custom escrow for SNX bridged via canonical messaging.",
+          "ignoreRelatives": ["owner"]
+        },
+        "0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC": {
+          "ignoreInWatchMode": ["totalSupply"]
+        },
+        "0x323dFC63c9B83CB83f40325AaB74b245937cbdF0": {
+          "ignoreInWatchMode": ["totalSupply"]
+        },
+        "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1": {
+          "fields": {
+            "l2TokenBridge": { "edit": ["format", "OptimismAddress"] },
+            "OTHER_BRIDGE": { "edit": ["format", "OptimismAddress"] },
+            "otherBridge": { "edit": ["format", "OptimismAddress"] }
+          }
+        },
+        "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": {
+          "fields": {
+            "OTHER_BRIDGE": { "edit": ["format", "OptimismAddress"] },
+            "otherBridge": { "edit": ["format", "OptimismAddress"] }
+          }
+        },
+        "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": {
+          "fields": {
+            "Proxy__OVM_L1CrossDomainMessenger": {
+              "handler": {
+                "type": "call",
+                "method": "getAddress",
+                "args": ["Proxy__OVM_L1CrossDomainMessenger"]
+              }
+            },
+            "Proxy__OVM_L1StandardBridge": {
+              "handler": {
+                "type": "call",
+                "method": "getAddress",
+                "args": ["Proxy__OVM_L1StandardBridge"]
+              }
+            }
+          }
+        },
+        "0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64": {
+          "ignoreInWatchMode": ["nonce"]
+        },
+        "0x10E6593CDda8c58a1d0f14C5164B376352a55f2F": {
+          "description": "Custom Gateway for DAI deposits via canonical messaging. Deposited DAI is forwarded to a Vault contract.",
+          "ignoreRelatives": [
+            "l1Token",
+            "l2DAITokenBridge",
+            "l2Token",
+            "l2Token",
+            "messenger"
+          ]
+        },
+        "0xdfe97868233d1aa22e815a266982f2cf17685a27": {
+          "ignoreMethods": [
+            "getL2OutputAfter",
+            "getL2OutputIndexAfter",
+            "getL2Output"
+          ],
+          "ignoreInWatchMode": [
+            "nextBlockNumber",
+            "nextOutputIndex",
+            "latestBlockNumber",
+            "latestOutputIndex"
+          ],
+          "fields": {
+            "deletedOutputs": {
+              "handler": {
+                "type": "event",
+                "select": ["prevNextOutputIndex", "newNextOutputIndex"],
+                "add": { "event": "OutputsDeleted" }
+              }
+            }
+          }
+        },
+        "0xbEb5Fc579115071764c7423A4f12eDde41f106Ed": {
+          "ignoreMethods": ["isOutputFinalized"],
+          "ignoreInWatchMode": ["params"],
+          "fields": {
+            "paused": {
+              "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused.",
+              "severity": "HIGH"
+            }
+          }
+        },
+        "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1": {
+          "ignoreMethods": ["xDomainMessageSender"],
+          "ignoreInWatchMode": ["messageNonce"],
+          "fields": {
+            "OTHER_MESSENGER": { "edit": ["format", "OptimismAddress"] },
+            "otherMessenger": { "edit": ["format", "OptimismAddress"] }
+          }
+        },
+        "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290": {
+          "fields": {
+            "batcherHash": {
+              "handler": {
+                "type": "call",
+                "method": "function batcherHash() view returns (address)",
+                "args": []
+              }
+            },
+            "opStackDA": {
+              "handler": {
+                "type": "opStackDA",
+                "sequencerAddress": "{{ batcherHash }}"
+              }
+            },
+            "sequencerInbox": {
+              "handler": {
+                "type": "opStackSequencerInbox",
+                "sequencerAddress": "{{ batcherHash }}"
+              }
+            },
+            "gasLimit": {
+              "description": "Gas limit for blocks on L2.",
+              "severity": "LOW"
+            }
+          },
+          "ignoreInWatchMode": ["scalar"]
+        },
+        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": {
+          "description": "Collecting sequencer, base- and L1 fees from L2.",
+          "ignoreInWatchMode": ["getNextSequenceId"]
+        },
+        "0xe5965Ab5962eDc7477C8520243A95517CD252fA9": {
+          "ignoreInWatchMode": ["gameCount"],
+          "ignoreMethods": ["gameAtIndex"],
+          "fields": {
+            "gameImpls": { "handler": { "type": "array", "length": 5 } },
+            "initBonds": { "handler": { "type": "array", "length": 5 } },
+            "permissionedGamesTotal": {
+              "handler": {
+                "type": "eventCount",
+                "topics": [
+                  "0x5b565efe82411da98814f356d0e7bcb8f0219b8d970307c5afb4a6903a8b2e35",
+                  null,
+                  "0x0000000000000000000000000000000000000000000000000000000000000001"
+                ]
+              }
+            }
+          }
+        },
+        "0xA6f3DFdbf4855a43c529bc42EDE96797252879af": {
+          "ignoreMethods": [
+            "getNumToResolve",
+            "resolutionCheckpoints",
+            "resolvedSubgames"
+          ]
+        },
+        "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": {
+          "ignoreMethods": ["zeroHashes"]
+        },
+        "0x050ed6F6273c7D836a111E42153BC00D0380b87d": {
+          "ignoreMethods": [
+            "getNumToResolve",
+            "resolutionCheckpoints",
+            "resolvedSubgames"
+          ]
+        },
+        "0x0454092516c9A4d636d3CAfA1e82161376C8a748": {
+          "fields": {
+            "getRequiredThreshold": {
+              "handler": { "type": "array", "length": 20 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

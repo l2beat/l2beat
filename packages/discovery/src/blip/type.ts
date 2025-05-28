@@ -20,3 +20,4 @@ export type BlipSexp =
   | ['if', BlipSexp, BlipSexp, BlipSexp]
   | ['delete', ...(string | number)[]]
   | ['shape', ...ShapeArg[]]
+  | ['to_entries']
