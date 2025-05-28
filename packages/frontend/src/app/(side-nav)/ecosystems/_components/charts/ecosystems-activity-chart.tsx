@@ -128,7 +128,7 @@ export function EcosystemsActivityChart({
                 width: 100,
               },
               scale: 'lin',
-              unit: ' TPS',
+              unit: ' UOPS',
             },
           })}
           <ChartTooltip
