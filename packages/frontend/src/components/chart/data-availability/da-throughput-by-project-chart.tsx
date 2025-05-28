@@ -19,12 +19,14 @@ import type { DaThroughputChartDataByChart } from '~/server/features/data-availa
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'
+import type { Milestone } from '@l2beat/config'
 
 interface Props {
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
   projectsToShow: string[]
   customColors: Record<string, string>
+  milestones: Milestone[]
 }
 
 export function DaThroughputByProjectChart({
@@ -32,6 +34,7 @@ export function DaThroughputByProjectChart({
   isLoading,
   projectsToShow,
   customColors,
+  milestones,
 }: Props) {
   const colors = useMemo(
     () => generateAccessibleColors(projectsToShow.length),
@@ -97,7 +100,12 @@ export function DaThroughputByProjectChart({
   }, [data, projectsToShow, denominator])
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      milestones={milestones}
+    >
       <BarChart
         accessibilityLayer
         data={chartData}

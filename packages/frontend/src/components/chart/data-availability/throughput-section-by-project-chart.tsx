@@ -9,6 +9,7 @@ import { ProjectCombobox } from '~/components/project-combobox'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
+import type { Milestone } from '@l2beat/config'
 
 const DEFAULT_PROJECTS_TO_SHOW = 5
 
@@ -19,6 +20,7 @@ interface Props {
   selectedProjects: string[] | undefined
   setSelectedProjects: (projects: string[] | undefined) => void
   customColors: Record<string, string>
+  milestones: Milestone[]
 }
 
 export function ThroughputSectionByProjectChart({
@@ -28,6 +30,7 @@ export function ThroughputSectionByProjectChart({
   selectedProjects,
   setSelectedProjects,
   customColors,
+  milestones,
 }: Props) {
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range,
@@ -94,6 +97,7 @@ export function ThroughputSectionByProjectChart({
         isLoading={isLoading}
         projectsToShow={projectsToShow}
         customColors={customColors}
+        milestones={milestones}
       />
     </div>
   )
