@@ -7,7 +7,6 @@ import { RecategorisationPreviewContextProvider } from '~/components/recategoris
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import type { SearchBarProject } from '~/components/search-bar/search-bar-entry'
 import { env } from '~/env'
-import { PlausibleProvider } from '~/providers/plausible-provider'
 import { TRPCReactProvider } from '~/trpc/react'
 
 export interface AppLayoutProps {
@@ -26,27 +25,23 @@ export function AppLayout({
 }) {
   return (
     <TRPCReactProvider>
-      {env.NODE_ENV !== 'production' && env.NEXT_PUBLIC_REWRITE && (
-        <DevAutoReloader />
-      )}
+      {env.NODE_ENV !== 'production' && <DevAutoReloader />}
       <ThemeProvider
         attribute="class"
         storageKey="l2beat-theme"
         disableTransitionOnChange
       >
-        <PlausibleProvider>
-          <TooltipProvider delayDuration={300} disableHoverableContent>
-            <GlossaryContextProvider terms={terms}>
-              <SearchBarContextProvider projects={searchBarProjects}>
-                <RecategorisationPreviewContextProvider
-                  defaultChecked={defaultRecategorisationPreviewChecked}
-                >
-                  {children}
-                </RecategorisationPreviewContextProvider>
-              </SearchBarContextProvider>
-            </GlossaryContextProvider>
-          </TooltipProvider>
-        </PlausibleProvider>
+        <TooltipProvider delayDuration={300} disableHoverableContent>
+          <GlossaryContextProvider terms={terms}>
+            <SearchBarContextProvider projects={searchBarProjects}>
+              <RecategorisationPreviewContextProvider
+                defaultChecked={defaultRecategorisationPreviewChecked}
+              >
+                {children}
+              </RecategorisationPreviewContextProvider>
+            </SearchBarContextProvider>
+          </GlossaryContextProvider>
+        </TooltipProvider>
       </ThemeProvider>
     </TRPCReactProvider>
   )

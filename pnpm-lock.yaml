@@ -598,9 +598,6 @@ importers:
       markdown-it:
         specifier: ^14.1.0
         version: 14.1.0
-      next-plausible:
-        specifier: ^3.12.0
-        version: 3.12.2(next@15.0.1(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -6266,13 +6263,6 @@ packages:
 
   next-line@1.1.0:
     resolution: {integrity: sha512-+I10J3wKNoKddNxn0CNpoZ3eTZuqxjNM3b1GImVx22+ePI+Y15P8g/j3WsbP0fhzzrFzrtjOAoq5NCCucswXOQ==}
-
-  next-plausible@3.12.2:
-    resolution: {integrity: sha512-jyOYLAdwaZZR6nrzFhN9xfVjzYOG6mIQ/LLDCfdAS99ELy759cKfNxluGo+pI2Xh9cYxTFYYZGlnkyR3IPy4yg==}
-    peerDependencies:
-      next: ^11.1.0 || ^12.0.0 || ^13.0.0 || ^14.0.0
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
 
   next-themes@0.3.0:
     resolution: {integrity: sha512-/QHIrsYpd6Kfk7xakK4svpDI5mmXP0gfvCoJdGpZQ2TOrQZmsW0QxjaiLn8wbIKjtm4BTSqLoix4lxYYOnLJ/w==}
@@ -14037,12 +14027,6 @@ snapshots:
   new-github-issue-url@0.2.1: {}
 
   next-line@1.1.0: {}
-
-  next-plausible@3.12.2(next@15.0.1(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
-    dependencies:
-      next: 15.0.1(@opentelemetry/api@1.9.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      react: 19.0.0
-      react-dom: 19.0.0(react@19.0.0)
 
   next-themes@0.3.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:

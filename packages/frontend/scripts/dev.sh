@@ -57,7 +57,7 @@ while [ ! -f dist/server/index.js ]; do
   sleep 0.1
 done
 
-NEXT_PUBLIC_REWRITE=true node --watch dist/server/index.js
+node --watch dist/server/index.js
 pids+=($!)
 
 echo "All processes started. Press Ctrl+C to exit."

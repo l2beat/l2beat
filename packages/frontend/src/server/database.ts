@@ -54,17 +54,10 @@ function ssl() {
 }
 
 function pool() {
-  if (env.NEXT_PUBLIC_REWRITE && env.NODE_ENV === 'production') {
+  if (env.NODE_ENV === 'production') {
     return {
       min: 50,
       max: 200,
-    }
-  }
-
-  if (env.NODE_ENV === 'production') {
-    return {
-      min: 2,
-      max: 10,
     }
   }
 

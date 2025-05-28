@@ -22,7 +22,7 @@ export const manifest = getManifest(
 )
 
 export function getManifest(isProduction: boolean, rootDir: string) {
-  if (isProduction && env.NEXT_PUBLIC_REWRITE) {
+  if (isProduction) {
     const content = fs.readFileSync('dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson
     return {

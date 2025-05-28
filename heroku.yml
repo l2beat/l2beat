@@ -5,7 +5,6 @@ build:
 setup:
   config:
     NODE_ENV: production
-    NEXT_PUBLIC_REWRITE: 'true'
 run:
   web:
     command:

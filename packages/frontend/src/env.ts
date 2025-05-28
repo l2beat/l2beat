@@ -22,7 +22,6 @@ const CLIENT_CONFIG = {
   NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
   NEXT_PUBLIC_ECOSYSTEMS: coerceBoolean.default('false'),
-  NEXT_PUBLIC_REWRITE: coerceBoolean.default('false'),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -104,6 +103,5 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
     NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     NEXT_PUBLIC_ECOSYSTEMS: process.env.NEXT_PUBLIC_ECOSYSTEMS,
-    NEXT_PUBLIC_REWRITE: process.env.NEXT_PUBLIC_REWRITE,
   }
 }
