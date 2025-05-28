@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import type { BridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
@@ -13,7 +14,6 @@ import { SentimentText } from '~/components/sentiment-text'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { InfoIcon } from '~/icons/info'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'
 

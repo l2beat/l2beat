@@ -1,3 +1,7 @@
+import type {
+  DaProjectPageEntry,
+  EthereumDaProjectPageEntry,
+} from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -5,10 +9,6 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type {
-  DaProjectPageEntry,
-  EthereumDaProjectPageEntry,
-} from '~/server/features/data-availability/project/get-da-project-entry'
 import { EthereumDaProjectSummary } from '../_components/ethereum-da-project-summary'
 import { RegularDaProjectSummary } from '../_components/regular-da-project-summary'
 

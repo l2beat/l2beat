@@ -1,5 +1,6 @@
 'use client'
 
+import type { CommonProjectEntry } from 'rewrite/src/server/features/utils/get-common-project-entry'
 import {
   Tooltip,
   TooltipContent,
@@ -15,7 +16,6 @@ import { useIsMobile } from '~/hooks/use-is-mobile'
 import { ShieldIcon } from '~/icons/shield'
 import { UnderReviewIcon } from '~/icons/under-review'
 import { UnverifiedIcon } from '~/icons/unverified'
-import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../not-synced/not-synced-icon'
 import { PrimaryValueCell } from './primary-value-cell'

@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getBridgesArchivedEntries } from 'rewrite/src/server/features/bridges/get-bridges-archived-entries'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesArchivedData(

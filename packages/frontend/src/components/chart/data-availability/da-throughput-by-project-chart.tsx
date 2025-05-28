@@ -3,6 +3,7 @@ import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
+import type { DaThroughputChartDataByChart } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -15,7 +16,6 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'

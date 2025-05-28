@@ -1,5 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
+import { getDaLayerRisks } from 'rewrite/src/server/features/data-availability/utils/get-da-layer-risks'
+import type { DaSolution } from 'rewrite/src/server/features/scaling/project/get-scaling-da-solution'
+import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
@@ -7,9 +10,6 @@ import {
 import type { GroupSectionProps } from '~/components/projects/sections/group-section'
 import type { TechnologyChoicesSectionProps } from '~/components/projects/sections/technology-choices-section'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
-import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
-import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { getDiagramParams } from '../get-diagram-params'
 import { toTechnologyRisk } from '../risk-summary/to-technology-risk'
 import { getTechnologyChoicesSectionProps } from './get-technology-choices-section-props'

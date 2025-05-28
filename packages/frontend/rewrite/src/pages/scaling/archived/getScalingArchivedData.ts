@@ -1,10 +1,10 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { ICache } from 'rewrite/src/server/cache/ICache'
+import { getScalingArchivedEntries } from 'rewrite/src/server/features/scaling/archived/get-scaling-archived-entries'
 import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingArchivedData(

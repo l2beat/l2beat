@@ -1,9 +1,9 @@
 import {
   type ActivityChartParams,
   getActivityChart,
-} from '~/server/features/scaling/activity/get-activity-chart'
-import type { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/project-filter-utils'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+} from 'rewrite/src/server/features/scaling/activity/get-activity-chart'
+import type { ActivityProjectFilterType } from 'rewrite/src/server/features/scaling/activity/utils/project-filter-utils'
+import type { ActivityTimeRange } from 'rewrite/src/server/features/scaling/activity/utils/range'
 
 interface Params {
   range: ActivityTimeRange

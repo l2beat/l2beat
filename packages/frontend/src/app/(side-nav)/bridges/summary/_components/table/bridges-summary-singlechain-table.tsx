@@ -4,7 +4,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { BasicTable } from '~/components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 
-import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import type { BridgesSummaryEntry } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { bridgesSummarySingleChainColumns } from './singlechain-columns'
 
 export interface Props {

@@ -1,7 +1,7 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import type { DaSummaryEntry } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
 import { useTable } from '~/hooks/use-table'
-import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { BasicDaTable } from '../../../_components/basic-da-table'
 import { customColumns } from './columns'
 

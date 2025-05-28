@@ -2,6 +2,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import type {
+  DaBridgeSummaryEntry,
+  DaSummaryEntry,
+} from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
 import {
   Tooltip,
   TooltipContent,
@@ -12,10 +16,6 @@ import { TableCell, TableRow } from '~/components/table/table'
 import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
 import { UnverifiedIcon } from '~/icons/unverified'
-import type {
-  DaBridgeSummaryEntry,
-  DaSummaryEntry,
-} from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { cn } from '~/utils/cn'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {

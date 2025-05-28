@@ -2,8 +2,8 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
+import type { DaThroughputTimeRange } from 'rewrite/src/server/features/data-availability/throughput/utils/range'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
-import type { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { ThroughputSectionAbsoluteChart } from './throughput-section-absolute-chart'
 import { ThroughputSectionByProjectChart } from './throughput-section-by-project-chart'
 

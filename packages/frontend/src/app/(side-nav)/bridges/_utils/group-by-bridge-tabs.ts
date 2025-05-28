@@ -1,4 +1,4 @@
-import type { CommonBridgesEntry } from '~/server/features/bridges/get-common-bridges-entry'
+import type { CommonBridgesEntry } from 'rewrite/src/server/features/bridges/get-common-bridges-entry'
 
 export type TabbedBridgeEntries<
   T extends { category: CommonBridgesEntry['category'] },

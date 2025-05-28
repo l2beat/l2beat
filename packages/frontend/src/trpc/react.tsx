@@ -9,9 +9,9 @@ import { useState } from 'react'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react'
+import type { AppRouter } from 'rewrite/src/server/api/root'
 import { env } from '~/env'
 import { useIsClient } from '~/hooks/use-is-client'
-import type { AppRouter } from '~/server/api/root'
 import { createQueryClient } from './query-client'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined

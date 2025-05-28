@@ -1,6 +1,6 @@
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
-import { ps } from '~/server/projects'
+import { getTvsChart } from 'rewrite/src/server/features/scaling/tvs/get-tvs-chart-data'
+import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
+import { ps } from 'rewrite/src/server/projects'
 
 interface Params {
   slug: string

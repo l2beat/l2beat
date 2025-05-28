@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
+import { ps } from 'rewrite/src/server/projects'
 import type { ButtonProps } from '~/components/core/button'
 import { Button, buttonVariants } from '~/components/core/button'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
@@ -10,8 +12,6 @@ import { FullRedPizzaSymbol } from '~/components/rosette/pizza/real-elements/ful
 import { FullYellowPizzaSymbol } from '~/components/rosette/pizza/real-elements/full-yellow-pizza'
 import type { RosetteValue } from '~/components/rosette/types'
 import { env } from '~/env'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
-import { ps } from '~/server/projects'
 import { cn } from '~/utils/cn'
 type Params = {
   slug: string

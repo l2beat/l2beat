@@ -1,6 +1,6 @@
+import type { ScalingArchivedEntry } from 'rewrite/src/server/features/scaling/archived/get-scaling-archived-entries'
 import { MainPageHeader } from '~/components/main-page-header'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import type { TabbedScalingEntries } from '../_utils/group-by-scaling-tabs'
 import { ScalingArchivedTables } from './_components/scaling-archived-tables'
 

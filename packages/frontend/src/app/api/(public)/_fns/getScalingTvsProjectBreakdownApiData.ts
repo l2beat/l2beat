@@ -1,5 +1,5 @@
-import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
-import { ps } from '~/server/projects'
+import { getTvsBreakdownForProject } from 'rewrite/src/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import { ps } from 'rewrite/src/server/projects'
 
 export async function getScalingTvsProjectBreakdownApiData(slug: string) {
   const project = await ps.getProject({

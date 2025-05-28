@@ -1,12 +1,12 @@
 'use client'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
+import { DaThroughputTimeRange } from 'rewrite/src/server/features/data-availability/throughput/utils/range'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { Skeleton } from '~/components/core/skeleton'
 import { ProjectCombobox } from '~/components/project-combobox'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
 

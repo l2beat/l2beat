@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
-import { ps } from '~/server/projects'
+import { getVerifiers } from 'rewrite/src/server/features/zk-catalog/get-verifiers'
+import { ps } from 'rewrite/src/server/projects'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ZkCatalogPage } from './_page'
 import { getZkCatalogEntries } from './_utils/get-zk-catalog-entries'

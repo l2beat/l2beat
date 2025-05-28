@@ -1,3 +1,4 @@
+import type { DaRiskEntry } from 'rewrite/src/server/features/data-availability/risks/get-da-risk-entries'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -6,7 +7,6 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
-import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import {
   CustomSystemInfo,
   PublicSystemInfo,

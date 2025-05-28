@@ -1,5 +1,5 @@
+import type { EcosystemEntry } from 'rewrite/src/server/features/ecosystems/get-ecosystem-entry'
 import { CssVariables } from '~/components/css-variables'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { cn } from '~/utils/cn'
 import { EcosystemsActivityChart } from '../_components/charts/ecosystems-activity-chart'
 import { EcosystemsProjectsChart } from '../_components/charts/ecosystems-projects-chart'

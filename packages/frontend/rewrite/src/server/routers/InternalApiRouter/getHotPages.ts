@@ -1,10 +1,10 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectValueRecord } from '@l2beat/database'
+import { getDb } from 'rewrite/src/server/database'
+import { getScalingTab } from 'rewrite/src/server/features/scaling/get-common-scaling-entry'
+import { ps } from 'rewrite/src/server/projects'
 import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
 import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
-import { getDb } from '~/server/database'
-import { getScalingTab } from '~/server/features/scaling/get-common-scaling-entry'
-import { ps } from '~/server/projects'
 
 export async function getHotPages() {
   const db = getDb()

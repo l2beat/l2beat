@@ -1,4 +1,4 @@
-import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import { getScalingFinalityEntries } from 'rewrite/src/server/features/scaling/finality/get-scaling-finality-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingFinalityPage } from './_page'
 

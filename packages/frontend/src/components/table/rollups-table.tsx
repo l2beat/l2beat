@@ -1,7 +1,7 @@
 import type { Row, Table } from '@tanstack/react-table'
 import React from 'react'
+import type { CommonProjectEntry } from 'rewrite/src/server/features/utils/get-common-project-entry'
 import { featureFlags } from '~/consts/feature-flags'
-import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import { cn } from '~/utils/cn'
 import type { BasicTableProps } from './basic-table'
 import { BasicTable, BasicTableRow } from './basic-table'

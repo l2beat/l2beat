@@ -2,11 +2,11 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import type { ScalingLivenessEntry } from 'rewrite/src/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
 import { columns } from './columns'
 import { toLivenessTableEntry } from './to-table-entry'

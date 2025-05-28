@@ -1,12 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
+import type { ScalingActivityEntry } from 'rewrite/src/server/features/scaling/activity/get-scaling-activity-entries'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { ActivityPage as NextActivityPage } from '~/app/(side-nav)/scaling/activity/_page'
 import { SideNavLayout } from '~/app/(side-nav)/side-nav-layout'
 import type { AppLayoutProps } from '~/app/_layout'
 import { AppLayout } from '~/app/_layout'
-import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingActivityEntry>

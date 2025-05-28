@@ -1,6 +1,12 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
+import type { CostsUnit } from 'rewrite/src/server/features/scaling/costs/types'
+import type { CostsResolution } from 'rewrite/src/server/features/scaling/costs/utils/range'
+import {
+  type CostsTimeRange,
+  rangeToResolution,
+} from 'rewrite/src/server/features/scaling/costs/utils/range'
 import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
@@ -13,12 +19,6 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import type { CostsUnit } from '~/server/features/scaling/costs/types'
-import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
-import {
-  type CostsTimeRange,
-  rangeToResolution,
-} from '~/server/features/scaling/costs/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 import { formatBytes } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'

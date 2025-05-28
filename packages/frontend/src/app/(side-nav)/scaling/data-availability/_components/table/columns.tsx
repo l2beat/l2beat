@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import type { ScalingDaEntry } from 'rewrite/src/server/features/scaling/data-availability/get-scaling-da-entries'
 import { Badge } from '~/components/badge/badge'
 import { CombinedGrissiniCell } from '~/components/rosette/grissini/combined-grissini-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
@@ -11,7 +12,6 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { TableLink } from '../../../../../../components/table/table-link'
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()

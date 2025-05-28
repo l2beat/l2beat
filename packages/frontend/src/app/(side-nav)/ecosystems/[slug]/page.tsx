@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
+import { getEcosystemEntry } from 'rewrite/src/server/features/ecosystems/get-ecosystem-entry'
+import { ps } from 'rewrite/src/server/projects'
 import { env } from '~/env'
-import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
-import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 import { EcosystemProjectPage } from './_page'
 

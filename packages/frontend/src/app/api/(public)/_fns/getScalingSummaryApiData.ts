@@ -1,5 +1,5 @@
-import { getScalingApiEntries } from '~/server/features/scaling/summary/get-scaling-api-entries'
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
+import { getScalingApiEntries } from 'rewrite/src/server/features/scaling/summary/get-scaling-api-entries'
+import { getTvsChart } from 'rewrite/src/server/features/scaling/tvs/get-tvs-chart-data'
 
 export async function getScalingSummaryApiData() {
   const [entries, data] = await Promise.all([

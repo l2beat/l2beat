@@ -1,8 +1,8 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getScalingProjectEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
+import { ps } from 'rewrite/src/server/projects'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { ps } from '~/server/projects'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

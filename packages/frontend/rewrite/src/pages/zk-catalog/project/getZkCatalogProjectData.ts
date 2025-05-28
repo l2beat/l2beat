@@ -1,9 +1,9 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getVerifiers } from 'rewrite/src/server/features/zk-catalog/get-verifiers'
+import { ps } from 'rewrite/src/server/projects'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { getZkCatalogProjectDetails } from '~/app/(side-nav)/zk-catalog/[slug]/_utils/get-zk-catalog-project-details'
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
-import { ps } from '~/server/projects'
 import type { Manifest } from '../../../../../src/utils/Manifest'
 
 export async function getZkCatalogProjectData(

@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+import type { ScalingLivenessEntry } from 'rewrite/src/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { compareStageAndTvs } from 'rewrite/src/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
@@ -19,8 +21,6 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { useLivenessTimeRangeContext } from './liveness-time-range-context'
 import { LivenessTimeRangeControls } from './liveness-time-range-controls'

@@ -1,11 +1,11 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { notFound } from 'next/navigation'
-import { env } from '~/env'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
-} from '~/server/features/data-availability/project/get-da-project-entry'
-import { ps } from '~/server/projects'
+} from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
+import { ps } from 'rewrite/src/server/projects'
+import { env } from '~/env'
 import { HydrateClient, api } from '~/trpc/server'
 import { getProjectMetadata } from '~/utils/metadata'
 import { DataAvailabilityProjectPage } from './_page'

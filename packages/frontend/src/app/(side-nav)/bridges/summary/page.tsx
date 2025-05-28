@@ -1,4 +1,4 @@
-import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
+import { getBridgesSummaryEntries } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { BridgesSummaryPage } from './_page'

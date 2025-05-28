@@ -1,10 +1,10 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { ICache } from 'rewrite/src/server/cache/ICache'
+import { getScalingRiskEntries } from 'rewrite/src/server/features/scaling/risks/get-scaling-risk-entries'
 import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingRiskData(

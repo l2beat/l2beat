@@ -2,13 +2,13 @@
 import { useCommandState } from 'cmdk'
 import Image from 'next/image'
 import React from 'react'
-import { externalLinks } from '~/consts/external-links'
-import { CheckIcon } from '~/icons/check'
-import { ChevronIcon } from '~/icons/chevron'
 import type {
   ProjectToken,
   ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+} from 'rewrite/src/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import { externalLinks } from '~/consts/external-links'
+import { CheckIcon } from '~/icons/check'
+import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
   Command,

@@ -1,3 +1,4 @@
+import type { DaThroughputEntry } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-entries'
 import { CountBadge } from '~/components/badge/count-badge'
 import { DaThroughputChart } from '~/components/chart/data-availability/da-throughput-chart'
 import {
@@ -8,7 +9,6 @@ import {
 } from '~/components/core/directory-tabs'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
-import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import { PublicSystemInfo } from '../_components/da-category-info'
 import { DaThroughputPublicTable } from './_components/table/da-throughput-public-table'
 import { IncludeScalingOnlyProvider } from './_context/da-throughput-context'

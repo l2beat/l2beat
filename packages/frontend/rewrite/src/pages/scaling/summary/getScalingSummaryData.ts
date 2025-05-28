@@ -1,11 +1,11 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
 import type { ICache } from 'rewrite/src/server/cache/ICache'
+import { getScalingSummaryEntries } from 'rewrite/src/server/features/scaling/summary/get-scaling-summary-entries'
 import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
 import { SCALING_SUMMARY_TIME_RANGE } from '~/app/(side-nav)/scaling/summary/_page'
-import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

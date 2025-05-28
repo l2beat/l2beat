@@ -1,5 +1,7 @@
 'use client'
 import { useMemo } from 'react'
+import type { ScalingRiskEntry } from 'rewrite/src/server/features/scaling/risks/get-scaling-risk-entries'
+import { compareStageAndTvs } from 'rewrite/src/server/features/scaling/utils/compare-stage-and-tvs'
 import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
@@ -18,8 +20,6 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compare-stage-and-tvs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingRiskTable } from './table/scaling-risk-table'
 

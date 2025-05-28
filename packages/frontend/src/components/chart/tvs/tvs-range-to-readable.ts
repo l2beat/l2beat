@@ -1,5 +1,5 @@
 import { pluralize } from '@l2beat/shared-pure'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
 
 export function tvsRangeToReadable(range: TvsChartRange) {
   if (range === 'max') {

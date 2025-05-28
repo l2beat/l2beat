@@ -1,4 +1,4 @@
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
 import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-controls'
 
 export interface Props {

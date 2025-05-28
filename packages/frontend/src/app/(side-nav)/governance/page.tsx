@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
+import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
 import { getCollection } from '~/content/get-collection'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { GovernancePage } from './_page'
 import { getGovernanceEventEntries } from './_utils/get-governance-event-entries'

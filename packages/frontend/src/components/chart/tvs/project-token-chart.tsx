@@ -5,6 +5,11 @@ import capitalize from 'lodash/capitalize'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
+import type {
+  ProjectToken,
+  ProjectTokens,
+} from 'rewrite/src/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
 import {
   ChartContainer,
   ChartLegend,
@@ -25,11 +30,6 @@ import { tooltipContentVariants } from '~/components/core/tooltip/tooltip'
 import { TvsBreakdownButton } from '~/components/projects/sections/stacked-tvs-section'
 import { TokenCombobox } from '~/components/token-combobox'
 import { useIsClient } from '~/hooks/use-is-client'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'

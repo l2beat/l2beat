@@ -1,6 +1,8 @@
 'use client'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'react'
+import type { EcosystemMilestone } from 'rewrite/src/server/features/ecosystems/get-ecosystem-entry'
+import { generateTimestamps } from 'rewrite/src/server/features/utils/generate-timestamps'
 import { MilestoneDrawerContent } from '~/components/core/chart/chart-milestones'
 import {
   getTickCondition,
@@ -12,8 +14,6 @@ import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { ChevronIcon } from '~/icons/chevron'
 import { IncidentIcon } from '~/icons/incident'
 import { MilestoneIcon } from '~/icons/milestone'
-import type { EcosystemMilestone } from '~/server/features/ecosystems/get-ecosystem-entry'
-import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
 import { cn } from '~/utils/cn'
 import { formatDate } from '~/utils/dates'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'

@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getBridgesSummaryEntries } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

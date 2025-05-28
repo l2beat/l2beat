@@ -1,6 +1,6 @@
 import type { Badge, Project } from '@l2beat/config'
+import { getBadgeLink } from 'rewrite/src/server/features/utils/get-badge-link'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
-import { getBadgeLink } from '~/server/features/utils/get-badge-link'
 import { getImageParams } from './get-image-params'
 
 const badgesParams: Record<

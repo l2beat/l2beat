@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getDaRiskEntries } from 'rewrite/src/server/features/data-availability/risks/get-da-risk-entries'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityRiskData(

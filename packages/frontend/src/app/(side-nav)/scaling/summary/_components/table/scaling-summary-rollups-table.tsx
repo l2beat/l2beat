@@ -2,11 +2,11 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import type { ScalingSummaryEntry } from 'rewrite/src/server/features/scaling/summary/get-scaling-summary-entries'
 import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { toTableRows } from '../../_utils/to-table-rows'
 import { scalingSummaryColumns } from './columns'
 

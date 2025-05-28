@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { getProjectIcon } from '~/server/features/utils/get-project-icon'
-import { ps } from '~/server/projects'
+import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
+import { ps } from 'rewrite/src/server/projects'
 import type { SearchBarProject } from './search-bar-entry'
 
 export async function getSearchBarProjects(): Promise<SearchBarProject[]> {

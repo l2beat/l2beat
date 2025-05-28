@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getDaThroughputEntries } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-entries'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

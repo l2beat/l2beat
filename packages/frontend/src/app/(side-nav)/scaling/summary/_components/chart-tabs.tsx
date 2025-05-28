@@ -1,10 +1,10 @@
 'use client'
 import * as Tabs from '@radix-ui/react-tabs'
+import type { ActivityTimeRange } from 'rewrite/src/server/features/scaling/activity/utils/range'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/scaling-summary-activity-chart'
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/scaling-summary-tvs-chart'
 import type { ChartUnit } from '~/components/chart/types'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
-import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { cn } from '~/utils/cn'
 import type { TimeRange } from '~/utils/range/range'
 

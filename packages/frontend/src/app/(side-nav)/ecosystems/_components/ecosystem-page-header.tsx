@@ -1,10 +1,10 @@
 import Image from 'next/image'
+import type { EcosystemEntry } from 'rewrite/src/server/features/ecosystems/get-ecosystem-entry'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import {
   type BadgeWithParams,
   ProjectBadge,
 } from '~/components/projects/project-badge'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
 import { cn } from '~/utils/cn'
 
 interface Props {

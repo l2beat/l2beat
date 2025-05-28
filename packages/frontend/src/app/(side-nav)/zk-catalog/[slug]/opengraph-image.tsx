@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { NextResponse } from 'next/server'
+import { ps } from 'rewrite/src/server/projects'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
-import { ps } from '~/server/projects'
 import { getBaseUrl } from '~/utils/get-base-url'
 
 export const runtime = 'nodejs'

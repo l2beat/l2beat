@@ -1,4 +1,5 @@
 'use client'
+import type { BridgesArchivedEntry } from 'rewrite/src/server/features/bridges/get-bridges-archived-entries'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -9,7 +10,6 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
 import { BridgesArchivedTable } from './table/bridges-archived-table'
 

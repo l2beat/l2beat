@@ -1,4 +1,4 @@
-import { ps } from '~/server/projects'
+import { ps } from 'rewrite/src/server/projects'
 
 export async function getLogoGeneratorProjects() {
   const projects = await ps.getProjects({

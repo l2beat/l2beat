@@ -1,4 +1,4 @@
-import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import { getDaThroughputEntries } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { DataAvailabilityThroughputPage } from './_page'

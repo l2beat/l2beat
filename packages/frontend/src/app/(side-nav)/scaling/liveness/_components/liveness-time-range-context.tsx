@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext } from 'react'
+import type { LivenessTimeRange } from 'rewrite/src/server/features/scaling/liveness/types'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 
 type LivenessTimeRangeContextValue = {
   timeRange: LivenessTimeRange

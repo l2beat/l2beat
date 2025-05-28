@@ -1,14 +1,14 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
-import type { RenderData } from 'rewrite/src/ssr/types'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
-} from '~/server/features/data-availability/project/get-da-project-entry'
+} from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
+import type { RenderData } from 'rewrite/src/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
+import { ps } from 'rewrite/src/server/projects'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import { ps } from '~/server/projects'
 import type { ExpressHelpers } from '~/trpc/server'
 import { getExpressHelpers } from '~/trpc/server'
 

@@ -1,5 +1,5 @@
+import type { BridgesArchivedEntry } from 'rewrite/src/server/features/bridges/get-bridges-archived-entries'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { BridgesHeader } from '../_components/bridges-header'
 import type { TabbedBridgeEntries } from '../_utils/group-by-bridge-tabs'
 import { BridgesArchivedTables } from './_components/bridges-archived-tables'

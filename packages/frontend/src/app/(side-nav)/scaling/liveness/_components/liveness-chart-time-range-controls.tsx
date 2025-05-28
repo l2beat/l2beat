@@ -1,7 +1,7 @@
 'use client'
 
+import type { LivenessChartTimeRange } from 'rewrite/src/server/features/scaling/liveness/utils/chart-range'
 import { ChartTimeRangeControls } from '~/components/core/chart/chart-time-range-controls'
-import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 
 interface Props {
   timeRange: LivenessChartTimeRange

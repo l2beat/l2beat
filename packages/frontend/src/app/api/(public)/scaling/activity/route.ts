@@ -2,7 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { ActivityChartParams } from '~/server/features/scaling/activity/get-activity-chart'
+import { ActivityChartParams } from 'rewrite/src/server/features/scaling/activity/get-activity-chart'
 import { getScalingActivityApiData } from '../../_fns/getScalingActivityApiData'
 
 export async function GET(request: NextRequest) {

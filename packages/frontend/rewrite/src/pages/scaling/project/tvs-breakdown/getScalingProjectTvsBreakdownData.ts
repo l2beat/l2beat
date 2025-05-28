@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from 'rewrite/src/common/getAppLayoutProps'
+import { getScalingProjectTvsBreakdownData as nextGetScalingProjectTvsBreakdownData } from 'rewrite/src/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
 import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
 import type { RenderData } from 'rewrite/src/ssr/types'
-import { getScalingProjectTvsBreakdownData as nextGetScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

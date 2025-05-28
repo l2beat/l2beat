@@ -1,6 +1,7 @@
 import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
+import type { LivenessAnomaly } from 'rewrite/src/server/features/scaling/liveness/types'
 import { Callout } from '~/components/callout'
 import {
   Tooltip,
@@ -8,7 +9,6 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './liveness-duration-cell'
