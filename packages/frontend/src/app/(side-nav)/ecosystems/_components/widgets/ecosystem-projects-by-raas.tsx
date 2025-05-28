@@ -3,7 +3,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import Image from '~/_next/image'
-import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import {
   Tooltip,
   TooltipContent,
@@ -11,6 +10,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { ArrowIcon } from '~/icons/arrow'
+import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/_components/table/projects-used-in'
 import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
 import { cn } from '~/utils/cn'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'

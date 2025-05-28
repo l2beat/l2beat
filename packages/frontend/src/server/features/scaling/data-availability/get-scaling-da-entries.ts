@@ -6,12 +6,12 @@ import type {
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
-import { ps } from '~/server/projects'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
-} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
+} from '~/pages/data-availability/utils/map-risks-to-rosette-values'
 import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { ps } from '~/server/projects'
 import { getDaLayerRisks } from '../../data-availability/utils/get-da-layer-risks'
 import type { ProjectsEconomicSecurity } from '../../data-availability/utils/get-da-projects-economic-security'
 import { getDaProjectsEconomicSecurity } from '../../data-availability/utils/get-da-projects-economic-security'

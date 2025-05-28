@@ -9,8 +9,8 @@ import { getDaCommonProjectColumns } from '~/components/table/utils/common-proje
 import { EM_DASH } from '~/consts/characters'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { DacMembersCell } from '../../../_components/dac-members-cell'
-import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
+import { DacMembersCell } from '../../../components/dac-members-cell'
+import { virtual, withSpanByBridges } from '../../../utils/col-utils'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 

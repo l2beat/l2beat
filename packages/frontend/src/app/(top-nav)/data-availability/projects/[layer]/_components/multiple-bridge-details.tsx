@@ -1,8 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
-import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
   Drawer,
@@ -22,6 +20,8 @@ import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
 import { InfoIcon } from '~/icons/info'
 import { UnverifiedIcon } from '~/icons/unverified'
+import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/da-summary-public-table'
+import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/projects-used-in'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/format-currency'

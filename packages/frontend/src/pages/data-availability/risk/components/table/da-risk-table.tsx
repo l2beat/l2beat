@@ -9,7 +9,7 @@ import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-
 import {
   BasicDaTable,
   getRowTypeClassNames,
-} from '../../../_components/basic-da-table'
+} from '../../../components/basic-da-table'
 import { customColumns, publicColumns } from './columns'
 
 export function DaRiskTable({

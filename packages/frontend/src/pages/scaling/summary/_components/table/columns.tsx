@@ -19,7 +19,7 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import { sortStages } from '~/components/table/sorting/sort-stages'
 import { TableLink } from '~/components/table/table-link'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
-import { TotalCell } from '~/pages/scaling/summary/_components/table/total-cell'
+import { TotalCell } from '~/pages/scaling/summary/components/table/total-cell'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import type { ScalingSummaryTableRow } from '../../utils/to-table-rows'
 

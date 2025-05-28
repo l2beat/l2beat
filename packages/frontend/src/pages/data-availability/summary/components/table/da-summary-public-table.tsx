@@ -21,7 +21,7 @@ import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-val
 import {
   BasicDaTable,
   getRowTypeClassNames,
-} from '../../../_components/basic-da-table'
+} from '../../../components/basic-da-table'
 import { publicSystemsColumns } from './columns'
 import { ProjectsUsedIn } from './projects-used-in'
 

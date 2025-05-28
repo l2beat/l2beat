@@ -5,7 +5,7 @@ import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableLink } from '~/components/table/table-link'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
-import { virtual, withSpanByBridges } from '../../../_utils/col-utils'
+import { virtual, withSpanByBridges } from '../../../utils/col-utils'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 

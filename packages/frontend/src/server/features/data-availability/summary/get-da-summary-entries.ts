@@ -6,14 +6,14 @@ import type {
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
-import { ps } from '~/server/projects'
-import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
-import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
+import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/projects-used-in'
+import type { TabbedDaEntries } from '~/pages/data-availability/utils/group-by-da-tabs'
+import { groupByDaTabs } from '~/pages/data-availability/utils/group-by-da-tabs'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
-} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+} from '~/pages/data-availability/utils/map-risks-to-rosette-values'
+import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/get-project-icon'
 import {
   type CommonDaEntry,
