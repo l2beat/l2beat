@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "karak",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"],
+      "names": { "0x28A227d4faF0f4f75897438E24C43EF1CDABb920": "KarakMultisig" }
+    }
+  }
+}

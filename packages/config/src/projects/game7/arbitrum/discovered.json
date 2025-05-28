@@ -2,7 +2,7 @@
   "name": "game7",
   "chain": "arbitrum",
   "blockNumber": 331093646,
-  "configHash": "0x0cda9f693b2d106ebcc77624ec5c2b869ba8d690c28fc200ab761a0b40975c3f",
+  "configHash": "0x4c50c53f0580bfa95e9a99bc5b4f0cb4e383fc835ecb3deebc7b2a95ef1da104",
   "entries": [
     {
       "name": "OneStepProverHostIo",

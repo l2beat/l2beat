@@ -2,7 +2,7 @@
   "name": "popboss",
   "chain": "arbitrum",
   "blockNumber": 331093357,
-  "configHash": "0x531bfbff26cafcde16b8a1adb7b7c9a07d4f263f537e2bb6a4d8cbfecdce2964",
+  "configHash": "0xaa28c4777745b4f3ed2cde27edfd4222f9ea3e0d34fafd410d2e7e8d2f531942",
   "entries": [
     {
       "name": "UpgradeExecutor",

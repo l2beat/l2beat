@@ -2,7 +2,7 @@
   "name": "swan",
   "chain": "ethereum",
   "blockNumber": 20413034,
-  "configHash": "0x64982ef7845af549a29657aa1c1b5eb6eacb9c6fe686933ef1b751fb5c4fd9c2",
+  "configHash": "0x3ba47dd1b698af6286f2c843c3e0198d96dd762ba4b129296100cdd7b0ae183a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

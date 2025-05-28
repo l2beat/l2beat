@@ -2,7 +2,7 @@
   "name": "gateway",
   "chain": "ethereum",
   "blockNumber": 22572509,
-  "configHash": "0xe522e0d1aa5d6dc72aee6e03e3ef9200e4f29ecfc8cb5c1584d7be9293f57b56",
+  "configHash": "0xe6d19af9e8b1cc50a22e05848290959e5cf672fc93e640127f8a8369a7a1688a",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

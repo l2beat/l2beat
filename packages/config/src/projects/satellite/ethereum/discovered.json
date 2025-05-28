@@ -2,7 +2,7 @@
   "name": "satellite",
   "chain": "ethereum",
   "blockNumber": 20017695,
-  "configHash": "0xb03cc1b56031d6ef36e5b8de8cccdec40f87a4a2b29f75bcd01b2e2f3c339554",
+  "configHash": "0xdb86c3f3a6a6166c0f179164878b5e2dfb4b22795951e0707ff04bef1e3d4d24",
   "entries": [
     {
       "address": "0x027c1882B975E2cd771AE068b0389FA38B9dda73",

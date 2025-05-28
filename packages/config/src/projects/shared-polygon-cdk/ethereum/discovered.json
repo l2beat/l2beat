@@ -2,7 +2,7 @@
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
   "blockNumber": 22536886,
-  "configHash": "0xa2dfb1acd6bc73b533ca5c287dc179b8f1e483f06ba34731b79fe08467af5085",
+  "configHash": "0xb8eaf6f01fa63cb9c982c7ba1b07e8a0aa0e20a311a7529059bc5ed39efa9c95",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",

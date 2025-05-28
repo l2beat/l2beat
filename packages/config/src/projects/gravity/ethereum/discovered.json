@@ -2,7 +2,7 @@
   "name": "gravity",
   "chain": "ethereum",
   "blockNumber": 17065004,
-  "configHash": "0xfbe09841c15f90786ebfca70de6de6594d9a3dd5d316a1346e7962985dc43fce",
+  "configHash": "0x024f2cff7683ae58da31b80b807d322522cf99c26fb9f05e42a8f3f3d5ae3018",
   "entries": [
     {
       "name": "Gravity",

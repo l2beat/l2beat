@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0x0c37319592dc4f7a5cba5e316bd77241f1eae5c23e31d649e15b939193c04ee7",
+  "configHash": "0x2509db535f231aa8befbd442598523850dbfa954d29eda857289c9b65541d82f",
   "entries": [
     {
       "name": "MantaProxyAdmin",

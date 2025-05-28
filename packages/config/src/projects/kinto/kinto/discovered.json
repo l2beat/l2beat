@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "kinto",
   "blockNumber": 869343,
-  "configHash": "0xce9e7fd2c6ae479273bb570ec53e05d4aad369309fe037cda7c6954578bcdc25",
+  "configHash": "0x3538793bf99ae5e779268871c6e476ccc217a0792062eb42e364dc9d8a8c8d7c",
   "entries": [
     {
       "name": "NioGuardians",

@@ -2,7 +2,7 @@
   "name": "sygma",
   "chain": "ethereum",
   "blockNumber": 19532229,
-  "configHash": "0xbe08c2f578b582f7e3847d3984717956c84c170b736d0b94945fdbc8c70a2ad6",
+  "configHash": "0xd0a7b3e552d5c26461daf935ba3be7bced0bf678682174a5f53d2fa031d0e2c7",
   "entries": [
     {
       "address": "0x0c1db86328E6CFCD4f530401131Dc9a26DefA12a",

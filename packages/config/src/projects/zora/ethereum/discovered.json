@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 22437752,
-  "configHash": "0xaa1a9d5442f9a512e879a4dccfdc9469031cea4afc168bdb7752a41aa46a1e48",
+  "configHash": "0x273a369ea0aba1edf5713bec500f9d81eaf2e32c333135e549cb11ab18ce2cc3",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

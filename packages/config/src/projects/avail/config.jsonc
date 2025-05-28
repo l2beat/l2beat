@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "avail",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {}
+}

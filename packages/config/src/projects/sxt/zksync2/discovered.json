@@ -2,7 +2,7 @@
   "name": "sxt",
   "chain": "zksync2",
   "blockNumber": 60986372,
-  "configHash": "0xf791a8ff80fe2d475d2c8980381b391c690ddbc92c9622fc731d145fcb777085",
+  "configHash": "0xe696a019d82ceecabea411d9fbadaf7c44657c38ce2785c7492a36ae8121a369",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
