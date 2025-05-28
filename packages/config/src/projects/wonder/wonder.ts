@@ -1,4 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { zkStackL2 } from '../../templates/zkStack'
@@ -10,6 +12,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 
 export const wonder: ScalingProject = zkStackL2({
   addedAt: UnixTime(1741634331), // 2025/03/10 19:18 UTC
+  additionalBadges: [BADGES.DA.CustomDA],
   display: {
     name: 'Wonder',
     slug: 'wonder',
@@ -58,6 +61,29 @@ export const wonder: ScalingProject = zkStackL2({
       },
     }),
   ],
+  daProvider: {
+    layer: DA_LAYERS.NONE,
+    bridge: DA_BRIDGES.NONE,
+    riskView: RISK_VIEW.DATA_EXTERNAL,
+    technology: {
+      name: 'Data is not stored on chain',
+      description:
+        'The transaction data is not recorded on the Ethereum main chain. Transaction data is stored off-chain and only the hashes are posted onchain by the centralized Sequencer.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the external data becomes unavailable.',
+          isCritical: true,
+        },
+      ],
+      references: [
+        {
+          title: 'ExecutorFacet - _commitOneBatch() function',
+          url: 'https://etherscan.io/address/0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490#code#F1#L50',
+        },
+      ],
+    },
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
