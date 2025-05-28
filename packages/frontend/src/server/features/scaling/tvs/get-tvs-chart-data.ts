@@ -31,7 +31,7 @@ type TvsChartDataPoint = readonly [
   external: number,
   ethPrice: number,
 ]
-type TvsChartData = TvsChartDataPoint[]
+export type TvsChartData = TvsChartDataPoint[]
 
 /**
  * @returns {

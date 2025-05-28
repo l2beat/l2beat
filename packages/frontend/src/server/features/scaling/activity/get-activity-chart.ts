@@ -22,7 +22,7 @@ export const ActivityChartParams = z.object({
   previewRecategorisation: z.boolean(),
 })
 
-type ActivityChartData = {
+export type ActivityChartData = {
   data: [
     timestamp: number,
     projectsTxCount: number,

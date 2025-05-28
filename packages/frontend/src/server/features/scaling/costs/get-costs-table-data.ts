@@ -6,14 +6,18 @@ import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import type { CostsTimeRange } from './utils/range'
 
+type LatestCostsValuesWithTotal = LatestCostsValues & {
+  total: number
+}
+
 export type CostsTableData = Record<
   string,
   {
     isSynced: boolean
     uopsCount: number | undefined
-    gas: LatestCostsValues
-    eth: LatestCostsValues
-    usd: LatestCostsValues
+    gas: LatestCostsValuesWithTotal
+    eth: LatestCostsValuesWithTotal
+    usd: LatestCostsValuesWithTotal
   }
 >
 
