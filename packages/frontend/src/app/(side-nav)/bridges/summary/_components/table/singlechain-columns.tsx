@@ -9,7 +9,6 @@ import {
 } from '~/components/table/sorting/sort-table-values'
 import { TableLink } from '~/components/table/table-link'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/common-project-columns'
-import { EM_DASH } from '~/consts/characters'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
@@ -81,7 +80,7 @@ export const bridgesSummarySingleChainColumns = [
     sortingFn: (a, b) =>
       sortTableValues(a.original.livenessFailure, b.original.livenessFailure),
   }),
-  columnHelper.accessor((e) => adjustTableValue(e.sourceUpgradeability), {
+  columnHelper.accessor((e) => e.governance, {
     header: 'Governance',
     meta: {
       tooltip:
@@ -89,21 +88,27 @@ export const bridgesSummarySingleChainColumns = [
     },
     cell: (ctx) => (
       <>
-        <div>
+        <div className="flex items-center gap-px">
           <span className="font-bold">Upgrades: </span>
-          {ctx.row.original.sourceUpgradeability?.value ?? EM_DASH}
+          <TableValueCell
+            value={ctx.row.original.governance?.upgrade}
+            emptyMode="em-dash"
+          />
         </div>
-        <div>
+        <div className="flex items-center gap-px">
           <span className="font-bold">Pause: </span>
-          {ctx.row.original.sourceUpgradeability?.secondLine ?? EM_DASH}
+          <TableValueCell
+            value={ctx.row.original.governance?.pause}
+            emptyMode="em-dash"
+          />
         </div>
       </>
     ),
     sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
-        a.original.sourceUpgradeability,
-        b.original.sourceUpgradeability,
+        a.original.governance?.upgrade,
+        b.original.governance?.upgrade,
       ),
   }),
   columnHelper.accessor((e) => e.otherConsiderations, {
