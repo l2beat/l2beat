@@ -2,11 +2,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import {
-  ActivityChartParams,
-  getActivityChart,
-} from '~/server/features/scaling/activity/get-activity-chart'
+import { ActivityChartParams } from '~/server/features/scaling/activity/get-activity-chart'
 import { ps } from '~/server/projects'
+import { getScalingActivityProjectApiData } from '../../../_fns/getScalingActivityProjectApiData'
 
 export async function GET(
   request: NextRequest,
@@ -51,43 +49,12 @@ const getCachedResponse = cache(
       } as const
     }
 
-    const { data } = await getActivityChart(params)
+    const response = await getScalingActivityProjectApiData({
+      slug,
+      range: parsedParams.data.range,
+    })
 
-    const oldestProjectData = data.at(0)
-    const latestProjectData = data.at(-1)
-
-    if (!oldestProjectData || !latestProjectData) {
-      return {
-        success: false,
-        error: 'Missing data.',
-      } as const
-    }
-
-    // Unfortunately, ethereum data is being served along with other projects data
-    const dataPoints = data.map(
-      ([
-        timestamp,
-        projectsTxCount,
-        ethereumTxCount,
-        projectsUopsCount,
-        ethereumUopsCount,
-      ]) =>
-        [
-          timestamp,
-          isEthereum ? ethereumTxCount : projectsTxCount,
-          isEthereum ? ethereumUopsCount : projectsUopsCount,
-        ] as const,
-    )
-
-    return {
-      success: true,
-      data: {
-        chart: {
-          types: ['timestamp', 'count', 'uopsCount'],
-          data: dataPoints,
-        },
-      },
-    } as const
+    return response
   },
   ['scaling-activity-project-route'],
   {

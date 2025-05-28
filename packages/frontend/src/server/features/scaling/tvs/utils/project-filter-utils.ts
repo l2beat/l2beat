@@ -20,6 +20,16 @@ export const TvsProjectFilter = z.discriminatedUnion('type', [
 ])
 export type TvsProjectFilter = z.infer<typeof TvsProjectFilter>
 
+export const TvsProjectFilterType = z.enum([
+  'layer2',
+  'rollups',
+  'validiumsAndOptimiums',
+  'others',
+  'bridge',
+  'projects',
+])
+export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
+
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
   previewRecategorisation?: boolean,

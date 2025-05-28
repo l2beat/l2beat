@@ -2,10 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import {
-  ActivityChartParams,
-  getActivityChart,
-} from '~/server/features/scaling/activity/get-activity-chart'
+import { ActivityChartParams } from '~/server/features/scaling/activity/get-activity-chart'
+import { getScalingActivityApiData } from '../../_fns/getScalingActivityApiData'
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
@@ -40,39 +38,20 @@ export async function GET(request: NextRequest) {
     })
   }
 
-  const response = await getCachedResponse(parsedParams.data)
+  const response = await getCachedResponse({
+    projectIds:
+      parsedParams.data.filter.type === 'projects'
+        ? parsedParams.data.filter.projectIds
+        : [],
+    range: parsedParams.data.range,
+    type: parsedParams.data.filter.type,
+  })
 
   return NextResponse.json(response)
 }
 
 const getCachedResponse = cache(
-  async (params: ActivityChartParams) => {
-    const { data } = await getActivityChart(params)
-    const latestActivityData = data.at(-1)
-
-    if (!latestActivityData) {
-      return {
-        success: false,
-        error: 'Missing data.',
-      } as const
-    }
-
-    // Strip ethereum data points
-    const projectsDataPoints = data.map(
-      ([timestamp, projectsTxCount, _, projectsUopsCount]) =>
-        [timestamp, projectsTxCount, projectsUopsCount] as const,
-    )
-
-    return {
-      success: true,
-      data: {
-        chart: {
-          types: ['timestamp', 'count', 'uopsCount'],
-          data: projectsDataPoints,
-        },
-      },
-    } as const
-  },
+  getScalingActivityApiData,
   ['scaling-activity-route'],
   {
     tags: ['hourly-data'],
