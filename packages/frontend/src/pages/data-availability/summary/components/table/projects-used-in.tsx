@@ -1,5 +1,4 @@
 import type { UsedInProject } from '@l2beat/config'
-import Image from 'next/image'
 import {
   Tooltip,
   TooltipContent,
@@ -72,7 +71,7 @@ export function ProjectsUsedIn({
           <Tooltip key={project.slug}>
             {noLink ? (
               <TooltipTrigger>
-                <Image
+                <img
                   width={20}
                   height={20}
                   src={project.icon}

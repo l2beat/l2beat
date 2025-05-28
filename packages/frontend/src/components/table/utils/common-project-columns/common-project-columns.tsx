@@ -1,5 +1,4 @@
 import type { ColumnHelper } from '@tanstack/react-table'
-import Image from 'next/image'
 import { EM_DASH } from '~/consts/characters'
 import { IndexCell } from '../../cells/index-cell'
 
@@ -40,7 +39,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
       id: 'logo',
       cell: (ctx) => {
         const image = (
-          <Image
+          <img
             className="min-h-[20px] min-w-[20px]"
             src={ctx.row.original.icon}
             width={20}

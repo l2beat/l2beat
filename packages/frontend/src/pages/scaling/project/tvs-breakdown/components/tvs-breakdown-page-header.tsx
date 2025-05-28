@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { Breadcrumbs } from '~/components/breadcrumbs'
 import { formatTimestampToDateWithHour } from '~/utils/dates'
 
@@ -23,12 +22,7 @@ export function TvsBreakdownPageHeader({
           {
             content: (
               <div className="flex items-center gap-1.5">
-                <Image
-                  width={16}
-                  height={16}
-                  src={icon}
-                  alt={`${title} logo`}
-                />
+                <img width={16} height={16} src={icon} alt={`${title} logo`} />
                 <span className="leading-none">{title}</span>
               </div>
             ),

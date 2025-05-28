@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { PercentChange } from '~/components/percent-change'
 import type { EcosystemToken } from '~/server/features/ecosystems/get-ecosystem-token'
@@ -18,7 +17,7 @@ export function EcosystemToken({ token, className }: Props) {
       <EcosystemWidgetTitle>Ecosystem Token</EcosystemWidgetTitle>
       <div className="grid md:grid-cols-3 lg:grid-cols-1">
         <div className="flex items-center gap-2 text-xl font-medium">
-          <Image
+          <img
             src={token.logo}
             alt={token.name}
             width={40}

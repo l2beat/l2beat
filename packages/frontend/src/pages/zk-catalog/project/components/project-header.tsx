@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 interface Props {
   title: string
   icon: string | undefined
@@ -9,7 +7,7 @@ export function ProjectHeader(props: Props) {
   return (
     <h1 className="flex items-center justify-start gap-3">
       {props.icon && (
-        <Image
+        <img
           width={32}
           height={32}
           className="size-8 md:size-10"

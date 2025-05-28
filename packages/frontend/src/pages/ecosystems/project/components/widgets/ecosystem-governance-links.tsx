@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
@@ -62,7 +61,7 @@ function GovernanceLink({
             L2BEAT Review
           </div>
         </div>
-        <Image
+        <img
           {...bankImage}
           width={bankImage.width / 3}
           height={bankImage.height / 3}

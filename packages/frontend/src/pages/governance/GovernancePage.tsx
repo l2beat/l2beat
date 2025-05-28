@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
@@ -81,7 +80,7 @@ function Header({
                   href={delegatedProject.data.delegateTokensUrl}
                   underline={false}
                 >
-                  <Image
+                  <img
                     alt={`Logo of ${delegatedProject.data.name}`}
                     width={20}
                     height={20}

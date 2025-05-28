@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { cn } from '~/utils/cn'
 
 export type ProjectDetailsRelatedProjectBannerProps = {
@@ -29,7 +28,7 @@ export function ProjectDetailsRelatedProjectBanner({
       <div>
         {text}{' '}
         <span className="inline-block">
-          <Image
+          <img
             className="mr-1 inline-block size-5"
             src={project.icon}
             width={20}

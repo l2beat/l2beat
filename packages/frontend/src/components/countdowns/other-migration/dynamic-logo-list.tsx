@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import {
   Tooltip,
@@ -53,7 +52,7 @@ export function DynamicLogoList({ projects }: Props) {
           <Tooltip key={slug}>
             <a href={`/scaling/projects/${slug}`}>
               <TooltipTrigger>
-                <Image
+                <img
                   src={icon}
                   alt={name}
                   width={LOGO_SIZE}

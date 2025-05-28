@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react'
 
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
@@ -75,7 +74,7 @@ export function DesktopProjectNavigation({
         >
           <div className="flex flex-row items-center gap-4">
             {project.slug && (
-              <Image
+              <img
                 width={32}
                 height={32}
                 src={project.icon}

@@ -1,5 +1,4 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import Image from 'next/image'
 import {
   Tooltip,
   TooltipContent,
@@ -31,7 +30,7 @@ export function UsedInProjectEntry({
                 href={`${project.url}#${project.targetName}`}
                 className="size-5"
               >
-                <Image
+                <img
                   width={20}
                   height={20}
                   key={i}

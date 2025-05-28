@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { ImageParams } from '~/utils/project/get-image-params'
 
 export function ReportBanner({
@@ -16,7 +15,7 @@ export function ReportBanner({
           Upgradeability of Ethereum L2s
         </div>
       </div>
-      <Image
+      <img
         alt=""
         {...image}
         className="h-full max-h-[320px] rounded-md md:rounded-none"

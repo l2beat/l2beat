@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { NotSyncedIcon } from '~/components/not-synced/not-synced-icon'
 
 interface Props {
@@ -16,7 +15,7 @@ export function TokenNameCell({
 }: Props) {
   return (
     <div className="flex items-center justify-start gap-2 pr-4 md:pr-2">
-      <Image
+      <img
         width={16}
         height={16}
         src={iconUrl}

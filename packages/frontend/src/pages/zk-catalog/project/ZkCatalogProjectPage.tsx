@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import type { ReactNode } from 'react'
 import { Breadcrumbs } from '~/components/breadcrumbs'
 import {
@@ -35,7 +34,7 @@ export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
                 {
                   content: (
                     <span className="flex items-center gap-1.5">
-                      <Image
+                      <img
                         alt={`${projectDetails.title} logo`}
                         width={16}
                         height={16}

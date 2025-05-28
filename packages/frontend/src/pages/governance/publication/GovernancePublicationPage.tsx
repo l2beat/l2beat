@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { MainPageHeader } from '~/components/main-page-header'
 import { Article } from '~/components/markdown/article'
@@ -26,7 +25,7 @@ export function GovernancePublicationPage({ publication, ...props }: Props) {
                 {publication.description}
               </p>
             )}
-            <Image
+            <img
               {...publication.thumbnail}
               alt={`${publication.title} publication thumbnail`}
               className="mb-12 w-full rounded-lg"
@@ -50,7 +49,7 @@ function PublicationHeader({
       </p>
       <h1 className="md:heading-32 heading-24 mt-2">{publication.title}</h1>
       <div className="mt-6 flex items-center justify-start">
-        <Image
+        <img
           {...publication.author.avatar}
           alt={`Avatar of ${publication.author.firstName} ${publication.author.lastName}`}
           className="mr-2 size-10 rounded-full"

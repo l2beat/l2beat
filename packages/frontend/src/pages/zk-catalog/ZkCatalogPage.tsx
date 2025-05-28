@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import Image from 'next/image'
 import { MainPageHeader } from '~/components/main-page-header'
 import { ChevronIcon } from '~/icons/chevron'
 import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
@@ -50,7 +49,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
               >
                 <div className="grid md:grid-cols-[1.5fr,1fr,1fr,1fr,130px,70px]">
                   <div className="mb-3 flex items-center gap-2 md:hidden">
-                    <Image
+                    <img
                       width={18}
                       height={18}
                       alt={entry.name}
@@ -64,7 +63,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                     className="hidden flex-col items-start justify-start md:flex"
                   >
                     <div className="flex items-center gap-2">
-                      <Image
+                      <img
                         width={18}
                         height={18}
                         alt={entry.name}

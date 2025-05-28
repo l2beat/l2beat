@@ -1,5 +1,4 @@
 import compact from 'lodash/compact'
-import Image from 'next/image'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
@@ -103,7 +102,7 @@ function QrCodeSection({
             mobile && 'size-[184px]',
           )}
         >
-          <Image
+          <img
             alt="QR Code of donate address"
             src={qrCodeUrl}
             width={176}

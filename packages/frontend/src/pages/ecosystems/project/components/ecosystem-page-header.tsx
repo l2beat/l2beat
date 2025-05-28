@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import {
   type BadgeWithParams,
@@ -18,24 +17,20 @@ export function EcosystemPageHeader({ logo, badges, links }: Props) {
     <header className="flex items-center">
       <div>
         <div className="flex h-20 items-center gap-2">
-          <Image
+          <img
             src={logo.light}
             className={cn('h-10 w-auto', logo.dark && 'dark:hidden')}
             alt="Ecosystem logo"
-            quality={100}
             width={logo.width}
             height={logo.height}
-            priority
           />
           {logo.dark && (
-            <Image
+            <img
               src={logo.dark}
               className="hidden h-10 w-auto dark:block"
               alt="Ecosystem logo"
-              quality={100}
               width={logo.width}
               height={logo.height}
-              priority
             />
           )}
         </div>

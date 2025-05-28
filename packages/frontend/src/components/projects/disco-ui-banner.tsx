@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { DiscoUiIcon } from '~/icons/disco-ui'
 import { CustomLinkIcon } from '~/icons/outlink'
 
@@ -26,18 +25,17 @@ export function DiscoUiBanner({ href }: { href: string }) {
             </a>
           </div>
           <div className="relative w-1/2">
-            <Image
+            <img
               src={'/images/disco-ui-desktop.png'}
               alt="Disco UI Banner"
-              fill
-              className="object-cover object-top"
+              className="absolute inset-0 h-full w-full object-cover object-top"
             />
           </div>
         </div>
       </div>
       {/* Mobile */}
       <div className="relative max-h-40 overflow-hidden rounded md:hidden">
-        <Image
+        <img
           src={'/images/disco-ui-mobile.png'}
           alt="Disco UI Banner"
           className="size-full object-cover object-top"
