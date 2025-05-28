@@ -57,7 +57,7 @@ export async function getHotPages() {
 
   const daPaths = daLayers.map((d) => {
     const bridge = daBridges.find((b) => b.daBridge.daLayer === d.id)
-    return `/data-availability/${d.slug}/${bridge?.slug ?? 'no-bridge'}`
+    return `/data-availability/projects/${d.slug}/${bridge?.slug ?? 'no-bridge'}`
   })
 
   return [
