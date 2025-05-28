@@ -2,11 +2,9 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import {
-  TvsChartDataParams,
-  getTvsChart,
-} from '~/server/features/scaling/tvs/get-tvs-chart-data'
+import { TvsChartDataParams } from '~/server/features/scaling/tvs/get-tvs-chart-data'
 import { ps } from '~/server/projects'
+import { getScalingTvsProjectApiData } from '../../../_fns/getScalingTvsProjectApiData'
 
 export async function GET(
   request: NextRequest,
@@ -54,41 +52,11 @@ const getCachedResponse = cache(
         errors: parsedParams.error.errors,
       } as const
     }
-
-    const data = await getTvsChart(params)
-
-    const oldestTvsData = data.at(0)
-    const latestTvsData = data.at(-1)
-
-    if (!oldestTvsData || !latestTvsData) {
-      return {
-        success: false,
-        error: 'Missing data.',
-      } as const
-    }
-
-    const usdValue = latestTvsData[1] + latestTvsData[2] + latestTvsData[3]
-    const ethValue = usdValue / latestTvsData[4]
-
-    return {
-      success: true,
-      data: {
-        usdValue,
-        ethValue,
-        chart: {
-          types: ['timestamp', 'native', 'canonical', 'external', 'ethPrice'],
-          data: data.map(
-            ([timestamp, native, canonical, external, ethPrice]) => [
-              timestamp,
-              native,
-              canonical,
-              external,
-              ethPrice,
-            ],
-          ),
-        },
-      },
-    } as const
+    return getScalingTvsProjectApiData({
+      slug,
+      range: parsedParams.data.range,
+      excludeAssociatedTokens: parsedParams.data.excludeAssociatedTokens,
+    })
   },
   ['scaling-tvs-project-route'],
   {

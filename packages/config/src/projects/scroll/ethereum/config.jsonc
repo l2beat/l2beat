@@ -148,6 +148,11 @@
         "0x9F66505cB1626D06B50EF2597f41De6686e8f79a": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.3.0/bundle/verifier.bin"
       }
     },
+    "0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6": {
+      "manualSourcePaths": {
+        "0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6": "https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.4.2/bundle/verifier.bin"
+      }
+    },
     /* ---- Do not show old verifiers ---- */
     "0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1": {
       // PlonkVerifierV0

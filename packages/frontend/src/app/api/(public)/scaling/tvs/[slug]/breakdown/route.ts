@@ -1,8 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { NextResponse } from 'next/server'
-import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
-import { ps } from '~/server/projects'
+import { getScalingTvsProjectBreakdownApiData } from '~/app/api/(public)/_fns/getScalingTvsProjectBreakdownApiData'
 
 export async function GET(
   _: Request,
@@ -15,20 +14,7 @@ export async function GET(
 }
 
 const getCachedResponse = cache(
-  async (slug: string) => {
-    const project = await ps.getProject({
-      slug,
-      select: ['tvsConfig'],
-      optional: ['chainConfig', 'contracts'],
-    })
-
-    if (!project) {
-      return { success: false, error: 'Project not found.' }
-    }
-
-    const data = await getTvsBreakdownForProject(project)
-    return { success: true, data }
-  },
+  getScalingTvsProjectBreakdownApiData,
   ['scaling-tvs-project-breakdown-route'],
   {
     tags: ['hourly-data'],
