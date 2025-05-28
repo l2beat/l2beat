@@ -10,6 +10,7 @@ import {
 import { TableLink } from '~/components/table/table-link'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/common-project-columns'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import { OthersConsiderationCell } from './others-consideration-cell'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
@@ -114,7 +115,9 @@ export const bridgesSummarySingleChainColumns = [
   columnHelper.accessor((e) => e.otherConsiderations, {
     header: 'Other\nconsiderations',
     cell: (ctx) => (
-      <span>{ctx.row.original.otherConsiderations?.length ?? 'None'}</span>
+      <OthersConsiderationCell
+        otherConsiderations={ctx.row.original.otherConsiderations}
+      />
     ),
     sortUndefined: 'last',
   }),
