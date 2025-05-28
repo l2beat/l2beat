@@ -83,11 +83,12 @@ export class ZkStackDataFetcher {
     '325': 'GRVT',
     '61166': 'Treasure Chain',
     '1345': 'OpenZK',
-    '9637': 'Lumoz',
+    '9637': 'Wonder',
     '320': 'ZKcandy',
     '232': 'Lens',
     '2904': 'LaChain',
     '9075': 'Gateway',
+    '1217': 'SxT',
   }
 
   private tableFields: TableField[] = [
