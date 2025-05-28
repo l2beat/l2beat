@@ -6,17 +6,15 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
-import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
-import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
-import { BridgesSummaryOthersTable } from './table/bridges-summary-others-table'
-import { BridgesSummarySingleChainTable } from './table/bridges-summary-singlechain-table'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
+import type { TabbedBridgeEntries } from '../../utils/group-by-bridge-tabs'
+import { BridgesArchivedTable } from './table/bridges-archived-table'
 
-type Props = TabbedBridgeEntries<BridgesSummaryEntry>
-export function BridgesSummaryTables(props: Props) {
+type Props = TabbedBridgeEntries<BridgesArchivedEntry>
+export function BridgesArchivedTables(props: Props) {
   const filterEntries = useFilterEntries()
 
   const entries = {
@@ -31,7 +29,6 @@ export function BridgesSummaryTables(props: Props) {
 
   return (
     <>
-      <HorizontalSeparator className="my-4 max-md:hidden" />
       <TableFilters entries={[...props.singleChain, ...props.others]} />
       <DirectoryTabs defaultValue="singleChain">
         <DirectoryTabsList>
@@ -45,12 +42,12 @@ export function BridgesSummaryTables(props: Props) {
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="singleChain">
-            <BridgesSummarySingleChainTable entries={entries.singleChain} />
+            <BridgesArchivedTable entries={entries.singleChain} />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
-            <BridgesSummaryOthersTable entries={entries.others} />
+            <BridgesArchivedTable entries={entries.others} isOthers />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
