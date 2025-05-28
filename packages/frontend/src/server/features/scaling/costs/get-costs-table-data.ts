@@ -1,60 +1,57 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getSummedActivityForProjects } from '../activity/get-summed-activity-for-projects'
 import { getCostsForProjects } from './get-costs-for-projects'
-import type { LatestCostsProjectResponse } from './types'
+import type { LatestCostsProjectResponse, LatestCostsValues } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { isCostsSynced } from './utils/is-costs-synced'
 import type { CostsTimeRange } from './utils/range'
 
-export function getCostsTable(
-  ...parameters: Parameters<typeof getCachedCostsTableData>
-) {
+export type CostsTableData = Record<
+  string,
+  {
+    isSynced: boolean
+    uopsCount: number | undefined
+    gas: LatestCostsValues
+    eth: LatestCostsValues
+    usd: LatestCostsValues
+  }
+>
+
+export async function getCostsTable(
+  timeRange: CostsTimeRange,
+): Promise<CostsTableData> {
   if (env.MOCK) {
     return getMockCostsTableData()
   }
-  return getCachedCostsTableData(...parameters)
+
+  const projects = (await getCostsProjects()).filter((p) => !p.archivedAt)
+
+  const projectsCosts = await getCostsForProjects(projects, timeRange)
+  const rangeByProject = Object.fromEntries(
+    Object.entries(projectsCosts).map(([projectId, data]) => {
+      return [projectId, data.range]
+    }),
+  )
+  const projectsActivity = await getSummedActivityForProjects(
+    projects.map((p) => p.id),
+    timeRange,
+    rangeByProject,
+  )
+
+  return Object.fromEntries(
+    Object.entries(projectsCosts).map(([projectId, costs]) => {
+      const isSynced = isCostsSynced(costs.syncedUntil)
+      return [
+        projectId,
+        {
+          ...withTotal(costs),
+          uopsCount: projectsActivity[projectId],
+          isSynced,
+        },
+      ]
+    }),
+  )
 }
-
-export type CostsTableData = Awaited<ReturnType<typeof getCachedCostsTableData>>
-
-export const getCachedCostsTableData = cache(
-  async (timeRange: CostsTimeRange) => {
-    const projects = (await getCostsProjects()).filter((p) => !p.archivedAt)
-
-    const projectsCosts = await getCostsForProjects(projects, timeRange)
-    const rangeByProject = Object.fromEntries(
-      Object.entries(projectsCosts).map(([projectId, data]) => {
-        return [projectId, data.range]
-      }),
-    )
-    const projectsActivity = await getSummedActivityForProjects(
-      projects.map((p) => p.id),
-      timeRange,
-      rangeByProject,
-    )
-
-    return Object.fromEntries(
-      Object.entries(projectsCosts).map(([projectId, costs]) => {
-        const isSynced = isCostsSynced(costs.syncedUntil)
-        return [
-          projectId,
-          {
-            ...withTotal(costs),
-            uopsCount: projectsActivity[projectId],
-            isSynced,
-          },
-        ]
-      }),
-    )
-  },
-  ['costs-table-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
 
 function withTotal(data: LatestCostsProjectResponse) {
   return {

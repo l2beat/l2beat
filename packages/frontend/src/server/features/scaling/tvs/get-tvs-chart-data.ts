@@ -1,6 +1,5 @@
 import type { ProjectValueRecord } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
+import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
@@ -25,8 +24,16 @@ export const TvsChartDataParams = z.object({
 
 export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
 
+type TvsChartDataPoint = readonly [
+  timestamp: number,
+  native: number,
+  canonical: number,
+  external: number,
+  ethPrice: number,
+]
+type TvsChartData = TvsChartDataPoint[]
+
 /**
- * A function that computes values for chart data of the TVS over time.
  * @returns {
  *  total: {
  *    usd: number
@@ -35,57 +42,49 @@ export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
  *  chart: [timestamp, native, canonical, external, ethPrice][] - all numbers
  * }
  */
-export async function getTvsChart(
-  ...args: Parameters<typeof getCachedTvsChartData>
-) {
+export async function getTvsChart({
+  range,
+  excludeAssociatedTokens,
+  filter,
+  previewRecategorisation,
+}: TvsChartDataParams): Promise<TvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData(...args)
-  }
-  return getCachedTvsChartData(...args)
-}
-
-export type TvsChartData = Awaited<ReturnType<typeof getCachedTvsChartData>>
-export const getCachedTvsChartData = cache(
-  async ({
-    range,
-    excludeAssociatedTokens,
-    filter,
-    previewRecategorisation,
-  }: TvsChartDataParams) => {
-    const projectsFilter = createTvsProjectsFilter(
+    return getMockTvsChartData({
+      range,
+      excludeAssociatedTokens,
       filter,
       previewRecategorisation,
-    )
-    const tvsProjects = await getTvsProjects(
-      projectsFilter,
-      previewRecategorisation,
-    )
-    if (tvsProjects.length === 0) {
-      return []
-    }
-    // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
-    const forSummary =
-      filter.type !== 'projects' || filter.projectIds.length !== 1
-    const [ethPrices, values] = await Promise.all([
-      getEthPrices(),
-      getSummedTvsValues(
-        tvsProjects.map((p) => p.projectId),
-        range,
-        !forSummary
-          ? 'PROJECT'
-          : excludeAssociatedTokens
-            ? 'SUMMARY_WA'
-            : 'SUMMARY',
-      ),
-    ])
-    return getChartData(values, ethPrices)
-  },
-  ['tvs-chart-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
+    })
+  }
+
+  const projectsFilter = createTvsProjectsFilter(
+    filter,
+    previewRecategorisation,
+  )
+  const tvsProjects = await getTvsProjects(
+    projectsFilter,
+    previewRecategorisation,
+  )
+  if (tvsProjects.length === 0) {
+    return []
+  }
+  // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
+  const forSummary =
+    filter.type !== 'projects' || filter.projectIds.length !== 1
+  const [ethPrices, values] = await Promise.all([
+    getEthPrices(),
+    getSummedTvsValues(
+      tvsProjects.map((p) => p.projectId),
+      range,
+      !forSummary
+        ? 'PROJECT'
+        : excludeAssociatedTokens
+          ? 'SUMMARY_WA'
+          : 'SUMMARY',
+    ),
+  ])
+  return getChartData(values, ethPrices)
+}
 
 function getChartData(
   values: Omit<ProjectValueRecord, 'type' | 'project'>[],

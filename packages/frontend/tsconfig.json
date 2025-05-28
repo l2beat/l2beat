@@ -26,8 +26,7 @@
       "~/*": ["./src/*"],
       "react": ["./node_modules/@types/react"],
       "next/navigation": ["src/_next/navigation"],
-      "next/image": ["src/_next/image"],
-      "next/cache": ["src/_next/cache"]
+      "next/image": ["src/_next/image"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "**/*.js"],
