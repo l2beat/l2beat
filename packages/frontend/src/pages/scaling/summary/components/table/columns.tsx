@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { Badge } from '~/components/badge/badge'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
@@ -8,6 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
+import { SyncStatusWrapper } from '~/components/sync-status-wrapper'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'

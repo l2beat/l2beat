@@ -9,7 +9,7 @@ import type { ScalingActivityEntry } from '~/server/features/scaling/activity/ge
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
 import { formatUopsRatio } from '~/utils/number-format/format-uops-ratio'
-import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
+import { SyncStatusWrapper } from '../../../../../../components/sync-status-wrapper'
 import type { ActivityMetric } from '../activity-metric-context'
 import { MaxCountCell } from './max-count-cell'
 

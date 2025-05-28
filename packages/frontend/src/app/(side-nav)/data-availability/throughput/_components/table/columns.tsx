@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
+import { SyncStatusWrapper } from '~/components/sync-status-wrapper'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableLink } from '~/components/table/table-link'

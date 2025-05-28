@@ -1,4 +1,4 @@
-import { GrayedOut } from './grayed-out'
+import { GrayedOut } from '../app/(side-nav)/scaling/finality/_components/table/grayed-out'
 
 interface Props {
   isSynced: boolean | undefined

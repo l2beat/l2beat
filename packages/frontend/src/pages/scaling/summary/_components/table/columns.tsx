@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { Badge } from '~/components/badge/badge'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
@@ -8,6 +7,7 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
+import { SyncStatusWrapper } from '~/components/sync-status-wrapper'
 import { StageCell } from '~/components/table/cells/stage/stage-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TwoRowCell } from '~/components/table/cells/two-row-cell'
@@ -17,10 +17,10 @@ import {
 } from '~/components/table/cells/type-info'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { sortStages } from '~/components/table/sorting/sort-stages'
+import { TableLink } from '~/components/table/table-link'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
+import { TotalCell } from '~/pages/scaling/summary/_components/table/total-cell'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
-import { TableLink } from '../../../../../../components/table/table-link'
-import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import type { ScalingSummaryTableRow } from '../../utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
