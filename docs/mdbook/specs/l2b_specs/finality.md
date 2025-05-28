@@ -15,6 +15,7 @@
   - [Scroll](#scroll)
     - [Time to withdrawal calculation](#time-to-withdrawal-calculation)
   - [Orbit Stack](#orbit-stack)
+    - [Time to withdrawal calculation](#time-to-withdrawal-calculation-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -312,7 +313,7 @@ event FinalizeBatch(
 #### Time to withdrawal calculation
 
 1. **Track initiation on L2**  
-   Listen for `AppendMessage` on the L2 Message Queue, store `messageHash`
+   Listen for the `AppendMessage` on the L2 Message Queue, store `messageHash`
    together with the L2 block timestamp in which the event was emitted.
 
 2. **Track execution on L1**  
@@ -339,3 +340,91 @@ event FinalizeBatch(
      (includes any additional delay introduced by the relayer)
 
 ### Orbit Stack
+
+
+When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth() or an ERC-20 bridge's withdraw function), the sequence of events is:
+- The withdrawal triggers an L2-to-L1 message. Internally this is done via ArbSys.sendTxToL1, which emits an L2 event and adds the message to Arbitrum's outgoing message Merkle tree.
+- The L2 transaction (and its outgoing message) get included in a rollup assertion that the validator posts to the L1 rollup contract (SequencerInbox/Bridge) in a batch. This marks the inclusion of the withdrawal request on L1. 
+- Once the assertion is posted, it enters the dispute window on L1. For Arbitrum One this is roughly 7 days (currently ~6.4 days in seconds). During this period, any validator can challenge the posted state if they detect fraud. In the normal case with no fraud proofs, the assertion simply "ages" for the full challenge period.
+- Once the dispute period expires without a successful challenge, at least one honest validator will confirm the rollup assertion on L1. The Arbitrum Rollup contract finalizes the L2 state root and posts the assertion's outgoing message Merkle root to the Outbox contract on L1. At this point the L2 transaction's effects are fully finalized on L1 (equivalent to an L1 transaction's finality, aside from Ethereum's own finalization delay). The withdrawal message is now provably included in the Outbox's Merkle root of pending messages.
+
+#### Time to withdrawal calculation
+
+1. **Track initiation on L2**  
+   Listen for the `L2ToL1Tx` event from the `ArbSys` pre-compile  
+   (`0x0000000000000000000000000000000000000064`):
+
+   ```solidity
+   event L2ToL1Tx(
+       address caller,              // sender on L2
+       address indexed destination, // receiver on L1
+       uint256 indexed hash,       // unique message hash
+       uint256 indexed position,   // (level<<192)|leafIndex
+       uint256 arbBlockNum,        // L2 block number
+       uint256 ethBlockNum,        // 0 at emission
+       uint256 timestamp,          // L2 timestamp
+       uint256 callvalue,          // ETH value
+       bytes   data                // calldata for L1
+   );
+   ```
+   
+   Store:
+   - `position` - the global message index
+   - `hash` - unique identifier (for quick look-ups)
+   - `timestamp` - L2 time of initiation
+
+   From `position` you can extract:
+   - `level = position >> 192` (always 0 in Nitro)
+   - `leafIndex = position & ((1<<192) - 1)`
+
+2. **Locate first inclusion on L1 (publication)**  
+   Watch the `SequencerInbox` contract for `SequencerBatchDelivered` events.  
+   Each event exposes  
+   `batchSequenceNumber` – the **leafIndex** of the *first* message in that batch.  
+
+   Let `b₀, b₁, …` be the `batchSequenceNumber`s ordered by appearance.  
+   Your withdrawal sits in the earliest batch that satisfies  
+   `bᵢ ≤ leafIndex < bᵢ₊₁`  
+   (or, equivalently, in the last batch whose `batchSequenceNumber` is  
+   not greater than `leafIndex`).  
+   The timestamp of the block that emitted that event is the publication time.  
+
+   *Delayed-inbox edge-case* — if the message travelled via the delayed inbox,  
+   apply the same check to `Bridge.MessageDelivered` events instead.
+
+3. **Detect when the withdrawal becomes executable**  
+   After the ~7-day fraud-proof window, a validator confirms the rollup
+   assertion. The Rollup contract writes the final send-root to the Outbox
+   and emits:
+
+   ```solidity
+   event OutboxEntryCreated(
+       uint256 indexed leafIndex,
+       bytes32 outboxRoot
+   );
+   ```
+
+   The block timestamp of this event is the earliest time the withdrawal
+   *can* be executed.
+
+4. **(Optional) Track the actual execution**  
+   When the message is executed, `Outbox.executeTransaction` emits:
+
+   ```solidity
+   event OutboxTransactionExecuted(
+       uint256 indexed leafIndex,
+       bytes32 hash
+   );
+   ```
+   
+   Its block timestamp gives the *real* execution time.
+
+5. **Compute the intervals**  
+   - *Time to publication*  
+     `SequencerBatchDelivered.timestamp − L2ToL1Tx.timestamp`
+
+   - *Earliest withdrawal time*  
+     `OutboxEntryCreated.timestamp − L2ToL1Tx.timestamp`
+
+   - *Actual withdrawal time* (optional)  
+     `OutboxTransactionExecuted.timestamp − L2ToL1Tx.timestamp`
