@@ -1,4 +1,5 @@
 {
+  "import": ["globalTokens.jsonc"],
   "chains": {
     "all": {
       "categories": {
