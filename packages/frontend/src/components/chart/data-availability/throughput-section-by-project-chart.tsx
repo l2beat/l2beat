@@ -1,4 +1,5 @@
 'use client'
+import type { Milestone } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
@@ -9,7 +10,6 @@ import { ProjectCombobox } from '~/components/project-combobox'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { DaThroughputByProjectChart } from './da-throughput-by-project-chart'
-import type { Milestone } from '@l2beat/config'
 
 const DEFAULT_PROJECTS_TO_SHOW = 5
 

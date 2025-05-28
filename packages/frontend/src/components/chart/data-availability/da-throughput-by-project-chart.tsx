@@ -1,4 +1,5 @@
 'use client'
+import type { Milestone } from '@l2beat/config'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -19,7 +20,6 @@ import type { DaThroughputChartDataByChart } from '~/server/features/data-availa
 import { formatTimestamp } from '~/utils/dates'
 import { generateAccessibleColors } from '~/utils/generate-colors'
 import { getDaDataParams } from './get-da-data-params'
-import type { Milestone } from '@l2beat/config'
 
 interface Props {
   data: DaThroughputChartDataByChart | undefined
