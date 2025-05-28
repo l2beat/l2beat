@@ -91,6 +91,7 @@ export const pulseChain: Bridge = {
       },
       pause: {
         value: 'EOA',
+        sentiment: 'bad',
       },
     },
     livenessFailure: {

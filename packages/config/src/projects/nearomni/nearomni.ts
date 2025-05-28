@@ -60,6 +60,7 @@ export const nearomni: Bridge = {
       },
       pause: {
         value: 'EOA',
+        sentiment: 'bad',
       },
     },
     livenessFailure: {

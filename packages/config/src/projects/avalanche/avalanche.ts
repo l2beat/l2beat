@@ -109,6 +109,7 @@ export const avalanche: Bridge = {
       },
       pause: {
         value: 'EOA',
+        sentiment: 'bad',
       },
     },
     livenessFailure: {

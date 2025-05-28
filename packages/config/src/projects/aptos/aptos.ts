@@ -56,6 +56,7 @@ export const aptos: Bridge = {
       },
       pause: {
         value: 'EOA',
+        sentiment: 'bad',
       },
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,

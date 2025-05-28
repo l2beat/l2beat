@@ -84,6 +84,7 @@ export const omni: Bridge = {
       },
       pause: {
         value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+        sentiment: 'bad',
       },
     },
     destinationToken: {
