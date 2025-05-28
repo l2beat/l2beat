@@ -13,18 +13,18 @@
     value: "None"
   }
   proposerFailure: {
-    description: "Provers can examine the proposed blocks on the TaikoL1 contract, and generate SGX proofs for them. Currently, any prover providing a valid SGX attestation can register a SGX instance and create proofs for proposed blocks."
+    description: "[object Object] Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond."
     sentiment: "good"
     value: "Self propose"
   }
   sequencerFailure: {
-    description: "The system uses a based (or L1-sequenced) rollup sequencing mechanism. Users can propose L2 blocks directly on the Taiko L1 contract. The Taiko multisig can pause block proposals without delay."
+    description: "The system uses a based (or L1-sequenced) rollup sequencing mechanism, meaning that users can propose L2 blocks directly on the Taiko L1 contract. Proposers are required to also prove blocks within 2h, or forfeit half of their liveness bond (125.0 TAIKO)."
     sentiment: "good"
     value: "Self sequence"
   }
   stateValidation: {
-    description: "A multi-tier proof system is used. The tiers are SGX, ZK (RISC0, SP1), Minority Guardian, and Guardian (highest tier). A higher tier proof can challenge a lower one within the challenge period.\n        The system allows for an invalid state to be finalized by compromised Guardians (the highest tier) and does not enforce ZK proofs."
-    secondLine: "4h challenge period"
+    description: "A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination."
+    secondLine: "2h execution delay"
     sentiment: "bad"
     value: "Multi-proofs"
   }

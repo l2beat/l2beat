@@ -1,10 +1,11 @@
+import type { ContractValue } from '@l2beat/discovery'
 import {
   assert,
   // assert,
   EthereumAddress,
-  formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
   // formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -18,11 +19,10 @@ import {
   RISK_VIEW,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { formatExecutionDelay } from '../../common/formatDelays'
-import type { ContractValue } from '@l2beat/discovery'
 
 const discovery = new ProjectDiscovery('taiko')
 
