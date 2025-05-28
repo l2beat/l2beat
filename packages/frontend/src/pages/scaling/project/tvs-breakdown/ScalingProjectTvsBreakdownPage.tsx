@@ -10,12 +10,12 @@ import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
 import { AppLayout } from '~/layouts/app-layout.tsx'
 import { TopNavLayout } from '~/layouts/top-nav-layout'
 import type { ScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
-import { RequestTokenBox } from './_components/request-token-box'
-import { CanonicallyBridgedTable } from './_components/tables/canonically-bridged-table'
-import { ExternallyBridgedTable } from './_components/tables/externally-bridges-table'
-import { NativelyMintedTable } from './_components/tables/natively-minted-table'
-import { TvsBreakdownPageHeader } from './_components/tvs-breakdown-page-header'
-import { TvsBreakdownSummaryBox } from './_components/tvs-breakdown-summary-box'
+import { RequestTokenBox } from './components/request-token-box'
+import { CanonicallyBridgedTable } from './components/tables/canonically-bridged-table'
+import { ExternallyBridgedTable } from './components/tables/externally-bridges-table'
+import { NativelyMintedTable } from './components/tables/natively-minted-table'
+import { TvsBreakdownPageHeader } from './components/tvs-breakdown-page-header'
+import { TvsBreakdownSummaryBox } from './components/tvs-breakdown-summary-box'
 
 interface Props extends AppLayoutProps {
   tvsBreakdownData: ScalingProjectTvsBreakdownData

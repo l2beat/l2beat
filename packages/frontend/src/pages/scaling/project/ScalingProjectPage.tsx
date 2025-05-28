@@ -15,7 +15,7 @@ import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
 import { AppLayout } from '~/layouts/app-layout.tsx'
 import { TopNavLayout } from '~/layouts/top-nav-layout'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { ProjectScalingSummary } from './_components/scaling-project-summary'
+import { ProjectScalingSummary } from './components/scaling-project-summary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
