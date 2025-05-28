@@ -2,10 +2,9 @@
 
 {
   dataAvailability: {
-    description: "All of the data (SD = state diffs) needed for proof construction is published onchain."
-    orderHint: Infinity
-    sentiment: "good"
-    value: "Onchain (SD)"
+    description: "Proof construction and state derivation rely fully on data that is NOT published onchain."
+    sentiment: "bad"
+    value: "External"
   }
   exitWindow: {
     description: "There is no window for users to exit in case of an unwanted standard upgrade because the central operator can censor withdrawal transactions by implementing a TransactionFilterer with no delay. The standard upgrade delay is 4d 3h."
