@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "mawari",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {}
+}
