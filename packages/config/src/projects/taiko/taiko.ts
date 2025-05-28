@@ -26,7 +26,7 @@ import type { ContractValue } from '@l2beat/discovery'
 
 const discovery = new ProjectDiscovery('taiko')
 
-const taikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
+const taikoL1ContractAddress = discovery.getContract('TaikoL1').address
 
 interface PacayaConfig extends Record<string, ContractValue> {
   chainId: number
@@ -63,7 +63,7 @@ interface PacayaConfig extends Record<string, ContractValue> {
 }
 
 const taikoChainConfig = discovery.getContractValue<PacayaConfig>(
-  'TaikoL1Contract',
+  'TaikoL1',
   'pacayaConfig',
 )
 

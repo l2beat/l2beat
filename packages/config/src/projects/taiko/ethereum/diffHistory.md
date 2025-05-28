@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6c130de119846a2af8d66449147822eabbfd1dc2
+Generated with discovered.json: 0xb755e92bfd88b4e5a68f6c0db4f824f010f726bb
 
-# Diff at Tue, 27 May 2025 13:11:57 GMT:
+# Diff at Wed, 28 May 2025 07:14:42 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@23beb76ada08c9c42f8f16b886f40d94b22ac36e block: 22481930
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
 - current block number: 22565516
 
 ## Description
@@ -644,25 +644,13 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 +   Status: CREATED
     contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
-    +++ description: None
+    +++ description: Contract that allows to enqueue forced transaction through L1. A pending forced transaction must be processed every 255 batches.
 ```
 
 ```diff
 +   Status: CREATED
     contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
     +++ description: Contract managing SGX attestation certificates.
-```
-
-```diff
-+   Status: CREATED
-    contract BridgedERC1155 (0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract BridgedERC20V2 (0x65666141a541423606365123Ed280AB16a09A2e1)
-    +++ description: None
 ```
 
 ```diff
@@ -692,7 +680,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
 +   Status: CREATED
     contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
-    +++ description: None
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
 ```
 
 ```diff
@@ -707,45 +695,37 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
     +++ description: Entry contract to verify batches using SP1.
 ```
 
-```diff
-+   Status: CREATED
-    contract BridgedERC721 (0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7)
-    +++ description: None
-```
-
 ## Source code changes
 
 ```diff
-.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++
+.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++++
  .../ERC1967Proxy.p.sol                             |    2 +-
  .../AutomataDcapV3Attestation.sol                  |    0
  .../ERC1967Proxy.p.sol                             |    0
- .../BridgedERC1155.sol}                            | 3998 ++++++++++----------
- .../taiko/ethereum/.flat/BridgedERC20V2.sol        | 3604 ++++++++++++++++++
- .../taiko/ethereum/.flat/BridgedERC721.sol         | 3123 +++++++++++++++
- .../DefaultResolver/DefaultResolver.sol}           |  807 ++--
+ .../DefaultResolver/DefaultResolver.sol}           |  807 ++---
  .../DefaultResolver}/ERC1967Proxy.p.sol            |    2 +-
  .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
  .../ForcedInclusionStore/ForcedInclusionStore.sol} | 1533 +++-----
- .../MainnetSignalService/MainnetSignalService.sol  |  822 ++--
- .../MainnetTaikoL1/ERC1967Proxy.p.sol => /dev/null |  594 ---
+ .../MainnetSgxVerifier.sol => /dev/null            | 2857 ---------------
+ .../MainnetSignalService/MainnetSignalService.sol  |  822 ++---
+ .../MainnetTaikoL1/ERC1967Proxy.p.sol => /dev/null |  594 ----
  .../MainnetTierRouter.sol => /dev/null             |  219 --
  .../Risc0VerifierGateway/Risc0Verifier.sol         |  907 ++---
  .../SP1VerifierGateway/SP1Verifier.sol             |  914 ++---
  .../ERC1967Proxy.p.sol                             |    2 +-
- .../SgxVerifier.sol}                               | 3349 ++++++++--------
- .../ERC1967Proxy.p.sol                             |  594 +++
- .../SgxVerifier.sol}                               | 3349 ++++++++--------
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
+ .../ERC1967Proxy.p.sol                             |  594 ++++
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
  .../TaikoL1}/ERC1967Proxy.p.sol                    |    0
- .../ethereum/.flat/TaikoL1/MainnetInbox.3.sol      | 2964 +++++++++++++++
+ .../ethereum/.flat/TaikoL1/MainnetInbox.3.sol      | 2964 ++++++++++++++++
  .../TaikoL1/MainnetTaikoL1.2.sol}                  |    7 +
  .../ethereum/.flat/TaikoL1/PacayaForkRouter.1.sol  | 1173 ++++++
  .../TaikoToken/TaikoToken.sol                      |  132 +-
- .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 +++
- .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 +++++++
- .../.flat/VerifierGateway/ERC1967Proxy.p.sol       |  594 +++
- .../VerifierGateway/MainnetVerifier.sol}           | 1453 ++-----
- 29 files changed, 25014 insertions(+), 10945 deletions(-)
+ .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
+ .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
+ .../.flat/VerifierGateway/ERC1967Proxy.p.sol       |  594 ++++
+ .../VerifierGateway/MainnetVerifier.sol}           | 1453 ++------
+ 27 files changed, 16368 insertions(+), 11723 deletions(-)
 ```
 
 ## Config/verification related changes
