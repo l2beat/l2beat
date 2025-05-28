@@ -1,3 +1,103 @@
+Generated with discovered.json: 0x7c72a724d5ea1a59d8916505b2dbebe517fbb383
+
+# Diff at Tue, 27 May 2025 13:50:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@23beb76ada08c9c42f8f16b886f40d94b22ac36e block: 22567785
+- current block number: 22574521
+
+## Description
+
+Added manual source for new verifier.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567785 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierPostEuclid-2 (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x26cd90e30199eed8d6c94ea4ffaf77c4b2a17f7e3ad9299ff6aaa482214bbb56"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.4.2/bundle/verifier.bin"}]
+    }
+```
+
+Generated with discovered.json: 0x5956aac180a00ed19bbf1475df44bb2460139ece
+
+# Diff at Mon, 26 May 2025 15:20:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22437905
+- current block number: 22567785
+
+## Description
+
+emergency upgrade: fix bug in the verifier. new verifier is not public/verified yet.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ZkEvmVerifierPostEuclid (0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828)
+    +++ description: Contract used to verify zk proofs given the aggregate proof and the public input hash.
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (0x4CEA3E866e7c57fD75CB0CA3E9F5f1151D4Ead3F) {
+    +++ description: Contract used to update the verifier and keep track of current and old versions.
+      values.latestVerifier.6.verifier:
+-        "0x33996CC9EEe2dc20B10b8E57d313d0FacC7a0828"
++        "0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x9F66505cB1626D06B50EF2597f41De6686e8f79a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierPostEuclid-2 (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierPostEuclid-2 (0xBB08c87a2E871FcF3d86C4F7ED03dEc8B66297Ba)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ZkEvmVerifierPostEuclid-2.sol}                                        | 0
+ .../ZkEvmVerifierPostEuclid.sol}                                          | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437905 (main branch discovery), not current.
+
+```diff
+    contract  (0x9F66505cB1626D06B50EF2597f41De6686e8f79a) {
+    +++ description: None
+      name:
+-        "PlonkVerifierPostEuclid-2"
++        ""
+    }
+```
+
 Generated with discovered.json: 0x674e436234f1a4b596a376bc026371925b961ce2
 
 # Diff at Fri, 23 May 2025 09:41:19 GMT:

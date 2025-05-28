@@ -43,6 +43,7 @@ export interface Node {
   readonly id: string
   readonly address: string
   readonly isInitial: boolean
+  readonly hasTemplate: boolean
   readonly addressType: ApiAddressType
   readonly name: string
   readonly fields: Field[]

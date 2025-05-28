@@ -137,7 +137,9 @@
 
     "0xE298a76986336686CC3566469e3520d23D1a8aaD": "Aztec Multisig",
 
-    "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Near Omni Multisig"
+    "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Near Omni Multisig",
+
+    "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": "Hyperlane Multisig"
   },
   "types": {
     "StarknetProgramHash": {

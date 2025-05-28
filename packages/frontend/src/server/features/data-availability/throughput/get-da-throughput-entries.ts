@@ -9,20 +9,19 @@ import {
 import { getThroughputSyncWarning } from './is-throughput-synced'
 
 export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
-  const projectsWithDaTracking = await ps.getProjects({
-    select: ['daTrackingConfig'],
-  })
+  const [projectsWithDaTracking, daLayers, daBridges] = await Promise.all([
+    ps.getProjects({
+      select: ['daTrackingConfig'],
+    }),
+    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({ select: ['daBridge'] }),
+  ])
 
   const uniqueDaLayersInProjects = new Set(
     projectsWithDaTracking.flatMap((l) =>
       l.daTrackingConfig.map((d) => d.daLayer),
     ),
   )
-
-  const [daLayers, daBridges] = await Promise.all([
-    ps.getProjects({ select: ['daLayer', 'statuses'] }),
-    ps.getProjects({ select: ['daBridge'] }),
-  ])
 
   const daLayersWithDaTracking = daLayers.filter((p) =>
     uniqueDaLayersInProjects.has(p.id),

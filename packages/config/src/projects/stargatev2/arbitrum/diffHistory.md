@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xc6538e8706018a9319b5ce24463f2f34338601d8
+
+# Diff at Mon, 26 May 2025 15:50:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 333890998
+- current block number: 340770045
+
+## Description
+
+deficit offset removed (fee related).
+
+## Watched changes
+
+```diff
+    contract StargatePoolNative (0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F) {
+    +++ description: None
+      values.deficitOffset:
+-        "600000000000000000000"
++        0
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xe8CDF27AcD73a434D661C84887215F7598e7d0d3) {
+    +++ description: None
+      values.deficitOffset:
+-        2000000000000
++        0
+    }
+```
+
 Generated with discovered.json: 0xf7d6c88917d6d657d05fb30e1d4adf8cc9fc8392
 
 # Diff at Tue, 06 May 2025 15:41:14 GMT:

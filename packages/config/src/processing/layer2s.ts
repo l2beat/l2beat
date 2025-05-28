@@ -207,7 +207,7 @@ import { unichain } from '../projects/unichain/unichain'
 import { union } from '../projects/union/union'
 import { wirex } from '../projects/wirex/wirex'
 import { witness } from '../projects/witness/witness'
-import { wonderfi } from '../projects/wonderfi/wonderfi'
+import { wonder } from '../projects/wonder/wonder'
 import { worldchain } from '../projects/worldchain/worldchain'
 import { xchain } from '../projects/xchain/xchain'
 import { xlayer } from '../projects/xlayer/xlayer'
@@ -435,7 +435,7 @@ export const layer2s: ScalingProject[] = [
   union,
   wirex,
   witness,
-  wonderfi,
+  wonder,
   worldchain,
   xchain,
   xlayer,

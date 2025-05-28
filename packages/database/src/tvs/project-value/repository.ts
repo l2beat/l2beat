@@ -68,32 +68,6 @@ export class ProjectValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectsForType(
-    projects: ProjectId[],
-    type: ProjectValueType,
-    range: [number | null, number],
-  ): Promise<ProjectValueRecord[]> {
-    if (projects.length === 0) {
-      return []
-    }
-    const [from, to] = range
-    let query = this.db
-      .selectFrom('ProjectValue')
-      .selectAll()
-      .where('type', '=', type)
-      .where('project', 'in', projects)
-      .where('timestamp', '<=', UnixTime.toDate(to))
-      .orderBy('timestamp', 'asc')
-
-    if (from !== null) {
-      query = query.where('timestamp', '>=', UnixTime.toDate(from))
-    }
-
-    const rows = await query.execute()
-
-    return rows.map(toRecord)
-  }
-
   async getSummedByTimestamp(
     projects: ProjectId[],
     type: ProjectValueType,

@@ -24,8 +24,8 @@ export async function getLivenessSection(
 > {
   const trackedTransactions = getTrackedTransactions(project, 'liveness')
   if (!trackedTransactions) return undefined
-
   assert(project.trackedTxsConfig, 'trackedTxsConfig is required')
+
   const configSubtypes = groupBy(
     project.trackedTxsConfig.filter(
       (x): x is TrackedTxCostsConfig => x.type === 'liveness',
@@ -34,23 +34,32 @@ export async function getLivenessSection(
   )
   const duplicatedData = project.livenessConfig?.duplicateData.to
 
+  const configuredSubtypes = compact([
+    ...Object.keys(configSubtypes),
+    duplicatedData,
+  ]) as TrackedTxsConfigSubtype[]
+
+  const [data] = await Promise.all([
+    api.liveness.projectChart({
+      projectId: project.id,
+      range: '30d',
+      subtype: getDefaultSubtype(configuredSubtypes),
+    }),
+    api.liveness.projectChart.prefetch({
+      projectId: project.id,
+      range: '30d',
+      subtype: getDefaultSubtype(configuredSubtypes),
+    }),
+  ])
+
+  if (data.data.length === 0) return undefined
+
   const hasTrackedContractsChanged = project.trackedTxsConfig
     ? getHasTrackedContractChanged(
         project as Project<'trackedTxsConfig'>,
         projectChangeReport,
       )
     : false
-
-  const configuredSubtypes = compact([
-    ...Object.keys(configSubtypes),
-    duplicatedData,
-  ]) as TrackedTxsConfigSubtype[]
-
-  await api.liveness.projectChart.prefetch({
-    projectId: project.id,
-    range: '30d',
-    subtype: getDefaultSubtype(configuredSubtypes),
-  })
 
   return {
     configuredSubtypes,

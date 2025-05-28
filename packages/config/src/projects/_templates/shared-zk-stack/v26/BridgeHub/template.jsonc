@@ -53,6 +53,14 @@
         "groupBy": "chainId",
         "set": { "event": "SettlementLayerRegistered" }
       }
+    },
+    "migrations": {
+      "description": "zk chain migrations that were started",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "add": { "event": "MigrationStarted" }
+      }
     }
   }
 }

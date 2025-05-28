@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import type { Interval } from './calculateIntervals'
 import { calculateStats } from './calculateStats'
+import type { LivenessRecordWithConfig } from './mapToRecordWithConfig'
 
 describe(calculateStats.name, () => {
   it('should calculate stats', async () => {

@@ -17,9 +17,9 @@
     "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "HypERC20Collateral", // usdc lockbox
     "0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6": "HyperlaneMultisig",
     "0xc005dc82818d67AF737725bD4bf75435d065D239": "Mailbox",
-    "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751": "StaticAggregationIsm_default",
-    "0xb7d55490065c157352b2a560bb3eFf5d5c548563": "UnknownIsm",
-    "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944": "DomainRoutingIsm",
+    "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": "StaticAggregationIsm_default",
+    "0xE08367b408C4E17aA517593ffff9fe291b396a69": "UnknownIsm",
+    "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": "DomainRoutingIsm",
     "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm_eclipse",
     "0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e": "StaticMessageIdMultisigIsm",
     "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": "StaticMerkleRootMultisigIsm"
@@ -50,28 +50,21 @@
         }
       }
     },
-    "0xD56421450D656c0e9bDea3EEdb29Cee3D9c24751": {
+    "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": {
       // StaticAggregationIsm_default
       "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of {{threshold}} out of the [{{modules}}] ISM contracts successfully verify a message.",
       "fields": {
         "modules": {
-          "handler": {
-            "type": "hardcoded", // can be safely hardcoded to this address because a metaproxy is used
-            "value": [
-              "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944",
-              "0xb7d55490065c157352b2a560bb3eFf5d5c548563"
-            ]
-          }
+          "copy": "modulesAndThreshold",
+          "edit": ["get", 0]
         },
         "threshold": {
-          "handler": {
-            "type": "hardcoded",
-            "value": 2
-          }
+          "copy": "modulesAndThreshold",
+          "edit": ["get", 1]
         }
       }
     },
-    "0x630011A3e7Dc73fE6aA9F95C7549F0bAaaa46944": {
+    "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": {
       // DomainRoutingIsm
       // no metadata in metaproxy
       "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to {{module}} for the origin Eclipse.",

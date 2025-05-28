@@ -6,7 +6,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import type { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
+import type { LivenessRecordWithConfig } from '../utils/mapToRecordWithConfig'
 import { AnomaliesIndexer } from './AnomaliesIndexer'
 
 const NOW = UnixTime.now()
