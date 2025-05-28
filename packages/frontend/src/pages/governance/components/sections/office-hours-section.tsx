@@ -1,6 +1,6 @@
 import { Button } from '~/components/core/button'
 import { PlainLink } from '~/components/plain-link'
-import { OfficeHoursIllustration } from '../../_assets/office-hours-illustration'
+import { OfficeHoursIllustration } from '../../assets/office-hours-illustration'
 import { GovernanceCard } from '../governance-card'
 
 export function OfficeHoursSection() {

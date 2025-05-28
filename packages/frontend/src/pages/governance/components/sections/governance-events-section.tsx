@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
-import type { GovernanceEventEntry } from '../../_utils/get-governance-event-entries'
+import type { GovernanceEventEntry } from '../../utils/get-governance-event-entries'
 import { GovernanceCard } from '../governance-card'
 
 interface Props {

@@ -1,7 +1,7 @@
 import { getCollection } from '~/content/get-collection'
 
-import { getGovernancePublicationEntry } from '~/app/(side-nav)/governance/_utils/get-governance-publication-entry'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getGovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
