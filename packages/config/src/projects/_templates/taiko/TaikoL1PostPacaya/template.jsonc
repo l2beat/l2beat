@@ -1,5 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TaikoL1",
-  "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
+  "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
+  "ignoreMethods": [
+    "addressManager",
+    "getLastSyncedBlock",
+    "lastUnpausedAt",
+    "proxiableUUID"
+  ]
 }

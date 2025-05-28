@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb755e92bfd88b4e5a68f6c0db4f824f010f726bb
+Generated with discovered.json: 0xbcfb521d5d710b4dfababbf87781ab370a26ae79
 
-# Diff at Wed, 28 May 2025 07:14:42 GMT:
+# Diff at Wed, 28 May 2025 08:12:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
-- current block number: 22565516
+- current block number: 22579860
 
 ## Description
 
@@ -138,37 +138,58 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 -        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
       values.getLastVerifiedBlock.blockId_:
 -        1148703
-+        1175004
++        1178564
       values.getLastVerifiedBlock.blockHash_:
 -        "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031"
-+        "0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c"
++        "0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b"
       values.getLastVerifiedBlock.stateRoot_:
 -        "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d"
-+        "0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad"
++        "0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587"
       values.getLastVerifiedBlock.verifiedAt_:
 -        1747209131
-+        1738399175
++        1738480871
+      values.getStateVariables.1.genesisHeight:
+-        19923613
+      values.getStateVariables.1.genesisTimestamp:
+-        1716358991
       values.getStateVariables.1.lastSyncedBlockId:
 -        1148703
-+        1175004
       values.getStateVariables.1.lastSynecdAt:
 -        1747226267
-+        1748243435
+      values.getStateVariables.1.numBlocks:
++        1178840
+      values.getStateVariables.1.lastVerifiedBlockId:
++        1178564
+      values.getStateVariables.1.provingPaused:
++        false
+      values.getStateVariables.1.lastProposedIn:
++        22579860
+      values.getStateVariables.1.lastUnpausedAt:
++        1716571955
       values.getStateVariables.0.numBlocks:
 -        1149204
-+        1175320
       values.getStateVariables.0.lastVerifiedBlockId:
 -        1148703
-+        1175004
+      values.getStateVariables.0.provingPaused:
+-        false
       values.getStateVariables.0.lastProposedIn:
 -        22481927
-+        22565513
+      values.getStateVariables.0.lastUnpausedAt:
+-        1716571955
+      values.getStateVariables.0.genesisHeight:
++        19923613
+      values.getStateVariables.0.genesisTimestamp:
++        1716358991
+      values.getStateVariables.0.lastSyncedBlockId:
++        1178564
+      values.getStateVariables.0.lastSynecdAt:
++        1748416535
       values.impl:
 -        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
 +        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
       values.lastProposedIn:
 -        22481927
-+        22565513
++        22579860
       values.lastUnpausedAt:
 -        1716571955
       values.preconf_task_manager:
@@ -200,9 +221,9 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.state.slotB:
 -        {"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}
       values.state.stats1:
-+        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1175004,"lastSyncedAt":1748243435}
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1178564,"lastSyncedAt":1748416535}
       values.state.stats2:
-+        {"numBatches":1175320,"lastVerifiedBatchId":1175004,"paused":false,"lastProposedIn":22565513,"lastUnpausedAt":1716571955}
++        {"numBatches":1178840,"lastVerifiedBatchId":1178564,"paused":false,"lastProposedIn":22579860,"lastUnpausedAt":1716571955}
       values.state_root:
 -        "0x0000000000000000000000000000000000000000"
       values.taiko:
@@ -238,13 +259,13 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.bondToken:
 +        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
       values.getLastSyncedTransition:
-+        {"batchId_":1175004,"blockId_":1175004,"ts_":{"parentHash":"0xb0ece3907bc57abb13a98f5f8cc1824a51e4fcaf84d2ee003933e4859b1c97f0","blockHash":"0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c","stateRoot":"0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748234819}}
++        {"batchId_":1178564,"blockId_":1178564,"ts_":{"parentHash":"0x7c801227fd8912dfd03b4b1f664ae228b579aa782a221a4a4569131637ab2955","blockHash":"0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b","stateRoot":"0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748406971}}
       values.getLastVerifiedTransition:
-+        {"batchId_":1175004,"blockId_":1175004,"ts_":{"parentHash":"0xb0ece3907bc57abb13a98f5f8cc1824a51e4fcaf84d2ee003933e4859b1c97f0","blockHash":"0x22961a797a297ef4722b4c7f073f5daadd934fc8d7f3e54d004c0c136e61928c","stateRoot":"0x3f91f4d3b3b522d52477c6eb852ab137e5960947fe414d887ba59bfab57739ad","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748234819}}
++        {"batchId_":1178564,"blockId_":1178564,"ts_":{"parentHash":"0x7c801227fd8912dfd03b4b1f664ae228b579aa782a221a4a4569131637ab2955","blockHash":"0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b","stateRoot":"0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748406971}}
       values.getStats1:
-+        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1175004,"lastSyncedAt":1748243435}
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1178564,"lastSyncedAt":1748416535}
       values.getStats2:
-+        {"numBatches":1175320,"lastVerifiedBatchId":1175004,"paused":false,"lastProposedIn":22565513,"lastUnpausedAt":1716571955}
++        {"numBatches":1178840,"lastVerifiedBatchId":1178564,"paused":false,"lastProposedIn":22579860,"lastUnpausedAt":1716571955}
       values.inboxWrapper:
 +        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
       values.isOnL1:
@@ -271,8 +292,6 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        "MainnetInbox"
       category:
 -        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"addressManager":"Processing error occurred.","getLastSyncedBlock":"Processing error occurred.","lastUnpausedAt":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -355,7 +374,7 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        7
       values.clock:
 -        1747232111
-+        1748244947
++        1748418323
       values.getNonVotingAccounts.3:
 +        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
       values.getNonVotingAccounts.2:
@@ -368,8 +387,6 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
       values.proxiableUUID:
 -        "EXPECT_REVERT"
-      values.getPastTotalSupply:
-+        [0,0,0,0,0]
       values.TAIKO_ERC20_VAULT:
 +        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
       implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
@@ -378,8 +395,6 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 +        "TaikoToken"
       category:
 -        {"name":"Local Infrastructure","priority":5}
-      errors:
-+        {"getPastTotalSupply":"Processing error occurred.","proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -462,20 +477,21 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 ```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
-      values.$members.5:
-+        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
-      values.$members.4:
--        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
-+        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
-      values.$members.3:
--        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.2:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
 +        "0x0aED2375549D1115e180bd0caea829C429Ea50B3"
+      values.$members.1:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
++        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.$members.0:
+-        "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
++        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
       values.$threshold:
 -        3
 +        4
       values.multisigThreshold:
 -        "3 of 5 (60%)"
-+        "4 of 6 (67%)"
++        "4 of 5 (80%)"
       receivedPermissions.23:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
       receivedPermissions.22:

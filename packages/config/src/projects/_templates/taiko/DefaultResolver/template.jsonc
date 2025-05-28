@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+  "ignoreMethods": ["proxiableUUID"],
   "types": {
     "Bytes32ToName": {
       "typeCaster": "Mapping",
