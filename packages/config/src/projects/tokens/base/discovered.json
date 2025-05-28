@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "base",
   "blockNumber": 30000033,
-  "configHash": "0x27a2b901054959d99743aa2d6fad647d7a56e04efe87e0502503778c1ebe4d01",
+  "configHash": "0x14b0077584ea68c806301e0d536ea4f630e441e500448de348cd4a1ab2ff23b5",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -415,7 +415,7 @@
       }
     },
     {
-      "name": "USDC",
+      "name": "USD Coin Token",
       "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "type": "Contract",
       "template": "tokens/circle/USDC",
@@ -1474,5 +1474,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x01a1c819bddac79917f9a2670111a55b63ac9c668607dd945b9698d0c106e24e"
+  "permissionsConfigHash": "0xc6a55c0a5f45dee7a6ccf97793c8a724902e441bb8a59528c312c63c076f3dc9"
 }

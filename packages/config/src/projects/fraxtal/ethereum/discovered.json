@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 22567345,
-  "configHash": "0x7e3a4591b2cbb690dce118dbd6a27bfd3d956b15553e8e952f732fdf84ffb19e",
+  "configHash": "0xb07af04dec168158d5860ced35a028f87dfc33066093161e8cf305fa672c3b4f",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -447,7 +447,7 @@
       }
     },
     {
-      "name": "frxETH Token",
+      "name": "Frax Ether Token",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
       "type": "Contract",
       "template": "fraxtal/frxETH",
@@ -848,7 +848,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "sfrxETH",
+      "name": "Staked Frax Ether Token",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
       "type": "Contract",
       "template": "fraxtal/sfrxETH",
@@ -1848,5 +1848,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
   },
-  "permissionsConfigHash": "0xdf2c6c0442cbd3a0422fc34ff413a3ae9324c3b94f7b6bbac4f64a8e80bb8810"
+  "permissionsConfigHash": "0xf80b26873f308ea3fa2beb4c407e31690293e11359c8d622e30f53ccd8fd71be"
 }

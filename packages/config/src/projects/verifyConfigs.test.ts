@@ -34,7 +34,10 @@ describe('Verify Discovery config files', () => {
           }
 
           expect(projects).toEqual(readConfigs)
-        })
+        }).timeout(5000)
+        // TODO(radomski): We're running into the timeout wall over and over
+        // again in CI. There is a solution to this problem for sure. We just
+        // need to spend time and figure it out.
       })
 
       describe(ConfigReader.prototype.readDiscovery.name, () => {

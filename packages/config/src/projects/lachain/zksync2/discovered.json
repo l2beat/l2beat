@@ -1,0 +1,11 @@
+{
+  "name": "lachain",
+  "chain": "zksync2",
+  "blockNumber": 60986426,
+  "configHash": "0xb899d0c0fd20548c50e528b5d79098983d0aeb0a6c7936eca689dc44ba4efca1",
+  "sharedModules": ["shared-zk-stack"],
+  "entries": [],
+  "abis": {},
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x8a202c02268b17db06a3c8b057f00fd037206e354cd80e49cb9532e1f9f8bfeb"
+}

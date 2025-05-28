@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xdc7bb99a7202feb9d6a320448bc8a06205964634
+
+# Diff at Wed, 28 May 2025 08:03:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@cb2cc891f49c23ee5f8d9c8d2c9ed16ac097ce95 block: 22466421
+- current block number: 22466421
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22466421 (main branch discovery), not current.
+
+```diff
+    EOA FirstAnvilAddress (0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266) {
+    +++ description: None
+      unverified:
+-        true
+      proxyType:
+-        "EIP7702 EOA"
++        "immutable"
+      values.$immutable:
++        true
+    }
+```
+
 Generated with discovered.json: 0xb46460f6fc92d9eb104af0ce3b5ad84a8d930376
 
 # Diff at Mon, 12 May 2025 09:57:13 GMT:

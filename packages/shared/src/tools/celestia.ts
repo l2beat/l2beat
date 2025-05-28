@@ -6,13 +6,29 @@ export const celestiaTools = {
   isOpStackCelestiaCommitment,
 }
 
+const OP_COMMITMENT_BYTE_COUNT = 40
+const opDecoders = [
+  { prefix: 'ce', decoder: decodeOPCommitment },
+  { prefix: '01010c', decoder: decodeOPCommitment },
+]
+
+const arbDecoders = [{ prefix: '63', decoder: decodeArbCommitment }]
+
+const decoders = opDecoders.concat(arbDecoders)
+
 function isOpStackCelestiaCommitment(commitment: string) {
   const bytes = commitment.startsWith('0x') ? commitment.slice(2) : commitment
 
-  const hasLengthMatch = bytes.length === 41 * 2
-  const hasPrefixMatch = bytes.startsWith('ce')
+  for (const { prefix } of opDecoders) {
+    if (
+      bytes.startsWith(prefix) &&
+      bytes.length - prefix.length === OP_COMMITMENT_BYTE_COUNT * 2
+    ) {
+      return true
+    }
+  }
 
-  return hasLengthMatch && hasPrefixMatch
+  return false
 }
 
 type CelestiaCommitmentData = {
@@ -21,20 +37,17 @@ type CelestiaCommitmentData = {
   blobCommitment: string
 }
 
-// Handle both OP's ce and Arb's 63
+// Handle both OP and ARB commitments
 function decodeCommitment(commitment: string): CelestiaCommitmentData {
   const hexBody = commitment.startsWith('0x') ? commitment.slice(2) : commitment
-  const byteDerivationVersion = hexBody.slice(0, 2)
 
-  if (byteDerivationVersion === 'ce') {
-    return decodeCe(hexBody)
+  for (const decoder of decoders) {
+    if (hexBody.startsWith(decoder.prefix)) {
+      return decoder.decoder(hexBody.slice(decoder.prefix.length))
+    }
   }
 
-  if (byteDerivationVersion === '63') {
-    return decode63(hexBody)
-  }
-
-  throw new Error(`Unknown byteDerivationVersion: ${byteDerivationVersion}`)
+  throw new Error(`Unknown byteDerivationVersion: ${hexBody.slice(0, 8)}`)
 }
 
 function extractNamespacesFromLogs(logs: string[]) {
@@ -96,12 +109,12 @@ const MsgEventArray = z.array(
  * OP
  * @see https://github.com/celestiaorg/optimism/blob/9931de7ebf78564062383d5d680458e750a0cb52/op-celestia/da.go#L10
  */
-function decodeCe(hex: string): CelestiaCommitmentData {
-  const heightHex = hex.slice(2, 18)
+function decodeOPCommitment(hex: string): CelestiaCommitmentData {
+  const heightHex = hex.slice(0, 16)
   const heightBuffer = Buffer.from(heightHex, 'hex')
   const blockHeightDecimal = heightBuffer.readUInt32LE(0)
 
-  const blobCommitment = Buffer.from(hex.slice(18), 'hex').toString('base64')
+  const blobCommitment = Buffer.from(hex.slice(16), 'hex').toString('base64')
 
   return {
     byteDerivationVersion: 'ce',
@@ -111,8 +124,8 @@ function decodeCe(hex: string): CelestiaCommitmentData {
 }
 
 // Arb
-function decode63(hex: string): CelestiaCommitmentData {
-  if (hex.length !== 178) {
+function decodeArbCommitment(hex: string): CelestiaCommitmentData {
+  if (hex.length !== 176) {
     throw new Error(
       'Could not decode 63-derivation-version: Invalid commitment length.',
     )
@@ -125,8 +138,8 @@ function decode63(hex: string): CelestiaCommitmentData {
   // lengthInShares: 8 bytes (16 hex chars)
   // txCommitment: 32 bytes (64 hex chars)
   // dataRoot: 32 bytes (64 hex chars)
-  const blockHeightHex = hex.slice(2, 18)
-  const txCommitmentHex = hex.slice(50, 114)
+  const blockHeightHex = hex.slice(0, 16)
+  const txCommitmentHex = hex.slice(48, 112)
 
   // Decoding
   const blockHeight = Number(BigInt('0x' + blockHeightHex).toString())

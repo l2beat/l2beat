@@ -33,7 +33,7 @@ export class ConfigReader {
       'Project not found, check if case matches',
     )
 
-    const basePath = path.join(this.rootPath, name, chain)
+    const basePath = path.join(this.rootPath, name)
     assert(
       fileExistsCaseSensitive(path.join(basePath)),
       'Chain not found in project, check if case matches',
@@ -57,7 +57,18 @@ export class ConfigReader {
       )
     }
 
-    const config = new ConfigRegistry(rawConfig)
+    const chainRawConfig = {
+      chain,
+      name,
+      ...merge(
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)['all'],
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)[chain],
+      ),
+    }
+
+    const config = new ConfigRegistry(chainRawConfig)
 
     assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -129,18 +140,16 @@ export class ConfigReader {
   }
 
   readAllChainsForProject(name: string) {
-    const chains = readdirSync(path.join(this.rootPath, name)).filter(
-      (chain) => {
-        try {
-          return existsSync(
-            path.join(this.rootPath, name, chain, 'config.jsonc'),
-          )
-        } catch {
-          return false
-        }
-      },
+    if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
+      return []
+    }
+    const config = readFileSync(
+      path.join(this.rootPath, name, 'config.jsonc'),
+      'utf-8',
     )
-    return chains
+
+    const parsed = JSON.parse(config)
+    return Object.keys(parsed.chains)
   }
 
   readAllProjectsForChain(chain: string): string[] {
@@ -170,7 +179,9 @@ export class ConfigReader {
         .filter((x) => x.isFile())
         .map((x) => x.name)
 
-      const hasConfig = chainFiles.includes('config.jsonc')
+      const allChains = this.readAllChainsForProject(folder.name)
+
+      const hasConfig = allChains.includes(chain)
       const hasDiscovered = chainFiles.includes('discovered.json')
       if (!hasConfig && !hasDiscovered) {
         continue

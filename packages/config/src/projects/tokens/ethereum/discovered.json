@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22445558,
-  "configHash": "0x0fc4366dde1734ed45dbcbc7b32355725d76ca9a82cd5b366ef5896256578a44",
+  "configHash": "0x6925930dd277d3c65dbbbc76d150601800a149cf3ec30d73547b2617b7f75689",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -517,7 +517,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "MiniMeToken",
+      "name": "Lido DAO Token",
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
       "type": "Contract",
       "template": "tokens/Lido/MiniMeToken",
@@ -634,7 +634,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "wstETH_tokenContract",
+      "name": "Wrapped liquid staked Ether 2.0 Token",
       "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
       "type": "Contract",
       "template": "tokens/Lido/wstETH",
@@ -1075,7 +1075,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "stETH_tokenContract",
+      "name": "Liquid staked Ether 2.0 Token",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
       "type": "Contract",
       "template": "tokens/Lido/stETH",
@@ -1447,7 +1447,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "STRK_tokenContract",
+      "name": "StarkNet Token",
       "address": "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
       "type": "Contract",
       "template": "tokens/STRK",
@@ -4486,5 +4486,5 @@
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0x01a1c819bddac79917f9a2670111a55b63ac9c668607dd945b9698d0c106e24e"
+  "permissionsConfigHash": "0xc6a55c0a5f45dee7a6ccf97793c8a724902e441bb8a59528c312c63c076f3dc9"
 }

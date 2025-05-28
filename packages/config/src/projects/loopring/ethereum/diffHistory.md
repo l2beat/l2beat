@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x49ca49c45faabaa24774f087f33dd7783693e39a
+Generated with discovered.json: 0x1affb14f6a435a5372f1d7a22948a0b868c256c0
+
+# Diff at Wed, 28 May 2025 13:56:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 21973864
+- current block number: 21973864
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973864 (main branch discovery), not current.
+
+```diff
+    contract LoopringCoin V2 Token (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD) {
+    +++ description: None
+      name:
+-        "LRC_v2"
++        "LoopringCoin V2 Token"
+    }
+```
+
+Generated with discovered.json: 0xdfcbde749054ffb8e6aa286ef87773b08c04e6be
 
 # Diff at Fri, 23 May 2025 09:40:59 GMT:
 

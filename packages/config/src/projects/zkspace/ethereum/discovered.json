@@ -2,7 +2,7 @@
   "name": "zkspace",
   "chain": "ethereum",
   "blockNumber": 20432700,
-  "configHash": "0xe2f290bb6a11a69a7d7ba689de54a4b7e655df4f06ca62d87d4845fa44885839",
+  "configHash": "0xbafefacacb68d1a232229788e1b6fc7d4d8e72b8ae8bf9fbcf7f2628474355e0",
   "entries": [
     {
       "name": "VerifierExit",
@@ -303,7 +303,7 @@
       }
     },
     {
-      "name": "ZksToken",
+      "name": "Zks Token",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "type": "Contract",
       "sourceHashes": [
@@ -852,5 +852,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xa68c82d4ab57dfef15a9dd0c80a4e06a7fbd5a2d507adca4c22da308cc43475b"
+  "permissionsConfigHash": "0xc74c84c274e612257f4325d8adbc8e530f056fb1dde28cf416ff400f69ccdab5"
 }

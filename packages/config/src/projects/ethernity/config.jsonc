@@ -1,0 +1,15 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "ethernity",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x908C324c35fF36F64236A7CDa4D50f3003E9C5C3"],
+      "overrides": {
+        "0xFcdb270B674911D321F1014c347EaBB1c55134FB": {
+          "ignoreDiscovery": true
+        }
+      }
+    }
+  }
+}

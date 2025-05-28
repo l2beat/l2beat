@@ -999,6 +999,7 @@ In the first example, `["get", "systemConfig"]` is a filter that extracts the sy
 - `if`, conditional logic (if/then/else).
 - `delete`, deletes removes keys/indices from objects/arrays.
 - `shape`, creates a new object from input values using specified keys.
+- `to_entries`, converts an object to an array of key-value pairs.
 
 #### `pipe`
 
@@ -1149,6 +1150,21 @@ If an argument is a `[keyName, filter]` pair, the corresponding input value is p
 - Input: `[1, 2, 3, 4]`
 - Program: `["shape", "a", ["b", ["=", 2]]]`
 - Output: `{ a: 1, b: true }`
+
+### `to_entries`
+
+Converts an object to an array of key-value pairs.
+Each pair is represented as an object with key and value properties.
+The output is always an array.
+The order of entries follows the object's key insertion order.
+
+- Input: `{ a: 1, b: 2, c: 3 }`
+- Program: `["to_entries"]`
+- Output: `[[ "a", 1 ], [ "b", 2 ], [ "c", 3 ]]`
+
+- Input: `[1, 23]`
+- Program: `["to_entries"]`
+- Output: `[[ "0", 1 ], [ "1", 23 ]]`
 
 ### Copy feature
 

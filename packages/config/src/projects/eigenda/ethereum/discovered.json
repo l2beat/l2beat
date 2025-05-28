@@ -2,7 +2,7 @@
   "name": "eigenda",
   "chain": "ethereum",
   "blockNumber": 22425142,
-  "configHash": "0x8ae9c65522f57e0027bdebe8613d3ed6c27fa72008901687bfcbb4e47df1a0bd",
+  "configHash": "0x163befb9e509ae48821dc3dda862d25ba97baa4d0a35ac4ec5b8d17de4a6d117",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
