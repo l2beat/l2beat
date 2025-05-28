@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { cn } from '~/utils/cn'
 
 export type ProjectDetailsRelatedProjectBannerProps = {
@@ -37,12 +36,12 @@ export function ProjectDetailsRelatedProjectBanner({
             height={20}
             alt={`${project.name} logo`}
           />
-          <Link
+          <a
             href={href}
             className="inline-block text-xs font-medium text-link underline hover:text-blue-550 dark:hover:text-blue-550"
           >
             {project.name}
-          </Link>
+          </a>
         </span>
       </div>
     </div>

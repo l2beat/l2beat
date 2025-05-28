@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
 import type { GovernancePublicationEntry } from '../../utils/get-governance-publication-entry'
@@ -29,7 +28,7 @@ export function RecentPublicationsSection({ publications }: Props) {
 function ExploreAllButton({ className }: { className?: string }) {
   return (
     <Button className={className} variant="outline" size="sm" asChild>
-      <Link href="/governance/publications">Explore all publications</Link>
+      <a href="/governance/publications">Explore all publications</a>
     </Button>
   )
 }

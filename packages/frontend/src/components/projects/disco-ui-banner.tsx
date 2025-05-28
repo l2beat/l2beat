@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { DiscoUiIcon } from '~/icons/disco-ui'
 import { CustomLinkIcon } from '~/icons/outlink'
 
@@ -17,14 +16,14 @@ export function DiscoUiBanner({ href }: { href: string }) {
             <div className="mb-0.5 text-xs text-primary">
               A dashboard to explore contracts and permissions
             </div>
-            <Link
+            <a
               href={href}
               target="_blank"
               className="flex w-fit items-center gap-1.5 rounded bg-surface-primary px-4 py-2 text-sm font-medium text-link underline"
             >
               Go to Disco
               <CustomLinkIcon className="size-4 fill-link" />
-            </Link>
+            </a>
           </div>
           <div className="relative w-1/2">
             <Image
@@ -45,7 +44,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
           width={423}
           height={160}
         />
-        <Link
+        <a
           target="_blank"
           className="absolute inset-x-3 bottom-3 flex items-center justify-center gap-1.5 rounded bg-white py-2"
           href={href}
@@ -54,7 +53,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
             Explore in Disco
           </span>
           <CustomLinkIcon className="size-4 !fill-[#2A5BD8]" />
-        </Link>
+        </a>
       </div>
     </>
   )

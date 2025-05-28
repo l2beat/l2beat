@@ -1,12 +1,11 @@
 'use client'
-import Link from 'next/link'
 import { useTracking } from '~/hooks/use-tracking'
 import { cn } from '~/utils/cn'
 
 export function UopsExplorerLink() {
   const { track } = useTracking()
   return (
-    <Link
+    <a
       href="https://uops.l2beat.com/"
       target="_blank"
       className={cn(
@@ -19,6 +18,6 @@ export function UopsExplorerLink() {
     >
       <span>🔍</span>
       <span>UOPS Explorer</span>
-    </Link>
+    </a>
   )
 }

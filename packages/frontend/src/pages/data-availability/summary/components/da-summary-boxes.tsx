@@ -1,7 +1,6 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
-import Link from 'next/link'
 import { Breakdown } from '~/components/breakdown/breakdown'
 import {
   Tooltip,
@@ -150,14 +149,14 @@ function SummaryThroughputBox({
         <span className="text-base font-bold !leading-6 md:text-xl">
           Past Day Data Size
         </span>
-        <Link
+        <a
           className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke py-1.5 pl-2.5 pr-1.5 text-[13px] font-bold leading-none text-link md:px-3 md:py-2"
           href="/data-availability/throughput"
         >
           <span className="max-md:hidden">View details</span>
           <span className="md:hidden">Details</span>
           <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
-        </Link>
+        </a>
       </div>
       <div className="mt-2.5 md:mb-6 md:mt-[25px]">
         <ValueWithChange

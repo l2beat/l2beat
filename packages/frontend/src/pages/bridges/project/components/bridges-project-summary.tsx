@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
@@ -60,12 +59,12 @@ export function BridgesProjectSummary({ project }: Props) {
         <div className="md:hidden">
           <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
           <div className="flex items-center justify-between">
-            <Link
+            <a
               className="text-xs text-link underline"
               href={project.discoUiHref}
             >
               Explore more in Discovery UI
-            </Link>
+            </a>
             <DiscoUiLink href={project.discoUiHref} />
           </div>
         </div>

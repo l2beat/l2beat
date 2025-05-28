@@ -1,4 +1,4 @@
-import type { ImageProps } from '~/_next/image'
+import type { ImageProps } from 'next/image'
 
 export default function Image({
   fill: _,

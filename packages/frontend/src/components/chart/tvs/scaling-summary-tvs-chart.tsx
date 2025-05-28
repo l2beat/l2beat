@@ -1,7 +1,6 @@
 'use client'
 
 import { UnixTime } from '@l2beat/shared-pure'
-import Link from 'next/link'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
@@ -210,13 +209,13 @@ function Header({ total, unit, change, timeRange }: Props) {
       <div>
         <div className="flex items-center gap-3">
           <span className="text-xl font-bold">Value Secured</span>
-          <Link
+          <a
             className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
             href="/scaling/tvs"
           >
             View details
             <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
-          </Link>
+          </a>
         </div>
         <CustomLink
           href="/scaling/tvs"

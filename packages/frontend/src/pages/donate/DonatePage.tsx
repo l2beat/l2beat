@@ -1,6 +1,5 @@
 import compact from 'lodash/compact'
 import Image from 'next/image'
-import Link from 'next/link'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
@@ -326,9 +325,8 @@ export const fundingSources = [
     tier: 'Medium',
     description: (
       <span>
-        Live at <Link href="https://dydx.l2beat.com">dydx.l2beat.com</Link>,
-        view the code{' '}
-        <Link href="https://github.com/l2beat/starkex-explorer">here</Link>.
+        Live at <a href="https://dydx.l2beat.com">dydx.l2beat.com</a>, view the
+        code <a href="https://github.com/l2beat/starkex-explorer">here</a>.
         Funded by StarkWare and dYdX
       </span>
     ),

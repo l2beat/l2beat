@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import { CustomLink } from '~/components/link/custom-link'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
@@ -72,13 +71,13 @@ function GovernanceLink({
         />
       </div>
 
-      <Link
+      <a
         className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke bg-link/[0.07] px-3 py-2 text-[13px] font-bold leading-none text-link"
         href={href}
       >
         Governance Review
         <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
-      </Link>
+      </a>
     </EcosystemWidget>
   )
 }

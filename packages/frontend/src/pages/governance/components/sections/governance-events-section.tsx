@@ -1,5 +1,4 @@
 'use client'
-import Link from 'next/link'
 import { Button } from '~/components/core/button'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { cn } from '~/utils/cn'
@@ -87,7 +86,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         size="sm"
         asChild
       >
-        <Link href={event.link}>Join the event</Link>
+        <a href={event.link}>Join the event</a>
       </Button>
     </GovernanceCard>
   )
