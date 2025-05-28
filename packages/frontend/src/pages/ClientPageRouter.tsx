@@ -27,6 +27,7 @@ import { ScalingRiskPage } from './scaling/risk/ScalingRiskPage'
 import { ScalingSummaryPage } from './scaling/summary/ScalingSummaryPage'
 import { ScalingTvsPage } from './scaling/tvs/ScalingTvsPage'
 import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
+import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
 import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
 import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
 export type Pages = typeof pages
@@ -77,6 +78,7 @@ const pages = {
   DonatePage,
   DaRiskFrameworkPage,
   MultisigReportPage,
+  TermsOfServicePage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

@@ -14,6 +14,7 @@ import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
+import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
 
 export function createServerPageRouter(
   manifest: Manifest,
@@ -47,6 +48,7 @@ export function createServerPageRouter(
     createGlossaryRouter,
     createDaRiskFrameworkRouter,
     createMutlisigReportRouter,
+    createTermsOfServiceRouter,
   ]
 
   for (const createRouter of routers) {
