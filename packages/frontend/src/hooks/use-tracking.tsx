@@ -1,5 +1,3 @@
-import { usePlausible } from 'next-plausible'
-
 type MyEvents = {
   switchChanged: { name: string; value: string }
   checkboxChanged: { name: string; value: string }
@@ -22,6 +20,12 @@ type MyEvents = {
 }
 
 export function useTracking() {
-  const plausible = usePlausible<MyEvents>()
-  return { track: plausible }
+  return {
+    track: <T extends keyof MyEvents>(
+      key: T,
+      params: { props: MyEvents[T] },
+    ) => {
+      console.log('track', key, params)
+    },
+  }
 }
