@@ -1,6 +1,5 @@
 import type { Manifest } from '~/utils/Manifest'
 import { getBaseUrl } from '~/utils/get-base-url'
-import { getPureDefaultMetadata } from '~/utils/metadata'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
 export type OpenGraph = {
@@ -28,10 +27,10 @@ type PartialMetadata = {
 export function getMetadata(manifest: Manifest, metadata: PartialMetadata) {
   const { title, description, openGraph, ...rest } = metadata ?? {}
   return {
-    ...getPureDefaultMetadata({
-      title,
-      description,
-    }),
+    title: title ?? 'L2BEAT - The state of the layer two ecosystem',
+    description:
+      description ??
+      'L2BEAT is an analytics and research website about Ethereum layer 2 scaling. Here you will find in depth comparison of major protocols live on Ethereum today.',
     openGraph: getOpenGraph(manifest, openGraph),
     ...rest,
   }
