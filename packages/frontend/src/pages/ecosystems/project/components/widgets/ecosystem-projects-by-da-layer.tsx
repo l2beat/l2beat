@@ -1,4 +1,5 @@
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import ProgressBar from '~/components/progress-bar'
 import type { BlobsData } from '~/server/features/ecosystems/get-blobs-data'
 import type { ProjectsByDaLayer } from '~/server/features/ecosystems/get-projects-by-da-layer'
 import { formatPercent } from '~/utils/calculate-percentage-change'

@@ -1,11 +1,11 @@
 import type { Project, ProjectStatuses } from '@l2beat/config'
-import {
-  getEthereumDaProjectSections,
-  getRegularDaProjectSections,
-} from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/da-project-sections'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import {
+  getEthereumDaProjectSections,
+  getRegularDaProjectSections,
+} from '~/pages/data-availability/project/utils/da-project-sections'
 import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/projects-used-in'
 import {
   mapBridgeRisksToRosetteValues,
