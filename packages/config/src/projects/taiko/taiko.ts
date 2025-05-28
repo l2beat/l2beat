@@ -310,7 +310,7 @@ export const taiko: ScalingProject = {
     },
     proposerFailure: {
       description:
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS +
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS.description +
         ' Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond.',
       sentiment: 'good',
       value: 'Self propose',
