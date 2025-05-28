@@ -501,7 +501,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "LRC_v2",
+      "name": "LoopringCoin V2 Token",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
       "type": "Contract",
       "sourceHashes": [

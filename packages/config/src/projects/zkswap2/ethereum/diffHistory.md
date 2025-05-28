@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x350d6e7bc28267efb43aa7e089e039f90cee9e29
+
+# Diff at Wed, 28 May 2025 13:22:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+    contract Zks Token (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6) {
+    +++ description: None
+      name:
+-        "ZksToken"
++        "Zks Token"
+    }
+```
+
 Generated with discovered.json: 0x36fb574fc61a4c9245c8a4a47545efb78a88c7ea
 
 # Diff at Fri, 23 May 2025 09:41:09 GMT:

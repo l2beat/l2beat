@@ -447,7 +447,7 @@
       }
     },
     {
-      "name": "frxETH Token",
+      "name": "Frax Ether Token",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
       "type": "Contract",
       "template": "fraxtal/frxETH",
@@ -848,7 +848,7 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "sfrxETH",
+      "name": "Staked Frax Ether Token",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
       "type": "Contract",
       "template": "fraxtal/sfrxETH",

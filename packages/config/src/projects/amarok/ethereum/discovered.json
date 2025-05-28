@@ -73,7 +73,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "VotingToken",
+      "name": "UMA Voting Token v1",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
       "type": "Contract",
       "sourceHashes": [
