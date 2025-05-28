@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import { InfoIcon } from 'rewrite/src/icons/info'
-import { RoundedWarningIcon } from 'rewrite/src/icons/rounded-warning'
-import type { BridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
+import { InfoIcon } from '~/icons/info'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,

@@ -3,7 +3,7 @@ import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,

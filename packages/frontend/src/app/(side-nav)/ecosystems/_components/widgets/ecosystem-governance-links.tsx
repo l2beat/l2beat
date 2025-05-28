@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronIcon } from 'rewrite/src/icons/chevron'
-import type { ImageParams } from 'rewrite/src/utils/project/get-image-params'
+import { ChevronIcon } from '~/icons/chevron'
+import type { ImageParams } from '~/utils/project/get-image-params'
 import { CustomLink } from '~/comp~/utils/project/get-image-params
 import { cn } from '~/utils/cn'
 import { EcosystemWidget } from './ecosystem-widget'

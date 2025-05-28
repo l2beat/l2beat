@@ -1,6 +1,4 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { RoundedWarningIcon } from 'rewrite/src/icons/rounded-warning'
-import { formatDollarValueNumber } from 'rewrite/src/utils/number-format/format-dollar-value-number'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
@@ -15,7 +13,9 @@ import { ValueWithPercentageChange } from '~/components/table/cells/value-with-p
 import {
   WarningBar,
   sentimentToWarningBarColor,
-} from '~/components/warning-bar'~/utils/number-format/format-dollar-value-number
+} from '~/components/warning-bar'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'~/utils/number-format/format-dollar-value-number
 import { TableLink } from '../../../../../../components/table/table-link'
 
 export interface TotalCellProps {

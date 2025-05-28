@@ -1,7 +1,7 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getEcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/types'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 

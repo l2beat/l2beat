@@ -1,6 +1,6 @@
 'use client'
 import partition from 'lodash/partition'
-import type { DiagramParams } from 'rewrite/src/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { DiagramImage } from '~/comp~/utils/project/get-diagram-params
 import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'

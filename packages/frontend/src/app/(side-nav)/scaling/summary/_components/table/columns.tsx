@@ -1,5 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { formatActivityCount } from 'rewrite/src/utils/number-format/format-activity-count'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { Badge } from '~/components/badge/badge'
 import { NoDataBadge } from '~/components/badge/no-data-badge'

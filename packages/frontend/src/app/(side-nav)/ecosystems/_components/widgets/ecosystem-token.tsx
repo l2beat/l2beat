@@ -1,7 +1,7 @@
 import Image from 'next/image'
-import type { EcosystemToken } from 'rewrite/src/server/features/ecosystems/get-ecosystem-token'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
-import { formatNumber } from 'rewrite/src/utils/number-format/format-number'
+import type { EcosystemToken } from '~/server/features/ecosystems/get-ecosystem-token'
+import { formatCurrency } from '~/utils/number-format/format-currency'
+import { formatNumber } from '~/utils/number-format/format-number'
 import { HorizontalSeparator } f~/utils/number-format/format-currency
 import { PercentChange } from ~/utils/number-format/format-number
 import { cn } from '~/utils/cn'

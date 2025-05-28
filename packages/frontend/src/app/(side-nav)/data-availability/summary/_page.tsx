@@ -1,5 +1,3 @@
-import type { DaSummaryEntry } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
-import type { ThroughputSummaryData } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-summary'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -8,6 +6,8 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/directory-tabs'
 import { MainPageHeader } from '~/components/main-page-header'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import {
   CustomSystemInfo,
   PublicSystemInfo,

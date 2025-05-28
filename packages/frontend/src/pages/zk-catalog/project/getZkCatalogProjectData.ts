@@ -1,9 +1,9 @@
+import { getZkCatalogProjectDetails } from '~/app/(side-nav)/zk-catalog/[slug]/_utils/get-zk-catalog-project-details'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/types'
-import { getZkCatalogProjectDetails } from '~/app/(side-nav)/zk-catalog/[slug]/_utils/get-zk-catalog-project-details'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '../../../utils/Manifest'
 
 export async function getZkCatalogProjectData(

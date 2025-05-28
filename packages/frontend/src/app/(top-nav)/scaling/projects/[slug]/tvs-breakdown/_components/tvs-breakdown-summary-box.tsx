@@ -1,5 +1,4 @@
 import type { WarningWithSentiment } from '@l2beat/config'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import {
   Tooltip,
@@ -8,6 +7,7 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 
 type ValueWithChange = {
   value: number~/utils/number-format/format-currency

@@ -1,7 +1,7 @@
 import express from 'express'
-import type { RenderFunction } from 'rewrite/src/ssr/types'
 import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
+import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
 import { getZkCatalogData } from './getZkCatalogData'

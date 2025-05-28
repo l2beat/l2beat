@@ -1,9 +1,9 @@
 'use client'
 
-import { InfoIcon } from 'rewrite/src/icons/info'
-import { UnverifiedIcon } from 'rewrite/src/icons/unverified'
-import type { DaProjectPageEntry } from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
+import { InfoIcon } from '~/icons/info'
+import { UnverifiedIcon } from '~/icons/unverified'
+import type { DaProjectPageEntry } from '~/server/features/data-availability/project/get-da-project-entry'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'

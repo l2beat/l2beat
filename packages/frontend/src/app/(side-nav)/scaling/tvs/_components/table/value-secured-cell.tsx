@@ -1,4 +1,4 @@
-import { formatDollarValueNumber } from 'rewrite/src/utils/number-format/format-dollar-value-number'
+import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import { ValueWithPercentageChange } from ~/utils/number - format / format - dollar - value - number
 
 export interface ValueSecuredCellProps {

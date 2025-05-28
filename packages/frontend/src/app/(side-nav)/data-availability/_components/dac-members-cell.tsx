@@ -1,6 +1,6 @@
-import type { DaBridgeSummaryEntry } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
 import { NaBadge } from '~/components/badge/na-badge'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
+import type { DaBridgeSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
 interface Props {
   dacInfo: DaBridgeSummaryEntry['dacInfo']

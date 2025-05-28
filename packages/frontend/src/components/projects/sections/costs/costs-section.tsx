@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import type { TrackedTransactionsByType } from 'rewrite/src/utils/project/tracked-txs/get-tracked-transactions'
+import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/get-tracked-transactions'
 import { ProjectCostsChart } from '~/components/chart/costs/project-costs-chart'
 import { HorizontalSeparator } from '~/component~/utils/project/tracked-txs/get-tracked-transactions
 

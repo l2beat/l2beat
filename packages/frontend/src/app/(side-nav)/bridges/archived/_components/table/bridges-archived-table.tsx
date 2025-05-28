@@ -2,11 +2,11 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { useTable } from 'rewrite/src/hooks/use-table'
 import { BasicTable } from '~/components/table/basic-table'
+import { useTable } from '~/hooks/use-table'
 
-import type { BridgesArchivedEntry } from 'rewrite/src/server/features/bridges/get-bridges-archived-entries'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
 import { getBridgesArchivedColumns } from './columns'
 
 export interface Props {

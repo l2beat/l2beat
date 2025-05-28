@@ -1,5 +1,5 @@
 import type { ProjectScalingStateValidation } from '@l2beat/config'
-import type { DiagramParams } from 'rewrite/src/utils/project/get-diagram-params'
+import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { DiagramImage } from '~/comp~/utils/project/get-diagram-params
 import { HorizontalSeparator } from '../../core/horizontal-separator'
 import { Markdown } from '../../markdown/markdown'

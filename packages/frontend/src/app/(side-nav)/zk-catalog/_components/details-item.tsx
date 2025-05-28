@@ -1,9 +1,9 @@
-import { InfoIcon } from 'rewrite/src/icons/info'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
+import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
 
 export function DetailsItem({

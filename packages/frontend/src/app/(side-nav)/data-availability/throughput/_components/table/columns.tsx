@@ -1,9 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import type { DaThroughputEntry } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-entries'
+import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
 import {
   formatBpsToMbps,
   formatBytes,
-} from 'rewrite/src/utils/number-format/format-bytes'
+} from '~/utils/number-format/format-bytes'
 import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'

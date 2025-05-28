@@ -1,6 +1,6 @@
-import type { BlobsData } from 'rewrite/src/server/features/ecosystems/get-blobs-data'
-import type { ProjectsByDaLayer } from 'rewrite/src/server/features/ecosystems/get-projects-by-da-layer'
-import { formatBytes } from 'rewrite/src/utils/number-format/format-bytes'
+import type { BlobsData } from '~/server/features/ecosystems/get-blobs-data'
+import type { ProjectsByDaLayer } from '~/server/features/ecosystems/get-projects-by-da-layer'
+import { formatBytes } from '~/utils/number-format/format-bytes'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import ProgressBar from '~/co~/utils/number-format/format-bytes
 import { formatPercent } from '~/utils/calculate-percentage-change'

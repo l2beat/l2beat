@@ -2,17 +2,17 @@
 
 import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
+import Image from '~/_next/image'
+import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
-} from 'rewrite/src/components/core/tooltip/tooltip'
-import { LinkWithOnHoverPrefetch } from 'rewrite/src/components/link/link-with-on-hover-prefetch'
-import { ArrowIcon } from 'rewrite/src/icons/arrow'
-import type { ProjectByRaas } from 'rewrite/src/server/features/ecosystems/get-projects-by-raas'
-import Image from '~/_next/image'
-import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
+} from '~/components/core/tooltip/tooltip'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
+import { ArrowIcon } from '~/icons/arrow'
+import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
 import { cn } from '~/utils/cn'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 

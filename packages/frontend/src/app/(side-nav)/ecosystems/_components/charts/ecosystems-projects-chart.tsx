@@ -3,7 +3,6 @@ import { assert } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
-import type { EcosystemProjectsCountData } from 'rewrite/src/server/features/ecosystems/get-ecosystem-projects-chart-data'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -15,6 +14,7 @@ import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator
 import { CustomFillGradientDef } from '~/components/core/chart/defs/custom-gradient-def'
 import { getChartRange } from '~/components/core/chart/utils/get-chart-range-from-columns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
+import type { EcosystemProjectsCountData } from '~/server/features/ecosystems/get-ecosystem-projects-chart-data'
 import { formatTimestamp } from '~/utils/dates'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'

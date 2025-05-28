@@ -28,9 +28,9 @@ import { useIsClient } from '~/hooks/use-is-client'
 import type {
   ProjectToken,
   ProjectTokens,
-} from 'rewrite/src/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
-import { api } from 'rewrite/src/trpc/react'
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
+import { api } from '~/trpc/react'
 import {~/server/features/scaling/tvs/tokens/get-tokens-for-projectcy'
 import { cn } from '~/utils/cn'~/server/features/scaling/tvs/utils/range
 import { formatTimest~/trpc/reacttes'

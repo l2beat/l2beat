@@ -1,5 +1,5 @@
 import express from 'express'
-import type { RenderFunction } from 'rewrite/src/ssr/types'
+import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
 import { getAboutUsData } from './getAboutUsData'
 

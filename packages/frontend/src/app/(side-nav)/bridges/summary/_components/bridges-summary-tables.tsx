@@ -1,5 +1,4 @@
 'use client'
-import type { BridgesSummaryEntry } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -11,6 +10,7 @@ import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 import type { TabbedBridgeEntries } from '../../_utils/group-by-bridge-tabs'
 import { BridgesSummaryOthersTable } from './table/bridges-summary-others-table'
 import { BridgesSummarySingleChainTable } from './table/bridges-summary-singlechain-table'

@@ -1,8 +1,8 @@
-import { getBridgesSummaryEntries } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/types'
-import { getExpressHelpers } from 'rewrite/src/trpc/server'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesSummaryData(

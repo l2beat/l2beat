@@ -1,9 +1,9 @@
-import { getBridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
-import { ps } from 'rewrite/src/server/projects'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/types'
-import { getExpressHelpers } from 'rewrite/src/trpc/server'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { ps } from '~/server/projects'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesProjectData(

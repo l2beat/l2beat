@@ -1,5 +1,5 @@
 import type { Project, ProjectRisk } from '@l2beat/config'
-import { groupRisks } from 'rewrite/src/utils/project/risk-summary/group-risks'
+import { groupRisks } from '~/utils/project/risk-summary/group-risks'
 import type { DaRiskSummarySectionProps } from '~/components/projects/sections/da-risk-summary-section'
 import type { ProjectSection~/utils/project/risk-summary/group-risks'
 

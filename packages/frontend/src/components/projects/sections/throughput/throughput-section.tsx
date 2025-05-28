@@ -1,14 +1,14 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import Link from 'next/link'
-import {
-  formatBpsToMbps,
-  formatBytes,
-} from 'rewrite/src/utils/number-format/format-bytes'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/throughput-section-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ClockIcon } from '~/icons/clock'
+import {
+  formatBpsToMbps,
+  formatBytes,
+} from '~/utils/number-format/format-bytes'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
 ~/utils/number-format/format-bytes

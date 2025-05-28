@@ -1,12 +1,12 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
-import type { ICache } from 'rewrite/src/server/cache/ICache'
-import { getScalingTvsEntries } from 'rewrite/src/server/features/scaling/tvs/get-scaling-tvs-entries'
-import { parseCookies } from 'rewrite/src/server/utils/parseCookies'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
-import type { RenderData } from 'rewrite/src/ssr/types'
-import { getExpressHelpers } from 'rewrite/src/trpc/server'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import type { ICache } from '~/server/cache/ICache'
+import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import { parseCookies } from '~/server/utils/parseCookies'
+import { getMetadata } from '~/ssr/head/getMetadata'
+import type { RenderData } from '~/ssr/types'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingTvsData(

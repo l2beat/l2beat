@@ -1,6 +1,6 @@
 import { CustomLink } from '~/components/link/custom-link'
 
-import { CustomLinkIcon } from 'rewrite/src/icons/outlink'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { formatAddress } from '~/utils/format-address'
 
 interface Props {

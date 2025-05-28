@@ -1,8 +1,8 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
-import { RoundedWarningIcon } from 'rewrite/src/icons/rounded-warning'
-import type { ProjectScalingEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
-import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
 import {

@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import type { BridgesSummaryEntry } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
@@ -7,6 +6,7 @@ import {
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
+import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 

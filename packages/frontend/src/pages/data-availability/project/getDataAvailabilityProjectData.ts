@@ -4,11 +4,11 @@ import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
 } from '~/server/features/data-availability/project/get-da-project-entry'
-import type { RenderData } from 'rewrite/src/ssr/types'
+import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 
 import { ps } from '~/server/projects'
-import { getMetadata } from 'rewrite/src/ssr/head/getMetadata'
+import { getMetadata } from '~/ssr/head/getMetadata'
 import type { ExpressHelpers } from '~/trpc/server'
 import { getExpressHelpers } from '~/trpc/server'
 
