@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xbcfb521d5d710b4dfababbf87781ab370a26ae79
+Generated with discovered.json: 0x302f5eea3ab44e51a10b8133f3765b0852fb1b35
 
-# Diff at Wed, 28 May 2025 08:12:24 GMT:
+# Diff at Wed, 28 May 2025 09:05:19 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22481930
@@ -492,39 +492,42 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "4 of 5 (80%)"
-      receivedPermissions.23:
+      receivedPermissions.24:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.22:
+      receivedPermissions.23:
 +        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
-      receivedPermissions.21:
+      receivedPermissions.22:
 +        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
-      receivedPermissions.20:
+      receivedPermissions.21:
 +        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
-      receivedPermissions.19:
+      receivedPermissions.20:
 +        {"permission":"upgrade","from":"0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
-      receivedPermissions.18.from:
+      receivedPermissions.19.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
 +        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-      receivedPermissions.17.from:
+      receivedPermissions.18.from:
 -        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
 +        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-      receivedPermissions.16.from:
+      receivedPermissions.17.from:
 -        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
 +        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
-      receivedPermissions.15.from:
+      receivedPermissions.16.from:
 -        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.15.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
 +        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
       receivedPermissions.14.from:
--        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
 +        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
       receivedPermissions.13.from:
--        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
 +        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
       receivedPermissions.12.from:
--        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
 +        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
       receivedPermissions.11.from:
--        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
 +        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
       receivedPermissions.10.from:
 -        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
@@ -655,6 +658,78 @@ The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_r
 -   Status: DELETED
     contract MainnetGuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
     +++ description: Verifier contract for Guardian proven blocks.
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.10.name:
+-        "bridge_watchdog"
++        "taiko_token"
+      values.namedAddresses.10.address:
+-        "0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.9.name:
+-        "taiko_token"
++        "signal_service"
+      values.namedAddresses.9.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x1670000000000000000000000000000000000005"
+      values.namedAddresses.8.name:
+-        "signal_service"
++        "erc1155_vault"
+      values.namedAddresses.8.address:
+-        "0x1670000000000000000000000000000000000005"
++        "0x1670000000000000000000000000000000000004"
+      values.namedAddresses.7.name:
+-        "erc1155_vault"
++        "bridged_erc1155"
+      values.namedAddresses.7.address:
+-        "0x1670000000000000000000000000000000000004"
++        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+      values.namedAddresses.6.name:
+-        "bridged_erc1155"
++        "bridge"
+      values.namedAddresses.6.address:
+-        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "0x1670000000000000000000000000000000000001"
+      values.namedAddresses.5.name:
+-        "bridge"
++        "bridged_erc20"
+      values.namedAddresses.5.address:
+-        "0x1670000000000000000000000000000000000001"
++        "0x65666141a541423606365123Ed280AB16a09A2e1"
+      values.namedAddresses.4.name:
+-        "bridged_erc20"
++        "bridged_erc721"
+      values.namedAddresses.4.address:
+-        "0x65666141a541423606365123Ed280AB16a09A2e1"
++        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+      values.namedAddresses.3.name:
+-        "bridged_erc721"
++        "quota_manager"
+      values.namedAddresses.3.address:
+-        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "0x0000000000000000000000000000000000000000"
+      values.namedAddresses.2.name:
+-        "quota_manager"
++        "erc721_vault"
+      values.namedAddresses.2.address:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1670000000000000000000000000000000000003"
+      values.namedAddresses.1.name:
+-        "erc721_vault"
++        "erc20_vault"
+      values.namedAddresses.1.address:
+-        "0x1670000000000000000000000000000000000003"
++        "0x1670000000000000000000000000000000000002"
+      values.namedAddresses.0.name:
+-        "erc20_vault"
++        "bridge_watchdog"
+      values.namedAddresses.0.address:
+-        "0x1670000000000000000000000000000000000002"
++        "0x0000000000000000000000000000000000000000"
+    }
 ```
 
 ```diff
@@ -1106,25 +1181,27 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
 ```diff
     contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
     +++ description: None
-      receivedPermissions.18:
+      receivedPermissions.19:
 +        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.17:
+      receivedPermissions.18:
 +        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
-      receivedPermissions.16:
+      receivedPermissions.17:
 +        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
-      receivedPermissions.15:
+      receivedPermissions.16:
 +        {"permission":"upgrade","from":"0xE3D777143Ea25A6E031d1e921F396750885f43aC","role":"admin"}
-      receivedPermissions.14:
+      receivedPermissions.15:
 +        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0x579A8d63a2Db646284CBFE31FE5082c9989E985c","role":"admin"}
       receivedPermissions.13.from:
 -        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-+        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
       receivedPermissions.12.from:
 -        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-+        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
       receivedPermissions.11.from:
 -        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-+        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
       receivedPermissions.10.from:
 -        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
 +        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
@@ -1234,7 +1311,19 @@ discovery. Values are for block 22481930 (main branch discovery), not current.
       description:
 -        "This contract manages the shared addresses for Taiko rollups."
 +        "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades."
+      values.namedAddresses:
++        [{"name":"erc20_vault","address":"0x1670000000000000000000000000000000000002"},{"name":"erc721_vault","address":"0x1670000000000000000000000000000000000003"},{"name":"quota_manager","address":"0x0000000000000000000000000000000000000000"},{"name":"bridged_erc721","address":"0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"},{"name":"bridged_erc20","address":"0x65666141a541423606365123Ed280AB16a09A2e1"},{"name":"bridge","address":"0x1670000000000000000000000000000000000001"},{"name":"bridged_erc1155","address":"0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"},{"name":"erc1155_vault","address":"0x1670000000000000000000000000000000000004"},{"name":"signal_service","address":"0x1670000000000000000000000000000000000005"},{"name":"taiko_token","address":"0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"},{"name":"bridge_watchdog","address":"0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"}]
+      values.quotaManager:
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000":"taiko_token","0x626f6e645f746f6b656e00000000000000000000000000000000000000000000":"bond_token","0x6272696467650000000000000000000000000000000000000000000000000000":"bridge","0x7369676e616c5f73657276696365000000000000000000000000000000000000":"signal_service","0x65726332305f7661756c74000000000000000000000000000000000000000000":"erc20_vault","0x6572633732315f7661756c740000000000000000000000000000000000000000":"erc721_vault","0x657263313135355f7661756c7400000000000000000000000000000000000000":"erc1155_vault","0x6272696467655f7761746368646f670000000000000000000000000000000000":"bridge_watchdog","0x627269646765645f657263323000000000000000000000000000000000000000":"bridged_erc20","0x627269646765645f657263373231000000000000000000000000000000000000":"bridged_erc721","0x627269646765645f657263313135350000000000000000000000000000000000":"bridged_erc1155","0x71756f74615f6d616e6167657200000000000000000000000000000000000000":"quota_manager"}}]
     }
+```
+
+```diff
++   Status: CREATED
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E)
+    +++ description: Defines withdrawal limits per token.
 ```
 
 Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8

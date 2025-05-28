@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 22579860,
-  "configHash": "0x93567d1f7ea9c6c853b1b3adfe8148dd007cbb07f7468f81c2dce546b7959d4a",
+  "configHash": "0x5be41fba6521bc9dc343d3c98566a30e3cfcb61158ef348a05b0b67ec2c13f9e",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -1006,6 +1006,69 @@
       ]
     },
     {
+      "name": "QuotaManager",
+      "address": "0x91f67118DD47d502B1f0C354D0611997B022f29E",
+      "type": "Contract",
+      "template": "taiko/QuotaManager",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x515420aaad70e32a5f53c329c15df869122650ffc387b0ef64bb3de9748b3797"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Defines withdrawal limits per token.",
+      "sinceTimestamp": 1715578067,
+      "sinceBlock": 19859002,
+      "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
+        "$pastUpgrades": [
+          [
+            "2024-05-13T05:27:47.000Z",
+            "0x03df9b2af0bebae6b9a3d413c98e53ccd3c629e10010f2c1c14d1c6da630a7d7",
+            ["0x49c5e5F131314Bb24b17E249960F8B12F925ef22"]
+          ],
+          [
+            "2024-06-06T08:51:11.000Z",
+            "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+            ["0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+        "impl": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
+        "inNonReentrant": false,
+        "lastUnpausedAt": 0,
+        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "quotaPeriod": 86400,
+        "tokenQuotas": [
+          { "name": "Ether", "quota": "1,000" },
+          { "name": "WETH", "quota": "1,000" },
+          { "name": "TAIKO", "quota": "2,000,000" },
+          { "name": "USDT", "quota": "0.000004" },
+          { "name": "USDC", "quota": "0.000004" }
+        ]
+      },
+      "implementationNames": {
+        "0x91f67118DD47d502B1f0C354D0611997B022f29E": "ERC1967Proxy",
+        "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64": "QuotaManager"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x0000000000000000000000000000000000000000": "Ether",
+            "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
+            "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TAIKO",
+            "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
+            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
+          }
+        },
+        { "typeCaster": "Undecimal", "arg": { "decimals": 18 } }
+      ]
+    },
+    {
       "name": "MainnetERC20Vault",
       "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
       "type": "Contract",
@@ -1178,6 +1241,11 @@
         {
           "permission": "upgrade",
           "from": "0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0x91f67118DD47d502B1f0C354D0611997B022f29E",
           "role": "admin"
         },
         {
@@ -1687,15 +1755,81 @@
         "impl": "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
+        "namedAddresses": [
+          {
+            "name": "taiko_token",
+            "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+          },
+          {
+            "name": "signal_service",
+            "address": "0x1670000000000000000000000000000000000005"
+          },
+          {
+            "name": "bridge",
+            "address": "0x1670000000000000000000000000000000000001"
+          },
+          {
+            "name": "erc20_vault",
+            "address": "0x1670000000000000000000000000000000000002"
+          },
+          {
+            "name": "erc721_vault",
+            "address": "0x1670000000000000000000000000000000000003"
+          },
+          {
+            "name": "erc1155_vault",
+            "address": "0x1670000000000000000000000000000000000004"
+          },
+          {
+            "name": "bridged_erc20",
+            "address": "0x65666141a541423606365123Ed280AB16a09A2e1"
+          },
+          {
+            "name": "bridged_erc721",
+            "address": "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+          },
+          {
+            "name": "bridged_erc1155",
+            "address": "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+          },
+          {
+            "name": "bridge_watchdog",
+            "address": "0x0000000000000000000000000000000000000000"
+          },
+          {
+            "name": "quota_manager",
+            "address": "0x0000000000000000000000000000000000000000"
+          }
+        ],
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "EXPECT_REVERT"
+        "proxiableUUID": "EXPECT_REVERT",
+        "quotaManager": "0x91f67118DD47d502B1f0C354D0611997B022f29E"
       },
       "implementationNames": {
         "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": "ERC1967Proxy",
         "0xEC1a9aa1C648F047752fe4eeDb2C21ceab0c6449": "MainnetSharedAddressManager"
-      }
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000": "taiko_token",
+            "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000": "bond_token",
+            "0x6272696467650000000000000000000000000000000000000000000000000000": "bridge",
+            "0x7369676e616c5f73657276696365000000000000000000000000000000000000": "signal_service",
+            "0x65726332305f7661756c74000000000000000000000000000000000000000000": "erc20_vault",
+            "0x6572633732315f7661756c740000000000000000000000000000000000000000": "erc721_vault",
+            "0x657263313135355f7661756c7400000000000000000000000000000000000000": "erc1155_vault",
+            "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
+            "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
+            "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
+            "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155",
+            "0x71756f74615f6d616e6167657200000000000000000000000000000000000000": "quota_manager"
+          }
+        }
+      ]
     },
     {
       "address": "0xFa92ff698D57f7B875570D9F59501812B843CD44",
@@ -2640,6 +2774,12 @@
       "function verifyBlocks(uint64 _maxBlocksToVerify)",
       "function withdrawBond(uint256 _amount)"
     ],
+    "0x91f67118DD47d502B1f0C354D0611997B022f29E": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2948,6 +3088,53 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64": [
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error QM_INVALID_PARAM()",
+      "error QM_OUT_OF_QUOTA()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event QuotaPeriodUpdated(uint256 quotaPeriod)",
+      "event QuotaUpdated(address indexed token, uint256 oldQuota, uint256 newQuota)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function availableQuota(address _token, uint256 _leap) view returns (uint256)",
+      "function consumeQuota(address _token, uint256 _amount)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _addressManager, uint24 _quotaPeriod)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function quotaPeriod() view returns (uint24)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function setQuotaPeriod(uint24 _quotaPeriod)",
+      "function tokenQuota(address token) view returns (uint48 updatedAt, uint104 quota, uint104 available)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function updateQuota(address _token, uint104 _quota)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5": [
       "constructor(uint64 _taikoChainId, address _taikoInbox, address _taikoProofVerifier, address _automataDcapAttestation)",
       "error ACCESS_DENIED()",
@@ -3099,8 +3286,9 @@
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DefaultResolver": "0x53b32b1e255a1a1bdf21125cbb22170988a66cec3102548b5283ec54eaedf25e",
     "taiko/ForcedInclusionStore": "0xe4a5ab65e9492a918778491a3551eb6d5788e45a0c040f4da6f6f53269925c97",
-    "taiko/L1SharedAddressManager": "0xd976f5dcb933f23a5c977268c83558dc62938c00a9a1c0eafb1fa7f6c7065c19",
+    "taiko/L1SharedAddressManager": "0x53e383d79bc5a05364962d3a986723394e3f04e839085710857c1b3a050bef18",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
+    "taiko/QuotaManager": "0x194cf0f821f8b8cf3c52962a1b75430d7be0250ec02bd41c70fb9e1d65e72e05",
     "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SgxVerifier": "0x76591e4af9aa17fa8b64070623f9f2599e0161de42b8c518384374ca652c644e",
@@ -3115,5 +3303,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0xb75121818e8cb56121eb04cb41e8639c8cffe68f9fdca00892bca3c008282c46"
+  "permissionsConfigHash": "0x48524e683d728ccfb78b6c18a38deefcf546bdfb97c257bb50fab724f9a1d720"
 }
