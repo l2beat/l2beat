@@ -106,12 +106,6 @@ export const satellite: Bridge = {
       description: "2/3 Validators' Stake",
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: "2/3 Validators' Stake",
-      description:
-        'Contracts are upgradable by the same Validators that validate message transfers.',
-      sentiment: 'warning',
-    },
   },
   permissions: {
     [discovery.chain]: {

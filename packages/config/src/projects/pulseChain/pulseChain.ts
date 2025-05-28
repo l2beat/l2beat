@@ -83,11 +83,15 @@ export const pulseChain: Bridge = {
       description: `${discovery.getMultisigStats('BridgeValidators')} BridgeValidators Multisig. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'EOA',
-      secondLine: 'EOA',
-      description: `Critical contracts can be upgraded by an EOA.`,
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: 'EOA',
+        description: 'Critical contracts can be upgraded by an EOA.',
+        sentiment: 'bad',
+      },
+      pause: {
+        value: 'EOA',
+      },
     },
     livenessFailure: {
       value: 'No mechanism',

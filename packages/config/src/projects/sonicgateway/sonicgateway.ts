@@ -89,10 +89,12 @@ export const sonicgateway: Bridge = {
       description: `${validatorThresholdString} Validators with onchain signer addresses. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
-      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
+        description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
+        sentiment: 'bad',
+      },
     },
     livenessFailure: {
       value: 'Reclaim funds',

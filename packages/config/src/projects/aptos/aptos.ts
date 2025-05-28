@@ -47,12 +47,16 @@ export const aptos: Bridge = {
         'If the operators do not service the bridge, deposited funds do not arrive at the destination chain and are stuck.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'EOA',
-      secondLine: 'EOA',
-      description:
-        'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay. LayerZero contracts are upgradable without delay.',
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: 'EOA',
+        description:
+          'Token Bridge contracts are not upgradable but the owner (EOA) can remove all the funds after 1 week delay. LayerZero contracts are upgradable without delay.',
+        sentiment: 'bad',
+      },
+      pause: {
+        value: 'EOA',
+      },
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },

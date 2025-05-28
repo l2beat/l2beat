@@ -64,12 +64,6 @@ export const pNetwork: Bridge = {
         'Transfers need to be signed offchain by a designed address.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'The code that secures the system can be changed arbitrarily and without notice.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   technology: {

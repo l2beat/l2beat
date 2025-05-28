@@ -86,14 +86,6 @@ export const skaleIMA: Bridge = {
         'There are 16 randomly selected validator nodes of the destination chain, 11 of them needs to sign and verify messages',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'The bridge can be upgraded by the' +
-        discovery.getMultisigStats('ProxyAdminOwner') +
-        'Multisig. There is no delay on the upgrade.',
-      sentiment: 'bad',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
     },

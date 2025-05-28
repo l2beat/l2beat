@@ -176,11 +176,6 @@ export const allbridge: Bridge = {
         'Allbridge taps into three different crosschain messaging protocols: Their in-house AMB with two validators, Wormhole AMB and Circle CCTP.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Allbridge contracts are immutable but all critical parameters can be changed by an EOA`,
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   contracts: {

@@ -95,11 +95,6 @@ export const hyphen: Bridge = {
       description: 'Withdrawals are validated by an EOA.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts can be upgraded.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   contracts: {
