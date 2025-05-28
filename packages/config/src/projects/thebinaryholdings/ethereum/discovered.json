@@ -2,7 +2,7 @@
   "name": "thebinaryholdings",
   "chain": "ethereum",
   "blockNumber": 21429035,
-  "configHash": "0xdecaa3972f49ccad15db6b8606bd44baeb1169758443f89c1bdffb34ccae55f2",
+  "configHash": "0xa0e5aea9a75ce5b4b71e90064fe01b134f44e4b0e813523a8141b478026042bd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

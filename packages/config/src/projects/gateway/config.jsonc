@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "gateway",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9"],
+      "names": { "0x32400084C286CF3E17e7B677ea9583e60a000324": "ZKsync" },
+      "overrides": {
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9075]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9075]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        }
+      },
+      "sharedModules": ["shared-zk-stack"]
+    }
+  }
+}

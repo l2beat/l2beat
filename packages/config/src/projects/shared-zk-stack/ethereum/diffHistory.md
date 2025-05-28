@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xce2a36cd459c023f97caa025240a5a892f068e7e
+
+# Diff at Tue, 27 May 2025 08:31:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d675d0bd208eadc685b2cb489512b83f62c0890e block: 22496282
+- current block number: 22572946
+
+## Description
+
+Config: add migration tracking.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22496282 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: zk chain migrations that were started
++++ severity: HIGH
+      values.migrations:
++        []
+      fieldMeta.migrations:
++        {"severity":"HIGH","description":"zk chain migrations that were started"}
+    }
+```
+
 Generated with discovered.json: 0x549f6db2a17c41223d7aac5081b7692aad5f198d
 
 # Diff at Fri, 23 May 2025 09:41:10 GMT:

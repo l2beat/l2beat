@@ -30,6 +30,7 @@ export const onChainProjects: string[] = [
   'espresso',
   'dydx',
   'tokens',
+  'gateway',
 ]
 
 describe('discovery config.jsonc', () => {

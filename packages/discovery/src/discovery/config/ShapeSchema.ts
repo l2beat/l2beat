@@ -6,7 +6,7 @@ export const ShapeSchema = z.record(
   z.string(),
   z.object({
     hash: stringAs(Hash256),
-    address: stringAs(EthereumAddress),
+    address: stringAs(EthereumAddress).or(z.array(stringAs(EthereumAddress))),
     chain: z.string(),
     blockNumber: z.number(),
   }),

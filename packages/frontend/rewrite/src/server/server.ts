@@ -1,14 +1,14 @@
 import { readFileSync } from 'node:fs'
-import * as trpcExpress from '@trpc/server/adapters/express'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
-import { appRouter } from '~/server/api/root'
 import { type Manifest, manifest } from '../../../src/utils/Manifest'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/server-entry'
 import { type RenderData } from '../ssr/types'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { createApiRouter } from './routers/ApiRouter'
+import { createTrpcRouter } from './routers/TrpcRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
@@ -31,19 +31,10 @@ export function createServer() {
   }
 
   app.use(MetricsMiddleware)
+
+  app.use('/api/trpc', createTrpcRouter())
   app.use('/', createServerPageRouter(manifest, renderToHtml))
-
-  const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
-    headers: new Headers(req.headers as Record<string, string>),
-  })
-
-  app.use(
-    '/api/trpc',
-    trpcExpress.createExpressMiddleware({
-      router: appRouter,
-      createContext,
-    }),
-  )
+  app.use('/', createApiRouter())
 
   app.listen(port, () => {
     console.log(`[HTTP] Server started at http://localhost:${port}`)
@@ -55,7 +46,7 @@ function renderToHtml(data: RenderData, url: string) {
   const envData = Object.fromEntries(
     Object.entries(process.env)
       .map(([key, value]) => {
-        if (!key.startsWith('NEXT_PUBLIC_')) {
+        if (!key.startsWith('NEXT_PUBLIC_') && key !== 'NODE_ENV') {
           return undefined
         }
         return [key, value] as const

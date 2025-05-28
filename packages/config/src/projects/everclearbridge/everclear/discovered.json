@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "blockNumber": 1122116,
-  "configHash": "0x4fa5dee468ec72407d8bd70bf4d9a5ba321f2dd07bec0e02d695617a0a194bb4",
+  "configHash": "0x0095ed0b00326f3b236f9dfddb6b1986810d1c1ff384fcf616c82f622c45c715",
   "entries": [
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -40,11 +40,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
-        "0x62c0ff182f9767f2e54f31e47ffd6587cc114b97ea994c85864c11c8116eb229",
-        "0x8225b12393daa7489701089347eb52c11b768a1c177a6cd227092c9aefd97b85",
-        "0x1e60affed7805f9a7e3ab1afdf31c05e81f9a8977725c508d6222e816b67806f",
-        "0x7128ff67025fb2bcb219505d0a80a78e76013becea566de4efba404b7869bc9f",
-        "0xa9aa0764f18d93b6c8773c69f72f6bdd86c3135b4f310eb2c0e2eb5ae5d0aa30"
+        "0x457307c82577abe25e93c7096a0773b8bc37c55a1373212df91feeee68559f79"
       ],
       "proxyType": "Everclear proxy",
       "ignoreInWatchMode": [

@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 22437749,
-  "configHash": "0x9c7fd9f670cd0dcf1bc5ff41c7bdd84248d1207cace19f3172136e85714331b0",
+  "configHash": "0x40782f5a99435845e6ebc415cce1e962f6b834823df80b70843e8a6a61926737",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lisk",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+        "0xE3622468Ea7dD804702B56ca2a4f88C0936995e6",
+        "0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf"
+      ]
+    }
+  }
+}

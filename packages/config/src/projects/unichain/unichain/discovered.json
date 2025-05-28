@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "unichain",
   "blockNumber": 16289384,
-  "configHash": "0x00920e75ab0425cd6c4c4e5274f52202d06b321ee4cf4733438cf65e47fe8e09",
+  "configHash": "0x3d2c0c0853846460d8576aa923acf52a91cbf0f0ef309edc5795bcdd0fa43c82",
   "entries": [
     {
       "address": "0x2F60A5184c63ca94f82a27100643DbAbe4F3f7Fd",
@@ -90,8 +90,14 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0x93e57A196454CB919193fa9946f14943cf733845",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xb6560306ccb0e772b132a8a6dd78244c0d7ac270c80baba40f95006184926c30",
+            ["0x93e57A196454CB919193fa9946f14943cf733845"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "baseFee": 0,
         "baseFeeScalar": 2000,
         "blobBaseFee": 1,
@@ -157,14 +163,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0D3C0d3c0d3c0d3C0D3c0d3C0D3c0d3c0D30011",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x535fc15c66b384bf5f53847b4f1d5666a8a3a24f9e43f66854b1643b641312a8",
-            ["0x95Fc06E1F6330F2829f0622d6158F5b1E21597B0"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "l1FeeWallet": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
@@ -287,8 +287,14 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
+        "$pastUpgrades": [
+          [
+            "2025-05-09T16:00:01.000Z",
+            "0xe992e00998b34075506d2726a274db07a62af6cdd9d527bfda9128114603cfbd",
+            ["0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
+          ]
+        ],
+        "$upgradeCount": 1,
         "basefee": 5781724235,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
@@ -495,14 +501,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xC0d3c0D3c0d3C0D3C0D3C0d3c0D3C0D3c0d30019",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0xb16f95118e9269c5d7e0ee3a58e4cf22cb5a7e74c2ae7446b4419fd6855aa761",
-            ["0xeb82050BB91e4879E256E0cF9a7C4bD58916aa6e"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",
@@ -532,14 +532,8 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0xc0D3c0D3C0d3c0d3c0d3C0d3c0d3C0d3C0D3001A",
-        "$pastUpgrades": [
-          [
-            "2024-12-05T19:19:37.000Z",
-            "0x66332072346a29a118b78491d791cb2abb2cea8f16e343b492e25f1ba9785406",
-            ["0xc1fB143b9dF08eB0612ABCA237Dfe3726da2ED15"]
-          ]
-        ],
-        "$upgradeCount": 1,
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
         "MIN_WITHDRAWAL_AMOUNT": 1,
         "minWithdrawalAmount": 1,
         "recipient": "0x4300c0D3c0d3c0d3c0d3c0d3C0D3c0d3c0d30001",

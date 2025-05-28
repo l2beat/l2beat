@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x0fc58d2d398e44031ead8ee0c453852224e69126
+
+# Diff at Tue, 27 May 2025 13:50:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@23beb76ada08c9c42f8f16b886f40d94b22ac36e block: 22567785
+- current block number: 22574521
+
+## Description
+
+Added manual source for new verifier.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567785 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierPostEuclid-2 (0x7F1A3E1299F44baefE20CB2bcD62a75cA00c20d6) {
+    +++ description: None
+      unverified:
+-        true
+      sourceHashes:
++        ["0x26cd90e30199eed8d6c94ea4ffaf77c4b2a17f7e3ad9299ff6aaa482214bbb56"]
+      references:
++        [{"text":"Source Code","href":"https://circuit-release.s3.us-west-2.amazonaws.com/scroll-zkvm/releases/0.4.2/bundle/verifier.bin"}]
+    }
+```
+
 Generated with discovered.json: 0x5956aac180a00ed19bbf1475df44bb2460139ece
 
 # Diff at Mon, 26 May 2025 15:20:32 GMT:

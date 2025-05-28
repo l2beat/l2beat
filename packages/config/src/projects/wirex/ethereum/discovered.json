@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 22187530,
-  "configHash": "0xa138f67ddbf68243d8cf0aff1f87dff1d7fe9179b6229f3d7f8708eb4441e962",
+  "configHash": "0x7146dbae0d5ea32858ae5a892f284847abfa23bc3994f4bc630628cc1eb21c47",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

@@ -96,6 +96,10 @@ export function executeMatchFlat(
   return new EventSource(`/api/terminal/match-flat?${params}`)
 }
 
+export function executeDownloadAllShapes(): EventSource {
+  return new EventSource(`/api/terminal/download-all-shapes`)
+}
+
 export async function listTemplates(): Promise<ApiListTemplatesResponse> {
   const res = await fetch('/api/templates')
   if (!res.ok) {
@@ -107,12 +111,12 @@ export async function listTemplates(): Promise<ApiListTemplatesResponse> {
 
 export async function createShape(
   chain: string,
-  address: string,
+  addresses: string[],
   blockNumber: number,
   templateId: string,
   fileName: string,
 ) {
-  const body = { chain, address, blockNumber, templateId, fileName }
+  const body = { chain, addresses, blockNumber, templateId, fileName }
 
   const res = await fetch('/api/templates/create-shape', {
     method: 'POST',

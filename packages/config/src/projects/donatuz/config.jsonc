@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "donatuz",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "base": {
+      "initialAddresses": ["0xBbea8Cc549702F67cc082d2cAA9842Ba3767536B"]
+    }
+  }
+}

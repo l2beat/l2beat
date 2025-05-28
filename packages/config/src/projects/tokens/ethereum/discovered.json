@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22445558,
-  "configHash": "0x0fc4366dde1734ed45dbcbc7b32355725d76ca9a82cd5b366ef5896256578a44",
+  "configHash": "0x6925930dd277d3c65dbbbc76d150601800a149cf3ec30d73547b2617b7f75689",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",

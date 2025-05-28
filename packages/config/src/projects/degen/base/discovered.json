@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 29954256,
-  "configHash": "0x52b6b2be91988a9091ec98dc6f24ef2be3928ccf0c65012506d0c4532ddee1a7",
+  "configHash": "0x705171783435fbf0effbb71dd5322340760f04edeff3ea796ce7dd9d9ad03aee",
   "entries": [
     {
       "address": "0x001271c57AeC639952B5201D052767c316755512",
@@ -666,8 +666,7 @@
       "template": "orbitstack/RollupProxy_fastConfirm",
       "sourceHashes": [
         "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca",
-        "0x9349e73cbc2d2b818c1d79711574ba210b56249d8d3845bc78c776caf8f8ff42",
-        "0x7ee21b18b2e18c636bfafc08ff72692cc43302b2599ba75f0abad67282866dd5"
+        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
       ],
       "proxyType": "Arbitrum proxy",
       "description": "Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).",

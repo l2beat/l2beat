@@ -1,0 +1,142 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "nova",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "nova": {
+      "initialAddresses": [
+        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+        "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+        "0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f",
+        "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De",
+        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+      ],
+      "names": {
+        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": "L2UpgradeExecutor",
+        "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9": "L2ProxyAdmin",
+        "0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f": "L2BaseFee",
+        "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De": "L2SurplusFee",
+        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD": "L2ArbitrumToken",
+        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8": "L2GatewayRouter",
+        "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257": "L2ERC20Gateway",
+        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD": "L2WethGateway",
+        "0xbf544970E6BD77b21C6492C281AB60d0770451F4": "L2ARBGateway",
+        "0xada790b026097BfB36a5ed696859b97a96CEd92C": "L2GatewaysProxyAdmin",
+        "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3": "L2SecurityCouncilEmergency",
+        "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock"
+      },
+      "overrides": {
+        "0x509386DbF5C0BE6fd68Df97A05fdB375136c32De": {
+          "fields": {
+            "recipientsData": {
+              "description": "Lists recipients and weights using events, while the latest represents the current state.",
+              "handler": {
+                "type": "event",
+                "select": ["recipients", "weights"],
+                "add": { "event": "RecipientsUpdated" }
+              }
+            }
+          }
+        },
+        "0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f": {
+          "fields": {
+            "recipientsData": {
+              "description": "Lists recipients and weights using events, while the latest represents the current state.",
+              "handler": {
+                "type": "event",
+                "select": ["recipients", "weights"],
+                "add": { "event": "RecipientsUpdated" }
+              }
+            }
+          }
+        },
+        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD": {
+          "ignoreRelatives": ["l1Weth", "l2Weth"],
+          "ignoreMethods": ["exitNum"]
+        },
+        "0xbf544970E6BD77b21C6492C281AB60d0770451F4": {
+          "ignoreRelatives": ["counterpartGateway"],
+          "ignoreInWatchMode": ["exitNum"]
+        },
+        "0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257": {
+          "ignoreRelatives": ["counterpartGateway"],
+          "ignoreInWatchMode": ["exitNum"]
+        },
+        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8": {
+          "ignoreRelatives": ["counterpartGateway"]
+        },
+        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482": {
+          "fields": {
+            "accessControl": { "handler": { "type": "accessControl" } }
+          }
+        },
+        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD": {
+          "ignoreMethods": ["getPastTotalSupply"],
+          "ignoreInWatchMode": ["totalSupply"]
+        }
+      }
+    },
+    "ethereum": {
+      "initialAddresses": [
+        "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
+        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+        "0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
+      ],
+      "names": {
+        "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
+        "0x71D78dC7cCC0e037e12de1E50f5470903ce37148": "ProxyAdmin",
+        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "ProxyAdmin 2",
+        "0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560": "ProxyAdmin 3",
+        "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": "L1DaiGateway",
+        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": "RollupProxy",
+        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox",
+        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
+        "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
+        "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
+        "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
+        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "ArbitrumBridge",
+        "0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688": "EdgeChallengeManager"
+      },
+      "overrides": {
+        "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999": {
+          "ignoreDiscovery": true
+        },
+        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+          "ignoreDiscovery": true
+        },
+        "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": {
+          "fields": {
+            "NOVA_STAKERS": {
+              "handler": {
+                "type": "call",
+                "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+                "args": ["0xFb209827c58283535b744575e11953DCC4bEAD88", 0, 100]
+              }
+            }
+          },
+          "ignoreRelatives": ["NOVA_STAKERS"]
+        },
+        "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+          "ignoreRelatives": ["governanceChainInbox", "l2Timelock"]
+        },
+        "0x97f63339374fCe157Aa8Ee27830172d2AF76A786": {
+          "ignoreRelatives": [
+            "counterpartGateway",
+            "inbox",
+            "l1Dai",
+            "l1Router",
+            "l2Counterpart",
+            "l2Dai"
+          ]
+        },
+        "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": {
+          "ignoreInWatchMode": ["nonce"]
+        },
+        "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd": {
+          "ignoreRelatives": ["getValidators"]
+        }
+      }
+    }
+  }
+}

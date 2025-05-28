@@ -8,7 +8,7 @@ import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Discover } from './Discover'
-import { DownloadShapes } from './DownloadShapes'
+import { DownloadAllShapes, DownloadShapes } from './DownloadShapes'
 import { Events } from './Events'
 import { FetchAgglayer } from './FetchAggLayer'
 import { FetchDiscoveryCache } from './FetchDiscoveryCache'
@@ -16,6 +16,7 @@ import { FetchFlatSources } from './FetchFlatSources'
 import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
+import { FindUnusedShapes } from './FindUnusedShapes'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { GetTokenMinters } from './GetTokenMinters'
@@ -49,6 +50,7 @@ export function getSubcommands() {
     DetectProxy,
     Discover,
     DownloadShapes,
+    DownloadAllShapes,
     Events,
     FetchAgglayer,
     FetchDiscoveryCache,
@@ -56,6 +58,7 @@ export function getSubcommands() {
     FetchZkStack,
     FindCelestiaNamespace,
     FindL2,
+    FindUnusedShapes,
     Flatten,
     FlattenAndDiff,
     GetTokenMinters,

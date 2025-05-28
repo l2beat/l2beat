@@ -2,7 +2,7 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22330737,
-  "configHash": "0xa91a54db6c259e3ccecdc460be96b314a7c89bfb1a82543cd1f350897f44995d",
+  "configHash": "0x1ad14ba7feccd12e34610c950397577d0f7f5f2c93aeee25c060cddcb7db4a5e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -1257,7 +1257,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "receivedPermissions": [
         {
           "permission": "interact",

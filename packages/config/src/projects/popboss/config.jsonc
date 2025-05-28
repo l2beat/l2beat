@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "popboss",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": ["0x53D82686BC9827fEc03bcEe661B37b855A18EcA9"]
+    }
+  }
+}

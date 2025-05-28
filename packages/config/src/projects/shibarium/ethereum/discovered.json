@@ -2,7 +2,7 @@
   "name": "shibarium",
   "chain": "ethereum",
   "blockNumber": 22337733,
-  "configHash": "0x590b91cde5ce5fe3db710866585181d4d7e41f2e4bc3ee21d202560f74e2278d",
+  "configHash": "0xf5c53a4fd429ceecbd81aa93af538b6ac5c8a39bc3ff346c214a9b5737b50eb5",
   "entries": [
     {
       "name": "ERC1155Predicate",

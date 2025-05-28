@@ -17,11 +17,14 @@ import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
+type JustImport = z.infer<typeof JustImport>
 const JustImport = z
   .object({ import: z.optional(z.array(z.string())) })
   .passthrough()
 
 export class ConfigReader {
+  private importedCache = new Map<string, JustImport>()
+
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
@@ -30,7 +33,7 @@ export class ConfigReader {
       'Project not found, check if case matches',
     )
 
-    const basePath = path.join(this.rootPath, name, chain)
+    const basePath = path.join(this.rootPath, name)
     assert(
       fileExistsCaseSensitive(path.join(basePath)),
       'Chain not found in project, check if case matches',
@@ -49,12 +52,23 @@ export class ConfigReader {
     if (rawConfig.import !== undefined) {
       const visited = new Set<string>()
       rawConfig = merge(
-        resolveImports(basePath, rawConfig.import, visited),
+        this.resolveImports(basePath, rawConfig.import, visited),
         rawConfig,
       )
     }
 
-    const config = new ConfigRegistry(rawConfig)
+    const chainRawConfig = {
+      chain,
+      name,
+      ...merge(
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)['all'],
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)[chain],
+      ),
+    }
+
+    const config = new ConfigRegistry(chainRawConfig)
 
     assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -126,18 +140,16 @@ export class ConfigReader {
   }
 
   readAllChainsForProject(name: string) {
-    const chains = readdirSync(path.join(this.rootPath, name)).filter(
-      (chain) => {
-        try {
-          return existsSync(
-            path.join(this.rootPath, name, chain, 'config.jsonc'),
-          )
-        } catch {
-          return false
-        }
-      },
+    if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
+      return []
+    }
+    const config = readFileSync(
+      path.join(this.rootPath, name, 'config.jsonc'),
+      'utf-8',
     )
-    return chains
+
+    const parsed = JSON.parse(config)
+    return Object.keys(parsed.chains)
   }
 
   readAllProjectsForChain(chain: string): string[] {
@@ -167,7 +179,9 @@ export class ConfigReader {
         .filter((x) => x.isFile())
         .map((x) => x.name)
 
-      const hasConfig = chainFiles.includes('config.jsonc')
+      const allChains = this.readAllChainsForProject(folder.name)
+
+      const hasConfig = allChains.includes(chain)
       const hasDiscovered = chainFiles.includes('discovered.json')
       if (!hasConfig && !hasDiscovered) {
         continue
@@ -207,6 +221,45 @@ export class ConfigReader {
   getProjectChainPath(project: string, chain: string): string {
     return path.join(this.getProjectPath(project), chain)
   }
+
+  resolveImports(
+    basePath: string,
+    imports: string[],
+    visited: Set<string>,
+  ): json {
+    let result: json = {}
+    for (const importPath of imports) {
+      const resolvedPath = path.resolve(basePath, importPath)
+      if (visited.has(resolvedPath)) {
+        throw new Error(`Circular import detected: ${importPath}`)
+      }
+      visited.add(resolvedPath)
+
+      let rawConfig = this.importedCache.get(resolvedPath)
+      if (rawConfig === undefined) {
+        const contents = readJsonc(resolvedPath)
+        const parseResult = JustImport.safeParse(contents)
+        if (!parseResult.success) {
+          const message = formatZodParsingError(parseResult.error, importPath)
+          console.log(message)
+
+          throw new Error(`Cannot parse file ${importPath}`)
+        }
+        rawConfig = parseResult.data
+        this.importedCache.set(resolvedPath, rawConfig)
+      }
+
+      if (rawConfig.import !== undefined) {
+        const importBasePath = path.dirname(resolvedPath)
+        result = merge(
+          this.resolveImports(importBasePath, rawConfig.import, visited),
+          result,
+        )
+      }
+      result = merge(result, rawConfig)
+    }
+    return result
+  }
 }
 
 function formatZodParsingError(error: ZodError, fileName: string): string {
@@ -228,38 +281,4 @@ function formatZodParsingError(error: ZodError, fileName: string): string {
     ...lines,
     chalk.red(`╚${'═'.repeat(maxLength - 1)}╝`),
   ].join('\n')
-}
-
-export function resolveImports(
-  basePath: string,
-  imports: string[],
-  visited: Set<string>,
-): json {
-  let result: json = {}
-  for (const importPath of imports) {
-    const resolvedPath = path.resolve(basePath, importPath)
-    if (visited.has(resolvedPath)) {
-      throw new Error(`Circular import detected: ${importPath}`)
-    }
-    visited.add(resolvedPath)
-
-    const contents = readJsonc(resolvedPath)
-    const parseResult = JustImport.safeParse(contents)
-    if (!parseResult.success) {
-      const message = formatZodParsingError(parseResult.error, importPath)
-      console.log(message)
-
-      throw new Error(`Cannot parse file ${importPath}`)
-    }
-    const rawConfig = parseResult.data
-    if (rawConfig.import !== undefined) {
-      const importBasePath = path.dirname(resolvedPath)
-      result = merge(
-        resolveImports(importBasePath, rawConfig.import, visited),
-        result,
-      )
-    }
-    result = merge(result, rawConfig)
-  }
-  return result
 }

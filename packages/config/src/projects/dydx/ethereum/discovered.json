@@ -2,7 +2,7 @@
   "name": "dydx",
   "chain": "ethereum",
   "blockNumber": 21343041,
-  "configHash": "0x3757ba2a1d95a6d5d479a9d2dcc95c542e7aa46ce796dcb62b15481c24c30177",
+  "configHash": "0xfb700f1fbd67e708ae0d58c0b7c97574912599188671c4621b6b85b2cce4a06a",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -1196,11 +1196,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xcbc560d276343abe292d73f08cd9006d7faaf560c300a437744a6e8646c9baa6",
-        "0x74ee5c93d85e8e3f9a076d643a1f10dbc07160631e7b7ddf00cf54b7f4218bd8",
-        "0x30ebdecf2dc34bef72c4db7e2fc3ed61f8f12fd248455fda41cadfc6076c4ab5",
-        "0x2ca4953b47f855531afeb05271bc0a2a40ef59696a328130b04419b2ffab757a",
-        "0x55d6a4cd67a46f33d25cf27c466b0794bf83409eefb65aa00799943d4519273f",
-        "0x78eb03e490fcb196d0b884db041c442d39699b0f0434493a89834ad53949e95d"
+        "0xbe20bbe6c3b6a691ea8198517ba23e844544647f6d12c96c2f69d20075251c3a"
       ],
       "proxyType": "StarkWare diamond",
       "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],

@@ -1,5 +1,4 @@
 import type { ProjectId, ProjectValueType } from '@l2beat/shared-pure'
-import { assert } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generate-timestamps'
@@ -28,7 +27,9 @@ export async function getSummedTvsValues(
   ])
 
   const latestTimestamp = latest.at(-1)?.timestamp
-  assert(latestTimestamp, 'Latest timestamp is not defined')
+  if (!latestTimestamp) {
+    return []
+  }
   const delayedRecords = latest.filter((v) => v.timestamp < latestTimestamp)
 
   if (delayedRecords.length > 0) {
