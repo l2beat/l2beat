@@ -7,13 +7,13 @@ import clsx from 'clsx'
 import { Fragment, type ReactNode, useState } from 'react'
 import { formatUnits } from 'viem'
 
-interface Props {
+interface ExpandedViewProps {
   decoded: DecodedResult
 }
 
-export function DecodedView({ decoded }: Props) {
+export function ExpandedView({ decoded }: ExpandedViewProps) {
   return (
-    <main className="mx-auto max-w-[900px] p-4 pb-20">
+    <>
       {decoded.transaction && (
         <div className="mb-2">
           <DecodedLabel name="hash" type="bytes32" />
@@ -31,7 +31,7 @@ export function DecodedView({ decoded }: Props) {
         </div>
       )}
       <DecodedDisplay value={decoded.data} index={0} />
-    </main>
+    </>
   )
 }
 
@@ -406,7 +406,7 @@ function toLine(value: string) {
 
 const MAX_UINT = (2n ** 256n - 1n).toString()
 
-function formatNumber(value: string, transform?: string) {
+export function formatNumber(value: string, transform?: string) {
   if (value === MAX_UINT) {
     return 'Infinity'
   }
@@ -433,7 +433,7 @@ function formatNumber(value: string, transform?: string) {
   return formatDecimals(value, 0)
 }
 
-function formatDuration(value: string): string {
+export function formatDuration(value: string): string {
   let n = BigInt(value)
 
   if (n < 0) {
@@ -468,7 +468,7 @@ function formatDuration(value: string): string {
   return parts.join(' ') || '0 seconds'
 }
 
-function formatDecimals(value: string, decimals: number) {
+export function formatDecimals(value: string, decimals: number) {
   if (value === MAX_UINT) {
     return 'Infinity'
   }

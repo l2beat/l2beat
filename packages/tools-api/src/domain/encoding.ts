@@ -30,7 +30,27 @@ export function decodeType(type: string, encoded: `0x${string}`): AbiValue {
   return decodeParsed(parseType(type), encoded)
 }
 
+const DEBUG = false
+
 function decodeParsed(type: ParsedType, encoded: `0x${string}`): AbiValue {
+  if (DEBUG) {
+    console.log(type.type, type.dynamic ? 'dynamic' : type.size)
+    let p = encoded.slice(2)
+    if (type.function) {
+      console.log(p.slice(0, 8))
+      p = p.slice(8)
+    }
+    let i = 0
+    while (p && i < 5) {
+      i++
+      console.log(p.slice(0, 64))
+      p = p.slice(64)
+    }
+    if (p) {
+      console.log('...truncated')
+    }
+  }
+
   const common = { name: type.name ?? '', abi: type.type, encoded }
   let selector: `0x${string}` | undefined
   if (type.function) {
@@ -201,7 +221,7 @@ function hexToString(bytes: `0x${string}`) {
   return new TextDecoder().decode(buffer)
 }
 
-function sliceBytes(
+export function sliceBytes(
   bytes: `0x${string}`,
   from: number,
   to?: number,

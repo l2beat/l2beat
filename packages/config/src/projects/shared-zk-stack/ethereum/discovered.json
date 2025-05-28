@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22496282,
+  "blockNumber": 22572946,
   "configHash": "0x1ae9b6d7d3421c2b2d93c40ef6367efc6ef88c7d48440d6dae7db429b91d4f79",
   "entries": [
     {
@@ -431,6 +431,7 @@
         "MAX_NUMBER_OF_ZK_CHAINS": 100,
         "messageRoot": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
         "migrationPaused": false,
+        "migrations": [],
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -448,6 +449,10 @@
         "settlementLayers": {
           "severity": "HIGH",
           "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
+        },
+        "migrations": {
+          "severity": "HIGH",
+          "description": "zk chain migrations that were started"
         }
       },
       "implementationNames": {
@@ -670,7 +675,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 199,
+        "nonce": 200,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3080,7 +3085,7 @@
     "shared-zk-stack/EmergencyUpgradeBoard": "0xacd4df56d946492afa03616aa316816a98708b5748146311403dee1b08202d21",
     "shared-zk-stack/Guardians": "0x930c8157109c56bfeaf429f0178d7025d6b21175c4f0c9d57ad594991cc7076d",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
-    "shared-zk-stack/v26/BridgeHub": "0xcd4a199c4e676c36dc4f1b4d9c57e695d6ecaccd252a1336611234f3e3e2f01a",
+    "shared-zk-stack/v26/BridgeHub": "0xf014e4d30ee25cd14594d8255fb3576318fbe9b5eba6bbbec917528cdd8c07fc",
     "shared-zk-stack/v26/ChainTypeManager": "0xbe2d88a172590cb3a629ad843086d648ed322c86eb23d4da6a7f43dfe04b8f0c",
     "shared-zk-stack/v26/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/v26/L1AssetRouter": "0x4530b565b0dd64d0a259a829b0966d9bad2fa221c992d87478f69a5d1b62fb76",

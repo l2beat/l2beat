@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xc197f82d06405a7743706be69db75eb21406058f
+
+# Diff at Tue, 27 May 2025 12:35:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@23beb76ada08c9c42f8f16b886f40d94b22ac36e block: 22566407
+- current block number: 22566407
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22566407 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.opStackDA.isUsingCelestia:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xd89d102ad342b175a1c44885cfc8a862e057af57
 
 # Diff at Mon, 26 May 2025 10:36:26 GMT:

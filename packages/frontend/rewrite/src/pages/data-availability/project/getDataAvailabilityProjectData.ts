@@ -85,7 +85,7 @@ async function getProjectEntry(
     return entry
   }
 
-  const entry = await Promise.all([
+  const [entry] = await Promise.all([
     getDaProjectEntry(layer, params.bridge),
     prefetch,
   ])
