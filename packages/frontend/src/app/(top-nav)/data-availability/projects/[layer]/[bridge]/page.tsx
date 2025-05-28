@@ -3,10 +3,10 @@ import { notFound } from 'next/navigation'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
-} from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
-import { ps } from 'rewrite/src/server/projects'
-import { env } from '~/env'
+} from '~/server/features/data-availability/project/get-da-project-entry'
+import { ps } from '~/server/projects'
 import { HydrateClient, api } from '~/trpc/server'
+import { env } from '~/env'
 import { getProjectMetadata } from '~/utils/metadata'
 import { DataAvailabilityProjectPage } from './_page'
 

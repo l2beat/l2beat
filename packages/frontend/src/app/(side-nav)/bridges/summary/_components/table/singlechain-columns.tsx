@@ -1,5 +1,4 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import type { BridgesSummaryEntry } from 'rewrite/src/server/features/bridges/get-bridges-summary-entries'
 import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
@@ -11,6 +10,7 @@ import {
 import { TableLink } from '~/components/table/table-link'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/common-project-columns'
 import { EM_DASH } from '~/consts/characters'
+import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 

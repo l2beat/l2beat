@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
-import type { ProjectsChangeReport } from 'rewrite/src/server/features/projects-change-report/get-projects-change-report'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/get-contract-utils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'

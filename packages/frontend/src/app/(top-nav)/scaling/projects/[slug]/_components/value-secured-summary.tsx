@@ -1,6 +1,8 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { RoundedWarningIcon } from 'rewrite/src/icons/rounded-warning'
 import type { ProjectScalingEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
+import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
 import {
@@ -11,11 +13,9 @@ import {
 import { VerticalSeparator } from '~/components/core/vertical-separator'
 import { CustomLink } from '~/components/link/custom-link'
 import { Square } from '~/components/square'
-import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { ValueWithPercentageChan~/utils/number-format/format-currencypercentage-change'
 import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface ValueSecuredBreakdown {
   totalChange: number

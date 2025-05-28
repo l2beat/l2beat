@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import type { EcosystemToken } from 'rewrite/src/server/features/ecosystems/get-ecosystem-token'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { PercentChange } from '~/components/percent-change'
+import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
+import { formatNumber } from 'rewrite/src/utils/number-format/format-number'
+import { HorizontalSeparator } f~/utils/number-format/format-currency
+import { PercentChange } from ~/utils/number-format/format-number
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/format-currency'
-import { formatNumber } from '~/utils/number-format/format-number'
 import { EcosystemWidget, EcosystemWidgetTitle } from './ecosystem-widget'
 
 interface Props {

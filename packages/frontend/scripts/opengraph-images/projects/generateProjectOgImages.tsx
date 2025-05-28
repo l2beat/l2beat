@@ -2,9 +2,9 @@ import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import type { Project } from '@l2beat/config'
 import { Resvg } from '@resvg/resvg-js'
-import { ps } from 'rewrite/src/server/projects'
-import satori from 'satori'
 import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
+import { ps } from '~/server/projects'
+import satori from 'satori'
 
 export async function generateProjectOgImages(
   size: { width: number; height: number },

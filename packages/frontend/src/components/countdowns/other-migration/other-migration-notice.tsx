@@ -1,5 +1,4 @@
 'use client'
-import type { ProjectCountdownsWithContext } from 'rewrite/src/server/features/scaling/utils/get-countdowns'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
@@ -7,6 +6,7 @@ import { externalLinks } from '~/consts/external-links'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { ArrowRightIcon } from '~/icons/arrow-right'
 import { CloseIcon } from '~/icons/close'
+import type { ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { CountdownSection } from '../countdown-section'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>

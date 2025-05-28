@@ -1,4 +1,6 @@
 'use client'
+import { CustomLinkIcon } from '~/icons/outlink'
+import { SocialIcon } from '~/icons/products/social-icon'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,8 +10,6 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from '~/components/core/navigation-menu'
-import { CustomLinkIcon } from '~/icons/outlink'
-import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { DiscoUiLink } from './disco-ui-link'

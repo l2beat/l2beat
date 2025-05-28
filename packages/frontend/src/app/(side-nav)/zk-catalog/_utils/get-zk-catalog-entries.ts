@@ -1,6 +1,6 @@
 import type { Project } from '@l2beat/config'
-import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
-import type { VerifiersStatuses } from 'rewrite/src/server/features/zk-catalog/get-verifiers'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
+import type { VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { getProofVerification } from './get-proof-verification'
 import type { TrustedSetup } from './get-trusted-setup'
 import { getTrustedSetup } from './get-trusted-setup'

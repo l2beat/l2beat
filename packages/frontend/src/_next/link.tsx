@@ -1,4 +1,4 @@
-import type { LinkProps } from 'next/link'
+import type { LinkProps } from '~/_next/link'
 
 export default function Link(props: LinkProps & { href: string }) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { getScalingCostsEntries } from 'rewrite/src/server/features/scaling/costs/get-scaling-costs-entries'
+import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingCostsPage } from './_page'

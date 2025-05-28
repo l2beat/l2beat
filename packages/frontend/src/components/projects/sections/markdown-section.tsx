@@ -1,6 +1,6 @@
 import type { ReferenceLink } from '@l2beat/config'
-import { DiagramImage } from '~/components/diagram-image'
-import type { DiagramParams } from '~/utils/project/get-diagram-params'
+import type { DiagramParams } from 'rewrite/src/utils/project/get-diagram-params'
+import { DiagramImage } from '~/comp~/utils/project/get-diagram-params
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { ReferenceList } from './reference-list'

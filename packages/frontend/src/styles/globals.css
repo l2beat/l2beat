@@ -227,10 +227,6 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
-
-  .word-break-word {
-    word-break: break-word;
-  }
 }
 
 @layer components {

@@ -1,4 +1,4 @@
-import { getDaRiskEntries } from 'rewrite/src/server/features/data-availability/risks/get-da-risk-entries'
+import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { DataAvailabilityRiskPage } from './_page'
 

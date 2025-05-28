@@ -1,14 +1,14 @@
 'use client'
 import type { StageConfigured } from '@l2beat/config'
-import { StageBadge } from '~/components/badge/stage-badge'
-import { Countdown } from '~/components/countdown'
-import { CustomLink } from '~/components/link/custom-link'
 import { externalLinks } from '~/consts/external-links'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { ArrowRightIcon } from '~/icons/arrow-right'
 import { CloseIcon } from '~/icons/close'
 import { MissingIcon } from '~/icons/missing'
 import { StopwatchIcon } from '~/icons/stopwatch'
+import { StageBadge } from '~/components/badge/stage-badge'
+import { Countdown } from '~/components/countdown'
+import { CustomLink } from '~/components/link/custom-link'
 import { CountdownSection } from '../countdown-section'
 
 interface Props {

@@ -1,4 +1,3 @@
-import type { BridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
@@ -6,6 +5,7 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { ScrollToTopButton } from '~/components/scroll-to-top-button'
+import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { BridgesMvpWarning } from './_components/bridges-mvp-warning'
 import { BridgesProjectSummary } from './_components/bridges-project-summary'
 

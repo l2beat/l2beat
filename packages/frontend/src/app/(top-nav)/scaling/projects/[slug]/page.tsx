@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getScalingProjectEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
-import { ps } from 'rewrite/src/server/projects'
-import { env } from '~/env'
+import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { ps } from '~/server/projects'
 import { HydrateClient, api } from '~/trpc/server'
+import { env } from '~/env'
 import { getProjectMetadata } from '~/utils/metadata'
 import { ScalingProjectPage } from './_page'
 

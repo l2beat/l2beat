@@ -1,4 +1,4 @@
-import { getScalingLivenessEntries } from 'rewrite/src/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingLivenessPage } from './_page'
 

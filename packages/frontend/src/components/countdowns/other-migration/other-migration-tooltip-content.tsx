@@ -1,5 +1,5 @@
-import type { ProjectCountdownsWithContext } from 'rewrite/src/server/features/scaling/utils/get-countdowns'
 import { CloseIcon } from '~/icons/close'
+import type { ProjectCountdownsWithContext } from '~/server/features/scaling/utils/get-countdowns'
 import { Callout } from '../../callout'
 import { Countdown } from '../../countdown'
 

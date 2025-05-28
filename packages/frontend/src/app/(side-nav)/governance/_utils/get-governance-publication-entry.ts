@@ -1,8 +1,8 @@
 import type { CollectionEntry } from '~/content/get-collection'
 import { getCollectionEntry } from '~/content/get-collection'
-import { formatPublicationDate } from '~/utils/dates'
 import type { ImageParams } from '~/utils/project/get-image-params'
 import { getImageParams } from '~/utils/project/get-image-params'
+import { formatPublicationDate } from '~/utils/dates'
 import type { GovernanceAuthorEntry } from './get-governance-author-entry'
 import { getGovernanceAuthorEntry } from './get-governance-author-entry'
 

@@ -1,6 +1,12 @@
 'use client'
 
-import type { CommonProjectEntry } from 'rewrite/src/server/features/utils/get-common-project-entry'
+import { featureFlags } from '~/consts/feature-flags'
+import { useIsMobile } from '~/hooks/use-is-mobile'
+import { ShieldIcon } from '~/icons/shield'
+import { UnderReviewIcon } from '~/icons/under-review'
+import { UnverifiedIcon } from '~/icons/unverified'
+import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
+import { getUnderReviewText } from '~/utils/project/under-review'
 import {
   Tooltip,
   TooltipContent,
@@ -11,12 +17,6 @@ import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/o
 import { Markdown } from '~/components/markdown/markdown'
 import { ProjectBadge } from '~/components/projects/project-badge'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
-import { featureFlags } from '~/consts/feature-flags'
-import { useIsMobile } from '~/hooks/use-is-mobile'
-import { ShieldIcon } from '~/icons/shield'
-import { UnderReviewIcon } from '~/icons/under-review'
-import { UnverifiedIcon } from '~/icons/unverified'
-import { getUnderReviewText } from '~/utils/project/under-review'
 import { NotSyncedIcon } from '../../not-synced/not-synced-icon'
 import { PrimaryValueCell } from './primary-value-cell'
 

@@ -1,8 +1,6 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
-import type { ScalingActivityEntry } from 'rewrite/src/server/features/scaling/activity/get-scaling-activity-entries'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import { ScalingActivityChart } from '~/components/chart/activity/scaling-activity-chart'
 import {
@@ -22,6 +20,8 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { UopsExplorerLink } from '../../_components/uops-explorer-link'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingActivityTable } from './table/scaling-activity-table'

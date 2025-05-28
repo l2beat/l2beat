@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 
-import type { DaThroughputDataPoint } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-chart'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import {
   ChartContainer,
   ChartLegend,

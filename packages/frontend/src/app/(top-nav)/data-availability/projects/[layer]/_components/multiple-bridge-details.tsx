@@ -1,6 +1,9 @@
 'use client'
 
+import { InfoIcon } from 'rewrite/src/icons/info'
+import { UnverifiedIcon } from 'rewrite/src/icons/unverified'
 import type { DaProjectPageEntry } from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
+import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
 import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
 import { ProjectsUsedIn } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
 import { Button, buttonVariants } from '~/components/core/button'
@@ -18,13 +21,10 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { useRouterWithProgressBar } from '~/components/navigation-progress-bar'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
-import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
+import { GrissiniDetails } from ~/utils/number-format/format-currency'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
-import { InfoIcon } from '~/icons/info'
-import { UnverifiedIcon } from '~/icons/unverified'
 import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface Props {
   project: DaProjectPageEntry

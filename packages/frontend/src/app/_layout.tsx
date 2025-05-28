@@ -1,4 +1,6 @@
 import { ThemeProvider } from 'next-themes'
+import { PlausibleProvider } from '~/providers/plausible-provider'
+import { TRPCReactProvider } from '~/trpc/react'
 import { DevAutoReloader } from '~/components/DevAutoReloader'
 import { TooltipProvider } from '~/components/core/tooltip/tooltip'
 import type { GlossaryTermWithoutDescription } from '~/components/markdown/glossary-context'
@@ -7,8 +9,6 @@ import { RecategorisationPreviewContextProvider } from '~/components/recategoris
 import { SearchBarContextProvider } from '~/components/search-bar/search-bar-context'
 import type { SearchBarProject } from '~/components/search-bar/search-bar-entry'
 import { env } from '~/env'
-import { PlausibleProvider } from '~/providers/plausible-provider'
-import { TRPCReactProvider } from '~/trpc/react'
 
 export interface AppLayoutProps {
   terms: GlossaryTermWithoutDescription[]

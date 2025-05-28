@@ -1,3 +1,4 @@
+import { SocialIcon } from '~/icons/products/social-icon'
 import {
   Accordion,
   AccordionContent,
@@ -5,7 +6,6 @@ import {
   AccordionTrigger,
 } from '~/components/core/accordion'
 import { CustomLink } from '~/components/link/custom-link'
-import { SocialIcon } from '~/icons/products/social-icon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { parseSocial } from './parse-social'

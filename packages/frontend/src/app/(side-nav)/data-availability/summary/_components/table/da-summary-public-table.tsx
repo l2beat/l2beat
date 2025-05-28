@@ -2,10 +2,13 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useTable } from 'rewrite/src/hooks/use-table'
+import { UnverifiedIcon } from 'rewrite/src/icons/unverified'
 import type {
   DaBridgeSummaryEntry,
   DaSummaryEntry,
 } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
+import { formatDollarValueNumber } from 'rewrite/src/utils/number-format/format-dollar-value-number'
 import {
   Tooltip,
   TooltipContent,
@@ -13,11 +16,8 @@ import {
 } from '~/components/core/tooltip/tooltip'
 import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { TableCell, TableRow } from '~/components/table/table'
-import { TableLink } from '~/components/table/table-link'
-import { useTable } from '~/hooks/use-table'
-import { UnverifiedIcon } from '~/icons/unverified'
+import { TableLink } from '~/components/t~/utils/number-format/format-dollar-value-number
 import { cn } from '~/utils/cn'
-import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 import {
   BasicDaTable,
   getRowTypeClassNames,

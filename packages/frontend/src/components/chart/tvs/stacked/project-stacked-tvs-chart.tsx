@@ -2,14 +2,14 @@
 
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import type {
-  ProjectToken,
-  ProjectTokens,
-} from 'rewrite/src/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { TvsBreakdownButton } from '~/components/projects/sections/stacked-tvs-section'
 import { TokenCombobox } from '~/components/token-combobox'
+import type {
+  ProjectToken,
+  ProjectTokens,
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../../core/chart/chart-controls-wrapper'
 import { ProjectChartTimeRange } from '../../../core/chart/chart-time-range'

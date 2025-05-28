@@ -1,6 +1,6 @@
 import type { StageConfigured } from '@l2beat/config'
-import { StageBadge } from '~/components/badge/stage-badge'
 import { MissingIcon } from '~/icons/missing'
+import { StageBadge } from '~/components/badge/stage-badge'
 import { Countdown } from '../../countdown'
 
 interface Props {

@@ -1,10 +1,10 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import type { ScalingUpcomingEntry } from 'rewrite/src/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import {
   TypeExplanationTooltip,
   TypeInfo,
 } from '~/components/table/cells/type-info'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
+import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 
 const columnHelper = createColumnHelper<ScalingUpcomingEntry>()
 

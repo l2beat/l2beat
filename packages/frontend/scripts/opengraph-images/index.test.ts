@@ -1,6 +1,6 @@
 import { existsSync } from 'fs'
 import path from 'path'
-import { ps } from 'rewrite/src/server/projects'
+import { ps } from '~/server/projects'
 import { getOpengraphProjectTypes } from './projects/generateProjectOgImages'
 
 describe('opengraph images', () => {

@@ -1,5 +1,5 @@
-import { getDaSummaryEntries } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
-import { getDaThroughputSummary } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-summary'
+import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
+import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { DataAvailabilitySummaryPage } from './_page'
 

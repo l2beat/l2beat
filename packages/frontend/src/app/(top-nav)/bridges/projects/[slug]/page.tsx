@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getBridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
-import { ps } from 'rewrite/src/server/projects'
-import { env } from '~/env'
+import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { ps } from '~/server/projects'
 import { HydrateClient, api } from '~/trpc/server'
+import { env } from '~/env'
 import { getProjectMetadata } from '~/utils/metadata'
 import { BridgesProjectPage } from './_page'
 

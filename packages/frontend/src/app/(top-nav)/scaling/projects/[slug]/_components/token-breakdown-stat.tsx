@@ -1,4 +1,3 @@
-import type { ProjectScalingEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import {
   TokenBreakdown,
@@ -14,6 +13,7 @@ import {
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 
 interface Props {
   tokenTvs:

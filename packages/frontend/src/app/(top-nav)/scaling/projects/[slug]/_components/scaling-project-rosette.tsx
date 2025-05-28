@@ -1,8 +1,8 @@
 'use client'
 import { useState } from 'react'
-import type { ProjectScalingEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
 import { BigIndividualRosette } from '~/components/rosette/individual/big-individual-rosette'
 import { BigPizzaRosette } from '~/components/rosette/pizza/big-pizza-rosette'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import type { RosetteType } from './rosette-selector'
 import { RosetteSelector } from './rosette-selector'
 

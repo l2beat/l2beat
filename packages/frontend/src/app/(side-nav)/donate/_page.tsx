@@ -1,9 +1,9 @@
 import compact from 'lodash/compact'
 import Image from 'next/image'
+import { CustomLinkIcon } from '~/icons/outlink'
 import { CustomLink } from '~/components/link/custom-link'
 import { MainPageHeader } from '~/components/main-page-header'
 import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { CustomLinkIcon } from '~/icons/outlink'
 import { cn } from '~/utils/cn'
 import { fundingSources } from './funding-sources'
 

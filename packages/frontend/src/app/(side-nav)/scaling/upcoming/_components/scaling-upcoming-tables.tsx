@@ -1,7 +1,5 @@
 'use client'
 
-import type { ScalingUpcomingEntry } from 'rewrite/src/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { CountBadge } from '~/components/badge/count-badge'
 import {
   DirectoryTabs,
@@ -18,6 +16,8 @@ import {
 import { TableFilters } from '~/components/table/filters/table-filters'
 import { useFilterEntries } from '~/components/table/filters/use-filter-entries'
 import { TableSortingProvider } from '~/components/table/sorting/table-sorting-context'
+import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import type { TabbedScalingEntries } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import { getRecategorisedEntries } from '../../_utils/get-recategorised-entries'
 import { ScalingUpcomingTable } from './table/scaling-upcoming-table'
 

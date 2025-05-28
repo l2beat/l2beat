@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { getScalingTvsEntries } from 'rewrite/src/server/features/scaling/tvs/get-scaling-tvs-entries'
+import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingTvsPage } from './_page'

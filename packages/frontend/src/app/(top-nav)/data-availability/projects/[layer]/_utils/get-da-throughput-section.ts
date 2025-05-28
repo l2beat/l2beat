@@ -1,8 +1,8 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
-import { getDaThroughputTable } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-table'
-import { getThroughputSyncWarning } from 'rewrite/src/server/features/data-availability/throughput/is-throughput-synced'
-import { ps } from 'rewrite/src/server/projects'
+import { getDaThroughputTable } from '~/server/features/data-availability/throughput/get-da-throughput-table'
+import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/is-throughput-synced'
+import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
 
 export async function getDaThroughputSection(

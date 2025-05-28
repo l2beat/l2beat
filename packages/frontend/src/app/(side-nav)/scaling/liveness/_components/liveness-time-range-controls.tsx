@@ -4,7 +4,7 @@ import { Skeleton } from '~/components/core/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
 
 interface Props {
-  timeRange: LivenessTimeRange
+  timeRange: LivenessTimeRange~/server/features/scaling/liveness/types
   setTimeRange: (timeRange: LivenessTimeRange) => void
   className?: string
 }

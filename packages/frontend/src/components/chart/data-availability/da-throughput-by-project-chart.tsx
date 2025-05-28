@@ -3,7 +3,7 @@ import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
-import type { DaThroughputChartDataByChart } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
+import type { DaThroughputChartDataByChart } from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,

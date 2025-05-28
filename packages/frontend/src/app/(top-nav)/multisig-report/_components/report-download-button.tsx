@@ -1,5 +1,5 @@
+import { DownloadArrowIcon } from 'rewrite/src/icons/download-arrow'
 import { CustomLink } from '~/components/link/custom-link'
-import { DownloadArrowIcon } from '~/icons/download-arrow'
 import { cn } from '~/utils/cn'
 
 interface ReportDownloadButtonProps {

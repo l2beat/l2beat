@@ -1,8 +1,8 @@
 import { notFound } from 'next/navigation'
-import { getScalingProjectTvsBreakdownData } from 'rewrite/src/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
-import { ps } from 'rewrite/src/server/projects'
-import { env } from '~/env'
+import { getScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
+import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
+import { env } from '~/env'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingProjectTvsBreakdownPage } from './_page'
 

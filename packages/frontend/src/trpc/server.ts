@@ -2,9 +2,9 @@ import { createHydrationHelpers } from '@trpc/react-query/rsc'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import { cache } from 'react'
 
-import type { AppRouter } from 'rewrite/src/server/trpc/root'
-import { appRouter, createCaller } from 'rewrite/src/server/trpc/root'
-import { createTRPCContext } from 'rewrite/src/server/trpc/trpc'
+import type { AppRouter } from '~/server/trpc/root'
+import { appRouter, createCaller } from '~/server/trpc/root'
+import { createTRPCContext } from '~/server/trpc/trpc'
 import { createQueryClient } from './query-client'
 
 /**

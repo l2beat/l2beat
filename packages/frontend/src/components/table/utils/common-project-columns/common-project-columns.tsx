@@ -1,7 +1,7 @@
 import type { ColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { EM_DASH } from '~/consts/characters'
+import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { IndexCell } from '../../cells/index-cell'
 
 export interface CommonProjectColumnsEntry {

@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import type { ScalingArchivedEntry } from 'rewrite/src/server/features/scaling/archived/get-scaling-archived-entries'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/pizza-rosette-cell'
 import { TypeExplanationTooltip } from '~/components/table/cells/type-info'
 import { TypeInfo } from '~/components/table/cells/type-info'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/scaling-common-project-columns'
 import { EM_DASH } from '~/consts/characters'
+import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()

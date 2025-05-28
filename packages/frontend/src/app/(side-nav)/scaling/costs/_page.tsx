@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
-import type { ScalingCostsEntry } from 'rewrite/src/server/features/scaling/costs/get-scaling-costs-entries'
 import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
+import type { ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import type { TabbedScalingEntries } from '../_utils/group-by-scaling-tabs'
 import { CostsHeader } from './_components/costs-header'
 import { CostsMetricContextProvider } from './_components/costs-metric-context'

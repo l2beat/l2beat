@@ -1,11 +1,11 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import type { ScalingRiskEntry } from 'rewrite/src/server/features/scaling/risks/get-scaling-risk-entries'
 import { BasicTable } from '~/components/table/basic-table'
 import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
+import type { ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { scalingRiskColumns } from './columns'
 
 export function ScalingRiskTable({

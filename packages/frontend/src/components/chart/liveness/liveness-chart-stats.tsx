@@ -1,11 +1,14 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { Fragment } from 'react'
-import type { LivenessAnomaly } from 'rewrite/src/server/features/scaling/liveness/types'
-import type { LivenessChartTimeRange } from 'rewrite/src/server/features/scaling/liveness/utils/chart-range'
+import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chart-range'
 import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
 import { AnomalyIndicator } from '~/app/(side-nav)/scaling/liveness/_components/anomaly-indicator'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
+import {~/components/core/chart/chart-stats
+  ChartStats,
+  ChartStatsItem,
+} from 'rewrite/src/components/core/chart/chart-stats'
 import { cn } from '~/utils/cn'
 
 export function LivenessChartStats({

@@ -1,4 +1,4 @@
-import { getScalingArchivedEntries } from 'rewrite/src/server/features/scaling/archived/get-scaling-archived-entries'
+import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingArchivedPage } from './_page'
 

@@ -1,7 +1,7 @@
 import type { IndexerConfigurationRecord } from '@l2beat/database'
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { UnixTime } from '@l2beat/shared-pure'
-import { getDb } from 'rewrite/src/server/database'
+import { getDb } from '~/server/database'
 
 export async function getLivenessTxs(
   projectId: string,

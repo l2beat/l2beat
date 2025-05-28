@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import type { BridgesProjectEntry } from 'rewrite/src/server/features/bridges/project/get-bridges-project-entry'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
 import { ArchivedBar } from '~/components/projects/archived-bar'
@@ -11,6 +10,7 @@ import { AboutSection } from '~/components/projects/sections/about-section'
 import { UnderReviewBar } from '~/components/projects/under-review-bar'
 import { UpcomingBar } from '~/components/projects/upcoming-bar'
 import { WarningBar } from '~/components/warning-bar'
+import type { BridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
 import { getUnderReviewText } from '~/utils/project/under-review'
 import { BridgesProjectStats } from './bridges-project-stats'
 

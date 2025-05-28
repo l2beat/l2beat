@@ -1,4 +1,4 @@
-import { getScalingUpcomingEntries } from 'rewrite/src/server/features/scaling/upcoming/get-scaling-upcoming-entries'
+import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ScalingUpcomingPage } from './_page'
 

@@ -5,6 +5,7 @@ import * as React from 'react'
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useBreakpoint } from '~/hooks/use-breakpoint'
 import {
   Sheet,
   SheetContent,
@@ -12,7 +13,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from '~/components/core/sheet'
-import { useBreakpoint } from '~/hooks/use-breakpoint'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 

@@ -1,4 +1,3 @@
-import type { ProjectScalingEntry } from 'rewrite/src/server/features/scaling/project/get-scaling-project-entry'
 import { ContentWrapper } from '~/components/content-wrapper'
 import { OtherMigrationNotice } from '~/components/countdowns/other-migration/other-migration-notice'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/why-am-i-here-notice'
@@ -9,6 +8,7 @@ import { MobileProjectNavigation } from '~/components/projects/navigation/mobile
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
 import { ProjectDetails } from '~/components/projects/project-details'
 import { featureFlags } from '~/consts/feature-flags'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ProjectScalingSummary } from './_components/scaling-project-summary'
 
 export function ScalingProjectPage({

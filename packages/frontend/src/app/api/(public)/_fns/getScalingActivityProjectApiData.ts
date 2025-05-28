@@ -1,6 +1,6 @@
-import { getActivityChart } from 'rewrite/src/server/features/scaling/activity/get-activity-chart'
-import type { ActivityTimeRange } from 'rewrite/src/server/features/scaling/activity/utils/range'
-import { ps } from 'rewrite/src/server/projects'
+import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
+import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
+import { ps } from '~/server/projects'
 
 interface Params {
   slug: string

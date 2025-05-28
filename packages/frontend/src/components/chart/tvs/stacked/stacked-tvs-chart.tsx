@@ -4,6 +4,7 @@ import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
+import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -16,7 +17,6 @@ import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 import type { ChartUnit } from '../../types'
 
 export interface StackedTvsChartDataPoint {

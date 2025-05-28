@@ -3,7 +3,7 @@ import '../src/dotenv'
 import { type Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
-import { getDb } from 'rewrite/src/server/database'
+import { getDb } from '~/server/database'
 
 const BENCHMARK_ROUNDS = 10
 const SEPARATOR = '================================'

@@ -1,6 +1,6 @@
 import { getDefaultMetadata } from '~/utils/metadata'
 
-import { getScalingRiskEntries } from 'rewrite/src/server/features/scaling/risks/get-scaling-risk-entries'
+import { getScalingRiskEntries } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { RiskPage } from './_page'
 
 export const metadata = getDefaultMetadata({

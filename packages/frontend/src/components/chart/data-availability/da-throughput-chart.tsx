@@ -1,10 +1,10 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { DaThroughputTimeRange } from 'rewrite/src/server/features/data-availability/throughput/utils/range'
+import {} from 'rewrite/src/components/core/radio-group'
 import { useIncludeScalingOnly } from '~/app/(side-nav)/data-availability/throughput/_context/da-throughput-context'
 import { Checkbox } from '~/components/core/checkbox'
-import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-controls'

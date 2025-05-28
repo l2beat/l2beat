@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
-import { TvsChartDataParams } from 'rewrite/src/server/features/scaling/tvs/get-tvs-chart-data'
-import { ps } from 'rewrite/src/server/projects'
+import { TvsChartDataParams } from '~/server/features/scaling/tvs/get-tvs-chart-data'
+import { ps } from '~/server/projects'
 import { getScalingTvsProjectApiData } from '../../../_fns/getScalingTvsProjectApiData'
 
 export async function GET(

@@ -2,10 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import type { ReactNode } from 'react'
 import { Fragment } from 'react'
-import type {
-  DaProjectPageEntry,
-  EthereumDaProjectPageEntry,
-} from 'rewrite/src/server/features/data-availability/project/get-da-project-entry'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Tooltip,
@@ -16,6 +12,10 @@ import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import type { RosetteValue } from '~/components/rosette/types'
 import { EM_DASH } from '~/consts/characters'
 import { InfoIcon } from '~/icons/info'
+import type {
+  DaProjectPageEntry,
+  EthereumDaProjectPageEntry,
+} from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatBpsToMbps } from '~/utils/number-format/format-bytes'
 import { formatCurrency } from '~/utils/number-format/format-currency'

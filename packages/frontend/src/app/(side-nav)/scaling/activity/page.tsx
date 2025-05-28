@@ -1,5 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { getScalingActivityEntries } from 'rewrite/src/server/features/scaling/activity/get-scaling-activity-entries'
+import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
 import { api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { ActivityPage } from './_page'

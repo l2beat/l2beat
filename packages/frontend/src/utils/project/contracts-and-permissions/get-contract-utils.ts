@@ -1,7 +1,7 @@
 import type { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { getProjectIcon } from 'rewrite/src/server/features/utils/get-project-icon'
-import { ps } from 'rewrite/src/server/projects'
 import type { UsedInProject } from '~/components/projects/sections/permissions/used-in-project'
+import { getProjectIcon } from '~/server/features/utils/get-project-icon'
+import { ps } from '~/server/projects'
 
 export interface ContractUtils {
   getChainName(chain: string): string

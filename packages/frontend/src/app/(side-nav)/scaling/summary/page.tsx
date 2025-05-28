@@ -1,4 +1,4 @@
-import { getScalingSummaryEntries } from 'rewrite/src/server/features/scaling/summary/get-scaling-summary-entries'
+import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/metadata'
 import { SCALING_SUMMARY_TIME_RANGE, ScalingSummaryPage } from './_page'

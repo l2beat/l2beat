@@ -1,12 +1,12 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import type {
   ProjectToken,
   ProjectTokens,
-} from 'rewrite/src/server/features/scaling/tvs/tokens/get-tokens-for-project'
-import type { TvsChartRange } from 'rewrite/src/server/features/scaling/tvs/utils/range'
-import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
+} from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
+import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/react'
 import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'

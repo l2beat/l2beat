@@ -2,22 +2,22 @@ import { ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
 import Link from 'next/link'
+import { ChevronIcon } from 'rewrite/src/icons/chevron'
+import { InfoIcon } from 'rewrite/src/icons/info'
 import type { DaSummaryEntry } from 'rewrite/src/server/features/data-availability/summary/get-da-summary-entries'
 import type { ThroughputSummaryData } from 'rewrite/src/server/features/data-availability/throughput/get-da-throughput-summary'
+import { formatBytes } from 'rewrite/src/utils/number-format/format-bytes'
+import { formatCurrency } from 'rewrite/src/utils/number-format/format-currency'
 import { Breakdown } from '~/components/breakdown/breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { PercentChange } from '~/components/percent-change'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { ChevronIcon } from '~/icons/chevron'
-import { InfoIcon } from '~/icons/info'
+import { PercentChange } from~/utils/number-format/format-bytes
+import { PrimaryCard } from '~/c~/utils/number-format/format-currency
 import { calculatePercentageChange } from '~/utils/calculate-percentage-change'
 import { cn } from '~/utils/cn'
-import { formatBytes } from '~/utils/number-format/format-bytes'
-import { formatCurrency } from '~/utils/number-format/format-currency'
 
 interface DaSummaryBoxesProps {
   entries: DaSummaryEntry[]
