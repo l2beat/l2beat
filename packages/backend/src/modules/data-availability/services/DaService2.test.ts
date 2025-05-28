@@ -64,21 +64,21 @@ describe(DaService2.name, () => {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 1000n,
         },
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 300n,
         },
         {
           configurationId: 'eth-3',
           projectId: 'project-ethereum-2',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 300n,
         },
       ])
@@ -119,14 +119,14 @@ describe(DaService2.name, () => {
           configurationId: 'cel-1',
           projectId: 'celestia',
           daLayer: 'celestia',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 300n,
         },
         {
           configurationId: 'cel-2',
           projectId: 'project-celestia-1',
           daLayer: 'celestia',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 100n,
         },
       ])
@@ -167,24 +167,24 @@ describe(DaService2.name, () => {
           configurationId: 'av-1',
           projectId: 'avail',
           daLayer: 'avail',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 300n,
         },
         {
           configurationId: 'av-2',
           projectId: 'project-avail-1',
           daLayer: 'avail',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 100n,
         },
       ])
     })
 
-    it('should aggregate per day and merge with existing records', async () => {
+    it('should aggregate per hour and merge with existing records', async () => {
       const TIME = UnixTime.now()
 
       const mockBlobs = [
-        // blob matching project-ethereum-1 on current day
+        // blob matching project-ethereum-1 on current hour
         {
           type: 'ethereum',
           daLayer: 'ethereum',
@@ -193,7 +193,7 @@ describe(DaService2.name, () => {
           blockTimestamp: TIME,
           size: BigInt(100),
         } as EthereumBlob,
-        // blob matching project-ethereum-1 on current day
+        // blob matching project-ethereum-1 on current hour
         {
           type: 'ethereum',
           daLayer: 'ethereum',
@@ -202,57 +202,57 @@ describe(DaService2.name, () => {
           blockTimestamp: TIME,
           size: BigInt(200),
         } as EthereumBlob,
-        // blob matching project-ethereum-1 on previous day
+        // blob matching project-ethereum-1 on previous hour
         {
           type: 'ethereum',
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
-          blockTimestamp: TIME - 1 * UnixTime.DAY,
+          blockTimestamp: TIME - 1 * UnixTime.HOUR,
           size: BigInt(300),
         } as EthereumBlob,
-        // blob matching project-ethereum-1 on next day
+        // blob matching project-ethereum-1 on next hour
         {
           type: 'ethereum',
           daLayer: 'ethereum',
           inbox: 'ethereum-1-inbox',
           sequencer: 'ethereum-1-seq1',
-          blockTimestamp: TIME + 1 * UnixTime.DAY,
+          blockTimestamp: TIME + 1 * UnixTime.HOUR,
           size: BigInt(400),
         } as EthereumBlob,
       ]
 
       const mockRecords: DataAvailabilityRecord2[] = [
-        // ethereum record for previous day
+        // ethereum record for previous hour
         {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') - 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
           totalSize: 10000n,
         },
-        // project record for previous day
+        // project record for previous hour
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') - 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
           totalSize: 1000n,
         },
-        // ethereum record for current day
+        // ethereum record for current hour
         {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 10000n,
         },
-        // project record for current day
+        // project record for current hour
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 1000n,
         },
       ]
@@ -268,42 +268,42 @@ describe(DaService2.name, () => {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') - 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
           totalSize: 10300n, // 10 000 + 300
         },
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') - 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') - 1 * UnixTime.HOUR,
           totalSize: 1300n, // 1 000 + 300
         },
         {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 10300n, // 10 000 + 100 + 200
         },
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day'),
+          timestamp: UnixTime.toStartOf(TIME, 'hour'),
           totalSize: 1300n, // 1 000 + 100 + 200
         },
         {
           configurationId: 'eth-1',
           projectId: 'ethereum',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') + 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
           totalSize: 400n,
         },
         {
           configurationId: 'eth-2',
           projectId: 'project-ethereum-1',
           daLayer: 'ethereum',
-          timestamp: UnixTime.toStartOf(TIME, 'day') + 1 * UnixTime.DAY,
+          timestamp: UnixTime.toStartOf(TIME, 'hour') + 1 * UnixTime.HOUR,
           totalSize: 400n,
         },
       ])

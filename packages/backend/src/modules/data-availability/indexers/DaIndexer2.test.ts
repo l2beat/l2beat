@@ -50,8 +50,8 @@ describe(DaIndexer2.name, () => {
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
-        UnixTime.toStartOf(100, 'day'),
-        UnixTime.toEndOf(200, 'day'),
+        UnixTime.toStartOf(100, 'hour'),
+        UnixTime.toEndOf(200, 'hour'),
       )
       expect(daService.generateRecords).toHaveBeenOnlyCalledWith(
         blobs,

@@ -97,12 +97,12 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
   private async getPreviousRecordsInBlobsRange(blobs: DaBlob[]) {
     const from = UnixTime.toStartOf(
       Math.min(...blobs.map((b) => b.blockTimestamp)),
-      'day',
+      'hour',
     )
 
     const to = UnixTime.toEndOf(
       Math.max(...blobs.map((b) => b.blockTimestamp)),
-      'day',
+      'hour',
     )
 
     return await this.$.db.dataAvailability2.getForDaLayerInTimeRange(

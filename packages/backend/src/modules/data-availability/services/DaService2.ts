@@ -55,7 +55,7 @@ export class DaService2 {
         case 'baseLayer': {
           if (blob.daLayer === c.daLayer) {
             records.push({
-              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
               daLayer: blob.daLayer,
               projectId: c.projectId,
               configurationId: c.configurationId,
@@ -68,7 +68,7 @@ export class DaService2 {
           if (blob.type === 'ethereum') {
             if (matchEthereumProject(blob, c)) {
               records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
                 projectId: c.projectId,
                 configurationId: c.configurationId,
@@ -82,7 +82,7 @@ export class DaService2 {
           if (blob.type === 'celestia') {
             if (matchCelestiaProject(blob, c)) {
               records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
                 projectId: c.projectId,
                 configurationId: c.configurationId,
@@ -96,7 +96,7 @@ export class DaService2 {
           if (blob.type === 'avail') {
             if (matchAvailProject(blob, c)) {
               records.push({
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
                 projectId: c.projectId,
                 configurationId: c.configurationId,
