@@ -184,6 +184,13 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         res,
       )
     })
+
+    app.get('/api/terminal/download-all-shapes', (_req, res) => {
+      executeTerminalCommand(
+        `cd ${path.dirname(paths.discovery)}/../ && l2b download-all-shapes`,
+        res,
+      )
+    })
   }
 
   const server = app.listen(port, () => {
