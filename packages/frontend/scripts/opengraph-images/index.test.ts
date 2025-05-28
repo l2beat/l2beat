@@ -28,7 +28,7 @@ describe('opengraph images', () => {
 
     if (missingProjects.length > 0) {
       throw new Error(
-        `Missing opengraph images for projects: ${missingProjects.join(', ')}. Run \`pnpm rewrite:generate-og-images\` to generate them.`,
+        `Missing opengraph images for projects: ${missingProjects.join(', ')}. Run \`pnpm og-images\` to generate them.`,
       )
     }
   })

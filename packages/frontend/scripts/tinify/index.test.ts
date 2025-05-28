@@ -7,7 +7,7 @@ import { hashPng } from './utils/hashPng'
 import { getTinifiyMetadata } from './utils/tinifyMetadata'
 
 describe('tinify', () => {
-  const pngs = getAllStaticPngs(path.join(process.cwd(), 'rewrite/static'))
+  const pngs = getAllStaticPngs(path.join(process.cwd(), 'static'))
 
   it('got every image tinified', () => {
     const metadata = getTinifiyMetadata()
@@ -20,7 +20,7 @@ describe('tinify', () => {
 
     if (missing.length > 0) {
       throw new Error(
-        `Not all images were tinified. Run \`pnpm rewrite:tinify\` to tinify them.`,
+        `Not all images were tinified. Run \`pnpm tinify\` to tinify them.`,
       )
     }
   })
@@ -28,7 +28,7 @@ describe('tinify', () => {
   it('made sure every logo has proper dimensions and size', () => {
     const metadata = getTinifiyMetadata()
     const icons = pngs.filter((p) =>
-      p.startsWith(path.join(process.cwd(), 'rewrite/static/icons')),
+      p.startsWith(path.join(process.cwd(), 'static/icons')),
     )
 
     for (const icon of icons) {
@@ -41,7 +41,7 @@ describe('tinify', () => {
       const hash = metadata[path.relative(process.cwd(), icon)]
 
       if (!hash) {
-        throw new Error(`${icon} not in metadata, run pnpm rewrite:tinify`)
+        throw new Error(`${icon} not in metadata, run pnpm tinify`)
       }
 
       if (hash !== expectedHash) {

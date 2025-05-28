@@ -20,14 +20,11 @@ export function createServer() {
   if (isProduction) {
     app.use(compression())
     // TODO: immutable cache
-    app.use(
-      '/',
-      sirv('./rewrite/dist/static', { maxAge: 31536000, immutable: true }),
-    )
+    app.use('/', sirv('./dist/static', { maxAge: 31536000, immutable: true }))
     // This is done to delay moving markdown to server side
-    app.use('/', sirv('./rewrite/static', { maxAge: 3600 }))
+    app.use('/', sirv('./static', { maxAge: 3600 }))
   } else {
-    app.use('/', express.static('./rewrite/static'))
+    app.use('/', express.static('./static'))
   }
 
   app.use(MetricsMiddleware)
@@ -64,7 +61,7 @@ function renderToHtml(data: RenderData, url: string) {
 }
 
 function getTemplate(manifest: Manifest) {
-  let template = readFileSync('rewrite/index.html', 'utf-8')
+  let template = readFileSync('index.html', 'utf-8')
   template = template.replace('/index.js', manifest.getUrl('/index.js'))
   return template
 }

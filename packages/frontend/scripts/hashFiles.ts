@@ -10,9 +10,9 @@ interface Manifest {
 
 void addHashes({
   prefix: '/',
-  inputDir: 'rewrite/static',
-  outputDir: 'rewrite/dist/static',
-  manifest: 'rewrite/dist/manifest.json',
+  inputDir: 'static',
+  outputDir: 'dist/static',
+  manifest: 'dist/manifest.json',
   ignore: ['.gitignore'],
   hashLength: 8,
 })

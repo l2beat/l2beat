@@ -27,7 +27,7 @@ export async function generateProjectOgImages(
     for (const type of types) {
       const outputDir = path.join(
         process.cwd(),
-        `rewrite/static/meta-images/${type}/projects/${project.slug}`,
+        `static/meta-images/${type}/projects/${project.slug}`,
       )
       const outputFile = path.join(outputDir, 'opengraph-image.png')
       if (existsSync(outputFile)) {
