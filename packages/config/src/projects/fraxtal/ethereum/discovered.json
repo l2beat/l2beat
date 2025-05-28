@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 22567345,
-  "configHash": "0xf2c9a46494e773a0f4dc91590d8c7c994b1a024e42d5aec3807d9a1aaf2b1890",
+  "configHash": "0xb07af04dec168158d5860ced35a028f87dfc33066093161e8cf305fa672c3b4f",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

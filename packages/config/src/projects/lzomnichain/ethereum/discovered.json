@@ -2,7 +2,7 @@
   "name": "lzomnichain",
   "chain": "ethereum",
   "blockNumber": 22567714,
-  "configHash": "0x903be5a29f22f1e8f6456667d9be01081c5a4e5c3a9f8ee9194382cd1704e481",
+  "configHash": "0xea46fc7095dc9284703f80701fff88f6bc0ec3f08d81824804e139346b04a614",
   "entries": [
     {
       "name": "FPValidator",

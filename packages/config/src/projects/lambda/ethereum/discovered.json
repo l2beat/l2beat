@@ -2,7 +2,7 @@
   "name": "lambda",
   "chain": "ethereum",
   "blockNumber": 20914730,
-  "configHash": "0x3e40deb71b126c44f86ac5ea38493068888343e9333749de338bb89bf4fc5e18",
+  "configHash": "0x671db5100a5e67a7e5c877a1c7224b0323c9bb71e1e8a87a37e06d8a3ec99216",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

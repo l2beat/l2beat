@@ -2,7 +2,7 @@
   "name": "sollet",
   "chain": "ethereum",
   "blockNumber": 16154924,
-  "configHash": "0x1d8860e0b4966aea94b255e683128c933d4026683449e95c4242906744a8ac1a",
+  "configHash": "0xca6d900552e848300dcc45d24aae8954f5d5dcf7439312661bc87ab914cb1532",
   "entries": [
     {
       "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361",

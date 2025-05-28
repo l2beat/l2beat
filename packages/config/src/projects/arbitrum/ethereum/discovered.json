@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 22566681,
-  "configHash": "0x291c96c79f1ae377b312d6722e7fc4e844d5a0411aca3da6dbbbb6593bec1a92",
+  "configHash": "0xd70c1af03a0f1a3374bdcb3250955fd041e39b16d8913e7b912d77134c6bc6aa",
   "entries": [
     {
       "name": "bartek.eth-L2BEAT",

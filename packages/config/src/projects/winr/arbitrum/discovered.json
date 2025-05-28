@@ -2,7 +2,7 @@
   "name": "winr",
   "chain": "arbitrum",
   "blockNumber": 336627087,
-  "configHash": "0x7ce3c535f4a61be1467db0e1e0c807ec5d6fdfa30d8575cdaddb0ebb9016809e",
+  "configHash": "0xfb2e40e5903f02f2347c8a3a7d3f9eb286a9f3ade11da04bc1d9a37e31f34f7b",
   "entries": [
     {
       "name": "OneStepProverMemory",

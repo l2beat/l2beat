@@ -2,7 +2,7 @@
   "name": "soneium",
   "chain": "ethereum",
   "blockNumber": 22437746,
-  "configHash": "0x884d2d803ef5aa5daaf85ca6b9cd60250565f3debb4ddc5906ef07a08721b419",
+  "configHash": "0xb103939ca72e779d4bd3528b265e6f751e8b9c60c7d340f4cab0ae1ee68c36dd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

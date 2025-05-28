@@ -2,7 +2,7 @@
   "name": "socket",
   "chain": "ethereum",
   "blockNumber": 22495675,
-  "configHash": "0x28c34db420c9b29ec75c5af427d31b32916e709f9bc9b441db271677470572a9",
+  "configHash": "0x2fc9bf25c416a3df13b527a18f026c2ee3dd974547d5595e31ffc842b9f03c30",
   "entries": [
     {
       "name": "WETH Vault (Kinto)",
