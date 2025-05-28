@@ -1,5 +1,5 @@
-import { getZkCatalogProjectDetails } from '~/app/(side-nav)/zk-catalog/[slug]/_utils/get-zk-catalog-project-details'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/get-zk-catalog-project-details'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'

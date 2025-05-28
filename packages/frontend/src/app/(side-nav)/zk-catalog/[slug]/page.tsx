@@ -4,8 +4,8 @@ import { env } from '~/env'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { ps } from '~/server/projects'
 import { getDefaultMetadata } from '~/utils/metadata'
+import { getZkCatalogProjectDetails } from '../../../../pages/zk-catalog/project/utils/get-zk-catalog-project-details'
 import { ZkCatalogProjectPage } from './_page'
-import { getZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
 
 interface Params {
   slug: string

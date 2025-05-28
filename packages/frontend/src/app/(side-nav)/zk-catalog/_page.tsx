@@ -6,13 +6,14 @@ import {
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
 import Image from 'next/image'
+import React from 'react'
 import { MainPageHeader } from '~/components/main-page-header'
 import { ChevronIcon } from '~/icons/chevron'
-import { VerifiedCountWithDetails } from './[slug]/_components/verified-count-with-details'
+import { VerifierCard } from '../../../pages/zk-catalog/components/verifier-card'
+import { VerifiedCountWithDetails } from '../../../pages/zk-catalog/project/components/verified-count-with-details'
+import type { ZkCatalogEntry } from '../../../pages/zk-catalog/utils/get-zk-catalog-entries'
 import { DetailsItem } from './_components/details-item'
 import { DetailsLink } from './_components/details-link'
-import { VerifierCard } from './_components/verifier-card'
-import type { ZkCatalogEntry } from './_utils/get-zk-catalog-entries'
 
 interface Props {
   entries: ZkCatalogEntry[]

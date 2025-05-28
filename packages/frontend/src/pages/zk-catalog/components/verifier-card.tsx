@@ -1,7 +1,7 @@
 import { EtherscanLink } from '~/components/etherscan-link'
-import { LastUsedCell } from '../[slug]/_components/last-used-cell'
-import { SubVerifiersTable } from '../[slug]/_components/sub-verifiers-table'
-import { VerifiedCell } from '../[slug]/_components/verified-cell'
+import { LastUsedCell } from '../project/components/last-used-cell'
+import { SubVerifiersTable } from '../project/components/sub-verifiers-table'
+import { VerifiedCell } from '../project/components/verified-cell'
 import type { ZkCatalogViewEntry } from '../types'
 import { DetailsItem } from './details-item'
 
