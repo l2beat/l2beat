@@ -14,5 +14,5 @@
       "next/cache": ["./src/_next/cache"]
     }
   },
-  "exclude": ["dist", "static"]
+  "exclude": ["dist", "../static"]
 }
