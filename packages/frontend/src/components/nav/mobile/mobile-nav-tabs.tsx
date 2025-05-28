@@ -1,4 +1,4 @@
-import { usePathname } from 'next/navigation'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../core/overflow-wrapper'
 import type { NavGroup } from '../types'

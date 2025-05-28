@@ -1,7 +1,6 @@
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
-import { usePathname } from 'next/navigation'
 import {
   Sheet,
   SheetContent,
@@ -10,6 +9,7 @@ import {
   SheetTitle,
 } from '~/components/core/sheet'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 

@@ -8,7 +8,6 @@ import {
   useState,
 } from 'react'
 
-import { usePathname, useRouter } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Select,
@@ -18,6 +17,8 @@ import {
   SelectValue,
 } from '~/components/core/select'
 import { useCurrentSection } from '~/hooks/use-current-section'
+import { usePathname } from '~/hooks/usePathname'
+import { useRouter } from '~/hooks/useRouter'
 import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'

@@ -24,9 +24,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"],
-      "react": ["./node_modules/@types/react"],
-      "next/navigation": ["src/_next/navigation"],
-      "next/image": ["src/_next/image"]
+      "react": ["./node_modules/@types/react"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "**/*.js"],

@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
-import Image from '~/_next/image'
 import {
   Tooltip,
   TooltipContent,
@@ -32,7 +31,7 @@ export function EcosystemProjectsByRaas({
       </EcosystemWidgetTitle>
       <div className="flex justify-between">
         <div className="flex items-center gap-1.5">
-          <Image
+          <img
             src={icon}
             className="rounded-sm"
             alt={raas}

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/navigation'
 import { Button, buttonVariants } from '~/components/core/button'
 import {
   Drawer,
@@ -16,6 +15,7 @@ import { GrissiniCell } from '~/components/rosette/grissini/grissini-cell'
 import { GrissiniDetails } from '~/components/rosette/grissini/grissini-details'
 import { GrissiniIcon } from '~/components/rosette/grissini/grissini-icon'
 import { NoBridgeGrissiniDetailsPlaceholder } from '~/components/rosette/grissini/no-bridge-grissini-details-placeholder'
+import { useRouter } from '~/hooks/useRouter'
 import { InfoIcon } from '~/icons/info'
 import { UnverifiedIcon } from '~/icons/unverified'
 import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/da-summary-public-table'

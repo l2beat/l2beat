@@ -1,6 +1,6 @@
-import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
