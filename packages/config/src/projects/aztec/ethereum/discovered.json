@@ -209,12 +209,9 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "unverified": true,
-      "proxyType": "EIP7702 EOA",
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["$implementation"],
-      "values": {
-        "$implementation": "0x930FcC37d6042c79211EE18A02857Cb1Fd7F0D0b"
-      }
+      "values": { "$immutable": true }
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",
