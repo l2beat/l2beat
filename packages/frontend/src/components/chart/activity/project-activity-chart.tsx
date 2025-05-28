@@ -3,11 +3,12 @@
 import type { Milestone, ProjectScalingCategory } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
-import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
 import { NotSyncedBanner } from '~/components/not-synced/not-synced-banner'
 import { EthereumLineIcon } from '~/icons/ethereum-line-icon'
+import type { ActivityMetric } from '~/pages/scaling/activity/components/activity-metric-context'
+import { ActivityMetricControls } from '~/pages/scaling/activity/components/activity-metric-controls'
+import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/activity-time-range-controls'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
@@ -17,7 +18,6 @@ import { Checkbox } from '../../core/checkbox'
 import type { ChartScale } from '../types'
 import { ActivityChart } from './activity-chart'
 import { getChartType } from './utils/get-chart-type'
-import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 
 interface Props {
   milestones: Milestone[]

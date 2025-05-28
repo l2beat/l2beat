@@ -1,12 +1,12 @@
 import { Skeleton } from '~/components/core/skeleton'
 import { InfoIcon } from '~/icons/info'
+import type { ActivityMetric } from '~/pages/scaling/activity/components/activity-metric-context'
+import { useActivityMetricContext } from '~/pages/scaling/activity/components/activity-metric-context'
+import { ActivityMetricControls } from '~/pages/scaling/activity/components/activity-metric-controls'
 import type { ActivityChartStats } from '~/server/features/scaling/activity/get-activity-chart-stats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/count-per-second'
-import { formatActivityCount } from '~/utils/number-format/format-activity-count'
-import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import { useActivityMetricContext } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
-import { ActivityMetricControls } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-controls'
 import { cn } from '~/utils/cn'
+import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'
 import {
   Tooltip,

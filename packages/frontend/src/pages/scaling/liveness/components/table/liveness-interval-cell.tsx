@@ -1,5 +1,4 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { DurationCell } from '~/app/(side-nav)/scaling/finality/_components/table/duration-cell'
 import { Badge } from '~/components/badge/badge'
 import { Skeleton } from '~/components/core/skeleton'
 import {
@@ -11,6 +10,7 @@ import { SyncStatusWrapper } from '~/components/sync-status-wrapper'
 import { WarningBar } from '~/components/warning-bar'
 import { useIsClient } from '~/hooks/use-is-client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { DurationCell } from '~/pages/scaling/finality/components/table/duration-cell'
 import type { LivenessDataPoint } from '~/server/features/scaling/liveness/types'
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'

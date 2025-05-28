@@ -29,7 +29,6 @@ import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/react'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
-import { ActivityTimeRangeControls } from '~/app/(side-nav)/scaling/activity/_components/activity-time-range-controls'
 import { EcosystemWidget } from '../widgets/ecosystem-widget'
 import { EcosystemChartTimeRange } from './ecosystems-chart-time-range'
 import { EcosystemsMarketShare } from './ecosystems-market-share'

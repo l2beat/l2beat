@@ -5,7 +5,6 @@ import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import type { ActivityMetric } from '~/app/(side-nav)/scaling/activity/_components/activity-metric-context'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -34,6 +33,7 @@ import {
 } from '~/components/core/chart/defs/yellow-gradient-def'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { ActivityMetric } from '~/pages/scaling/activity/components/activity-metric-context'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/format-activity-count'
 import { formatInteger } from '~/utils/number-format/format-integer'
