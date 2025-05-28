@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x27200017b87c83f1865932aec752a3c1c777eb50
+
+# Diff at Wed, 28 May 2025 13:56:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 22445558
+- current block number: 22445558
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22445558 (main branch discovery), not current.
+
+```diff
+    contract Lido DAO Token (0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32) {
+    +++ description: None
+      name:
+-        "MiniMeToken"
++        "Lido DAO Token"
+    }
+```
+
+```diff
+    contract Wrapped liquid staked Ether 2.0 Token (0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0) {
+    +++ description: None
+      name:
+-        "wstETH_tokenContract"
++        "Wrapped liquid staked Ether 2.0 Token"
+    }
+```
+
+```diff
+    contract Liquid staked Ether 2.0 Token (0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84) {
+    +++ description: None
+      name:
+-        "stETH_tokenContract"
++        "Liquid staked Ether 2.0 Token"
+    }
+```
+
+```diff
+    contract StarkNet Token (0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766) {
+    +++ description: None
+      name:
+-        "STRK_tokenContract"
++        "StarkNet Token"
+    }
+```
+
 Generated with discovered.json: 0x3345d3d697a64417e2a093827d2ba764e6b78f8b
 
 # Diff at Fri, 23 May 2025 09:41:15 GMT:

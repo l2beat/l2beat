@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x5325d075207028f0e8b8fb49259aa900e4b37ea3
+
+# Diff at Wed, 28 May 2025 13:56:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 30000033
+- current block number: 30000033
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30000033 (main branch discovery), not current.
+
+```diff
+    contract USD Coin Token (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913) {
+    +++ description: None
+      name:
+-        "USDC"
++        "USD Coin Token"
+    }
+```
+
 Generated with discovered.json: 0x400d2c89f7570138ebdc91281c6c8540a96d8249
 
 # Diff at Fri, 23 May 2025 09:41:15 GMT:
