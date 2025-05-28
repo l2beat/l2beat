@@ -2,7 +2,7 @@ import type { Field } from '../../store/State'
 
 export type GroupedFields = Record<string, Field[]>
 
-export function groupJsonFields(fields: Field[]): GroupedFields {
+export function groupTopLevelArray(fields: Field[]): GroupedFields {
   const grouped: GroupedFields = {}
 
   fields.forEach((field) => {

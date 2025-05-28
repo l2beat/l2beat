@@ -1,0 +1,106 @@
+import type { Field } from '../../store/State'
+
+export function groupByPath(fields: Field[]) {
+  const grouped: Record<string, Field[]> = {}
+  for (const field of fields) {
+    const parts = field.name.split('.')
+    const groupingPath = parts.slice(0, -1).join('.')
+    if (!grouped[groupingPath]) grouped[groupingPath] = []
+    grouped[groupingPath].push(field)
+  }
+  return grouped
+}
+
+export type SimpleField = {
+  type: 'simple'
+  property: string
+  fullKey: string
+}
+
+export interface ComplexField {
+  type: 'complex'
+  property: string
+  value: (SimpleField | ComplexField)[]
+}
+
+export type ExpandedField = SimpleField | ComplexField
+
+export function buildFieldTree(
+  fields: Field[],
+  staringPath?: string,
+): ExpandedField[] {
+  const [simpleFields, complexFields] = partition(fields, isSimpleField)
+
+  const simple: SimpleField[] = simpleFields.map((field) => ({
+    type: 'simple',
+    property: field.name,
+    fullKey: normalizePath(staringPath, field.name),
+  }))
+
+  const grouped = groupByFirstKey(complexFields)
+
+  const complex: ComplexField[] = Object.entries(grouped).map(
+    ([key, group]) => {
+      const fullKey = normalizePath(staringPath, key)
+      return {
+        type: 'complex',
+        property: key,
+        value: buildFieldTree(group, fullKey),
+      }
+    },
+  )
+
+  return [...simple, ...complex]
+}
+
+function partition<T>(array: T[], predicate: (item: T) => boolean): [T[], T[]] {
+  const a: T[] = []
+  const b: T[] = []
+  for (const item of array) {
+    predicate(item) ? a.push(item) : b.push(item)
+  }
+  return [a, b]
+}
+
+function groupByFirstKey(fields: Field[]): Record<string, Field[]> {
+  const result: Record<string, Field[]> = {}
+  for (const field of fields) {
+    const parts = field.name.split('.')
+    const first = parts[0] || ''
+    const rest = parts.slice(1)
+
+    let baseName = first
+    let indexPart = ''
+
+    // Extract trailing array index if present
+    if (/^.+\[\d+\]$/.test(first)) {
+      baseName = first.replace(/\[\d+\]$/, '')
+      indexPart = first.substring(baseName.length)
+    }
+
+    // Reconstruct new field name with index portion
+    let newName = indexPart
+    if (rest.length > 0) {
+      newName = newName ? `${newName}.${rest.join('.')}` : rest.join('.')
+    }
+
+    const newField: Field = {
+      ...field,
+      name: newName,
+    }
+
+    if (!result[baseName]) result[baseName] = []
+    result[baseName]?.push(newField)
+  }
+  return result
+}
+
+function normalizePath(base: string | undefined, part: string): string {
+  if (!base) return part
+  // Omit dot when appending array indices
+  return part.startsWith('[') ? `${base}${part}` : `${base}.${part}`
+}
+
+function isSimpleField(field: Field): boolean {
+  return !field.name.includes('.')
+}
