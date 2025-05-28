@@ -1,5 +1,5 @@
+import type { FaqItemWithId } from '~/pages/faq/FaqPage'
 import { cn } from '~/utils/cn'
-import type { FaqItemWithId } from '../page'
 
 interface Props {
   entry: FaqItemWithId

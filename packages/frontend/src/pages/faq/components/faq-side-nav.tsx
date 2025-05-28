@@ -1,8 +1,8 @@
 'use client'
 import { useCallback, useRef } from 'react'
 import { useCurrentSection } from '~/hooks/use-current-section'
+import type { FaqItemWithId } from '~/pages/faq/FaqPage'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
-import type { FaqItemWithId } from '../page'
 import { FaqSideNavItem } from './faq-side-nav-item'
 
 interface Props {
