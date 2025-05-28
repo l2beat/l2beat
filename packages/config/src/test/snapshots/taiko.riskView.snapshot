@@ -13,7 +13,7 @@
     value: "None"
   }
   proposerFailure: {
-    description: "[object Object] Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond."
+    description: "Anyone can be a Proposer and propose new roots to the L1 bridge. Provers are required to submit two valid proofs for blocks, one of which must be SGX (Geth), and the other can be either SGX (Reth), SP1, or RISC0. If the proposer fails to prove the block within the proving window, they forfeit half of their liveness bond."
     sentiment: "good"
     value: "Self propose"
   }
