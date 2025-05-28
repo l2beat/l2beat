@@ -81,7 +81,7 @@ export function ProjectsUsedIn({
             ) : (
               <a href={`/scaling/projects/${project.slug}`} className="size-5">
                 <TooltipTrigger>
-                  <Image
+                  <img
                     width={20}
                     height={20}
                     src={project.icon}

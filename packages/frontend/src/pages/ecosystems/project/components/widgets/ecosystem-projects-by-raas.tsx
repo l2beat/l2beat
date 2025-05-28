@@ -72,7 +72,7 @@ export function EcosystemProjectsByRaas({
           {projects.map((p) => (
             <ProjectLinkWithTooltip key={p.slug} project={p}>
               <div className="flex items-center gap-2">
-                <Image
+                <img
                   src={p.icon}
                   className="rounded-sm"
                   alt={p.name}
@@ -90,7 +90,7 @@ export function EcosystemProjectsByRaas({
         <div className="flex flex-wrap gap-2">
           {projects.map((project) => (
             <ProjectLinkWithTooltip key={project.slug} project={project}>
-              <Image
+              <img
                 width={24}
                 height={24}
                 src={project.icon}

@@ -123,7 +123,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
                   >
-                    <Image
+                    <img
                       src={project.iconUrl}
                       alt={`${project.name} logo`}
                       className="rounded-sm"
@@ -161,7 +161,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       }
                     >
                       {item.type === 'project' && (
-                        <Image
+                        <img
                           src={item.iconUrl}
                           alt={`${item.name} logo`}
                           className="rounded-sm"
