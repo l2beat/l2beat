@@ -2,7 +2,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "blockNumber": 22243976,
-  "configHash": "0x84daa1163bec6a2dacb4d7dcf88dfec4f4c8d49e3981ad01fccc2309868b1793",
+  "configHash": "0xc6ffc8223041e84f7d6012282dc7879ed74dad4b4cd65f2dfb8e02c0938e43bd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

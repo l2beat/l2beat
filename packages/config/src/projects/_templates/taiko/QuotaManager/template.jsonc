@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Defines withdrawal limits per token.",
+  "ignoreMethods": ["proxiableUUID"],
+  "types": {
+    "TokenAddressToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x0000000000000000000000000000000000000000": "Ether",
+        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH",
+        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800": "TAIKO",
+        "0xdAC17F958D2ee523a2206206994597C13D831ec7": "USDT",
+        "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": "USDC"
+      }
+    }
+  },
+  "fields": {
+    "tokenQuotas": {
+      "handler": {
+        "type": "event",
+        "select": "newQuota",
+        "groupBy": "token",
+        "set": {
+          "event": "QuotaUpdated"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        [
+          "map",
+          [
+            "pipe",
+            ["shape", ["name", ["format", "TokenAddressToName"]], "quota"],
+            [
+              "if",
+              [
+                "pipe",
+                ["get", "name"],
+                ["and", ["!=", "USDT"], ["!=", "USDC"]]
+              ],
+              ["set", "quota", ["format", "Undecimal18"]],
+              ["set", "quota", ["format", "Undecimal6"]]
+            ]
+          ]
+        ]
+      ]
+    }
+  }
+}

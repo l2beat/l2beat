@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "ethereum",
   "blockNumber": 22495658,
-  "configHash": "0x2f9f3ae3c94bef7c5e2aab708c7cc16411424500051bd23696fc55123a640cec",
+  "configHash": "0xf86f8fd67b82fc2ee859768f62e48484faccb01968796f2c897da1d86eb79408",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",

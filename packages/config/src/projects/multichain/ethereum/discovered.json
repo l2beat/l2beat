@@ -2,7 +2,7 @@
   "name": "multichain",
   "chain": "ethereum",
   "blockNumber": 21322825,
-  "configHash": "0x3891e5640e21ace56c72fb6e980921dbd09c87f5610fa1cd61cda6532c1c86f5",
+  "configHash": "0xe0e6ee2fb2dffdf7c65ff2119511b5912b87d48c18f9e577723f1fb1db57dc99",
   "entries": [
     {
       "address": "0x2A038e100F8B85DF21e4d44121bdBfE0c288A869",

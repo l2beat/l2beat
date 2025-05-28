@@ -2,7 +2,7 @@
   "name": "zksync2",
   "chain": "zksync2",
   "blockNumber": 54952335,
-  "configHash": "0xb7091380767bd44a3f3de9670146d263e7d173c5268d5409a64701553fd6105c",
+  "configHash": "0xc2f01ba22ca67b62fcd328cb978c22d77e5a62113941ab2f241befdf3fbfd645",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

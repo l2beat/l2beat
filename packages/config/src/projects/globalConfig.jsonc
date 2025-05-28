@@ -83,103 +83,159 @@
   "types": {
     "Undecimal2": {
       "typeCaster": "Undecimal",
-      "arg": { "decimals": 2 }
+      "arg": {
+        "decimals": 2
+      }
     },
     "Undecimal18": {
       "typeCaster": "Undecimal",
-      "arg": { "decimals": 18 }
+      "arg": {
+        "decimals": 18
+      }
     },
     "Undecimal24": {
       "typeCaster": "Undecimal",
-      "arg": { "decimals": 24 }
+      "arg": {
+        "decimals": 24
+      }
+    },
+    "Undecimal6": {
+      "typeCaster": "Undecimal",
+      "arg": {
+        "decimals": 6
+      }
     },
     "ZkSyncAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "zksync" }
+      "arg": {
+        "prefix": "zksync"
+      }
     },
     "EthereumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "eth" }
+      "arg": {
+        "prefix": "eth"
+      }
     },
     "ArbitrumAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "arb1" }
+      "arg": {
+        "prefix": "arb1"
+      }
     },
     "NovaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "arb-nova" }
+      "arg": {
+        "prefix": "arb-nova"
+      }
     },
     "OptimismAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "oeth" }
+      "arg": {
+        "prefix": "oeth"
+      }
     },
     "PolygonAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "matic" }
+      "arg": {
+        "prefix": "matic"
+      }
     },
     "BSCAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "bnb" }
+      "arg": {
+        "prefix": "bnb"
+      }
     },
     "AvalancheAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "avax" }
+      "arg": {
+        "prefix": "avax"
+      }
     },
     "CeloAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "celo" }
+      "arg": {
+        "prefix": "celo"
+      }
     },
     "LineaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "linea" }
+      "arg": {
+        "prefix": "linea"
+      }
     },
     "BaseAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "base" }
+      "arg": {
+        "prefix": "base"
+      }
     },
     "PolygonZKEVMAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "zkevm" }
+      "arg": {
+        "prefix": "zkevm"
+      }
     },
     "GnosisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "gno" }
+      "arg": {
+        "prefix": "gno"
+      }
     },
     "SepoliaAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "sep" }
+      "arg": {
+        "prefix": "sep"
+      }
     },
     "ScrollAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "scr" }
+      "arg": {
+        "prefix": "scr"
+      }
     },
     "MantleAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "mantle" }
+      "arg": {
+        "prefix": "mantle"
+      }
     },
     "MetisAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "metis-andromeda" }
+      "arg": {
+        "prefix": "metis-andromeda"
+      }
     },
     "BobanetworkAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "boba" }
+      "arg": {
+        "prefix": "boba"
+      }
     },
     "ModeAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "mode" }
+      "arg": {
+        "prefix": "mode"
+      }
     },
     "ZoraAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "zora" }
+      "arg": {
+        "prefix": "zora"
+      }
     },
     "MantapacificAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "manta" }
+      "arg": {
+        "prefix": "manta"
+      }
     },
     "BlastAddress": {
       "typeCaster": "ChainPrefix",
-      "arg": { "prefix": "blastmainnet" }
+      "arg": {
+        "prefix": "blastmainnet"
+      }
     },
     "ArbOsWasmModuleRoot": {
       "typeCaster": "Mapping",

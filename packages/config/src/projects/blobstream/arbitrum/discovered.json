@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "arbitrum",
   "blockNumber": 325165450,
-  "configHash": "0xef315e566b705c34bcd880a12b448f0040ec475b4573933fd6cfe48ccf4fdbfb",
+  "configHash": "0xd28e453bef23864100131d27e54d594c6f6bcb4bf6bf6c8a0fa932b99d000cfa",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -321,7 +321,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1735949706,
       "sinceBlock": 291720238,
       "values": {

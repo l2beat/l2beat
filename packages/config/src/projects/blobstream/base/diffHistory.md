@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x33fc0808ceea80db862761d887e9747def47c74b
+
+# Diff at Wed, 28 May 2025 11:34:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 28782173
+- current block number: 28782173
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28782173 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) {
+    +++ description: Verifier contract for SP1 proofs.
+      description:
+-        "SP1Verifier is a contract used to verify proofs given public values and verification key."
++        "Verifier contract for SP1 proofs."
+    }
+```
+
 Generated with discovered.json: 0xc5d497c103fff6a12dc1d2fd27b6584b984ef295
 
 # Diff at Fri, 23 May 2025 09:41:14 GMT:

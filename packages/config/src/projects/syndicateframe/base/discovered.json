@@ -2,7 +2,7 @@
   "name": "syndicateframe",
   "chain": "base",
   "blockNumber": 30222952,
-  "configHash": "0x39ebd939e63354710ae4e0ea4bb4a9f95cde0812abd213cc9b268287fac3d368",
+  "configHash": "0xc337bca770d6750b1de14ad7759989f1b896e23e48283841b166356b0a62e342",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

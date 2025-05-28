@@ -2,7 +2,7 @@
   "name": "lens",
   "chain": "zksync2",
   "blockNumber": 54952331,
-  "configHash": "0xdbb71a9ef361ad8e5d1ca7021f9cc5cbf97b7f593a8f77c2a121a9f897f00742",
+  "configHash": "0xb773db19ef5d0d716a45195ea005c7e2a3f0bc86b36532f09259fde77cc4c05e",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
