@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "blockNumber": 22425701,
-  "configHash": "0x7b6a04c3e5b2ed092172dc44e1b84b8b41dd4bb6df73b7063c02d6f1775f7cc3",
+  "configHash": "0x53866ab2b3db9c88f97f1c9947f151729b4a8d7377152727fea7883c9d44fd34",
   "entries": [
     {
       "name": "Inbox",

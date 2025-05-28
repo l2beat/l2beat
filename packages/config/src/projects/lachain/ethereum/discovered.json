@@ -2,7 +2,7 @@
   "name": "lachain",
   "chain": "ethereum",
   "blockNumber": 22574469,
-  "configHash": "0xcbbb0e00db30779f21a95b3dea0a2c6793543de40aeea7fa60a5390ea1c349a5",
+  "configHash": "0xac0c6ab807bc2f2c5517882d6651a8ec469e4c601bc9e5f642d3628151ad743f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

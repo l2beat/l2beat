@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "base",
   "blockNumber": 30000033,
-  "configHash": "0x27a2b901054959d99743aa2d6fad647d7a56e04efe87e0502503778c1ebe4d01",
+  "configHash": "0xefbee464f4008d7b1f963e19954879c1957e50cba1f3dae798e82b326285e391",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",

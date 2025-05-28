@@ -2,7 +2,7 @@
   "name": "wonder",
   "chain": "zksync2",
   "blockNumber": 60986305,
-  "configHash": "0x296d9dce38173fb258713893a926261ffe7468ef4330c065265e47728fa830c3",
+  "configHash": "0x310dfb309f80c90762e1654fecea6ca025ee8474e76e6b10e5e2e9223894f22f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xbbebc45569f49137d70c0f3887a20460970cdf81
+
+# Diff at Wed, 28 May 2025 11:34:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 17565279
+- current block number: 17565279
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17565279 (main branch discovery), not current.
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      sourceHashes.4:
+-        "0xb6a5aa1fb38aec46fe13d3e977cb8a06b3e3fd7e5c1ec2ef87f58fa4d21d3f45"
+      sourceHashes.3:
+-        "0xe7e19467e9bc94a61947db08bfecea640d85dd166beac055385b877417dfbd71"
+      sourceHashes.2:
+-        "0xbe5fe6b595b02be18ecb35c95a6b4b18c75aa4a08ab3cf035b72e9e5f71109d9"
+      sourceHashes.1:
+-        "0x0aeeb5887677b09d5c9b6dfb6fd52bf2c97728ae0aedb533baab3f7fe0653ac3"
++        "0x28d2bbb6847ab4d4dfc220d056bad884fa0fb9d713ee16b26a55e0e48e494d73"
+    }
+```
+
 Generated with discovered.json: 0x82d421c2a4ba290aefc28dd6b5a55bd6ed25849f
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

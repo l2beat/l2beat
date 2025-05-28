@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "blast",
   "blockNumber": 16435499,
-  "configHash": "0x3f4f06207a57cdab016e5fc6cf14a87aa83ab1deb7461689d467b1985bf0c72e",
+  "configHash": "0x236fccb9d4b9689212136ae851f83a6e8cf35cf0eead1ed43cd81764bfc82954",
   "entries": [
     {
       "address": "0x17887788E01A1192a26F636Cfcfc033c7Bb42348",

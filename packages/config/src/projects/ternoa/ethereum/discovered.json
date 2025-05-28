@@ -2,7 +2,7 @@
   "name": "ternoa",
   "chain": "ethereum",
   "blockNumber": 22208591,
-  "configHash": "0xe983cd8acb96346f7ec2785b82178c974a9819a06fb860292f315447963e19be",
+  "configHash": "0x31e70ee6db0c0d8a9c8f0942c61e97925155726a216b47a25f139ada662438e1",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {

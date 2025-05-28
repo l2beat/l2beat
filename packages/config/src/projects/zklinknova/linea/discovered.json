@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "linea",
   "blockNumber": 17565279,
-  "configHash": "0x8221ecd3fc7d97dbaba7c590da0c59501f011bcfc083a8e56bd0d121328f6fee",
+  "configHash": "0xce5f1e01a7e56a1c378a76277710a4688132ef00f4e20da4af6127b440161921",
   "entries": [
     {
       "name": "LineaOwner",
@@ -111,10 +111,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
-        "0x0aeeb5887677b09d5c9b6dfb6fd52bf2c97728ae0aedb533baab3f7fe0653ac3",
-        "0xe7e19467e9bc94a61947db08bfecea640d85dd166beac055385b877417dfbd71",
-        "0xb6a5aa1fb38aec46fe13d3e977cb8a06b3e3fd7e5c1ec2ef87f58fa4d21d3f45",
-        "0xbe5fe6b595b02be18ecb35c95a6b4b18c75aa4a08ab3cf035b72e9e5f71109d9"
+        "0x28d2bbb6847ab4d4dfc220d056bad884fa0fb9d713ee16b26a55e0e48e494d73"
       ],
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [

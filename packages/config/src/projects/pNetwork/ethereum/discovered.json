@@ -2,7 +2,7 @@
   "name": "pNetwork",
   "chain": "ethereum",
   "blockNumber": 20420398,
-  "configHash": "0xa1b4ad3a109320e33895733a98088d1ebc7286c1290a8c2c0e98f6d0538b64b0",
+  "configHash": "0xc2ffa76660a041c73f16f461225863afd8019829a5a20c78ce823528b821de9d",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",

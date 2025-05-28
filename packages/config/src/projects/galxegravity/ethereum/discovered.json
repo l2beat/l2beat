@@ -2,7 +2,7 @@
   "name": "galxegravity",
   "chain": "ethereum",
   "blockNumber": 22445463,
-  "configHash": "0xc8a7bdf8aac5e88c74c929a1f1c66ab072c9caa91d7316e57a2e5e6e239304f0",
+  "configHash": "0xf3dd3a4c3a787ac956161808a492c0bac21d6e9a8753dcf7b5222725af0f32b4",
   "entries": [
     {
       "name": "OneStepProofEntry",

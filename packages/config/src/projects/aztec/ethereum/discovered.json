@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 22466421,
-  "configHash": "0x6c457831ac2821007cce3c71b338a3da4e429a96d1f4700ff1af9b492983d985",
+  "configHash": "0x66ab342c7abbffea87210ba2f7740ad3c0ff6fc4cd39b5c9cc92b30570d9fd6f",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",

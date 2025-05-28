@@ -2,7 +2,7 @@
   "name": "nearomni",
   "chain": "ethereum",
   "blockNumber": 22545890,
-  "configHash": "0x662f8c1649b1880dd83045873be09dd385cbd3f098f0451e1d932b8e0d323fca",
+  "configHash": "0xbf4e743d4feef3e23348af74af83797cbb12d0a0a974729af1f6c91eaae0acba",
   "entries": [
     {
       "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",

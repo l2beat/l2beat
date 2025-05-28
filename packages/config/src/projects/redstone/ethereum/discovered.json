@@ -2,7 +2,7 @@
   "name": "redstone",
   "chain": "ethereum",
   "blockNumber": 22208357,
-  "configHash": "0x332a680cc5ecc085510967cda7817e941080131d3946f4f9c70ce53cbc75330e",
+  "configHash": "0xe2a25791616e45a1a72cd46d897587aef4580ffb3537c381074a3e86b11b3222",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

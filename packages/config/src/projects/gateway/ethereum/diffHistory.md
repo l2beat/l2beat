@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xca664d1e5701d9ee37602d9ca465f1e4e2f19e0d
+
+# Diff at Wed, 28 May 2025 11:33:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 22572509
+- current block number: 22572509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22572509 (main branch discovery), not current.
+
+```diff
+    contract DiamondProxy (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      sourceHashes.4:
+-        "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b"
+      sourceHashes.3:
+-        "0xb3038139dce45f6c1aaedbfb1b321c230301b2d004da109b39a17d827c6b0e4f"
+      sourceHashes.2:
+-        "0x1f9f7cd43747f5bcf879d544be0baca967245540e70592112cdc90c360f30486"
+      sourceHashes.1:
+-        "0xab7812fa82c483b781aee4c2339b860fcdee4033de1e243370a77a20fc353ddc"
++        "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b"
+      sourceHashes.0:
+-        "0xca793d2e01bb37722ba48f56662e8602e693d6808ed9587867c2bac43c3dec25"
++        "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
+    }
+```
+
 Generated with discovered.json: 0x2959f22728090692581419e3e7609f98d713673d
 
 # Diff at Tue, 27 May 2025 07:40:21 GMT:

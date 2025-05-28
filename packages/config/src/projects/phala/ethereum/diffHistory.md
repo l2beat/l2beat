@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x7d3864b5c9aff436fd3b03a25a0fe032f0c5285d
+Generated with discovered.json: 0x48ac61da22998516d5633972cc6ff2b7196d2d41
 
-# Diff at Mon, 26 May 2025 14:09:14 GMT:
+# Diff at Wed, 28 May 2025 11:33:27 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@3db02bc7437859ebfc56377058097da280c15ce8 block: 22467145
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 22467145
 - current block number: 22467145
 
 ## Description
