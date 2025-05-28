@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react'
-import type { AppRouter } from 'rewrite/src/server/api/root'
+import type { AppRouter } from 'rewrite/src/server/trpc/root'
 import { env } from '~/env'
 import { useIsClient } from '~/hooks/use-is-client'
 import { createQueryClient } from './query-client'

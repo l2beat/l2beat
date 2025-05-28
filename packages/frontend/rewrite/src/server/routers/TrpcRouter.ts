@@ -1,6 +1,6 @@
 import * as trpcExpress from '@trpc/server/adapters/express'
 import express from 'express'
-import { appRouter } from 'rewrite/src/server/api/root'
+import { appRouter } from 'rewrite/src/server/trpc/root'
 
 const createContext = ({ req }: trpcExpress.CreateExpressContextOptions) => ({
   headers: new Headers(req.headers as Record<string, string>),

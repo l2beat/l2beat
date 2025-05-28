@@ -1,4 +1,4 @@
-import { createCallerFactory, router } from 'rewrite/src/server/api/trpc'
+import { createCallerFactory, router } from 'rewrite/src/server/trpc/trpc'
 import { activityRouter } from './routers/activity'
 import { costsRouter } from './routers/costs'
 import { daRouter } from './routers/da'
