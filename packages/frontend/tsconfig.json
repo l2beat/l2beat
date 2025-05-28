@@ -32,5 +32,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "**/*.js"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist", "static"]
 }

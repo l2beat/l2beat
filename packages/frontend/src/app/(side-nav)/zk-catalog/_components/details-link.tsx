@@ -1,6 +1,5 @@
 'use client'
 
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
 export function DetailsLink({
@@ -11,7 +10,7 @@ export function DetailsLink({
   className?: string
 }) {
   return (
-    <LinkWithOnHoverPrefetch
+    <a
       onClick={(e) => e.stopPropagation()}
       href={`/zk-catalog/${slug}`}
       className={cn(
@@ -21,6 +20,6 @@ export function DetailsLink({
     >
       <span className="max-md:hidden">Details</span>
       <span className="md:hidden">Details page</span>
-    </LinkWithOnHoverPrefetch>
+    </a>
   )
 }

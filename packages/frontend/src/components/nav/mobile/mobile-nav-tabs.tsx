@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from '../../core/overflow-wrapper'
@@ -34,7 +33,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
           .map((link) => {
             const isSelected = link.href === pathname
             return (
-              <Link
+              <a
                 ref={(node) => {
                   if (node && isSelected) {
                     node.scrollIntoView({
@@ -52,7 +51,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
                 )}
               >
                 {link.shortTitle ?? link.title}
-              </Link>
+              </a>
             )
           })}
       </div>

@@ -1,5 +1,4 @@
 import type { Request } from 'express'
-import { SCALING_SUMMARY_TIME_RANGE } from '~/app/(side-nav)/scaling/summary/_page'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
@@ -8,6 +7,7 @@ import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
+import { SCALING_SUMMARY_TIME_RANGE } from './ScalingSummaryPage'
 
 export async function getScalingSummaryData(
   req: Request,

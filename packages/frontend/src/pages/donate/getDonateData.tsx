@@ -24,6 +24,7 @@ export async function getDonateData(
       page: 'DonatePage',
       props: {
         ...appLayoutProps,
+        gitcoinOption: false,
         qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
       },
     },

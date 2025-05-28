@@ -10,7 +10,6 @@ import {
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { ArrowIcon } from '~/icons/arrow'
 import type { ProjectByRaas } from '~/server/features/ecosystems/get-projects-by-raas'
 import { cn } from '~/utils/cn'
@@ -114,12 +113,9 @@ function ProjectLinkWithTooltip({
 }: { project: UsedInProjectWithIcon; children: React.ReactNode }) {
   return (
     <Tooltip>
-      <LinkWithOnHoverPrefetch
-        href={`/scaling/projects/${project.slug}`}
-        className="size-6"
-      >
+      <a href={`/scaling/projects/${project.slug}`} className="size-6">
         <TooltipTrigger>{children}</TooltipTrigger>
-      </LinkWithOnHoverPrefetch>
+      </a>
       <TooltipPortal>
         <TooltipContent>
           <p className="font-bold">{project.name}</p>

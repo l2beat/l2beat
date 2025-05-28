@@ -1,4 +1,4 @@
-import type { Manifest } from '../../../../src/utils/Manifest'
+import type { Manifest } from '~/utils/Manifest'
 import type { FontInfo } from './fonts'
 
 export function FontStyles({

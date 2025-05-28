@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 
 const OFFSET = 54
 const GAP = 10
@@ -52,7 +51,7 @@ export function DynamicLogoList({ projects }: Props) {
       >
         {projects.slice(0, visibleCount).map(({ slug, name, icon }) => (
           <Tooltip key={slug}>
-            <LinkWithOnHoverPrefetch href={`/scaling/projects/${slug}`}>
+            <a href={`/scaling/projects/${slug}`}>
               <TooltipTrigger>
                 <Image
                   src={icon}
@@ -61,7 +60,7 @@ export function DynamicLogoList({ projects }: Props) {
                   height={LOGO_SIZE}
                 />
               </TooltipTrigger>
-            </LinkWithOnHoverPrefetch>
+            </a>
             <TooltipContent>{name}</TooltipContent>
           </Tooltip>
         ))}

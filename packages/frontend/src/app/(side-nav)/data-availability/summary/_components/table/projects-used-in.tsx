@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
 export interface UsedInProjectWithIcon extends UsedInProject {
@@ -81,10 +80,7 @@ export function ProjectsUsedIn({
                 />
               </TooltipTrigger>
             ) : (
-              <LinkWithOnHoverPrefetch
-                href={`/scaling/projects/${project.slug}`}
-                className="size-5"
-              >
+              <a href={`/scaling/projects/${project.slug}`} className="size-5">
                 <TooltipTrigger>
                   <Image
                     width={20}
@@ -93,7 +89,7 @@ export function ProjectsUsedIn({
                     alt={`${project.name} logo`}
                   />
                 </TooltipTrigger>
-              </LinkWithOnHoverPrefetch>
+              </a>
             )}
             <TooltipContent>
               <p className="font-bold">{project.name}</p>

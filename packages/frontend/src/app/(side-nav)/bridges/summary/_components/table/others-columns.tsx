@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TotalCell } from '~/app/(side-nav)/scaling/summary/_components/table/total-cell'
 import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sort-table-values'
 import { getBridgesCommonProjectColumns } from '~/components/table/utils/common-project-columns/bridges-common-project-columns'
+import { TotalCell } from '~/pages/scaling/summary/components/table/total-cell'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()

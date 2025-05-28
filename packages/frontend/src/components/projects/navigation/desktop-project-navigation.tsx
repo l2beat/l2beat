@@ -10,7 +10,7 @@ import {
 } from 'react'
 
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Select,
@@ -19,7 +19,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
-import { useRouterWithProgressBar } from '~/components/navigation-progress-bar'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
@@ -44,7 +43,7 @@ export function DesktopProjectNavigation({
   projectVariants,
   sections,
 }: ProjectNavigationProps) {
-  const router = useRouterWithProgressBar()
+  const router = useRouter()
   const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()

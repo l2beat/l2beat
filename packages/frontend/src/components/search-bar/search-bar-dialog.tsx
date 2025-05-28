@@ -4,6 +4,7 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useMemo, useRef, useState } from 'react'
 import {
   Command,
@@ -18,7 +19,6 @@ import {
 import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useTracking } from '~/hooks/use-tracking'
-import { useRouterWithProgressBar } from '../navigation-progress-bar'
 import type { SearchBarCategory } from './search-bar-categories'
 import { searchBarCategories } from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'
@@ -34,7 +34,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const { track } = useTracking()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
-  const router = useRouterWithProgressBar()
+  const router = useRouter()
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 

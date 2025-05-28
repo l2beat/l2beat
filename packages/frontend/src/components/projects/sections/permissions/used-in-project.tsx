@@ -5,7 +5,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 
 export interface UsedInProject {
   id: ProjectId
@@ -28,7 +27,7 @@ export function UsedInProjectEntry({
         {implementations.map((project, i) => (
           <Tooltip key={i}>
             <TooltipTrigger disabledOnMobile>
-              <LinkWithOnHoverPrefetch
+              <a
                 href={`${project.url}#${project.targetName}`}
                 className="size-5"
               >
@@ -40,7 +39,7 @@ export function UsedInProjectEntry({
                   alt="Project icon"
                   className="mx-1 inline min-h-5 min-w-5"
                 />
-              </LinkWithOnHoverPrefetch>
+              </a>
             </TooltipTrigger>
             <TooltipContent>
               <div>{project.name}</div>
