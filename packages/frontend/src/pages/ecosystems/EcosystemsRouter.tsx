@@ -12,6 +12,10 @@ export function createEcosystemsRouter(
   render: RenderFunction,
   cache: ICache,
 ) {
+  if (!env.NEXT_PUBLIC_ECOSYSTEMS) {
+    return undefined
+  }
+
   const router = express.Router()
 
   router.get(

@@ -50,7 +50,10 @@ export function createServerPageRouter(
   ]
 
   for (const createRouter of routers) {
-    router.use('/', createRouter(manifest, render, cache))
+    const subRouter = createRouter(manifest, render, cache)
+    if (subRouter) {
+      router.use('/', subRouter)
+    }
   }
 
   return router
