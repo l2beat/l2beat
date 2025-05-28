@@ -9,5 +9,5 @@ setup:
 run:
   web:
     command:
-    - node ./rewrite/dist/server/index.js
+    - node ./dist/server/index.js
     image: frontend

@@ -36,4 +36,3 @@ COPY --from=builder /src/ .
 COPY docker/.profile.d .profile.d
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /app/packages/frontend/
-CMD NODE_ENV=production NEXT_PUBLIC_REWRITE=true node ./rewrite/dist/server/index.js
