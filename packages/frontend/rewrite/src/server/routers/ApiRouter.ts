@@ -1,6 +1,6 @@
 import express from 'express'
-import { createPublicApiRouter } from './PublicApiRouter'
 import { createInternalApiRouter } from './InternalApiRouter'
+import { createPublicApiRouter } from './PublicApiRouter'
 
 export function createApiRouter() {
   const router = express.Router()
