@@ -1,7 +1,7 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import { api } from '~/trpc/server'
-import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import {
   type ProjectChanges,
   getProjectsChangeReport,

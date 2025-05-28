@@ -5,7 +5,6 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
 
-import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -17,6 +16,7 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaChartMeta } from './meta'
 

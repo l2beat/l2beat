@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 
-import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import {
   ChartContainer,
   ChartLegend,
@@ -26,6 +25,7 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/get-stroke-over-fill-area-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/get-da-throughput-chart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './get-da-data-params'
 import { getDaChartMeta } from './meta'

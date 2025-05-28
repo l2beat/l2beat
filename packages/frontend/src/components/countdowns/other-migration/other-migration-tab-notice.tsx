@@ -1,9 +1,9 @@
 // TODO: Figure out how to what to do about it
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { UnixTime } from '@l2beat/shared-pure'
-import { externalLinks } from '~/consts/external-links'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'
+import { externalLinks } from '~/consts/external-links'
 import { cn } from '~/utils/cn'
 import { DynamicLogoList } from './dynamic-logo-list'
 

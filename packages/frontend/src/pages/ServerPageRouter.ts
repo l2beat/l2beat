@@ -13,8 +13,8 @@ import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
-import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
+import { createZkCatalogRouter } from './zk-catalog/ZkCatalogRouter'
 
 export function createServerPageRouter(
   manifest: Manifest,

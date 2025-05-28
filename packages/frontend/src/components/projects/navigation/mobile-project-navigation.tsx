@@ -2,8 +2,8 @@
 
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
-import { useCurrentSection } from '~/hooks/use-current-section'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'
+import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
 import type { ProjectNavigationSection } from './types'

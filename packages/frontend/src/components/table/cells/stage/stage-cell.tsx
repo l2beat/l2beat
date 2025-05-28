@@ -1,8 +1,5 @@
 import type { ProjectScalingStage, Stage } from '@l2beat/config'
 
-import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
-import { EmergencyIcon } from '~/icons/emergency'
-import { StopwatchIcon } from '~/icons/stopwatch'
 import { StageBadge } from '~/components/badge/stage-badge'
 import {
   Tooltip,
@@ -10,6 +7,9 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { TableLink } from '~/components/table/table-link'
+import { CircleQuestionMarkIcon } from '~/icons/circle-question-mark'
+import { EmergencyIcon } from '~/icons/emergency'
+import { StopwatchIcon } from '~/icons/stopwatch'
 import { cn } from '~/utils/cn'
 import { StageTooltip } from './stage-tooltip'
 

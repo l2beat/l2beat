@@ -10,13 +10,13 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/value-with-percentage-change'
+import { TableLink } from '~/components/table/table-link'
 import {
   WarningBar,
   sentimentToWarningBarColor,
 } from '~/components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatDollarValueNumber } from '~/utils/number-format/format-dollar-value-number'
-import { TableLink } from '~/components/table/table-link'
 
 export interface TotalCellProps {
   breakdown:

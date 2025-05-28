@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { DiscoUiIcon } from '~/icons/disco-ui'
 import { navigationMenuTriggerStyle } from '~/components/core/navigation-menu'
+import { DiscoUiIcon } from '~/icons/disco-ui'
 import { cn } from '~/utils/cn'
 
 export function DiscoUiLink({ href }: { href: string }) {

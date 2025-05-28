@@ -4,9 +4,9 @@ import type {
   ProjectScalingStack,
 } from '@l2beat/config'
 import type { RosetteValue } from '~/components/rosette/types'
-import { ps } from '~/server/projects'
 import { getL2Risks } from '~/pages/scaling/utils/get-l2-risks'
 import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import type { CommonScalingEntry } from '../get-common-scaling-entry'

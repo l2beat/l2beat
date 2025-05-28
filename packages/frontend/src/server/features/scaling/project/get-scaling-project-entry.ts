@@ -11,6 +11,7 @@ import compact from 'lodash/compact'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import { env } from '~/env'
 import {
   isActivityChartDataEmpty,
   isTvsChartDataEmpty,
@@ -33,7 +34,6 @@ import { getWithdrawalsSection } from '~/utils/project/technology/get-withdrawal
 import { getTrackedTransactions } from '~/utils/project/tracked-txs/get-tracked-transactions'
 import type { UnderReviewStatus } from '~/utils/project/under-review'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
-import { env } from '~/env'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectIcon } from '../../utils/get-project-icon'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
