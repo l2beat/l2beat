@@ -9,9 +9,9 @@ import type {
   ApiPreviewPermissions,
   UpgradeabilityActor,
 } from '../api/types'
+import { Checkbox } from '../components/Checkbox'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
-import { Checkbox } from '../components/Checkbox'
 
 export function PreviewPanel() {
   const { project } = useParams()

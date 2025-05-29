@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react'
+import { Checkbox } from '../../components/Checkbox'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
-import { Checkbox } from '../../components/Checkbox'
 
 type SettingsButtonProps = {
   onClick: () => void

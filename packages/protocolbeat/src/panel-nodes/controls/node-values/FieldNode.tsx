@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import type { ExpandedField } from './buildFieldTree'
 import { Checkbox } from '../../../components/Checkbox'
+import type { ExpandedField } from './buildFieldTree'
 
 export function FieldNode({
   field,

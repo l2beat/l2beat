@@ -3,8 +3,8 @@ import { Dialog } from '../../../components/Dialog'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
 import { ControlButton } from '../ControlButton'
-import { buildFieldTree } from './buildFieldTree'
 import { FieldNode } from './FieldNode'
+import { buildFieldTree } from './buildFieldTree'
 import type { ExpandedField } from './buildFieldTree'
 
 export const ValuesDialog = {

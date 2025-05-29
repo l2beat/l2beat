@@ -3,9 +3,9 @@ import ansiHTML from 'ansi-html'
 import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
+import { Checkbox } from '../components/Checkbox'
 import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
-import { Checkbox } from '../components/Checkbox'
 
 ansiHTML.setColors({
   reset: ['F0D8BD', '1D1816'], // [fg, bg]
