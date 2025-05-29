@@ -235,6 +235,25 @@
         "decimals": 18,
         "sinceTimestamp": 1739109131
       }
+    },
+    {
+      "mode": "custom",
+      "id": "sophon-SOPH",
+      "priceId": "sophon",
+      "symbol": "SOPH",
+      "name": "Sophon",
+      "iconUrl": "https://assets.coingecko.com/coins/images/38680/large/sophon_logo_200.png?1747898236",
+      "category": "other",
+      "source": "native",
+      "isAssociated": true,
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1748455200,
+        "address": "0x000000000000000000000000000000000000800A",
+        "chain": "sophon"
+      }
     }
   ]
 }

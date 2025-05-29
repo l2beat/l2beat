@@ -6818,5 +6818,15 @@
       "source": "native",
       "supply": "circulatingSupply"
     }
+  ],
+  "sophon": [
+    {
+      "symbol": "SOPH",
+      "address": "0x000000000000000000000000000000000000800a",
+      "coingeckoId": "sophon",
+      "category": "other",
+      "source": "native",
+      "supply": "circulatingSupply"
+    }
   ]
 }
