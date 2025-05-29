@@ -298,21 +298,9 @@ const config: Config = {
         'row-highlight-no-opacity': 'row-highlight-no-opacity 2.5s ease-in-out',
       },
       fontFamily: {
-        sans: ['var(--font-roboto)', 'Roboto', 'Arial', 'sans-serif'],
-        'roboto-serif': ['var(--font-roboto-serif)', 'Roboto Serif', 'serif'],
-        'roboto-serif-ext': [
-          'var(--font-roboto-serif-ext)',
-          'var(--font-roboto-serif)',
-          'Roboto Serif',
-          'serif',
-        ],
-        'rewrite-roboto': ['Roboto', 'Arial', 'sans-serif'],
-        'rewrite-roboto-serif': ['Roboto Serif', 'serif'],
-        'rewrite-roboto-serif-ext': [
-          'Roboto Serif Ext',
-          'Roboto Serif',
-          'serif',
-        ],
+        roboto: ['Roboto', 'Arial', 'sans-serif'],
+        'roboto-serif': ['Roboto Serif', 'serif'],
+        'roboto-serif-ext': ['Roboto Serif Ext', 'Roboto Serif', 'serif'],
         lora: ['Lora', 'serif'],
       },
       spacing: {
