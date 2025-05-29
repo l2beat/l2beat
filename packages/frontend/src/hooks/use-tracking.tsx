@@ -19,13 +19,20 @@ type MyEvents = {
   filterInversed: { name: string; allValues: string }
 }
 
+export type Plausible = {
+  <T extends keyof MyEvents>(
+    event: T,
+    ...args: MyEvents[T] extends never ? [] : [{ props: MyEvents[T] }]
+  ): void
+}
+
 export function useTracking() {
   return {
     track: <T extends keyof MyEvents>(
       key: T,
-      params: { props: MyEvents[T] },
+      ...args: MyEvents[T] extends never ? [] : [{ props: MyEvents[T] }]
     ) => {
-      console.log('track', key, params)
+      return window.plausible(key, ...args)
     },
   }
 }

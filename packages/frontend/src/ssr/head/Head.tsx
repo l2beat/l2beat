@@ -37,6 +37,16 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
+      <script
+        defer
+        data-domain="l2beat.com"
+        src="https://plausible.io/js/script.hash.outbound-links.pageview-props.tagged-events.js"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
+        }}
+      />
     </>
   )
 }
