@@ -41,3 +41,7 @@ TODO
 ## Frontrunning risk
 
 TODO. Intuition: if there are two permissioned provers, one being a SC minority and one being a non-SC actor, the non-SC might frontrun the SC and prevent them from, for example, enforcing censorship resistance if no other mechanism is present.
+
+## Based preconfs
+
+TODO.
