@@ -28,8 +28,18 @@ function ValuesDialogTrigger({ disabled }: { disabled: boolean }) {
 function ValuesDialogBody({ node }: { node: Node }) {
   const setNodes = useStore((state) => state.setNodes)
   const nodes = useStore((state) => state.nodes)
+  const [searchQuery, setSearchQuery] = useState('')
 
-  const fieldTree = useMemo(() => buildFieldTree(node.fields), [node.fields])
+  const filteredFields = useMemo(() => {
+    return node.fields.filter((field) =>
+      field.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+  }, [searchQuery, node.fields])
+
+  const fieldTree = useMemo(
+    () => buildFieldTree(filteredFields),
+    [filteredFields],
+  )
 
   const [hiddenFields, setHiddenFields] = useState(node.hiddenFields)
 
@@ -82,7 +92,7 @@ function ValuesDialogBody({ node }: { node: Node }) {
       <Dialog.Description className="mb-5 text-sm leading-normal">
         Make changes to what values are visible in the node.
       </Dialog.Description>
-
+      <h3 className="font-medium text-sm">Actions</h3>
       <div className="mb-4 flex gap-2">
         <Dialog.Button onClick={() => setHiddenFields([])}>All</Dialog.Button>
         <Dialog.Button
@@ -105,19 +115,31 @@ function ValuesDialogBody({ node }: { node: Node }) {
         </Dialog.Button>
       </div>
 
-      <div className="flex max-h-[40vh] flex-col overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-2 text-sm">
-        {fieldTree.map((field) => (
-          <FieldNode
-            key={field.property}
-            field={field}
-            hiddenFields={hiddenFields}
-            onToggle={toggleField}
+      <h3 className="font-medium text-sm">Fields</h3>
+      <div className="flex flex-col gap-1">
+        <div className="w-full">
+          <Dialog.Input
+            type="text"
+            placeholder="Search fields..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full"
           />
-        ))}
+        </div>
+        <div className="flex max-h-[40vh] flex-col overflow-y-auto border border-coffee-400 bg-coffee-400/10 p-2 text-sm">
+          {fieldTree.map((field) => (
+            <FieldNode
+              key={field.property}
+              field={field}
+              hiddenFields={hiddenFields}
+              onToggle={toggleField}
+            />
+          ))}
+        </div>
       </div>
 
       <Dialog.Close asChild>
-        <div className="flex justify-end">
+        <div className="mt-4 flex justify-end">
           <Dialog.Button onClick={modifyNode}>Save</Dialog.Button>
         </div>
       </Dialog.Close>

@@ -36,7 +36,7 @@ export function FieldNode({
     return (
       <div className="flex gap-1 pl-1">
         <div>{field.property}</div>
-        <div className="w-full border-coffee-200/50 border-b border-dashed"></div>
+        <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed"></div>
         <Checkbox state={checkboxState} onClick={() => onToggle(field)} />
       </div>
     )
@@ -49,7 +49,7 @@ export function FieldNode({
         <div onClick={toggle} className="cursor-pointer hover:underline">
           {field.property}
         </div>
-        <div className="w-full border-coffee-200/50 border-b border-dashed"></div>
+        <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed"></div>
         <Checkbox state={checkboxState} onClick={() => onToggle(field)} />
       </div>
       {!isCollapsed && (
