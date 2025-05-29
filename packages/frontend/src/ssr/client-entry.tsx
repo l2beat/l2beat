@@ -1,10 +1,14 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { ClientPageRouter, type SsrData } from '../pages/ClientPageRouter'
+import { Env } from '~/env'
+import { Plausible } from '~/hooks/use-tracking'
 
 declare global {
   interface Window {
     __SSR_DATA__: SsrData
+    __ENV__: Record<string, string>
+    plausible: Plausible
   }
 }
 

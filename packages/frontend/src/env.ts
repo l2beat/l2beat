@@ -73,7 +73,6 @@ function createEnv(): Env {
 
 function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
   if (typeof process === 'undefined') {
-    // @ts-expect-error - window.__ENV__ is not typed
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return window.__ENV__
   }
