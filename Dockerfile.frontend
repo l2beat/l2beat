@@ -36,3 +36,4 @@ COPY --from=builder /src/ .
 COPY docker/.profile.d .profile.d
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 WORKDIR /app/packages/frontend/
+CMD NODE_ENV=production node ./dist/server/index.js
