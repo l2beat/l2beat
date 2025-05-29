@@ -411,3 +411,5 @@ When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth(
 
    - *Earliest withdrawal time*  
      `SendRootUpdated.timestamp − L2ToL1Tx.timestamp` (where SendRootUpdated meets the condition in Step 2)
+
+This [PoC script](https://gist.github.com/vincfurc/7fd3b88e95d6d7105fac3ca2dca075d5) calculates the time to withdrawal for Arbitrum One.
