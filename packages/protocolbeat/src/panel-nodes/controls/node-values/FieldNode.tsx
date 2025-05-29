@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { ExpandedField } from './buildFieldTree'
+import { Checkbox } from '../../../components/Checkbox'
 
 export function FieldNode({
   field,
@@ -19,11 +20,11 @@ export function FieldNode({
   const totalChildrenCount = childrenKeys.length
 
   // Determine checkbox state
-  let checkboxState: 'checked' | 'unchecked' | 'indeterminate'
+  let checkboxState: 'indeterminate' | boolean
   if (hiddenChildrenCount === 0) {
-    checkboxState = 'checked' // All visible
+    checkboxState = true // All visible
   } else if (hiddenChildrenCount === totalChildrenCount) {
-    checkboxState = 'unchecked' // All hidden
+    checkboxState = false // All hidden
   } else {
     checkboxState = 'indeterminate' // Some visible, some hidden
   }
@@ -37,7 +38,7 @@ export function FieldNode({
       <div className="flex gap-1 pl-1">
         <div>{field.property}</div>
         <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed"></div>
-        <Checkbox state={checkboxState} onClick={() => onToggle(field)} />
+        <Checkbox checked={checkboxState} onClick={() => onToggle(field)} />
       </div>
     )
   }
@@ -50,7 +51,7 @@ export function FieldNode({
           {field.property}
         </div>
         <div className="mb-1 w-full border-coffee-200/50 border-b border-dashed"></div>
-        <Checkbox state={checkboxState} onClick={() => onToggle(field)} />
+        <Checkbox checked={checkboxState} onClick={() => onToggle(field)} />
       </div>
       {!isCollapsed && (
         <div className="ml-1 flex flex-col border-coffee-200/50 border-l pl-2">
@@ -74,48 +75,4 @@ function extractChildrenKeys(field: ExpandedField): string[] {
   }
 
   return field.value.flatMap(extractChildrenKeys)
-}
-
-type CheckboxProps = {
-  state: 'checked' | 'unchecked' | 'indeterminate'
-  onClick: () => void
-}
-
-function Checkbox(props: CheckboxProps) {
-  return (
-    <div
-      className="flex size-4 cursor-pointer items-center justify-center border-coffee-400 bg-coffee-700 hover:bg-coffee-700/50"
-      onClick={() => props.onClick()}
-    >
-      {props.state === 'checked' && <CheckedTick />}
-      {props.state === 'indeterminate' && <Indeterminate />}
-      {props.state === 'unchecked' && <span className="w-4"></span>}
-    </div>
-  )
-}
-
-function CheckedTick() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      className="fill-none stroke-coffee-200"
-    >
-      <path d="M2.5 8.5L6.5 12.5L13.5 4" strokeWidth="2" />
-    </svg>
-  )
-}
-
-function Indeterminate() {
-  return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      className="fill-none stroke-coffee-200"
-    >
-      <line x1="3" y1="8" x2="13" y2="8" strokeWidth="2" />
-    </svg>
-  )
 }

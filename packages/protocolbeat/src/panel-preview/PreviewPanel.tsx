@@ -11,6 +11,7 @@ import type {
 } from '../api/types'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
+import { Checkbox } from '../components/Checkbox'
 
 export function PreviewPanel() {
   const { project } = useParams()
@@ -59,15 +60,14 @@ function OptionsPanel(props: {
   setShowOnlySelected: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   return (
-    <div className="bg-coffee-600 p-0 px-2 text-right">
-      <label>
-        <input
-          type="checkbox"
-          checked={props.showOnlySelected}
-          onChange={(e) => props.setShowOnlySelected(e.target.checked)}
-        />{' '}
+    <div className="flex items-center justify-end gap-1 bg-coffee-600 p-0 px-2 text-right">
+      <div
+        className="flex cursor-pointer select-none items-center justify-center gap-1"
+        onClick={() => props.setShowOnlySelected(!props.showOnlySelected)}
+      >
+        <Checkbox checked={props.showOnlySelected} />
         Show only selected address
-      </label>
+      </div>
     </div>
   )
 }

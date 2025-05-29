@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import { usePanelStore } from '../store/store'
 import { useTerminalStore } from './store'
+import { Checkbox } from '../components/Checkbox'
 
 ansiHTML.setColors({
   reset: ['F0D8BD', '1D1816'], // [fg, bg]
@@ -77,11 +78,10 @@ export function TerminalPanel() {
           ))}
         </select>
         <label className="flex items-center gap-1">
-          <input
-            type="checkbox"
+          <Checkbox
             checked={command.devMode}
-            onChange={(e) => setDevMode(e.target.checked)}
-            className="h-4 w-4 appearance-none rounded border border-coffee-200 bg-coffee-800 checked:bg-autumn-300"
+            onClick={() => setDevMode(!command.devMode)}
+            className="h-4 w-4 border border-coffee-200"
           />
           <span className="text-xs">--dev</span>
         </label>

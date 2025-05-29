@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { useStore } from '../store/store'
 import { ControlButton } from './ControlButton'
+import { Checkbox } from '../../components/Checkbox'
 
 type SettingsButtonProps = {
   onClick: () => void
@@ -41,10 +42,9 @@ export function SettingsTray() {
           onClick={toggleHideUnknowns}
           className="flex items-center gap-1"
         >
-          <input
-            type="checkbox"
+          <Checkbox
             checked={preferences.hideUnknownOnLoad}
-            onChange={toggleHideUnknowns}
+            onClick={toggleHideUnknowns}
           />
           <span>Hide unknowns on load</span>
         </ControlButton>
@@ -52,10 +52,9 @@ export function SettingsTray() {
           onClick={toggleEnableDimming}
           className="flex items-center gap-1"
         >
-          <input
-            type="checkbox"
+          <Checkbox
             checked={preferences.enableDimming}
-            onChange={toggleEnableDimming}
+            onClick={toggleEnableDimming}
           />
           <span>Enable dimming on selection</span>
         </ControlButton>
