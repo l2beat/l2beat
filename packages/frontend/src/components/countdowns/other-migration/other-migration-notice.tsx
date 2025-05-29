@@ -1,4 +1,3 @@
-'use client'
 import { Callout } from '~/components/callout'
 import { Countdown } from '~/components/countdown'
 import { CustomLink } from '~/components/link/custom-link'

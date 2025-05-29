@@ -1,6 +1,5 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -22,98 +21,105 @@ export const CostsChartParams = z.object({
 })
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
+export type CostsChartDataPoint = readonly [
+  timestamp: number,
+  overheadGas: number,
+  overheadGasEth: number,
+  overheadGasUsd: number,
+  calldataGas: number,
+  calldataGasEth: number,
+  calldataGasUsd: number,
+  computeGas: number,
+  computeGasEth: number,
+  computeGasUsd: number,
+  blobsGas: number | undefined,
+  blobsGasEth: number | undefined,
+  blobsGasUsd: number | undefined,
+]
+
+export type CostsChartData = CostsChartDataPoint[]
+
 /**
  * A function that computes values for chart data of the costs over time.
  * @returns [timestamp, overheadGas, overheadEth, overheadUsd, calldataGas, calldataEth, calldataUsd, computeGas, computeEth, computeUsd, blobsGas, blobsEth, blobsUsd][] - all numbers
  */
-export function getCostsChart(
-  ...parameters: Parameters<typeof getCachedCostsChartData>
-) {
+export async function getCostsChart({
+  range: timeRange,
+  filter,
+  previewRecategorisation,
+}: CostsChartParams): Promise<CostsChartData> {
   if (env.MOCK) {
-    return getMockCostsChartData(...parameters)
+    return getMockCostsChartData({
+      range: timeRange,
+      filter,
+      previewRecategorisation,
+    })
   }
-  return getCachedCostsChartData(...parameters)
-}
 
-export type CostsChartData = Awaited<ReturnType<typeof getCachedCostsChartData>>
+  const db = getDb()
+  const projects = await getCostsProjects(filter, previewRecategorisation)
+  if (projects.length === 0) {
+    return []
+  }
+  const resolution = rangeToResolution(timeRange)
+  const range = getRangeWithMax(timeRange, resolution)
 
-export const getCachedCostsChartData = cache(
-  async ({
-    range: timeRange,
-    filter,
-    previewRecategorisation,
-  }: CostsChartParams) => {
-    const db = getDb()
-    const projects = await getCostsProjects(filter, previewRecategorisation)
-    if (projects.length === 0) {
-      return []
-    }
-    const resolution = rangeToResolution(timeRange)
-    const range = getRangeWithMax(timeRange, resolution)
+  const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
+    projects.map((p) => p.id),
+    range,
+  )
 
-    const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-      projects.map((p) => p.id),
-      range,
-    )
+  if (data.length === 0) {
+    return []
+  }
 
-    if (data.length === 0) {
-      return []
-    }
+  const summedByTimestamp = sumByTimestamp(data, resolution)
 
-    const summedByTimestamp = sumByTimestamp(data, resolution)
+  const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
+  const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
 
-    const minTimestamp = UnixTime(Math.min(...summedByTimestamp.keys()))
-    const maxTimestamp = UnixTime(Math.max(...summedByTimestamp.keys()))
-
-    const timestamps = generateTimestamps(
-      [minTimestamp, maxTimestamp],
-      resolution,
-    )
-    const result = timestamps.map((timestamp) => {
-      const entry = summedByTimestamp.get(timestamp)
-      const blobsFallback =
-        timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
-      if (!entry) {
-        return [
-          timestamp,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          blobsFallback,
-          blobsFallback,
-          blobsFallback,
-        ] as const
-      }
+  const timestamps = generateTimestamps(
+    [minTimestamp, maxTimestamp],
+    resolution,
+  )
+  const result = timestamps.map((timestamp) => {
+    const entry = summedByTimestamp.get(timestamp)
+    const blobsFallback = timestamp >= DENCUN_UPGRADE_TIMESTAMP ? 0 : undefined
+    if (!entry) {
       return [
         timestamp,
-        entry.overheadGas,
-        entry.overheadGasEth,
-        entry.overheadGasUsd,
-        entry.calldataGas,
-        entry.calldataGasEth,
-        entry.calldataGasUsd,
-        entry.computeGas,
-        entry.computeGasEth,
-        entry.computeGasUsd,
-        entry.blobsGas ?? blobsFallback,
-        entry.blobsGasEth ?? blobsFallback,
-        entry.blobsGasUsd ?? blobsFallback,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        blobsFallback,
+        blobsFallback,
+        blobsFallback,
       ] as const
-    })
-    return result
-  },
-  ['costs-chart-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
+    }
+    return [
+      timestamp,
+      entry.overheadGas,
+      entry.overheadGasEth,
+      entry.overheadGasUsd,
+      entry.calldataGas,
+      entry.calldataGasEth,
+      entry.calldataGasUsd,
+      entry.computeGas,
+      entry.computeGasEth,
+      entry.computeGasUsd,
+      entry.blobsGas ?? blobsFallback,
+      entry.blobsGasEth ?? blobsFallback,
+      entry.blobsGasUsd ?? blobsFallback,
+    ] as const
+  })
+  return result
+}
 
 function getMockCostsChartData({
   range: timeRange,

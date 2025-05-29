@@ -1,4 +1,3 @@
-'use client'
 import { CommandDialog } from '~/components/core/command'
 import {
   Popover,

@@ -2,11 +2,9 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
-    "rewrite:build": {
-      "dependsOn": ["^build"],
-      "outputs": ["rewrite/dist"]
-    },
     "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist"],
       "env": [
         "CI",
         "CRON_SECRET",

@@ -1,8 +1,6 @@
-'use client'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/chevron'
 import { cn } from '~/utils/cn'
 import {
@@ -42,9 +40,9 @@ export function NavSidebar({ groups, logoLink, sideLinks, topNavbar }: Props) {
     <Sidebar topNavbar={topNavbar}>
       <SidebarHeader>
         <div className="flex h-[38px] flex-row items-center justify-between">
-          <Link href={logoLink}>
+          <a href={logoLink}>
             <Logo className="block h-8 w-auto" />
-          </Link>
+          </a>
           <div className="flex flex-row items-center gap-4">
             <DarkThemeToggle />
             <div className="size-6 lg:hidden">
@@ -153,7 +151,7 @@ function NavCollapsibleItem({
         </CollapsibleTrigger>
       ) : (
         <div className="group flex items-center p-1.5" data-active={isActive}>
-          <Link
+          <a
             href={group.links[0].href}
             className="flex items-center gap-2"
             data-active={isActive}
@@ -167,7 +165,7 @@ function NavCollapsibleItem({
             >
               {group.title}
             </span>
-          </Link>
+          </a>
           <CollapsibleTrigger className="group size-6">
             <ChevronIcon
               className={cn(

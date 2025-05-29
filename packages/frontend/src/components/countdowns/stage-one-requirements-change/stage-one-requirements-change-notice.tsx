@@ -1,4 +1,3 @@
-'use client'
 import type { StageConfigured } from '@l2beat/config'
 import { StageBadge } from '~/components/badge/stage-badge'
 import { Countdown } from '~/components/countdown'

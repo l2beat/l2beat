@@ -1,5 +1,5 @@
 import type { Project, ProjectScalingRiskView } from '@l2beat/config'
-import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import { getDataAvailabilitySection } from '~/utils/project/technology/get-data-availability-section'
 import { getOperatorSection } from '~/utils/project/technology/get-operator-section'

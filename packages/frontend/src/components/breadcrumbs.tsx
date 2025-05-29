@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import React from 'react'
 import type { ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/chevron'
@@ -43,9 +42,9 @@ function BreadcrumbItem({
 }: { href?: string; children: ReactNode; className?: string }) {
   if (href) {
     return (
-      <Link href={href} className={className}>
+      <a href={href} className={className}>
         {children}
-      </Link>
+      </a>
     )
   }
   return <div className={className}>{children}</div>

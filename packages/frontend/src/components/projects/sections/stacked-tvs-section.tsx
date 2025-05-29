@@ -1,8 +1,7 @@
 import type { Milestone, ProjectTvsInfo } from '@l2beat/config'
-import Link from 'next/link'
-import { TvsBreakdownSummaryBox } from '~/app/(top-nav)/scaling/projects/[slug]/tvs-breakdown/_components/tvs-breakdown-summary-box'
 import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { TvsBreakdownSummaryBox } from '~/pages/scaling/project/tvs-breakdown/components/tvs-breakdown-summary-box'
 import type { ProjectSevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get-7d-tvs-breakdown'
 import type { ProjectTokens } from '~/server/features/scaling/tvs/tokens/get-tokens-for-project'
 import { cn } from '~/utils/cn'
@@ -73,7 +72,7 @@ export function TvsBreakdownButton({
   tvsBreakdownUrl,
 }: { tvsBreakdownUrl: string }) {
   return (
-    <Link
+    <a
       href={tvsBreakdownUrl}
       className={cn(
         'text-xs font-bold leading-none text-primary md:text-white',
@@ -82,6 +81,6 @@ export function TvsBreakdownButton({
       )}
     >
       View TVS breakdown
-    </Link>
+    </a>
   )
 }
