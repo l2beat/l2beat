@@ -1,0 +1,48 @@
+import { useState } from 'react'
+import { useEventListener } from './use-event-listener'
+
+const getURLSearchParams = () => {
+  if (typeof window !== 'undefined') {
+    return new URLSearchParams(window.location.search)
+  }
+  return new URLSearchParams((globalThis as any).__FIX_SSR_URL__.split('?')[1])
+}
+
+const useQueryParam = (
+  key: string,
+  defaultVal: string,
+): [string, (val: string) => void] => {
+  const urlSearchParams = getURLSearchParams()
+  const [query, setQuery] = useState(urlSearchParams.get(key) ?? defaultVal)
+
+  const updateUrl = (newVal: string) => {
+    setQuery(newVal)
+
+    const urlSearchParams = getURLSearchParams()
+
+    if (newVal.trim() !== '' && newVal !== defaultVal) {
+      urlSearchParams.set(key, newVal)
+    } else {
+      urlSearchParams.delete(key)
+    }
+
+    if (typeof window !== 'undefined') {
+      if (urlSearchParams.size > 0) {
+        const newUrl = `${window.location.pathname}?${urlSearchParams.toString()}`
+        window.history.pushState({}, '', newUrl)
+      } else {
+        window.history.pushState({}, '', window.location.pathname)
+      }
+    }
+  }
+
+  useEventListener('popstate', () => {
+    const params = new URLSearchParams(window.location.search)
+    const value = params.get(key)
+    setQuery(value ?? defaultVal)
+  })
+
+  return [query, updateUrl]
+}
+
+export default useQueryParam
