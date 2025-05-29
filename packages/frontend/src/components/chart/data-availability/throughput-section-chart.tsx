@@ -58,6 +58,7 @@ export function ThroughputSectionChart({
           selectedProjects={selectedProjects}
           setSelectedProjects={setSelectedProjects}
           customColors={customColors}
+          milestones={milestones}
         />
       )}
     </div>
