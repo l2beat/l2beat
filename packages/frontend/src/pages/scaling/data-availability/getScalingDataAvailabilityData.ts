@@ -12,9 +12,7 @@ export async function getScalingDataAvailabilityData(
   cache: ICache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps({
-      recategorisationPreview: req.query.recategorisationPreview === 'true',
-    }),
+    getAppLayoutProps(),
     cache.get(
       {
         key: ['scaling', 'data-availability', 'entries'],

@@ -14,9 +14,7 @@ export async function getScalingSummaryData(
   cache: ICache,
 ): Promise<RenderData> {
   const [appLayoutProps, data] = await Promise.all([
-    getAppLayoutProps({
-      recategorisationPreview: req.query.recategorisationPreview === 'true',
-    }),
+    getAppLayoutProps(),
     cache.get(
       {
         key: ['scaling', 'summary', 'data'],

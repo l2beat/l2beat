@@ -12,9 +12,7 @@ export async function getScalingUpcomingData(
   cache: ICache,
 ): Promise<RenderData> {
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps({
-      recategorisationPreview: req.query.recategorisationPreview === 'true',
-    }),
+    getAppLayoutProps(),
     cache.get(
       {
         key: ['scaling', 'upcoming', 'entries'],
