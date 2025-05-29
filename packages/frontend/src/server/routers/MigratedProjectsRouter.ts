@@ -4,15 +4,9 @@ export function createMigratedProjectsRouter() {
   const router = express.Router()
 
   router.get('/scaling/projects/zksync', (_, res) => {
-    console.log(
-      'redirecting /scaling/projects/zksync to /scaling/projects/zksync-lite',
-    )
     res.redirect(301, '/scaling/projects/zksync-lite')
   })
   router.get('/scaling/projects/zksync/tvs-breakdown', (_, res) => {
-    console.log(
-      'redirecting /scaling/projects/zksync/tvs-breakdown to /scaling/projects/zksync-lite/tvs-breakdown',
-    )
     res.redirect(301, `/scaling/projects/zksync-lite/tvs-breakdown`)
   })
 
