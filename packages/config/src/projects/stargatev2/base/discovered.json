@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "base",
   "blockNumber": 30742564,
-  "configHash": "0xf66e158c09e09b2cd343a9aa21016da6b88cf0cc3996c6cecdad83a671b9f434",
+  "configHash": "0xaf2e3935904415afade7ce4a80c02fc2a710a4cb33aeee312e48e6f61b168ecd",
   "entries": [
     {
       "name": "StargatePoolUSDC",

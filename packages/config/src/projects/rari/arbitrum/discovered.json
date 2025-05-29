@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 338996542,
-  "configHash": "0xbb393115840e6c8cd4fc50418f6e907492b72735677ee4577a7ab6e38cbcd631",
+  "configHash": "0x0f60c2666f179f7176f5f296dfcdde8bdd25538d0a9f5ede1f517092e6514375",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000100",
@@ -81,12 +81,22 @@
       }
     },
     {
+      "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x0CA4c24079a191e08F659699292e5C75274EF253",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -470,6 +480,19 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
+        }
+      ]
+    },
+    {
       "name": "Caldera",
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391",
       "type": "EOA",
@@ -542,6 +565,70 @@
       }
     },
     {
+      "name": "SP1VerifierGateway",
+      "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "sinceTimestamp": 1719523665,
+      "sinceBlock": 226384983,
+      "values": {
+        "$immutable": true,
+        "oldVerifier": {
+          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
+          "frozen": true
+        },
+        "oldVerifier2": {
+          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
+          "frozen": true
+        },
+        "oldVerifier3": {
+          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
+          "frozen": true
+        },
+        "oldVerifier4": {
+          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
+          "frozen": true
+        },
+        "oldVerifier5": {
+          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
+          "frozen": true
+        },
+        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+        "verifier": {
+          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "frozen": false
+        }
+      },
+      "fieldMeta": {
+        "oldVerifier": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
+        },
+        "oldVerifier2": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
+        },
+        "oldVerifier3": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."
+        },
+        "oldVerifier4": {
+          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
+        },
+        "oldVerifier5": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
+        },
+        "verifier": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+        }
+      },
+      "implementationNames": {
+        "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
+      }
+    },
+    {
       "name": "RollupEventInbox",
       "address": "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6",
       "type": "Contract",
@@ -572,6 +659,11 @@
         "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6": "TransparentUpgradeableProxy",
         "0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7": "RollupEventInbox"
       }
+    },
+    {
+      "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "QuoteVerifier",
@@ -632,6 +724,11 @@
         "0xcc6DcB3FaA2436270E696994f326426B76A9f731": "L1ERC20Gateway"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Caldera Multisig 1",
@@ -781,6 +878,66 @@
       }
     },
     {
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "can freeze the bridge contract and update the list of authorized relayers.",
+          "role": ".guardians"
+        },
+        {
+          "permission": "upgrade",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1710506484,
+      "sinceBlock": 190629615,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$members": [
+          "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
+          "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+          "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+          "0x4983A5ebE79c0570aa368cE84f281A8aAc50cE4d",
+          "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
+          "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
+        ],
+        "$threshold": 4,
+        "domainSeparator": "0x135047a4f7370f1dbbb2d75c227cb284db5615784b95b7cf4ac4c9201a7d9a12",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
+        "nonce": 16,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": "GnosisSafeProxy",
+        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+      }
+    },
+    {
+      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CustomGateway",
       "address": "0x8bE956aB42274056ef4471BEb211b33e258b7324",
       "type": "Contract",
@@ -862,7 +1019,17 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x93616128705070474e0D8EdD11349c45668ac9DC",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -870,6 +1037,19 @@
       "address": "0x9a2859B2a83148b8DE25d26643B5407555D219E1",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
+        }
+      ]
     },
     {
       "name": "ValidatorUtils",
@@ -1170,14 +1350,82 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xbf853295743511e8DC5F03809d209C33fC136d24",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "GnosisSafe",
+      "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "role": ".owner"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1724204782,
+      "sinceBlock": 245028307,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
+          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+          "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x185e357963cf69402f9a4921a2354b8685eb211841dd51a3bffb313a342335ab",
+        "getChainId": 42161,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "address": "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs.",
+      "sinceTimestamp": 1735949706,
+      "sinceBlock": 291720238,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      },
+      "implementationNames": {
+        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
+      }
     },
     {
       "address": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
@@ -1541,6 +1789,25 @@
       "function CELESTIA_MESSAGE_HEADER_FLAG() view returns (bytes1)",
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge) execCtx, tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) view returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
+    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1751,6 +2018,9 @@
     "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
       "constructor(address _singleton)"
     ],
+    "0x738a9b55304f9fcF776B3BA285e50c0f9eF77997": [
+      "constructor(address _singleton)"
+    ],
     "0x73D3a5E535cBF98B9b5Ff7fEb8EC26e61FCEC4b7": [
       "constructor()",
       "error AlreadyInit()",
@@ -1929,6 +2199,9 @@
     "0xb47a57a218911653d964fE8aAa1cED55A71D8043": [
       "function executeOneStep(tuple(uint256 maxInboxMessagesRead, address bridge), tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) startMach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) startMod, tuple(uint16 opcode, uint256 argumentData) inst, bytes proof) pure returns (tuple(uint8 status, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) valueStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) valueMultiStack, tuple(tuple(tuple(uint8 valueType, uint256 contents)[] inner) proved, bytes32 remainingHash) internalStack, tuple(tuple(tuple(uint8 valueType, uint256 contents) returnPc, bytes32 localsMerkleRoot, uint32 callerModule, uint32 callerModuleInternals)[] proved, bytes32 remainingHash) frameStack, tuple(bytes32 inactiveStackHash, bytes32 remainingHash) frameMultiStack, bytes32 globalStateHash, uint32 moduleIdx, uint32 functionIdx, uint32 functionPc, bytes32 recoveryPc, bytes32 modulesRoot) mach, tuple(bytes32 globalsMerkleRoot, tuple(uint64 size, uint64 maxSize, bytes32 merkleRoot) moduleMemory, bytes32 tablesMerkleRoot, bytes32 functionsMerkleRoot, bytes32 extraHash, uint32 internalsOffset) mod)"
     ],
+    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
+      "constructor(address _singleton)"
+    ],
     "0xcc6DcB3FaA2436270E696994f326426B76A9f731": [
       "event DepositInitiated(address l1Token, address indexed _from, address indexed _to, uint256 indexed _sequenceNumber, uint256 _amount)",
       "event TxToL2(address indexed _from, address indexed _to, uint256 indexed _seqNum, bytes _data)",
@@ -1952,6 +2225,64 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb": [
       "constructor(bytes32 _mrEnclave, bytes32 _mrSigner, address _quoteVerifier)",
@@ -2082,7 +2413,9 @@
     "orbitstack/SequencerInbox_Celestia_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71"
+    "succinct/SP1Blobstream": "0x3660212a9fcb00242154458e4a67cfeada6645ad8cefe00e557c1f624ac8ec71",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
-  "permissionsConfigHash": "0xf4883523b85fb8b9bc218f168249675aa035a9729390b05b08768e5638e48a13"
+  "permissionsConfigHash": "0x820710ca2fa08b80f2de9158f348313a191dc6c3aa138ddaf2c1e9ec599916c4"
 }

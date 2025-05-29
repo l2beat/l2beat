@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x2ce701030df3a7d2ec47f8c47e03a56761537dd4
+
+# Diff at Thu, 29 May 2025 07:50:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9764537dfab122079ee09c9ec95835b322e2dd25 block: 22437745
+- current block number: 22437745
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437745 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa20465b264c99ba5dc94ea350c956799c4d92128
 
 # Diff at Fri, 23 May 2025 09:41:04 GMT:

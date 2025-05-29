@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x6d3cd9258434d229e76463bc97d80842762bdb31
+
+# Diff at Thu, 29 May 2025 07:51:34 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9764537dfab122079ee09c9ec95835b322e2dd25 block: 22445558
+- current block number: 22445558
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22445558 (main branch discovery), not current.
+
+```diff
+    contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xFdDf38947aFB03C621C71b06C9C70bce73f12999","role":"admin"}
+      receivedPermissions.7.from:
+-        "0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
++        "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CSFeeOracle (0x4D4074628678Bd302921c20573EEa1ed38DdF7FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HashConsensus (0x71093efF8D8599b5fA340D665Ad60fA7C80688e4)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x27200017b87c83f1865932aec752a3c1c777eb50
 
 # Diff at Wed, 28 May 2025 13:56:28 GMT:

@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 22495698,
-  "configHash": "0x379747c172cd9b881d5c5e57c85dd1014cd48653ae6c9d1d6c85087854ffe816",
+  "configHash": "0xf1bc22577e08e14e58118bee0948025589c19d958047fcaf0f60392f156981fb",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

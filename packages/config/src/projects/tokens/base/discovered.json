@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "base",
   "blockNumber": 30000033,
-  "configHash": "0x14b0077584ea68c806301e0d536ea4f630e441e500448de348cd4a1ab2ff23b5",
+  "configHash": "0xc97e62c0d87ced669d1c94155a299ea7d2989bf241209c54b65c6188e8dda4e1",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -1474,5 +1474,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0xc6a55c0a5f45dee7a6ccf97793c8a724902e441bb8a59528c312c63c076f3dc9"
+  "permissionsConfigHash": "0x225ca9f4ea22c68feedc20ef8c0b130ae062f410ef4ad131682a88a6eb7ac2d6"
 }

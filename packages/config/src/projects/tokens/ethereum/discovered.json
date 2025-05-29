@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22445558,
-  "configHash": "0x6925930dd277d3c65dbbbc76d150601800a149cf3ec30d73547b2617b7f75689",
+  "configHash": "0xe763dff0e64b91cd50dda64f286c29961f6c183a9db8ae875f41aee80ac70825",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -257,6 +257,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
           "role": "admin"
         },
@@ -391,6 +396,62 @@
       "implementationNames": {
         "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": "AppProxyUpgradeable",
         "0xa29b819654cE6224A222bb5f586920105E2D7E0E": "LegacyOracle"
+      }
+    },
+    {
+      "name": "CSFeeOracle",
+      "address": "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x0e9e628d137fa4b53b03ce51b1b0e0122d524ca323f45751894d2e62c91c2651",
+        "0xeac43c3fd7eae13460161196e3255017b4296896629f70133974d9e26bd2b742"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1728566339,
+      "sinceBlock": 20935462,
+      "values": {
+        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "$implementation": "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E",
+        "$pastUpgrades": [
+          [
+            "2024-10-10T13:18:59.000Z",
+            "0x3dfff1bb9a5dd98d252ab44ae3ef8a002a4ab84ef6f35f5b7aeeae60f91ec32e",
+            ["0x919ac5C6c62B6ef7B05cF05070080525a7B0381E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "avgPerfLeewayBP": 500,
+        "CONTRACT_MANAGER_ROLE": "0x8135f02737a6b32709c1f229001b55183df0d6abcb3022e8bae091ad43fd9e6d",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "feeDistributor": "0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0",
+        "GENESIS_TIME": 1606824023,
+        "getConsensusContract": "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
+        "getConsensusReport": {
+          "hash": "0x17b35011a871985e815031f2819c3bceef4963c9dbbca9044c527040ecb5b589",
+          "refSlot": 11462879,
+          "processingDeadlineTime": 1746797771,
+          "processingStarted": true
+        },
+        "getConsensusVersion": 2,
+        "getContractVersion": 1,
+        "getLastProcessingRefSlot": 11462879,
+        "getResumeSinceTimestamp": 0,
+        "isPaused": false,
+        "MANAGE_CONSENSUS_CONTRACT_ROLE": "0x04a0afbbd09d5ad397fc858789da4f8edd59f5ca5098d70faa490babee945c3b",
+        "MANAGE_CONSENSUS_VERSION_ROLE": "0xc31b1e4b732c5173dc51d519dfa432bad95550ecc4b0f9a61c2a558a2a8e4341",
+        "PAUSE_INFINITELY": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "PAUSE_ROLE": "0x139c2898040ef16910dc9f44dc697df79363da767d8bc92f2e310312b816e46d",
+        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "proxy__getImplementation": "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E",
+        "proxy__getIsOssified": false,
+        "RECOVERER_ROLE": "0xb3e25b5404b87e5a838579cb5d7481d61ad96ee284d38ec1e97c07ba64e7f6fc",
+        "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
+        "SECONDS_PER_SLOT": 12,
+        "SUBMIT_DATA_ROLE": "0x65fa0c17458517c727737e4153dd477fa3e328cf706640b0f68b1a285c5990da"
+      },
+      "implementationNames": {
+        "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": "OssifiableProxy",
+        "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E": "CSFeeOracle"
       }
     },
     {
@@ -612,6 +673,86 @@
       "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "HashConsensus",
+      "address": "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd7c073e5462dc74227ab219c6db299253e6a83e1a470f27a9d5dcff04fd6b46f"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1728566351,
+      "sinceBlock": 20935463,
+      "values": {
+        "$immutable": true,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DISABLE_CONSENSUS_ROLE": "0x10b016346186602d93fc7a27ace09ba944baf9453611b186d36acd3d3d667dc0",
+        "getChainConfig": {
+          "slotsPerEpoch": 32,
+          "secondsPerSlot": 12,
+          "genesisTime": 1606824023
+        },
+        "getConsensusState": {
+          "refSlot": 11462879,
+          "consensusReport": "0x17b35011a871985e815031f2819c3bceef4963c9dbbca9044c527040ecb5b589",
+          "isReportProcessing": true
+        },
+        "getCurrentFrame": {
+          "refSlot": 11462879,
+          "reportProcessingDeadlineSlot": 11664479
+        },
+        "getFastLaneMembers": {
+          "addresses": [
+            "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+            "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+            "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
+            "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E"
+          ],
+          "lastReportedRefSlots": [
+            11462879, 11261279, 11462879, 11462879, 11462879
+          ]
+        },
+        "getFrameConfig": {
+          "initialEpoch": 326715,
+          "epochsPerFrame": 6300,
+          "fastLaneLengthSlots": 1800
+        },
+        "getInitialRefSlot": 10454879,
+        "getMembers": {
+          "addresses": [
+            "0x140Bd8FbDc884f48dA7cb1c09bE8A2fAdfea776E",
+            "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
+            "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
+            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
+            "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+            "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+            "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
+            "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12"
+          ],
+          "lastReportedRefSlots": [
+            11462879, 0, 11462879, 11059679, 11462879, 11462879, 11261279,
+            11462879, 11462879
+          ]
+        },
+        "getQuorum": 5,
+        "getReportProcessor": "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
+        "getReportVariants": {
+          "variants": [
+            "0x17b35011a871985e815031f2819c3bceef4963c9dbbca9044c527040ecb5b589"
+          ],
+          "support": [6]
+        },
+        "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
+        "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
+        "MANAGE_MEMBERS_AND_QUORUM_ROLE": "0x66a484cf1a3c6ef8dfd59d24824943d2853a29d96f34a01271efc55774452a51",
+        "MANAGE_REPORT_PROCESSOR_ROLE": "0xc5219a8d2d0107a57aad00b22081326d173df87bad251126f070df2659770c3e"
+      },
+      "implementationNames": {
+        "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": "HashConsensus"
+      }
     },
     {
       "address": "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
@@ -2740,6 +2881,26 @@
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
     ],
+    "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": [
+      "constructor(address implementation_, address admin_, bytes data_)",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidAdmin(address admin)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error NotAdmin()",
+      "error ProxyIsOssified()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event ProxyOssified()",
+      "event Upgraded(address indexed implementation)",
+      "function proxy__changeAdmin(address newAdmin_)",
+      "function proxy__getAdmin() view returns (address)",
+      "function proxy__getImplementation() view returns (address)",
+      "function proxy__getIsOssified() view returns (bool)",
+      "function proxy__ossify()",
+      "function proxy__upgradeTo(address newImplementation_)",
+      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_)"
+    ],
     "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error AddressEmptyCode(address target)",
@@ -2891,6 +3052,84 @@
       "function setSimulatedShareRateDeviationBPLimit(uint256 _simulatedShareRateDeviationBPLimit)",
       "function smoothenTokenRebase(uint256 _preTotalPooledEther, uint256 _preTotalShares, uint256 _preCLBalance, uint256 _postCLBalance, uint256 _withdrawalVaultBalance, uint256 _elRewardsVaultBalance, uint256 _sharesRequestedToBurn, uint256 _etherToLockForWithdrawals, uint256 _newSharesToBurnForWithdrawals) view returns (uint256 withdrawals, uint256 elRewards, uint256 simulatedSharesToBurn, uint256 sharesToBurn)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4": [
+      "constructor(uint256 slotsPerEpoch, uint256 secondsPerSlot, uint256 genesisTime, uint256 epochsPerFrame, uint256 fastLaneLengthSlots, address admin, address reportProcessor)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressCannotBeZero()",
+      "error AdminCannotBeZero()",
+      "error ConsensusReportAlreadyProcessing()",
+      "error DuplicateMember()",
+      "error DuplicateReport()",
+      "error EmptyReport()",
+      "error EpochsPerFrameCannotBeZero()",
+      "error FastLanePeriodCannotBeLongerThanFrame()",
+      "error InitialEpochAlreadyArrived()",
+      "error InitialEpochIsYetToArrive()",
+      "error InitialEpochRefSlotCannotBeEarlierThanProcessingSlot()",
+      "error InvalidChainConfig()",
+      "error InvalidInitialization()",
+      "error InvalidSlot()",
+      "error NewProcessorCannotBeTheSame()",
+      "error NonFastLaneMemberCannotReportWithinFastLaneInterval()",
+      "error NonMember()",
+      "error NotInitializing()",
+      "error NumericOverflow()",
+      "error QuorumTooSmall(uint256 minQuorum, uint256 receivedQuorum)",
+      "error ReportProcessorCannotBeZero()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error StaleReport()",
+      "error UnexpectedConsensusVersion(uint256 expected, uint256 received)",
+      "event ConsensusLost(uint256 indexed refSlot)",
+      "event ConsensusReached(uint256 indexed refSlot, bytes32 report, uint256 support)",
+      "event FastLaneConfigSet(uint256 fastLaneLengthSlots)",
+      "event FrameConfigSet(uint256 newInitialEpoch, uint256 newEpochsPerFrame)",
+      "event Initialized(uint64 version)",
+      "event MemberAdded(address indexed addr, uint256 newTotalMembers, uint256 newQuorum)",
+      "event MemberRemoved(address indexed addr, uint256 newTotalMembers, uint256 newQuorum)",
+      "event QuorumSet(uint256 newQuorum, uint256 totalMembers, uint256 prevQuorum)",
+      "event ReportProcessorSet(address indexed processor, address indexed prevProcessor)",
+      "event ReportReceived(uint256 indexed refSlot, address indexed member, bytes32 report)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DISABLE_CONSENSUS_ROLE() view returns (bytes32)",
+      "function MANAGE_FAST_LANE_CONFIG_ROLE() view returns (bytes32)",
+      "function MANAGE_FRAME_CONFIG_ROLE() view returns (bytes32)",
+      "function MANAGE_MEMBERS_AND_QUORUM_ROLE() view returns (bytes32)",
+      "function MANAGE_REPORT_PROCESSOR_ROLE() view returns (bytes32)",
+      "function addMember(address addr, uint256 quorum)",
+      "function disableConsensus()",
+      "function getChainConfig() view returns (uint256 slotsPerEpoch, uint256 secondsPerSlot, uint256 genesisTime)",
+      "function getConsensusState() view returns (uint256 refSlot, bytes32 consensusReport, bool isReportProcessing)",
+      "function getConsensusStateForMember(address addr) view returns (tuple(uint256 currentFrameRefSlot, bytes32 currentFrameConsensusReport, bool isMember, bool isFastLane, bool canReport, uint256 lastMemberReportRefSlot, bytes32 currentFrameMemberReport) result)",
+      "function getCurrentFrame() view returns (uint256 refSlot, uint256 reportProcessingDeadlineSlot)",
+      "function getFastLaneMembers() view returns (address[] addresses, uint256[] lastReportedRefSlots)",
+      "function getFrameConfig() view returns (uint256 initialEpoch, uint256 epochsPerFrame, uint256 fastLaneLengthSlots)",
+      "function getInitialRefSlot() view returns (uint256)",
+      "function getIsFastLaneMember(address addr) view returns (bool)",
+      "function getIsMember(address addr) view returns (bool)",
+      "function getMembers() view returns (address[] addresses, uint256[] lastReportedRefSlots)",
+      "function getQuorum() view returns (uint256)",
+      "function getReportProcessor() view returns (address)",
+      "function getReportVariants() view returns (bytes32[] variants, uint256[] support)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function removeMember(address addr, uint256 quorum)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFastLaneLengthSlots(uint256 fastLaneLengthSlots)",
+      "function setFrameConfig(uint256 epochsPerFrame, uint256 fastLaneLengthSlots)",
+      "function setQuorum(uint256 quorum)",
+      "function setReportProcessor(address newProcessor)",
+      "function submitReport(uint256 slot, bytes32 report, uint256 consensusVersion)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function updateInitialEpoch(uint256 initialEpoch)"
     ],
     "0x71FCD2a6F38B644641B0F46c345Ea03Daabf2758": [
       "constructor(address lidoLocator, address communityStakingModule, uint256 maxCurveLength, uint256 minBondLockRetentionPeriod, uint256 maxBondLockRetentionPeriod)",
@@ -3470,6 +3709,108 @@
     ],
     "0x909d0CB383Ecc77e44daE5d0146cF476f611f62b": [
       "constructor(address _singleton)"
+    ],
+    "0x919ac5C6c62B6ef7B05cF05070080525a7B0381E": [
+      "constructor(uint256 secondsPerSlot, uint256 genesisTime)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AddressCannotBeSame()",
+      "error AddressCannotBeZero()",
+      "error FailedToSendEther()",
+      "error HashCannotBeZero()",
+      "error InitialRefSlotCannotBeLessThanProcessingOne(uint256 initialRefSlot, uint256 processingRefSlot)",
+      "error InvalidContractVersion()",
+      "error InvalidContractVersionIncrement()",
+      "error InvalidInitialization()",
+      "error InvalidPerfLeeway()",
+      "error NoConsensusReportToProcess()",
+      "error NonZeroContractVersionOnInit()",
+      "error NotAllowedToRecover()",
+      "error NotInitializing()",
+      "error PauseUntilMustBeInFuture()",
+      "error PausedExpected()",
+      "error ProcessingDeadlineMissed(uint256 deadline)",
+      "error RefSlotAlreadyProcessing()",
+      "error RefSlotCannotDecrease(uint256 refSlot, uint256 prevRefSlot)",
+      "error RefSlotMustBeGreaterThanProcessingOne(uint256 refSlot, uint256 processingRefSlot)",
+      "error ResumedExpected()",
+      "error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value)",
+      "error SecondsPerSlotCannotBeZero()",
+      "error SenderIsNotTheConsensusContract()",
+      "error SenderNotAllowed()",
+      "error UnexpectedChainConfig()",
+      "error UnexpectedConsensusVersion(uint256 expectedVersion, uint256 receivedVersion)",
+      "error UnexpectedContractVersion(uint256 expected, uint256 received)",
+      "error UnexpectedDataHash(bytes32 consensusHash, bytes32 receivedHash)",
+      "error UnexpectedRefSlot(uint256 consensusRefSlot, uint256 dataRefSlot)",
+      "error VersionCannotBeSame()",
+      "error VersionCannotBeZero()",
+      "error ZeroAdminAddress()",
+      "error ZeroFeeDistributorAddress()",
+      "error ZeroPauseDuration()",
+      "event ConsensusHashContractSet(address indexed addr, address indexed prevAddr)",
+      "event ConsensusVersionSet(uint256 indexed version, uint256 indexed prevVersion)",
+      "event ContractVersionSet(uint256 version)",
+      "event ERC1155Recovered(address indexed token, uint256 tokenId, address indexed recipient, uint256 amount)",
+      "event ERC20Recovered(address indexed token, address indexed recipient, uint256 amount)",
+      "event ERC721Recovered(address indexed token, uint256 tokenId, address indexed recipient)",
+      "event EtherRecovered(address indexed recipient, uint256 amount)",
+      "event FeeDistributorContractSet(address feeDistributorContract)",
+      "event Initialized(uint64 version)",
+      "event Paused(uint256 duration)",
+      "event PerfLeewaySet(uint256 valueBP)",
+      "event ProcessingStarted(uint256 indexed refSlot, bytes32 hash)",
+      "event ReportDiscarded(uint256 indexed refSlot, bytes32 hash)",
+      "event ReportSubmitted(uint256 indexed refSlot, bytes32 hash, uint256 processingDeadlineTime)",
+      "event Resumed()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event StETHSharesRecovered(address indexed recipient, uint256 shares)",
+      "event WarnProcessingMissed(uint256 indexed refSlot)",
+      "function CONTRACT_MANAGER_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function GENESIS_TIME() view returns (uint256)",
+      "function MANAGE_CONSENSUS_CONTRACT_ROLE() view returns (bytes32)",
+      "function MANAGE_CONSENSUS_VERSION_ROLE() view returns (bytes32)",
+      "function PAUSE_INFINITELY() view returns (uint256)",
+      "function PAUSE_ROLE() view returns (bytes32)",
+      "function RECOVERER_ROLE() view returns (bytes32)",
+      "function RESUME_ROLE() view returns (bytes32)",
+      "function SECONDS_PER_SLOT() view returns (uint256)",
+      "function SUBMIT_DATA_ROLE() view returns (bytes32)",
+      "function avgPerfLeewayBP() view returns (uint256)",
+      "function discardConsensusReport(uint256 refSlot)",
+      "function feeDistributor() view returns (address)",
+      "function getConsensusContract() view returns (address)",
+      "function getConsensusReport() view returns (bytes32 hash, uint256 refSlot, uint256 processingDeadlineTime, bool processingStarted)",
+      "function getConsensusVersion() view returns (uint256)",
+      "function getContractVersion() view returns (uint256)",
+      "function getLastProcessingRefSlot() view returns (uint256)",
+      "function getResumeSinceTimestamp() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address admin, address feeDistributorContract, address consensusContract, uint256 consensusVersion, uint256 _avgPerfLeewayBP)",
+      "function isPaused() view returns (bool)",
+      "function pauseFor(uint256 duration)",
+      "function pauseUntil(uint256 pauseUntilInclusive)",
+      "function recoverERC1155(address token, uint256 tokenId)",
+      "function recoverERC20(address token, uint256 amount)",
+      "function recoverERC721(address token, uint256 tokenId)",
+      "function recoverEther()",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function resume()",
+      "function revokeRole(bytes32 role, address account)",
+      "function setConsensusContract(address addr)",
+      "function setConsensusVersion(uint256 version)",
+      "function setFeeDistributorContract(address feeDistributorContract)",
+      "function setPerformanceLeeway(uint256 valueBP)",
+      "function submitConsensusReport(bytes32 reportHash, uint256 refSlot, uint256 deadline)",
+      "function submitReportData(tuple(uint256 consensusVersion, uint256 refSlot, bytes32 treeRoot, string treeCid, string logCid, uint256 distributed) data, uint256 contractVersion)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "0x9895F0F17cc1d1891b6f18ee0b483B6f221b37Bb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -4486,5 +4827,5 @@
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0xc6a55c0a5f45dee7a6ccf97793c8a724902e441bb8a59528c312c63c076f3dc9"
+  "permissionsConfigHash": "0x225ca9f4ea22c68feedc20ef8c0b130ae062f410ef4ad131682a88a6eb7ac2d6"
 }
