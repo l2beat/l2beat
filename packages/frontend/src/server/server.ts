@@ -21,7 +21,10 @@ export function createServer() {
   if (isProduction) {
     app.use(compression())
     // TODO: immutable cache
-    app.use('/', sirv('./dist/static', { maxAge: 31536000, immutable: true }))
+    app.use(
+      '/static',
+      sirv('./dist/static', { maxAge: 31536000, immutable: true }),
+    )
     // This is done to delay moving markdown to server side
     app.use('/', sirv('./static', { maxAge: 3600 }))
   } else {

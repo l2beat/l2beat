@@ -9,7 +9,6 @@ interface Manifest {
 }
 
 void addHashes({
-  prefix: '/',
   inputDir: 'static',
   outputDir: 'dist/static',
   manifest: 'dist/manifest.json',
@@ -18,7 +17,6 @@ void addHashes({
 })
 
 interface AddHashesOptions {
-  prefix: string
   inputDir: string
   outputDir: string
   manifest: string
@@ -58,8 +56,8 @@ async function addHashes(options: AddHashesOptions) {
     mkdirSync(path.dirname(output), { recursive: true })
     fs.copyFileSync(full, output)
 
-    const oldName = path.join(options.prefix, dir, `${name}${ext}`)
-    const newName = path.join(options.prefix, dir, itemWithHash)
+    const oldName = path.join('/', dir, `${name}${ext}`)
+    const newName = path.join('/static', dir, itemWithHash)
 
     manifest.names[oldName] = newName
     if (dimensions) {
