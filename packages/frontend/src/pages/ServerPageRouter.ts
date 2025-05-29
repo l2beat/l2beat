@@ -1,4 +1,5 @@
 import express from 'express'
+import { env } from '~/env'
 import { InMemoryCache } from '../server/cache/InMemoryCache'
 import type { RenderFunction } from '../ssr/types'
 import type { Manifest } from '../utils/Manifest'
@@ -28,6 +29,10 @@ export function createServerPageRouter(
       'Content-Type': 'text/html; charset=utf-8',
       'Cache-Control': 'public, max-age=300',
     })
+    if (env.NODE_ENV === 'production') {
+      headers.set('Cache-Control', 'public, max-age=300')
+    }
+
     res.setHeaders(headers)
     next()
   })
