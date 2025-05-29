@@ -394,8 +394,8 @@ export const taiko: ScalingProject = {
       name: `Users can force any transaction`,
       description: `The system is designed to allow users to propose L2 blocks directly on L1.
         Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.
-        Moreover, users can submit a blob containing as standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
-        This forced transaction mechanism allows users to submit a transaction without running a prover, although they can be subject to an inclusion delay of maximum ${inclusionDelay} batches.`,
+        Moreover, users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
+        This forced transaction mechanism allows users to submit a transaction without running a prover, although they can be subject to an inclusion delay up to ${inclusionDelay} batches.`,
       references: [],
       risks: [],
     },
