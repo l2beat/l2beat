@@ -3,7 +3,6 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { parseCookies } from '~/server/utils/parseCookies'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'
@@ -14,10 +13,9 @@ export async function getScalingCostsData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const cookies = parseCookies(req)
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
-      recategorisationPreview: cookies.recategorisationPreview,
+      recategorisationPreview: req.query.recategorisationPreview === 'true',
     }),
     cache.get(
       {

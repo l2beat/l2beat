@@ -14,10 +14,9 @@ export async function getScalingActivityData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const cookies = parseCookies(req)
   const [appLayoutProps, data] = await Promise.all([
     getAppLayoutProps({
-      recategorisationPreview: cookies.recategorisationPreview,
+      recategorisationPreview: req.query.recategorisationPreview === 'true',
     }),
     cache.get(
       {
