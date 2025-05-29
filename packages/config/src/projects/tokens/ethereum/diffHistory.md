@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x6d3cd9258434d229e76463bc97d80842762bdb31
+Generated with discovered.json: 0x27b306eae0c1a10ca0ab1b31e149d79dbccff513
 
-# Diff at Thu, 29 May 2025 07:51:34 GMT:
+# Diff at Thu, 29 May 2025 13:04:59 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@9764537dfab122079ee09c9ec95835b322e2dd25 block: 22445558
-- current block number: 22445558
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9aa89f1c179f09ddb4f24aed66c1bd0315f063a3 block: 22445558
+- current block number: 22587696
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+add some templates
 
 ## Config/verification related changes
 
@@ -18,12 +18,16 @@ discovery. Values are for block 22445558 (main branch discovery), not current.
 
 ```diff
     contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
-    +++ description: None
+    +++ description: Custom role-based operations entrypoint for Lido.
       receivedPermissions.8:
 +        {"permission":"upgrade","from":"0xFdDf38947aFB03C621C71b06C9C70bce73f12999","role":"admin"}
       receivedPermissions.7.from:
 -        "0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
 +        "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB"
+      template:
++        "tokens/Lido/LidoDaoAgent"
+      description:
++        "Custom role-based operations entrypoint for Lido."
     }
 ```
 
