@@ -1,7 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import type { TooltipProps } from 'recharts'
 import { Area, ComposedChart, Line, YAxis } from 'recharts'
-import { formatCostValue } from '~/app/(side-nav)/scaling/costs/_utils/format-cost-value'
 import type { ChartMeta } from '~/components/core/chart/chart'
 import {
   ChartContainer,
@@ -13,6 +12,7 @@ import {
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
 import { getCommonChartComponents } from '~/components/core/chart/utils/get-common-chart-components'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
+import { formatCostValue } from '~/pages/scaling/costs/utils/format-cost-value'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
 import {

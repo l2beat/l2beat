@@ -1,5 +1,3 @@
-'use client'
-
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { cn } from '~/utils/cn'
 import { Switch } from '../core/switch'

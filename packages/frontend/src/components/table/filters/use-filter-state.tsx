@@ -1,9 +1,9 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
-import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
+import { usePathname } from '~/hooks/usePathname'
 import { FilterableValueId } from './filterable-value'
 import { getFilterSearchParams } from './utils/get-filter-search-params'
 

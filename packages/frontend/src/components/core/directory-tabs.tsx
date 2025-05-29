@@ -1,9 +1,7 @@
-'use client'
-
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { usePathname } from 'next/navigation'
 import * as React from 'react'
 import { useTracking } from '~/hooks/use-tracking'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './overflow-wrapper'
 

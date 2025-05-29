@@ -1,6 +1,4 @@
 import type { Badge } from '@l2beat/config'
-import Image from 'next/image'
-import Link from 'next/link'
 import type { ClassNameValue } from 'tailwind-merge'
 import { cn } from '~/utils/cn'
 import {
@@ -28,7 +26,7 @@ export function ProjectBadge({
   disableInteraction?: boolean
 }) {
   const badgeImg = (
-    <Image
+    <img
       src={badge.src}
       alt={`${badge.name} badge`}
       width={badge.width}
@@ -44,7 +42,7 @@ export function ProjectBadge({
   )
   const component =
     !disableInteraction && badge.href ? (
-      <Link href={badge.href}>{badgeImg}</Link>
+      <a href={badge.href}>{badgeImg}</a>
     ) : (
       badgeImg
     )

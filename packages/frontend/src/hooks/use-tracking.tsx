@@ -1,5 +1,3 @@
-import { usePlausible } from 'next-plausible'
-
 type MyEvents = {
   switchChanged: { name: string; value: string }
   checkboxChanged: { name: string; value: string }
@@ -21,7 +19,20 @@ type MyEvents = {
   filterInversed: { name: string; allValues: string }
 }
 
+export type Plausible = {
+  <T extends keyof MyEvents>(
+    event: T,
+    ...args: MyEvents[T] extends never ? [] : [{ props: MyEvents[T] }]
+  ): void
+}
+
 export function useTracking() {
-  const plausible = usePlausible<MyEvents>()
-  return { track: plausible }
+  return {
+    track: <T extends keyof MyEvents>(
+      key: T,
+      ...args: MyEvents[T] extends never ? [] : [{ props: MyEvents[T] }]
+    ) => {
+      return window.plausible(key, ...args)
+    },
+  }
 }

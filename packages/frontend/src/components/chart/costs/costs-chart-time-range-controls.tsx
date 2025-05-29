@@ -1,4 +1,4 @@
-import type { CostsMetric } from '~/app/(side-nav)/scaling/costs/_components/costs-metric-context'
+import type { CostsMetric } from '~/pages/scaling/costs/components/costs-metric-context'
 import type { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { ChartTimeRangeControls } from '../../core/chart/chart-time-range-controls'
 

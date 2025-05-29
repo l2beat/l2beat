@@ -1,7 +1,5 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
 import { createContext, useContext, useState } from 'react'
+import { usePathname } from '~/hooks/usePathname'
 import { setCookie } from '~/utils/cookies/client'
 
 type RecategorisationPreviewContextValue = {

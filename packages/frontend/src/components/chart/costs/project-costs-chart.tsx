@@ -1,5 +1,3 @@
-'use client'
-
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'

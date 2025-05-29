@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext } from 'react'
 
 const GlossaryContext = createContext<GlossaryTermWithoutDescription[] | null>(

@@ -1,6 +1,5 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -24,48 +23,35 @@ export type ProjectDaThroughputChartParams = z.infer<
   typeof ProjectDaThroughputChartParams
 >
 
-export function getProjectDaThroughputChart(
+export async function getProjectDaThroughputChart(
   params: ProjectDaThroughputChartParams,
-) {
+): Promise<ProjectDaThroughputChartData | undefined> {
   if (env.MOCK) {
     return getMockProjectDaThroughputChartData(params)
   }
 
-  return getCachedProjectDaThroughputChartData(params)
+  const db = getDb()
+  const [from, to] = getRangeWithMax(params.range, 'daily', {
+    offset: -1 * UnixTime.DAY,
+  })
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
+    [params.projectId],
+    [from, to],
+  )
+  if (throughput.length === 0) {
+    return undefined
+  }
+  const { grouped, minTimestamp, maxTimestamp } =
+    groupByTimestampAndProjectId(throughput)
+
+  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
+  return {
+    chart: timestamps.map((timestamp) => {
+      return [timestamp, grouped[timestamp] ?? 0]
+    }),
+    range: [minTimestamp, maxTimestamp],
+  }
 }
-
-const getCachedProjectDaThroughputChartData = cache(
-  async ({
-    range,
-    projectId,
-  }: ProjectDaThroughputChartParams): Promise<
-    ProjectDaThroughputChartData | undefined
-  > => {
-    const db = getDb()
-    const [from, to] = getRangeWithMax(range, 'daily', {
-      offset: -1 * UnixTime.DAY,
-    })
-    const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
-      [projectId],
-      [from, to],
-    )
-    if (throughput.length === 0) {
-      return undefined
-    }
-    const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput)
-
-    const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-    return {
-      chart: timestamps.map((timestamp) => {
-        return [timestamp, grouped[timestamp] ?? 0]
-      }),
-      range: [minTimestamp, maxTimestamp],
-    }
-  },
-  ['project-da-throughput-chart-data'],
-  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
-)
 
 function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   let minTimestamp = Infinity

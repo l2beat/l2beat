@@ -1,7 +1,4 @@
-'use client'
-
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 
 /**
@@ -20,7 +17,7 @@ export function TopNavLink({
   const pathname = usePathname()
   return (
     <li className="group/top-nav-link h-full">
-      <Link
+      <a
         className={cn(
           'flex h-full items-center font-medium',
           large
@@ -35,7 +32,7 @@ export function TopNavLink({
         target={href.startsWith('http') ? '_blank' : undefined}
       >
         {children ?? title}
-      </Link>
+      </a>
     </li>
   )
 }
