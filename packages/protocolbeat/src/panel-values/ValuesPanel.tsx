@@ -1,11 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
-import type {
-  ApiAddressEntry,
-  ApiProjectChain,
-  ApiProjectContract,
-} from '../api/types'
+import type { ApiAddressEntry, ApiProjectContract } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { isReadOnly } from '../config'
 import { usePanelStore } from '../store/store'
@@ -14,6 +10,7 @@ import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
+import { findSelected } from '../common/findSelected'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -47,41 +44,6 @@ export function ValuesPanel() {
       )}
     </div>
   )
-}
-
-function findSelected(chains: ApiProjectChain[], address: string | undefined) {
-  if (!address) {
-    return
-  }
-  for (const chain of chains) {
-    for (const contract of chain.initialContracts) {
-      if (contract.address === address) {
-        return {
-          ...contract,
-          chain: chain.chain,
-          blockNumber: chain.blockNumber,
-        }
-      }
-    }
-    for (const contract of chain.discoveredContracts) {
-      if (contract.address === address) {
-        return {
-          ...contract,
-          chain: chain.chain,
-          blockNumber: chain.blockNumber,
-        }
-      }
-    }
-    for (const eoa of chain.eoas) {
-      if (eoa.address === address) {
-        return {
-          ...eoa,
-          chain: chain.chain,
-          blockNumber: chain.blockNumber,
-        }
-      }
-    }
-  }
 }
 
 function Display({

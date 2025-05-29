@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
-import type { ApiProjectChain, ApiProjectContract } from '../api/types'
+import type { ApiProjectContract } from '../api/types'
 import { isReadOnly } from '../config'
 import { IconChatbot } from '../icons/IconChatbot'
 import { IconClose } from '../icons/IconClose'
@@ -9,6 +9,7 @@ import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
 import { usePanelStore } from '../store/store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
+import { findSelected } from '../common/findSelected'
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(
@@ -134,29 +135,6 @@ const toClipboard = async (
       }
 
       navigator.clipboard.writeText([...fields, ...abis].join('\n'))
-    }
-  }
-}
-
-function findSelected(chains: ApiProjectChain[], address: string | undefined) {
-  if (!address) {
-    return
-  }
-  for (const chain of chains) {
-    for (const contract of chain.initialContracts) {
-      if (contract.address === address) {
-        return { contract, chain: chain }
-      }
-    }
-    for (const contract of chain.discoveredContracts) {
-      if (contract.address === address) {
-        return { contract, chain: chain }
-      }
-    }
-    for (const eoa of chain.eoas) {
-      if (eoa.address === address) {
-        return { contract: eoa, chain: chain }
-      }
     }
   }
 }
