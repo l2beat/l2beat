@@ -2,7 +2,6 @@
   "name": "@l2beat/frontend",
   "version": "0.1.0",
   "private": true,
-  "type": "commonjs",
   "scripts": {
     "dev": "scripts/dev.sh",
     "dev:mock": "MOCK=true pnpm dev",
