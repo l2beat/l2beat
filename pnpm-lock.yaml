@@ -825,6 +825,12 @@ importers:
       d3-force:
         specifier: ^3.0.0
         version: 3.0.0
+      earl:
+        specifier: ^1.1.0
+        version: 1.3.0
+      mocha:
+        specifier: ^10.2.0
+        version: 10.7.3
       monaco-editor:
         specifier: ^0.52.0
         version: 0.52.0
