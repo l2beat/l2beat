@@ -11,6 +11,9 @@ const getURLSearchParams = () => {
 const useQueryParam = (
   key: string,
   defaultVal: string,
+  opts?: {
+    replaceState?: boolean
+  },
 ): [string, (val: string) => void] => {
   const urlSearchParams = getURLSearchParams()
   const [query, setQuery] = useState(urlSearchParams.get(key) ?? defaultVal)
@@ -29,9 +32,17 @@ const useQueryParam = (
     if (typeof window !== 'undefined') {
       if (urlSearchParams.size > 0) {
         const newUrl = `${window.location.pathname}?${urlSearchParams.toString()}`
-        window.history.pushState({}, '', newUrl)
+        if (opts?.replaceState) {
+          window.history.replaceState({}, '', newUrl)
+        } else {
+          window.history.pushState({}, '', newUrl)
+        }
       } else {
-        window.history.pushState({}, '', window.location.pathname)
+        if (opts?.replaceState) {
+          window.history.replaceState({}, '', window.location.pathname)
+        } else {
+          window.history.pushState({}, '', window.location.pathname)
+        }
       }
     }
   }
