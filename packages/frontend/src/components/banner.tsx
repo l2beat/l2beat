@@ -1,4 +1,3 @@
-'use client'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { CloseIcon } from '~/icons/close'

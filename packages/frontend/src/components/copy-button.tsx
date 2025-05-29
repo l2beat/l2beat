@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 
 import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard'

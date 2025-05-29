@@ -1,5 +1,3 @@
-'use client'
-
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'

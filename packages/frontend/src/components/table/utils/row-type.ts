@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { UNVERIFIED_DA_CLASSNAME } from '~/app/(side-nav)/data-availability/summary/_components/table/da-summary-public-table'
+import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/da-summary-public-table'
 import type { CommonProjectEntry } from '~/server/features/utils/get-common-project-entry'
 import type { BasicTableProps } from '../basic-table'
 

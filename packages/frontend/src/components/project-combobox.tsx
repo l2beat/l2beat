@@ -1,4 +1,3 @@
-'use client'
 import React, { useCallback } from 'react'
 import { CheckIcon } from '~/icons/check'
 import { ChevronIcon } from '~/icons/chevron'

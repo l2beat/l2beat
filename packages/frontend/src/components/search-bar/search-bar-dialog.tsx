@@ -1,9 +1,6 @@
-'use client'
-
 import { assertUnreachable } from '@l2beat/shared-pure'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
-import Image from 'next/image'
 import { useMemo, useRef, useState } from 'react'
 import {
   Command,
@@ -18,7 +15,7 @@ import {
 import { useGlobalShortcut } from '~/hooks/use-global-shortcut'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useTracking } from '~/hooks/use-tracking'
-import { useRouterWithProgressBar } from '../navigation-progress-bar'
+import { useRouter } from '~/hooks/useRouter'
 import type { SearchBarCategory } from './search-bar-categories'
 import { searchBarCategories } from './search-bar-categories'
 import { useSearchBarContext } from './search-bar-context'
@@ -34,7 +31,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
   const { track } = useTracking()
   const [value, setValue] = useState('')
   const { open, setOpen } = useSearchBarContext()
-  const router = useRouterWithProgressBar()
+  const router = useRouter()
 
   useGlobalShortcut('/', () => setOpen((open) => !open))
 
@@ -126,7 +123,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                     onSelect={() => onItemSelect(project)}
                     label={entryToLabel(project)}
                   >
-                    <Image
+                    <img
                       src={project.iconUrl}
                       alt={`${project.name} logo`}
                       className="rounded-sm"
@@ -164,7 +161,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                       }
                     >
                       {item.type === 'project' && (
-                        <Image
+                        <img
                           src={item.iconUrl}
                           alt={`${item.name} logo`}
                           className="rounded-sm"

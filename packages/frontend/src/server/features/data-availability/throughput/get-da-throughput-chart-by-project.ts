@@ -2,7 +2,6 @@ import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
-import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -25,41 +24,37 @@ export type DaThroughputChartByProjectParams = z.infer<
   typeof DaThroughputChartByProjectParams
 >
 
-export function getDaThroughputChartByProject(
-  params: DaThroughputChartByProjectParams,
+export async function getDaThroughputChartByProject(
+  ...parameters: Parameters<typeof getDaThroughputChartByProjectData>
 ) {
   if (env.MOCK) {
-    return getMockDaThroughputChartByProjectData(params)
+    return getMockDaThroughputChartByProjectData(...parameters)
   }
-
-  return getCachedDaThroughputChartByProjectData(params)
+  return getDaThroughputChartByProjectData(...parameters)
 }
 
-const getCachedDaThroughputChartByProjectData = cache(
-  async ({
-    range,
-    daLayer,
-  }: DaThroughputChartByProjectParams): Promise<DaThroughputChartDataByChart> => {
-    const db = getDb()
-    const [from, to] = getRangeWithMax(range, 'daily', {
-      offset: -1 * UnixTime.DAY,
-    })
-    const [throughput, allProjects] = await Promise.all([
-      db.dataAvailability.getByDaLayersAndTimeRange([daLayer], [from, to]),
-      ps.getProjects({}),
-    ])
-    if (throughput.length === 0) {
-      return []
-    }
-    const { grouped, minTimestamp, maxTimestamp } =
-      groupByTimestampAndProjectId(throughput, allProjects)
+const getDaThroughputChartByProjectData = async (
+  params: DaThroughputChartByProjectParams,
+): Promise<DaThroughputChartDataByChart> => {
+  const db = getDb()
+  const [from, to] = getRangeWithMax(params.range, 'daily', {
+    offset: -1 * UnixTime.DAY,
+  })
+  const [throughput, allProjects] = await Promise.all([
+    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], [from, to]),
+    ps.getProjects({}),
+  ])
+  if (throughput.length === 0) {
+    return []
+  }
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+    throughput,
+    allProjects,
+  )
 
-    const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
-    return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
-  },
-  ['da-throughput-chart-by-project-data'],
-  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
-)
+  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
+  return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
+}
 
 function groupByTimestampAndProjectId(
   records: DataAvailabilityRecord[],

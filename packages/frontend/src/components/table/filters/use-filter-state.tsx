@@ -1,11 +1,10 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
-import { usePathname } from 'next/navigation'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
+import useQueryParam from '~/hooks/useQueryParam'
 import { FilterableValueId } from './filterable-value'
-import { getFilterSearchParams } from './utils/get-filter-search-params'
 
 export type FilterValue = z.infer<typeof FilterValue>
 export const FilterValue = z.object({
@@ -156,42 +155,20 @@ function filterReducer(
 
 export function useFilterState() {
   const { track } = useTracking()
-  const pathname = usePathname()
+
+  const [filters, setFilters] = useQueryParam('filters', '{}', {
+    replaceState: true,
+  })
 
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    {},
+    JSON.parse(filters),
   )
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const filters = params.get('filters')
-    if (!filters) return
-    dispatch({
-      type: 'set',
-      payload: {
-        filters: FilterState.catch({}).parse(
-          JSON.parse(decodeURIComponent(filters)),
-        ),
-      },
-    })
-  }, [])
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    if (Object.keys(state).length > 0) {
-      params.set('filters', getFilterSearchParams(state))
-    } else {
-      params.delete('filters')
-    }
-
-    if (params.size === 0) {
-      window.history.replaceState(null, '', pathname)
-    } else {
-      window.history.replaceState(null, '', `${pathname}?${params.toString()}`)
-    }
-  }, [pathname, state])
+    setFilters(Object.keys(state).length > 0 ? JSON.stringify(state) : '{}')
+  }, [state, setFilters])
 
   return {
     state,

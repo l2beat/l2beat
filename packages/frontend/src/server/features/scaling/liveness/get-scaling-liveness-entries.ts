@@ -5,7 +5,7 @@ import type {
   TableReadyValue,
 } from '@l2beat/config'
 import { TrackedTxsConfigSubtypeValues, UnixTime } from '@l2beat/shared-pure'
-import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
