@@ -6,7 +6,7 @@ import type { RenderData, RenderResult } from './types'
 
 export function render(data: RenderData, url: string): RenderResult {
   // @ts-expect-error how to type this?
-  globalThis.globalThis.__FIX_SSR_URL__ = url
+  globalThis.__FIX_SSR_URL__ = url
   const html = renderToString(
     <StrictMode>
       <ClientPageRouter ssrData={data.ssr} />
