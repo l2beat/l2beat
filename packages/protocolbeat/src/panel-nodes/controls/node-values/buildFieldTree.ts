@@ -72,35 +72,55 @@ function groupByFirstKey(fields: Field[]): Record<string, Field[]> {
     let baseName = first
     let indexPart = ''
 
-    // Extract trailing array index if present
-    if (/^.+\[\d+\]$/.test(first)) {
-      baseName = first.replace(/\[\d+\]$/, '')
-      indexPart = first.substring(baseName.length)
-    }
+    // Extract the first array index if present
+    const arrayMatch = first.match(/^(.+?)\[(\d+)\](.*)$/)
+    if (arrayMatch) {
+      baseName = arrayMatch[1] ?? '' // The part before the first [
+      indexPart = arrayMatch[2] ?? '' // The number inside the first []
+      const remainingArrayPart = arrayMatch[3] ?? '' // Any remaining array indices like [1][2]
 
-    // Reconstruct new field name with index portion
-    let newName = indexPart
-    if (rest.length > 0) {
-      newName = newName ? `${newName}.${rest.join('.')}` : rest.join('.')
-    }
+      // Reconstruct new field name with remaining array part and dot-separated parts
+      let newName = indexPart + remainingArrayPart
+      if (rest.length > 0) {
+        newName = newName ? `${newName}.${rest.join('.')}` : rest.join('.')
+      }
 
-    const newField: Field = {
-      ...field,
-      name: newName,
-    }
+      const newField: Field = {
+        ...field,
+        name: newName,
+      }
 
-    if (!result[baseName]) result[baseName] = []
-    result[baseName]?.push(newField)
+      if (!result[baseName]) result[baseName] = []
+      result[baseName]?.push(newField)
+    } else {
+      // No array notation, handle as before
+      let newName = ''
+      if (rest.length > 0) {
+        newName = rest.join('.')
+      }
+
+      const newField: Field = {
+        ...field,
+        name: newName,
+      }
+
+      if (!result[first]) result[first] = []
+      result[first]?.push(newField)
+    }
   }
   return result
 }
 
 function normalizePath(base: string | undefined, part: string): string {
   if (!base) return part
-  // Omit dot when appending array indices
+  // If part is just a number, it's an array index and should be wrapped in brackets
+  if (/^\d+$/.test(part)) {
+    return `${base}[${part}]`
+  }
+  // Omit dot when appending array indices that already have brackets
   return part.startsWith('[') ? `${base}${part}` : `${base}.${part}`
 }
 
 function isSimpleField(field: Field): boolean {
-  return !field.name.includes('.')
+  return !field.name.includes('.') && !field.name.includes('[')
 }
