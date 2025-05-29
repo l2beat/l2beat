@@ -47,7 +47,7 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   return (
     <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
-      <div className="group flex h-[22px] items-center justify-between pr-1 hover:bg-autumn-600">
+      <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-autumn-600">
         <button
           onClick={() => setOpen((open) => !open)}
           className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
@@ -110,7 +110,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-autumn-600 hover:text-coffee-200"
+        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-autumn-600 hover:text-coffee-200"
       >
         {open && (
           <>
@@ -145,13 +145,13 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
   return (
     <li
       className={clsx(
-        'flex h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
+        'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-autumn-300 text-black',
         !isSelected && 'bg-coffee-800 hover:bg-autumn-600',
       )}
       onClick={() => select(entry.address)}
     >
-      <div className="mr-[7px] h-[22px] border-coffee-600 border-l" />
+      <div className="mr-[7px] min-h-[22px] border-coffee-600 border-l" />
       <AddressIcon type={entry.type} />
       <span className="overflow-hidden text-ellipsis tabular-nums">
         {entry.name ?? toShortenedAddress(entry.address)}
