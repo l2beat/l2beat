@@ -86,6 +86,7 @@ function ChangedDetectedDropdown({
     project.changes.diff &&
     project.changes.diff.length > 0 && (
       <details
+        open
         key={project.name}
         style={{ marginTop: '0px', marginBottom: '0px', textWrap: 'wrap' }}
       >
