@@ -35,7 +35,7 @@ export function useTracking() {
   return {
     track: <T extends keyof PlausibleEvents>(
       key: T,
-      ...args: PlausibleEvents[T] extends never
+      ...args: PlausibleEvents[T] extends undefined
         ? []
         : [{ props: PlausibleEvents[T] }]
     ) => {
