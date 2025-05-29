@@ -7,7 +7,7 @@ setup:
     NODE_ENV: production
     NEXT_PUBLIC_REWRITE: 'true'
 run:
-  web:
+  frontend:
     command:
     - node ./rewrite/dist/server/index.js
     image: frontend
