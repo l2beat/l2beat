@@ -1,8 +1,8 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
-import { ClientPageRouter, type SsrData } from '../pages/ClientPageRouter'
 import { Env } from '~/env'
 import { Plausible } from '~/hooks/use-tracking'
+import { ClientPageRouter, type SsrData } from '../pages/ClientPageRouter'
 
 declare global {
   interface Window {
