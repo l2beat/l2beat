@@ -99,7 +99,9 @@ export const sophon: ScalingProject = zkStackL2({
         'stAZUR',
         'stAVAIL',
         'OPN',
-      ], // 'SOPH' not on CG yet
+        'SOPH',
+      ],
+      premintedTokens: ['SOPH'],
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
@@ -110,7 +112,7 @@ export const sophon: ScalingProject = zkStackL2({
         l2EtherAddress: EthereumAddress(
           '0x72af9F169B619D85A47Dfa8fefbCD39dE55c567D',
         ),
-        tokensToAssignFromL1: [], // 'SOPH' not on CG yet
+        tokensToAssignFromL1: ['SOPH'],
       },
     }),
   ],
