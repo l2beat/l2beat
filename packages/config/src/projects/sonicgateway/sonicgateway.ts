@@ -95,6 +95,12 @@ export const sonicgateway: Bridge = {
         description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
         sentiment: 'bad',
       },
+      pause: {
+        value: 'Not pausable',
+        sentiment: 'good',
+        description:
+          "There is no pause function in the bridge's smart contract.",
+      },
     },
     livenessFailure: {
       value: 'Reclaim funds',
