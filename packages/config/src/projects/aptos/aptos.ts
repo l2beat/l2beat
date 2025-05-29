@@ -57,6 +57,8 @@ export const aptos: Bridge = {
       pause: {
         value: 'EOA',
         sentiment: 'bad',
+        description:
+          'Although the globalPause function is restricted to a Multisig, parts of the message bridge are upgradeable by an EOA which can be used to freeze the bridge.',
       },
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,

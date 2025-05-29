@@ -110,6 +110,8 @@ export const avalanche: Bridge = {
       pause: {
         value: 'EOA',
         sentiment: 'bad',
+        description:
+          'There is no formal pause function as this bridge does not use smart contracts, but the operator can stop processing messages anytime.',
       },
     },
     livenessFailure: {

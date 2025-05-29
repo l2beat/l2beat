@@ -55,11 +55,14 @@ export const gravity: Bridge = {
       upgrade: {
         value: 'Not upgradable',
         description:
-          'The smart contract code on Ethereum that secures the system cannot change nor be paused.',
+          'The smart contract code on Ethereum that secures the system cannot change.',
         sentiment: 'good',
       },
       pause: {
         value: 'Not pausable',
+        sentiment: 'good',
+        description:
+          "There is no pause function in the bridge's smart contract.",
       },
     },
     livenessFailure: {

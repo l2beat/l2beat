@@ -92,6 +92,8 @@ export const pulseChain: Bridge = {
       pause: {
         value: 'EOA',
         sentiment: 'bad',
+        description:
+          'Although there is no formal pause fucntion, the liveness of the bridge depends on the Multisig and operators.',
       },
     },
     livenessFailure: {

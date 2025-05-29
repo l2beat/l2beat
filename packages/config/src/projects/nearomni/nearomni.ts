@@ -61,6 +61,8 @@ export const nearomni: Bridge = {
       pause: {
         value: 'EOA',
         sentiment: 'bad',
+        description:
+          'An EOA (PAUSABLE_ADMIN_ROLE) can pause the bridge directly.',
       },
     },
     livenessFailure: {
