@@ -2,7 +2,7 @@
   "name": "b3",
   "chain": "base",
   "blockNumber": 30222921,
-  "configHash": "0xb464a13bc2ea7deb05490948c35f7946ae19cba331833be772204301075608ee",
+  "configHash": "0x5228782a77fbd0b8546b5f05c923293ab3d6572609266352e81cd253940624de",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

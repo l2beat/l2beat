@@ -2,7 +2,7 @@
   "name": "pepeunchained",
   "chain": "ethereum",
   "blockNumber": 22567759,
-  "configHash": "0x88ee3c5fbe0fead20ce8341c71c795bdf23ee2499d40482b914bd72d30a542ab",
+  "configHash": "0x1380284e8a23aef0e1ed838f7f77acdacbc8bbe406869bdd9129caef3473b11f",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -172,6 +172,33 @@
       "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LivenessGuard",
+      "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "role": ".livenessGuard"
+        }
+      ],
+      "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
+      "values": {
+        "$immutable": true,
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
+      }
     },
     {
       "address": "0x3041BA32f451F5850c147805F5521AC206421623",
@@ -1474,6 +1501,16 @@
       "function submissionInterval() view returns (uint256)",
       "function version() view returns (string)"
     ],
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": [
+      "constructor(address _safe)",
+      "event OwnerRecorded(address owner)",
+      "function checkAfterExecution(bytes32, bool)",
+      "function checkTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, address msgSender)",
+      "function lastLive(address) view returns (uint256)",
+      "function safe() view returns (address safe_)",
+      "function showLiveness()",
+      "function version() view returns (string)"
+    ],
     "0x320E53df19662A58fF4953d62B229E9BCAAC0b49": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1973,5 +2010,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
   },
-  "permissionsConfigHash": "0x8142e73f4212bcf92a8dffe7760f7ae1d61e4a0ac0b0d94377030c1dff86612b"
+  "permissionsConfigHash": "0x31641a5fece3353ef4f475f9ba6e0d789024c2b589dbb745ab494a5f4fa323e8"
 }
