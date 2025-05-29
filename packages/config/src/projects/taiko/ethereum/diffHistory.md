@@ -8,7 +8,7 @@ Generated with discovered.json: 0xe4d87bdf78d1f238e46d96175be0f5e25c786dac
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Ignore spammy batches/state values.
 
 ## Watched changes
 
