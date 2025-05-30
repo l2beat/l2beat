@@ -5,6 +5,18 @@ import { z } from 'zod'
 import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
+const templateIdRegex = new RegExp(
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
+)
+
+const safeTemplateIdSchema = z.string().refine((id) => {
+  return templateIdRegex.test(id)
+})
+
+const listTemplateFilesSchema = z.object({
+  templateId: safeTemplateIdSchema,
+})
+
 const createTemplateSchema = z.object({
   chain: z.string(),
   addresses: z.array(
@@ -50,11 +62,7 @@ export function attachTemplateRouter(
   })
 
   app.get('/api/template-files', (req, res) => {
-    const query = z
-      .object({
-        templateId: z.string().min(1),
-      })
-      .parse(req.query)
+    const query = listTemplateFilesSchema.parse(req.query)
 
     const template = templateService.readTemplateFile(query.templateId)
 
