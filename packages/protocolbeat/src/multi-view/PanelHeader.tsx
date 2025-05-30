@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
-import type { ApiProjectChain, ApiProjectContract } from '../api/types'
+import type { ApiProjectContract } from '../api/types'
+import { findSelected } from '../common/findSelected'
 import { isReadOnly } from '../config'
 import { IconChatbot } from '../icons/IconChatbot'
 import { IconClose } from '../icons/IconClose'
@@ -97,16 +98,14 @@ const toClipboard = async (
     case 'values': {
       const projectData = await getProject(project)
 
-      const data = findSelected(projectData.entries, selectedAddress)
-      if (!data) return
-      const { contract, chain } = data
+      const contract = findSelected(projectData.entries, selectedAddress)
       if (!contract) break
 
       const fields: string[] = []
       if ('fields' in contract) {
         fields.push(
           `In our logic for fetching values we map proxy owners to $admin field.`,
-          `These are the values for block number ${chain.blockNumber} on chain ${chain.chain}:`,
+          `These are the values for block number ${contract.blockNumber} on chain ${contract.chain}:`,
         )
 
         for (const f of (contract as ApiProjectContract).fields) {
@@ -134,29 +133,6 @@ const toClipboard = async (
       }
 
       navigator.clipboard.writeText([...fields, ...abis].join('\n'))
-    }
-  }
-}
-
-function findSelected(chains: ApiProjectChain[], address: string | undefined) {
-  if (!address) {
-    return
-  }
-  for (const chain of chains) {
-    for (const contract of chain.initialContracts) {
-      if (contract.address === address) {
-        return { contract, chain: chain }
-      }
-    }
-    for (const contract of chain.discoveredContracts) {
-      if (contract.address === address) {
-        return { contract, chain: chain }
-      }
-    }
-    for (const eoa of chain.eoas) {
-      if (eoa.address === address) {
-        return { contract: eoa, chain: chain }
-      }
     }
   }
 }
