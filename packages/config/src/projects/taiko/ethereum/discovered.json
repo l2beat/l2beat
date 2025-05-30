@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22595179,
-  "configHash": "0x152f36b9d677b6c3856256728ff968eda29c5cf8a14b3b2f6e43cf029d8106e3",
+  "blockNumber": 22595405,
+  "configHash": "0xb87b3af0f196cc1adad069d4fd15986b870c1c1944ad340fc6f4cd4fbca6f1e6",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -360,68 +360,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1181412,
-          "blockId_": 1181412,
+          "batchId_": 1181424,
+          "blockId_": 1181424,
           "ts_": {
-            "parentHash": "0x76e774e7424f69a966b871d6c2481d1abb09d1841427aba857fa88b4d5dc6082",
-            "blockHash": "0xe89b48e58c88b373f8dadabb538424968a0d29fad811d0433938ef363baa5fac",
-            "stateRoot": "0x19470096c3dfd417b99991066f7c0e487b4e0cadfabf0541c029d142d5129c1d",
-            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+            "parentHash": "0xd0c9f35fd504d5fd857bf196f1d2ac7895c68a7dbf72c1f3530ecab8f0385911",
+            "blockHash": "0x5ab13f376ca5fde4e711db768ac51805c0ac7c45ddfe26b2c51cc9e3501b136b",
+            "stateRoot": "0x7a5c80d1cb96dae56fc84a73923de62c7c3016d84f4d40ab7c1d1e0745bcf8a5",
+            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1748595203
+            "createdAt": 1748594999
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1181412,
-          "blockHash_": "0xe89b48e58c88b373f8dadabb538424968a0d29fad811d0433938ef363baa5fac",
-          "stateRoot_": "0x19470096c3dfd417b99991066f7c0e487b4e0cadfabf0541c029d142d5129c1d",
+          "blockId_": 1181427,
+          "blockHash_": "0xb50525d4ca0efa67bd4f4c1f72a97d85ad67d7072df0216729261685923e1779",
+          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "verifiedAt_": 1738570619
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1181412,
-          "blockId_": 1181412,
+          "batchId_": 1181427,
+          "blockId_": 1181427,
           "ts_": {
-            "parentHash": "0x76e774e7424f69a966b871d6c2481d1abb09d1841427aba857fa88b4d5dc6082",
-            "blockHash": "0xe89b48e58c88b373f8dadabb538424968a0d29fad811d0433938ef363baa5fac",
-            "stateRoot": "0x19470096c3dfd417b99991066f7c0e487b4e0cadfabf0541c029d142d5129c1d",
+            "parentHash": "0x273e7da4b9efbbefd01edfc0f3ed89a142b2f21318eacaac5e44a1a940755ac8",
+            "blockHash": "0xb50525d4ca0efa67bd4f4c1f72a97d85ad67d7072df0216729261685923e1779",
+            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
             "inProvingWindow": true,
-            "createdAt": 1748595203
+            "createdAt": 1748595551
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1181412,
-            "lastSynecdAt": 1748602859
+            "lastSyncedBlockId": 1181424,
+            "lastSynecdAt": 1748603759
           },
           {
-            "numBlocks": 1181561,
-            "lastVerifiedBlockId": 1181412,
+            "numBlocks": 1181609,
+            "lastVerifiedBlockId": 1181427,
             "provingPaused": false,
-            "lastProposedIn": 22595176,
+            "lastProposedIn": 22595404,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1181412,
-          "lastSyncedAt": 1748602859
+          "lastSyncedBatchId": 1181424,
+          "lastSyncedAt": 1748603759
         },
         "getStats2": {
-          "numBatches": 1181561,
-          "lastVerifiedBatchId": 1181412,
+          "numBatches": 1181609,
+          "lastVerifiedBatchId": 1181427,
           "paused": false,
-          "lastProposedIn": 22595176,
+          "lastProposedIn": 22595404,
           "lastUnpausedAt": 1716571955
         },
         "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
         "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 22595176,
+        "lastProposedIn": 22595404,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -462,14 +462,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1181412,
-            "lastSyncedAt": 1748602859
+            "lastSyncedBatchId": 1181424,
+            "lastSyncedAt": 1748603759
           },
           "stats2": {
-            "numBatches": 1181561,
-            "lastVerifiedBatchId": 1181412,
+            "numBatches": 1181609,
+            "lastVerifiedBatchId": 1181427,
             "paused": false,
-            "lastProposedIn": 22595176,
+            "lastProposedIn": 22595404,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -491,6 +491,88 @@
       "address": "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Halborn",
+      "address": "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1744669439,
+      "sinceBlock": 22270189,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x1d955983044548E03DAA583B36A37cA4bdE6F556",
+          "0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1",
+          "0xDFbD5490462963Cc242471913B53b034B209B32c"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x46bc81327e2a77d3c2264f8944ec556aa669588229e8da54a1887d0c5f46cf2f",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SignerList",
+      "address": "0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+      "type": "Contract",
+      "template": "taiko/SignerList",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x2e03e80de0ae2460891172f783bb22adb3198bbe1184bf5558ce46a0a1426ddb"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A signer list for registering agents, similar to a Multisig.",
+      "sinceTimestamp": 1746111707,
+      "sinceBlock": 22389760,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x584fE70fE82F728f0Fe26488857D623f3B59E070",
+        "$pastUpgrades": [
+          [
+            "2025-05-01T15:01:47.000Z",
+            "0x8acf74d966e6eb99972a4a73382cf42aa918d4715eaf4b587d1007f24edf5208",
+            ["0x584fE70fE82F728f0Fe26488857D623f3B59E070"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "addresslistLength": 9,
+        "dao": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "getEncryptionAgents": [
+          "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
+          "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8",
+          "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4",
+          "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A",
+          "0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
+          "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656",
+          "0x1d955983044548E03DAA583B36A37cA4bdE6F556",
+          "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55",
+          "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
+        ],
+        "settings": {
+          "encryptionRegistry": "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1",
+          "minSignerListLength": 9
+        }
+      },
+      "implementationNames": {
+        "0x0F95E6968EC1B28c794CF1aD99609431de5179c2": "ERC1967Proxy",
+        "0x584fE70fE82F728f0Fe26488857D623f3B59E070": "SignerList"
+      }
     },
     {
       "name": "AutomataDcapV3Attestation",
@@ -601,7 +683,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1748603615,
+        "clock": 1748606339,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -639,7 +721,165 @@
       }
     },
     {
+      "address": "0x166868E5AE72592a06056775236d2E4D64CDcCa9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Drew Van der Werff Agent",
+      "address": "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Halborn Agent",
+      "address": "0x1d955983044548E03DAA583B36A37cA4bdE6F556",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Chainbound Agent",
+      "address": "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Drew Van der Werff",
+      "address": "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1744670315,
+      "sinceBlock": 22270262,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
+          "0x23aEC1a2094F995D1680E33c677b0a4092eFe2fB"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xd46e6feb2f3cf7b1389e9d2f425229f881c046f161a089314d0e1eb782c1d83e",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "EmergencyMultisig",
+      "address": "0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd",
+      "type": "Contract",
+      "template": "taiko/EmergencyMultisig",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x5214d838c15a1ddc2fa952f428cd6eeb5b5146d215923c3d4667100066d7f73e"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
+      "sinceTimestamp": 1746111707,
+      "sinceBlock": 22389760,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x437E450452E8Bc142bd5317199296EcB187c514b",
+        "$pastUpgrades": [
+          [
+            "2025-05-01T15:01:47.000Z",
+            "0x8acf74d966e6eb99972a4a73382cf42aa918d4715eaf4b587d1007f24edf5208",
+            ["0x437E450452E8Bc142bd5317199296EcB187c514b"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "dao": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "implementation": "0x437E450452E8Bc142bd5317199296EcB187c514b",
+        "lastMultisigSettingsChange": 22574240,
+        "multisigSettings": {
+          "onlyListed": true,
+          "minApprovals": 6,
+          "signerList": "0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+          "proposalExpirationPeriod": 1209600
+        },
+        "pluginType": 0,
+        "proposalCount": 21,
+        "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
+        "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
+      },
+      "fieldMeta": {
+        "proposalCount": {
+          "description": "The total count of encrypted emergency proposals created."
+        }
+      },
+      "implementationNames": {
+        "0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd": "ERC1967Proxy",
+        "0x437E450452E8Bc142bd5317199296EcB187c514b": "EmergencyMultisig"
+      }
+    },
+    {
+      "name": "EncryptionRegistry",
+      "address": "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1",
+      "type": "Contract",
+      "template": "taiko/EncryptionRegistry",
+      "sourceHashes": [
+        "0x95721d01741fd367320ddaabfaf4b41498755af0f0fda0f258599c6ddf848ed2"
+      ],
+      "proxyType": "immutable",
+      "description": "A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.",
+      "sinceTimestamp": 1746111707,
+      "sinceBlock": 22389760,
+      "values": {
+        "$immutable": true,
+        "accountList": [
+          "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
+          "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
+          "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
+          "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
+          "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
+          "0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
+          "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
+          "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
+          "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+          "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
+        ],
+        "getRegisteredAccounts": [
+          "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
+          "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
+          "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
+          "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
+          "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
+          "0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
+          "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
+          "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
+          "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+          "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487"
+        ]
+      },
+      "implementationNames": {
+        "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": "EncryptionRegistry"
+      }
+    },
+    {
+      "address": "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -681,9 +921,71 @@
       }
     },
     {
+      "address": "0x392EF0Ec3579436299E4f9b170c454995c03CE8A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Nethermind Agent",
+      "address": "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Chainbound",
+      "address": "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1744099343,
+      "sinceBlock": 22222858,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
+          "0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477",
+          "0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0",
+          "0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xb191b2fa234a05ce7930e8b23a4d977d6089bc86b36973c0fa445aa04708a3a7",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 5,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SigVerifyLib",
@@ -726,6 +1028,61 @@
       "implementationNames": {
         "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98": "RiscZeroGroth16Verifier"
       }
+    },
+    {
+      "address": "0x51c7c8F83F8C43D83ec5a5e0EB2a2863839B864d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Nethermind",
+      "address": "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1745580551,
+      "sinceBlock": 22345744,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a",
+          "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A",
+          "0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x800112abf60154bd14da3294f48f3fc29049934338eda4a0974029f144cc12b1",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "0x5374b2907a45a28c37caA45e06FC6eBceECAC72a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5811Ab14833720D743ec57BC49c9342DF66069d0",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DefaultResolver",
@@ -966,6 +1323,21 @@
       }
     },
     {
+      "address": "0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x719304183f09a84C4D8dA8d64BDB6C6E0EEede4E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Risc0VerifierGateway",
       "address": "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
       "type": "Contract",
@@ -1052,6 +1424,23 @@
         "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782": "ERC1967Proxy",
         "0xDb7AEe4fA967C2aB0eC28f63C8675224E59340A5": "SgxVerifier"
       }
+    },
+    {
+      "name": "Aragon Agent",
+      "address": "0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2BEAT Agent",
+      "address": "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "AutomataDcapV3Attestation",
@@ -1292,6 +1681,86 @@
         { "typeCaster": "Undecimal", "arg": { "decimals": 18 } },
         { "typeCaster": "Undecimal", "arg": { "decimals": 6 } }
       ]
+    },
+    {
+      "name": "Toni Wahrstätter Agent",
+      "address": "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "OptimisticTokenVotingPlugin",
+      "address": "0x989E348275b659d36f8751ea1c10D146211650BE",
+      "type": "Contract",
+      "template": "taiko/OptimisticTokenVotingPlugin",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x919b8268f27c8e7d5eb3409d5dfa664b37f80dc78898df309e0fe272050c410a"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.",
+      "sinceTimestamp": 1746111707,
+      "sinceBlock": 22389760,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085",
+        "$pastUpgrades": [
+          [
+            "2025-05-01T15:01:47.000Z",
+            "0x8acf74d966e6eb99972a4a73382cf42aa918d4715eaf4b587d1007f24edf5208",
+            ["0x5B0Da2FB08754a5dDf32e28887D2F5437485f085"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "dao": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "governanceSettings": {
+          "minVetoRatio": 100000,
+          "minDuration": 0,
+          "timelockPeriod": 604800,
+          "l2InactivityPeriod": 600,
+          "l2AggregationGracePeriod": 172800,
+          "skipL2": true
+        },
+        "governanceSettings_timelockPeriod_fmt": "7d",
+        "implementation": "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085",
+        "isL2Available": false,
+        "minVetoPercent": "10",
+        "minVetoRatio": 100000,
+        "pluginType": 0,
+        "proposalCount": 13,
+        "proposalIds": [
+          "594318504305273196926027118847304676812617940992",
+          "594333808845007833054360677244409987180489867265",
+          "594333890512775894079591912881534348495153004546",
+          "594368007222883387369940600290236287695678603267",
+          "594516275055798178677248899489514254466604335108",
+          "594516360806954642753743290707182802352260251653",
+          "594516471058441525137805458817300690127055486982",
+          "594544283016854707280302755040001935835586887687",
+          "594544466769332844587073035223531748793578946568",
+          "594789857995414210150628315872956409027640688649",
+          "594868197801926748603689506985812031612995502090",
+          "594868769476303175780308156445682560815637463051",
+          "594932801089851422612858457733038049577270247436"
+        ],
+        "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
+        "taikoBridge": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+        "taikoL1": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+        "UPDATE_OPTIMISTIC_GOVERNANCE_SETTINGS_PERMISSION_ID": "0x3dc194e23158bc1a3f2c26e18c8c910b557388bad663356cd4fc49c11477a4a4",
+        "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5",
+        "votingToken": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      },
+      "fieldMeta": {
+        "minVetoRatio": {
+          "description": "this value /1000000 is the threshold ratio (relative to voting supply) to veto a proposal."
+        },
+        "governanceSettings": { "description": "" }
+      },
+      "implementationNames": {
+        "0x989E348275b659d36f8751ea1c10D146211650BE": "ERC1967Proxy",
+        "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085": "OptimisticTokenVotingPlugin"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 4 } }]
     },
     {
       "name": "MainnetERC20Vault",
@@ -1567,7 +2036,7 @@
         "0x0567fe67ea1d2872edb3f9420706c18e62259987f7e28a61ab4bdf9c44348e57"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The entry point to the DAO Aragon-based governance framework.",
+      "description": "The main contract of the Aragon-based DAO governance framework.",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1766,6 +2235,40 @@
       }
     },
     {
+      "name": "Toni Wahrstätter",
+      "address": "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1734939971,
+      "sinceBlock": 21463784,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F",
+          "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x2c85c7a523987922c6ceb40f6c07213d63480fc17b57b24b61991693a2ce8d4a",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "name": "VerifierGateway",
       "address": "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
       "type": "Contract",
@@ -1814,6 +2317,90 @@
       }
     },
     {
+      "name": "Aragon",
+      "address": "0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1745211803,
+      "sinceBlock": 22315159,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x5811Ab14833720D743ec57BC49c9342DF66069d0",
+          "0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
+          "0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xabf3ab8a64aad2cded05c3358873223fc1af4081735a969d65c1ce5991dc880f",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 4,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "Daniel Wang",
+      "address": "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732702979,
+      "sinceBlock": 21278465,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x30bc4C0Baf55A37Ccf2d626Bc592bd7715b75De2",
+          "0x7057A707621Fadd422f84DE94A9dF7c4F1AC595C"
+        ],
+        "$threshold": 1,
+        "domainSeparator": "0x4d1471e323401d347b11627cf824dfcf21c5307d1377cffaec145c873dc2550d",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
+        "nonce": 67,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "address": "0xB4BE8887908AA8a00A40F3a6AC28402672B83328",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xbBCE182D3d6ae94CF0d0BF7C83E87c01f42635B0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xbC40317A69CB1D1aF2CBcfE32C8B7a6840Dc287a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "SP1VerifierGateway",
       "address": "0xbee1040D0Aab17AE19454384904525aE4A3602B9",
       "type": "Contract",
@@ -1850,6 +2437,57 @@
         "0xbee1040D0Aab17AE19454384904525aE4A3602B9": "ERC1967Proxy",
         "0x35f26e14D0dAeDd1904843370f761C60B891D466": "SP1Verifier"
       }
+    },
+    {
+      "address": "0xBFD60Cb2313B848a2FC088d3bc1ab6BF498E1DD1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xcF7017aD172a8aefBfF7e45CfaCeF5bd94701477",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd0d756A346105511bc59726c82c7Fd2e3Fe69e3F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Safe",
+      "address": "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1746429647,
+      "sinceBlock": 22416011,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0xB4BE8887908AA8a00A40F3a6AC28402672B83328",
+          "0x392EF0Ec3579436299E4f9b170c454995c03CE8A",
+          "0x55792e1F0a41D3af8B6d41DFdcf24651AA80fA1e",
+          "0x5374b2907a45a28c37caA45e06FC6eBceECAC72a"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x6ea5ff8a5c7b48ff401e1c5f76f263954b3be76834480c8c8bbf33095b0c1732",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
+        "nonce": 1,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MainnetBridge",
@@ -1937,7 +2575,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37233,
+        "nextMessageId": 37234,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1950,7 +2588,66 @@
       }
     },
     {
+      "name": "Multisig",
+      "address": "0xD7dA1C25E915438720692bC55eb3a7170cA90321",
+      "type": "Contract",
+      "template": "taiko/Multisig",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0x2b345501d9a4b9f9fc8537b9a257c07664f8aa5cc1db8755e53d6f7d8a589f91"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).",
+      "sinceTimestamp": 1746111707,
+      "sinceBlock": 22389760,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25",
+        "$pastUpgrades": [
+          [
+            "2025-05-01T15:01:47.000Z",
+            "0x8acf74d966e6eb99972a4a73382cf42aa918d4715eaf4b587d1007f24edf5208",
+            ["0x8510d389236d7213eE9B9C38CAaBc0aD24853C25"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "dao": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "implementation": "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25",
+        "lastMultisigSettingsChange": 22574240,
+        "multisigSettings": {
+          "onlyListed": true,
+          "minApprovals": 5,
+          "destinationProposalDuration": 1814400,
+          "signerList": "0x0F95E6968EC1B28c794CF1aD99609431de5179c2",
+          "proposalExpirationPeriod": 1209600
+        },
+        "pluginType": 0,
+        "proposalCount": 6,
+        "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
+        "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
+      },
+      "implementationNames": {
+        "0xD7dA1C25E915438720692bC55eb3a7170cA90321": "ERC1967Proxy",
+        "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25": "Multisig"
+      }
+    },
+    {
       "address": "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDFbD5490462963Cc242471913B53b034B209B32c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE7CBcDa9a4FEAe2bC7ca6b2B682Bc4Ae9f8B7e3B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xE8Cd88fb3081EA29D1D6AeAefcb45BBDF512B39f",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2079,6 +2776,47 @@
       ]
     },
     {
+      "name": "Daniel Wang Agent",
+      "address": "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2BEAT",
+      "address": "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1744116143,
+      "sinceBlock": 22224254,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x3D4997AAC0834BEb5ede861c424807Aa3F29b5bB",
+          "0x6dcB04fCC1c597DAFad86e2886bE463d53CaFAdf",
+          "0x166868E5AE72592a06056775236d2E4D64CDcCa9"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0xae594c52c29d405feb0ada763f5db9b0bdfb194b07d0804bfd2490415e9675fc",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      },
+      "category": { "name": "Spam", "priority": -1 }
+    },
+    {
       "address": "0xFa92ff698D57f7B875570D9F59501812B843CD44",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2139,6 +2877,15 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351": [
+      "constructor(address _singleton)"
+    ],
+    "0x0F95E6968EC1B28c794CF1aD99609431de5179c2": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2150,6 +2897,9 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": [
+      "constructor(address _singleton)"
     ],
     "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F": [
       "error B_INSUFFICIENT_GAS()",
@@ -2225,6 +2975,34 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": [
+      "constructor(address _addresslist)",
+      "error AlreadyAppointed()",
+      "error AlreadyListed()",
+      "error CannotAppointContracts()",
+      "error InvalidAddressList()",
+      "error MustBeAppointed()",
+      "error MustBeListed()",
+      "error MustResetAppointedAgent()",
+      "event AgentAppointed(address account, address agent)",
+      "event PublicKeySet(address account, bytes32 publicKey)",
+      "function accountList(uint256) view returns (address)",
+      "function accounts(address) view returns (address appointedAgent, bytes32 publicKey)",
+      "function appointAgent(address _newAgent)",
+      "function appointerOf(address) view returns (address)",
+      "function getAppointedAgent(address _account) view returns (address)",
+      "function getRegisteredAccounts() view returns (address[])",
+      "function removeUnused()",
+      "function setOwnPublicKey(bytes32 _publicKey)",
+      "function setPublicKey(address _accountOwner, bytes32 _publicKey)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
+    ],
     "0x35f26e14D0dAeDd1904843370f761C60B891D466": [
       "constructor(uint64 _taikoChainId, address _sp1RemoteVerifier)",
       "error ACCESS_DENIED()",
@@ -2270,6 +3048,54 @@
     ],
     "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da": [
       "constructor(address _singleton)"
+    ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c": [
       "constructor(address _resolver)",
@@ -2337,6 +3163,52 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifySignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) view"
+    ],
+    "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": [
+      "constructor(address _singleton)"
+    ],
+    "0x437E450452E8Bc142bd5317199296EcB187c514b": [
+      "constructor()",
+      "error ApprovalCastForbidden(uint256 proposalId, address sender)",
+      "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
+      "error InvalidActions(uint256 proposalId)",
+      "error InvalidMetadataUri(uint256 proposalId)",
+      "error InvalidSignerList(address signerList)",
+      "error MinApprovalsOutOfBounds(uint16 limit, uint16 actual)",
+      "error ProposalCreationForbidden(address sender)",
+      "error ProposalExecutionForbidden(uint256 proposalId)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Approved(uint256 indexed proposalId, address indexed approver)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event EmergencyProposalCreated(uint256 indexed proposalId, address indexed creator, bytes encryptedPayloadURI)",
+      "event Executed(uint256 indexed proposalId)",
+      "event Initialized(uint8 version)",
+      "event MultisigSettingsUpdated(bool onlyListed, uint16 indexed minApprovals, address signerList, uint32 proposalExpirationPeriod)",
+      "event ProposalCreated(uint256 indexed proposalId, address indexed creator, uint64 startDate, uint64 endDate, bytes metadata, tuple(address to, uint256 value, bytes data)[] actions, uint256 allowFailureMap)",
+      "event ProposalExecuted(uint256 indexed proposalId)",
+      "event Upgraded(address indexed implementation)",
+      "function UPDATE_MULTISIG_SETTINGS_PERMISSION_ID() view returns (bytes32)",
+      "function UPGRADE_PLUGIN_PERMISSION_ID() view returns (bytes32)",
+      "function approve(uint256 _proposalId)",
+      "function canApprove(uint256 _proposalId, address _account) view returns (bool)",
+      "function canExecute(uint256 _proposalId) view returns (bool)",
+      "function createProposal(bytes _encryptedPayloadURI, bytes32 _publicMetadataUriHash, bytes32 _destinationActionsHash, address _destinationPlugin, bool _approveProposal) returns (uint256 proposalId)",
+      "function dao() view returns (address)",
+      "function execute(uint256 _proposalId, bytes _metadataUri, tuple(address to, uint256 value, bytes data)[] _actions)",
+      "function getProposal(uint256 _proposalId) view returns (bool executed, uint16 approvals, tuple(uint16 minApprovals, uint64 snapshotBlock, uint64 expirationDate) parameters, bytes encryptedPayloadURI, bytes32 publicMetadataUriHash, bytes32 destinationActionsHash, address destinationPlugin)",
+      "function hasApproved(uint256 _proposalId, address _account) view returns (bool)",
+      "function hashActions(tuple(address to, uint256 value, bytes data)[] _actions) pure returns (bytes32 actionsHash)",
+      "function implementation() view returns (address)",
+      "function initialize(address _dao, tuple(bool onlyListed, uint16 minApprovals, address signerList, uint32 proposalExpirationPeriod) _multisigSettings)",
+      "function lastMultisigSettingsChange() view returns (uint64)",
+      "function multisigSettings() view returns (bool onlyListed, uint16 minApprovals, address signerList, uint32 proposalExpirationPeriod)",
+      "function pluginType() pure returns (uint8)",
+      "function proposalCount() view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function updateMultisigSettings(tuple(bool onlyListed, uint16 minApprovals, address signerList, uint32 proposalExpirationPeriod) _multisigSettings)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
@@ -2547,11 +3419,95 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": [
+      "constructor(address _singleton)"
+    ],
+    "0x584fE70fE82F728f0Fe26488857D623f3B59E070": [
+      "constructor()",
+      "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
+      "error InvalidAddresslistUpdate(address member)",
+      "error InvalidEncryptionRegistry(address givenAddress)",
+      "error SignerListLengthOutOfBounds(uint16 limit, uint256 actual)",
+      "event Initialized(uint8 version)",
+      "event SignerListSettingsUpdated(address encryptionRegistry, uint16 minSignerListLength)",
+      "event SignersAdded(address[] signers)",
+      "event SignersRemoved(address[] signers)",
+      "function addSigners(address[] _signers)",
+      "function addresslistLength() view returns (uint256)",
+      "function addresslistLengthAtBlock(uint256 _blockNumber) view returns (uint256)",
+      "function dao() view returns (address)",
+      "function getEncryptionAgents() view returns (address[] result)",
+      "function getListedEncryptionOwnerAtBlock(address _address, uint256 _blockNumber) view returns (address _owner)",
+      "function initialize(address _dao, address[] _signers)",
+      "function isListed(address _account) view returns (bool)",
+      "function isListedAtBlock(address _account, uint256 _blockNumber) view returns (bool)",
+      "function isListedOrAppointedByListed(address _address) view returns (bool listedOrAppointedByListed)",
+      "function removeSigners(address[] _signers)",
+      "function resolveEncryptionAccountAtBlock(address _address, uint256 _blockNumber) view returns (address _owner, address _agent)",
+      "function settings() view returns (address encryptionRegistry, uint16 minSignerListLength)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function updateSettings(tuple(address encryptionRegistry, uint16 minSignerListLength) _newSettings)"
+    ],
     "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x5B0Da2FB08754a5dDf32e28887D2F5437485f085": [
+      "constructor()",
+      "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
+      "error DurationOutOfBounds(uint64 limit, uint64 actual)",
+      "error EmptyAddress()",
+      "error MinDurationOutOfBounds(uint64 limit, uint64 actual)",
+      "error NoVotingPower()",
+      "error ProposalExecutionForbidden(uint256 proposalId)",
+      "error ProposalVetoingForbidden(uint256 proposalId, address account)",
+      "error RatioOutOfBounds(uint256 limit, uint256 actual)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event MembersAdded(address[] members)",
+      "event MembersRemoved(address[] members)",
+      "event MembershipContractAnnounced(address indexed definingContract)",
+      "event OptimisticGovernanceSettingsUpdated(uint32 minVetoRatio, uint64 minDuration, uint64 l2AggregationGracePeriod, uint64 l2InactivityPeriod, bool skipL2)",
+      "event ProposalCreated(uint256 indexed proposalId, address indexed creator, uint64 startDate, uint64 endDate, bytes metadata, tuple(address to, uint256 value, bytes data)[] actions, uint256 allowFailureMap)",
+      "event ProposalExecuted(uint256 indexed proposalId)",
+      "event Upgraded(address indexed implementation)",
+      "event VetoCast(uint256 indexed proposalId, address indexed voter, uint256 votingPower)",
+      "function PROPOSER_PERMISSION_ID() view returns (bytes32)",
+      "function UPDATE_OPTIMISTIC_GOVERNANCE_SETTINGS_PERMISSION_ID() view returns (bytes32)",
+      "function UPGRADE_PLUGIN_PERMISSION_ID() view returns (bytes32)",
+      "function bridgedVotingPower(uint256 _timestamp) view returns (uint256)",
+      "function canExecute(uint256 _proposalId) view returns (bool)",
+      "function canVeto(uint256 _proposalId, address _voter) view returns (bool)",
+      "function createProposal(bytes _metadata, tuple(address to, uint256 value, bytes data)[] _actions, uint256 _allowFailureMap, uint64 _duration) returns (uint256 proposalId)",
+      "function dao() view returns (address)",
+      "function effectiveVotingPower(uint256 _timestamp, bool _includeL2VotingPower) view returns (uint256)",
+      "function execute(uint256 _proposalId)",
+      "function getProposal(uint256 _proposalId) view returns (bool open, bool executed, tuple(uint64 vetoEndDate, uint64 snapshotTimestamp, uint32 minVetoRatio, bool unavailableL2) parameters, uint256 vetoTally, bytes metadataURI, tuple(address to, uint256 value, bytes data)[] actions, uint256 allowFailureMap)",
+      "function governanceSettings() view returns (uint32 minVetoRatio, uint32 minDuration, uint32 timelockPeriod, uint32 l2InactivityPeriod, uint32 l2AggregationGracePeriod, bool skipL2)",
+      "function hasVetoed(uint256 _proposalId, address _voter) view returns (bool)",
+      "function implementation() view returns (address)",
+      "function initialize(address _dao, tuple(uint32 minVetoRatio, uint32 minDuration, uint32 timelockPeriod, uint32 l2InactivityPeriod, uint32 l2AggregationGracePeriod, bool skipL2) _governanceSettings, address _token, address _taikoL1, address _taikoBridge)",
+      "function isL2Available() view returns (bool)",
+      "function isMember(address _account) view returns (bool)",
+      "function isMinVetoRatioReached(uint256 _proposalId) view returns (bool)",
+      "function minVetoRatio() view returns (uint32)",
+      "function parseProposalId(uint256 _proposalId) pure returns (uint256 counter, uint64 startDate, uint64 endDate)",
+      "function pluginType() pure returns (uint8)",
+      "function proposalCount() view returns (uint256)",
+      "function proposalIds(uint256) view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function taikoBridge() view returns (address)",
+      "function taikoL1() view returns (address)",
+      "function totalVotingPower(uint256 _timestamp) view returns (uint256)",
+      "function updateOptimisticGovernanceSettings(tuple(uint32 minVetoRatio, uint32 minDuration, uint32 timelockPeriod, uint32 l2InactivityPeriod, uint32 l2AggregationGracePeriod, bool skipL2) _governanceSettings)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function veto(uint256 _proposalId)",
+      "function votingToken() view returns (address)"
     ],
     "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106": [
       "constructor()",
@@ -2824,6 +3780,45 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(tuple(uint64 batchId, bytes32 metaHash, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) transition)[] _ctxs, bytes _proof) view"
     ],
+    "0x8510d389236d7213eE9B9C38CAaBc0aD24853C25": [
+      "constructor()",
+      "error ApprovalCastForbidden(uint256 proposalId, address sender)",
+      "error DaoUnauthorized(address dao, address where, address who, bytes32 permissionId)",
+      "error InvalidSignerList(address signerList)",
+      "error MinApprovalsOutOfBounds(uint16 limit, uint16 actual)",
+      "error ProposalCreationForbidden(address sender)",
+      "error ProposalExecutionForbidden(uint256 proposalId)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Approved(uint256 indexed proposalId, address indexed approver)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Executed(uint256 indexed proposalId)",
+      "event Initialized(uint8 version)",
+      "event MultisigSettingsUpdated(bool onlyListed, uint16 indexed minApprovals, uint32 destinationProposalDuration, address signerList, uint32 proposalExpirationPeriod)",
+      "event ProposalCreated(uint256 indexed proposalId, address indexed creator, uint64 startDate, uint64 endDate, bytes metadata, tuple(address to, uint256 value, bytes data)[] actions, uint256 allowFailureMap)",
+      "event ProposalExecuted(uint256 indexed proposalId)",
+      "event Upgraded(address indexed implementation)",
+      "function UPDATE_MULTISIG_SETTINGS_PERMISSION_ID() view returns (bytes32)",
+      "function UPGRADE_PLUGIN_PERMISSION_ID() view returns (bytes32)",
+      "function approve(uint256 _proposalId, bool _tryExecution)",
+      "function canApprove(uint256 _proposalId, address _account) view returns (bool)",
+      "function canExecute(uint256 _proposalId) view returns (bool)",
+      "function createProposal(bytes _metadataURI, tuple(address to, uint256 value, bytes data)[] _destinationActions, address _destinationPlugin, bool _approveProposal) returns (uint256 proposalId)",
+      "function dao() view returns (address)",
+      "function execute(uint256 _proposalId)",
+      "function getProposal(uint256 _proposalId) view returns (bool executed, uint16 approvals, tuple(uint16 minApprovals, uint64 snapshotBlock, uint64 expirationDate) parameters, bytes metadataURI, tuple(address to, uint256 value, bytes data)[] destinationActions, address destinationPlugin)",
+      "function hasApproved(uint256 _proposalId, address _account) view returns (bool)",
+      "function implementation() view returns (address)",
+      "function initialize(address _dao, tuple(bool onlyListed, uint16 minApprovals, uint32 destinationProposalDuration, address signerList, uint32 proposalExpirationPeriod) _multisigSettings)",
+      "function lastMultisigSettingsChange() view returns (uint64)",
+      "function multisigSettings() view returns (bool onlyListed, uint16 minApprovals, uint32 destinationProposalDuration, address signerList, uint32 proposalExpirationPeriod)",
+      "function pluginType() pure returns (uint8)",
+      "function proposalCount() view returns (uint256)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function updateMultisigSettings(tuple(bool onlyListed, uint16 minApprovals, uint32 destinationProposalDuration, address signerList, uint32 proposalExpirationPeriod) _multisigSettings)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x8ADDcf5d4CD7BD9dA1CE62eF84AeE22c9E2BfbA5": [
       "constructor(uint64 _taikoChainId, address _taikoInbox, address _taikoProofVerifier, address _automataDcapAttestation)",
       "error ACCESS_DENIED()",
@@ -3039,6 +4034,12 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x989E348275b659d36f8751ea1c10D146211650BE": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3071,6 +4072,9 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": [
+      "constructor(address _singleton)"
     ],
     "0xAdBa78120E85Add0dBD2050dBA0548CEDA81A31b": [
       "constructor(address _inbox, address _forcedInclusionStore, address _preconfRouter)",
@@ -3192,6 +4196,12 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xb284810536C0dAB6A8e48153B58588A9B9e0F701": [
+      "constructor(address _singleton)"
+    ],
+    "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": [
+      "constructor(address _singleton)"
     ],
     "0xB8826B144eB895eFE2923b61b3b117B1298A9526": [
       "constructor(address _resolver, address _inbox, address _bondToken, address _entrypoint)",
@@ -3351,7 +4361,16 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": [
+      "constructor(address _singleton)"
+    ],
     "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xD7dA1C25E915438720692bC55eb3a7170cA90321": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -3590,6 +4609,9 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": [
+      "constructor(address _singleton)"
+    ],
     "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -3640,8 +4662,12 @@
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DefaultResolver": "0x53b32b1e255a1a1bdf21125cbb22170988a66cec3102548b5283ec54eaedf25e",
+    "taiko/EmergencyMultisig": "0x36b976b7e7ae2e39b6dbca16db2b65fa0a7cec1456f559a3a21cca1013c436ae",
+    "taiko/EncryptionRegistry": "0x6e1f93fb50489c81ab2040ecb707c6e04171660edc52b35d0f255365e2c6da84",
     "taiko/ForcedInclusionStore": "0xe4a5ab65e9492a918778491a3551eb6d5788e45a0c040f4da6f6f53269925c97",
     "taiko/L1SharedAddressManager": "0x53e383d79bc5a05364962d3a986723394e3f04e839085710857c1b3a050bef18",
+    "taiko/Multisig": "0x49a0b215fa16081fbf9c9d57b0632f3c40ca9576ed2f18a7ed5229a2411be66d",
+    "taiko/OptimisticTokenVotingPlugin": "0x6a672d2ccf7819bd3003e4e2f21047fbad74dcfc72fcf6c89283ac0106156ec5",
     "taiko/PEMCertChainLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/QuotaManager": "0x050ea145bf48fda4a12016c962d9df58643d999f99a23e03eb1233786e25162f",
     "taiko/Risc0VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
@@ -3649,6 +4675,7 @@
     "taiko/SgxVerifier": "0x76591e4af9aa17fa8b64070623f9f2599e0161de42b8c518384374ca652c644e",
     "taiko/SharedERC20Vault": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/SignalService": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
+    "taiko/SignerList": "0x09efeff976f7ad4f78dcc3bfa1d6c9116b57ba24a2db0f2ddeb17aee1f2cf2e9",
     "taiko/SigVerifyLib": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/SP1VerifierGateway": "0x9c68a574bd07dcca487012dfc4123186f03a607d8b3036a8b31b28f4b19c3779",
     "taiko/TaikoBridge": "0x793959f21bd65aea7848aa1d1da5f48fafcc1a117591254ed528e654c30a8094",
@@ -3658,5 +4685,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0x42db0c98e5802d15470dda640a56e226f8b767f328faa9e67c435d14783a9687"
+  "permissionsConfigHash": "0x5383a46cb266f6dda6cea790712fef4772c4b4429ab92419af4a16678aba5127"
 }
