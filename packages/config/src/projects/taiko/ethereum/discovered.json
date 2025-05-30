@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 22595405,
-  "configHash": "0x70fa09cad64895964ba849cd9bb9c70fb058fdb233ee3b1346e59703dd2ec631",
+  "configHash": "0xb87b3af0f196cc1adad069d4fd15986b870c1c1944ad340fc6f4cd4fbca6f1e6",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -493,7 +493,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Halborn",
       "address": "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -524,7 +524,8 @@
       "implementationNames": {
         "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SignerList",
@@ -725,11 +726,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Drew Van der Werff Agent",
       "address": "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "Halborn Agent",
       "address": "0x1d955983044548E03DAA583B36A37cA4bdE6F556",
       "type": "EOA",
       "proxyType": "EOA"
@@ -740,6 +743,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Chainbound Agent",
       "address": "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4",
       "type": "EOA",
       "proxyType": "EOA"
@@ -750,7 +754,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Drew Van der Werff",
       "address": "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -780,7 +784,8 @@
       "implementationNames": {
         "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "EmergencyMultisig",
@@ -941,12 +946,13 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Nethermind Agent",
       "address": "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Chainbound",
       "address": "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -978,7 +984,8 @@
       "implementationNames": {
         "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "SigVerifyLib",
@@ -1028,7 +1035,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Nethermind",
       "address": "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1059,7 +1066,8 @@
       "implementationNames": {
         "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x5374b2907a45a28c37caA45e06FC6eBceECAC72a",
@@ -1418,6 +1426,7 @@
       }
     },
     {
+      "name": "Aragon Agent",
       "address": "0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1428,6 +1437,7 @@
       "proxyType": "EOA"
     },
     {
+      "name": "L2BEAT Agent",
       "address": "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1673,6 +1683,7 @@
       ]
     },
     {
+      "name": "Toni Wahrstätter Agent",
       "address": "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2224,7 +2235,7 @@
       }
     },
     {
-      "name": "Safe",
+      "name": "Toni Wahrstätter",
       "address": "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2254,7 +2265,8 @@
       "implementationNames": {
         "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "VerifierGateway",
@@ -2305,7 +2317,7 @@
       }
     },
     {
-      "name": "Safe",
+      "name": "Aragon",
       "address": "0xb284810536C0dAB6A8e48153B58588A9B9e0F701",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2336,10 +2348,11 @@
       "implementationNames": {
         "0xb284810536C0dAB6A8e48153B58588A9B9e0F701": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "Daniel Wang",
       "address": "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2369,7 +2382,8 @@
       "implementationNames": {
         "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xB4BE8887908AA8a00A40F3a6AC28402672B83328",
@@ -2472,7 +2486,8 @@
       "implementationNames": {
         "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "MainnetBridge",
@@ -2761,12 +2776,13 @@
       ]
     },
     {
+      "name": "Daniel Wang Agent",
       "address": "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "L2BEAT",
       "address": "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2797,7 +2813,8 @@
       "implementationNames": {
         "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xFa92ff698D57f7B875570D9F59501812B843CD44",
@@ -4668,5 +4685,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0xa1c5273a84bc9eef9f21bb67dbe51e7fc80597a477d64d535ac30e3bf55b08ae"
+  "permissionsConfigHash": "0x5383a46cb266f6dda6cea790712fef4772c4b4429ab92419af4a16678aba5127"
 }

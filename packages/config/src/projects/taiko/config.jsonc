@@ -23,6 +23,34 @@
         },
         "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": {
           "ignoreMethods": ["proxiableUUID"]
+        },
+        // SC members below
+        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": {
+          "category": "spam"
+        },
+        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": {
+          "category": "spam"
+        },
+        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": {
+          "category": "spam"
+        },
+        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": {
+          "category": "spam"
+        },
+        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701": {
+          "category": "spam"
+        },
+        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": {
+          "category": "spam"
+        },
+        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351": {
+          "category": "spam"
+        },
+        "0xb47fE76aC588101BFBdA9E68F66433bA51E8029a": {
+          "category": "spam"
+        },
+        "0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487": {
+          "category": "spam"
         }
       }
     }

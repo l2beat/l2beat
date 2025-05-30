@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc2ece89692a386d575d4856bccb1e2c3931000bc
+Generated with discovered.json: 0x3b97d3b6d2abbe01b8e7fc47f5297e091a1fc8bb
 
-# Diff at Fri, 30 May 2025 12:42:57 GMT:
+# Diff at Fri, 30 May 2025 14:28:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@5e500d5a1007dd6ae5f41140c749d1328c37f401 block: 22595179
@@ -27,7 +27,7 @@ discovery. Values are for block 22595179 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
+    contract Halborn (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
     +++ description: None
 ```
 
@@ -39,7 +39,7 @@ discovery. Values are for block 22595179 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
+    contract Drew Van der Werff (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
     +++ description: None
 ```
 
@@ -57,13 +57,13 @@ discovery. Values are for block 22595179 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
+    contract Chainbound (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Safe (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
+    contract Nethermind (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
     +++ description: None
 ```
 
@@ -75,19 +75,19 @@ discovery. Values are for block 22595179 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
+    contract Toni Wahrstätter (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
+    contract Aragon (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    contract Daniel Wang (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
     +++ description: None
 ```
 
@@ -105,7 +105,7 @@ discovery. Values are for block 22595179 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
-    contract Safe (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
+    contract L2BEAT (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
     +++ description: None
 ```
 
