@@ -51,8 +51,12 @@ export function CodePanel() {
   }, [codeResponse.data])
   const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
 
-  if (projectResponse.isPending || projectResponse.isError) {
+  if (projectResponse.isError) {
     return <div>Error</div>
+  }
+
+  if (projectResponse.isPending) {
+    return <div>Loading</div>
   }
 
   if (selected === undefined) {
