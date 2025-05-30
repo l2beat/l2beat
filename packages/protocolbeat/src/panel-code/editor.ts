@@ -33,13 +33,19 @@ export class Editor {
         "ui-monospace, Menlo, Monaco, 'Cascadia Code', 'Source Code Pro', Consolas, 'DejaVu Sans Mono', monospace",
       // @ts-expect-error Thanks you Microsoft
       'bracketPairColorization.enabled': false,
+      model: null, // Prevent Monaco from creating a default model
     })
   }
 
   setCode(code: string) {
     const staleCodeHash = cyrb64(this.currentCode)
-    this.models[staleCodeHash] = this.editor.getModel()
-    this.viewStates[staleCodeHash] = this.editor.saveViewState()
+    const currentModel = this.editor.getModel()
+
+    // Only cache the model if it exists and has content
+    if (currentModel && this.currentCode.trim() !== '') {
+      this.models[staleCodeHash] = currentModel
+      this.viewStates[staleCodeHash] = this.editor.saveViewState()
+    }
 
     this.currentCode = code
     const newCodeHash = cyrb64(code)
@@ -114,6 +120,18 @@ export class Editor {
 
   resize() {
     this.editor.layout()
+  }
+
+  dispose() {
+    Object.values(this.models).forEach((model) => {
+      if (model) {
+        model.dispose()
+      }
+    })
+    this.models = {}
+    this.viewStates = {}
+
+    this.editor.dispose()
   }
 }
 
