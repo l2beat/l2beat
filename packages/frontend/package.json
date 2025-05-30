@@ -78,7 +78,6 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@l2beat/eslint-config": "workspace:*",
     "@l2beat/typescript-config": "workspace:*",
     "@types/d3-scale": "^4.0.9",
     "@types/js-cookie": "^3.0.6",
