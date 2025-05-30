@@ -4,8 +4,17 @@
   "linter": {
     "enabled": true,
     "rules": {
+      "a11y": {
+        "noBlankTarget": "error"
+      },
       "correctness": {
         "useHookAtTopLevel": "error"
+      },
+      "suspicious": {
+        "noDuplicateJsxProps": "error"
+      },
+      "style": {
+        "useFragmentSyntax": "error"
       }
     }
   },

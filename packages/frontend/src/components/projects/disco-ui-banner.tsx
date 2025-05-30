@@ -19,6 +19,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
               href={href}
               target="_blank"
               className="flex w-fit items-center gap-1.5 rounded bg-surface-primary px-4 py-2 font-medium text-link text-sm underline"
+              rel="noreferrer"
             >
               Go to Disco
               <CustomLinkIcon className="size-4 fill-link" />
@@ -46,6 +47,7 @@ export function DiscoUiBanner({ href }: { href: string }) {
           target="_blank"
           className="absolute inset-x-3 bottom-3 flex items-center justify-center gap-1.5 rounded bg-white py-2"
           href={href}
+          rel="noreferrer"
         >
           <span className="mt-px font-bold text-[#2A5BD8] text-xs leading-none">
             Explore in Disco

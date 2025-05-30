@@ -7,6 +7,7 @@ export function UopsExplorerLink() {
     <a
       href="https://uops.l2beat.com/"
       target="_blank"
+      rel="noreferrer"
       className={cn(
         'flex w-fit items-center gap-1 rounded-lg bg-gradient-to-r from-purple-100 to-pink-100 px-2 py-1 font-semibold text-sm text-white max-md:ml-4',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',

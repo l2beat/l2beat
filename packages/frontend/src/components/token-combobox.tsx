@@ -69,6 +69,7 @@ export function TokenCombobox({
                 className={linkVariants()}
                 href={externalLinks.tokenRequest}
                 target="_blank"
+                rel="noreferrer"
               >
                 Request it here
               </a>

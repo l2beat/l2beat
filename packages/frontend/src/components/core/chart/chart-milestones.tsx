@@ -122,6 +122,7 @@ function ChartMilestone({
           href={triggerMilestone.url}
           style={{ left }}
           target="_blank"
+          rel="noreferrer"
         >
           <Icon />
         </a>
