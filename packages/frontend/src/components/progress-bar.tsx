@@ -7,14 +7,12 @@ interface ProgressBarSVGProps {
   trackClassName?: string
 }
 
-export default function ProgressBar({
+export function ProgressBar({
   progress,
   className,
   progressClassName,
   trackClassName,
 }: ProgressBarSVGProps) {
-  // Fixed height of 12px as requested
-
   return (
     <div className={cn(`relative h-3 w-full`, className)}>
       {/* Background track */}

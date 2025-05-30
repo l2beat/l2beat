@@ -155,10 +155,6 @@
       }
     },
     {
-      "include": ["src/**/*.stories.ts", "src/**/*.tsx"],
-      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
-    },
-    {
       "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
