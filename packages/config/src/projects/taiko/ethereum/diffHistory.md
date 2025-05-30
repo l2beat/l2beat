@@ -1,3 +1,114 @@
+Generated with discovered.json: 0xc2ece89692a386d575d4856bccb1e2c3931000bc
+
+# Diff at Fri, 30 May 2025 12:42:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e500d5a1007dd6ae5f41140c749d1328c37f401 block: 22595179
+- current block number: 22595405
+
+## Description
+
+Add DAO and SC related contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22595179 (main branch discovery), not current.
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+      description:
+-        "The entry point to the DAO Aragon-based governance framework."
++        "The main contract of the Aragon-based DAO governance framework."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2)
+    +++ description: A signer list for registering agents, similar to a Multisig.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
+```
+
+```diff
++   Status: CREATED
+    contract EncryptionRegistry (0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1)
+    +++ description: A registry for signers (of the Security Council) to appoint agents to operate on their behalf. These agents can also register their encryption keys for encrypted emergency proposal support.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x436a1075099A145417EBFc74BBaC9605e3e4f1A7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE)
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xa384E224A3F3D664F43eBE33395eF0DCcE67e894)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xb284810536C0dAB6A8e48153B58588A9B9e0F701)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xb47fE76aC588101BFBdA9E68F66433bA51E8029a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xD5cF6A34Ba5fb9289510dC93c03F1f9084798487)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321)
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0xf1cF63589A1e012F9124182c9eAa36B5333e5f06)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x47b22217bef062e9e7b46eb0b1ea339c1a6ab960
 
 # Diff at Fri, 30 May 2025 11:13:55 GMT:

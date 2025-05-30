@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "An optimistic governance module. Proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}.", // TODO: multiply by 1000 typecaster
+  "description": "An optimistic governance module. Proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}.",
   "ignoreMethods": [
     "getProposal",
     "bridgedVotingPower",
@@ -45,5 +45,8 @@
       },
       "edit": ["pipe", ["get", "timelockPeriod"], ["format", "FormatSeconds"]]
     }
+  },
+  "proposalCount": {
+    "description": "The total count of standard proposals created."
   }
 }
