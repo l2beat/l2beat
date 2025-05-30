@@ -2,7 +2,6 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingUpcomingEntries } from '~/server/features/scaling/upcoming/get-scaling-upcoming-entries'
-import { parseCookies } from '~/server/utils/parseCookies'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -12,11 +11,8 @@ export async function getScalingUpcomingData(
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
-  const cookies = parseCookies(req)
   const [appLayoutProps, entries] = await Promise.all([
-    getAppLayoutProps({
-      recategorisationPreview: cookies.recategorisationPreview,
-    }),
+    getAppLayoutProps(),
     cache.get(
       {
         key: ['scaling', 'upcoming', 'entries'],

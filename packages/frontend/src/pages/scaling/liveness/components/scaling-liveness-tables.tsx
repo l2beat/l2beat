@@ -81,7 +81,7 @@ export function ScalingLivenessTables(props: Props) {
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab}>
+      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>

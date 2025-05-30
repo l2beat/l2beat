@@ -82,7 +82,6 @@ export const stargatev2: Bridge = {
         'The LayerZero message protocol is used. If all preconfigured DVNs agree on a message, it is considered verified and can be executed at the destination.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL, // TODO: find Hydra onchain
   },
   technology: {

@@ -74,7 +74,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       references: [
         {
           title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800#code#F1#L46',
+          url: 'https://etherscan.io/address/0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490#code#F1#L50',
         },
       ],
     },

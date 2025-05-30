@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0xb814a81b1ac6dffe0e0bc1f65c82c3fa225cbef48212558a965d627b57d62992",
+  "configHash": "0x5f0e1d7b84bc32c7e8f587150b8ae0bbab651c4a23a5685e2e388b362e2363e7",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",

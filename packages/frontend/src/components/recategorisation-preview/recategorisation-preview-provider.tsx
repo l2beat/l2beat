@@ -1,6 +1,6 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext } from 'react'
 import { usePathname } from '~/hooks/usePathname'
-import { setCookie } from '~/utils/cookies/client'
+import { useQueryParam } from '~/hooks/useQueryParam'
 
 type RecategorisationPreviewContextValue = {
   checked: boolean
@@ -13,19 +13,20 @@ const RecategorisationPreviewContext =
 
 interface Props {
   children: React.ReactNode
-  defaultChecked?: boolean
 }
 
-export function RecategorisationPreviewContextProvider({
-  children,
-  defaultChecked,
-}: Props) {
+export function RecategorisationPreviewContextProvider({ children }: Props) {
   const pathname = usePathname()
-  const [checked, setChecked] = useState(defaultChecked ?? false)
+  const [checked, setChecked] = useQueryParam(
+    'recategorisationPreview',
+    'false',
+    {
+      replaceState: true,
+    },
+  )
 
   const onChange = (checked: boolean) => {
-    setChecked(checked)
-    setCookie('recategorisationPreview', checked)
+    setChecked(checked.toString())
   }
 
   const isScalingMainPage =
@@ -33,7 +34,7 @@ export function RecategorisationPreviewContextProvider({
   return (
     <RecategorisationPreviewContext.Provider
       value={{
-        checked,
+        checked: checked === 'true',
         setChecked: onChange,
         isScalingMainPage,
       }}

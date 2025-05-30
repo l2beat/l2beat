@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "SOPH",
+      "address": "0x6b7774cb12ed7573a7586e7d0e62a2a563ddd3f0"
+    },
+    {
       "symbol": "deUSD",
       "category": "stablecoin",
       "address": "0x15700b564ca08d9439c58ca5053166e8317aa138"

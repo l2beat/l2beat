@@ -51,12 +51,6 @@ export const layerzerov2oft: Bridge = {
         'The LayerZero message protocol is used. If all preconfigured verifiers agree on a message, it is considered verified and can be executed at the destination.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'Omnichain tokens can be individually upgradable and their security assumptions must be individually assessed for each token contract / OApp.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {

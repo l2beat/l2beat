@@ -2,7 +2,7 @@
   "name": "polygon-pos",
   "chain": "ethereum",
   "blockNumber": 22265851,
-  "configHash": "0xca3b6bfe6d76a2d180413a78bd5c066a55acb2dd2526a04fd449fa034267ad8e",
+  "configHash": "0x3780afad2ce83abe73664413fed5e40fce76270e6310716b829376c6640d1dd2",
   "entries": [
     {
       "name": "ERC1155Predicate",

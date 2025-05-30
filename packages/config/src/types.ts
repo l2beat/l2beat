@@ -301,7 +301,6 @@ export type BridgeCategory =
 
 export interface ProjectBridgeRisks {
   validatedBy?: TableReadyValue
-  sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
   livenessFailure?: TableReadyValue
   governance?: {

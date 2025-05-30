@@ -2,9 +2,7 @@ import { getSearchBarProjects } from '~/components/search-bar/search-bar-project
 import { getCollection } from '~/content/get-collection'
 import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
 
-export async function getAppLayoutProps(opts?: {
-  recategorisationPreview?: boolean
-}): Promise<AppLayoutProps> {
+export async function getAppLayoutProps(): Promise<AppLayoutProps> {
   const searchBarProjects = await getSearchBarProjects()
   return {
     terms: getCollection('glossary').map((term) => ({
@@ -12,6 +10,5 @@ export async function getAppLayoutProps(opts?: {
       matches: [term.data.term, ...(term.data.match ?? [])],
     })),
     searchBarProjects,
-    defaultRecategorisationPreviewChecked: opts?.recategorisationPreview,
   }
 }
