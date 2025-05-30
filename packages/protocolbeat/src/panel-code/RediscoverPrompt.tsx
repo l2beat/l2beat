@@ -1,6 +1,6 @@
 import { useQueryClient } from '@tanstack/react-query'
-import { useTerminalStore } from '../panel-terminal/store'
 import { useParams } from 'react-router-dom'
+import { useTerminalStore } from '../panel-terminal/store'
 
 export interface RediscoverPromptProps {
   chain: string

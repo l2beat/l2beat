@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getProject } from '../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
+import { findSelected } from '../common/findSelected'
 import { isReadOnly } from '../config'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
@@ -10,7 +11,6 @@ import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
-import { findSelected } from '../common/findSelected'
 
 export function ValuesPanel() {
   const { project } = useParams()

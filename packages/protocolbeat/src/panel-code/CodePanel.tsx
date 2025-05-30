@@ -4,15 +4,15 @@ import { useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import type { ApiCodeResponse } from '../api/types'
+import { findSelected } from '../common/findSelected'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { isReadOnly } from '../config'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
+import { RediscoverPrompt } from './RediscoverPrompt'
 import { Editor } from './editor'
 import { type Range, useCodeStore } from './store'
-import { isReadOnly } from '../config'
-import { RediscoverPrompt } from './RediscoverPrompt'
-import { findSelected } from '../common/findSelected'
 
 export function CodePanel() {
   const { project } = useParams()

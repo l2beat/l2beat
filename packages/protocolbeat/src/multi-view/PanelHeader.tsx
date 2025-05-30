@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import type { ApiProjectContract } from '../api/types'
+import { findSelected } from '../common/findSelected'
 import { isReadOnly } from '../config'
 import { IconChatbot } from '../icons/IconChatbot'
 import { IconClose } from '../icons/IconClose'
@@ -9,7 +10,6 @@ import { IconFullscreen } from '../icons/IconFullscreen'
 import { IconFullscreenExit } from '../icons/IconFullscreenExit'
 import { usePanelStore } from '../store/store'
 import { PANEL_IDS, type PanelId, useMultiViewStore } from './store'
-import { findSelected } from '../common/findSelected'
 
 export function PanelHeader(props: { id: PanelId }) {
   const isFullScreen = useMultiViewStore(
