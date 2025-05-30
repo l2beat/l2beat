@@ -4469,6 +4469,20 @@
       "supply": "zero"
     },
     {
+      "name": "Quest Ecosystem",
+      "coingeckoId": "ravenquest",
+      "address": "0x1Fc122FE8b6Fa6b8598799baF687539b5D3B2783",
+      "symbol": "QUEST",
+      "decimals": 6,
+      "deploymentTimestamp": 1743083699,
+      "coingeckoListingTimestamp": 1743552000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55071/large/token_200x200.png?1743598440",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "RabbitX",
       "coingeckoId": "rabbitx",
       "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
@@ -4954,6 +4968,20 @@
       "coingeckoListingTimestamp": 1748476800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38680/large/sophon_logo_200.png?1747898236",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Space Nation Oikos",
+      "coingeckoId": "space-nation-oikos",
+      "address": "0x6E7F11641c1EC71591828E531334192d622703F7",
+      "symbol": "OIK",
+      "decimals": 18,
+      "deploymentTimestamp": 1739786123,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54823/large/oik-logo.jpeg?1741858662",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
