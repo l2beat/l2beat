@@ -28,15 +28,7 @@ export function MonitorApp() {
     return <ErrorState />
   }
 
-  const entries = result.data
-
-  if (entries.length === 0) {
-    return (
-      <div className="flex flex-col gap-2 p-4">
-        <p>Whoopsie, no changes detected.</p>
-      </div>
-    )
-  }
+  const entries = result.data ?? []
 
   // Memoize visible entries to prevent unnecessary re-renders
   const visibleEntries = useMemo(() => {
@@ -81,6 +73,14 @@ export function MonitorApp() {
     }
   }, [loadMore])
 
+  if (entries.length === 0) {
+    return (
+      <div className="flex flex-col gap-2 p-4">
+        <p>Whoopsie, no changes detected.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="flex flex-col gap-2 md:p-4">
       {visibleEntries.map((entry) => {
@@ -93,7 +93,7 @@ export function MonitorApp() {
         return (
           <div
             key={`${entry.projectId}-${entry.chain}-${entry.blockNumber}`}
-            className="flex w-full gap-2"
+            className="flex gap-2"
           >
             <Message
               authorName={DISCORD_BOT_NAME}
