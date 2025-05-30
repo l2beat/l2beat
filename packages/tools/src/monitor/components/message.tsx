@@ -18,7 +18,7 @@ function Message({
   title,
   className = '',
 }: MessageProps) {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
 
   const toggleExpand: MouseEventHandler<HTMLDivElement> = (e) => {
     // Toggle on parent element dispatch only
