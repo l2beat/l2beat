@@ -4945,6 +4945,20 @@
       "supply": "zero"
     },
     {
+      "name": "Sophon",
+      "coingeckoId": "sophon",
+      "address": "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0",
+      "symbol": "SOPH",
+      "decimals": 18,
+      "deploymentTimestamp": 1729001015,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38680/large/sophon_logo_200.png?1747898236",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Spectral Token",
       "coingeckoId": "spectral",
       "address": "0xAdF7C35560035944e805D98fF17d58CDe2449389",
