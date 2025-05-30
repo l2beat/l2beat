@@ -38,7 +38,7 @@ async function benchmark() {
     const db = getDb()
     console.log(`Benchmarking ${name}`)
     const durations = []
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     for (const _ of range(BENCHMARK_ROUNDS)) {
       const start = process.hrtime()
       await fn(db)

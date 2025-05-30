@@ -65,7 +65,7 @@ function createEnv(): Env {
       if (!Reflect.has(SERVER_CONFIG, key)) {
         throw new Error(`Accessing invalid env: ${key.toString()}`)
       }
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+
       return Reflect.get(target, key, receiver)
     },
   })
@@ -73,7 +73,6 @@ function createEnv(): Env {
 
 function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
   if (typeof process === 'undefined') {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return window.__ENV__
   }
 

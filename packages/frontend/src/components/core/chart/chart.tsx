@@ -209,7 +209,6 @@ function ChartLegendContent({
       )}
     >
       {actualPayload.map((item) => {
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         const key = `${nameKey ?? item.dataKey ?? 'value'}`
         const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
@@ -217,7 +216,6 @@ function ChartLegendContent({
 
         return (
           <div
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             key={item.value}
             className="flex items-center gap-[3px] [&>svg]:text-secondary"
           >

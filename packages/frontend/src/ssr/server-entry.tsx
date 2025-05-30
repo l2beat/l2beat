@@ -5,7 +5,6 @@ import { Head } from './head/Head'
 import type { RenderData, RenderResult } from './types'
 
 export function render(data: RenderData, url: string): RenderResult {
-  // @ts-expect-error how to type this?
   globalThis.__FIX_SSR_URL__ = url
   const html = renderToString(
     <StrictMode>

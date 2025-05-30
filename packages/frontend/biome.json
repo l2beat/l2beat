@@ -1,8 +1,28 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
-  "extends": ["../../biome.json"],
+  "extends": ["../../biome.jsonc"],
   "linter": {
-    "enabled": true
+    "enabled": true,
+    "rules": {
+      "a11y": {
+        "noBlankTarget": "error"
+      },
+      "complexity": {
+        "noUselessFragments": "error"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "error",
+        "useHookAtTopLevel": "error",
+        "noChildrenProp": "error",
+        "noVoidElementsWithChildren": "error"
+      },
+      "suspicious": {
+        "noDuplicateJsxProps": "error"
+      },
+      "style": {
+        "useFragmentSyntax": "error"
+      }
+    }
   },
   "files": {
     "ignore": ["./static"]

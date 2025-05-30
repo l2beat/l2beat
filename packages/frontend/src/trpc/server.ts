@@ -39,9 +39,7 @@ export const getExpressHelpers = () =>
     //       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     //     )
     transformer: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       serialize: (data) => data,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       deserialize: (data) => data,
     },
   })
