@@ -4,7 +4,7 @@ import { HighlightedText } from '../common/HighlightedText'
 import { toShortenedAddress } from '../common/toShortenedAddress'
 import { isReadOnly } from '../config'
 import { useMultiViewStore } from '../multi-view/store'
-import { useCodeStore } from '../panel-code/store'
+import { useCodeStore } from '../components/editor/store'
 import { useSearchStore } from './store'
 
 interface CodeSearchEntryProps {

@@ -48,6 +48,30 @@ export function attachTemplateRouter(
 
     res.status(result.success ? 201 : 500).json(result)
   })
+
+  app.get('/api/template-files', (req, res) => {
+    const query = z
+      .object({
+        templateId: z.string().min(1),
+      })
+      .parse(req.query)
+
+    const template = templateService.readTemplateFile(query.templateId)
+
+    if (!template) {
+      res.status(404).json({ error: 'Template not found' })
+      return
+    }
+
+    const shapes = templateService.readShapeFile(query.templateId)
+    const criteria = templateService.readCriteriaFile(query.templateId)
+
+    res.json({
+      template,
+      shapes,
+      criteria,
+    })
+  })
 }
 
 async function wrapError<T>(fn: () => Promise<T>) {

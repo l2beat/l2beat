@@ -7,6 +7,7 @@ import type {
   ApiPreviewResponse,
   ApiProjectResponse,
   ApiProjectsResponse,
+  ApiTemplateFileResponse,
 } from './types'
 
 export async function getProjects(): Promise<ApiProjectsResponse> {
@@ -107,6 +108,24 @@ export async function listTemplates(): Promise<ApiListTemplatesResponse> {
   }
   const data = await res.json()
   return data as ApiListTemplatesResponse
+}
+
+export async function readTemplateFile(
+  templateId?: string,
+): Promise<ApiTemplateFileResponse> {
+  if (!templateId) {
+    return { template: '', shapes: undefined, criteria: undefined }
+  }
+
+  const res = await fetch(
+    `/api/template-files?templateId=${encodeURIComponent(templateId)}`,
+  )
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+
+  return data as ApiTemplateFileResponse
 }
 
 export async function createShape(

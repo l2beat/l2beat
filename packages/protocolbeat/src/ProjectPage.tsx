@@ -12,6 +12,7 @@ import { PreviewPanel } from './panel-preview/PreviewPanel'
 import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { usePanelStore } from './store/store'
+import { TemplatePanel } from './panel-template/TemplatePanel'
 
 export function ProjectPage() {
   const { project } = useParams()
@@ -40,6 +41,7 @@ const PANELS: Record<PanelId, () => JSX.Element> = {
   code: CodePanel,
   preview: PreviewPanel,
   terminal: TerminalPanel,
+  template: TemplatePanel,
 }
 
 const READONLY_PANELS: Record<
@@ -51,6 +53,7 @@ const READONLY_PANELS: Record<
   nodes: NodesPanel,
   preview: PreviewPanel,
   code: CodePanel,
+  template: TemplatePanel,
 }
 
 function Panel(props: { kind: PanelId }) {

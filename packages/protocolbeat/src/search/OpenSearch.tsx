@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDebounce } from '../common/useDebounce'
 import { IconSearch } from '../icons/IconSearch'
 import { useMultiViewStore } from '../multi-view/store'
-import { useCodeStore } from '../panel-code/store'
+import { useCodeStore } from '../components/editor/store'
 import { usePanelStore } from '../store/store'
 import {
   CodeSearchResultEntry,
