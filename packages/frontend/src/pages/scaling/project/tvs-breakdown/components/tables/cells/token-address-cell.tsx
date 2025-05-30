@@ -12,7 +12,7 @@ interface Props {
 export function TokenAddressCell(props: Props) {
   if (!props.url) {
     return (
-      <span className="pr-2 text-xs font-medium">
+      <span className="pr-2 font-medium text-xs">
         {props.name ?? formatAddress(props.address.toString())}
       </span>
     )

@@ -81,8 +81,8 @@ function Item({
       ref={ref}
       href={href}
       className={cn(
-        'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-divider px-4 text-center text-xs transition-colors',
-        selected && 'border-b border-current text-brand',
+        'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors',
+        selected && 'border-current border-b text-brand',
       )}
     >
       {children}

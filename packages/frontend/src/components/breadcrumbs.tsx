@@ -17,7 +17,7 @@ export function Breadcrumbs({ items, className }: Props) {
   return (
     <nav
       className={cn(
-        'flex select-none items-center gap-2 text-base font-medium text-secondary',
+        'flex select-none items-center gap-2 font-medium text-base text-secondary',
         className,
       )}
     >
@@ -27,7 +27,7 @@ export function Breadcrumbs({ items, className }: Props) {
             {item.content}
           </BreadcrumbItem>
           {i < items.length - 1 && (
-            <ChevronIcon className="size-2.5   -rotate-90 fill-current" />
+            <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
           )}
         </React.Fragment>
       ))}

@@ -33,7 +33,7 @@ export function ActivityChartHeader({
       <div className="flex justify-between">
         <div className="flex flex-col gap-1">
           <div className="flex items-start max-md:mb-2 max-md:flex-col md:items-center md:gap-2">
-            <h1 className="whitespace-nowrap text-xl font-bold max-md:ml-1 md:text-2xl">
+            <h1 className="whitespace-nowrap font-bold text-xl max-md:ml-1 md:text-2xl">
               Daily average
             </h1>
             <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export function ScalingFactorTooltip({
             account projects listed below.`}
           </div>
           <div className="flex flex-col gap-1">
-            <div className="text-xs font-bold">Exact formula:</div>
+            <div className="font-bold text-xs">Exact formula:</div>
             <div className="text-xs">
               {`(project ${metric}/7d + ETH ${metric}/7d) / ETH ${metric}/7d`}
             </div>

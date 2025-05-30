@@ -58,9 +58,9 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.discoUiHref && <DiscoUiBanner href={props.discoUiHref} />}
       {hasContractsChanged && <ContractsUpdated />}
       {props.diagram && (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={props.diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {props.diagram.caption}
           </figcaption>
         </figure>
@@ -125,8 +125,8 @@ export function ContractsSection(props: ContractsSectionProps) {
 function ChainNameHeader(props: { children: React.ReactNode }) {
   return (
     <div className="flex items-baseline gap-3">
-      <h3 className="whitespace-pre text-2xl font-bold">{props.children}</h3>
-      <div className="w-full border-b-2 border-divider" />
+      <h3 className="whitespace-pre font-bold text-2xl">{props.children}</h3>
+      <div className="w-full border-divider border-b-2" />
     </div>
   )
 }
@@ -135,7 +135,7 @@ function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
 }) {
   return (
-    <div className="rounded-lg border border-dashed border-yellow-200 px-4 py-3">
+    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
         There are impactful changes to the following contracts, and part of the
         information might be outdated.

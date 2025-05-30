@@ -96,7 +96,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     <div>
       <div
         className={cn(
-          'mb-3 mt-4 flex flex-col justify-between gap-1',
+          'mt-4 mb-3 flex flex-col justify-between gap-1',
           !hasPostedData && 'flex-row',
         )}
       >
@@ -122,7 +122,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
         milestones={milestones}
         range={range}
         showDataPosted={hasPostedData ? showDataPosted : false}
-        className="mb-2 mt-4"
+        className="mt-4 mb-2"
       />
       <UnitControls unit={unit} setUnit={setUnit} isLoading={isLoading} />
       <HorizontalSeparator className="my-4" />

@@ -19,7 +19,7 @@ export function StageOneRequirementsChangeNotice({ downgradePending }: Props) {
   return (
     <CountdownSection>
       <div className="flex flex-wrap items-center justify-center gap-4">
-        <h2 className="mr-auto text-2xl font-bold md:text-3xl">
+        <h2 className="mr-auto font-bold text-2xl md:text-3xl">
           Stages changes
         </h2>
         <Countdown
@@ -27,12 +27,12 @@ export function StageOneRequirementsChangeNotice({ downgradePending }: Props) {
           size={isMobile ? 'sm' : 'md'}
         />
       </div>
-      <div className="mt-4 text-base font-medium">
+      <div className="mt-4 font-medium text-base">
         The project will be downgraded to{' '}
         <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
         because it does not satisfy an upcoming Stage 1 principle.
       </div>
-      <p className="mb-4 mt-6 text-lg font-bold">
+      <p className="mt-6 mb-4 font-bold text-lg">
         The project will move to Stage 0 because:
       </p>
       <div className="flex gap-2 bg-red-600/20 p-4">
@@ -41,7 +41,7 @@ export function StageOneRequirementsChangeNotice({ downgradePending }: Props) {
       </div>
       <CustomLink
         href={externalLinks.articles.stageOneRequirementsChange}
-        className="mt-2.5 flex items-center gap-1 text-base font-bold"
+        className="mt-2.5 flex items-center gap-1 font-bold text-base"
       >
         Learn more about the new requirements <ArrowRightIcon />
       </CustomLink>
@@ -56,9 +56,9 @@ export function StageOneRequirementsChangeStageSectionNotice({
     <div className="flex gap-2 rounded-lg bg-brand/20 p-4">
       <StopwatchIcon className="mt-0.5 size-5 shrink-0" />
       <div>
-        <p className="text-lg font-bold">New requirements coming soon</p>
+        <p className="font-bold text-lg">New requirements coming soon</p>
         <Countdown expiresAt={downgradePending.expiresAt} size="sm" />
-        <div className="mt-4 text-base font-medium">
+        <div className="mt-4 font-medium text-base">
           The project will be downgraded to{' '}
           <StageBadge stage="Stage 0" isAppchain={false} className="inline" />{' '}
           because it does not satisfy an upcoming Stage 1 principle.
@@ -69,7 +69,7 @@ export function StageOneRequirementsChangeStageSectionNotice({
         </div>{' '}
         <CustomLink
           href={externalLinks.articles.stageOneRequirementsChange}
-          className="mt-2.5 flex items-center gap-1 text-base font-bold"
+          className="mt-2.5 flex items-center gap-1 font-bold text-base"
         >
           Learn more about the new requirements <ArrowRightIcon />
         </CustomLink>

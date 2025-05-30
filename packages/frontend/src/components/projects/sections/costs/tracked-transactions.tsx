@@ -49,7 +49,7 @@ export function TrackedTransactions(props: TrackedTransactionsByType) {
     <Collapsible className="group rounded-lg border border-divider">
       <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-3 font-bold">
         Tracked transactions
-        <ChevronIcon className="size-4 transition-transform duration-300 group-data-[state=open]:-rotate-180" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
       </CollapsibleTrigger>
       <CollapsibleContent className="px-6">
         {hasHistoricalTransactions && (
@@ -103,7 +103,7 @@ function TransactionGroup({
 }) {
   return (
     <div className="mb-6">
-      <h2 className="mb-3 text-base font-medium text-secondary">{title}</h2>
+      <h2 className="mb-3 font-medium text-base text-secondary">{title}</h2>
       {transactions.map((transaction, index) => (
         <TransactionDetails
           key={index}
@@ -127,7 +127,7 @@ function TransactionDetails({
       <div className="mb-2 flex justify-between max-lg:flex-col lg:gap-2">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1">
-            <p className="text-xs font-medium capitalize">
+            <p className="font-medium text-xs capitalize">
               {transaction.params.formula}
             </p>
             {transaction.params.formula === 'sharedBridge' && (
@@ -170,7 +170,7 @@ function TransactionDetails({
         </p>
       </div>
 
-      <div className="border-l-2 border-divider pl-3">
+      <div className="border-divider border-l-2 pl-3">
         {transaction.params.formula === 'functionCall' && (
           <>
             <div className="mb-1 text-sm">
@@ -210,7 +210,7 @@ function TransactionDetails({
               <span className="text-secondary">Selector: </span>
               <span>{transaction.params.selector}</span>
             </div>
-            <div className="mb-1 text-sm text-secondary">Program Hashes:</div>
+            <div className="mb-1 text-secondary text-sm">Program Hashes:</div>
             {transaction.params.programHashes.map((hash, index) => (
               <div
                 key={index}

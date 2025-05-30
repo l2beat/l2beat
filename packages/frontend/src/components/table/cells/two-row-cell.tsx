@@ -16,7 +16,7 @@ function TwoRowCellFirstRow({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'text-xs font-medium leading-[15px] md:text-sm md:leading-[1.2]',
+        'font-medium text-xs leading-[15px] md:text-sm md:leading-[1.2]',
         className,
       )}
     >
@@ -29,7 +29,7 @@ function TwoRowCellSecondRow({ children, className }: Props) {
   return (
     <div
       className={cn(
-        'text-[13px] leading-[14px] text-secondary md:text-xs md:leading-[15px]',
+        'text-[13px] text-secondary leading-[14px] md:text-xs md:leading-[15px]',
         className,
       )}
     >

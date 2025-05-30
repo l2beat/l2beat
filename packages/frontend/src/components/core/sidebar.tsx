@@ -189,7 +189,7 @@ function SidebarGroupItem({
 }: React.ComponentProps<'div'>) {
   return (
     <div
-      className={cn('relative text-sm font-medium leading-none', className)}
+      className={cn('relative font-medium text-sm leading-none', className)}
       {...props}
     />
   )
@@ -228,7 +228,7 @@ function SidebarGroupSmallLink({
     <a
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
-        'pl-1.5 text-xs leading-none text-primary transition-colors hover:text-secondary',
+        'pl-1.5 text-primary text-xs leading-none transition-colors hover:text-secondary',
         isActive && 'text-brand hover:text-brand',
         className,
       )}
@@ -241,7 +241,7 @@ function SidebarGroupSub({ className, ...props }: React.ComponentProps<'ul'>) {
   return (
     <ul
       className={cn(
-        'ml-3.5 flex min-w-0 translate-x-px flex-col gap-0.5 border-l border-divider py-0.5 pl-[13px]',
+        'ml-3.5 flex min-w-0 translate-x-px flex-col gap-0.5 border-divider border-l py-0.5 pl-[13px]',
         className,
       )}
       {...props}
@@ -268,7 +268,7 @@ function SidebarGroupSubButton({
     <Comp
       data-active={isActive}
       className={cn(
-        'flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
+        '-translate-x-px flex h-7 min-w-0 items-center gap-2 overflow-hidden rounded px-2.5 py-1.5 text-primary outline-none ring-brand hover:bg-surface-tertiary hover:text-primary focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-primary',
         'data-[active=true]:bg-brand data-[active=true]:text-primary-invert',
         className,
       )}

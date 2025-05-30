@@ -16,7 +16,7 @@ export function OtherMigrationTooltip({
 }: Props) {
   return (
     <Tooltip>
-      <TooltipTrigger className="relative -top-px">
+      <TooltipTrigger className="-top-px relative">
         <StopwatchIcon className="size-3.5 md:size-4" />
       </TooltipTrigger>
       <TooltipContent>

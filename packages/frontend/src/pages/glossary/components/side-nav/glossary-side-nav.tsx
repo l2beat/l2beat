@@ -22,7 +22,7 @@ export function GlossarySideNav(props: Props) {
   return (
     <div className="sticky top-28 mt-5 hidden h-[calc(100vh-350px)] w-[246px] min-w-[246px] lg:block">
       <ul
-        className="flex h-full flex-col gap-4 overflow-y-scroll pb-8 pr-6"
+        className="flex h-full flex-col gap-4 overflow-y-scroll pr-6 pb-8"
         ref={overflowContainer}
       >
         {props.entries.map((entry) => {

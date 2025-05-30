@@ -25,7 +25,7 @@ export function OurApproachSection({ className }: Props) {
       </p>
       <div className="md:paragraph-15 paragraph-16 mt-4">
         As a governance delegate, we hold the following core values:
-        <ul className="md:paragraph-15 paragraph-16 ml-6 mt-2 list-disc">
+        <ul className="md:paragraph-15 paragraph-16 mt-2 ml-6 list-disc">
           <li>
             <strong>Transparency & Open Communication:</strong> We believe in
             being open about our decision-making process and keeping the

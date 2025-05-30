@@ -14,7 +14,7 @@ export async function getDaThroughputTable(
   if (env.MOCK) {
     return getMockDaThroughputTableData(...parameters)
   }
-  return getDaThroughputTableData(...parameters)
+  return await getDaThroughputTableData(...parameters)
 }
 
 export type ThroughputTableData = Awaited<

@@ -10,8 +10,8 @@ export function AboutUsPage(props: AppLayoutProps) {
       <SideNavLayout>
         <MainPageHeader>About Us</MainPageHeader>
         <PrimaryCard>
-          <h1 className="mb-4 text-3xl font-bold md:hidden">About Us</h1>
-          <p className="mb-6 text-xl font-bold">
+          <h1 className="mb-4 font-bold text-3xl md:hidden">About Us</h1>
+          <p className="mb-6 font-bold text-xl">
             Learn about L2BEAT and its mission
           </p>
           <Details />
@@ -23,7 +23,7 @@ export function AboutUsPage(props: AppLayoutProps) {
 
 function Details() {
   return (
-    <div className="grid gap-4 text-base font-normal leading-6 md:grid-cols-2">
+    <div className="grid gap-4 font-normal text-base leading-6 md:grid-cols-2">
       <div className="flex flex-col gap-4">
         <p>
           We are a public goods company dedicated to providing onchain

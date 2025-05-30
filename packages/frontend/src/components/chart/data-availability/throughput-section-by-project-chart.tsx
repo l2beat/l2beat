@@ -65,7 +65,7 @@ export function ThroughputSectionByProjectChart({
 
   return (
     <div>
-      <div className="mb-3 mt-4 flex flex-col justify-between gap-1">
+      <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
         <ProjectChartTimeRange range={chartRange} />
         <div className="flex justify-between gap-1">
           {!data && isLoading ? (

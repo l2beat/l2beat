@@ -92,11 +92,11 @@ function BridgesChartHeader({
   return (
     <header className="flex justify-between">
       <div>
-        <h1 className="text-xl font-bold md:text-2xl">Value Secured</h1>
+        <h1 className="font-bold text-xl md:text-2xl">Value Secured</h1>
         <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
+        <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">
           {value === undefined ? (
             <Skeleton className="my-0.5 h-[26px] w-32 md:h-8" />
           ) : (
@@ -106,7 +106,7 @@ function BridgesChartHeader({
         {change === undefined ? (
           <Skeleton className="h-5 w-32 lg:h-6" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-medium text-secondary lg:text-base">
+          <p className="whitespace-nowrap text-right font-medium text-secondary text-xs lg:text-base">
             {changeOverTime} / {tvsRangeToReadable(range)}
           </p>
         )}

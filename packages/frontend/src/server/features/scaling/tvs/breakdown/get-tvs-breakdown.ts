@@ -17,7 +17,7 @@ import type {
   CanonicalAssetBreakdownData,
 } from './types'
 
-export async function getTvsBreakdown(
+export function getTvsBreakdown(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
   tokenValuesMap: Map<TokenId, TokenValueRecord>,
   chains: ChainConfig[],

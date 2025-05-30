@@ -15,7 +15,7 @@ export async function getBlobsData(
   if (env.MOCK) {
     return getMockBlobsData()
   }
-  return getCachedBlobsData(projects)
+  return await getCachedBlobsData(projects)
 }
 
 const getCachedBlobsData = async (

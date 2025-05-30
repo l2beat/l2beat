@@ -51,7 +51,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((-4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute origin-top -translate-x-1/2 rotate-[36deg]',
+          '-translate-x-1/2 absolute origin-top rotate-[36deg]',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== first.name && 'opacity-20',
         )}
@@ -64,7 +64,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((-2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[-72deg]',
+          '-translate-x-1/2 -translate-y-full absolute origin-bottom rotate-[-72deg]',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== second.name && 'opacity-20',
         )}
@@ -77,7 +77,7 @@ export function PizzaRosetteLabels({
           left: '50%',
         }}
         className={cn(
-          'absolute -translate-x-1/2 -translate-y-full',
+          '-translate-x-1/2 -translate-y-full absolute',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== third.name && 'opacity-20',
         )}
@@ -90,7 +90,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[72deg]',
+          '-translate-x-1/2 -translate-y-full absolute origin-bottom rotate-[72deg]',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== fourth.name && 'opacity-20',
         )}
@@ -103,7 +103,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute origin-top -translate-x-1/2 rotate-[-36deg]',
+          '-translate-x-1/2 absolute origin-top rotate-[-36deg]',
           rosetteVariants({ size, className: textClassName }),
           selectedRisk && selectedRisk.name !== fifth.name && 'opacity-20',
         )}

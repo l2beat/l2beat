@@ -24,7 +24,7 @@ export const canonicallyBridgedColumns = [
       if (!address) return '-'
 
       if (address === 'multiple')
-        return <div className="text-xs font-medium">Multiple</div>
+        return <div className="font-medium text-xs">Multiple</div>
 
       return <TokenAddressCell address={address.address} url={address.url} />
     },
@@ -37,7 +37,7 @@ export const canonicallyBridgedColumns = [
       if (!escrow) return '-'
 
       if (escrow === 'multiple')
-        return <div className="text-xs font-medium">Multiple</div>
+        return <div className="font-medium text-xs">Multiple</div>
 
       return (
         <TokenAddressCell
@@ -83,7 +83,7 @@ export const canonicallyBridgedColumns = [
         >
           <ChevronIcon
             className={cn(
-              'w-[10px]   transition-transform duration-300',
+              'w-[10px] transition-transform duration-300',
               isExpended && 'rotate-180',
             )}
           />

@@ -30,7 +30,7 @@ export function MainPageHeader({
         )}
       >
         <div className="flex flex-col justify-center">
-          <h1 className="text-[26px] font-bold">{children}</h1>
+          <h1 className="font-bold text-[26px]">{children}</h1>
         </div>
         <div className="flex items-center gap-5">
           {isScalingMainPage && <RecategorisationPreviewSwitch />}
@@ -64,7 +64,7 @@ function Warning({ children, className }: WarningProps) {
   return (
     <div
       className={cn(
-        'flex items-start border-x-0 border-y border-yellow-700   bg-yellow-200 px-4 py-2 align-top text-[13px] font-medium leading-normal text-yellow-900 md:rounded-lg md:border-x md:px-6',
+        'flex items-start border-yellow-700 border-x-0 border-y bg-yellow-200 px-4 py-2 align-top font-medium text-[13px] text-yellow-900 leading-normal md:rounded-lg md:border-x md:px-6',
         className,
       )}
     >

@@ -22,9 +22,9 @@ export function StateValidationSection({
   return (
     <ProjectSection {...sectionProps}>
       {diagram && (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {diagram.caption}
           </figcaption>
         </figure>
@@ -32,7 +32,7 @@ export function StateValidationSection({
       <div className="flex flex-col gap-6">
         {stateValidation.description && (
           <>
-            <Markdown className="leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+            <Markdown className="text-gray-850 leading-snug md:text-lg dark:text-gray-400">
               {stateValidation.description}
             </Markdown>
             <HorizontalSeparator />
@@ -58,9 +58,9 @@ function Category({ category }: CategoryProps) {
 
   return (
     <div>
-      <span className="text-lg font-bold md:text-xl">{category.title}</span>
+      <span className="font-bold text-lg md:text-xl">{category.title}</span>
       {category.isIncomplete && <SectionIncompleteNote />}
-      <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400 md:text-lg">
+      <Markdown className="mt-2 text-gray-850 leading-snug md:text-lg dark:text-gray-400">
         {category.description}
       </Markdown>
       {risks && <RiskList risks={risks} />}

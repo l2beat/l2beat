@@ -12,7 +12,7 @@ export function DetailsLink({
       onClick={(e) => e.stopPropagation()}
       href={`/zk-catalog/${slug}`}
       className={cn(
-        'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 text-base font-bold text-primary-invert dark:bg-white md:mt-0',
+        'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 font-bold text-base text-primary-invert md:mt-0 dark:bg-white',
         className,
       )}
     >

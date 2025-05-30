@@ -30,7 +30,7 @@ export function VerifiedCell(props: Props) {
         <div className="flex w-max flex-col">
           <Tooltip>
             <TooltipTrigger className="w-max">
-              <span className="flex items-center text-sm text-green-700 dark:text-green-450 md:text-base">
+              <span className="flex items-center text-green-700 text-sm md:text-base dark:text-green-450">
                 <VerifiedIcon className="mr-1.5 size-5 dark:fill-green-450" />
                 <span>Successful</span>
               </span>
@@ -40,7 +40,7 @@ export function VerifiedCell(props: Props) {
               was able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap font-medium text-secondary text-xs max-md:hidden">
             (performed by{' '}
             {
               <CustomLink className="underline" href={props.performedBy.link}>
@@ -76,7 +76,7 @@ export function VerifiedCell(props: Props) {
         <div className="flex w-max flex-col">
           <Tooltip>
             <TooltipTrigger className="w-max">
-              <span className="flex items-center text-sm text-red-700 dark:text-red-300 md:text-base">
+              <span className="flex items-center text-red-700 text-sm md:text-base dark:text-red-300">
                 <UnverifiedIcon className="mr-1.5 size-5" />
                 Unsuccessful
               </span>
@@ -86,7 +86,7 @@ export function VerifiedCell(props: Props) {
               wasn&apos;t able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-secondary max-md:hidden">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap font-medium text-secondary text-xs max-md:hidden">
             (performed by{' '}
             {
               <CustomLink className="underline" href={props.performedBy.link}>

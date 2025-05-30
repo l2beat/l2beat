@@ -16,7 +16,7 @@ export function TableFilters({ entries, className }: Props) {
   return (
     <div
       className={cn(
-        'flex flex-wrap items-center gap-1 max-md:mt-4 max-md:px-4 primary-card:max-md:mt-0 primary-card:max-md:px-0',
+        'flex flex-wrap items-center gap-1 max-md:mt-4 primary-card:max-md:mt-0 max-md:px-4 primary-card:max-md:px-0',
         className,
       )}
     >

@@ -164,7 +164,7 @@ export function MilestoneDrawerContent({
           <Icon className="size-[18px] shrink-0" />
           <span>{tooltipMilestone.title}</span>
         </DialogTitle>
-        <p className="mb-4 ml-6 text-xs text-secondary">
+        <p className="mb-4 ml-6 text-secondary text-xs">
           {formatDate(tooltipMilestone.date.slice(0, 10))}
           {tooltipMilestone.projectName
             ? ` • ${tooltipMilestone.projectName}`
@@ -175,10 +175,10 @@ export function MilestoneDrawerContent({
         </p>
         <CustomLink href={tooltipMilestone.url}>Learn more</CustomLink>
       </DrawerHeader>
-      <DrawerFooter className="flex flex-row items-center justify-between px-0 pb-8 pt-6">
+      <DrawerFooter className="flex flex-row items-center justify-between px-0 pt-6 pb-8">
         <Button
           size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
           onClick={() => setSelectedMilestoneIndex((s) => s - 1)}
           aria-label="Previous milestone"
           disabled={selectedMilestoneIndex === 0}
@@ -191,13 +191,13 @@ export function MilestoneDrawerContent({
         </div>
         <Button
           size="sm"
-          className="h-10 w-[120px] bg-brand px-3 text-sm text-primary-invert disabled:bg-brand/40"
+          className="h-10 w-[120px] bg-brand px-3 text-primary-invert text-sm disabled:bg-brand/40"
           onClick={() => setSelectedMilestoneIndex((s) => s + 1)}
           aria-label="Next milestone"
           disabled={selectedMilestoneIndex === allMilestones.length - 1}
         >
           Next
-          <ChevronIcon className="ml-1 size-3 -rotate-90" />
+          <ChevronIcon className="-rotate-90 ml-1 size-3" />
         </Button>
       </DrawerFooter>
     </>

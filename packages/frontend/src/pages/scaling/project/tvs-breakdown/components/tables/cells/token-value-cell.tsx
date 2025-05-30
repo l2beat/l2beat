@@ -9,7 +9,7 @@ interface Props {
 export function TokenValueCell({ usdValue, syncStatus }: Props) {
   return (
     <SyncStatusWrapper isSynced={syncStatus === undefined}>
-      <div className="text-xs font-bold">
+      <div className="font-bold text-xs">
         ${formatNumberWithCommas(+usdValue)}
       </div>
     </SyncStatusWrapper>

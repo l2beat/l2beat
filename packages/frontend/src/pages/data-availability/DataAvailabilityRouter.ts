@@ -16,7 +16,7 @@ export function createDataAvailabilityRouter(
 ) {
   const router = express.Router()
 
-  router.get('/data-availability', async (_, res) => {
+  router.get('/data-availability', (_req, res) => {
     res.redirect('/data-availability/summary')
   })
 

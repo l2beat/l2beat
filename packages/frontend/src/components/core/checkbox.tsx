@@ -24,7 +24,7 @@ const Checkbox = ({
     <label
       htmlFor={usedId}
       className={cn(
-        'flex h-8 w-max cursor-pointer select-none items-center space-x-2 rounded-lg py-1 pl-2 pr-3',
+        'flex h-8 w-max cursor-pointer select-none items-center space-x-2 rounded-lg py-1 pr-3 pl-2',
         'bg-surface-primary primary-card:bg-surface-secondary',
         props.disabled && 'cursor-not-allowed opacity-50',
         className,
@@ -59,7 +59,7 @@ const Checkbox = ({
           />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
-      <div className="whitespace-pre text-xs font-medium leading-none md:text-sm">
+      <div className="whitespace-pre font-medium text-xs leading-none md:text-sm">
         {children}
       </div>
     </label>

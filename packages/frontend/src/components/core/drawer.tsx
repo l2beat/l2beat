@@ -82,7 +82,7 @@ const DrawerTitle = ({
   <DrawerPrimitive.Title
     ref={ref}
     className={cn(
-      'mb-4 text-3xl font-bold leading-normal tracking-tight',
+      'mb-4 font-bold text-3xl leading-normal tracking-tight',
       className,
     )}
     {...props}

@@ -31,14 +31,14 @@ export function TvsChartHeader({
   return (
     <header className="flex justify-between text-base">
       <div>
-        <h1 className="text-xl font-bold md:text-2xl">
+        <h1 className="font-bold text-xl md:text-2xl">
           Total value secured
           <span className="max-md:hidden"> stacked by type</span>
         </h1>
         <ChartTimeRange range={timeRange} />
       </div>
       <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right text-xl font-bold md:text-2xl">
+        <div className="whitespace-nowrap text-right font-bold text-xl md:text-2xl">
           {value === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32 md:my-1.5 md:h-6" />
           ) : (
@@ -48,7 +48,7 @@ export function TvsChartHeader({
         {change === undefined ? (
           <Skeleton className="my-[3px] h-3.5 w-32 lg:my-1 lg:h-4" />
         ) : (
-          <p className="whitespace-nowrap text-right text-xs font-medium text-secondary lg:text-base">
+          <p className="whitespace-nowrap text-right font-medium text-secondary text-xs lg:text-base">
             {changeOverTime} / {tvsRangeToReadable(range)}
           </p>
         )}

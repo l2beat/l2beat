@@ -27,9 +27,9 @@ export function MarkdownSection({
   return (
     <ProjectSection {...projectSectionProps}>
       {diagram ? (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {diagram.caption}
           </figcaption>
         </figure>

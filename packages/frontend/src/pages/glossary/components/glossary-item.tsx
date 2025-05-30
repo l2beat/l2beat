@@ -15,7 +15,7 @@ export function GlossaryItem(props: Props) {
       <div className="group flex items-center gap-2 pb-2 text-primary">
         <a
           href={`#${props.entry.id}`}
-          className="flex items-center gap-2 text-2xl font-bold leading-[115%] no-underline"
+          className="flex items-center gap-2 font-bold text-2xl leading-[115%] no-underline"
         >
           {props.entry.data.term}
           {props.entry.data.isSpicy && (
@@ -24,12 +24,12 @@ export function GlossaryItem(props: Props) {
         </a>
         <CopyButton
           toCopy={`https://l2beat.com/glossary#${props.entry.id}`}
-          className="md:hidden md:group-hover:block md:group-hover:animate-in md:group-hover:fade-in-0"
+          className="md:group-hover:fade-in-0 md:hidden md:group-hover:block md:group-hover:animate-in"
           iconClassName="size-5"
         />
       </div>
 
-      <p className="text-base font-normal leading-[170%] tracking-[-0.16px] text-secondary">
+      <p className="font-normal text-base text-secondary leading-[170%] tracking-[-0.16px]">
         {props.entry.data.definition}
       </p>
     </section>

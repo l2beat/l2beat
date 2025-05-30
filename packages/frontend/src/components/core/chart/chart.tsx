@@ -46,17 +46,17 @@ const chartContainerClassNames = cn(
   'group relative',
   "flex aspect-video justify-center text-xs [&_.recharts-sector[stroke='#fff']]:stroke-transparent [&_.recharts-sector]:outline-none [&_.recharts-surface]:outline-none",
   // Tooltip cursor line
-  '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary [&_.recharts-curve.recharts-tooltip-cursor]:stroke-2',
+  '[&_.recharts-curve.recharts-tooltip-cursor]:stroke-2 [&_.recharts-curve.recharts-tooltip-cursor]:stroke-primary',
   // Tooltip cursor bar
   '[&_.recharts-rectangle.recharts-tooltip-cursor]:fill-primary/25',
   // Tooltip
-  '[&_.recharts-tooltip-wrapper]:z-110 [&_.recharts-tooltip-wrapper]:!transition-none',
+  '[&_.recharts-tooltip-wrapper]:!transition-none [&_.recharts-tooltip-wrapper]:z-110',
   // Active dots
   "[&_.recharts-dot[stroke='#fff']]:fill-primary [&_.recharts-dot[stroke='#fff']]:stroke-none [&_.recharts-layer]:outline-none",
   // Cartesian grid line
   "[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/25 dark:[&_.recharts-cartesian-grid_line[stroke='#ccc']]:stroke-primary/40",
   // Cartesian X axis tick text
-  '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
+  '[&_.xAxis_.recharts-cartesian-axis-tick_text]:fill-secondary [&_.xAxis_.recharts-cartesian-axis-tick_text]:font-medium [&_.xAxis_.recharts-cartesian-axis-tick_text]:text-3xs [&_.xAxis_.recharts-cartesian-axis-tick_text]:leading-none',
   // Cartesian Y axis tick text
   '[&_.yAxis_.recharts-cartesian-axis-tick_text]:z-100 [&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/50 [&_.yAxis_.recharts-cartesian-axis-tick_text]:text-sm dark:[&_.yAxis_.recharts-cartesian-axis-tick_text]:fill-primary/70',
   // Polar grid
@@ -127,7 +127,7 @@ function ChartContainer<T extends { timestamp: number }>({
           <ChartLoader
             className={cn(
               'absolute inset-x-0 m-auto select-none opacity-40',
-              'top-[calc(50%_-_5px)] -translate-y-1/2 group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
+              '-translate-y-1/2 top-[calc(50%_-_5px)] group-has-[.recharts-legend-wrapper]:top-[calc(50%_-_11px)]',
               loaderClassName,
             )}
           />
@@ -137,7 +137,7 @@ function ChartContainer<T extends { timestamp: number }>({
           <Logo
             animated={false}
             className={cn(
-              'pointer-events-none absolute bottom-12 right-3 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
+              'pointer-events-none absolute right-3 bottom-12 h-8 w-20 opacity-50 group-has-[.recharts-legend-wrapper]:bottom-14',
               logoClassName,
             )}
           />
@@ -225,7 +225,7 @@ function ChartLegendContent({
               type={itemConfig.indicatorType}
               backgroundColor={itemConfig.color}
             />
-            <span className="text-2xs font-medium leading-none tracking-[-0.2px] text-secondary">
+            <span className="font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
               {itemConfig.legendLabel ?? itemConfig.label}
             </span>
           </div>

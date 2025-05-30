@@ -48,7 +48,7 @@ async function benchmark() {
     const min = Math.min(...durations)
     const max = Math.max(...durations)
     const mean = durations.reduce((a, b) => a + b, 0) / durations.length
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const median = durations.sort()[Math.floor(durations.length / 2)]!
 
     result[name] = { min, max, mean, median }

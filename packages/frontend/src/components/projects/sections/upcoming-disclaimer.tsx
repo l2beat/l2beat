@@ -6,7 +6,7 @@ import { Callout } from '../../callout'
 export function UpcomingDisclaimer() {
   return (
     <Callout
-      className="rounded-none bg-blue-600/20 p-4 max-md:-mx-4 md:mt-16 md:rounded-lg"
+      className="max-md:-mx-4 rounded-none bg-blue-600/20 p-4 md:mt-16 md:rounded-lg"
       icon={<InfoIcon className="mt-1" variant="blue" />}
       body={
         <>

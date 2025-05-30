@@ -46,7 +46,7 @@ export function MilestonesAndIncidentsSection({
               className="group mx-auto mt-1 flex w-min justify-between gap-2.5"
               variant="outline"
             >
-              <span className="w-[76px] whitespace-pre text-left text-sm font-bold">
+              <span className="w-[76px] whitespace-pre text-left font-bold text-sm">
                 {isOpen ? 'Show less' : 'Show more'}
               </span>
               <ChevronIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
@@ -74,7 +74,7 @@ function MilestonesBase(props: {
             <div key={i} className="relative pb-7">
               <div
                 className={cn(
-                  'absolute left-[-1.445rem] top-3 h-full w-[1.7px] bg-gradient-to-b dark:w-px',
+                  'absolute top-3 left-[-1.445rem] h-full w-[1.7px] bg-gradient-to-b dark:w-px',
                   milestone.type === 'general' && [
                     'from-green-400 dark:from-green-500',
                     milestone.next?.type === 'general' &&
@@ -98,14 +98,14 @@ function MilestonesBase(props: {
               {isLast && (
                 <div
                   className={cn(
-                    'absolute left-[-1.445rem] top-3 h-full w-[1.7px] transition-opacity duration-300 dark:w-px',
+                    'absolute top-3 left-[-1.445rem] h-full w-[1.7px] transition-opacity duration-300 dark:w-px',
                     'bg-gradient-to-b from-transparent to-gray-100 dark:to-zinc-900',
                     props.isOpen === true && 'opacity-0',
                   )}
                 />
               )}
-              <Icon className="absolute -left-8" />
-              <p className="text-lg font-bold leading-none">
+              <Icon className="-left-8 absolute" />
+              <p className="font-bold text-lg leading-none">
                 {milestone.title}
               </p>
               <p className="text-sm dark:text-gray-400">

@@ -15,7 +15,7 @@ export function BridgesMvpWarning({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'text-balance bg-yellow-500 p-2 text-center text-base font-medium leading-[1.15] text-black',
+        'text-balance bg-yellow-500 p-2 text-center font-medium text-base text-black leading-[1.15]',
         className,
       )}
     >

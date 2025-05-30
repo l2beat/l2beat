@@ -1,4 +1,3 @@
-import type { WarningWithSentiment } from '@l2beat/config'
 import type { UnixTime } from '@l2beat/shared-pure'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
 import { ValueSecuredBreakdown } from '~/components/breakdown/value-secured-breakdown'
@@ -16,15 +15,6 @@ import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-
 import { cn } from '~/utils/cn'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-
-interface ValueSecuredBreakdown {
-  totalChange: number
-  total: number
-  canonical: number
-  external: number
-  native: number
-  warning: WarningWithSentiment | undefined
-}
 
 export interface ValueSecuredSummaryProps {
   tvs: NonNullable<ProjectScalingEntry['header']['tvs']> | undefined
@@ -67,17 +57,17 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
       )}
     >
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
-        <span className="text-lg font-medium md:hidden md:text-xs md:font-normal md:text-gray-500 md:dark:text-gray-600">
+        <span className="font-medium text-lg md:hidden md:font-normal md:text-gray-500 md:text-xs md:dark:text-gray-600">
           Value secured
         </span>
-        <span className="hidden text-lg font-bold text-secondary md:block md:text-xs md:font-normal">
+        <span className="hidden font-bold text-lg text-secondary md:block md:font-normal md:text-xs">
           TVS
         </span>
 
         <div className="flex items-center gap-1">
           {params.breakdown.total > 0 || !!props.archivedAt ? (
             <ValueWithPercentageChange
-              className="text-lg font-bold md:text-2xl md:leading-none"
+              className="font-bold text-lg md:text-2xl md:leading-none"
               changeClassName="text-xs font-bold md:text-base md:w-[58px]"
               change={params.breakdown.totalChange}
             >
@@ -112,7 +102,7 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
         className="my-3 h-1 w-full md:my-0 md:hidden [@media(min-width:1000px)]:flex"
       />
       <VerticalSeparator className="row-span-2 hidden w-px max-md:border-none md:block [@media(min-width:1000px)]:hidden" />
-      <div className="row-span-2 flex h-1/2 flex-wrap gap-3 @container md:h-full md:gap-0 [@media(min-width:1000px)]:h-1/2">
+      <div className="@container row-span-2 flex h-1/2 flex-wrap gap-3 md:h-full md:gap-0 [@media(min-width:1000px)]:h-1/2">
         {tvsStats.map((s, i) => (
           <div
             key={i}
@@ -120,15 +110,15 @@ export function ValueSecuredSummary(props: ValueSecuredSummaryProps) {
           >
             <div className="flex items-center gap-1">
               {s.icon}
-              <span className="text-xs leading-none text-secondary">
+              <span className="text-secondary text-xs leading-none">
                 <span className="inline md:hidden">{s.label}</span>
                 <span className="hidden md:inline">{s.shortLabel}</span>
               </span>
             </div>
-            <span className="whitespace-nowrap text-base font-medium leading-none">
+            <span className="whitespace-nowrap font-medium text-base leading-none">
               {s.value}
               {params.breakdown.total > 0 && (
-                <span className="hidden w-[54px] text-right font-normal text-secondary @[210px]:inline-block">
+                <span className="@[210px]:inline-block hidden w-[54px] text-right font-normal text-secondary">
                   {` (${s.usage}%)`}
                 </span>
               )}

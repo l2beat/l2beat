@@ -47,7 +47,7 @@ export function L3RiskAnalysisSection({
 
   return (
     <ProjectSection {...sectionProps} isUnderReview={isUnderReview}>
-      <div className="font-normal dark:text-white/80 md:text-lg md:leading-7">
+      <div className="font-normal md:text-lg md:leading-7 dark:text-white/80">
         The L3 risks depend on the individual properties of L3 and those of the
         host chain combined.
       </div>
@@ -80,7 +80,7 @@ export function L3RiskAnalysisSection({
       <CombinedRiskTable l2={l2} l3={l3} combined={combined} />
       <div className="mt-8 flex flex-col gap-6 md:flex-row">
         <RosetteTile>
-          <span className="w-full text-xs font-medium text-primary">
+          <span className="w-full font-medium text-primary text-xs">
             L2 & L3 individual risks
           </span>
           <div className="flex items-center justify-between">
@@ -88,7 +88,7 @@ export function L3RiskAnalysisSection({
           </div>
         </RosetteTile>
         <RosetteTile>
-          <span className="w-full text-xs font-medium text-primary">
+          <span className="w-full font-medium text-primary text-xs">
             L3 combined risks
           </span>
           <div className="flex items-center justify-between">
@@ -100,11 +100,11 @@ export function L3RiskAnalysisSection({
           </div>
         </RosetteTile>
       </div>
-      <HorizontalSeparator className="mb-7 mt-6" />
-      <div className="mb-4 text-xl font-bold text-zinc-800 dark:text-white md:text-[28px]">
+      <HorizontalSeparator className="mt-6 mb-7" />
+      <div className="mb-4 font-bold text-xl text-zinc-800 md:text-[28px] dark:text-white">
         L3 {combined ? 'combined' : 'individual'} risks
       </div>
-      <div className="mb-4 text-black/80 dark:text-white/80 md:text-lg">
+      <div className="mb-4 text-black/80 md:text-lg dark:text-white/80">
         The information below reflects{' '}
         {combined ? 'combined L2 & L3' : 'individual L3'} risks.
       </div>
@@ -172,8 +172,8 @@ function CombinedRiskTable(props: {
         <tbody>
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell className="rounded-tl">
-              <span className="text-sm font-medium">{props.l2.name}</span>
-              <div className="text-[13px] font-normal leading-none text-secondary">
+              <span className="font-medium text-sm">{props.l2.name}</span>
+              <div className="font-normal text-[13px] text-secondary leading-none">
                 L2
               </div>
             </HeaderCell>
@@ -183,8 +183,8 @@ function CombinedRiskTable(props: {
           </tr>
           <tr className="[&>td:not(:last-child)]:border-r-0 [&>td]:border-b-0">
             <HeaderCell>
-              <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="text-[13px] font-normal leading-none text-secondary">
+              <span className="font-medium text-xs">{props.l3.name}</span>
+              <div className="font-normal text-[13px] text-secondary leading-none">
                 L3 • Individual
               </div>
             </HeaderCell>
@@ -194,8 +194,8 @@ function CombinedRiskTable(props: {
           </tr>
           <tr className="border-zinc-700 dark:border-zinc-300 [&>td:not(:last-child)]:border-r-0 [&>td]:border-t-2">
             <HeaderCell className="rounded-bl border-t-zinc-700 dark:border-t-zinc-300">
-              <span className="text-xs font-medium">{props.l3.name}</span>
-              <div className="whitespace-nowrap text-[13px] font-normal leading-none text-secondary">
+              <span className="font-medium text-xs">{props.l3.name}</span>
+              <div className="whitespace-nowrap font-normal text-[13px] text-secondary leading-none">
                 L3 • Combined
               </div>
             </HeaderCell>
@@ -230,7 +230,7 @@ function HeaderCell({
   return (
     <td
       className={cn(
-        'border border-divider bg-surface-secondary px-3 py-2 text-[13px] font-bold',
+        'border border-divider bg-surface-secondary px-3 py-2 font-bold text-[13px]',
         className,
       )}
     >

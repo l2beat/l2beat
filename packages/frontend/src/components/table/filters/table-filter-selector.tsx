@@ -116,8 +116,8 @@ function Trigger() {
       <FilterIcon />
       {Object.keys(state).length === 0 ? (
         <>
-          <span className="ml-1.5 text-xs font-medium md:text-sm">Filters</span>
-          <kbd className="ml-1.5 flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-mono text-3xs font-bold text-primary-invert max-md:hidden">
+          <span className="ml-1.5 font-medium text-xs md:text-sm">Filters</span>
+          <kbd className="ml-1.5 flex size-4 select-none items-center justify-center rounded bg-icon-secondary font-bold font-mono text-3xs text-primary-invert max-md:hidden">
             F
           </kbd>
         </>

@@ -70,7 +70,7 @@ export function StageTooltip({
           color="yellow"
           body={emergencyWarning}
           icon={<EmergencyIcon className="size-4" />}
-          className={cn('mb-3 !gap-2 px-3 py-2')}
+          className={cn('!gap-2 mb-3 px-3 py-2')}
         />
       )}
       {stageConfig.stage === 'UnderReview' && (

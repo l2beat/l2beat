@@ -21,7 +21,7 @@ export function GovernancePublicationPage({ publication, ...props }: Props) {
           <HorizontalSeparator className="my-8" />
           <div className="mx-auto mt-8 max-w-[720px] md:pt-8">
             {publication.description && (
-              <p className="mb-12 font-roboto-serif text-xl font-light leading-[1.6] opacity-80">
+              <p className="mb-12 font-light font-roboto-serif text-xl leading-[1.6] opacity-80">
                 {publication.description}
               </p>
             )}
@@ -43,7 +43,7 @@ function PublicationHeader({
 }: { publication: GovernancePublicationEntry }) {
   return (
     <div>
-      <p className="subtitle-12 uppercase text-brand">
+      <p className="subtitle-12 text-brand uppercase">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}
       </p>

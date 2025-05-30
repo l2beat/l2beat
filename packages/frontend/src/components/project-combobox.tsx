@@ -71,7 +71,7 @@ export function ProjectCombobox({
                       projects.includes(project) ? 'opacity-100' : 'opacity-0',
                     )}
                   />
-                  <span className="text-sm font-bold">{project}</span>
+                  <span className="font-bold text-sm">{project}</span>
                 </CommandItem>
               ))}
             </CommandGroup>

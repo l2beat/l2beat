@@ -22,10 +22,10 @@ export function PercentChange({ value, className, textClassName }: Props) {
       )}
     >
       {isMore && (
-        <TrendArrowUpIcon className="absolute left-0.5 top-1/2 -translate-y-1/2" />
+        <TrendArrowUpIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
       )}
       {isLess && (
-        <TrendArrowDownIcon className="absolute left-0.5 top-1/2 -translate-y-1/2" />
+        <TrendArrowDownIcon className="-translate-y-1/2 absolute top-1/2 left-0.5" />
       )}
       <span
         className={cn(

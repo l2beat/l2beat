@@ -55,7 +55,7 @@ export function RealPizzaRosetteIcon({
           cy="90"
           r="89.566"
           className={cn(
-            'stroke-divider stroke-2',
+            'stroke-2 stroke-divider',
             background === 'header' && 'fill-header-secondary',
             background === 'surface' && 'fill-surface-secondary',
           )}

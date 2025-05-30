@@ -148,7 +148,7 @@ function TokenGroup({ heading, tokens, value, onSelect }: TokenGroupProps) {
           </CommandItem>
         ))}
         {moreCount > 0 && (
-          <p className="ml-7 px-2 py-1.5 text-xs font-medium">
+          <p className="ml-7 px-2 py-1.5 font-medium text-xs">
             and {moreCount} more...
           </p>
         )}
@@ -172,7 +172,7 @@ function TokenItem({ token }: TokenItemProps) {
         height={18}
         className="rounded-full"
       />
-      <span className="text-sm font-bold">{token.name}</span>
+      <span className="font-bold text-sm">{token.name}</span>
       <span className="max-xs:hidden">({token.symbol})</span>
     </div>
   )

@@ -11,7 +11,7 @@ export function OtherMigrationTooltipContent({
 }: Props) {
   return (
     <div className="space-y-2">
-      <p className="text-lg font-bold leading-none text-primary">
+      <p className="font-bold text-lg text-primary leading-none">
         Recategorisation
       </p>
       <p className="text-[13px]">The project will be moved to Others in:</p>
@@ -21,7 +21,7 @@ export function OtherMigrationTooltipContent({
         className="mx-auto w-full"
         withBackground
       />
-      <p className="!mt-4 text-base font-bold leading-none text-primary">
+      <p className="!mt-4 font-bold text-base text-primary leading-none">
         Reasons
       </p>
       <p className="text-[13px]">
@@ -34,7 +34,7 @@ export function OtherMigrationTooltipContent({
             key={reason.label}
             color="red"
             body={reason.shortDescription}
-            className="px-4 py-2 text-xs font-bold text-primary"
+            className="px-4 py-2 font-bold text-primary text-xs"
             icon={<CloseIcon className="mt-1 size-3 fill-negative" />}
           />
         )

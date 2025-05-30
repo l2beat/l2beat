@@ -33,7 +33,7 @@ export function ProjectNameCell({
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
-        <PrimaryValueCell className="font-bold !leading-none">
+        <PrimaryValueCell className="!leading-none font-bold">
           <NameWithProjectInfoTooltip
             withInfoTooltip={withInfoTooltip}
             project={project}
@@ -52,7 +52,7 @@ export function ProjectNameCell({
         {project.statuses?.redWarning && (
           <Tooltip>
             <TooltipTrigger>
-              <ShieldIcon className="relative -top-px size-3.5 fill-red-300 md:size-4" />
+              <ShieldIcon className="-top-px relative size-3.5 fill-red-300 md:size-4" />
             </TooltipTrigger>
             <TooltipContent>{project.statuses.redWarning}</TooltipContent>
           </Tooltip>
@@ -70,7 +70,7 @@ export function ProjectNameCell({
         {project.statuses?.yellowWarning && (
           <Tooltip>
             <TooltipTrigger>
-              <ShieldIcon className="relative -top-px size-3.5 fill-yellow-700 dark:fill-yellow-300 md:size-4" />
+              <ShieldIcon className="-top-px relative size-3.5 fill-yellow-700 md:size-4 dark:fill-yellow-300" />
             </TooltipTrigger>
             <TooltipContent>
               <Markdown inline ignoreGlossary>
@@ -91,7 +91,7 @@ export function ProjectNameCell({
           )}
       </div>
       {project.nameSecondLine && (
-        <span className="block text-[0.8125rem] font-medium leading-[0.9375rem] text-secondary">
+        <span className="block font-medium text-[0.8125rem] text-secondary leading-[0.9375rem]">
           {project.nameSecondLine}
         </span>
       )}
@@ -126,7 +126,7 @@ function NameWithProjectInfoTooltip({
         <TooltipContent className="flex flex-col gap-2">
           <span className="heading-18">What is {projectName}?</span>
           <p>{project.description}</p>
-          <div className="flex !max-w-screen-xs flex-row flex-wrap">
+          <div className="!max-w-screen-xs flex flex-row flex-wrap">
             {project.badges?.map((badge, key) => (
               <ProjectBadge key={key} badge={badge} className="!h-16" />
             ))}

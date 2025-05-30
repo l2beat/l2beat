@@ -9,7 +9,7 @@ interface Props {
 export function TokenAmountCell({ amount, syncStatus }: Props) {
   return (
     <SyncStatusWrapper isSynced={syncStatus === undefined}>
-      <div className="text-xs font-medium">
+      <div className="font-medium text-xs">
         {formatNumberWithCommas(+amount)}
       </div>
     </SyncStatusWrapper>

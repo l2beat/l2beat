@@ -76,7 +76,7 @@ export function ShowMoreText({
           {isOverflowing && (
             <button
               className={cn(
-                'absolute right-0 top-0 cursor-pointer pl-1 underline',
+                'absolute top-0 right-0 cursor-pointer pl-1 underline',
                 'hidden md:block',
                 textClassName,
               )}
@@ -99,10 +99,10 @@ export function ShowMoreText({
               </DrawerTrigger>
               <DrawerContent className="pb-8">
                 <DrawerHeader>
-                  <DrawerTitle className="mb-2.5 text-lg font-semibold text-primary">
+                  <DrawerTitle className="mb-2.5 font-semibold text-lg text-primary">
                     {pageTitle}
                   </DrawerTitle>
-                  <DrawerDescription className="text-xs font-normal text-primary">
+                  <DrawerDescription className="font-normal text-primary text-xs">
                     {children}
                   </DrawerDescription>
                 </DrawerHeader>

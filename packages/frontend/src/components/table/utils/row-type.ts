@@ -18,7 +18,7 @@ export function getRowType(
   if (!!entry.statuses?.verificationWarning || !!entry.statuses?.redWarning) {
     return 'unverified'
   }
-  if (!!entry.statuses?.underReview) {
+  if (entry.statuses?.underReview) {
     return 'under-review'
   }
 }

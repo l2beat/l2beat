@@ -82,7 +82,7 @@ export function DesktopProjectNavigation({
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="text-xl font-bold lg:text-2xl">
+            <span className="font-bold text-xl lg:text-2xl">
               {project.title}
             </span>
           </div>
@@ -206,7 +206,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center text-xs font-bold',
+        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center font-bold text-xs',
         props.selected
           ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
           : 'bg-surface-tertiary',
@@ -234,7 +234,7 @@ function NavigationSubsectionEntry(props: {
           {props.selected && (
             <div className="absolute h-[18px] w-[5px] rounded-full bg-gradient-to-r from-purple-100 to-pink-100" />
           )}
-          <div className="h-full border-l border-divider" />
+          <div className="h-full border-divider border-l" />
         </div>
         {/* Right side */}
         <div

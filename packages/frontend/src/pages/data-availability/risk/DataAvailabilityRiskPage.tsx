@@ -36,7 +36,7 @@ export function DataAvailabilityRiskPage({
     Padding from directory tabs can not be removed because it is needed
     for the tabs to be sticky
   */}
-          <div className="flex flex-col gap-6 lg:-mt-4">
+          <div className="lg:-mt-4 flex flex-col gap-6">
             <DirectoryTabs defaultValue="public">
               <DirectoryTabsList>
                 <DirectoryTabsTrigger value="public">

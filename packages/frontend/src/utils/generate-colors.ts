@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import { assert } from '@l2beat/shared-pure'
+
 /**
  * Colorblind friendly color generation strategy:
  * - 11 colors is predefined in the base palette (Okabe-Ito + CARTO Safe)
@@ -96,9 +97,10 @@ function hexToLab(hex: string): Color {
     const fv = v / 255
     return fv <= 0.04045 ? fv / 12.92 : Math.pow((fv + 0.055) / 1.055, 2.4)
   })
-  const X = R! * 0.4124 + G! * 0.3576 + B! * 0.1805
-  const Y = R! * 0.2126 + G! * 0.7152 + B! * 0.0722
-  const Z = R! * 0.0193 + G! * 0.1192 + B! * 0.9505
+  assert(R && G && B, 'R, G, B are required')
+  const X = R * 0.4124 + G * 0.3576 + B * 0.1805
+  const Y = R * 0.2126 + G * 0.7152 + B * 0.0722
+  const Z = R * 0.0193 + G * 0.1192 + B * 0.9505
   // Normalize for D65 white point
   const [Xn, Yn, Zn] = [0.95047, 1.0, 1.08883]
   const fx = X / Xn > 0.008856 ? Math.cbrt(X / Xn) : (7.787 * X) / Xn + 16 / 116
@@ -138,7 +140,8 @@ function labToHex(color: Color): string {
     return Math.round(c * 255)
   })
   const hex = (x: number) => x.toString(16).padStart(2, '0')
-  return `#${hex(r!)}${hex(g!)}${hex(b!)}`
+  assert(r && g && b, 'r, g, b are required')
+  return `#${hex(r)}${hex(g)}${hex(b)}`
 }
 
 // Calculate CIEDE2000-like distance (using simple Euclidean in Lab as approximation)

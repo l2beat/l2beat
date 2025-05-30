@@ -23,8 +23,8 @@ export function MultisigReportPage({ multisigReportImage, ...props }: Props) {
           <main className="flex flex-col md:items-center">
             <ReportBanner image={multisigReportImage} />
             <ReportDownloadButton fileUrl={multisigReportUrl} />
-            <div className="mb-6 mt-12 w-full leading-7">
-              <h2 className="mb-3 text-2xl font-bold md:mb-5 md:text-4xl">
+            <div className="mt-12 mb-6 w-full leading-7">
+              <h2 className="mb-3 font-bold text-2xl md:mb-5 md:text-4xl">
                 About the report
               </h2>
               <div>

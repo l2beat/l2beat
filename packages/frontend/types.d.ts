@@ -1,8 +1,8 @@
 import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
-import {} from 'react/canary'
-
+import type { Plausible } from '~/hooks/use-tracking'
+import type { SsrData } from '../pages/ClientPageRouter'
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
     cellClassName?: string
@@ -25,5 +25,15 @@ declare module '@tanstack/react-table' {
      * Columns marked as virtual will not be rendered in the table and must be rendered by the parent row spans
      */
     virtual?: boolean
+  }
+}
+
+declare global {
+  var __FIX_SSR_URL__: string
+
+  interface Window {
+    __SSR_DATA__: SsrData
+    __ENV__: Record<string, string>
+    plausible: Plausible
   }
 }

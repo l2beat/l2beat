@@ -24,17 +24,17 @@ export function Verifiers(props: Props) {
     <Accordion type="multiple" asChild>
       <table className="w-full">
         <thead>
-          <tr className="border-b border-divider align-bottom text-secondary">
-            <th className="px-4 py-2 text-start text-xs font-medium uppercase">
+          <tr className="border-divider border-b align-bottom text-secondary">
+            <th className="px-4 py-2 text-start font-medium text-xs uppercase">
               Name
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase md:table-cell">
+            <th className="hidden py-2 pr-4 text-start font-medium text-xs uppercase md:table-cell">
               Verifier
             </th>
-            <th className="py-2 pr-4 text-start text-xs font-medium uppercase">
+            <th className="py-2 pr-4 text-start font-medium text-xs uppercase">
               Verification status
             </th>
-            <th className="hidden py-2 pr-4 text-start text-xs font-medium uppercase md:table-cell">
+            <th className="hidden py-2 pr-4 text-start font-medium text-xs uppercase md:table-cell">
               Last used
             </th>
             <th />
@@ -47,13 +47,13 @@ export function Verifiers(props: Props) {
             asChild
           >
             <tbody
-              className="border-b border-divider transition-colors last:border-none"
+              className="border-divider border-b transition-colors last:border-none"
               key={item.contractAddress.toString()}
             >
               <AccordionHeader asChild>
                 <AccordionTrigger asChild>
                   <tr className="group/trigger h-14 cursor-pointer">
-                    <td className="px-4 text-base font-medium md:text-lg">
+                    <td className="px-4 font-medium text-base md:text-lg">
                       {item.name}
                     </td>
                     <td className="hidden pr-4 text-sm md:table-cell md:text-base">
@@ -96,7 +96,7 @@ export function Verifiers(props: Props) {
                       </p>
                     ) : null}
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="mb-2 font-medium text-secondary text-xs">
                         Verifier
                       </p>
                       <EtherscanLink
@@ -105,13 +105,13 @@ export function Verifiers(props: Props) {
                       />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="mb-2 font-medium text-secondary text-xs">
                         Last used
                       </p>
                       <LastUsedCell days={item.lastUsedDaysAgo} />
                     </div>
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="mb-2 font-medium text-secondary text-xs">
                         Description
                       </p>
                       <Markdown className="text-xs">
@@ -128,10 +128,10 @@ export function Verifiers(props: Props) {
                     className="mt-1 hidden w-[90%] space-y-5 px-4 pb-5 md:table-cell"
                   >
                     <div>
-                      <p className="mb-2 text-xs font-medium text-secondary">
+                      <p className="mb-2 font-medium text-secondary text-xs">
                         Description
                       </p>
-                      <Markdown className="text-xs font-medium text-zinc-900/80 dark:text-white/80">
+                      <Markdown className="font-medium text-xs text-zinc-900/80 dark:text-white/80">
                         {item.description}
                       </Markdown>
                     </div>

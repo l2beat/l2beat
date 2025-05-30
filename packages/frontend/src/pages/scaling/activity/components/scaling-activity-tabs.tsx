@@ -96,7 +96,7 @@ export function ScalingActivityTabs(props: Props) {
               milestones={props.milestones}
               type="Rollups"
             />
-            <HorizontalSeparator className="mb-3 mt-5" />
+            <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.rollups} rollups />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -112,7 +112,7 @@ export function ScalingActivityTabs(props: Props) {
               hideScalingFactor
               type="ValidiumsAndOptimiums"
             />
-            <HorizontalSeparator className="mb-3 mt-5" />
+            <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
@@ -125,7 +125,7 @@ export function ScalingActivityTabs(props: Props) {
               hideScalingFactor
               type="Others"
             />
-            <HorizontalSeparator className="mb-3 mt-5" />
+            <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.others} />
             <OtherMigrationTabNotice
               projectsToBeMigrated={projectToBeMigratedToOthers}

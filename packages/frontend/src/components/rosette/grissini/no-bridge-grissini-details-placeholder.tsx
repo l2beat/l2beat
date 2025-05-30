@@ -35,8 +35,8 @@ export function NoBridgeGrissiniDetailsPlaceholder({
         />
       </svg>
 
-      <div className="text-lg font-bold">{TITLE}</div>
-      <div className="text-xs font-medium">{DESCRIPTION}</div>
+      <div className="font-bold text-lg">{TITLE}</div>
+      <div className="font-medium text-xs">{DESCRIPTION}</div>
     </div>
   )
 }
@@ -78,7 +78,7 @@ export function InlinedNoBridgeGrissiniDetailsPlaceholder({
         </div>
         <div
           className={cn(
-            'text-[13px] font-medium leading-none',
+            'font-medium text-[13px] leading-none',
             sentimentToTextColor('neutral'),
           )}
         >

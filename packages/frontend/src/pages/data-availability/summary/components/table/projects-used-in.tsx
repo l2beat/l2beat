@@ -47,7 +47,7 @@ export function ProjectsUsedIn({
   ) : (
     <Tooltip>
       <TooltipTrigger asChild>
-        <span className="cursor-default text-2xs leading-none text-zinc-800 dark:text-gray-50">
+        <span className="cursor-default text-2xs text-zinc-800 leading-none dark:text-gray-50">
           +{rest.length} more
         </span>
       </TooltipTrigger>
@@ -92,7 +92,7 @@ export function ProjectsUsedIn({
             )}
             <TooltipContent>
               <p className="font-bold">{project.name}</p>
-              <p className="text-xs text-secondary">
+              <p className="text-secondary text-xs">
                 Click to view project page
               </p>
             </TooltipContent>

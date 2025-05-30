@@ -37,7 +37,7 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', async (_, res) => {
+  router.get('/', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 

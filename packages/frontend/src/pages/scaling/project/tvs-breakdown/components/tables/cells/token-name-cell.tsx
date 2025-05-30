@@ -22,7 +22,7 @@ export function TokenNameCell({
         className="size-5 rounded-full"
         alt={`Icon of ${symbol}`}
       />
-      <span className="text-xs font-medium">
+      <span className="font-medium text-xs">
         {symbol} {isGasToken && '(gas)'}
       </span>
       {syncStatus && <NotSyncedIcon content={syncStatus} />}

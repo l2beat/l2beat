@@ -26,7 +26,7 @@ export async function getProjectsChangeReport() {
     return getProjectsChangeReportMock()
   }
 
-  return getProjectsChangeReportWithFns()
+  return await getProjectsChangeReportWithFns()
 }
 
 async function getProjectsChangeReportWithFns() {

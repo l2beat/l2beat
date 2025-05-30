@@ -14,7 +14,7 @@ export function createBridgesRouter(
 ) {
   const router = express.Router()
 
-  router.get('/bridges', async (req, res) => {
+  router.get('/bridges', (_req, res) => {
     res.redirect('/bridges/summary')
   })
 

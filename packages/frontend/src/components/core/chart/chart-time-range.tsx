@@ -11,7 +11,7 @@ export function ChartTimeRange({ range }: Props) {
   }
 
   return (
-    <p className="flex items-center text-xs font-medium text-secondary lg:text-base">
+    <p className="flex items-center font-medium text-secondary text-xs lg:text-base">
       {formatRange(...range)}
     </p>
   )

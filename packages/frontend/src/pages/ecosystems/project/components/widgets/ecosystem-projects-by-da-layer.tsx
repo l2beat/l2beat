@@ -33,15 +33,15 @@ export function EcosystemProjectsByDaLayer({
             )}
           </tbody>
         </table>
-        <div className="relative mt-3 rounded bg-surface-secondary p-4 sm:-mt-2">
-          <div className="absolute left-0 top-2.5 -translate-x-full max-sm:hidden">
-            <div className="size-0 border-y-8 border-r-[10px] border-y-transparent border-r-surface-secondary"></div>
+        <div className="sm:-mt-2 relative mt-3 rounded bg-surface-secondary p-4">
+          <div className="-translate-x-full absolute top-2.5 left-0 max-sm:hidden">
+            <div className="size-0 border-y-8 border-y-transparent border-r-[10px] border-r-surface-secondary"></div>
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="text-2xs font-medium text-secondary">
+            <h3 className="font-medium text-2xs text-secondary">
               Blobs posted
             </h3>
-            <p className="text-sm font-bold">
+            <p className="font-bold text-sm">
               {formatBytes(blobsData.totalData)}
             </p>
           </div>

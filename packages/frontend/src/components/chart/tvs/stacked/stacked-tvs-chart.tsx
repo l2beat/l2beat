@@ -117,7 +117,7 @@ function CustomTooltip({
   const reversedPayload = [...payload].reverse()
   return (
     <ChartTooltipWrapper>
-      <div className="flex w-44 flex-col xs:!w-56">
+      <div className="xs:!w-56 flex w-44 flex-col">
         <div className="label-value-14-medium mb-3 text-secondary">
           {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
         </div>

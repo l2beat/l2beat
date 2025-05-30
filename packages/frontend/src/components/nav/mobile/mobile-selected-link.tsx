@@ -15,7 +15,7 @@ export function MobileSelectedLink({ groups }: { groups: NavGroup[] }) {
   return (
     <>
       <VerticalSeparator className="h-10" />
-      <span className="text-base font-bold">{selectedGroup.title}</span>
+      <span className="font-bold text-base">{selectedGroup.title}</span>
     </>
   )
 }

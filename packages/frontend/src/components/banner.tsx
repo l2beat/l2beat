@@ -23,7 +23,7 @@ export function Banner({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        'relative z-10 flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white dark:text-white md:flex-row md:gap-3',
+        'relative z-10 flex w-full flex-col items-center justify-center gap-1 bg-gradient-to-r from-[#7F39B6] to-[#CD1BD3] py-1.5 text-white md:flex-row md:gap-3 dark:text-white',
         className,
       )}
     >
@@ -50,7 +50,7 @@ function BannerActionButton() {
       className="text-white dark:text-white"
     >
       <div className="flex items-center justify-center gap-1 rounded-lg border border-[#9360BC] bg-[#53227A] px-5 py-1 transition-colors duration-200 hover:bg-[#53227A]/80">
-        <span className="text-xs font-medium">Read article</span>
+        <span className="font-medium text-xs">Read article</span>
       </div>
     </CustomLink>
   )

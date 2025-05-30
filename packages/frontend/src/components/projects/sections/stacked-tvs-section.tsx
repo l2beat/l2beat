@@ -75,7 +75,7 @@ export function TvsBreakdownButton({
     <a
       href={tvsBreakdownUrl}
       className={cn(
-        'text-xs font-bold leading-none text-primary md:text-white',
+        'font-bold text-primary text-xs leading-none md:text-white',
         'mt-4 flex w-full justify-center rounded-md border border-brand bg-transparent from-purple-100 to-pink-100 p-3 md:mt-0 md:w-fit md:border-0 md:bg-gradient-to-r md:py-2',
         'ring-brand ring-offset-1 ring-offset-background focus:outline-none focus:ring-2',
       )}

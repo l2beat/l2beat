@@ -11,7 +11,7 @@ export function EcosystemChartTimeRange({ range }: Props) {
   }
 
   return (
-    <p className="text-xs font-medium text-secondary">
+    <p className="font-medium text-secondary text-xs">
       {formatRange(...range)}
     </p>
   )

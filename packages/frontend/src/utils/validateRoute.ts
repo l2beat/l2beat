@@ -11,10 +11,10 @@ export function validateRoute<
   query?: TQuery
   body?: TBody
 }): RequestHandler<z.infer<TParams>, unknown, z.infer<TBody>, z.infer<TQuery>> {
-  return async (req, res, next): Promise<void> => {
+  return (req, res, next) => {
     for (const key in schema) {
       assert(key === 'params' || key === 'query' || key === 'body')
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      // biome-ignore lint/style/noNonNullAssertion: we know it's there
       const keySchema = schema[key]!
       const result = keySchema.safeParse(req[key])
       if (!result.success) {

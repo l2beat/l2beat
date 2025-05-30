@@ -206,7 +206,7 @@ export async function getRegularDaProjectSections({
   if (daBridgeItems.length > 0) {
     items.push({
       type: 'Group',
-      sideNavTitle: !!bridge?.daBridge.risks.isNoBridge
+      sideNavTitle: bridge?.daBridge.risks.isNoBridge
         ? 'No DA Bridge'
         : undefined,
       props: {

@@ -103,7 +103,7 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
     <Tooltip>
       <TooltipTrigger>
         <div className="relative ml-1 inline-block size-4">
-          <Icon className="absolute -top-0.5 left-0 size-4" />
+          <Icon className="-top-0.5 absolute left-0 size-4" />
         </div>
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>

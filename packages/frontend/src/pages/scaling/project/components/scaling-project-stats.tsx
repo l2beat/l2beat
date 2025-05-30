@@ -40,7 +40,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
-            className="font-medium !leading-none md:text-lg md:font-bold"
+            className="!leading-none font-medium md:font-bold md:text-lg"
             changeClassName="md:text-base md:font-medium !leading-none"
           >
             {project.header.activity.lastDayUops.toFixed(2)}
@@ -146,7 +146,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-xs leading-normal text-secondary">
+        <span className="text-secondary text-xs leading-normal">
           {props.title}
         </span>
         {props.tooltip && (
@@ -161,7 +161,7 @@ function ProjectStat(props: ProjectStat) {
 
       <span
         className={cn(
-          'text-lg font-medium !leading-none md:font-bold',
+          '!leading-none font-medium text-lg md:font-bold',
           props.valueClassName,
         )}
       >

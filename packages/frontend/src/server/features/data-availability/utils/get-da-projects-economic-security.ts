@@ -7,7 +7,7 @@ export async function getDaProjectsEconomicSecurity(): Promise<ProjectsEconomicS
   if (env.MOCK) {
     return getMockProjectsEconomicSecurityData()
   }
-  return getProjectsEconomicSecurityData()
+  return await getProjectsEconomicSecurityData()
 }
 
 export type ProjectsEconomicSecurity = Record<string, number | undefined>

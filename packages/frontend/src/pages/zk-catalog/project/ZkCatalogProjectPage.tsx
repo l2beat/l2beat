@@ -50,7 +50,7 @@ export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
               ]}
             />
           </MainPageHeader>
-          <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6">
+          <div className="border-divider max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6 max-lg:pt-8">
             <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
               <ProjectHeader
                 icon={projectDetails.icon}
@@ -126,7 +126,7 @@ function HeaderItem({
 }) {
   return (
     <div className="flex items-baseline justify-between md:block">
-      <h3 className="flex items-center gap-1.5 text-xs text-secondary md:mb-2">
+      <h3 className="flex items-center gap-1.5 text-secondary text-xs md:mb-2">
         {title}
         {tooltip ? (
           <Tooltip>
@@ -137,7 +137,7 @@ function HeaderItem({
           </Tooltip>
         ) : null}
       </h3>
-      <span className="text-lg font-bold">{children}</span>
+      <span className="font-bold text-lg">{children}</span>
     </div>
   )
 }
@@ -145,7 +145,7 @@ function HeaderItem({
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <PrimaryCard>
-      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
+      <h2 className="mb-4 font-bold text-2xl">{title}</h2>
       {children}
     </PrimaryCard>
   )

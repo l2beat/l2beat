@@ -99,11 +99,11 @@ function Header({
   return (
     <div className="mb-3 flex items-center justify-between">
       <div>
-        <div className="text-xl font-bold">Projects count</div>
+        <div className="font-bold text-xl">Projects count</div>
         <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
-        <div className="text-xl font-bold">{projectCount} Projects</div>
+        <div className="font-bold text-xl">{projectCount} Projects</div>
         <EcosystemsMarketShare marketShare={marketShare} />
       </div>
     </div>
