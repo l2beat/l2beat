@@ -8,7 +8,7 @@ const getURLSearchParams = () => {
   return new URLSearchParams((globalThis as any).__FIX_SSR_URL__.split('?')[1])
 }
 
-const useQueryParam = (
+export const useQueryParam = (
   key: string,
   defaultVal: string,
   opts?: {
@@ -55,5 +55,3 @@ const useQueryParam = (
 
   return [query, updateUrl]
 }
-
-export default useQueryParam

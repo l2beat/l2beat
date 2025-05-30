@@ -21,6 +21,8 @@ import {
   type EVMBlockWithTransactions,
   EVMBlockWithTransactionsResponse,
   EVMCallResponse,
+  type EVMLog,
+  EVMLogsResponse,
   EVMTransactionReceiptResponse,
   EVMTransactionResponse,
   Quantity,
@@ -33,6 +35,12 @@ interface Dependencies extends ClientCoreDependencies {
   generateId?: () => string
   multicallClient?: MulticallV3Client
 }
+
+type Param =
+  | string
+  | number
+  | boolean
+  | Record<string, string | string[] | string[][]>
 
 export class RpcClient extends ClientCore implements BlockClient {
   multicallClient?: MulticallV3Client
@@ -149,6 +157,34 @@ export class RpcClient extends ClientCore implements BlockClient {
     return balance.data.result
   }
 
+  async getLogs(
+    addresses: string[],
+    topics: string[],
+    from: number,
+    to: number,
+  ): Promise<EVMLog[]> {
+    const method = 'eth_getLogs'
+    const response = await this.query(method, [
+      {
+        address: addresses,
+        topics: [topics],
+        fromBlock: Quantity.encode(BigInt(from)),
+        toBlock: Quantity.encode(BigInt(to)),
+      },
+    ])
+
+    const logsResponse = EVMLogsResponse.safeParse(response)
+    if (!logsResponse.success) {
+      this.$.logger.warn(`Invalid response`, {
+        method,
+        response: JSON.stringify(response),
+      })
+      throw new Error('Error during parsing')
+    }
+
+    return logsResponse.data.result
+  }
+
   async call(
     callParams: CallParameters,
     blockNumber: number | 'latest',
@@ -224,10 +260,7 @@ export class RpcClient extends ClientCore implements BlockClient {
     return callResult.data.map((c) => Bytes.fromHex(c.result))
   }
 
-  async query(
-    method: string,
-    params: (string | number | boolean | Record<string, string>)[],
-  ) {
+  async query(method: string, params: Param[]) {
     return await this.fetch(this.$.url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -243,10 +276,7 @@ export class RpcClient extends ClientCore implements BlockClient {
   }
 
   // TODO: add multi-method support
-  async batchQuery(
-    method: string,
-    paramsBatch: (string | number | boolean | Record<string, string>)[][],
-  ) {
+  async batchQuery(method: string, paramsBatch: Param[][]) {
     const queries = paramsBatch.map((params) => ({
       method: method,
       params: params,

@@ -9,24 +9,28 @@ describe(EthereumDaProvider.name, () => {
   describe(EthereumDaProvider.prototype.getBlobs.name, () => {
     it('should return blobs for given block range', async () => {
       const mockDate = new Date()
-      const kzgCommitment1 = generateKzgCommitment()
-      const kzgCommitment2 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
-      const versionedHash2 = '0x01' + utils.sha256(kzgCommitment2).substring(4)
-      const blob1 = {
-        kzg_commitment: kzgCommitment1,
-        data: 'blob1',
-      }
-      const blob2 = {
-        kzg_commitment: kzgCommitment2,
-        data: 'blob2',
-      }
+
+      const versionedHash1 = '0x0123'
+      const versionedHash2 = '0x0123'
+
+      const txHash = '0xtx1'
+      const mockLogFilters = [
+        {
+          address: 'inbox1',
+          topics: ['topic1-1', 'topic1-2'],
+        },
+        {
+          address: 'inbox2',
+          topics: ['topic2-1', 'topic2-2'],
+        },
+      ]
 
       const mockRpcClient = mockObject<RpcClient>({
         getBlock: mockFn().resolvesTo({
           timestamp: UnixTime.fromDate(mockDate),
           transactions: [
             {
+              hash: txHash,
               type: '0x3',
               blobVersionedHashes: [versionedHash1, versionedHash2],
               from: '0xfrom1',
@@ -34,19 +38,29 @@ describe(EthereumDaProvider.name, () => {
             },
           ],
         }),
-      })
-
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([blob1, blob2]),
+        getLogs: mockFn().resolvesTo([
+          {
+            transactionHash: txHash,
+            address: 'inbox1',
+            topics: ['topic1-1'],
+          },
+        ]),
       })
 
       const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
+        mockObject<BeaconChainClient>(),
         mockRpcClient,
         'ethereum',
       )
 
-      const result = await provider.getBlobs(1, 1)
+      const result = await provider.getBlobs(1, 1, mockLogFilters)
+
+      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(
+        ['inbox1', 'inbox2'],
+        ['topic1-1', 'topic1-2', 'topic2-1', 'topic2-2'],
+        1,
+        1,
+      )
 
       expect(result).toEqual([
         {
@@ -54,6 +68,7 @@ describe(EthereumDaProvider.name, () => {
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
+          topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
           size: 131072n,
         } as EthereumBlob,
@@ -62,53 +77,7 @@ describe(EthereumDaProvider.name, () => {
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
-          blockTimestamp: UnixTime.fromDate(mockDate),
-          size: 131072n,
-        } as EthereumBlob,
-      ])
-    })
-
-    it('should fallback to beacon chain if blobScanClient is undefined', async () => {
-      const mockDate = new Date()
-      const kzgCommitment1 = generateKzgCommitment()
-      const versionedHash1 = '0x01' + utils.sha256(kzgCommitment1).substring(4)
-      const blob1 = {
-        kzg_commitment: kzgCommitment1,
-        data: 'blob1',
-      }
-
-      const mockRpcClient = mockObject<RpcClient>({
-        getBlock: mockFn().resolvesTo({
-          timestamp: UnixTime.fromDate(mockDate),
-          transactions: [
-            {
-              type: '0x3',
-              blobVersionedHashes: [versionedHash1],
-              from: '0xfrom1',
-              to: '0xto1',
-            },
-          ],
-        }),
-      })
-
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getBlockSidecar: mockFn().resolvesTo([blob1]),
-      })
-
-      const provider = new EthereumDaProvider(
-        mockBeaconChainClient,
-        mockRpcClient,
-        'ethereum',
-      )
-
-      const result = await provider.getBlobs(1, 1)
-
-      expect(result).toEqual([
-        {
-          type: 'ethereum',
-          daLayer: 'ethereum',
-          inbox: '0xto1',
-          sequencer: '0xfrom1',
+          topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
           size: 131072n,
         } as EthereumBlob,

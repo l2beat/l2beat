@@ -656,6 +656,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1048,7 +1051,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x621f55fd8b6b52e1c4a45395c21601eaf547cf0946b1ba5f9c330ac6316d8831"
 }

@@ -4,11 +4,12 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [High-level flow](#high-level-flow)
-- [`Inbox`: the `sendL2MessageFromOrigin` function](#inbox-the-sendl2messagefromorigin-function)
-- [`Bridge`: the `enqueueDelayedMessage` function](#bridge-the-enqueuedelayedmessage-function)
-- [`SequencerInbox`: the `forceInclusion` function](#sequencerinbox-the-forceinclusion-function)
-  - [The `DelayBuffer` library](#the-delaybuffer-library)
+- [Forced transactions](#forced-transactions)
+  - [High-level flow](#high-level-flow)
+  - [`Inbox`: the `sendL2MessageFromOrigin` function](#inbox-the-sendl2messagefromorigin-function)
+  - [`Bridge`: the `enqueueDelayedMessage` function](#bridge-the-enqueuedelayedmessage-function)
+  - [`SequencerInbox`: the `forceInclusion` function](#sequencerinbox-the-forceinclusion-function)
+    - [The `DelayBuffer` library](#the-delaybuffer-library)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

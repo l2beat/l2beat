@@ -69,6 +69,11 @@ const taikoChainConfig = discovery.getContractValue<PacayaConfig>(
 
 const livenessBond = utils.formatEther(taikoChainConfig.livenessBondBase)
 
+const inclusionDelay = discovery.getContractValue<PacayaConfig>(
+  'ForcedInclusionStore',
+  'inclusionDelay',
+)
+
 const chainId = 167000
 
 const preconfRouter = discovery.getContractValue(
@@ -153,6 +158,10 @@ export const taiko: ScalingProject = {
         sinceBlock: 0, // Edge Case: config added @ DA Module start
         inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
         sequencers: [],
+        topics: [
+          '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2
+          '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', // BatchProposed
+        ],
       },
     ],
     trackedTxs: [
@@ -385,10 +394,12 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     forceTransactions: {
-      // NOTE: the ForcedInclusionStore mechanism is ignored on purpose as the system still allows free-for-all block proposals. When a preconfer router is added, it becomes relevant and will be described.
       name: `Users can force any transaction`,
       description: `The system is designed to allow users to propose L2 blocks directly on L1.
-        Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.`,
+        Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.
+        Moreover, users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
+        This forced transaction mechanism allows users to submit a transaction without running a prover.
+        This mechanism ensures that at least one forced transaction from the queue is processed every ${inclusionDelay} batches. However, if many transactions (k) are added to the queue, an individual transaction could experience a worst-case delay of up to k * ${inclusionDelay} batches while waiting for its turn.`,
       references: [],
       risks: [],
     },
