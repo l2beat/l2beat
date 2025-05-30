@@ -424,6 +424,14 @@ export const taiko: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Taiko Pacaya Hardfork',
+      url: 'https://taiko.mirror.xyz/pIchmo0E-DfSySCzL52BFbus54Z3XJEO0k0Ptqqpm_I',
+      date: '2025-05-21T00:00:00.00Z',
+      description:
+        'Taiko Pacaya hardfork replaces the contestable rollup design with a batch based protocol.',
+      type: 'general',
+    },
+    {
       title: 'TAIKO Token Airdrop',
       url: 'https://taiko.mirror.xyz/VSOtILX2DQsc_6IMt5hBT1fEYSH8243pZ8IA_pBfHks',
       date: '2024-06-05T00:00:00.00Z',
