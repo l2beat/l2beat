@@ -62,17 +62,22 @@ export function attachTemplateRouter(
   })
 
   app.get('/api/template-files', (req, res) => {
-    const query = listTemplateFilesSchema.parse(req.query)
+    const query = listTemplateFilesSchema.safeParse(req.query)
 
-    const template = templateService.readTemplateFile(query.templateId)
+    if (!query.success) {
+      res.status(400).json({ errors: query.error.flatten() })
+      return
+    }
+
+    const template = templateService.readTemplateFile(query.data.templateId)
 
     if (!template) {
       res.status(404).json({ error: 'Template not found' })
       return
     }
 
-    const shapes = templateService.readShapeFile(query.templateId)
-    const criteria = templateService.readCriteriaFile(query.templateId)
+    const shapes = templateService.readShapeFile(query.data.templateId)
+    const criteria = templateService.readCriteriaFile(query.data.templateId)
 
     res.json({
       template,
