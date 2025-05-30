@@ -1,18 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
 import type { ApiCodeResponse } from '../api/types'
 import { findSelected } from '../common/findSelected'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { CodeView } from '../components/editor/CodeView'
+import { useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
 import { IconCodeFile } from '../icons/IconCodeFile'
-import { useMultiViewStore } from '../multi-view/store'
 import { usePanelStore } from '../store/store'
 import { RediscoverPrompt } from './RediscoverPrompt'
-import { Editor } from './editor'
-import { type Range, useCodeStore } from './store'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -115,50 +114,8 @@ export function CodePanel() {
       <CodeView
         code={sources[sourceIndex ?? 0]?.code ?? '// No code'}
         range={passedRange}
+        editorKey="code-panel"
       />
     </div>
   )
-}
-
-function CodeView({ code, range }: { code: string; range: Range | undefined }) {
-  const monacoEl = useRef(null)
-  const { editor, setEditor, showRange } = useCodeStore()
-  const panels = useMultiViewStore((state) => state.panels)
-  const pickedUp = useMultiViewStore((state) => state.pickedUp)
-  const fullScreen = useMultiViewStore((state) => state.fullScreen)
-
-  useEffect(() => {
-    if (!monacoEl.current) {
-      return
-    }
-
-    const editor = new Editor(monacoEl.current)
-    setEditor(editor)
-
-    function onResize() {
-      editor.resize()
-    }
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-    }
-  }, [setEditor])
-
-  useEffect(() => {
-    editor?.setCode(code)
-  }, [editor, code])
-
-  useEffect(() => {
-    editor?.resize()
-  }, [editor, panels, pickedUp, fullScreen])
-
-  useEffect(() => {
-    if (range !== undefined) {
-      showRange(undefined)
-      const { startOffset, length } = range
-      editor?.showRange(startOffset, length)
-    }
-  }, [editor, range])
-
-  return <div className="h-full w-full" ref={monacoEl} />
 }

@@ -48,6 +48,12 @@ export interface ApiProjectChain {
 
 export type ApiListTemplatesResponse = Record<string, string[]>
 
+export interface ApiTemplateFileResponse {
+  template: string
+  shapes?: string
+  criteria?: string
+}
+
 export type ApiCreateShapeResponse =
   | {
       success: true

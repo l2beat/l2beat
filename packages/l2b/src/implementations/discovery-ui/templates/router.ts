@@ -5,12 +5,25 @@ import { z } from 'zod'
 import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
+const templateIdRegex = new RegExp(
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
+)
+
+const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
+  message:
+    'Template ID must be alphanumeric and can contain underscores or hyphens.',
+})
+
+export const listTemplateFilesSchema = z.object({
+  templateId: safeTemplateIdSchema,
+})
+
 const createTemplateSchema = z.object({
   chain: z.string(),
   addresses: z.array(
     z.string().refine((address) => EthereumAddress.check(address)),
   ),
-  templateId: z.string(),
+  templateId: safeTemplateIdSchema,
   fileName: z.string(),
   blockNumber: z.number(),
 })

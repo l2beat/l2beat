@@ -9,9 +9,10 @@ export interface Range {
 interface CodeState {
   sourceIndex: Record<string, number>
   range: Range | undefined
-  editor: Editor | undefined
+  editors: Record<string, Editor>
 
-  setEditor: (editor: Editor) => void
+  setEditor: (key: string, editor: Editor) => void
+  getEditor: (key: string) => Editor | undefined
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
   showRange: (range: Range | undefined) => void
@@ -20,9 +21,15 @@ interface CodeState {
 export const useCodeStore = create<CodeState>((set, get) => ({
   sourceIndex: {},
   range: undefined,
-  editor: undefined,
+  editors: {},
 
-  setEditor: (editor: Editor) => set({ editor }),
+  setEditor: (key: string, editor: Editor) =>
+    set((state) => ({
+      editors: { ...state.editors, [key]: editor },
+    })),
+  getEditor: (key: string) => {
+    return get().editors[key]
+  },
   setSourceIndex: (address: string, sourceIndex: number) =>
     set((state) => ({
       sourceIndex: { ...state.sourceIndex, [address]: sourceIndex },
