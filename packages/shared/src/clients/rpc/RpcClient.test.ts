@@ -152,7 +152,7 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getLogs.name, () => {
     it('fetches logs from rpc and parsers response', async () => {
-      const mockAdress = EthereumAddress.random()
+      const mockAdresses = [EthereumAddress.random(), EthereumAddress.random()]
       const mockTopics = ['0xabcd', '0xdcba']
       const mockFromBlock = 100
       const mockToBlock = 200
@@ -161,7 +161,7 @@ describe(RpcClient.name, () => {
         fetch: async () => ({
           result: [
             {
-              address: mockAdress,
+              address: mockAdresses[0],
               topics: mockTopics,
               blockNumber: `0x${mockFromBlock.toString(16)}`,
               transactionHash:
@@ -173,7 +173,7 @@ describe(RpcClient.name, () => {
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLogs(
-        mockAdress,
+        mockAdresses,
         mockTopics,
         mockFromBlock,
         mockToBlock,
@@ -181,7 +181,7 @@ describe(RpcClient.name, () => {
 
       expect(result).toEqual([
         {
-          address: mockAdress,
+          address: mockAdresses[0],
           topics: mockTopics,
           blockNumber: mockFromBlock,
           transactionHash:
@@ -194,7 +194,7 @@ describe(RpcClient.name, () => {
           method: 'eth_getLogs',
           params: [
             {
-              address: mockAdress,
+              address: mockAdresses,
               topics: [mockTopics],
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,

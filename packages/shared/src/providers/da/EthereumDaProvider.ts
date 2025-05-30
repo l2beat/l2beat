@@ -27,13 +27,15 @@ export class EthereumDaProvider implements DaBlobProvider {
     // to be able to track internal call we need to get logs
     let logs: EVMLog[] = []
     if (logFilters) {
-      const getLogs = []
+      const addresses = []
+      const topics = []
+
       for (const filter of logFilters) {
-        getLogs.push(
-          this.rpcClient.getLogs(filter.address, filter.topics, from, to),
-        )
+        addresses.push(filter.address)
+        topics.push(...filter.topics)
       }
-      logs = (await Promise.all(getLogs)).flat()
+
+      logs = await this.rpcClient.getLogs(addresses, topics, from, to)
     }
 
     const getBlobs = []

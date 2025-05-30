@@ -16,8 +16,12 @@ describe(EthereumDaProvider.name, () => {
       const txHash = '0xtx1'
       const mockLogFilters = [
         {
-          address: 'inbox',
-          topics: ['topic'],
+          address: 'inbox1',
+          topics: ['topic1-1', 'topic1-2'],
+        },
+        {
+          address: 'inbox2',
+          topics: ['topic2-1', 'topic2-2'],
         },
       ]
 
@@ -37,8 +41,8 @@ describe(EthereumDaProvider.name, () => {
         getLogs: mockFn().resolvesTo([
           {
             transactionHash: txHash,
-            address: 'inbox',
-            topics: ['topic'],
+            address: 'inbox1',
+            topics: ['topic1-1'],
           },
         ]),
       })
@@ -51,13 +55,20 @@ describe(EthereumDaProvider.name, () => {
 
       const result = await provider.getBlobs(1, 1, mockLogFilters)
 
+      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(
+        ['inbox1', 'inbox2'],
+        ['topic1-1', 'topic1-2', 'topic2-1', 'topic2-2'],
+        1,
+        1,
+      )
+
       expect(result).toEqual([
         {
           type: 'ethereum',
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
-          topics: ['topic'],
+          topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
           size: 131072n,
         } as EthereumBlob,
@@ -66,7 +77,7 @@ describe(EthereumDaProvider.name, () => {
           daLayer: 'ethereum',
           inbox: '0xto1',
           sequencer: '0xfrom1',
-          topics: ['topic'],
+          topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
           size: 131072n,
         } as EthereumBlob,
