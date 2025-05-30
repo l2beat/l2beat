@@ -58,6 +58,7 @@ export function TemplatePanel() {
         code={sources[fileIndex]?.code ?? 'No contents'}
         range={undefined}
         language={sources[fileIndex]?.language}
+        editorKey="template-panel"
       />
     </div>
   )

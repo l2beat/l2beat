@@ -10,13 +10,16 @@ export function CodeView({
   code,
   range,
   language,
+  editorKey = 'default',
 }: {
   code: string
   range: Range | undefined
   language?: EditorSupportedLanguage
+  editorKey?: string
 }) {
   const monacoEl = useRef(null)
-  const { editor, setEditor, showRange } = useCodeStore()
+  const { setEditor, getEditor, showRange } = useCodeStore()
+  const editor = getEditor(editorKey)
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
   const fullScreen = useMultiViewStore((state) => state.fullScreen)
@@ -27,7 +30,7 @@ export function CodeView({
     }
 
     const editor = new Editor(monacoEl.current)
-    setEditor(editor)
+    setEditor(editorKey, editor)
 
     function onResize() {
       editor.resize()
@@ -36,7 +39,7 @@ export function CodeView({
     return () => {
       window.removeEventListener('resize', onResize)
     }
-  }, [setEditor])
+  }, [setEditor, editorKey])
 
   useEffect(() => {
     editor?.setCode(code, language ?? 'solidity')

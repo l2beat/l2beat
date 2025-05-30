@@ -114,6 +114,7 @@ export function CodePanel() {
       <CodeView
         code={sources[sourceIndex ?? 0]?.code ?? '// No code'}
         range={passedRange}
+        editorKey="code-panel"
       />
     </div>
   )
