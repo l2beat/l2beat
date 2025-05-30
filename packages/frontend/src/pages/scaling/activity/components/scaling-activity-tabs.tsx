@@ -37,6 +37,7 @@ export function ScalingActivityTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: props.underReview.filter(filterEntries),
   }
 
   const entries = checked
@@ -71,6 +72,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
+            ...props.underReview,
           ]}
         />
         <UopsExplorerLink />
@@ -86,6 +88,10 @@ export function ScalingActivityTabs(props: Props) {
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
+          <DirectoryTabsTrigger value="underReview">
+            Under review
+            <CountBadge>{entries.underReview.length}</CountBadge>
           </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
@@ -131,6 +137,11 @@ export function ScalingActivityTabs(props: Props) {
               projectsToBeMigrated={projectToBeMigratedToOthers}
               className="mt-2"
             />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
+            <ScalingActivityTable entries={entries.underReview} />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
