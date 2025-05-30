@@ -20,14 +20,6 @@ export function MonitorApp() {
   const [isLoadingMore, setIsLoadingMore] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
 
-  if (result.isPending || result.isLoading) {
-    return <LoadingState />
-  }
-
-  if (result.isError) {
-    return <ErrorState />
-  }
-
   const entries = result.data ?? []
 
   // Memoize visible entries to prevent unnecessary re-renders
@@ -72,6 +64,14 @@ export function MonitorApp() {
       observer.disconnect()
     }
   }, [loadMore])
+
+  if (result.isPending || result.isLoading) {
+    return <LoadingState />
+  }
+
+  if (result.isError) {
+    return <ErrorState />
+  }
 
   if (entries.length === 0) {
     return (
