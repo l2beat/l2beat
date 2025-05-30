@@ -11,7 +11,9 @@
         "noUselessFragments": "error"
       },
       "correctness": {
-        "useHookAtTopLevel": "error"
+        "useHookAtTopLevel": "error",
+        "noChildrenProp": "error",
+        "noVoidElementsWithChildren": "error"
       },
       "suspicious": {
         "noDuplicateJsxProps": "error"
