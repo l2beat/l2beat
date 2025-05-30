@@ -1,4 +1,3 @@
-'use client'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'

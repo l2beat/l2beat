@@ -2,7 +2,7 @@
   "name": "deri",
   "chain": "arbitrum",
   "blockNumber": 339286979,
-  "configHash": "0x308a68bbed28bf60746429747968afb93afe3157bc0ea46b369914e7e3869eba",
+  "configHash": "0x26278d7294d73a4577ea399201ce4a969ce5c1e597d5ddd7d99f9cd54ba6b864",
   "entries": [
     {
       "address": "0x02c903F5c76F3f00c1F659702Bd76DF30470bBEE",

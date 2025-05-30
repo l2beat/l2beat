@@ -33,7 +33,7 @@ export class ConfigReader {
       'Project not found, check if case matches',
     )
 
-    const basePath = path.join(this.rootPath, name, chain)
+    const basePath = path.join(this.rootPath, name)
     assert(
       fileExistsCaseSensitive(path.join(basePath)),
       'Chain not found in project, check if case matches',
@@ -57,7 +57,18 @@ export class ConfigReader {
       )
     }
 
-    const config = new ConfigRegistry(rawConfig)
+    const chainRawConfig = {
+      chain,
+      name,
+      ...merge(
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)['all'],
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)[chain],
+      ),
+    }
+
+    const config = new ConfigRegistry(chainRawConfig)
 
     assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
 
@@ -129,18 +140,17 @@ export class ConfigReader {
   }
 
   readAllChainsForProject(name: string) {
-    const chains = readdirSync(path.join(this.rootPath, name)).filter(
-      (chain) => {
-        try {
-          return existsSync(
-            path.join(this.rootPath, name, chain, 'config.jsonc'),
-          )
-        } catch {
-          return false
-        }
-      },
+    if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
+      return []
+    }
+
+    const parsed = readJsonc(path.join(this.rootPath, name, 'config.jsonc'))
+    assert(
+      'chains' in parsed &&
+        typeof parsed.chains === 'object' &&
+        parsed.chains !== null,
     )
-    return chains
+    return Object.keys(parsed.chains)
   }
 
   readAllProjectsForChain(chain: string): string[] {
@@ -151,28 +161,8 @@ export class ConfigReader {
     const projects = []
 
     for (const folder of folders) {
-      const contents = readdirSync(path.join(this.rootPath, folder.name), {
-        withFileTypes: true,
-      })
-        .filter((x) => x.isDirectory())
-        .map((x) => x.name)
-
-      if (!contents.includes(chain)) {
-        continue
-      }
-
-      const chainFiles = readdirSync(
-        path.join(this.rootPath, folder.name, chain),
-        {
-          withFileTypes: true,
-        },
-      )
-        .filter((x) => x.isFile())
-        .map((x) => x.name)
-
-      const hasConfig = chainFiles.includes('config.jsonc')
-      const hasDiscovered = chainFiles.includes('discovered.json')
-      if (!hasConfig && !hasDiscovered) {
+      const allChains = this.readAllChainsForProject(folder.name)
+      if (!allChains.includes(chain)) {
         continue
       }
 

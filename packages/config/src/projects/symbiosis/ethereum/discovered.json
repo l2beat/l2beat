@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 22022451,
-  "configHash": "0xdc1af9b92e67d1e4055df6b07b581761d1d44ad4fa05727073fec8ad36e41a0e",
+  "configHash": "0x875ba6d1b78c93c950f9e43fcc84d56655e6bc799099aead456faeb6ebf5ef34",
   "entries": [
     {
       "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928",

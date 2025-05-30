@@ -1,4 +1,3 @@
-'use client'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/upcoming-badge'

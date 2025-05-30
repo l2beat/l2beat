@@ -1,9 +1,7 @@
-'use client'
-
 import { useMemo, useState } from 'react'
-import { useIncludeScalingOnly } from '~/app/(side-nav)/data-availability/throughput/_context/da-throughput-context'
 import { Checkbox } from '~/components/core/checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/radio-group'
+import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/da-throughput-context'
 import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/react'
 import { ChartTimeRange } from '../../core/chart/chart-time-range'

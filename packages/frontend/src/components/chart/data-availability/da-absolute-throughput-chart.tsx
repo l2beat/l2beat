@@ -1,5 +1,3 @@
-'use client'
-
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'

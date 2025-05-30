@@ -4469,6 +4469,20 @@
       "supply": "zero"
     },
     {
+      "name": "Quest Ecosystem",
+      "coingeckoId": "ravenquest",
+      "address": "0x1Fc122FE8b6Fa6b8598799baF687539b5D3B2783",
+      "symbol": "QUEST",
+      "decimals": 6,
+      "deploymentTimestamp": 1743083699,
+      "coingeckoListingTimestamp": 1743552000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55071/large/token_200x200.png?1743598440",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "RabbitX",
       "coingeckoId": "rabbitx",
       "address": "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e",
@@ -4940,6 +4954,34 @@
       "coingeckoListingTimestamp": 1722556800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Sophon",
+      "coingeckoId": "sophon",
+      "address": "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0",
+      "symbol": "SOPH",
+      "decimals": 18,
+      "deploymentTimestamp": 1729001015,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38680/large/sophon_logo_200.png?1747898236",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Space Nation Oikos",
+      "coingeckoId": "space-nation-oikos",
+      "address": "0x6E7F11641c1EC71591828E531334192d622703F7",
+      "symbol": "OIK",
+      "decimals": 18,
+      "deploymentTimestamp": 1739786123,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54823/large/oik-logo.jpeg?1741858662",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -8129,6 +8171,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Bridged USDC (world-chain-mainnet)",
+      "coingeckoId": "bridged-usdc-world-chain",
+      "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1724427653,
+      "coingeckoListingTimestamp": 1729209600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50792/large/usdc.png?1729233082",
+      "chainId": 480,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Ether",

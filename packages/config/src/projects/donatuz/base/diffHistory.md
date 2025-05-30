@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x5bb5d7c6b9da95c58da3ea15550843f202ed7dc5
+Generated with discovered.json: 0x6672322ad9c3cc8f7bba61d653bc2a51270b2221
+
+# Diff at Fri, 30 May 2025 06:16:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 30222868
+- current block number: 30898189
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      values.$members.9:
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.8:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.7:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.6:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.5:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+      values.multisigThreshold:
+-        "4 of 9 (44%)"
++        "4 of 10 (40%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30222868 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0xa096dD38362bd2cE3C696474329989960722A7Fd) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
+Generated with discovered.json: 0x0df3f9589b0dd8c16d7fe6f21857f333fc951d2e
 
 # Diff at Fri, 23 May 2025 09:41:14 GMT:
 

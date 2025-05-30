@@ -1,8 +1,8 @@
 {
   "name": "scroll",
   "chain": "scroll",
-  "blockNumber": 15285599,
-  "configHash": "0x2d13b4e6c86dddff5b2947490faebdf1553c81a875acea9b5a2efc7ec523c43e",
+  "blockNumber": 15984224,
+  "configHash": "0xb51eaba5d0cc609b8984d487facf7707d177e58ecd4e2826ab00a2b57a9db6d7",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -813,9 +813,9 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "messageRoot": "0x84c1797b0bb31bc4d43653ab084747da0e01580e0a42c8cc33220fce9b65e05e",
+        "messageRoot": "0x900a0b425903bd1701232802a48a4404a36848bccaf39f69b528e87719e4577a",
         "messenger": "0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC",
-        "nextMessageIndex": 204254,
+        "nextMessageIndex": 204658,
         "owner": "0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
       },
       "implementationNames": {

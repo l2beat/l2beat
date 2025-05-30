@@ -2,7 +2,7 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 22243970,
-  "configHash": "0x55e84b13f511c0498bd5158765369a31065ccc4e79688abdac88ebb62b352cf3",
+  "configHash": "0x8a9a485b3bfea540a897cf8f6356e53f3713553f33f3d9601e5a87f24e7b7826",
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
@@ -316,7 +316,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {

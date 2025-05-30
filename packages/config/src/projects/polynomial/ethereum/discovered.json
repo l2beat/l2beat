@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22046074,
-  "configHash": "0x4db187a2c3f2f63b406cc145562181d861ad61a543b427fe380f59687e576b08",
+  "configHash": "0x3e16dfff955182715f999463be712b26ae67bd7575ba67ab7c75c4a6bdaf6009",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -403,6 +403,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -908,7 +911,7 @@
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x213c52b737b9cccb13c4d89112aa649853488d329bcbc11292e3bbdc755fedd7"
 }

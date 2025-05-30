@@ -1,16 +1,16 @@
 import type { Project, ProjectStatuses } from '@l2beat/config'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
-import type { UsedInProjectWithIcon } from '~/app/(side-nav)/data-availability/summary/_components/table/projects-used-in'
-import {
-  getEthereumDaProjectSections,
-  getRegularDaProjectSections,
-} from '~/app/(top-nav)/data-availability/projects/[layer]/_utils/da-project-sections'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
+import {
+  getEthereumDaProjectSections,
+  getRegularDaProjectSections,
+} from '~/pages/data-availability/project/utils/da-project-sections'
+import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/projects-used-in'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '~/pages/data-availability/utils/map-risks-to-rosette-values'
 import { ps } from '~/server/projects'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'
@@ -139,7 +139,6 @@ export async function getDaProjectEntry(
     layerGrissiniValues,
     bridgeGrissiniValues,
   })
-
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
     .at(-1)

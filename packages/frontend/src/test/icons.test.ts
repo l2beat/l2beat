@@ -9,7 +9,7 @@ describe('icons', () => {
 
   describe('projects', () => {
     it('every project has an icon', async () => {
-      const icons = getIcons('../../public/icons')
+      const icons = getIcons('../../static/icons')
       const projects = await ps.getProjects({
         // We handle ecosystem logos in a different way
         whereNot: ['ecosystemConfig'],
@@ -27,7 +27,7 @@ describe('icons', () => {
 
   describe('raas', () => {
     it('every raas has an icon', async () => {
-      const icons = getIcons('../../public/icons')
+      const icons = getIcons('../../static/icons')
       const projects = await ps.getProjects({
         select: ['display'],
       })
@@ -53,7 +53,7 @@ describe('icons', () => {
         where: ['ecosystemConfig'],
       })
       for (const ecosystem of ecosystems) {
-        const icons = getIcons(`../../public/ecosystems/${ecosystem.slug}`)
+        const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
         expect(icons).toInclude('logo')
       }
     })
@@ -63,7 +63,7 @@ describe('icons', () => {
         where: ['ecosystemConfig'],
       })
       for (const ecosystem of ecosystems) {
-        const icons = getIcons(`../../public/ecosystems/${ecosystem.slug}`)
+        const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
         const hasDarkIcon = !!icons.find((i) => i.endsWith('.dark'))
         if (!hasDarkIcon) {
           continue
@@ -71,13 +71,13 @@ describe('icons', () => {
         const lightIconBuffer = readFileSync(
           path.join(
             __dirname,
-            `../../public/ecosystems/${ecosystem.slug}/logo.png`,
+            `../../static/ecosystems/${ecosystem.slug}/logo.png`,
           ),
         )
         const darkIconBuffer = readFileSync(
           path.join(
             __dirname,
-            `../../public/ecosystems/${ecosystem.slug}/logo.dark.png`,
+            `../../static/ecosystems/${ecosystem.slug}/logo.dark.png`,
           ),
         )
         const lightIconDimensions = getImageDimensions(lightIconBuffer)

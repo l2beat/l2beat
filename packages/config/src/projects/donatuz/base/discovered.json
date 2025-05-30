@@ -1,8 +1,8 @@
 {
   "name": "donatuz",
   "chain": "base",
-  "blockNumber": 30222868,
-  "configHash": "0xa020f48f1ec97111330eca61f87a80fd11b8e120381ef5d91c67b8b7285ba2f1",
+  "blockNumber": 30898189,
+  "configHash": "0xbaae7c6f1963c95a07732c0b56eca20120f33736d2e67c2388f6322003f1a887",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -45,7 +45,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620228",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620229",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -175,6 +175,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -189,8 +190,8 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 25,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -200,6 +201,11 @@
     },
     {
       "address": "0x7f445dCaD2E3A675381a396d6Bf6C6fbA6a76757",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -292,10 +298,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 1,
-        "latestBlockNumber": 27907200,
-        "latestOutputIndex": 645,
-        "nextBlockNumber": 27950400,
-        "nextOutputIndex": 646,
+        "latestBlockNumber": 29246400,
+        "latestOutputIndex": 676,
+        "nextBlockNumber": 29289600,
+        "nextOutputIndex": 677,
         "PROPOSER": "0xfB04981fa938f03b82B4Ca8F5B1FAAA1A547306B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1719319433,
@@ -387,6 +393,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -436,7 +445,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 30116122
+          "prevBlockNum": 30517296
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xa096dD38362bd2cE3C696474329989960722A7Fd",
@@ -768,7 +777,7 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xe5942d3aa00f87e7c8c44500813669025fcdbfb41a062e4ad8775a3dcf5d3121"
+  "permissionsConfigHash": "0xd6f2f16679a405aa491be2de055e7e049686db5071515ca3d79b3036804e0741"
 }

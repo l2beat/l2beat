@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "apechain",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": ["0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8"],
+      "names": {
+        "0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF": "ApeChainMultisig"
+      }
+    }
+  }
+}

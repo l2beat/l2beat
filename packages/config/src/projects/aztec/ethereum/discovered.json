@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 22466421,
-  "configHash": "0x6c457831ac2821007cce3c71b338a3da4e429a96d1f4700ff1af9b492983d985",
+  "configHash": "0x6f4f69287a8a4a4880fc76f7159fb9a1b22ae55435005556f902ca0032ad002c",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -209,12 +209,9 @@
       "name": "FirstAnvilAddress",
       "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
       "type": "EOA",
-      "unverified": true,
-      "proxyType": "EIP7702 EOA",
+      "proxyType": "immutable",
       "ignoreInWatchMode": ["$implementation"],
-      "values": {
-        "$implementation": "0x930FcC37d6042c79211EE18A02857Cb1Fd7F0D0b"
-      }
+      "values": { "$immutable": true }
     },
     {
       "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895",

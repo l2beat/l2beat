@@ -74,7 +74,8 @@ export const immutablezkevm: ScalingProject = {
       {
         address: EthereumAddress('0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6'),
         sinceTimestamp: UnixTime(1702962563),
-        tokens: ['IMX', 'USDC', 'ETH', 'USDT', 'GOG'],
+        tokens: ['IMX', 'USDC', 'ETH', 'USDT', 'GOG', 'QUEST', 'OIK'],
+        premintedTokens: ['QUEST', 'OIK'],
         chain: 'ethereum',
       },
     ],

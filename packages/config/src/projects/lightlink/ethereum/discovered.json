@@ -2,7 +2,7 @@
   "name": "lightlink",
   "chain": "ethereum",
   "blockNumber": 22208513,
-  "configHash": "0xf11747c6d817b880d15a4d40b27bd22091c2098e5db1ed31ec819f7b795582a9",
+  "configHash": "0x048b7c295e57f9b234f8a82e72bac69b0e3f8275b413ac3e534432a0ef6677b1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

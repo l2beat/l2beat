@@ -2,10 +2,10 @@
   "name": "abstract",
   "chain": "zksync2",
   "blockNumber": 54952331,
-  "configHash": "0xb007413fb0514d1be30dd44f879f6c432f4fbc3716804164e3a76ee3bcc9a656",
+  "configHash": "0x013ab86db34fb1748bbf92325f6c865650bacbccefc428d3cf3ba05eca8c897b",
   "sharedModules": ["shared-zk-stack"],
   "entries": [],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0x09c78f20df3b055782b6cb726902c7f8b596b8dec20cdc838b2379757c3be657"
+  "permissionsConfigHash": "0xec8ee1ffaee8f81cfd0f6394498cdac9359e8bfaa1cfa3eabe1950dbecdf9b9b"
 }

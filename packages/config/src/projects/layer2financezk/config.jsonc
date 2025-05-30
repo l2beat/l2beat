@@ -1,0 +1,67 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "layer2financezk",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
+        "0x5b000954F70B0410685193B0afd3074B744B5C97",
+        "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+      ],
+      "names": {
+        "0x5b000954F70B0410685193B0afd3074B744B5C97": "StrategyCompound",
+        "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9": "Committee"
+      },
+      "overrides": {
+        "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5": {
+          "ignoreMethods": [
+            "actualPrices",
+            "prices",
+            "rideDeparted",
+            "rideInfos",
+            "ridesShares",
+            "slippages"
+          ]
+        },
+        "0x82123571C8a5e0910280C066bc634c4945FFcbC8": {
+          "ignoreMethods": [
+            "getEthKey",
+            "getQuantum",
+            "identify",
+            "initializerSize",
+            "isAssetRegistered"
+          ],
+          "fields": {
+            "GOVERNORS": {
+              "handler": {
+                "type": "event",
+                "select": "acceptedGovernor",
+                "add": {
+                  "event": "event LogNewGovernorAccepted(address governor)"
+                },
+                "remove": {
+                  "event": "event LogRemovedGovernor(address governor)"
+                }
+              }
+            },
+            "OPERATORS": {
+              "handler": {
+                "type": "event",
+                "select": "operator",
+                "add": { "event": "event LogOperatorAdded(address operator)" },
+                "remove": {
+                  "event": "event LogOperatorRemoved(address operator)"
+                }
+              }
+            }
+          }
+        },
+        "0x5b000954F70B0410685193B0afd3074B744B5C97": {
+          "ignoreRelatives": ["uniswap", "weth"]
+        }
+      },
+      "sharedModules": ["shared-sharp-verifier"]
+    }
+  }
+}

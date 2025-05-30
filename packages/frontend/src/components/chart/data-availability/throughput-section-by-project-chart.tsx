@@ -1,4 +1,3 @@
-'use client'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'

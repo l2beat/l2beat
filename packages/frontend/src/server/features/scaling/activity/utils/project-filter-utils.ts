@@ -9,8 +9,18 @@ export const ActivityProjectFilter = z.discriminatedUnion('type', [
   }),
   z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
 ])
-
 export type ActivityProjectFilter = z.infer<typeof ActivityProjectFilter>
+
+export const ActivityProjectFilterType = z.enum([
+  'all',
+  'rollups',
+  'validiumsAndOptimiums',
+  'others',
+  'projects',
+])
+export type ActivityProjectFilterType = z.infer<
+  typeof ActivityProjectFilterType
+>
 
 export function createActivityProjectsFilter(
   filter: ActivityProjectFilter,

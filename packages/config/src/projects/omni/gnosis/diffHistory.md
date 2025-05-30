@@ -1,4 +1,233 @@
-Generated with discovered.json: 0x468c5a49668497ce67248088edca61b7a33abcb0
+Generated with discovered.json: 0x1532bbd41371943a7599af31f22f86289fef66ce
+
+# Diff at Fri, 30 May 2025 06:19:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 40024439
+- current block number: 40322200
+
+## Description
+
+optional hashi validator: adapter hash changed.
+
+## Watched changes
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      values.expectedAdaptersHash:
+-        "0xb2e80ac35c6fdf4c83cb64a9d16487c0806c1e3a5434f1ebad4e13ed04e36f44"
++        "0x85f5e71b0ea7fc842021a121ef9afd6db706267a7158b5ce9e13dd1ab2cc1444"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40024439 (main branch discovery), not current.
+
+```diff
+    contract Yaru (0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5) {
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+      sinceTimestamp:
++        1726019595
+      sinceBlock:
++        35938697
+    }
+```
+
+```diff
+    contract PermittableToken (0x199084efbd7fe14d217BBF22FDC6E2eD7266dDD4) {
+    +++ description: None
+      sinceTimestamp:
++        1634244030
+      sinceBlock:
++        18573208
+    }
+```
+
+```diff
+    contract GnosisSafe (0x507A7777E6DbF4680951E63fB3753a20F2c37706) {
+    +++ description: None
+      sinceTimestamp:
++        1686655675
+      sinceBlock:
++        28432566
+    }
+```
+
+```diff
+    contract OmnibridgeFeeManager (0x5dbC897aEf6B18394D845A922BF107FA98E3AC55) {
+    +++ description: None
+      sinceTimestamp:
++        1634245065
+      sinceBlock:
++        18573414
+    }
+```
+
+```diff
+    contract SelectorTokenGasLimitManager (0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED) {
+    +++ description: None
+      sinceTimestamp:
++        1634246385
+      sinceBlock:
++        18573677
+    }
+```
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      sinceTimestamp:
++        1726022850
+      sinceBlock:
++        35939330
+    }
+```
+
+```diff
+    contract HomeAMB (0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59) {
+    +++ description: None
+      sinceTimestamp:
++        1579258310
+      sinceBlock:
++        7904954
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x77bcb57ba7037e39063f1567ce734452bbD7a5F0) {
+    +++ description: None
+      sinceTimestamp:
++        1651741965
+      sinceBlock:
++        21984719
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      sinceTimestamp:
++        1603125660
+      sinceBlock:
++        12596066
+    }
+```
+
+```diff
+    contract BridgeValidators_Gnosis (0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      sinceTimestamp:
++        1579258260
+      sinceBlock:
++        7904944
+    }
+```
+
+```diff
+    contract SP1Helios (0xa809c536c85b63a2676CbAc3C4064748AD3a2562) {
+    +++ description: None
+      sinceTimestamp:
++        1740474195
+      sinceBlock:
++        38740156
+    }
+```
+
+```diff
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615) {
+    +++ description: None
+      sinceTimestamp:
++        1720614180
+      sinceBlock:
++        34894600
+    }
+```
+
+```diff
+    contract SafeL2 (0xb1F43dc8B57562e7FA48157D73102a8e4a94975A) {
+    +++ description: None
+      sinceTimestamp:
++        1729072540
+      sinceBlock:
++        36532291
+    }
+```
+
+```diff
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8) {
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+      sinceTimestamp:
++        1720614455
+      sinceBlock:
++        34894655
+    }
+```
+
+```diff
+    contract SP1HeliosAdapter (0xCEb436489e9C6d9E4Db76145A6CCE2a06411ea0A) {
+    +++ description: None
+      sinceTimestamp:
++        1740476145
+      sinceBlock:
++        38740538
+    }
+```
+
+```diff
+    contract MultiTokenForwardingRulesManager (0xd4D8c07097F9b87EcC4C1a838C4b71DBebcd2286) {
+    +++ description: None
+      sinceTimestamp:
++        1634246015
+      sinceBlock:
++        18573603
+    }
+```
+
+```diff
+    contract SP1Verifier (0xe2a2E96fDe2a05bE4A508F4FBABdb3A57BacF03b) {
+    +++ description: None
+      sinceTimestamp:
++        1740472845
+      sinceBlock:
++        38739894
+    }
+```
+
+```diff
+    contract TokenFactory (0xEAAE83ac10f975a6456f4C4E48c45Ea2d8e1b5d2) {
+    +++ description: None
+      sinceTimestamp:
++        1634244420
+      sinceBlock:
++        18573286
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0xEF138856d0581641A57245Ee5CFfc9ceaA059623) {
+    +++ description: None
+      sinceTimestamp:
++        1686041905
+      sinceBlock:
++        28315765
+    }
+```
+
+```diff
+    contract HomeOmnibridge (0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d) {
+    +++ description: None
+      sinceTimestamp:
++        1596501010
+      sinceBlock:
++        11300566
+    }
+```
+
+Generated with discovered.json: 0x38ac93bf40b5caa79e661306afbe58bfff7bb2f8
 
 # Diff at Fri, 23 May 2025 09:41:18 GMT:
 

@@ -76,6 +76,24 @@
     {
       "mode": "auto",
       "id": "worldchain-USDC-1",
+      "priceId": "bridged-usdc-world-chain",
+      "symbol": "USDC",
+      "name": "Bridged USDC (world-chain-mainnet)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50792/large/usdc.png?1729233082",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+        "chain": "worldchain",
+        "decimals": 6,
+        "sinceTimestamp": 1729209600
+      },
+      "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "worldchain-USDC-2",
       "priceId": "usd-coin",
       "symbol": "USDC",
       "name": "USD Coin",
@@ -90,25 +108,6 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "worldchain-USDC-2",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB",
-        "decimals": 6,
-        "sinceTimestamp": 1724427575
-      },
-      "category": "stablecoin",
-      "source": "external",
       "isAssociated": false
     },
     {

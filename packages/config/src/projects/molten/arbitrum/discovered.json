@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 338999070,
-  "configHash": "0xc4ee1a2381470dba206461c743ae890ad2597bad5fd84a40af347ce5003735cc",
+  "configHash": "0x0d3e57e509a7ec5963d8df388e0cc6049c5e4a426bf9304177e45c753653efbe",
   "entries": [
     {
       "name": "RollupProxy",

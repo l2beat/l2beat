@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x43f1fbf574a05623bda20fa7846ef698175d310f
+Generated with discovered.json: 0x857394c75e50e07cd7c3b783d8f4679a7aaf76f8
+
+# Diff at Fri, 30 May 2025 06:58:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 21916627
+- current block number: 21916627
+
+## Description
+
+config: change comment about eip1559 fee val
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21916627 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x806d48562C224a1332F2De8CCb02DDe8E8a5549E) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
+Generated with discovered.json: 0xe314fa12c9910a77dea8358027703123d89876a2
 
 # Diff at Fri, 23 May 2025 09:40:56 GMT:
 

@@ -1,8 +1,8 @@
 {
   "name": "abstract",
   "chain": "ethereum",
-  "blockNumber": 22496279,
-  "configHash": "0x421f56b1345b7114b25e528102645686164d794b8245093a282a994018d7b37e",
+  "blockNumber": 22593193,
+  "configHash": "0x3934c5af15f7af4a67e328245c6bad3b1d404d78c28327365270c23d3c5e9001",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -59,7 +59,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -76,11 +76,6 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -342,7 +337,7 @@
           "0x72213dfe8CA61B0A782970dCFebFb877778f9119",
           "0xfa96A3Da88f201433911bEFf3Ecc434CB1222731"
         ],
-        "getFirstUnprocessedPriorityTx": 19651,
+        "getFirstUnprocessedPriorityTx": 20261,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -350,21 +345,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 26,
-        "getPriorityTreeRoot": "0xbca80a35a57bd6178a6792350ce246d35167801c3c1fce94291586a1b3e0c304",
+        "getPriorityQueueSize": 5,
+        "getPriorityTreeRoot": "0x60ef6ca7a1da062e45c591cacaf86f8f1875af0eba63d1cab128b28149da10ca",
         "getPriorityTreeStartIndex": 17183,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 16798,
-        "getTotalBatchesExecuted": 16738,
-        "getTotalBatchesVerified": 16739,
-        "getTotalBlocksCommitted": 16798,
-        "getTotalBlocksExecuted": 16738,
-        "getTotalBlocksVerified": 16739,
-        "getTotalPriorityTxs": 19677,
+        "getTotalBatchesCommitted": 19610,
+        "getTotalBatchesExecuted": 19595,
+        "getTotalBatchesVerified": 19605,
+        "getTotalBlocksCommitted": 19610,
+        "getTotalBlocksExecuted": 19595,
+        "getTotalBlocksVerified": 19605,
+        "getTotalPriorityTxs": 20266,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -466,9 +461,33 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
+        }
+      ]
+    },
+    {
       "address": "0x45CC620803974f13a0f1A11517685581FF098000",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x4b2d036D2c27192549ad5A2F2D9875E1843833De",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validateZkStack",
+          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "role": ".validatorsVTL"
+        }
+      ]
     },
     {
       "address": "0x4d64Ff9c7aB6F4Dc6dD7D9438BCBA70e3E094e3E",
@@ -483,11 +502,6 @@
         {
           "permission": "validateZkStack",
           "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -518,7 +532,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -553,7 +567,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 3,
+        "nonce": 5,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -631,7 +645,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 4,
+        "nonce": 6,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -687,7 +701,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 14,
+        "nonce": 16,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -725,8 +739,8 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "0x11805594be0229EF08429D775AF0c55f7c4535dE",
-          "0x54aB716D465be3D5EEca64E63ac0048D7a81659a"
+          "0x415Ed64D42BC0c37AeaAEf79AA767d963Ef38807",
+          "0x4b2d036D2c27192549ad5A2F2D9875E1843833De"
         ]
       },
       "implementationNames": {
@@ -1263,5 +1277,5 @@
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x09c78f20df3b055782b6cb726902c7f8b596b8dec20cdc838b2379757c3be657"
+  "permissionsConfigHash": "0xec8ee1ffaee8f81cfd0f6394498cdac9359e8bfaa1cfa3eabe1950dbecdf9b9b"
 }

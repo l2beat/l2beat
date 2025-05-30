@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -14,140 +13,139 @@ import type { ActivityProjectFilter } from './utils/project-filter-utils'
 import { createActivityProjectsFilter } from './utils/project-filter-utils'
 import type { ActivityTimeRange } from './utils/range'
 
+export type RecategorisedActivityChartData = {
+  data: [
+    timestamp: number,
+    rollupsCount: number,
+    validiumsAndOptimiumsCount: number,
+    othersCount: number,
+    ethereumCount: number,
+  ][]
+  syncWarning: string | undefined
+  syncedUntil: number
+}
+
 /**
  * A function that computes values for chart data of the activity over time.
  * @returns [timestamp, rollupsCount, validiumAndOptimiumsCount, othersCount, ethereumCount][] - all numbers
  */
-export function getRecategorisedActivityChart(
-  ...parameters: Parameters<typeof getCachedRecategorisedActivityChartData>
-) {
+export async function getRecategorisedActivityChart(
+  filter: ActivityProjectFilter,
+  range: ActivityTimeRange,
+  previewRecategorisation: boolean,
+): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
-    return getMockRecategorisedActivityChart(...parameters)
+    return getMockRecategorisedActivityChart(
+      filter,
+      range,
+      previewRecategorisation,
+    )
   }
-  return getCachedRecategorisedActivityChartData(...parameters)
+
+  const db = getDb()
+  const projects = (await getActivityProjects()).filter(
+    createActivityProjectsFilter(filter, previewRecategorisation),
+  )
+
+  const rollups = projects
+    .filter(
+      (p) =>
+        (p.scalingInfo.type === 'ZK Rollup' ||
+          p.scalingInfo.type === 'Optimistic Rollup') &&
+        !isProjectOther(p.scalingInfo, previewRecategorisation),
+    )
+    .map((p) => p.id)
+  const validiumsAndOptimiums = projects
+    .filter(
+      (p) =>
+        (p.scalingInfo.type === 'Validium' ||
+          p.scalingInfo.type === 'Optimium') &&
+        !isProjectOther(p.scalingInfo, previewRecategorisation),
+    )
+    .map((p) => p.id)
+  const others = projects
+    .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
+    .map((p) => p.id)
+
+  const adjustedRange = getFullySyncedActivityRange(range)
+  const [
+    rollupsEntries,
+    validiumsAndOptimiumsEntries,
+    othersEntires,
+    ethereumEntries,
+  ] = await Promise.all([
+    await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
+    await db.activity.getByProjectsAndTimeRange(
+      validiumsAndOptimiums,
+      adjustedRange,
+    ),
+    await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
+    await db.activity.getByProjectsAndTimeRange(
+      [ProjectId.ETHEREUM],
+      adjustedRange,
+    ),
+  ])
+
+  const syncedUntil = adjustedRange[1]
+  const syncWarning = getActivitySyncWarning(syncedUntil)
+
+  const aggregatedRollupsEntries =
+    aggregateActivityRecords(rollupsEntries) ?? {}
+  const aggregatedValidiumsAndOptimiumsEntries =
+    aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
+  const aggregatedOthersEntries = aggregateActivityRecords(othersEntires) ?? {}
+  const aggregatedEthereumEntries =
+    aggregateActivityRecords(ethereumEntries, true) ?? {}
+
+  if (
+    Object.values(aggregatedRollupsEntries).length === 0 &&
+    Object.values(aggregatedValidiumsAndOptimiumsEntries).length === 0 &&
+    Object.values(aggregatedOthersEntries).length === 0 &&
+    Object.values(aggregatedEthereumEntries).length === 0
+  ) {
+    return { data: [], syncWarning, syncedUntil: syncedUntil }
+  }
+
+  const startTimestamp = Math.min(
+    ...Object.keys(aggregatedRollupsEntries).map(Number),
+    ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
+    ...Object.keys(aggregatedOthersEntries).map(Number),
+    ...Object.keys(aggregatedEthereumEntries).map(Number),
+  )
+  const timestamps = generateTimestamps(
+    [UnixTime(startTimestamp), adjustedRange[1]],
+    'daily',
+  )
+
+  const data: [number, number, number, number, number][] = timestamps.map(
+    (timestamp) => {
+      const rollupsEntry = aggregatedRollupsEntries[timestamp]
+      const validiumsAndOptimiumsEntry =
+        aggregatedValidiumsAndOptimiumsEntries[timestamp]
+      const othersEntry = aggregatedOthersEntries[timestamp]
+      const ethereumEntry = aggregatedEthereumEntries[timestamp]
+
+      const rollupsCount = rollupsEntry?.uopsCount ?? 0
+      const validiumsAndOptimiumsCount =
+        validiumsAndOptimiumsEntry?.uopsCount ?? 0
+      const othersCount = othersEntry?.uopsCount ?? 0
+      const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
+
+      return [
+        +timestamp,
+        rollupsCount,
+        validiumsAndOptimiumsCount,
+        othersCount,
+        ethereumCount,
+      ]
+    },
+  )
+  return {
+    data,
+    syncWarning,
+    syncedUntil: syncedUntil,
+  }
 }
-
-export type RecategorisedActivityChartData = Awaited<
-  ReturnType<typeof getCachedRecategorisedActivityChartData>
->
-
-export const getCachedRecategorisedActivityChartData = cache(
-  async (
-    filter: ActivityProjectFilter,
-    range: ActivityTimeRange,
-    previewRecategorisation: boolean,
-  ) => {
-    const db = getDb()
-    const projects = (await getActivityProjects()).filter(
-      createActivityProjectsFilter(filter, previewRecategorisation),
-    )
-
-    const rollups = projects
-      .filter(
-        (p) =>
-          (p.scalingInfo.type === 'ZK Rollup' ||
-            p.scalingInfo.type === 'Optimistic Rollup') &&
-          !isProjectOther(p.scalingInfo, previewRecategorisation),
-      )
-      .map((p) => p.id)
-    const validiumsAndOptimiums = projects
-      .filter(
-        (p) =>
-          (p.scalingInfo.type === 'Validium' ||
-            p.scalingInfo.type === 'Optimium') &&
-          !isProjectOther(p.scalingInfo, previewRecategorisation),
-      )
-      .map((p) => p.id)
-    const others = projects
-      .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
-      .map((p) => p.id)
-
-    const adjustedRange = getFullySyncedActivityRange(range)
-    const [
-      rollupsEntries,
-      validiumsAndOptimiumsEntries,
-      othersEntires,
-      ethereumEntries,
-    ] = await Promise.all([
-      await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
-      await db.activity.getByProjectsAndTimeRange(
-        validiumsAndOptimiums,
-        adjustedRange,
-      ),
-      await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
-      await db.activity.getByProjectsAndTimeRange(
-        [ProjectId.ETHEREUM],
-        adjustedRange,
-      ),
-    ])
-
-    const syncedUntil = adjustedRange[1]
-    const syncWarning = getActivitySyncWarning(syncedUntil)
-
-    const aggregatedRollupsEntries =
-      aggregateActivityRecords(rollupsEntries) ?? {}
-    const aggregatedValidiumsAndOptimiumsEntries =
-      aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
-    const aggregatedOthersEntries =
-      aggregateActivityRecords(othersEntires) ?? {}
-    const aggregatedEthereumEntries =
-      aggregateActivityRecords(ethereumEntries, true) ?? {}
-
-    if (
-      Object.values(aggregatedRollupsEntries).length === 0 &&
-      Object.values(aggregatedValidiumsAndOptimiumsEntries).length === 0 &&
-      Object.values(aggregatedOthersEntries).length === 0 &&
-      Object.values(aggregatedEthereumEntries).length === 0
-    ) {
-      return { data: [], syncWarning, syncedUntil: syncedUntil }
-    }
-
-    const startTimestamp = Math.min(
-      ...Object.keys(aggregatedRollupsEntries).map(Number),
-      ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
-      ...Object.keys(aggregatedOthersEntries).map(Number),
-      ...Object.keys(aggregatedEthereumEntries).map(Number),
-    )
-    const timestamps = generateTimestamps(
-      [UnixTime(startTimestamp), adjustedRange[1]],
-      'daily',
-    )
-
-    const data: [number, number, number, number, number][] = timestamps.map(
-      (timestamp) => {
-        const rollupsEntry = aggregatedRollupsEntries[timestamp]
-        const validiumsAndOptimiumsEntry =
-          aggregatedValidiumsAndOptimiumsEntries[timestamp]
-        const othersEntry = aggregatedOthersEntries[timestamp]
-        const ethereumEntry = aggregatedEthereumEntries[timestamp]
-
-        const rollupsCount = rollupsEntry?.uopsCount ?? 0
-        const validiumsAndOptimiumsCount =
-          validiumsAndOptimiumsEntry?.uopsCount ?? 0
-        const othersCount = othersEntry?.uopsCount ?? 0
-        const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
-
-        return [
-          +timestamp,
-          rollupsCount,
-          validiumsAndOptimiumsCount,
-          othersCount,
-          ethereumCount,
-        ]
-      },
-    )
-    return {
-      data,
-      syncWarning,
-      syncedUntil: syncedUntil,
-    }
-  },
-  ['recategorised-activity-chart-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
 
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,

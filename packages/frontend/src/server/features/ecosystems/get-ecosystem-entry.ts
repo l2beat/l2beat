@@ -7,10 +7,10 @@ import type {
   ProjectEcosystemInfo,
 } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import type { EcosystemGovernanceLinks } from '~/app/(side-nav)/ecosystems/_components/widgets/ecosystem-governance-links'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/project-badge'
 import { getCollection } from '~/content/get-collection'
+import type { EcosystemGovernanceLinks } from '~/pages/ecosystems/project/components/widgets/ecosystem-governance-links'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/get-badge-with-params'
 import { getImageParams } from '~/utils/project/get-image-params'

@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22437733,
-  "configHash": "0x860cc84f1df46b22ae43ecae88f500eb9222b9c6ba13c1e9423e72178cd2123a",
+  "blockNumber": 22593373,
+  "configHash": "0x4abadfd874e7192124b36c5f32956fc86608293d62722d7202779c46b35fb68e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -305,7 +305,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 14 (21%)",
-        "nonce": 61,
+        "nonce": 63,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -595,7 +595,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -633,7 +633,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 4530,
+        "gameCount": 5053,
         "gameImpls": [
           "0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
           "0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49",
@@ -718,8 +718,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 516982,
-          "prevBlockNum": 22437726
+          "prevBoughtGas": 516470,
+          "prevBlockNum": 22593354
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -778,11 +778,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0xea76E5ECe3f349f8b897Ba7Eb83b05F853CdA3ED",
+        "anchorGame": "0xa382e31957cB8059bd18B038bD000f2c689a4895",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0xb134dceb87a10bc60eb6376cf403def33b8eb4d112289898514907e60c0ad43c",
-          29649180
+          "0x3858a2d6137f99920f3ec8f85834ba2cf0dad21249dc6a3bd2b3ae75fa700215",
+          30591719
         ],
         "portal": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -907,7 +907,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1189,7 +1189,7 @@
         "blobbasefeeScalar": 1055762,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
-        "eip1559Denominator": 250,
+        "eip1559Denominator": 50,
         "eip1559Elasticity": 2,
         "gasLimit": 140000000,
         "getAddresses": {
@@ -1242,6 +1242,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1455,7 +1458,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1516,7 +1519,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293034831",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293042979",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1729,7 +1732,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -2128,7 +2131,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3376,7 +3379,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x32d1b09ccd589baf06a761f9f1c7e31b096f58ac63446a4c07a82cf07456b825"
 }

@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x8a5fbda7448383860095b16e5e4b3b240e1f5cfd
+Generated with discovered.json: 0x3637daf2a2768419d9d0f056b7002a2f00de189e
+
+# Diff at Fri, 30 May 2025 05:44:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 22231693
+- current block number: 22593538
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract SoonMultisig (0xD686D498a67Bb96FAa4afA3b2b1Cf182f5c3A701) {
+    +++ description: None
+      values.$members.3:
+-        "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B"
++        "0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
+      values.$members.2:
+-        "0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
++        "0x7b12Dc6d2b7F13d1283E9CCe9eC818C09CB02432"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231693 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x1E69C2522Dc139c9fC74E6ecb89373d435E70Dd8) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
+Generated with discovered.json: 0xb1d93f385868611b4936f2fca13568d7b7a56bd8
 
 # Diff at Fri, 23 May 2025 09:41:05 GMT:
 

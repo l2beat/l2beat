@@ -78,11 +78,6 @@ export const ronin: Bridge = {
       description: `16/22 Operators from the set. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Multisig (16/22)',
-      description: `Gateway Proxy can be upgraded by 16/22 operators.`,
-      sentiment: 'bad',
-    },
     livenessFailure: {
       value: 'No mechanism',
       description:

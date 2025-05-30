@@ -2,7 +2,7 @@
   "name": "bobanetwork",
   "chain": "ethereum",
   "blockNumber": 22267281,
-  "configHash": "0x0adb2d9d199ac866f32e1876c1943dffa504b1a8ab0df8c58454efdda133b099",
+  "configHash": "0xa6f11f95f30420bfec5e1a6366ef8092c043921ec2c903bb3cf7c4f3e351478c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -96,6 +96,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1095,7 +1098,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x7b42a926074757360f0ef107d2b805b7994b030acdeae60c025fe3c8608b49ff"
 }

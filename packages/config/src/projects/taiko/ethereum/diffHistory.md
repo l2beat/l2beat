@@ -1,3 +1,1543 @@
+Generated with discovered.json: 0x47b22217bef062e9e7b46eb0b1ea339c1a6ab960
+
+# Diff at Fri, 30 May 2025 11:13:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@80c24ef6a6e17335dc2761caff762cfb6f39304b block: 22579860
+- current block number: 22595179
+
+## Description
+
+Ignore spammy batches/state values.
+
+## Watched changes
+
+```diff
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) {
+    +++ description: None
+      values.$members.5:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.4:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0xFa92ff698D57f7B875570D9F59501812B843CD44"
+      values.$members.2:
+-        "0xFa92ff698D57f7B875570D9F59501812B843CD44"
++        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.5:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.4:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "4 of 6 (67%)"
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.24.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.23.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.22.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.21.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.20.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.19.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.18.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.17.from:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.16.from:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.15.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.14.from:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.13.from:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.12.from:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.11.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.10.from:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.9.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.8.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.8.description:
++        "can update the contract address for a given name"
+      receivedPermissions.7.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.7.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.6.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.5.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.5.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+      receivedPermissions.4.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.4.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.3.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.3.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DefaultResolver.sol                            |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DefaultResolver.sol                            | 1428 ++++++++++++
+ .../ERC1967Proxy.p.sol                             |  594 +++++
+ .../ethereum/.flat/ProverSet/ERC1967Proxy.p.sol    |  594 +++++
+ .../taiko/ethereum/.flat/ProverSet/ProverSet.sol   | 2287 ++++++++++++++++++++
+ 6 files changed, 4903 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22579860 (main branch discovery), not current.
+
+```diff
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03) {
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+      description:
+-        "Contract that allows to enqueue forced transaction through L1. A pending forced transaction must be processed every 255 batches."
++        "Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive."
+    }
+```
+
+Generated with discovered.json: 0x848b84f997bf4e9315a8bdb2dccf8e479db8ba31
+
+# Diff at Wed, 28 May 2025 13:56:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 22579860
+- current block number: 22579860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22579860 (main branch discovery), not current.
+
+```diff
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      name:
+-        "TaikoToken"
++        "Taiko Token"
+    }
+```
+
+Generated with discovered.json: 0x39dbd31018bfdca6cf2ff2a00524592e3782adac
+
+# Diff at Wed, 28 May 2025 11:33:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 22481930
+- current block number: 22579860
+
+## Description
+
+Main TaikoL1 contract has been upgraded to an intermediate proxy that points to both an old and new implementation. The old implementation is also not the same as the actually previous one, but it's just add a "Pacaya" fork height that prevents proposing or proving for new blocks. The new fork compared to the new presents some simplifications, like removal of `AddressCache`, `AddressResolver`, `IAddressResolver`, `ITaikoL1`, `LibBonds`, `LibData`, `LibProposing`, `LibProving`, `LibUtils`, `LibVerifying`, `RollupAddressCache`, `SafeCastUpgradeable`, `TaikoData`, and `TaikoEvents`. The address resolving logic is still present and has been moved to the `EssentialContract` contract.
+
+At the time of writing, calls are still forwarded to the old impl as the Pacaya fork is expected to go live on Wed 21 May. `ITaikoInbox` and `TaikoInbox` replace `ITaikoL1` and `TaikoL1`. Batches have replaced blocks, as now one batch can contain multiple blocks. Instead of `proposeBlocksV2`, the `proposeBatch` function is called to sequence blocks. An `InboxWrapper` contract has been introduced, which is referenced by the `TaikoInbox`. The `InboxWrapper` references a `ForcedInclusionStore` contract that is used to submit forced transactions. All forced transactions must pay a fee, and it's currently set to a very high value meaning that the mechanism is in practice disabled. The slowest forced transactions can be included is one by one every 255 batches, creating a potential DoS attack via spam of forced transactions. It's therefore not clear how to estimate exit windows (not that it matters rn).
+
+The `proveBatches` function reflects the removal of tiers. The `_params` is decoded into `metas[]` (metadatas) and `trans[]` (transitions). On transition ids: when a batch is first proposed, the `nextTransitionId` is 1 and the `verifiedTransitionId` is zero. When a batch is proven for the first time, the `nextTransitionId` is incremented to 2, the proofs get verified, everything is good. The same batch can be proven again: it is checked that the new block hash and new state root also corresponds. If it does, it is treated as a no-op, if it doesn't, the block hash of the transition is set to zero, and contracts are paused. It is possible to prove a fault this way by providing a different starting point for the proving process, by providing a different `parentHash` to start from. Batches whose transitions' `blockHash` is set to zero are skipped during the `verifyBatches` call.
+ 
+The `verifyBatches` function also reflects the removal of tiers. The main function is still to credit back bonds to the proposer, specifically the full liveness bond if the block has been proved within the proving window, or half bond if not.
+ 
+The `verifier` is actually a multi-proof system with 4 verifiers: sp1, r0, sgx_reth and sgx_geth. A proof must contain exactly two sub-proofs targeting two different verifiers. An ordering is defined between them based on their address: r0 -> sgx_geth -> sgx_reth -> sp1. It is required that one of the verifiers used is sgx_geth. It is possible to use two TEEs to verify a block, which causes them to still be affected by our recategorization.
+
+## Watched changes
+
+```diff
+    contract TaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: Main contract implementing the logic for proposing and proving Taiko blocks on L1.
+      name:
+-        "MainnetTaikoL1"
++        "TaikoL1"
+      template:
+-        "taiko/TaikoL1Contract"
++        "taiko/TaikoL1PostPacaya"
+      sourceHashes.1:
+-        "0x8c8d91a3b010953954bbd3ba9f4c55f76112bf6d7f298dcd584c2de94a4ad1a4"
++        "0xc4ae3ca2fcf606673a1324989a7ac169b3fdb6780917814506e56898484e99d7"
+      description:
+-        "This contract provides functionalities for proposing, proving, and verifying blocks."
++        "Main contract implementing the logic for proposing and proving Taiko blocks on L1."
+      values.$implementation:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        ["0x4e030b19135869F6fd926614754B7F9c184E2B83","0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","0x497B13f9192B09244de9b5F0964830969FB26F07"]
+      values.$pastUpgrades.25:
++        ["2024-11-10T16:10:23.000Z","0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]]
+      values.$pastUpgrades.24:
++        ["2025-05-16T02:36:23.000Z","0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795",["0x4e030b19135869F6fd926614754B7F9c184E2B83","0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264","0x497B13f9192B09244de9b5F0964830969FB26F07"]]
+      values.$pastUpgrades.23.2:
+-        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
++        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
+      values.$pastUpgrades.23.1:
+-        "2024-11-10T16:10:23.000Z"
++        "2024-06-04T06:10:11.000Z"
+      values.$pastUpgrades.23.0.2:
+-        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
++        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
+      values.$pastUpgrades.22.2:
+-        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
++        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
+      values.$pastUpgrades.22.1:
+-        "2024-06-04T06:10:11.000Z"
++        "2025-02-27T03:27:23.000Z"
+      values.$pastUpgrades.22.0.2:
+-        "0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"
++        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
+      values.$pastUpgrades.21.2:
+-        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
++        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
+      values.$pastUpgrades.21.1:
+-        "2025-02-27T03:27:23.000Z"
++        "2024-11-03T05:15:23.000Z"
+      values.$pastUpgrades.21.0.2:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.20.2:
+-        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
++        "2024-05-27T16:37:11.000Z"
+      values.$pastUpgrades.20.1:
+-        "2024-11-03T05:15:23.000Z"
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.20.0.2:
+-        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
++        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.19.2:
+-        "2024-05-27T16:37:11.000Z"
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.19.1:
+-        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
++        "2024-05-21T14:15:11.000Z"
+      values.$pastUpgrades.19.0.2:
+-        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
++        "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
+      values.$pastUpgrades.18.2:
+-        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
++        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
+      values.$pastUpgrades.18.1:
+-        "2024-05-21T14:15:11.000Z"
++        "2024-12-24T14:19:11.000Z"
+      values.$pastUpgrades.18.0.2:
+-        "0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"
++        "0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"
+      values.$pastUpgrades.17.2:
+-        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
++        "2025-05-15T08:40:47.000Z"
+      values.$pastUpgrades.17.1:
+-        "2024-12-24T14:19:11.000Z"
++        ["0x5eEcd1305aC72d4a77Bf3BD734e81c15e2A2adEf","0xaA64D5A3A26D1e76AcAf6e22c199D02d58076A01","0x497B13f9192B09244de9b5F0964830969FB26F07"]
+      values.$pastUpgrades.17.0:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
++        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
+      values.$upgradeCount:
+-        24
++        26
+      values.addressManager:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      values.assignment_hook:
+-        "0x0000000000000000000000000000000000000000"
+      values.automata_dcap_attestation:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.bond_token:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.bridge:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.bridge_watchdog:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc1155:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc20:
+-        "0x0000000000000000000000000000000000000000"
+      values.bridged_erc721:
+-        "0x0000000000000000000000000000000000000000"
+      values.chain_watchdog:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      values.erc1155_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.erc20_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.erc721_vault:
+-        "0x0000000000000000000000000000000000000000"
+      values.getLastSyncedBlock:
+-        {"blockId_":1148703,"blockHash_":"0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031","stateRoot_":"0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d","verifiedAt_":1747209131}
+      values.getLastVerifiedBlock.blockId_:
+-        1148703
++        1178564
+      values.getLastVerifiedBlock.blockHash_:
+-        "0x5a7e198eb91f666cb2a95abeb5585a7e9485c6c4a3008f8275c34ffedc3f1031"
++        "0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b"
+      values.getLastVerifiedBlock.stateRoot_:
+-        "0x775e54de208c8220b5e302d1c845c1b25cf99ed1f8807ac36e20589e3b56231d"
++        "0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587"
+      values.getLastVerifiedBlock.verifiedAt_:
+-        1747209131
++        1738480871
+      values.getStateVariables.1.genesisHeight:
+-        19923613
+      values.getStateVariables.1.genesisTimestamp:
+-        1716358991
+      values.getStateVariables.1.lastSyncedBlockId:
+-        1148703
+      values.getStateVariables.1.lastSynecdAt:
+-        1747226267
+      values.getStateVariables.1.numBlocks:
++        1178840
+      values.getStateVariables.1.lastVerifiedBlockId:
++        1178564
+      values.getStateVariables.1.provingPaused:
++        false
+      values.getStateVariables.1.lastProposedIn:
++        22579860
+      values.getStateVariables.1.lastUnpausedAt:
++        1716571955
+      values.getStateVariables.0.numBlocks:
+-        1149204
+      values.getStateVariables.0.lastVerifiedBlockId:
+-        1148703
+      values.getStateVariables.0.provingPaused:
+-        false
+      values.getStateVariables.0.lastProposedIn:
+-        22481927
+      values.getStateVariables.0.lastUnpausedAt:
+-        1716571955
+      values.getStateVariables.0.genesisHeight:
++        19923613
+      values.getStateVariables.0.genesisTimestamp:
++        1716358991
+      values.getStateVariables.0.lastSyncedBlockId:
++        1178564
+      values.getStateVariables.0.lastSynecdAt:
++        1748416535
+      values.impl:
+-        "0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"
++        "0x4e030b19135869F6fd926614754B7F9c184E2B83"
+      values.lastProposedIn:
+-        22481927
++        22579860
+      values.lastUnpausedAt:
+-        1716571955
+      values.preconf_task_manager:
+-        "0x0000000000000000000000000000000000000000"
+      values.proposer:
+-        "0x000000633b68f5D8D3a86593ebB815b4663BCBe0"
+      values.proposer_one:
+-        "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+      values.prover_assignment:
+-        "0x0000000000000000000000000000000000000000"
+      values.prover_set:
+-        "0x280eAbfd252f017B78e15b69580F249F45FB55Fa"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.quota_manager:
+-        "0x0000000000000000000000000000000000000000"
+      values.return_liveness_bond:
+-        "0x0000000000000000000000000000000000000000"
+      values.sgx_watchdog:
+-        "0x0000000000000000000000000000000000000000"
+      values.signal_root:
+-        "0x0000000000000000000000000000000000000000"
+      values.signal_service:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.sp1_remote_verifier:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+      values.state.slotA:
+-        {"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":1148703,"lastSynecdAt":1747226267}
+      values.state.slotB:
+-        {"numBlocks":1149204,"lastVerifiedBlockId":1148703,"provingPaused":false,"lastProposedIn":22481927,"lastUnpausedAt":1716571955}
+      values.state.stats1:
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1178564,"lastSyncedAt":1748416535}
+      values.state.stats2:
++        {"numBatches":1178840,"lastVerifiedBatchId":1178564,"paused":false,"lastProposedIn":22579860,"lastUnpausedAt":1716571955}
+      values.state_root:
+-        "0x0000000000000000000000000000000000000000"
+      values.taiko:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      values.taiko_token:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.tier_router:
+-        "0x44d307a9ec47aA55a7a30849d065686753C86Db6"
+      values.verifier_RISCZERO_GROTH16_VERIFIER:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
+      values.verifier_TIER_GUARDIAN:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
+      values.verifier_TIER_GUARDIAN_MINORITY:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
+      values.verifier_TIER_OPTIMISTIC:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_SGX:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      values.verifier_TIER_TDX:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_TEE_ANY:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_AND_TEE:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_ANY:
+-        "0x0000000000000000000000000000000000000000"
+      values.verifier_TIER_ZKVM_RISC0:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      values.verifier_TIER_ZKVM_SP1:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      values.withdrawer:
+-        "0x0000000000000000000000000000000000000000"
+      values.bondToken:
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.getLastSyncedTransition:
++        {"batchId_":1178564,"blockId_":1178564,"ts_":{"parentHash":"0x7c801227fd8912dfd03b4b1f664ae228b579aa782a221a4a4569131637ab2955","blockHash":"0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b","stateRoot":"0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748406971}}
+      values.getLastVerifiedTransition:
++        {"batchId_":1178564,"blockId_":1178564,"ts_":{"parentHash":"0x7c801227fd8912dfd03b4b1f664ae228b579aa782a221a4a4569131637ab2955","blockHash":"0x30dabf999649a05a6aeb9d9e30b6a2910788dbffb4a7fcdb5ec3f49934a0e12b","stateRoot":"0x339e2ac188194e6fd6bc0e129c2232940ca5c0efd7c7015435aafae3a1cb6587","prover":"0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6","inProvingWindow":true,"createdAt":1748406971}}
+      values.getStats1:
++        {"genesisHeight":19923613,"__reserved2":1716358991,"lastSyncedBatchId":1178564,"lastSyncedAt":1748416535}
+      values.getStats2:
++        {"numBatches":1178840,"lastVerifiedBatchId":1178564,"paused":false,"lastProposedIn":22579860,"lastUnpausedAt":1716571955}
+      values.inboxWrapper:
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      values.isOnL1:
++        true
+      values.newFork:
++        "0x497B13f9192B09244de9b5F0964830969FB26F07"
+      values.oldFork:
++        "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264"
+      values.pacayaConfig:
++        {"chainId":167000,"maxUnverifiedBatches":324000,"batchRingBufferSize":360000,"maxBatchesToVerify":16,"blockMaxGasLimit":240000000,"livenessBondBase":"125000000000000000000","livenessBondPerBlock":0,"stateRootSyncInternal":4,"maxAnchorHeightOffset":64,"baseFeeConfig":{"adjustmentQuotient":8,"sharingPctg":50,"gasIssuancePerSecond":5000000,"minGasExcess":1344899430,"maxGasIssuancePerBlock":600000000},"provingWindow":7200,"cooldownWindow":7200,"maxSignalsToReceive":16,"maxBlocksPerBatch":768,"forkHeights":{"ontake":538304,"pacaya":1166000,"shasta":0,"unzen":0}}
+      values.resolver:
++        "0x0000000000000000000000000000000000000000"
+      values.signalService:
++        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      values.verifier:
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      implementationNames.0x5110634593Ccb8072d161A7d260A409A7E74D7Ca:
+-        "MainnetTaikoL1"
+      implementationNames.0x4e030b19135869F6fd926614754B7F9c184E2B83:
++        "PacayaForkRouter"
+      implementationNames.0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264:
++        "MainnetTaikoL1"
+      implementationNames.0x497B13f9192B09244de9b5F0964830969FB26F07:
++        "MainnetInbox"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      template:
+-        "taiko/TaikoToken"
++        "taiko/TaikoTokenPostPacaya"
+      sourceHashes.1:
+-        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
++        "0x2b1eb63ab3adb1a0783bae6252816727a2fb5d150dd0e9912e0a01e4ee224be9"
+      sourceHashes.0:
+-        "0xea41529d3c7a5cd7651ff173711c111016d65e4345f6f60dc2af04d8ddef375f"
++        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b"
+      description:
+-        "Taiko's native token. Used for block proposal rewards, proving bonds and rewards, and contesting bonds."
++        "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting."
+      values.$implementation:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.$pastUpgrades.6:
++        ["2024-05-29T08:03:23.000Z","0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2",["0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"]]
+      values.$pastUpgrades.5.2:
+-        "0x56402f9fd928be890fbd29829b817faffc0780b85e83300a29962c969808cae2"
++        "2024-05-11T05:46:11.000Z"
+      values.$pastUpgrades.5.1.0:
+-        "0x7dF8bfBf0f09e94200b6a158b421e2CCaCc4830F"
++        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
+      values.$pastUpgrades.5.0:
+-        "2024-05-29T08:03:23.000Z"
++        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
+      values.$pastUpgrades.4.2:
+-        "2024-05-11T05:46:11.000Z"
++        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
+      values.$pastUpgrades.4.1.0:
+-        "0xea53c0f4b129Cf3f3FBA896F9f23ca18246e9B3c"
++        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
+      values.$pastUpgrades.4.0:
+-        "0x7d82794932540ed9edd259e58f6ef8ae21a49beada7f0224638f888f7149c01c"
++        "2024-04-25T08:29:59.000Z"
+      values.$pastUpgrades.3.2:
+-        "0x4f7a1c6ad21fbfeaecab40ea36a3845bf67e22d7770d8a259d62b995cb93cb34"
++        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
+      values.$pastUpgrades.3.1.0:
+-        "0x9ae1a067F9655DD0511390e3d70Bb25933AE61eb"
++        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
+      values.$pastUpgrades.3.0:
+-        "2024-04-25T08:29:59.000Z"
++        "2025-05-13T00:47:23.000Z"
+      values.$pastUpgrades.2.2:
+-        "0xdb7d5de46738ad3f676db47b61772db531f9858b7a01e8c3b5aee49fa74cac95"
++        "2024-07-02T07:15:47.000Z"
+      values.$pastUpgrades.2.1.0:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0xcfe803378D79d1180EbF030455040EA6513869dF"
+      values.$pastUpgrades.2.0:
+-        "2025-05-13T00:47:23.000Z"
++        "0xc9f468d33d8d55911e4e5b5c301ed244a5f81ab0f389d2b4f398eb5b89d417ef"
+      values.$pastUpgrades.1.2:
+-        "2024-07-02T07:15:47.000Z"
++        ["0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"]
+      values.$pastUpgrades.1.1:
+-        ["0xcfe803378D79d1180EbF030455040EA6513869dF"]
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.1.0:
+-        "0xc9f468d33d8d55911e4e5b5c301ed244a5f81ab0f389d2b4f398eb5b89d417ef"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.0.2.0:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.$pastUpgrades.0.1:
+-        "2024-06-07T04:02:11.000Z"
++        "0x986fc2c7ae945cdd358b2f2ae54364b350026f965f5861ed470f78e145f12626"
+      values.$pastUpgrades.0.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        "2025-05-15T05:12:11.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.clock:
+-        1747232111
++        1748418323
+      values.getNonVotingAccounts.3:
++        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+      values.getNonVotingAccounts.2:
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      values.getNonVotingAccounts.1:
+-        "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "0x0000000000000000000000000000000000000000"
+      values.impl:
+-        "0x87C752b0F70cAa237Edd7571B0845470A37DE040"
++        "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106"
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      values.TAIKO_ERC20_VAULT:
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      implementationNames.0x87C752b0F70cAa237Edd7571B0845470A37DE040:
+-        "TaikoToken"
+      implementationNames.0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106:
++        "TaikoToken"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetProverSet (0x280eAbfd252f017B78e15b69580F249F45FB55Fa)
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetTierRouter (0x44d307a9ec47aA55a7a30849d065686753C86Db6)
+    +++ description: Contract managing and routing the multi-tier proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract Risc0VerifierGateway (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc)
+    +++ description: Entry contract to verify batches using RISC Zero.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetGuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c)
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetRollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780)
+    +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452)
+    +++ description: Entry contract to verify batches using SP1.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.11:
++        "0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"
+      values.mrEnclaves.10:
++        "0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734"
+      values.mrEnclaves.9:
+-        "0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"
++        "0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160"
+      values.mrEnclaves.8:
+-        "0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734"
++        "0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d"
+      values.mrEnclaves.7:
+-        "0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160"
++        "0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807"
+      values.mrEnclaves.6:
+-        "0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d"
++        "0xdcd483d3406d9b1871bb92420f5a080c4372e0d6b8522a4a2cb91a0f736669c6"
+      values.mrEnclaves.5:
+-        "0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807"
++        "0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9"
+      values.mrEnclaves.4:
+-        "0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9"
++        "0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356"
+      values.mrEnclaves.3:
+-        "0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356"
++        "0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52"
+      values.mrEnclaves.2:
+-        "0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52"
++        "0x3b589538b775ddbfc5fb028167ff846116159e6687aef9f849ca5a70a7871ea5"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.2:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
++        "0x0aED2375549D1115e180bd0caea829C429Ea50B3"
+      values.$members.1:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
++        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.$members.0:
+-        "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
++        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$threshold:
+-        3
++        4
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 5 (80%)"
+      receivedPermissions.24:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.23:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.22:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.21:
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
+      receivedPermissions.20:
++        {"permission":"upgrade","from":"0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE","role":"admin"}
+      receivedPermissions.19.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.18.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.17.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.16.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.15.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.14.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.13.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.12.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.11.from:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.10.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.9.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.8.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.7.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.7.description:
++        "can update the contract address for a given name"
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.6.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.6.description:
++        "can update the program being verified"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.5.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.5.description:
++        "can update the program being verified"
+      receivedPermissions.4.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.4.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+      receivedPermissions.3.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.3.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.2.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.1.from:
+-        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.0.from:
+-        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.0.description:
+-        "can update the program being verified"
++        "can add new instances without a DCAP attestation"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      sourceHashes.1:
+-        "0xf99b7d5f650d3734e945c5040d8e4776dfdc97ff745666e084c1d471b7973f38"
++        "0xc978dbfc097ca447823c4a1eb83078cd63532727420b19287acc0f87e884285f"
+      values.$implementation:
+-        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
++        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.$pastUpgrades.7:
++        ["2024-05-01T08:03:23.000Z","0x0898d14da2f38d677085073d2decfb7ca32902406df2e7a84f6615d9c92d4516",["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]]
+      values.$pastUpgrades.6:
++        ["2024-06-06T08:51:11.000Z","0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",["0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"]]
+      values.$pastUpgrades.5.2:
+-        "2024-05-01T08:03:23.000Z"
++        ["0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"]
+      values.$pastUpgrades.5.1:
+-        "0x0898d14da2f38d677085073d2decfb7ca32902406df2e7a84f6615d9c92d4516"
++        "2025-05-18T14:25:11.000Z"
+      values.$pastUpgrades.5.0:
+-        ["0xE1d91bAE44B70bD66e8b688B8421fD62dcC33c72"]
++        "0x0ae99d24b294622e3d3868c8dca911a5936231ce1f97254ec0c6a6f65f7aa81c"
+      values.$pastUpgrades.4.2.0:
+-        "0x3d59c18b31A7D950EF9bd15eD285b6c182E0f0bb"
++        "0x0783Ee019C9b0f918A741469bD488A88827b3617"
+      values.$pastUpgrades.4.1:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2025-05-15T08:40:47.000Z"
+      values.$pastUpgrades.4.0:
+-        "2024-06-06T08:51:11.000Z"
++        "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd"
+      values.$upgradeCount:
+-        6
++        8
+      values.addressManager:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      values.impl:
+-        "0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3"
++        "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c"
+      values.lastUnpausedAt:
+-        0
+      values.resolver:
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      implementationNames.0x45fed11Ba70D4217545F18E27DDAF7D76Ff499f3:
+-        "MainnetSignalService"
+      implementationNames.0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c:
++        "MainnetSignalService"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetSgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
+-   Status: DELETED
+    contract MainnetGuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC)
+    +++ description: Verifier contract for Guardian proven blocks.
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.10.name:
+-        "bridge_watchdog"
++        "taiko_token"
+      values.namedAddresses.10.address:
+-        "0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.9.name:
+-        "taiko_token"
++        "signal_service"
+      values.namedAddresses.9.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x1670000000000000000000000000000000000005"
+      values.namedAddresses.8.name:
+-        "signal_service"
++        "erc1155_vault"
+      values.namedAddresses.8.address:
+-        "0x1670000000000000000000000000000000000005"
++        "0x1670000000000000000000000000000000000004"
+      values.namedAddresses.7.name:
+-        "erc1155_vault"
++        "bridged_erc1155"
+      values.namedAddresses.7.address:
+-        "0x1670000000000000000000000000000000000004"
++        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
+      values.namedAddresses.6.name:
+-        "bridged_erc1155"
++        "bridge"
+      values.namedAddresses.6.address:
+-        "0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"
++        "0x1670000000000000000000000000000000000001"
+      values.namedAddresses.5.name:
+-        "bridge"
++        "bridged_erc20"
+      values.namedAddresses.5.address:
+-        "0x1670000000000000000000000000000000000001"
++        "0x65666141a541423606365123Ed280AB16a09A2e1"
+      values.namedAddresses.4.name:
+-        "bridged_erc20"
++        "bridged_erc721"
+      values.namedAddresses.4.address:
+-        "0x65666141a541423606365123Ed280AB16a09A2e1"
++        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
+      values.namedAddresses.3.name:
+-        "bridged_erc721"
++        "quota_manager"
+      values.namedAddresses.3.address:
+-        "0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"
++        "0x0000000000000000000000000000000000000000"
+      values.namedAddresses.2.name:
+-        "quota_manager"
++        "erc721_vault"
+      values.namedAddresses.2.address:
+-        "0x0000000000000000000000000000000000000000"
++        "0x1670000000000000000000000000000000000003"
+      values.namedAddresses.1.name:
+-        "erc721_vault"
++        "erc20_vault"
+      values.namedAddresses.1.address:
+-        "0x1670000000000000000000000000000000000003"
++        "0x1670000000000000000000000000000000000002"
+      values.namedAddresses.0.name:
+-        "erc20_vault"
++        "bridge_watchdog"
+      values.namedAddresses.0.address:
+-        "0x1670000000000000000000000000000000000002"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03)
+    +++ description: Contract that allows to enqueue forced transaction through L1. A pending forced transaction must be processed every 255 batches.
+```
+
+```diff
++   Status: CREATED
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261)
+    +++ description: Contract managing SGX attestation certificates.
+```
+
+```diff
++   Status: CREATED
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE)
+    +++ description: Entry contract to verify batches using RISC Zero.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x7e6409e9b6c5e2064064a6cC994f9a2e95680782)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x8Efa01564425692d0a0838DC10E300BD310Cb43e)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract SgxVerifier (0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136)
+    +++ description: Verifier contract for SGX proven blocks.
+```
+
+```diff
++   Status: CREATED
+    contract TaikoWrapper (0x9F9D2fC7abe74C79f86F0D1212107692430eef72)
+    +++ description: Entry point for proposing blocks. It enforces the inclusion of forced transactions after their deadline.
+```
+
+```diff
++   Status: CREATED
+    contract VerifierGateway (0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1)
+    +++ description: Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.
+```
+
+```diff
++   Status: CREATED
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9)
+    +++ description: Entry contract to verify batches using SP1.
+```
+
+## Source code changes
+
+```diff
+.../AutomataDcapV3Attestation.sol                  | 3750 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../AutomataDcapV3Attestation.sol                  |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DefaultResolver/DefaultResolver.sol}           |  807 ++---
+ .../DefaultResolver}/ERC1967Proxy.p.sol            |    2 +-
+ .../ForcedInclusionStore}/ERC1967Proxy.p.sol       |    2 +-
+ .../ForcedInclusionStore/ForcedInclusionStore.sol} | 1533 +++-----
+ .../MainnetSgxVerifier.sol => /dev/null            | 2857 ---------------
+ .../MainnetSignalService/MainnetSignalService.sol  |  822 ++---
+ .../MainnetTaikoL1/ERC1967Proxy.p.sol => /dev/null |  594 ----
+ .../MainnetTierRouter.sol => /dev/null             |  219 --
+ .../Risc0VerifierGateway/Risc0Verifier.sol         |  907 ++---
+ .../SP1VerifierGateway/SP1Verifier.sol             |  914 ++---
+ .../ERC1967Proxy.p.sol                             |    2 +-
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
+ .../ERC1967Proxy.p.sol                             |  594 ++++
+ .../SgxVerifier.sol}                               | 3349 ++++++++---------
+ .../TaikoL1}/ERC1967Proxy.p.sol                    |    0
+ .../ethereum/.flat/TaikoL1/MainnetInbox.3.sol      | 2964 ++++++++++++++++
+ .../TaikoL1/MainnetTaikoL1.2.sol}                  |    7 +
+ .../ethereum/.flat/TaikoL1/PacayaForkRouter.1.sol  | 1173 ++++++
+ .../TaikoToken/TaikoToken.sol                      |  132 +-
+ .../ethereum/.flat/TaikoWrapper/ERC1967Proxy.p.sol |  594 ++++
+ .../ethereum/.flat/TaikoWrapper/TaikoWrapper.sol   | 1471 ++++++++
+ .../.flat/VerifierGateway/ERC1967Proxy.p.sol       |  594 ++++
+ .../VerifierGateway/MainnetVerifier.sol}           | 1453 ++------
+ 27 files changed, 16368 insertions(+), 11723 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22481930 (main branch discovery), not current.
+
+```diff
+    contract MainnetTaikoL1 (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      name:
+-        "TaikoL1Contract"
++        "MainnetTaikoL1"
+      proxyType:
+-        "EIP1967 proxy"
++        "TaikoFork proxy"
+      values.$pastUpgrades.23.2:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
++        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
+      values.$pastUpgrades.23.1:
+-        "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d"
++        "2024-11-10T16:10:23.000Z"
+      values.$pastUpgrades.23.0:
+-        "2024-11-10T16:10:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
+      values.$pastUpgrades.22.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
+      values.$pastUpgrades.22.1:
+-        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
++        "2024-06-04T06:10:11.000Z"
+      values.$pastUpgrades.22.0:
+-        "2024-11-10T15:46:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
+      values.$pastUpgrades.21.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
+      values.$pastUpgrades.21.1:
+-        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
++        "2025-02-27T03:27:23.000Z"
+      values.$pastUpgrades.21.0:
+-        "2024-11-03T05:15:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
+      values.$pastUpgrades.20.2:
+-        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
++        "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703"
+      values.$pastUpgrades.20.1:
+-        "2024-11-10T15:32:47.000Z"
++        "2024-11-03T05:15:23.000Z"
+      values.$pastUpgrades.20.0.2:
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.20.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.20.0.0:
+-        "0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.2:
+-        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
++        "2024-05-27T16:37:11.000Z"
+      values.$pastUpgrades.19.1:
+-        "2025-02-13T06:57:47.000Z"
++        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
+      values.$pastUpgrades.19.0.2:
++        "0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"
+      values.$pastUpgrades.19.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.19.0.0:
+-        "0x2784423f7c61Bc7B75dB6CdA26959946f437588D"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.18.2:
+-        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B"]
++        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
+      values.$pastUpgrades.18.1:
+-        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
++        "2024-05-21T14:15:11.000Z"
+      values.$pastUpgrades.18.0:
+-        "2024-12-24T14:19:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
+      values.$pastUpgrades.17.2:
+-        ["0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
++        "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25"
+      values.$pastUpgrades.17.1:
+-        "2024-12-23T03:12:35.000Z"
++        "2024-12-24T14:19:11.000Z"
+      values.$pastUpgrades.17.0:
+-        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
++        ["0xe7c4B445D3C7C8E4D68afb85A068F9fAa18e9A5B","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.16.2:
+-        ["0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
++        "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c"
+      values.$pastUpgrades.16.1:
+-        "2024-12-23T14:55:47.000Z"
++        "2025-02-13T06:57:47.000Z"
+      values.$pastUpgrades.16.0:
+-        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x2784423f7c61Bc7B75dB6CdA26959946f437588D"]
+      values.$pastUpgrades.15.2:
+-        ["0xa200c2268d77737a8Fd2CA1698dA6eeab2a85CEb"]
++        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
+      values.$pastUpgrades.15.1:
+-        "2024-05-27T16:37:11.000Z"
++        "2024-05-11T06:26:35.000Z"
+      values.$pastUpgrades.15.0:
+-        "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"]
+      values.$pastUpgrades.14.2:
+-        ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"]
++        "2024-12-23T02:45:11.000Z"
+      values.$pastUpgrades.14.1:
+-        "2024-07-02T07:03:35.000Z"
++        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
+      values.$pastUpgrades.14.0:
+-        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xb74A66b6CF50AD63E29669F0BDE4354E11758162"]
+      values.$pastUpgrades.13.2:
+-        "2024-11-01T09:20:35.000Z"
++        "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04"
+      values.$pastUpgrades.13.1:
+-        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
++        "2024-11-10T15:46:23.000Z"
+      values.$pastUpgrades.13.0.2:
++        "0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"
+      values.$pastUpgrades.13.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.13.0.0:
+-        "0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.12.2:
+-        ["0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
++        "2024-07-13T12:34:35.000Z"
+      values.$pastUpgrades.12.1:
+-        "2024-10-16T07:55:23.000Z"
++        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
+      values.$pastUpgrades.12.0:
+-        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
++        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3","0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000"]
+      values.$pastUpgrades.11.2:
+-        ["0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
++        "2024-10-16T07:55:23.000Z"
+      values.$pastUpgrades.11.1:
+-        "2024-06-07T04:02:11.000Z"
++        "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981"
+      values.$pastUpgrades.11.0:
+-        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xf0E6d34937701622cA887a75c150cC23d4FFDf2F"]
+      values.$pastUpgrades.10.2:
+-        ["0xBA1d90BCfA74163bFE09e8eF609b346507D83231"]
++        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
+      values.$pastUpgrades.10.1:
+-        "2024-07-16T14:30:23.000Z"
++        "2024-06-06T08:51:11.000Z"
+      values.$pastUpgrades.10.0:
+-        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x4b2743B869b85d5F7D8020566f92664995E4f3c5"]
+      values.$pastUpgrades.9.2:
+-        "2024-05-01T08:03:47.000Z"
++        "2024-07-16T14:30:23.000Z"
+      values.$pastUpgrades.9.1.2:
++        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.$pastUpgrades.9.1.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.1.0:
+-        "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.9.0:
+-        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
++        "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7"
+      values.$pastUpgrades.8.2:
+-        ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"]
++        "2024-05-28T05:18:11.000Z"
+      values.$pastUpgrades.8.1:
+-        "2024-06-07T08:40:35.000Z"
++        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
+      values.$pastUpgrades.8.0:
+-        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
+      values.$pastUpgrades.7.2:
+-        "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41"
++        "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38"
+      values.$pastUpgrades.7.1:
+-        ["0x5110634593Ccb8072d161A7d260A409A7E74D7Ca"]
++        "2024-11-10T15:32:47.000Z"
+      values.$pastUpgrades.7.0:
+-        "2025-02-27T03:27:23.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0205ea1e1162bc50E1030F36412E5Dd69daA4040"]
+      values.$pastUpgrades.6.2:
+-        ["0xe0A5D394878723CEAEC8B993e04756DF1f4B44eF"]
++        "2024-06-07T04:02:11.000Z"
+      values.$pastUpgrades.6.1:
+-        "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b"
++        "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04"
+      values.$pastUpgrades.6.0:
+-        "2024-05-21T14:15:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x0468745A07de44A9a3138adAc35875ecaf7a20D5"]
+      values.$pastUpgrades.5.2:
+-        "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78"
++        "2024-12-23T14:55:47.000Z"
+      values.$pastUpgrades.5.1:
+-        "2024-06-04T06:10:11.000Z"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xd4896d4537c6425aC5d89B9f122d4E4ac4D65e1c"]
+      values.$pastUpgrades.5.0:
+-        ["0xE84DC8E2a21e59426542Ab040D77f81d6dB881eE"]
++        "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99"
+      values.$pastUpgrades.4.2:
+-        "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f"
++        "2024-05-01T08:03:47.000Z"
+      values.$pastUpgrades.4.1:
+-        "2024-05-11T06:26:35.000Z"
++        "0x675a0b8283bd222e1df42a0a4df4b781a1a7c5575729e2e91f89dda879933702"
+      values.$pastUpgrades.4.0.2:
++        "0x99Ba70E62cab0cB983e66F72330fBDDC11d85501"
+      values.$pastUpgrades.4.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.4.0.0:
+-        "0x9fBBedBBcBb753E7214BE08381efE10d89D712fE"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.3.2:
+-        "2024-07-13T12:34:35.000Z"
++        "2024-12-23T03:12:35.000Z"
+      values.$pastUpgrades.3.1:
+-        ["0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"]
++        "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20"
+      values.$pastUpgrades.3.0:
+-        "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0xA3E75eDA1Be2114816f388A5cF53EbA142DCDB17"]
+      values.$pastUpgrades.2.2:
+-        "2024-12-23T02:45:11.000Z"
++        "2024-07-02T07:03:35.000Z"
+      values.$pastUpgrades.2.1:
+-        "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944"
++        "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b"
+      values.$pastUpgrades.2.0.2:
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.$pastUpgrades.2.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.2.0.0:
+-        "0xb74A66b6CF50AD63E29669F0BDE4354E11758162"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.2:
+-        "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131"
++        "2024-06-07T08:40:35.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-06-06T08:51:11.000Z"
++        "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914"
+      values.$pastUpgrades.1.0.2:
++        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
+      values.$pastUpgrades.1.0.1:
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.1.0.0:
+-        "0x4b2743B869b85d5F7D8020566f92664995E4f3c5"
++        "0x0000000000000000000000000000000000000000"
+      values.$pastUpgrades.0.2:
+-        "2024-05-28T05:18:11.000Z"
++        "2024-11-01T09:20:35.000Z"
+      values.$pastUpgrades.0.1:
+-        ["0x3505a0700DB72dEc7AbFF1aF231BB5D87aBF2944"]
++        "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd"
+      values.$pastUpgrades.0.0:
+-        "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028"
++        ["0x0000000000000000000000000000000000000000","0x0000000000000000000000000000000000000000","0x4229d14F520848aa83760Cf748abEB8A69cdaB2d"]
+    }
+```
+
+```diff
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98) {
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+      description:
+-        "Verifier contract for ZK-proven batches."
++        "Verifier contract for RISC Zero Groth16 proofs."
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      name:
+-        "Risc0Verifier"
++        "Risc0VerifierGateway"
+      template:
+-        "taiko/Risc0Verifier"
++        "taiko/Risc0VerifierGateway"
+      description:
+-        "Verifier contract for Risc0 proven blocks."
++        "Entry contract to verify batches using RISC Zero."
+    }
+```
+
+```diff
+    contract MainnetGuardianProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      name:
+-        "GuardianMinorityProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract MainnetRollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: This contract manages the rollup addresses list, allowing to set the address for a specific chainId-name pair.
+      name:
+-        "L1RollupAddressManager"
++        "MainnetRollupAddressManager"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452) {
+    +++ description: Entry contract to verify batches using SP1.
+      name:
+-        "SP1Verifier"
++        "SP1VerifierGateway"
+      template:
+-        "taiko/SP1Verifier"
++        "taiko/SP1VerifierGateway"
+      description:
+-        "Verifier contract for ZK-proven batches."
++        "Entry contract to verify batches using SP1."
+    }
+```
+
+```diff
+    contract SP1Verifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371) {
+    +++ description: Verifier contract for SP1 proofs.
+      name:
+-        "SP1RemoteVerifier"
++        "SP1Verifier"
+      description:
+-        "SP1Verifier is a contract used to verify proofs given public values and verification key."
++        "Verifier contract for SP1 proofs."
+    }
+```
+
+```diff
+    contract MainnetProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TAIKO token and acts as a Taiko Labs owned proposer and prover proxy. This contract relays `proveBlock` calls to the TaikoL1 contract so that msg.sender doesn't need to hold any TAIKO. There are several instances of this contract operated by different entities.
+      name:
+-        "DAOFallbackProposer"
++        "MainnetProverSet"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves:
++        ["0xbdec26abd36fde2cfbb8db7a0793a9346b11bd558b39890407d458500711c88c","0xa5f741bfed254a1e21738d429e7bd074e25918af7f71fbe1e0135c3974b06e00","0x3551faac39edee5abfaa19ab065c217db1485aebae255a9edddf6dfff6b29b52","0xa4eedfc6484494d4c08bfb9b9dd887c6e0540ba9d8ee207fe0e16814852e3356","0xa096348d480eb0474f5eab182671933c029545521960d87d4e49283005809be9","0xdfcb4fca3073e3f3a90b05d328688c32619d56f26789c0a9797aa10e765a7807","0x9546301721e2ea111ab0f79b6e529d6bb6c486ac98bcf7739429ad06c09db63d","0x13ea9869632ac20b176ae0fdc39998b2a644a695db024ef7fe0e4b3c59084160","0xc90e5d2e39d1d3f8397a6048c32ba50139d1577c28985e1f7638785935f41734","0x3f71cf178a032816c2731a43aef746c464a5326e891dc881773ec2b599b2cf0a"]
+      values.mrSigners:
++        ["0xca0583a715534a8c981b914589a7f0dc5d60959d9ae79fb5353299a4231673d5"]
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      name:
+-        "SharedERC20Vault"
++        "MainnetERC20Vault"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.19:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.18:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.17:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.16:
++        {"permission":"upgrade","from":"0xE3D777143Ea25A6E031d1e921F396750885f43aC","role":"admin"}
+      receivedPermissions.15:
++        {"permission":"upgrade","from":"0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a","role":"admin"}
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"0x579A8d63a2Db646284CBFE31FE5082c9989E985c","role":"admin"}
+      receivedPermissions.13.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.12.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.11.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.10.from:
+-        "0xE3D777143Ea25A6E031d1e921F396750885f43aC"
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.9.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x579f40D0BE111b823962043702cabe6Aaa290780"
+      receivedPermissions.8.from:
+-        "0x579A8d63a2Db646284CBFE31FE5082c9989E985c"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.7.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.6.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81"
+      receivedPermissions.5.from:
+-        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
++        "0x55902b2D3DF2A65370A89C86Ae9dd71Ecd508edc"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "0x579f40D0BE111b823962043702cabe6Aaa290780"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.4.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.4.description:
++        "can update the program being verified"
+      receivedPermissions.3.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.3.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.3.description:
++        "can update the contract address for a given name"
+      receivedPermissions.2.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.2.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x5c44f2239925b0d86d2BFEe539f19CD0A08Af452"
+      receivedPermissions.2.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.2.description:
++        "can update the program being verified"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.1.description:
++        "can add new instances without a DCAP attestation"
+      receivedPermissions.0.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.0.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.0.description:
++        "can update the program being verified"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      name:
+-        "SignalService"
++        "MainnetSignalService"
+    }
+```
+
+```diff
+    contract MainnetSgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      name:
+-        "SgxVerifier"
++        "MainnetSgxVerifier"
+    }
+```
+
+```diff
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      name:
+-        "TaikoBridge"
++        "MainnetBridge"
+    }
+```
+
+```diff
+    contract MainnetGuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      name:
+-        "GuardianProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      description:
+-        "This contract manages the shared addresses for Taiko rollups."
++        "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades."
+      values.namedAddresses:
++        [{"name":"erc20_vault","address":"0x1670000000000000000000000000000000000002"},{"name":"erc721_vault","address":"0x1670000000000000000000000000000000000003"},{"name":"quota_manager","address":"0x0000000000000000000000000000000000000000"},{"name":"bridged_erc721","address":"0xC3310905E2BC9Cfb198695B75EF3e5B69C6A1Bf7"},{"name":"bridged_erc20","address":"0x65666141a541423606365123Ed280AB16a09A2e1"},{"name":"bridge","address":"0x1670000000000000000000000000000000000001"},{"name":"bridged_erc1155","address":"0x3c90963cFBa436400B0F9C46Aa9224cB379c2c40"},{"name":"erc1155_vault","address":"0x1670000000000000000000000000000000000004"},{"name":"signal_service","address":"0x1670000000000000000000000000000000000005"},{"name":"taiko_token","address":"0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"},{"name":"bridge_watchdog","address":"0x00000291AB79c55dC4Fcd97dFbA4880DF4b93624"}]
+      values.quotaManager:
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000":"taiko_token","0x626f6e645f746f6b656e00000000000000000000000000000000000000000000":"bond_token","0x6272696467650000000000000000000000000000000000000000000000000000":"bridge","0x7369676e616c5f73657276696365000000000000000000000000000000000000":"signal_service","0x65726332305f7661756c74000000000000000000000000000000000000000000":"erc20_vault","0x6572633732315f7661756c740000000000000000000000000000000000000000":"erc721_vault","0x657263313135355f7661756c7400000000000000000000000000000000000000":"erc1155_vault","0x6272696467655f7761746368646f670000000000000000000000000000000000":"bridge_watchdog","0x627269646765645f657263323000000000000000000000000000000000000000":"bridged_erc20","0x627269646765645f657263373231000000000000000000000000000000000000":"bridged_erc721","0x627269646765645f657263313135350000000000000000000000000000000000":"bridged_erc1155","0x71756f74615f6d616e6167657200000000000000000000000000000000000000":"quota_manager"}}]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E)
+    +++ description: Defines withdrawal limits per token.
+```
+
 Generated with discovered.json: 0xaab72c9107d4bab5978b4f6c09e73c6157b6c6b8
 
 # Diff at Fri, 23 May 2025 09:41:06 GMT:

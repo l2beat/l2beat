@@ -2,7 +2,7 @@
   "name": "starknet",
   "chain": "ethereum",
   "blockNumber": 22480922,
-  "configHash": "0x290bc363dddc1c29fbaf21e9802d08d2ef037b7a5e4330dae7f37c6acf30cf73",
+  "configHash": "0x0b33f8416abeb0f473a7f9e616712a02c0eb613d79989971ffbc355dbd80b766",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

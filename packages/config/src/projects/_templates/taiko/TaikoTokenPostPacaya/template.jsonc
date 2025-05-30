@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoToken",
+  "description": "ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.",
+  "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+  "ignoreInWatchMode": ["clock"]
+}

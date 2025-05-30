@@ -1,6 +1,25 @@
 {
-  "extends": "@l2beat/typescript-config/nextjs",
   "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "esnext",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "checkJs": true,
+
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "noEmit": false,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "incremental": true,
+    "outDir": "dist",
+
     /* Path aliases */
     "baseUrl": ".",
     "paths": {
@@ -8,14 +27,6 @@
       "react": ["./node_modules/@types/react"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "**/*.cjs",
-    "**/*.mjs",
-    "**/*.js",
-    ".next/types/**/*.ts"
-  ],
-  "exclude": ["node_modules", "rewrite"]
+  "include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", "**/*.js"],
+  "exclude": ["node_modules", "dist", "static"]
 }

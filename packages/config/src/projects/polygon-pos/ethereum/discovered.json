@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 22265851,
-  "configHash": "0x7ebf4291642ef1fd8093bf03b1b61e3a48aa6019d1ee89f2c93cf58dfeb4883d",
+  "blockNumber": 22593522,
+  "configHash": "0x3780afad2ce83abe73664413fed5e40fce76270e6310716b829376c6640d1dd2",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -135,7 +135,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3054249,
+        "counter": 3071529,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -560,13 +560,13 @@
         "CHECKPOINT_REWARD": "53870967741900000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 79921,
-        "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3379695918038135156955979124",
+        "currentEpoch": 82523,
+        "currentValidatorSetSize": 104,
+        "currentValidatorSetTotalStake": "3441555194843931107043193860",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 79921,
+        "epoch": 82523,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -594,20 +594,20 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3125303789750950184077686",
+        "rewardPerStake": "3177426910561785806071464",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "10693939209428901681108",
+        "totalHeimdallFee": "11023939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "133135732904022769330745795",
+        "totalRewardsLiquidated": "135988492370396491532703866",
         "totalStaked": "10471125482114679921761405",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3379695918038135156955979124",
-          "stakerCount": 105
+          "amount": "3441555194843931107043193860",
+          "stakerCount": 104
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -835,7 +835,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 799210000,
+        "_nextHeaderBlock": 825230000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -844,8 +844,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 799200000,
-        "getLastChildBlock": 70282405,
+        "currentHeaderBlock": 825220000,
+        "getLastChildBlock": 72138661,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,

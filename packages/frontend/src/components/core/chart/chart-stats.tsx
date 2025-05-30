@@ -1,5 +1,5 @@
-import { SyncStatusWrapper } from '~/app/(side-nav)/scaling/finality/_components/table/sync-status-wrapper'
 import { NoDataBadge } from '~/components/badge/no-data-badge'
+import { SyncStatusWrapper } from '~/components/sync-status-wrapper'
 import { InfoIcon } from '~/icons/info'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../skeleton'

@@ -13,7 +13,10 @@ import { getPreview } from './getPreview'
 import { getProject } from './getProject'
 import { getProjects } from './getProjects'
 import { searchCode } from './searchCode'
-import { attachTemplateRouter } from './templates/router'
+import {
+  attachTemplateRouter,
+  listTemplateFilesSchema,
+} from './templates/router'
 
 const safeStringSchema = z
   .string()
@@ -121,6 +124,31 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
+  app.get('/api/template-files', (req, res) => {
+    const query = listTemplateFilesSchema.safeParse(req.query)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.error.flatten() })
+      return
+    }
+
+    const template = templateService.readTemplateFile(query.data.templateId)
+
+    if (!template) {
+      res.status(404).json({ error: 'Template not found' })
+      return
+    }
+
+    const shapes = templateService.readShapeFile(query.data.templateId)
+    const criteria = templateService.readCriteriaFile(query.data.templateId)
+
+    res.json({
+      template,
+      shapes,
+      criteria,
+    })
+  })
+
   app.use(express.static(STATIC_ROOT))
 
   if (!readonly) {
@@ -181,6 +209,13 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(
           paths.discovery,
         )} && l2b match-flat file "${implementationPath}" "${againstPath}"`,
+        res,
+      )
+    })
+
+    app.get('/api/terminal/download-all-shapes', (_req, res) => {
+      executeTerminalCommand(
+        `cd ${path.dirname(paths.discovery)}/../ && l2b download-all-shapes`,
         res,
       )
     })
