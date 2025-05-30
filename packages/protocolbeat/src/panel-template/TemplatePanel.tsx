@@ -37,6 +37,18 @@ export function TemplatePanel() {
     setFileIndex(0)
   }, [template])
 
+  if (projectResponse.isError) {
+    return <div>Error</div>
+  }
+
+  if (projectResponse.isPending) {
+    return <div>Loading</div>
+  }
+
+  if (selectedAddress === undefined) {
+    return <div>Select a contract</div>
+  }
+
   return (
     <div className="flex h-full w-full select-none flex-col">
       <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
