@@ -98,16 +98,14 @@ const toClipboard = async (
     case 'values': {
       const projectData = await getProject(project)
 
-      const data = findSelected(projectData.entries, selectedAddress)
-      if (!data) return
-      const { contract, chain } = data
+      const contract = findSelected(projectData.entries, selectedAddress)
       if (!contract) break
 
       const fields: string[] = []
       if ('fields' in contract) {
         fields.push(
           `In our logic for fetching values we map proxy owners to $admin field.`,
-          `These are the values for block number ${chain.blockNumber} on chain ${chain.chain}:`,
+          `These are the values for block number ${contract.blockNumber} on chain ${contract.chain}:`,
         )
 
         for (const f of (contract as ApiProjectContract).fields) {
