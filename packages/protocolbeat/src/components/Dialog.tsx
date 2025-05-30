@@ -112,7 +112,10 @@ function DialogClose({ children, ...props }: RadixDialog.DialogCloseProps) {
   return <RadixDialog.Close {...props}>{children}</RadixDialog.Close>
 }
 
-function DialogInput(props: InputHTMLAttributes<HTMLInputElement>) {
+function DialogInput({
+  className,
+  ...props
+}: InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       onKeyUp={(e) => {
@@ -125,6 +128,7 @@ function DialogInput(props: InputHTMLAttributes<HTMLInputElement>) {
       }}
       className={clsx(
         'border border-coffee-400 bg-coffee-400/20 px-2 py-1 text-sm placeholder:text-coffee-200/40 focus:border-coffee-300 focus:outline-none',
+        className,
       )}
       {...props}
     />
