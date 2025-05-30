@@ -1,7 +1,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import * as React from 'react'
 import { useTracking } from '~/hooks/use-tracking'
-import useQueryParam from '~/hooks/useQueryParam'
+import {useQueryParam} from '~/hooks/useQueryParam'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './overflow-wrapper'
 
@@ -17,7 +17,7 @@ const DirectoryTabs = ({
 }: React.ComponentProps<typeof TabsPrimitive.Root> & {
   defaultValue: string
 }) => {
-  const [selectedTab, setSelectedTab] = useQueryParam('tab', defaultValue)
+  const [selectedTab, setSelectedTab] = useQueryParam('tab', defaultValue, { replaceState: true })
 
   const { track } = useTracking()
   return (
