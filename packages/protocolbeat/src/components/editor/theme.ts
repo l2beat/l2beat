@@ -13,18 +13,20 @@ export const editorColoring: editor.IColors = {
   'editorIndentGuide.activeBackground1': colors.coffee['600'],
 }
 
+/**
+ * @see https://github.com/microsoft/monaco-editor/blob/main/src/language/json/tokenization.ts
+ */
 const jsonTokenColoringRules: editor.ITokenThemeRule[] = [
-  /**
-   * @see https://github.com/microsoft/monaco-editor/blob/main/src/language/json/tokenization.ts
-   */
-  { token: 'string.key.json', foreground: colors.aux.orange },
+  { token: 'string.key.json', foreground: colors.coffee['200'] },
   { token: 'string.value.json', foreground: colors.aux.yellow },
   { token: 'number.json', foreground: colors.aux.teal },
-  { token: 'keyword.json', foreground: colors.aux.orange }, // true, false, null
-  { token: 'delimiter.bracket.json', foreground: colors.aux.amber },
+  { token: 'keyword.json', foreground: colors.aux.orange, fontStyle: 'bold' },
+  { token: 'delimiter.bracket.json', foreground: colors.coffee['400'] },
   { token: 'delimiter.array.json', foreground: colors.aux.green },
-  { token: 'delimiter.colon.json', foreground: colors.aux.teal },
+  { token: 'delimiter.colon.json', foreground: colors.aux.pink },
   { token: 'delimiter.comma.json', foreground: colors.coffee['400'] },
+  { token: 'string.quote.json', foreground: colors.aux.cyan },
+  { token: 'string.escape.json', foreground: colors.aux.red },
 ]
 
 const solidityTokenColoringRules: editor.ITokenThemeRule[] = [
