@@ -7,6 +7,9 @@
       "a11y": {
         "noBlankTarget": "error"
       },
+      "complexity": {
+        "noUselessFragments": "error"
+      },
       "correctness": {
         "useHookAtTopLevel": "error"
       },
