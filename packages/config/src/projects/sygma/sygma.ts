@@ -49,12 +49,6 @@ export const sygma: Bridge = {
         '4/7 of the MPC group (the Sygma relayer network) is required to create a cross-chain message with the MPC signature.', // sygma eng team currently developing a zk methodology for block header oracle verification which we will implement on mainnet relayers soon. additionally, optimistic approach coming as well. we call this "tailored security"
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'Contracts are not upgradable, however they are modular and configurable via a MultiSig.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {

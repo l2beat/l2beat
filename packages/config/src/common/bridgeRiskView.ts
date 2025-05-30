@@ -1,16 +1,5 @@
 import type { TableReadyValue } from '../types'
 
-function NATIVE_AND_CANONICAL(
-  gasTokens: string[],
-  isAre: 'is' | 'are' = 'is',
-): TableReadyValue {
-  return {
-    value: 'Native & Canonical',
-    description: `${gasTokens.join(', ')} transferred via this bridge ${isAre} used to pay for gas and other tokens transferred are considered canonical on the destination chain.`,
-    sentiment: 'good',
-  }
-}
-
 const CANONICAL: TableReadyValue = {
   value: 'Canonical',
   description:
@@ -32,16 +21,8 @@ const WRAPPED: TableReadyValue = {
   sentiment: 'bad',
 }
 
-const UPGRADABLE_NO: TableReadyValue = {
-  value: 'No',
-  description: 'The code that secures the system can never change.',
-  sentiment: 'good',
-}
-
 export const BRIDGE_RISK_VIEW = {
-  NATIVE_AND_CANONICAL,
   CANONICAL,
   CANONICAL_OR_WRAPPED,
   WRAPPED,
-  UPGRADABLE_NO,
 }
