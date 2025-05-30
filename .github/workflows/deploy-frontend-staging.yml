@@ -1,7 +1,7 @@
-name: Deploy frontend prod
+name: Deploy frontend staging
 
 concurrency:
-  group: frontend-deployment-prod
+  group: frontend-deployment-staging
 permissions: {}
 
 on:
