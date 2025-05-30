@@ -32,7 +32,7 @@ It's important to note that the pause only affects withdrawals, and not deposits
 
 At the time of writing, Scroll allows a non-SC actor to pause the system. Scroll is assessed as a Stage 1 system with the old requirements because the Security Council majority can always recover from a malicious pause by revoking the non-SC role that allows to pause the system. With the new requirements, either a minority of the SC should be allowed to unpause and revoke, or the pause should expire. More importantly, the pause mechanism also affects forced transactions as it would not be possible to call the `depositTransaction` function in the `EnforcedTxGateway` contract. In such case, users would not be able to perform any action on the L2.
 
-Let's assume for a moment that these issues with the pause mechanism are fixed. An explicit pause mechanism is not the only way to cause a liveness failure.
+Let's assume for a moment that these issues with the pause mechanism are fixed. An explicit pause mechanism is not the only way to cause a liveness failure. The protocol currently employs a permissioned sequencer that can ignore forced transactions, up until the "enforced liveness mechanism" gets activated and everyone can then submit and prove blocks. If the delay is 7d, then the mechanism effectively acts as a pause that last 7 days and should be handled accordingly.
 
 ## Forced transaction delay upper bound
 
