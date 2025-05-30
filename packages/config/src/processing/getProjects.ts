@@ -63,7 +63,7 @@ function layer2Or3ToProject(
       yellowWarning: p.display.headerWarning,
       redWarning: p.display.redWarning,
       emergencyWarning: p.display.emergencyWarning,
-      isUnderReview: !!p.isUnderReview,
+      reviewStatus: p.reviewStatus ?? 'reviewed',
       isUnverified: !isVerified(p, daBridges),
       // countdowns
       otherMigration:
@@ -204,7 +204,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       yellowWarning: p.display.warning,
       redWarning: undefined,
       emergencyWarning: undefined,
-      isUnderReview: !!p.isUnderReview,
+      reviewStatus: p.reviewStatus ?? 'reviewed',
       isUnverified: !isVerified(p),
     },
     display: {

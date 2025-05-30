@@ -13,7 +13,7 @@ export const bsc: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
+    reviewStatus: 'reviewed',
     isUnverified: false,
   },
   display: {

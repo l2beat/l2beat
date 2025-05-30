@@ -9,7 +9,7 @@ export const everclearbridge: Bridge = {
   type: 'bridge',
   id: ProjectId('everclearbridge'),
   addedAt: UnixTime(1742199959), // 2025-03-17
-  isUnderReview: true,
+  reviewStatus: 'inReview',
   display: {
     name: 'Everclear',
     slug: 'everclearbridge',

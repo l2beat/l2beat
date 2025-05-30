@@ -145,7 +145,7 @@ describe('getProjects', () => {
       const target = [...layer2s, ...layer3s].filter(
         (project) =>
           !project.isUpcoming &&
-          !project.isUnderReview &&
+          project.reviewStatus === 'reviewed' &&
           !project.archivedAt &&
           // TODO: Ideally the category check should be removed, but
           // hyperliquid and polygon-pos are exceptions that would fail the test

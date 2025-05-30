@@ -6,7 +6,7 @@ export const train: Bridge = {
   type: 'bridge',
   id: ProjectId('train'),
   addedAt: UnixTime(1741358288), // 2025-03-07T14:38:08Z
-  isUnderReview: true,
+  reviewStatus: 'inReview',
   display: {
     name: 'Train',
     slug: 'train',

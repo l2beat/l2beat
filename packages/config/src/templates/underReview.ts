@@ -38,7 +38,7 @@ export function underReviewL2(
   templateVars: UnderReviewConfigL2,
 ): ScalingProject {
   return {
-    isUnderReview: true,
+    reviewStatus: 'initialReview',
     type: 'layer2',
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
@@ -78,7 +78,7 @@ export function underReviewL3(
 ): ScalingProject {
   return {
     type: 'layer3',
-    isUnderReview: true,
+    reviewStatus: 'initialReview',
     id: ProjectId(templateVars.id),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability,
