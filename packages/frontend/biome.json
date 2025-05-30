@@ -1,8 +1,5 @@
 {
   "extends": ["../../biome.json"],
-  "linter": {
-    "enabled": false
-  },
   "files": {
     "ignore": ["./static"]
   }

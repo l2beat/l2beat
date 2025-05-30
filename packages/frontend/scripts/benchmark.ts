@@ -1,6 +1,6 @@
 import '../src/dotenv'
 
-import { type Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import { getDb } from '~/server/database'

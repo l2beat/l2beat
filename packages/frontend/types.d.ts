@@ -1,6 +1,6 @@
 import '@tanstack/react-table'
-import { type CellContext } from '@tanstack/react-table'
-import { type ReactNode } from 'react'
+import type { CellContext } from '@tanstack/react-table'
+import type { ReactNode } from 'react'
 import {} from 'react/canary'
 
 declare module '@tanstack/react-table' {

@@ -5,7 +5,7 @@ import { Skeleton } from '~/components/core/skeleton'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useTableFilterContext } from '~/components/table/filters/table-filter-context'
 import {
-  CostsMetric,
+  type CostsMetric,
   useCostsMetricContext,
 } from '~/pages/scaling/costs/components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/pages/scaling/costs/components/costs-time-range-context'
