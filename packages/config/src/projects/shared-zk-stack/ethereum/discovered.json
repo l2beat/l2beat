@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "ethereum",
   "blockNumber": 22572946,
-  "configHash": "0x057c50921d1ee66daba109194f3526ebd4f9698503e9947bc39254257a2a8af8",
+  "configHash": "0x07362f23e4fdfb3e27f69a86b2d10091486c940acc9f88ac9ffe25b40a73f78f",
   "entries": [
     {
       "name": "GnosisSafe",

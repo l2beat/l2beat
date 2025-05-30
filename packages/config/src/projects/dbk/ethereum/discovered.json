@@ -2,7 +2,7 @@
   "name": "dbk",
   "chain": "ethereum",
   "blockNumber": 20792021,
-  "configHash": "0xf0d758196a77854462b2b933763376db4971a0e540d484d53395d926c363b678",
+  "configHash": "0x5f25295b6e37408cecead42dfce1f85c35df26f389ce5181e5d393fc49747b59",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

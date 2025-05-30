@@ -1,11 +1,10 @@
-import Link from 'next/link'
 import { navigationMenuTriggerStyle } from '~/components/core/navigation-menu'
 import { DiscoUiIcon } from '~/icons/disco-ui'
 import { cn } from '~/utils/cn'
 
 export function DiscoUiLink({ href }: { href: string }) {
   return (
-    <Link
+    <a
       href={href}
       rel="noopener noreferrer"
       target="_blank"
@@ -17,6 +16,6 @@ export function DiscoUiLink({ href }: { href: string }) {
       )}
     >
       <DiscoUiIcon className="h-[14px] w-[67px] fill-white" />
-    </Link>
+    </a>
   )
 }

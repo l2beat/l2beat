@@ -2,7 +2,7 @@
   "name": "aevo",
   "chain": "ethereum",
   "blockNumber": 22397569,
-  "configHash": "0xa05272690897ab54a367e14905a9d7808d5a5d96a744251409bcddb8d55ed875",
+  "configHash": "0xce4f965c59adf69d6ce5ba72329fa1c5432413953043f1c82cc0f9ac4fbdb4db",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

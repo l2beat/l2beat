@@ -1,4 +1,3 @@
-'use client'
 import { useState } from 'react'
 import { Badge } from '~/components/badge/badge'
 import { Checkbox } from '~/components/core/checkbox'

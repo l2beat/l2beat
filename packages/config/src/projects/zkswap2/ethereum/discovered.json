@@ -2,7 +2,7 @@
   "name": "zkswap2",
   "chain": "ethereum",
   "blockNumber": 16767881,
-  "configHash": "0xb895c3b211ec5e8bc9f1b3d647153036b6ce94e477776a3fc9bb00bb821d492f",
+  "configHash": "0x24b139944798a5cf0956eb592b6d5e419386d3a0373e0049da9f2d60eea55649",
   "entries": [
     {
       "name": "UpgradeGatekeeper",
@@ -300,7 +300,7 @@
       }
     },
     {
-      "name": "ZksToken",
+      "name": "Zks Token",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "type": "Contract",
       "sourceHashes": [
@@ -624,5 +624,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xf20cb2c85e5cd2c6aaf9bec0e00f4e48668b86422c8bf5e799667859cb19c3d9"
+  "permissionsConfigHash": "0x12358258ef5adb8f6a0bd55a1e18488db790dbf8f53a2635f83f7189034c85e6"
 }

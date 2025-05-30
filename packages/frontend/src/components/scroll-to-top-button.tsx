@@ -1,4 +1,3 @@
-'use client'
 import { useEffect, useState } from 'react'
 import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'

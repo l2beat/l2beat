@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x566e59944dc9e4f1bfc19670ffd95f9cf47cfae7
+
+# Diff at Wed, 28 May 2025 13:56:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 22579860
+- current block number: 22579860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22579860 (main branch discovery), not current.
+
+```diff
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      name:
+-        "TaikoToken"
++        "Taiko Token"
+    }
+```
+
 Generated with discovered.json: 0x39dbd31018bfdca6cf2ff2a00524592e3782adac
 
 # Diff at Wed, 28 May 2025 11:33:59 GMT:

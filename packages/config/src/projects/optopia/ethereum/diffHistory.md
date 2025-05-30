@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x94a5d2cd04288907be23c4060534370420d05aee
+
+# Diff at Wed, 28 May 2025 12:14:45 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@27d647bcbd8edf5cbba70b7be8478445dbba59bf block: 21184911
+- current block number: 22581193
+
+## Description
+
+For some reason the ERC20Factory has a EOA as the implementation contract. Ignored as it shows as implementation unverified on frontend and it's unusuable anyway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21184911 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x161aF05fA6BdA1c6E7Ee12839d470931bA796948) {
+    +++ description: None
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c","role":"admin"}
+    }
+```
+
+```diff
+    contract Optopia Multisig (0x2C73A1610EE822a8C2C21eddd455e725A3334c8C) {
+    +++ description: None
+      receivedPermissions.7:
+-        {"permission":"upgrade","from":"0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c","role":"admin","via":[{"address":"0x161aF05fA6BdA1c6E7Ee12839d470931bA796948"}]}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0xB77d3ea899ef38c464e19F5A6CBc5a37187DC43c)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x16bd4ff353ceb7106d48d0332937bc0d69e900a8
 
 # Diff at Fri, 23 May 2025 09:41:01 GMT:

@@ -2,7 +2,7 @@
   "name": "bobanetwork",
   "chain": "ethereum",
   "blockNumber": 22267281,
-  "configHash": "0xe04d63c14f9215ce5cb2cfc7f85e16d932df2e12e5a93613c09a8b45992c8463",
+  "configHash": "0xa6f11f95f30420bfec5e1a6366ef8092c043921ec2c903bb3cf7c4f3e351478c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

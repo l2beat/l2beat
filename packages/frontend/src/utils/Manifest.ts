@@ -18,12 +18,12 @@ export interface Manifest {
 // impossible to import on next fe side cuz /rewrite is CommonJS module.
 export const manifest = getManifest(
   env.NODE_ENV === 'production',
-  path.join(process.cwd(), 'rewrite'),
+  path.join(process.cwd()),
 )
 
 export function getManifest(isProduction: boolean, rootDir: string) {
-  if (isProduction && env.NEXT_PUBLIC_REWRITE) {
-    const content = fs.readFileSync('rewrite/dist/manifest.json', 'utf-8')
+  if (isProduction) {
+    const content = fs.readFileSync('dist/manifest.json', 'utf-8')
     const json = JSON.parse(content) as ManifestJson
     return {
       getUrl(url: string) {

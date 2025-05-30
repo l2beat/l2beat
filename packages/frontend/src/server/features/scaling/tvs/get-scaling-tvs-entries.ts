@@ -1,5 +1,5 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
-import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'

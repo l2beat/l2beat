@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x8ca781d8e9fd2d74c049f647124dc5f7cf7db98b
+
+# Diff at Wed, 28 May 2025 13:56:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 19825376
+- current block number: 19825376
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825376 (main branch discovery), not current.
+
+```diff
+    contract Compound Token (0xc00e94Cb662C3520282E6f5717214004A7f26888) {
+    +++ description: None
+      name:
+-        "Comp"
++        "Compound Token"
+    }
+```
+
 Generated with discovered.json: 0x7d403d031f00656764aeb0bbbc8639cd0c7d5d6e
 
 # Diff at Tue, 27 May 2025 08:27:21 GMT:

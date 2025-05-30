@@ -2,7 +2,7 @@
   "name": "taiko",
   "chain": "ethereum",
   "blockNumber": 22579860,
-  "configHash": "0x25ecb2ab936a6bdcc30db2dba1a7576dcfe9aa78ffafb1a44fb38afcd1e2b630",
+  "configHash": "0x5c5b2711b68c5381c848fb48ed562417b23479da7a2d7acc6b755e7517d3bf8b",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -537,7 +537,7 @@
       }
     },
     {
-      "name": "TaikoToken",
+      "name": "Taiko Token",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
       "type": "Contract",
       "template": "taiko/TaikoTokenPostPacaya",
@@ -3304,5 +3304,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0x48524e683d728ccfb78b6c18a38deefcf546bdfb97c257bb50fab724f9a1d720"
+  "permissionsConfigHash": "0x67b6a91cca79f04b099382f424a3f098e2bc418e6478fdba3bb747e55e468e07"
 }

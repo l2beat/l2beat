@@ -1,12 +1,8 @@
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
-import NextLink from 'next/link'
 import React from 'react'
 
-export type CustomLinkProps = Omit<
-  React.ComponentProps<typeof NextLink>,
-  'href'
-> &
+export type CustomLinkProps = Omit<React.ComponentProps<'a'>, 'href'> &
   VariantProps<typeof linkVariants> & {
     children: React.ReactNode
     href: string
@@ -55,9 +51,6 @@ export function CustomLink({
   }
 
   return (
-    <NextLink
-      className={linkVariants({ variant, underline, className })}
-      {...rest}
-    />
+    <a className={linkVariants({ variant, underline, className })} {...rest} />
   )
 }

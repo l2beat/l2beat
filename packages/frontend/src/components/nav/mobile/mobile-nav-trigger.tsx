@@ -1,5 +1,3 @@
-'use client'
-
 import { MenuCloseIcon } from '~/icons/menu-close'
 import { MenuOpenIcon } from '~/icons/menu-open'
 import { useSidebar } from '../../core/sidebar'

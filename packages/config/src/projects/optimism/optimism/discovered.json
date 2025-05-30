@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 135717996,
-  "configHash": "0xbc8187b64cb715e6d72e60eb4f1349fe5a4e0d3214d8a52e29a3f57da3172071",
+  "configHash": "0xc00c83bf0558900526f94402c503bedccce0b0aa196e19eee2732b9848c7789e",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",

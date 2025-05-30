@@ -77,7 +77,7 @@ export const StructureConfig = z.object({
   initialAddresses: z.array(stringAs(EthereumAddress)),
   import: z.optional(z.array(z.string())),
   maxAddresses: z.number().positive().default(100),
-  maxDepth: z.number().default(6),
+  maxDepth: z.number().default(Infinity),
   overrides: z.optional(
     z.record(
       z.string().refine((key) => EthereumAddress.check(key), {

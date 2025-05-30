@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 22367347,
-  "configHash": "0x7a367f0a6833ecca0bc3504ab2ab9d9e22aa938132169b423dd12815757fe209",
+  "configHash": "0x7a59cb9ea76763f078b7bde7396d9bc92d322c6af83cfb01bdd9b0642847a4ce",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
