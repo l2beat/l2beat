@@ -60,7 +60,7 @@ export type ProjectRiskCategory =
   | 'Withdrawals can be delayed if'
 // #endregion
 
-export type ProjectReviewStatus = 'initialReview' | 'inReview' | 'reviewed'
+export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
 export interface BaseProject {
   id: ProjectId
@@ -137,7 +137,7 @@ export interface ProjectStatuses {
   yellowWarning: string | undefined
   redWarning: string | undefined
   emergencyWarning: string | undefined
-  reviewStatus: ProjectReviewStatus
+  reviewStatus: ProjectReviewStatus | undefined
   isUnverified: boolean
   // countdowns
   otherMigration?: {

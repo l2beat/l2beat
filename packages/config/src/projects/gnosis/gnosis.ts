@@ -13,7 +13,7 @@ export const gnosis: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    reviewStatus: 'reviewed',
+    reviewStatus: undefined,
     isUnverified: false,
   },
   display: {
