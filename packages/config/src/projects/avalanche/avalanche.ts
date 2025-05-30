@@ -101,11 +101,18 @@ export const avalanche: Bridge = {
         'A 6/8 Intel SGX allegedgly controls the escrowing EOA. Identities of the signers are not publicly disclosed.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'EOA',
-      secondLine: 'EOA',
-      description: 'Avalanche Bridge uses an EOA as escrow.',
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: 'EOA',
+        description: 'Avalanche Bridge uses an EOA as escrow.',
+        sentiment: 'bad',
+      },
+      pause: {
+        value: 'EOA',
+        sentiment: 'bad',
+        description:
+          'There is no formal pause function as this bridge does not use smart contracts, but the operator can stop processing messages anytime.',
+      },
     },
     livenessFailure: {
       value: 'No mechanism',

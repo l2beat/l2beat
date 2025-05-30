@@ -92,11 +92,6 @@ export const debridge: Bridge = {
       description: 'Signed off-chain by 8 or more deBridge oracles.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'The bridge can be upgraded by 2/3 MSig.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   contracts: {

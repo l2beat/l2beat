@@ -257,12 +257,5 @@ Although the values can be different for every message-receiving contract on eac
         'For BNB Multichain is used, for other chains their native AMBs are used.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Connext can be upgraded by a ${discovery.getMultisigStats(
-        'Connext Multisig',
-      )} MultiSig`,
-      sentiment: 'bad',
-    },
   },
 }

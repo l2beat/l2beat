@@ -51,11 +51,6 @@ export const transporter: Bridge = {
         These validators are tasked with monitoring anomalous behavior and can halt the network if necessary.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Configuration changes and upgrades to CCIP are executed through the RBACTimelock smart contract. Upgrades to the source contracts can be proposed by Timelock Proposers and executed with a ${upgradeDelayString} delay. Pending timelock operations can be canceled by Timelock Cancellers.`,
-      sentiment: 'warning',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
       description: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED.description + ' ',

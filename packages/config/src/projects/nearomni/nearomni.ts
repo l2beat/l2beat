@@ -52,11 +52,18 @@ export const nearomni: Bridge = {
       description: `The derived EVM address of the multi-party computation signer is ${nearBridgeDerivedAddress}. The MPC setup is offchain and members are not public. Transfers from Ethereum to NEAR are validated by an Ethereum light client on NEAR.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: `Multisig (${discovery.getMultisigStats('Near Omni Multisig')})`,
-      secondLine: 'EOA',
-      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Near Omni Multisig')} Near Omni Multisig.`,
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: `Multisig (${discovery.getMultisigStats('Near Omni Multisig')})`,
+        description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Near Omni Multisig')} Near Omni Multisig.`,
+        sentiment: 'bad',
+      },
+      pause: {
+        value: 'EOA',
+        sentiment: 'bad',
+        description:
+          'An EOA (PAUSABLE_ADMIN_ROLE) can pause the bridge directly.',
+      },
     },
     livenessFailure: {
       value: 'No mechanism',
