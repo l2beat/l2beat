@@ -5,6 +5,7 @@ export type TabbedScalingEntries<T extends { tab: CommonScalingEntry['tab'] }> =
     rollups: T[]
     validiumsAndOptimiums: T[]
     others: T[]
+    underReview: T[]
   }
 
 export function groupByScalingTabs<
@@ -16,5 +17,6 @@ export function groupByScalingTabs<
       (p) => p.tab === 'validiumsAndOptimiums',
     ),
     others: projects.filter((p) => p.tab === 'others'),
+    underReview: projects.filter((p) => p.tab === 'underReview'),
   }
 }

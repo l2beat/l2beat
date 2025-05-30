@@ -9,7 +9,7 @@ import { getProjectIcon } from '../utils/get-project-icon'
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }
@@ -86,17 +86,19 @@ export function getCommonScalingEntry({
 }
 
 export function getScalingTab(
-  project: Project<'scalingInfo'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' {
+  project: Project<'scalingInfo' | 'statuses'>,
+): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview' {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
-  return project.scalingInfo.isOther
-    ? 'others'
-    : isRollup
-      ? 'rollups'
-      : 'validiumsAndOptimiums'
+  return project.statuses.isUnderReview
+    ? 'underReview'
+    : project.scalingInfo.isOther
+      ? 'others'
+      : isRollup
+        ? 'rollups'
+        : 'validiumsAndOptimiums'
 }
 
 function getStageOrder(stage: string | undefined): number {
