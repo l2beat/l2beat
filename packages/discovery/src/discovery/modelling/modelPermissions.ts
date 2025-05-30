@@ -19,12 +19,17 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
+export type Discoveries = {
+  [name: string]: { [chain: string]: DiscoveryOutput }
+}
+
 export async function modelPermissions(
   project: string,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
+  discoveries: Discoveries,
 ): Promise<PermissionsOutput> {
   const { permissionFacts, permissionsConfigHash } =
     await modelPermissionFactsUsingClingo(
@@ -33,8 +38,19 @@ export async function modelPermissions(
       templateService,
       paths,
       debug,
+      discoveries,
     )
   return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
+}
+
+export function getDependenciesToDiscoverForProject(
+  project: string,
+  configReader: ConfigReader,
+): { project: string; chain: string }[] {
+  // TODO: shared modules
+  return configReader
+    .readAllChainsForProject(project)
+    .map((chain) => ({ project, chain }))
 }
 
 export function buildPermissionsOutput(
@@ -80,11 +96,13 @@ export async function modelPermissionFactsUsingClingo(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
+  discoveries: Discoveries,
 ) {
   const clingoForProject = generateClingoForProject(
     project,
     configReader,
     templateService,
+    discoveries,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
@@ -126,16 +144,23 @@ export function generateClingoForProject(
   project: string,
   configReader: ConfigReader,
   templateService: TemplateService,
+  discoveries: Discoveries,
 ): string {
   const generatedClingo: string[] = []
 
-  const chainConfigs = configReader
-    .readAllChainsForProject(project)
-    .sort((a, b) => a.localeCompare(b))
-    .flatMap((chain) => configReader.readConfig(project, chain))
+  const dependenciesToDiscover = getDependenciesToDiscoverForProject(
+    project,
+    configReader,
+  )
 
-  for (const config of chainConfigs) {
-    const discovery = configReader.readDiscovery(config.name, config.chain)
+  for (const { project, chain } of dependenciesToDiscover) {
+    const discovery = discoveries[project]?.[chain]
+    if (!discovery) {
+      throw new Error(
+        `Discovery for ${project} on ${chain} is required but not provided`,
+      )
+    }
+    const config = configReader.readConfig(project, chain)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
       discovery,
