@@ -153,6 +153,10 @@ export const taiko: ScalingProject = {
         sinceBlock: 0, // Edge Case: config added @ DA Module start
         inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
         sequencers: [],
+        topics: [
+          '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2
+          '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', // BatchProposed
+        ],
       },
     ],
     trackedTxs: [

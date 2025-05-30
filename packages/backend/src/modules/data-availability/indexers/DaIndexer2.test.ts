@@ -27,7 +27,11 @@ const DA_LAYER = 'test-layer'
 describe(DaIndexer2.name, () => {
   describe(DaIndexer2.prototype.multiUpdate.name, () => {
     it('fetches blobs, generates records, saves metrics to DB', async () => {
-      const configurations = [config('project-a'), config('project-b')]
+      const mockInbox = EthereumAddress.random()
+      const configurations = [
+        config('project-a', mockInbox),
+        config('project-b'),
+      ]
       const blobs = [blob(100, 100_000), blob(200, 200_000)]
       const previousRecords = [record('project', 100, 100_000)]
       const generatedRecords = [record('project', 100, 400_000)]
@@ -47,7 +51,9 @@ describe(DaIndexer2.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150, [
+        { address: mockInbox, topics: ['topic'] },
+      ])
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
@@ -73,7 +79,12 @@ describe(DaIndexer2.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
+          DA_LAYER,
+          100,
+          150,
+          [],
+        )
         expect(safeHeight).toEqual(150)
       })
 
@@ -85,7 +96,12 @@ describe(DaIndexer2.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
+          DA_LAYER,
+          100,
+          200,
+          [],
+        )
         expect(safeHeight).toEqual(200)
       })
     })
@@ -99,7 +115,12 @@ describe(DaIndexer2.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        100,
+        200,
+        [],
+      )
       expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
@@ -193,15 +214,16 @@ function mockIndexer($: {
   return { repository, indexer, daService, daProvider }
 }
 
-function config(project: string): DaIndexedConfig {
+function config(project: string, inbox?: string): DaIndexedConfig {
   return {
     type: 'ethereum',
     configurationId: createId(project),
     projectId: ProjectId(project),
     daLayer: ProjectId(DA_LAYER),
-    inbox: EthereumAddress.ZERO,
+    inbox: inbox ?? EthereumAddress.random(),
     sequencers: [],
     sinceBlock: 1,
+    topics: inbox ? ['topic'] : [],
   }
 }
 
@@ -213,6 +235,7 @@ function blob(timestamp: number, size: number): DaBlob {
     type: 'ethereum',
     inbox: '',
     sequencer: '',
+    topics: [],
   }
 }
 
