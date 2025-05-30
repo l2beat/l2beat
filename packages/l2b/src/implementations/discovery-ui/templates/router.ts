@@ -6,11 +6,12 @@ import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
 const templateIdRegex = new RegExp(
-  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
+  '/^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$/',
 )
 
-const safeTemplateIdSchema = z.string().refine((id) => {
-  return templateIdRegex.test(id)
+const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
+  message:
+    'Template ID must be alphanumeric and can contain underscores or hyphens.',
 })
 
 const listTemplateFilesSchema = z.object({
