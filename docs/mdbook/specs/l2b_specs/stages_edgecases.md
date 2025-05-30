@@ -15,7 +15,7 @@
 
 ## Introduction
 
-The goal of this document is to describe certain edge cases that are not explicitely covered by the Stage 1 requirements, either voluntarily or because they were not considered at the time of writing, and start a discussion on how to handle them. The document is not exhaustive, and it is expected that more edge cases will be added in the future.
+The goal of this document is to describe certain edge cases that are not explicitly covered by the Stage 1 requirements, either voluntarily or because they were not considered at the time of writing, and start a discussion on how to handle them. The document is not exhaustive, and it is expected that more edge cases will be added in the future.
 
 ## Liveness failure upper bound
 
@@ -33,15 +33,15 @@ Pause mechanisms can differ, as they can either affect withdrawals, deposits, or
 
 ### Case study 1: Optimism
 
-Optimism describes the way a standard OP stack is supposed to satisfy the new Stage 1 requirements in their [specs](https://specs.optimism.io/protocol/stage-1.html). A "guardian" (i.e. the Security Council in the Superchain) can trigger a pause. The guardian can delegate such role to another actor called the "pause deputy" via a "deputy pause" Safe module. The pause automatically expires and cannot be triggered again unless the mechanism is explicitly reset by the guardian, meaning that the cooldown period is infinite. The pause can either be activated globally (e.g. Superchain-wide pause) or locally to the single chain. The expiration time of a standard OP stack is defined to be 3 months. Since both pauses can be chained, the liveness failure bound is actually 6 months. The guardian can explicitly unpause the system, and if so, the pause mechanism can be reused immediately. In additional to this mechanism, the guardian can always unilaterally revoke the deputy guardian role.
+Optimism describes the way a standard OP stack is supposed to satisfy the new Stage 1 requirements in their [specs](https://specs.optimism.io/protocol/stage-1.html). A "guardian" (i.e. the Security Council in the Superchain) can trigger a pause. The guardian can delegate such role to another actor called the "pause deputy" via a "deputy pause" Safe module. The pause automatically expires and cannot be triggered again unless the mechanism is explicitly reset by the guardian, meaning that the cooldown period is infinite. The pause can either be activated globally (e.g. Superchain-wide pause) or locally to the single chain. The expiration time of a standard OP stack is defined to be 3 months. Since both pauses can be chained, the liveness failure bound is actually 6 months. The guardian can explicitly unpause the system, and if so, the pause mechanism can be reused immediately. In additional to this mechanism, the guardian can always unilaterally revoke the deputy guardian (and with it the deputy pauser-) role.
 
-It's important to note that the pause only affects withdrawals, and not deposits or forced transactions. If a user needs to perform any action on the L2, for example to save an open position, it is still allowed to do so after the usual forced transaction delay in the worst case.
+It's important to note that the pause only affects withdrawals, and not deposits or forced transactions. If a user needs to perform any action on the L2, for example to save an open position, they are still allowed to do so after the usual forced transaction delay in the worst case.
 
 ### Case study 2: Scroll
 
 At the time of writing, Scroll allows a non-SC actor to pause the system. Scroll is assessed as a Stage 1 system with the old requirements because the Security Council majority can always recover from a malicious pause by revoking the non-SC role that allows to pause the system. With the new requirements, either a minority of the SC should be allowed to unpause and revoke, or the pause should expire. More importantly, the pause mechanism also affects forced transactions as it would not be possible to call the `depositTransaction` function in the `EnforcedTxGateway` contract. In such case, users would not be able to perform any action on the L2.
 
-Let's assume for a moment that these issues with the pause mechanism are fixed. An explicit pause mechanism is not the only way to cause a liveness failure. The protocol currently employs a permissioned sequencer that can ignore forced transactions, up until the "enforced liveness mechanism" gets activated and everyone can then submit and prove blocks. If the delay is 7d, then the mechanism effectively acts as a pause that last 7 days and should be handled accordingly.
+Let's assume for a moment that these issues with the pause mechanism are fixed. An explicit pause mechanism is not the only way to cause a liveness failure. The protocol currently employs a permissioned sequencer that can ignore forced transactions, up until the "enforced liveness mechanism" gets activated and everyone can then submit and prove blocks. If the delay is 7d, then the mechanism effectively acts as a pause that lasts 7 days and should be handled accordingly.
 
 ## Forced transaction delay upper bound
 
