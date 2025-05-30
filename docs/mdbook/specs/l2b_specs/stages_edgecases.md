@@ -3,10 +3,19 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
+- [Introduction](#introduction)
 - [Liveness failure upper bound](#liveness-failure-upper-bound)
-  - [Case study: OP Mainnet](#case-study-op-mainnet)
+  - [Case study 1: Optimism](#case-study-1-optimism)
+  - [Case study 2: Scroll](#case-study-2-scroll)
+- [Forced transaction delay upper bound](#forced-transaction-delay-upper-bound)
+- [Frontrunning risk](#frontrunning-risk)
+- [Based preconfs](#based-preconfs)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+## Introduction
+
+The goal of this document is to describe certain edge cases that are not explicitely covered by the Stage 1 requirements, either voluntarily or because they were not considered at the time of writing, and start a discussion on how to handle them. The document is not exhaustive, and it is expected that more edge cases will be added in the future.
 
 ## Liveness failure upper bound
 
@@ -36,12 +45,14 @@ Let's assume for a moment that these issues with the pause mechanism are fixed. 
 
 ## Forced transaction delay upper bound
 
-TODO
+OP stack and Orbit stack notably have a 12h and a 24h max forced transaction delay, respectively. Given that years long delays are unreasonable, an upper bound must be defined. While the forced transaction delay is taken into consideration when calculating exit windows, if a project exclusively relies on a Security Council for upgrades, such delays are not accounted for anywhere. Moreover, some protocols don't have well defined boundaries on the delay, like the recent forced transaction mechanism introduced by Taiko, where in the worst case a forced transaction is processed from the queue every 255 batches, but if the queue is too long, the delay for a specific forced transaction can be much longer.
+
+Given that forced transaction delays effectively act as a temporary pause from the perspective of censored users, it should be considered whether the upper bound value should be aligned with the liveness failure upper bound for sequencing (e.g. 7d).
 
 ## Frontrunning risk
 
-TODO. Intuition: if there are two permissioned provers, one being a SC minority and one being a non-SC actor, the non-SC might frontrun the SC and prevent them from, for example, enforcing censorship resistance if no other mechanism is present.
+Intuition: if there are two permissioned provers, one being a SC minority and one being a non-SC actor, the non-SC might frontrun the SC and prevent them from, for example, enforcing censorship resistance if no other mechanism is present. The threat model should be made more explicit on whether malicious actors have the ability to continuously frontrun other actors. For reference, Arbitrum's BoLD paper is described around this threat model.
 
 ## Based preconfs
 
-TODO.
+Pre-Pacaya Taiko uses free-for-all based sequencing, and therefore does not need a forced transaction mechanism. After Pacaya, a "preconf router" can be added with the intent of restricting sequencing rights to a staked whitelist of opted-in L1 proposers. It's important to remember that most of censorship resistance guarantees today come from the long tail of self-building proposers that do not use mev-boost, or in the future by FOCIL. Arguably, proposers that do not opt-in to mev-boost will also do not opt-in to stake to the preconf router, and therefore will not be able to provide censorship resistance, and neither would transactions originated from users through FOCIL as the sequencing call is gated. Because of this, the addition of a preconf router suggests the need of an additional forced transaction mechanism.
