@@ -25,7 +25,7 @@ export function getCommonDaEntry({
     href,
     tab: project.daLayer.systemCategory,
     statuses: {
-      underReview: project.statuses.isUnderReview ? 'config' : undefined,
+      underReview: project.statuses.reviewStatus ? 'config' : undefined,
       syncWarning,
     },
   }
@@ -47,7 +47,7 @@ export function getCommonDacDaEntry({
     href: `/scaling/projects/${project.slug}`,
     tab: 'custom',
     statuses: {
-      underReview: project.statuses.isUnderReview ? 'config' : undefined,
+      underReview: project.statuses.reviewStatus ? 'config' : undefined,
       syncWarning,
     },
   }

@@ -39,7 +39,7 @@ export async function getRegularDaProjectSections({
     getPermissionsSection(
       {
         id: bridge.id,
-        isUnderReview: layer.statuses.isUnderReview,
+        isUnderReview: !!layer.statuses.reviewStatus,
         permissions: bridge.permissions,
       },
       contractUtils,
@@ -53,7 +53,7 @@ export async function getRegularDaProjectSections({
         isVerified,
         slug: bridge.slug,
         contracts: bridge.contracts ?? {},
-        isUnderReview: layer.statuses.isUnderReview,
+        isUnderReview: !!layer.statuses.reviewStatus,
       },
       contractUtils,
       projectsChangeReport,
@@ -73,7 +73,7 @@ export async function getRegularDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: layer.statuses.isUnderReview,
+      isUnderReview: !!layer.statuses.reviewStatus,
       isVerified,
       layerGrissiniValues,
     },
@@ -100,7 +100,7 @@ export async function getRegularDaProjectSections({
     props: {
       id: 'da-bridge-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: layer.statuses.isUnderReview,
+      isUnderReview: !!layer.statuses.reviewStatus,
       isVerified,
       isNoBridge: !bridge || !!bridge.daBridge.risks.isNoBridge,
       bridgeGrissiniValues,
@@ -278,7 +278,7 @@ export async function getEthereumDaProjectSections({
     props: {
       id: 'da-layer-risk-analysis',
       title: 'Risk analysis',
-      isUnderReview: layer.statuses.isUnderReview,
+      isUnderReview: !!layer.statuses.reviewStatus,
       isVerified,
       layerGrissiniValues,
       bridgeGrissiniValues,

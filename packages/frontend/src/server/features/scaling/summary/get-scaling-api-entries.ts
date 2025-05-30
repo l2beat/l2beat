@@ -62,7 +62,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
         isArchived: false,
         isUpcoming: false,
         isUnderReview: !!getUnderReviewStatus({
-          isUnderReview: project.statuses.isUnderReview,
+          isUnderReview: !!project.statuses.reviewStatus,
           impactfulChange: !!changes?.impactfulChange,
         }),
         badges: project.display.badges,

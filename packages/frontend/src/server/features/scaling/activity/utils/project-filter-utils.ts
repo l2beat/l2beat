@@ -29,24 +29,24 @@ export function createActivityProjectsFilter(
   switch (filter.type) {
     case 'all':
       return (project) =>
-        !(previewRecategorisation && project.statuses.isUnderReview)
+        !(previewRecategorisation && project.statuses.reviewStatus)
     case 'rollups':
       return (project) =>
         !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.isUnderReview) && // If previewRecategorisation is true, we exclude projects that are under review
+        !(previewRecategorisation && project.statuses.reviewStatus) && // If previewRecategorisation is true, we exclude projects that are under review
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.isUnderReview) &&
+        !(previewRecategorisation && project.statuses.reviewStatus) &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
         isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.isUnderReview)
+        !(previewRecategorisation && project.statuses.reviewStatus)
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     default:

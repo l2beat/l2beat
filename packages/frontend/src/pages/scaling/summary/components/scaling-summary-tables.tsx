@@ -93,10 +93,12 @@ export function ScalingSummaryTables(props: Props) {
             Others
             <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          <DirectoryTabsTrigger value="underReview">
-            Under review
-            <CountBadge>{entries.underReview.length}</CountBadge>
-          </DirectoryTabsTrigger>
+          {entries.underReview.length > 0 && (
+            <DirectoryTabsTrigger value="underReview">
+              Under review
+              <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">

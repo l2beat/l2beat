@@ -38,7 +38,7 @@ export function getCommonScalingEntry({
       redWarning: project.statuses.redWarning,
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
         impactfulChange: !!changes?.impactfulChange,
       }),
       syncWarning,
@@ -92,7 +92,7 @@ export function getScalingTab(
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
-  return project.statuses.isUnderReview
+  return project.statuses.reviewStatus
     ? 'underReview'
     : project.scalingInfo.isOther
       ? 'others'

@@ -27,6 +27,6 @@ export function getBridgeTechnologySection(
   return {
     items,
     isUnderReview:
-      items.every((x) => x.isUnderReview) || project.statuses.isUnderReview,
+      items.every((x) => x.isUnderReview) || !!project.statuses.reviewStatus,
   }
 }

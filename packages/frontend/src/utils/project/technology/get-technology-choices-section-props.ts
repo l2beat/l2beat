@@ -5,12 +5,12 @@ export function getTechnologyChoicesSectionProps(
   project: Project<'statuses' | 'scalingTechnology'>,
   items: TechnologyChoice[],
 ): { items: TechnologyChoice[]; isUnderReview: boolean } | undefined {
-  if (items.length === 0 && !project.statuses.isUnderReview) {
+  if (items.length === 0 && !project.statuses.reviewStatus) {
     return undefined
   }
 
   const isUnderReview =
-    items.every((x) => x.isUnderReview) || project.statuses.isUnderReview
+    items.every((x) => x.isUnderReview) || !!project.statuses.reviewStatus
 
   return {
     isUnderReview,

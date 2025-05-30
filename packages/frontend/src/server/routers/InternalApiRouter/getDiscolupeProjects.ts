@@ -35,7 +35,7 @@ export async function getDiscolupeProjects() {
         project.discoveryInfo?.contractsDiscoDriven ?? false,
       isArchived: !!project.archivedAt,
       isUpcoming: !!project.isUpcoming,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
 
       costsConfigured: costs.includes(project.id.toString()),
       livenessConfigured: liveness.includes(project.id.toString()),

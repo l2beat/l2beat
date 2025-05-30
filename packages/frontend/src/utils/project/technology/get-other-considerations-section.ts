@@ -21,13 +21,13 @@ export function getBridgeOtherConsiderationsSection(
       makeTechnologyChoice(`other-considerations-${i + 1}`, x),
     ) ?? []
 
-  if (items.length === 0 && !project.statuses.isUnderReview) {
+  if (items.length === 0 && !project.statuses.reviewStatus) {
     return undefined
   }
 
   return {
     items,
     isUnderReview:
-      items.every((x) => x.isUnderReview) || project.statuses.isUnderReview,
+      items.every((x) => x.isUnderReview) || !!project.statuses.reviewStatus,
   }
 }

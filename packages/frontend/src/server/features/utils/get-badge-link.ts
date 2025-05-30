@@ -4,7 +4,7 @@ import { getScalingTab } from '../scaling/get-common-scaling-entry'
 
 export function getBadgeLink(
   badge: Badge,
-  project: Project<'scalingInfo'>,
+  project: Project<'scalingInfo' | 'statuses'>,
 ): string | undefined {
   if (!badge.action) return undefined
   if (badge.action.type === 'scalingFilter') {

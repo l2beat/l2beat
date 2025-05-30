@@ -222,7 +222,7 @@ export async function getScalingProjectEntry(
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
-      isUnderReview: !!project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
     archivedAt: project.archivedAt,
@@ -385,7 +385,7 @@ export async function getScalingProjectEntry(
         id: 'risk-summary',
         title: 'Risk summary',
         hostChainWarning: hostChainWarningWithRiskCount,
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }
@@ -416,7 +416,7 @@ export async function getScalingProjectEntry(
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
         isVerified: !project.statuses.isUnverified,
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   } else {
@@ -429,7 +429,7 @@ export async function getScalingProjectEntry(
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
         isVerified: !project.statuses.isUnverified,
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }
@@ -444,7 +444,7 @@ export async function getScalingProjectEntry(
         name: project.name,
         icon: getProjectIcon(project.slug),
         type: project.scalingInfo.type,
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
         isAppchain: project.scalingInfo.capability === 'appchain',
         additionalConsiderations:
           project.scalingStage.stage !== 'UnderReview'
@@ -478,7 +478,7 @@ export async function getScalingProjectEntry(
         id: 'state-derivation',
         title: 'State derivation',
         isUnderReview:
-          project.statuses.isUnderReview ||
+          !!project.statuses.reviewStatus ||
           !!project.scalingTechnology.stateDerivation.isUnderReview,
         ...project.scalingTechnology.stateDerivation,
       },
@@ -497,7 +497,7 @@ export async function getScalingProjectEntry(
           project.scalingTechnology.stateValidationImage ?? project.slug,
         ),
         isUnderReview:
-          project.statuses.isUnderReview ||
+          !!project.statuses.reviewStatus ||
           !!project.scalingTechnology.stateValidation.isUnderReview,
       },
     })
@@ -564,7 +564,7 @@ export async function getScalingProjectEntry(
           project.scalingTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }
@@ -573,7 +573,7 @@ export async function getScalingProjectEntry(
     {
       id: project.id,
       hostChain: hostChain?.id,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       permissions: project.permissions,
     },
     contractUtils,
@@ -599,7 +599,7 @@ export async function getScalingProjectEntry(
       isVerified: !project.statuses.isUnverified,
       slug: project.slug,
       contracts: project.contracts,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       architectureImage: project.scalingTechnology.architectureImage,
     },
     contractUtils,
