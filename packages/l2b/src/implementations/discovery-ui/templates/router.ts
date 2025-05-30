@@ -23,7 +23,7 @@ const createTemplateSchema = z.object({
   addresses: z.array(
     z.string().refine((address) => EthereumAddress.check(address)),
   ),
-  templateId: z.string(),
+  templateId: safeTemplateIdSchema,
   fileName: z.string(),
   blockNumber: z.number(),
 })
