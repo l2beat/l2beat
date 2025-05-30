@@ -1,6 +1,14 @@
 {
   "ethereum": [
     {
+      "symbol": "OIK",
+      "address": "0x6E7F11641c1EC71591828E531334192d622703F7"
+    },
+    {
+      "symbol": "QUEST",
+      "address": "0x1fc122fe8b6fa6b8598799baf687539b5d3b2783"
+    },
+    {
       "symbol": "SOPH",
       "address": "0x6b7774cb12ed7573a7586e7d0e62a2a563ddd3f0"
     },
