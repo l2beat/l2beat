@@ -380,17 +380,18 @@ When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth(
 
 2. **Detect when the withdrawal becomes executable**  
    After the ≈7-day fraud-proof window a validator confirms the rollup
-   assertion.  The Rollup contract emits  
+   assertion. Assertion confirmation could also incur in a “challenge grace period” delay, which allows the Security Council to intervene at the end of a dispute in case of any severe bugs in the OneStepProver contracts. 
+   During assertion confirmation the Rollup contract emits:
 
    ```solidity
-   event NodeConfirmed(
-       uint256 indexed nodeNum,
+   event AssertionConfirmed(
+       bytes32 indexed assertionHash,
        bytes32 indexed blockHash,  // L2 block hash of the assertion's end
        bytes32   sendRoot          // root of the Outbox tree
    );
    ```  
 
-   The confirmation routine then calls `Outbox.updateSendRoot(sendRoot, l2ToL1Block)`, which emits:
+   The confirmation routine calls `Outbox.updateSendRoot(sendRoot, l2ToL1Block)`, which emits:
 
    ```solidity
    event SendRootUpdated(
