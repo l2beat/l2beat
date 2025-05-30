@@ -185,6 +185,35 @@
           }
         }
       }
+    },
+    {
+      // I know it's dumb to do it here in overrides but if I place
+      // it in the frontend/biome.json, it will be ignored by the
+      // IDE extension as it only reads the root biome.json file.
+      // This will be fixed in biome 2.0 so remove this once we migrate.
+      "include": ["packages/frontend/src/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noBlankTarget": "error"
+          },
+          "complexity": {
+            "noUselessFragments": "error"
+          },
+          "correctness": {
+            "useExhaustiveDependencies": "error",
+            "useHookAtTopLevel": "error",
+            "noChildrenProp": "error",
+            "noVoidElementsWithChildren": "error"
+          },
+          "suspicious": {
+            "noDuplicateJsxProps": "error"
+          },
+          "style": {
+            "useFragmentSyntax": "error"
+          }
+        }
+      }
     }
   ]
 }
