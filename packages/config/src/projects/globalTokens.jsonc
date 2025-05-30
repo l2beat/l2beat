@@ -320,6 +320,7 @@
         "0x0FD10b9899882a6f2fcb5c371E17e70FdEe00C38": "Pundi X Token",
         "0x430EF9263E76DAE63c84292C3409D61c598E9682": "PYR Token",
         "0x4a220E6096B25EADb88358cb44068A3248254675": "Quant Token",
+        "0x1Fc122FE8b6Fa6b8598799baF687539b5D3B2783": "Quest Ecosystem Token",
         "0x3Ba925fdeAe6B46d0BB4d424D829982Cb2F7309e": "RabbitX Token",
         "0x31c8EAcBFFdD875c74b94b077895Bd78CF1E64A3": "Radicle Token",
         "0x12BB890508c125661E03b09EC06E404bc9289040": "Radio Caca V2 Token",
@@ -354,6 +355,8 @@
         "0xCC8Fa225D80b9c7D42F96e9570156c65D6cAAa25": "Smooth Love Potion Token",
         "0x7A56E1C57C7475CCf742a1832B028F0456652F97": "Solv BTC Token",
         "0xd9D920AA40f578ab794426F5C90F6C731D159DEf": "SolvBTC Babylon Token",
+        "0x6B7774CB12ed7573a7586E7D0e62a2A563dDd3f0": "Sophon Token",
+        "0x6E7F11641c1EC71591828E531334192d622703F7": "Space Nation Oikos Token",
         "0xAdF7C35560035944e805D98fF17d58CDe2449389": "Spectral Token",
         "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474": "Spectrum Staked ETH Token",
         "0x090185f2135308BaD17527004364eBcC2D37e5F6": "Spell Token",
@@ -590,6 +593,11 @@
       "names": {
         "0xFA3198ecF05303a6d96E57a45E6c815055D255b1": "Tether USD Token",
         "0xFBf489bb4783D4B1B2e7D07ba39873Fb8068507D": "USDC Token"
+      }
+    },
+    "worldchain": {
+      "names": {
+        "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1": "Bridged USDC (world-chain-mainnet) Token"
       }
     },
     "metis": {

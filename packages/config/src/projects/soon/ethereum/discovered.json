@@ -1,8 +1,8 @@
 {
   "name": "soon",
   "chain": "ethereum",
-  "blockNumber": 22231693,
-  "configHash": "0xd4d060bc839aa070f3dcd4cd46a99ce8e59b88b50283c2d7289bd3dd79c8a653",
+  "blockNumber": 22593538,
+  "configHash": "0x6c1c2b8a84e4b03977aeda854f6f98463926393e1077a0ec067c432214460e6e",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -51,10 +51,10 @@
         "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 2220000,
-        "latestOutputIndex": 443,
-        "nextBlockNumber": 2225000,
-        "nextOutputIndex": 444,
+        "latestBlockNumber": 3330000,
+        "latestOutputIndex": 665,
+        "nextBlockNumber": 3335000,
+        "nextOutputIndex": 666,
         "proposer": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "PROPOSER": "0x7b208fCB3a6a86101EaC90Df0a0923699fb9231F",
         "startingBlockNumber": 0,
@@ -175,6 +175,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -241,6 +244,11 @@
     },
     {
       "address": "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7b12Dc6d2b7F13d1283E9CCe9eC818C09CB02432",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -388,11 +396,6 @@
       }
     },
     {
-      "address": "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "AddressManager",
       "address": "0xA131FB9Ac1D86651Cf863baaE9190A787Aef56dd",
       "type": "Contract",
@@ -451,7 +454,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292665684",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292668718",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -615,7 +618,7 @@
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
           "0xd1bc675f91C9E54C8eA5Adc7B22Cae4C6AD39BB8",
-          "0x939cd11e4fCeAA2De82eEf7E4aC918Bf556D676B",
+          "0x7b12Dc6d2b7F13d1283E9CCe9eC818C09CB02432",
           "0x6437a4b69e0CF59F21D2cdB59FFaB9dc115A0643",
           "0x7b4d0e4d7C961CF967e88f600399d610736DeE51"
         ],
@@ -624,7 +627,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 28,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1069,7 +1072,7 @@
     "opstack/L2OutputOracle_soon": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal_soon": "0x501665d0286b3d5ec36d23208700c4c03246a24a07ae843b04971530af9ec17b",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x34aff45bb0809e922a7425e0d81a91786b162d097655d47f321638aa902ae371"
+  "permissionsConfigHash": "0x7582ba9b1c605a57691fa290b00c6bb187eb52cb1da8bdb69125d8143dca5288"
 }

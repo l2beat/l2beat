@@ -84,7 +84,6 @@ export const connext: Bridge = {
       description: 'Transfer is done via peer-to-peer atomic swap',
       sentiment: 'good',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL,
       description: BRIDGE_RISK_VIEW.CANONICAL.description,

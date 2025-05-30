@@ -2,7 +2,7 @@
   "name": "cyber",
   "chain": "ethereum",
   "blockNumber": 22208300,
-  "configHash": "0x950e19e99c55c99f49741b0f7a8bcf493aef290ab3059498ce9dfffca89a7c0b",
+  "configHash": "0x3b687e0ff2cca909de4a4c0a0008435efafb6eb642e66f4217b7dea97dfcc93e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -437,6 +437,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1276,7 +1279,7 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x0bdcecf329dc1e53b32ea0722e543dacd0eff48f81275e0b74a35e06b328e3df"
 }

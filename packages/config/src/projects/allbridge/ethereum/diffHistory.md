@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x731117abf3a6177c5d91da01f2d21952579fb479
+Generated with discovered.json: 0x785a106ebe2b623b2a10b7f658b359c65b49b2e1
+
+# Diff at Fri, 30 May 2025 05:08:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 21723681
+- current block number: 22593366
+
+## Description
+
+remote supported chainid added.
+
+## Watched changes
+
+```diff
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA) {
+    +++ description: None
+      values.otherChainIds:
+-        "0x0000010101010101010101010001000000000000000000000000000000000000"
++        "0x0000010101010101010101010101000000000000000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x579c2d005995b540d39b85b0f060ba735d1cc3b4
 
 # Diff at Tue, 04 Mar 2025 10:38:53 GMT:
 

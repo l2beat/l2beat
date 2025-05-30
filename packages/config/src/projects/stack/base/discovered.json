@@ -1,8 +1,8 @@
 {
   "name": "stack",
   "chain": "base",
-  "blockNumber": 30222889,
-  "configHash": "0x181006727fa4006a4c753a2858fde6610b86aa5beac0e60ffe1681ac65d02619",
+  "blockNumber": 30898222,
+  "configHash": "0x8be9ecd298efb038c09c3fdd3c6c21e55f3b84113e8d505d0eae10f173000661",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -166,6 +166,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -342,6 +345,7 @@
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
@@ -356,14 +360,19 @@
         "domainSeparator": "0x4fb7ea8ecabb8e9a869e85ce3babbe085732a2a3b9a239f476713291832d96f2",
         "getChainId": 8453,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 25,
+        "multisigThreshold": "4 of 10 (40%)",
+        "nonce": 27,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104": "GnosisSafeProxy",
         "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
       }
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -768,7 +777,7 @@
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xf4681809a93f17cdf1872ac74b9e791845d3268f9c133ac281ce6d011113db1c"
+  "permissionsConfigHash": "0x693a893278c2d231e0ad015faeac10facfea3b02563fbdd09777e38c143e6705"
 }

@@ -160,7 +160,6 @@ export interface ApiProjectContract extends ApiAddressEntry {
   proxyType?: string
   fields: Field[]
   abis: ApiAbi[]
-  sources: { name: string; code: string }[]
   implementationNames?: Record<string, string>
 }
 

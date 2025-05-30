@@ -2,7 +2,7 @@
   "name": "opticsV1",
   "chain": "ethereum",
   "blockNumber": 21937199,
-  "configHash": "0x3f228dc13418d8a083b910b16f466daddf7f08d1511c91e98b9e2c1a6d7b24c6",
+  "configHash": "0x84e711bdf886cc31c417f9b7782809fbb8e234a7dbbb27db479ff5ce025206cc",
   "entries": [
     {
       "address": "0x07f5bFE05C5C4BF4a86af7BAf667e3737A3BA18F",

@@ -53,7 +53,12 @@ export interface BridgesSummaryEntry extends CommonBridgesEntry {
   tvs: TvsData
   validatedBy?: TableReadyValue
   livenessFailure: TableReadyValue | undefined
-  sourceUpgradeability: TableReadyValue | undefined
+  governance:
+    | {
+        upgrade?: Pick<TableReadyValue, 'value' | 'sentiment' | 'description'>
+        pause?: Pick<TableReadyValue, 'value' | 'sentiment' | 'description'>
+      }
+    | undefined
   tvsOrder: number
   otherConsiderations: ProjectTechnologyChoice[] | undefined
   destination: {
@@ -114,7 +119,7 @@ function getBridgesSummaryEntry(
     destination: getDestination(project.bridgeInfo.destination),
     validatedBy: project.bridgeRisks.validatedBy,
     livenessFailure: project.bridgeRisks.livenessFailure,
-    sourceUpgradeability: project.bridgeRisks.sourceUpgradeability,
+    governance: project.bridgeRisks.governance,
     otherConsiderations: project.bridgeTechnology.otherConsiderations,
     tvsOrder: bridgeTvs?.breakdown.total ?? -1,
   }

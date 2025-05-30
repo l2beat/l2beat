@@ -54,7 +54,6 @@ export const beamerbridgev2: Bridge = {
         'Claims are considered valid if no challenge is submitted within the claim period (24h). The dispute can either be resolved by the participants or escalated by making use of the canonical bridge.',
       sentiment: 'warning',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {

@@ -1,8 +1,8 @@
 {
   "name": "muster",
   "chain": "arbitrum",
-  "blockNumber": 324576418,
-  "configHash": "0x02be3bb9b8135dc349271f3b9ba5bf0b061bd62282cbe290f5837e2d3210f71d",
+  "blockNumber": 342007871,
+  "configHash": "0x5579c376166538adbc5dd809eab8f46bdac90b21ae075754071bc62a26f97409",
   "entries": [
     {
       "name": "UpgradeExecutor",
@@ -287,13 +287,13 @@
         "confirmPeriodBlocks": 7200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 9283,
+        "firstUnresolvedNode": 10493,
         "inbox": "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 22199788,
-        "latestConfirmed": 9282,
-        "latestNodeCreated": 9306,
+        "latestConfirmed": 10492,
+        "latestNodeCreated": 10516,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD17550876106645988051ffDd31dFc3cDaA29F9c",
@@ -459,7 +459,7 @@
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
         ],
         "allowedOutboxList": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
-        "delayedMessageCount": 12033,
+        "delayedMessageCount": 13388,
         "inboxHistory": [
           "0x18BB8310E3a3DF4EFcCb6B3E9AeCB8bE6d4af07f",
           "0x8987777757a91Ed09912D7A5B8430bbAC2cf153C"
@@ -467,8 +467,8 @@
         "outboxHistory": ["0xD17550876106645988051ffDd31dFc3cDaA29F9c"],
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerInbox": "0xfb27e42E964F3364630F76D62EB295ae792BD4FA",
-        "sequencerMessageCount": 10021,
-        "sequencerReportedSubMessageCount": 322444
+        "sequencerMessageCount": 11360,
+        "sequencerReportedSubMessageCount": 351954
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -768,7 +768,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 10021,
+        "batchCount": 11360,
         "batchPosterManager": "0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117",
         "batchPosters": ["0x922bc2d9dd1c4fd0a08460DD8d3E29BfD5b99117"],
         "bridge": "0xB0EC3C1368AF7d9C2CAE6B7f8E022Cc14d59D2b1",
@@ -777,7 +777,7 @@
           "requiredSignatures": 1,
           "membersCount": 1,
           "blsSignatures": [
-            "YBGtv/cSOrjaYb4sgmbUZtClzsM63PDWhe3uEDaPBolgse9IHjyuxotHgD9Lk6xy9Afu1nDrBZ2Bs8hxNwLloekcRSykEwhWC+1z3WvDeVATzaoG1Tz0qQUkYxNoJLxyrBhvcfCSmDqCPlOL7PW3rwN98KJwG6HX1dJF0dM2BXVe7AZgO9JYNxQ16GqywnVMbQwkRkzwtFgBcWLR4wdZlZJDaU5Te7h4SgIURKTZ8g5AC1fIr6dEemMisLdCtyuK0BIUWjPbLJwYJRogplS7rHCvbRoMpMCTbJBfUDA84du3/h2PADv7TxTJ0y6PVhAqJwTbaXHMIvlq2WTNgf3F1gn6JkGnn9p/nim0rxYtbYcOzqIwv4bmd2DvmUyXCCWnbA=="
+            "YAvPkaef4hf3zNeyzlRuxt0SkWz8qbJuOHEi9I8eMxUrQ7mhMmz7wi7BgpHpsPB9tBEOz/mKpGHi1aQeHcxG0QWODhT8oWHlcUvMvgpO2dhXSK6cRjDlOZy4mBXrjMJVBBOgjAkpi4UetNc2w6tyNcOa9lRekf8obnO+HHUjxiczyon2S5KCxkvtDbsEZZHeiweLET02229SZ0KZ2WksOgXQX48WeA3C4lU93vqCQQKtK9G+PEqi8ZzYfdeIi7LRUQFwcK5OoazKObLJprc1b5WkE8q9k/hiAXvhNTXJB92LSevLu/QXGYwarYzjlWkKiQBsjoKmITWIclydZCQl7dP9ooCHB3pafue9Ude9ZoXsolpU8J8Hs+aUSwqJ7uhPYg=="
           ]
         },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
@@ -785,7 +785,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": false,
-        "keySetUpdates": 1,
+        "keySetUpdates": 2,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 5760,
@@ -798,7 +798,7 @@
         "rollup": "0x73CA76d9B04661604fF950fB8DBc9f18F1B853f1",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 12032,
+        "totalDelayedMessagesRead": 13387,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
