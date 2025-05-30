@@ -14,7 +14,7 @@ const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
     'Template ID must be alphanumeric and can contain underscores or hyphens.',
 })
 
-const listTemplateFilesSchema = z.object({
+export const listTemplateFilesSchema = z.object({
   templateId: safeTemplateIdSchema,
 })
 
@@ -60,31 +60,6 @@ export function attachTemplateRouter(
     )
 
     res.status(result.success ? 201 : 500).json(result)
-  })
-
-  app.get('/api/template-files', (req, res) => {
-    const query = listTemplateFilesSchema.safeParse(req.query)
-
-    if (!query.success) {
-      res.status(400).json({ errors: query.error.flatten() })
-      return
-    }
-
-    const template = templateService.readTemplateFile(query.data.templateId)
-
-    if (!template) {
-      res.status(404).json({ error: 'Template not found' })
-      return
-    }
-
-    const shapes = templateService.readShapeFile(query.data.templateId)
-    const criteria = templateService.readCriteriaFile(query.data.templateId)
-
-    res.json({
-      template,
-      shapes,
-      criteria,
-    })
   })
 }
 
