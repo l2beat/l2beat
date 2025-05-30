@@ -5,12 +5,25 @@ import { z } from 'zod'
 import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
+const templateIdRegex = new RegExp(
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
+)
+
+const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
+  message:
+    'Template ID must be alphanumeric and can contain underscores or hyphens.',
+})
+
+const listTemplateFilesSchema = z.object({
+  templateId: safeTemplateIdSchema,
+})
+
 const createTemplateSchema = z.object({
   chain: z.string(),
   addresses: z.array(
     z.string().refine((address) => EthereumAddress.check(address)),
   ),
-  templateId: z.string(),
+  templateId: safeTemplateIdSchema,
   fileName: z.string(),
   blockNumber: z.number(),
 })
@@ -47,6 +60,31 @@ export function attachTemplateRouter(
     )
 
     res.status(result.success ? 201 : 500).json(result)
+  })
+
+  app.get('/api/template-files', (req, res) => {
+    const query = listTemplateFilesSchema.safeParse(req.query)
+
+    if (!query.success) {
+      res.status(400).json({ errors: query.error.flatten() })
+      return
+    }
+
+    const template = templateService.readTemplateFile(query.data.templateId)
+
+    if (!template) {
+      res.status(404).json({ error: 'Template not found' })
+      return
+    }
+
+    const shapes = templateService.readShapeFile(query.data.templateId)
+    const criteria = templateService.readCriteriaFile(query.data.templateId)
+
+    res.json({
+      template,
+      shapes,
+      criteria,
+    })
   })
 }
 
