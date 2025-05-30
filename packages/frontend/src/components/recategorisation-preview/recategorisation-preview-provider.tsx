@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { usePathname } from '~/hooks/usePathname'
-import useQueryParam from '~/hooks/useQueryParam'
+import { useQueryParam } from '~/hooks/useQueryParam'
 
 type RecategorisationPreviewContextValue = {
   checked: boolean
@@ -20,6 +20,9 @@ export function RecategorisationPreviewContextProvider({ children }: Props) {
   const [checked, setChecked] = useQueryParam(
     'recategorisationPreview',
     'false',
+    {
+      replaceState: true,
+    },
   )
 
   const onChange = (checked: boolean) => {
