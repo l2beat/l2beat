@@ -57,11 +57,6 @@ export const polynetwork: Bridge = {
       description: '3/4 MultiSig of PolyNetwork Keepers',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts can be upgraded',
-      sentiment: 'bad',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.WRAPPED,
       description: BRIDGE_RISK_VIEW.WRAPPED.description,
