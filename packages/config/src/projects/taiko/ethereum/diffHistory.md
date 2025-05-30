@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe4d87bdf78d1f238e46d96175be0f5e25c786dac
+Generated with discovered.json: 0xcd05b78d38ef2a6d1a7f92e92a1f05b482abc8bb
 
-# Diff at Thu, 29 May 2025 12:25:51 GMT:
+# Diff at Fri, 30 May 2025 10:07:05 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@80c24ef6a6e17335dc2761caff762cfb6f39304b block: 22579860
-- current block number: 22588395
+- current block number: 22594847
 
 ## Description
 
@@ -32,6 +32,154 @@ Ignore spammy batches/state values.
       values.multisigThreshold:
 -        "3 of 5 (60%)"
 +        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      values.$members.5:
++        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
+      values.$members.4:
+-        "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
++        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+      values.$members.3:
+-        "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
++        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
+      values.multisigThreshold:
+-        "4 of 5 (80%)"
++        "4 of 6 (67%)"
+      receivedPermissions.27:
++        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.26:
++        {"permission":"upgrade","from":"0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.25:
++        {"permission":"upgrade","from":"0x8d7C954960a36a7596d7eA4945dDf891967ca8A3","role":"admin"}
+      receivedPermissions.24.from:
+-        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.23.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.22.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.21.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.20.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.19.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.18.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.17.from:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.16.from:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.15.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.14.from:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.13.from:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.12.from:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.11.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.10.from:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.9.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.8.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.8.from:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.8.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.8.description:
++        "can update the contract address for a given name"
+      receivedPermissions.7.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.7.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.6.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.5.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.5.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+      receivedPermissions.4.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.4.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.3.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.3.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a)
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../DefaultResolver.sol                            |    0
+ .../ERC1967Proxy.p.sol                             |    0
+ .../DefaultResolver.sol                            | 1428 ++++++++++++
+ .../ERC1967Proxy.p.sol                             |  594 +++++
+ .../ethereum/.flat/ProverSet/ERC1967Proxy.p.sol    |  594 +++++
+ .../taiko/ethereum/.flat/ProverSet/ProverSet.sol   | 2287 ++++++++++++++++++++
+ 6 files changed, 4903 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22579860 (main branch discovery), not current.
+
+```diff
+    contract ForcedInclusionStore (0x05d88855361808fA1d7fc28084Ef3fCa191c4e03) {
+    +++ description: Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive.
+      description:
+-        "Contract that allows to enqueue forced transaction through L1. A pending forced transaction must be processed every 255 batches."
++        "Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every 255 batches. Individual transactions may face longer delays if the queue is extensive."
     }
 ```
 
