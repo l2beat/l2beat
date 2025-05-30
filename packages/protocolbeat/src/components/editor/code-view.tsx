@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 
 import { useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
-import { useCodeStore } from './store'
 import { Editor, type EditorSupportedLanguage } from './editor'
+import { useCodeStore } from './store'
 import type { Range } from './store'
 
 export function CodeView({

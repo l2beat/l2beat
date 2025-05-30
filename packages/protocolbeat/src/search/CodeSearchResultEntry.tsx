@@ -2,9 +2,9 @@ import clsx from 'clsx'
 import type { ApiCodeSearchResponse } from '../api/types'
 import { HighlightedText } from '../common/HighlightedText'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
 import { useMultiViewStore } from '../multi-view/store'
-import { useCodeStore } from '../components/editor/store'
 import { useSearchStore } from './store'
 
 interface CodeSearchEntryProps {

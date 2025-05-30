@@ -9,10 +9,10 @@ import { CodePanel } from './panel-code/CodePanel'
 import { ListPanel } from './panel-list/ListPanel'
 import { NodesPanel } from './panel-nodes/NodesPanel'
 import { PreviewPanel } from './panel-preview/PreviewPanel'
+import { TemplatePanel } from './panel-template/TemplatePanel'
 import { TerminalPanel } from './panel-terminal/TerminalPanel'
 import { ValuesPanel } from './panel-values/ValuesPanel'
 import { usePanelStore } from './store/store'
-import { TemplatePanel } from './panel-template/TemplatePanel'
 
 export function ProjectPage() {
   const { project } = useParams()

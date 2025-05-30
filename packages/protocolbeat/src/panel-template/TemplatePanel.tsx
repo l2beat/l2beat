@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject, readTemplateFile } from '../api/api'
-import { usePanelStore } from '../store/store'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
-import clsx from 'clsx'
-import { IconCodeFile } from '../icons/IconCodeFile'
 import { CodeView } from '../components/editor/code-view'
-import { useState, useEffect } from 'react'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
+import { IconCodeFile } from '../icons/IconCodeFile'
+import { usePanelStore } from '../store/store'
 
 export function TemplatePanel() {
   const { project } = useParams()
