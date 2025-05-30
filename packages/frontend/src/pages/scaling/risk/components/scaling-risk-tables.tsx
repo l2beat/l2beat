@@ -111,7 +111,7 @@ export function ScalingRiskTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="underReview">
-            <ScalingRiskTable entries={entries.underReview} />
+            <ScalingRiskTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

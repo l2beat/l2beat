@@ -11,7 +11,7 @@ export function getRowType(
   if (entry.id === ProjectId.ETHEREUM) {
     return 'ethereum'
   }
-  if (rowColoringMode === 'ethereum-only') {
+  if (rowColoringMode === 'ignore-colors') {
     return undefined
   }
 

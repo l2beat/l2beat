@@ -143,7 +143,7 @@ export function ScalingActivityTabs(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
-            <ScalingActivityTable entries={entries.underReview} />
+            <ScalingActivityTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -9,7 +9,12 @@ import { scalingRiskColumns } from './columns'
 export function ScalingRiskTable({
   entries,
   rollups,
-}: { entries: ScalingRiskEntry[]; rollups?: boolean }) {
+  underReview,
+}: {
+  entries: ScalingRiskEntry[]
+  rollups?: boolean
+  underReview?: boolean
+}) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
@@ -28,5 +33,12 @@ export function ScalingRiskTable({
     },
   })
 
-  return rollups ? <RollupsTable table={table} /> : <BasicTable table={table} />
+  return rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable
+      table={table}
+      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+    />
+  )
 }

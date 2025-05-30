@@ -134,7 +134,7 @@ export function ScalingTvsTabs(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="underReview" className="pt-5">
-            <ScalingTvsTable entries={entries.underReview} />
+            <ScalingTvsTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
