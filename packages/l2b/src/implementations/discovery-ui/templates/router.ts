@@ -6,7 +6,7 @@ import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
 const templateIdRegex = new RegExp(
-  '/^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$/',
+  '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
 )
 
 const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
