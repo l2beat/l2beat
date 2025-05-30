@@ -1,5 +1,14 @@
 {
+  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
   "extends": ["../../biome.json"],
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "useHookAtTopLevel": "error"
+      }
+    }
+  },
   "files": {
     "ignore": ["./static"]
   }
