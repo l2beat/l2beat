@@ -172,16 +172,11 @@
           "fields": {
             "validators": {
               "handler": {
-                "type": "event",
-                "select": "validatorAddress",
-                "add": {
-                  "event": "ValidatorStatusUpdate",
-                  "where": ["=", "#isActive", true]
-                },
-                "remove": {
-                  "event": "ValidatorStatusUpdate",
-                  "where": ["!=", "#isActive", true]
-                }
+                "type": "hardcoded",
+                "value": [
+                  "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb",
+                  "0x509ff56c152315EdeE91A2e0f059195519507e01"
+                ]
               }
             }
           }

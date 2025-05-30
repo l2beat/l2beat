@@ -1,7 +1,7 @@
 {
   "name": "worldchain",
   "chain": "ethereum",
-  "blockNumber": 22567927,
+  "blockNumber": 22593567,
   "configHash": "0x70876b7893838fa4c263c70bbff280938bfbabfa688199315bda9f1406dfa4df",
   "entries": [
     {
@@ -73,7 +73,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 3324,
+        "gameCount": 3410,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
@@ -83,7 +83,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d",
-        "permissionedGamesTotal": 3324,
+        "permissionedGamesTotal": 3410,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -212,7 +212,7 @@
         "$upgradeCount": 1,
         "BRIDGE_MESSAGE_TYPEHASH": "0x87e4683aad14f1869b43140e06b846bd1b00c2e08e9825f6719d163b4cfef2a6",
         "burnAmount": 0,
-        "burnCaller": "0x2ba529D229FDc1DA08e67F536588aE45932d030A",
+        "burnCaller": "0x0000000000000000000000000000000000000000",
         "eip712Domain": {
           "fields": "0x0f",
           "name": "OpUSDCBridgeAdapter",
@@ -224,7 +224,7 @@
         },
         "LINKED_ADAPTER": "0xbD80b06d3dbD0801132c6689429aC09Ca6D27f82",
         "MESSENGER": "0xf931a81D18B1766d15695ffc7c1920a62b7e710a",
-        "messengerStatus": 2,
+        "messengerStatus": 3,
         "owner": "0x28fAb3A5b69711cc64B09240d2694d9F0f07eBf6",
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
         "USDC": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
@@ -322,19 +322,6 @@
       },
       "implementationNames": {
         "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
-      }
-    },
-    {
-      "name": "Burn Caller",
-      "address": "0x2ba529D229FDc1DA08e67F536588aE45932d030A",
-      "type": "Contract",
-      "unverified": true,
-      "proxyType": "immutable",
-      "sinceTimestamp": 1746132875,
-      "sinceBlock": 22391512,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "0x2ba529D229FDc1DA08e67F536588aE45932d030A": ""
       }
     },
     {
@@ -797,7 +784,7 @@
         "disputeGameFactory": "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea",
         "eip1559Denominator": 250,
         "eip1559Elasticity": 2,
-        "gasLimit": 33000000,
+        "gasLimit": 36000000,
         "gasPayingToken": {
           "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
           "decimals_": 18
@@ -845,6 +832,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1429,7 +1419,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 1301449,
-          "prevBlockNum": 22567861
+          "prevBlockNum": 22593552
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -1612,7 +1602,7 @@
         ],
         "$upgradeCount": 3,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292641847",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292642385",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -2522,7 +2512,7 @@
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xccc7a5b4ed926ebbe746c0192e81a84dd2c4db1a95d0e709eb0da967f4a9772f"
+  "permissionsConfigHash": "0xc5eb522095883c668940f62859ddb6cc5654cbd8cb9e09922997c7b13589d1da"
 }

@@ -252,6 +252,13 @@ export const sophon: ScalingProject = zkStackL2({
   ],
   milestones: [
     {
+      title: 'SOPH TGE',
+      url: 'https://x.com/sophon/status/1927697463655219692', // TODO better announcement link
+      date: '2025-05-28T00:00:00.00Z',
+      description: 'SOPH, the gas token of Sophon, is officially live.',
+      type: 'general',
+    },
+    {
       title: 'Avail Vector DA Bridge',
       url: 'https://blog.availproject.org/avail-to-power-consumer-entertainment-onchain-with-sophon/', // TODO better announcement link
       date: '2025-04-23T00:00:00.00Z',

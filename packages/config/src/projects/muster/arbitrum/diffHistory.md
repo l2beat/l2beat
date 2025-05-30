@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xfc358978deef8749a0e39664e0990694596ddc2d
+
+# Diff at Fri, 30 May 2025 06:08:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 324576418
+- current block number: 342007871
+
+## Description
+
+dac 1 -> 2 members.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xfb27e42E964F3364630F76D62EB295ae792BD4FA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset.blsSignatures.0:
+-        "YBGtv/cSOrjaYb4sgmbUZtClzsM63PDWhe3uEDaPBolgse9IHjyuxotHgD9Lk6xy9Afu1nDrBZ2Bs8hxNwLloekcRSykEwhWC+1z3WvDeVATzaoG1Tz0qQUkYxNoJLxyrBhvcfCSmDqCPlOL7PW3rwN98KJwG6HX1dJF0dM2BXVe7AZgO9JYNxQ16GqywnVMbQwkRkzwtFgBcWLR4wdZlZJDaU5Te7h4SgIURKTZ8g5AC1fIr6dEemMisLdCtyuK0BIUWjPbLJwYJRogplS7rHCvbRoMpMCTbJBfUDA84du3/h2PADv7TxTJ0y6PVhAqJwTbaXHMIvlq2WTNgf3F1gn6JkGnn9p/nim0rxYtbYcOzqIwv4bmd2DvmUyXCCWnbA=="
++        "YAvPkaef4hf3zNeyzlRuxt0SkWz8qbJuOHEi9I8eMxUrQ7mhMmz7wi7BgpHpsPB9tBEOz/mKpGHi1aQeHcxG0QWODhT8oWHlcUvMvgpO2dhXSK6cRjDlOZy4mBXrjMJVBBOgjAkpi4UetNc2w6tyNcOa9lRekf8obnO+HHUjxiczyon2S5KCxkvtDbsEZZHeiweLET02229SZ0KZ2WksOgXQX48WeA3C4lU93vqCQQKtK9G+PEqi8ZzYfdeIi7LRUQFwcK5OoazKObLJprc1b5WkE8q9k/hiAXvhNTXJB92LSevLu/QXGYwarYzjlWkKiQBsjoKmITWIclydZCQl7dP9ooCHB3pafue9Ude9ZoXsolpU8J8Hs+aUSwqJ7uhPYg=="
+      values.keySetUpdates:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x1a2ae68aff2998ec21eb36aba3c222f0782ece66
 
 # Diff at Tue, 27 May 2025 08:31:07 GMT:

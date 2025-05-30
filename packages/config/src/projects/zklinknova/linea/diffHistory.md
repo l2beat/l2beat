@@ -1,3 +1,193 @@
+Generated with discovered.json: 0xb1f9697e8d397f5408ba2ff7fe27685c963fe49d
+
+# Diff at Fri, 30 May 2025 06:44:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 17565279
+- current block number: 19494394
+
+## Description
+
+upgrade to an unverified implementation.
+
+hardcoded validators, parking original `validators` config.jsonc snippet here because the comments are broken
+```
+"handler": {
+  "type": "event",
+  "select": "validatorAddress",
+  "add": {
+    "event": "ValidatorStatusUpdate",
+    "where": ["=", "#isActive", true]
+  },
+  "remove": {
+    "event": "ValidatorStatusUpdate",
+    "where": ["!=", "#isActive", true]
+  }
+}
+```
+
+## Watched changes
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      sourceHashes:
+-        ["0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f","0x28d2bbb6847ab4d4dfc220d056bad884fa0fb9d713ee16b26a55e0e48e494d73"]
+      values.$implementation.3:
+-        "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
++        "0x6a91814E3481967Ea350398cf748aB845DF43c05"
+      values.$implementation.2:
+-        "0x495220D99B432b0de3e1F1fe206AA0E26A051C63"
++        "0xF3d053C29666D653Fa8629190579844BffE9FB92"
+      values.$implementation.1:
+-        "0xF3d053C29666D653Fa8629190579844BffE9FB92"
++        "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+      values.$implementation.0:
+-        "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f"
++        "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e"
+      values.$pastUpgrades.6:
++        ["2024-05-22T15:53:09.000Z","0x63cc92d7d7f235ed4094027a72b93973cb159c4cca509f669668032a0b6d9e96",["0xB76Ee80B3344D86580C990638bDE1915E58d2c6f","0xF3d053C29666D653Fa8629190579844BffE9FB92","0x495220D99B432b0de3e1F1fe206AA0E26A051C63","0x9f2E11F287733c4EF5B9A6ED923b780c28062727"]]
+      values.$pastUpgrades.5.2.3:
+-        "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
++        "0x841f709F4219a1283300c0250cA7c582aD2B289c"
+      values.$pastUpgrades.5.2.2:
+-        "0x495220D99B432b0de3e1F1fe206AA0E26A051C63"
++        "0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0"
+      values.$pastUpgrades.5.2.1:
+-        "0xF3d053C29666D653Fa8629190579844BffE9FB92"
++        "0x73B076425025A3Bf059001D5bE0E21384C8cf049"
+      values.$pastUpgrades.5.2.0:
+-        "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f"
++        "0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0"
+      values.$pastUpgrades.5.1:
+-        "2024-05-22T15:53:09.000Z"
++        "2024-03-04T03:26:13.000Z"
+      values.$pastUpgrades.5.0:
+-        "0x63cc92d7d7f235ed4094027a72b93973cb159c4cca509f669668032a0b6d9e96"
++        "0x33b1bba23b3c4bf16fb2b10b47dfda138dc2ff659fc32e2d0926b716e76f3dbc"
+      values.$pastUpgrades.4.2:
+-        ["0x73B076425025A3Bf059001D5bE0E21384C8cf049","0xfE3EB2e5AfaA936093C0DD2dB8898F4a2643FfE0","0x5e7077bf147Fc1Bb8f46039cc40bBd39F2dDfEa0","0x841f709F4219a1283300c0250cA7c582aD2B289c"]
++        "0xc126f92dc36c78ecb4aac331b0cc9e92ba1693d8b1a83981f4cb789cd1c55a6b"
+      values.$pastUpgrades.4.1:
+-        "2024-03-04T03:26:13.000Z"
++        ["0x6a91814E3481967Ea350398cf748aB845DF43c05","0xF3d053C29666D653Fa8629190579844BffE9FB92","0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e","0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"]
+      values.$pastUpgrades.4.0:
+-        "0x33b1bba23b3c4bf16fb2b10b47dfda138dc2ff659fc32e2d0926b716e76f3dbc"
++        "2025-05-14T03:35:45.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.facetAddresses.3:
+-        "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
++        "0x6a91814E3481967Ea350398cf748aB845DF43c05"
+      values.facetAddresses.2:
+-        "0x495220D99B432b0de3e1F1fe206AA0E26A051C63"
++        "0xF3d053C29666D653Fa8629190579844BffE9FB92"
+      values.facetAddresses.1:
+-        "0xF3d053C29666D653Fa8629190579844BffE9FB92"
++        "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+      values.facetAddresses.0:
+-        "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f"
++        "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e"
+      values.facets.3.addr:
+-        "0xB76Ee80B3344D86580C990638bDE1915E58d2c6f"
++        "0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488"
+      values.facets.3.selectors.12:
+-        "0xbe6f11cf"
+      values.facets.3.selectors.11:
+-        "0x17338945"
+      values.facets.3.selectors.10:
+-        "0x1cc5d103"
+      values.facets.3.selectors.9:
+-        "0x64bf8d66"
+      values.facets.3.selectors.8:
+-        "0x0e18b681"
+      values.facets.3.selectors.7:
+-        "0xf235757f"
+      values.facets.3.selectors.6:
+-        "0xe58bb639"
+      values.facets.3.selectors.5:
+-        "0x19b25add"
+      values.facets.3.selectors.4:
+-        "0x90646b4a"
++        "0x6a74f6f5"
+      values.facets.3.selectors.3:
+-        "0x27ae4c16"
++        "0x97c09d34"
+      values.facets.3.selectors.2:
+-        "0xa9f6d941"
++        "0xc3d93e7c"
+      values.facets.3.selectors.1:
+-        "0x4623c91d"
++        "0x93406cf2"
+      values.facets.3.selectors.0:
+-        "0x4dd18bf5"
++        "0x7f61885c"
+      values.facets.1.addr:
+-        "0x495220D99B432b0de3e1F1fe206AA0E26A051C63"
++        "0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e"
+      values.facets.0.addr:
+-        "0x9f2E11F287733c4EF5B9A6ED923b780c28062727"
++        "0x6a91814E3481967Ea350398cf748aB845DF43c05"
+      values.facets.0.selectors.12:
++        "0xbe6f11cf"
+      values.facets.0.selectors.11:
++        "0x17338945"
+      values.facets.0.selectors.10:
++        "0x1cc5d103"
+      values.facets.0.selectors.9:
++        "0x64bf8d66"
+      values.facets.0.selectors.8:
++        "0x0e18b681"
+      values.facets.0.selectors.7:
++        "0xf235757f"
+      values.facets.0.selectors.6:
++        "0xe58bb639"
+      values.facets.0.selectors.5:
++        "0x19b25add"
+      values.facets.0.selectors.4:
+-        "0x6a74f6f5"
++        "0x90646b4a"
+      values.facets.0.selectors.3:
+-        "0x97c09d34"
++        "0x27ae4c16"
+      values.facets.0.selectors.2:
+-        "0xc3d93e7c"
++        "0xa9f6d941"
+      values.facets.0.selectors.1:
+-        "0x93406cf2"
++        "0x4623c91d"
+      values.facets.0.selectors.0:
+-        "0x7f61885c"
++        "0x4dd18bf5"
+      values.FORWARD_REQUEST_TYPE_HASH:
+-        "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c"
+      implementationNames.0xB76Ee80B3344D86580C990638bDE1915E58d2c6f:
+-        "AdminFacet"
+      implementationNames.0x495220D99B432b0de3e1F1fe206AA0E26A051C63:
+-        "MailboxFacet"
+      implementationNames.0x9f2E11F287733c4EF5B9A6ED923b780c28062727:
+-        "ExecutorFacet"
+      implementationNames.0x6a91814E3481967Ea350398cf748aB845DF43c05:
++        ""
+      implementationNames.0xa3A4de013fbC21F46a3AB0F504dcEFfAd217252e:
++        ""
+      implementationNames.0xFF6e83e6A5cc362b8B40d819fBE7840aD13A3488:
++        ""
+      unverified:
++        true
+    }
+```
+
+## Source code changes
+
+```diff
+.../zkLink/AdminFacet.1.sol => /dev/null           | 1970 --------------------
+ .../zkLink/ExecutorFacet.4.sol => /dev/null        |  949 ----------
+ .../zkLink/MailboxFacet.3.sol => /dev/null         | 1851 ------------------
+ 3 files changed, 4770 deletions(-)
+```
+
 Generated with discovered.json: 0x756db9bdb68a59ec6cbfc001e0ee7e778c29d03e
 
 # Diff at Wed, 28 May 2025 11:34:48 GMT:
