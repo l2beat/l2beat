@@ -35,7 +35,7 @@ export function getBadgeWithParams(badge: Badge): BadgeWithParams | undefined {
 
 export function getBadgeWithParamsAndLink(
   badge: Badge,
-  project: Project<'scalingInfo'>,
+  project: Project<'scalingInfo' | 'statuses'>,
 ): BadgeWithParams | undefined {
   const badgeWithParams = getBadgeWithParams(badge)
   if (!badgeWithParams) return undefined

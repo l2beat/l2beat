@@ -25,7 +25,7 @@ export const espresso: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
+    reviewStatus: undefined,
     isUnverified: false,
   },
   display: {

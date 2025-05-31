@@ -6,7 +6,7 @@ export const ankr: Bridge = {
   type: 'bridge',
   id: ProjectId('ankr'),
   addedAt: UnixTime(1710858245), // 2024-03-19T14:24:05Z
-  isUnderReview: true,
+  reviewStatus: 'inReview',
   display: {
     name: 'Ankr',
     slug: 'ankr',

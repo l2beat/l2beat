@@ -30,5 +30,8 @@ export function getRecategorisedEntries<T extends CommonScalingEntry>(
       (entry) => entry.statuses?.underReview !== 'config',
     ),
     others: others.filter((entry) => entry.statuses?.underReview !== 'config'),
+    underReview: entries.underReview.filter(
+      (entry) => entry.statuses?.underReview === 'config',
+    ),
   }
 }

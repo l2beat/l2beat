@@ -1,25 +1,22 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/components/table/basic-table'
-import { RollupsTable } from '~/components/table/rollups-table'
 import { useTableSorting } from '~/components/table/sorting/table-sorting-context'
 import { useTable } from '~/hooks/use-table'
-import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
-import { useScalingAssociatedTokensContext } from '../../../components/scaling-associated-tokens-context'
+import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/scaling-associated-tokens-context'
+import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { toTableRows } from '../../utils/to-table-rows'
-import { scalingTvsColumns } from './columns'
+import { scalingSummaryUnderReviewColumns } from './columns'
 
 interface Props {
-  entries: ScalingTvsEntry[]
-  rollups?: boolean
-  underReview?: boolean
+  entries: ScalingSummaryEntry[]
 }
 
-export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
+export function ScalingSummaryUnderReviewTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
-  const allProjects = useMemo(
+  const tableEntries = useMemo(
     () =>
       toTableRows({
         projects: entries,
@@ -29,8 +26,8 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
   )
 
   const table = useTable({
-    data: allProjects,
-    columns: scalingTvsColumns,
+    data: tableEntries,
+    columns: scalingSummaryUnderReviewColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -45,13 +42,5 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
     },
   })
 
-  return rollups ? (
-    <RollupsTable table={table} />
-  ) : (
-    <BasicTable
-      table={table}
-      insideMainPageCard
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
-    />
-  )
+  return <BasicTable table={table} rowColoringMode="ignore-colors" />
 }

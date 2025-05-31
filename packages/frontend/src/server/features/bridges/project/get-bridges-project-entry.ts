@@ -103,7 +103,7 @@ export async function getBridgesProjectEntry(
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       ...changes,
     }),
     archivedAt: project.archivedAt,
@@ -194,7 +194,7 @@ export async function getBridgesProjectEntry(
         id: 'risk-analysis',
         title: 'Risk summary',
         ...riskSummary,
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }
@@ -236,7 +236,7 @@ export async function getBridgesProjectEntry(
           project.bridgeTechnology.upgradesAndGovernanceImage ?? project.slug,
         ),
         mdClassName: 'text-gray-850 leading-snug dark:text-gray-400 md:text-lg',
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
       },
     })
   }
@@ -244,7 +244,7 @@ export async function getBridgesProjectEntry(
   const permissionsSection = getPermissionsSection(
     {
       id: project.id,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       permissions: project.permissions,
     },
     contractUtils,
@@ -266,7 +266,7 @@ export async function getBridgesProjectEntry(
       id: project.id,
       slug: project.slug,
       isVerified: !project.statuses.isUnverified,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
       contracts: project.contracts,
     },
     contractUtils,

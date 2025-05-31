@@ -46,6 +46,7 @@ import type {
   ProjectFinalityConfig,
   ProjectFinalityInfo,
   ProjectLivenessInfo,
+  ProjectReviewStatus,
   ProjectRisk,
   ProjectScalingCapability,
   ProjectScalingCategory,
@@ -148,7 +149,7 @@ interface OpStackConfigCommon {
   nodeSourceLink?: string
   chainConfig?: ChainConfig
   hasProperSecurityCouncil?: boolean
-  isUnderReview?: boolean
+  reviewStatus?: ProjectReviewStatus
   stage?: ProjectScalingStage
   additionalBadges?: Badge[]
   additionalPurposes?: ProjectScalingPurpose[]
@@ -264,7 +265,7 @@ function opStackCommon(
     id: ProjectId(templateVars.discovery.projectName),
     addedAt: templateVars.addedAt,
     capability: templateVars.capability ?? 'universal',
-    isUnderReview: templateVars.isUnderReview ?? false,
+    reviewStatus: templateVars.reviewStatus,
     display: {
       purposes: templateVars.overridingPurposes ?? [
         'Universal',

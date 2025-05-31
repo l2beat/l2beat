@@ -12,7 +12,7 @@ export function getSequencingSection(
       project.scalingTechnology.sequencingImage ?? project.slug,
     ),
     content: project.scalingTechnology.sequencing.description,
-    isUnderReview: project.statuses.isUnderReview,
+    isUnderReview: !!project.statuses.reviewStatus,
     risks: project.scalingTechnology.sequencing.risks.map((r) => ({
       text: `${r.category} ${r.text}`,
       isCritical: !!r.isCritical,
