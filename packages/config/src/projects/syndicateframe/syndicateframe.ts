@@ -29,7 +29,7 @@ export const syndicateframe: ScalingProject = opStackL3({
         'https://bridge-frame.syndicate.io/',
         'https://frame.syndicate.io/',
       ],
-      documentation: ['https://docs.syndicate.io/get-started/introduction'],
+      documentation: ['https://docs.syndicate.io/docs/get-started/introduction'],
       explorers: ['https://explorer-frame.syndicate.io/'],
       repositories: [
         'https://github.com/WillPapper/syndicate-farcaster-frame-starter',
