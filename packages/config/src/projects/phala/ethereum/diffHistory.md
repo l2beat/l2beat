@@ -1,3 +1,52 @@
+Generated with discovered.json: 0xd9efd5b6a4e036ef02cb4f1a6af9865e8762c954
+
+# Diff at Mon, 02 Jun 2025 08:02:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22467145
+- current block number: 22615677
+
+## Description
+
+conduit ms signer change, verification keys updated.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.10:
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.9:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.8:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.7:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.6:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
+```diff
+    contract OPSuccinctL2OutputOracle (0xb45440830bd8D288bB2B5B01Be303ae60fc855d8) {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x00a4fec570ddb93572e5312e1debb095562fea9ae099622c6f7c9d145d87517f"
++        "0x009db7eba2814292b350d8b18e3861fcf8cb387de821c3d4546b79552ee2afa5"
+      values.rangeVkeyCommitment:
+-        "0x5614b4dc4d7a1c33681c404a27aa1db265ea84b75047859667fed5a303a8dc43"
++        "0x0ea16a87731757ad1753d1906cb006de1fdd6a760add547c0c691bcd0914de7e"
+    }
+```
+
 Generated with discovered.json: 0x3c344df638eb02590a9634113172ec66beb91aff
 
 # Diff at Fri, 30 May 2025 07:11:56 GMT:

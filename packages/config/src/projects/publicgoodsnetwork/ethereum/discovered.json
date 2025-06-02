@@ -1,7 +1,7 @@
 {
   "name": "publicgoodsnetwork",
   "chain": "ethereum",
-  "blockNumber": 22046074,
+  "blockNumber": 22615678,
   "configHash": "0xbfc4387a386ff5d4e9997cb22bf6723ecb547f8286c9a77048cdff2ef85a21d5",
   "entries": [
     {
@@ -205,6 +205,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -220,8 +221,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -327,6 +328,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
       "type": "EOA",
       "proxyType": "EOA"
@@ -362,7 +368,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639492",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292639497",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -504,7 +510,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 21363499
+          "prevBlockNum": 22410954
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
@@ -930,5 +936,5 @@
     "opstack/OptimismPortal_PGN_withdraw": "0x679c99335c290bd13a96713a84fb56b973eb0939f0a19e98ad2ea7829a234742",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x8f09f1900b010a03b1e7a6eca73d5e74b8237000b1d060a6fa646ada847d3247"
+  "permissionsConfigHash": "0x5d65cd45a98ff5d29171b5d0af28b50e30296a8c696466e3ead734d1de8ed2a0"
 }

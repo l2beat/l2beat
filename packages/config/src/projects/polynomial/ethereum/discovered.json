@@ -1,7 +1,7 @@
 {
   "name": "polynomial",
   "chain": "ethereum",
-  "blockNumber": 22046074,
+  "blockNumber": 22615678,
   "configHash": "0x3e16dfff955182715f999463be712b26ae67bd7575ba67ab7c75c4a6bdaf6009",
   "entries": [
     {
@@ -39,8 +39,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22011053
+          "prevBoughtGas": 100000,
+          "prevBlockNum": 22590644
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x58b51fb9FeeD00DD846f91D265Eba3cdd855A413",
@@ -114,7 +114,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619801",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619823",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -315,6 +315,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -330,8 +331,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -437,6 +438,11 @@
           "role": ".batcherHash"
         }
       ]
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -560,10 +566,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 11944800,
-        "latestOutputIndex": 552,
-        "nextBlockNumber": 11966400,
-        "nextOutputIndex": 553,
+        "latestBlockNumber": 15400800,
+        "latestOutputIndex": 712,
+        "nextBlockNumber": 15422400,
+        "nextOutputIndex": 713,
         "PROPOSER": "0x5DA28F0186051a9F7b9eE2553FFdc165EB0A6714",
         "startingBlockNumber": 0,
         "startingTimestamp": 1718038175,
@@ -913,5 +919,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x213c52b737b9cccb13c4d89112aa649853488d329bcbc11292e3bbdc755fedd7"
+  "permissionsConfigHash": "0x762dff279f1a79dcbef67d0c28404b7d0581fbf4df5f0295dd47743dfd94db56"
 }

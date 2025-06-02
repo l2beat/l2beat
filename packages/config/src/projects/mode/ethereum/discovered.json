@@ -1,7 +1,7 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 22437739,
+  "blockNumber": 22615671,
   "configHash": "0xb53d529ac3422eb24413f51af63e5b8c5fb45af05e250492f97b1f112f4e5c5e",
   "entries": [
     {
@@ -383,7 +383,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -438,10 +438,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 23259600,
-        "latestOutputIndex": 12921,
-        "nextBlockNumber": 23261400,
-        "nextOutputIndex": 12922,
+        "latestBlockNumber": 24339600,
+        "latestOutputIndex": 13521,
+        "nextBlockNumber": 24341400,
+        "nextOutputIndex": 13522,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -554,6 +554,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -569,8 +570,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 98,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -754,7 +755,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -989,6 +990,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -1068,7 +1074,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1144,7 +1150,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 489262,
-          "prevBlockNum": 22437545
+          "prevBlockNum": 22615341
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -1260,7 +1266,7 @@
         ],
         "$upgradeCount": 4,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292834671",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292835192",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1373,7 +1379,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1487,7 +1493,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2139,5 +2145,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x770405af56588d9453d4de08249d66dffbe3ba8a268a90b5eab28ab11bb1fad8"
+  "permissionsConfigHash": "0xc05cec9941b20512be3c7d570acebb480c392bb1022b338a5f9f995bb7408033"
 }

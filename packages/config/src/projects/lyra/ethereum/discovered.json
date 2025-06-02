@@ -1,7 +1,7 @@
 {
   "name": "lyra",
   "chain": "ethereum",
-  "blockNumber": 22046064,
+  "blockNumber": 22615668,
   "configHash": "0x2904e971b9be2fe6ccfba97c5df5b35b893d9580a94d3d9222f61be74cfca5e5",
   "entries": [
     {
@@ -152,10 +152,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 20970000,
-        "latestOutputIndex": 11649,
-        "nextBlockNumber": 20971800,
-        "nextOutputIndex": 11650,
+        "latestBlockNumber": 24413400,
+        "latestOutputIndex": 13562,
+        "nextBlockNumber": 24415200,
+        "nextOutputIndex": 13563,
         "PROPOSER": "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
         "startingBlockNumber": 0,
         "startingTimestamp": 1700021615,
@@ -329,6 +329,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -344,8 +345,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -399,7 +400,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620667",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620721",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -491,6 +492,11 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x824CACbBeA0377801f72d736CFd5C869dd89b931",
       "type": "EOA",
       "proxyType": "EOA"
@@ -525,8 +531,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 795560,
-          "prevBlockNum": 22017746
+          "prevBoughtGas": 389211,
+          "prevBlockNum": 22581310
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
@@ -970,5 +976,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x4a00478dceecdc8745c229b1d20783daddaedf3795c473605dfec629f5d18493"
+  "permissionsConfigHash": "0x388acabd047031c756b21cce369400c28fad67f0eb8fd817d53b1b27e429ef1a"
 }
