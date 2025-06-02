@@ -204,6 +204,16 @@ model Anomaly {
   @@id([timestamp, projectId, subtype])
 }
 
+model AnomalyStats {
+  timestamp DateTime @db.Timestamp(6)
+  projectId String   @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  mean      Int
+  stdDev    Int
+
+  @@id([timestamp, projectId, subtype])
+}
+
 model FlatSources {
   projectId   String @db.VarChar(255)
   chainId     Int
