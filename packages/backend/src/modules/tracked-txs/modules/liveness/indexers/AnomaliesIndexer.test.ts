@@ -456,7 +456,7 @@ describe(AnomaliesIndexer.name, () => {
         stats: {
           projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
-          timestamp: lastHour - 1 * anomalyDuration * UnixTime.HOUR,
+          timestamp: lastHour,
           mean: 3600,
           stdDev: 0.00010861285656770133,
         },

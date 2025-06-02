@@ -84,9 +84,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     return await Promise.resolve(targetHeight)
   }
 
-  async getAnomalies(
-    to: UnixTime,
-  ): Promise<{
+  async getAnomalies(to: UnixTime): Promise<{
     anomalyRecords: AnomalyRecord[]
     anomalyStatsRecords: AnomalyStatsRecord[]
   }> {
@@ -247,7 +245,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     assert(latestStDev !== undefined, 'Latest stdDev should not be undefined')
 
     const stats = {
-      timestamp: latestPoint,
+      timestamp: to,
       projectId,
       subtype,
       mean: latestMean,

@@ -208,8 +208,8 @@ model AnomalyStats {
   timestamp DateTime @db.Timestamp(6)
   projectId String   @db.VarChar(255)
   subtype   String   @db.VarChar(255)
-  mean      Int
-  stdDev    Int
+  mean      Float    @db.Real
+  stdDev    Float    @db.Real
 
   @@id([timestamp, projectId, subtype])
 }
