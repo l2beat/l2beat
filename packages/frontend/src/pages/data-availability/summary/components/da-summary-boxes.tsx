@@ -74,8 +74,8 @@ function SummaryTvsBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pb-0 pt-6 md:w-1/2 md:pb-[29px] md:pt-[21px]">
-      <span className="text-base font-bold !leading-6 md:text-xl">
+    <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:w-1/2 md:pt-[21px] md:pb-[29px]">
+      <span className="!leading-6 font-bold text-base md:text-xl">
         Total Value Secured
       </span>
       <div className="mt-2.5 grid grid-cols-2 md:my-6">
@@ -144,21 +144,21 @@ function SummaryThroughputBox({
   ]
 
   return (
-    <PrimaryCard className="flex w-full flex-col pb-6 pt-4 md:w-1/2 md:pt-4">
+    <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:w-1/2 md:pt-4">
       <div className="flex items-end gap-2">
-        <span className="text-base font-bold !leading-6 md:text-xl">
+        <span className="!leading-6 font-bold text-base md:text-xl">
           Past Day Data Size
         </span>
         <a
-          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke py-1.5 pl-2.5 pr-1.5 text-[13px] font-bold leading-none text-link md:px-3 md:py-2"
+          className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke py-1.5 pr-1.5 pl-2.5 font-bold text-[13px] text-link leading-none md:px-3 md:py-2"
           href="/data-availability/throughput"
         >
           <span className="max-md:hidden">View details</span>
           <span className="md:hidden">Details</span>
-          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+          <ChevronIcon className="-rotate-90 size-[10px] fill-current" />
         </a>
       </div>
-      <div className="mt-2.5 md:mb-6 md:mt-[25px]">
+      <div className="mt-2.5 md:mt-[25px] md:mb-6">
         <ValueWithChange
           label="Past day data posted to projects with public APIs"
           value={formatBytes(totalPosted)}
@@ -213,7 +213,7 @@ function BreakdownElement({ label, color }: { label: string; color: string }) {
   return (
     <div className="flex items-baseline gap-1">
       <div className={cn('size-2 rounded-sm', color)} />
-      <span className="text-[11px] font-medium leading-[11px] text-secondary">
+      <span className="font-medium text-[11px] text-secondary leading-[11px]">
         {label}
       </span>
     </div>
@@ -229,13 +229,13 @@ function ValueWithChange({
   return (
     <div className="flex flex-col gap-1.5 md:gap-2.5">
       <div className="flex items-center gap-1">
-        <span className="text-[13px] font-medium !leading-[normal] text-secondary md:text-xs">
+        <span className="!leading-[normal] font-medium text-[13px] text-secondary md:text-xs">
           {label}
         </span>
         <InfoTooltip text={tooltip} />
       </div>
       <div className="flex items-end gap-0.5 md:gap-1.5">
-        <span className="whitespace-pre text-xl font-semibold [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:!leading-[32px]">
+        <span className="[@media(min-width:1000px)]:!leading-[32px] whitespace-pre font-semibold text-xl [@media(min-width:1000px)]:text-3xl">
           {value}
         </span>
         <PercentChange

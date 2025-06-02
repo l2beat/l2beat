@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x13d9f4f41d1855d2f833dc16cc4e22c1800866aa
+
+# Diff at Sun, 01 Jun 2025 16:06:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9b0628e2bcceefdad3711656588a7d18b4de026c block: 22567898
+- current block number: 22610669
+
+## Description
+
+Added the state delete permission which is the only way to propagate a successful state challenge to the bridge's source of truth (ChainStorageContainer-SCC-batches VIA StateCommitmentChain).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567898 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","role":"admin"}
+      receivedPermissions.7.from:
+-        "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.6.from:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "stateDeleterMetis"
+      receivedPermissions.5.from:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.5.role:
+-        "admin"
++        ".1088_MVM_FraudVerifier"
+      receivedPermissions.5.description:
++        "Can delete batches from the StateCommitmentChain."
+    }
+```
+
+```diff
+    EOA  (0xDD6FFC7D9a4Fb420b637747edc6456340d12d377) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"0x081D1101855bD523bA69A9794e0217F0DB6323ff","description":"block (censor) specific L2->L1 messages (e.g. withdrawals), so that they cannot be relayed, pause the contract.","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0xc98c9d24d53925a7cb95cd03abb47e59ae234d5f
 
 # Diff at Mon, 26 May 2025 15:48:31 GMT:

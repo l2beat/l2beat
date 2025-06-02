@@ -52,6 +52,5 @@ const VerifierStatus = z.object({
   address: z.string(),
   timestamp: branded(z.number().nullable(), (n) => (n ? UnixTime(n) : null)),
 })
-type VerifierStatus = z.infer<typeof VerifierStatus>
 export const VerifiersStatuses = z.array(VerifierStatus)
 export type VerifiersStatuses = z.infer<typeof VerifiersStatuses>

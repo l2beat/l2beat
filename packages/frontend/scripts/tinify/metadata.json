@@ -414,7 +414,7 @@
   "static/images/architecture/linea.png": "7cdd792198dd41c959bdb0b1d8de7863",
   "static/images/architecture/loopring.png": "72b55764cd29bcdecd5b42214508231c",
   "static/images/architecture/mantle.png": "ce35781164a534be667b17b0dce95943",
-  "static/images/architecture/metis.png": "1be9fe6c5ce691338ce5eae41a05017f",
+  "static/images/architecture/metis.png": "89b6a8dbf3d1b9cb2c5280b908235251",
   "static/images/architecture/morph.png": "3325c88c8850cedbfd1c2150ad3fd56d",
   "static/images/architecture/near.png": "6a02b6ef345ce62f36f9310b189f7d57",
   "static/images/architecture/omni.png": "49e4bb5ccb181440c22b848cf8db0062",
@@ -444,7 +444,7 @@
   "static/images/architecture/stargatev2.png": "fb886285106fe5070f134983fdd0b6a7",
   "static/images/architecture/starkex.png": "8ede82eff84bce7368b76fb0fd14b6b1",
   "static/images/architecture/starknet.png": "8ce7d1d2b2c977fc5a14b53c059a62c4",
-  "static/images/architecture/taiko.png": "b3547dfd9e139861c49dff21c2e9ba37",
+  "static/images/architecture/taiko.png": "14f8432a447d8d42495d0b7dd381d6f6",
   "static/images/architecture/transporter.png": "56e1da9ab0fdcc85845c00b731fc51d5",
   "static/images/architecture/witness.png": "d1de236e3ebfb6ac32a1d5caf9bb1abc",
   "static/images/architecture/zircuit.png": "f69b8ade382e67f07b5b5344a508b45b",
@@ -1342,5 +1342,7 @@
   "static/meta-images/zk-catalog/projects/lachain/opengraph-image.png": "9840c2ae1defb3303b681f657bba96eb",
   "static/meta-images/zk-catalog/projects/sxt/opengraph-image.png": "c524c325dec2afaf18e2b803e1ad4a6b",
   "static/meta-images/zk-catalog/projects/wonder/opengraph-image.png": "8e1c30b7b4611ec648685372cc220cd1",
-  "static/meta-images/governance/publications/governance-review-53.png": "aac02cb21324aaf179d2cc5f09b608ce"
+  "static/meta-images/governance/publications/governance-review-53.png": "aac02cb21324aaf179d2cc5f09b608ce",
+  "static/icons/novastro.png": "3a551f4219e21ccd6a18223e8924c0a4",
+  "static/meta-images/scaling/projects/novastro/opengraph-image.png": "dc3afc0c64ec1a9783d72205dadeb12e"
 }

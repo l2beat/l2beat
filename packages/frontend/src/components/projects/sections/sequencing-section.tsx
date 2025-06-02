@@ -29,14 +29,14 @@ export function SequencingSection({
   return (
     <ProjectSection {...projectSectionProps}>
       {diagram ? (
-        <figure className="mb-8 mt-4 text-center">
+        <figure className="mt-4 mb-8 text-center">
           <DiagramImage diagram={diagram} />
-          <figcaption className="text-xs text-secondary">
+          <figcaption className="text-secondary text-xs">
             {diagram.caption}
           </figcaption>
         </figure>
       ) : null}
-      <h3 id={name} className="mb-2 text-lg font-bold md:text-xl">
+      <h3 id={name} className="mb-2 font-bold text-lg md:text-xl">
         <a href={`#${name}`}>{name}</a>
       </h3>
       <Markdown className={mdClassName}>{content}</Markdown>

@@ -137,7 +137,7 @@ function CustomTooltip({
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium tabular-nums text-primary">
+              <span className="label-value-15-medium text-primary tabular-nums">
                 {entry.value?.toFixed(2)} {unit}
               </span>
             </div>

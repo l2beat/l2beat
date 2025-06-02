@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "TaikoDAO",
-  "description": "The entry point to the DAO Aragon-based governance framework.",
+  "description": "The main contract of the Aragon-based DAO governance framework.",
   "fields": {
     "proxiableUUID": {
       "handler": {
@@ -11,6 +11,23 @@
         "expectRevert": true
       }
     }
+    // TODO: resolve permissions
+    // "permissionsGranted":{
+    //   "handler": {
+    //     "type": "event",
+    //     "add": {
+    //       "event": "Granted",
+    //     }
+    //   }
+    // },
+    // "permissionsRevoked":{
+    //   "handler": {
+    //     "type": "event",
+    //     "add": {
+    //       "event": "Revoked",
+    //     }
+    //   }
+    // }
   },
   "category": "gov"
 }

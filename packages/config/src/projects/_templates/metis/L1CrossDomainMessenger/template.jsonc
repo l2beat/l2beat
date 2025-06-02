@@ -2,5 +2,15 @@
   "schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "L1CrossDomainMessenger",
   "category": "core",
-  "description": "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function."
+  "description": "The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.",
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "block (censor) specific L2->L1 messages (e.g. withdrawals), so that they cannot be relayed, pause the contract."
+        }
+      ]
+    }
+  }
 }

@@ -34,7 +34,7 @@ export function CanonicallyBridgedTable(props: Props) {
 
   return (
     <div className="flex flex-col">
-      <h2 className="mb-3 text-xl font-bold md:mb-4 md:text-2xl">
+      <h2 className="mb-3 font-bold text-xl md:mb-4 md:text-2xl">
         <a href={`#${props.id}`}>Canonically Bridged Value</a>
       </h2>
 

@@ -11,7 +11,7 @@ export async function getFinality(projects: Project<'finalityConfig'>[]) {
     return getMockFinalityData(projects)
   }
 
-  return getFinalityData(projects)
+  return await getFinalityData(projects)
 }
 
 async function getFinalityData(projects: Project<'finalityConfig'>[]) {

@@ -77,7 +77,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="whitespace-pre text-xs text-secondary">
+        <span className="whitespace-pre text-secondary text-xs">
           {props.title}
         </span>
         {props.tooltip && (
@@ -90,7 +90,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="!leading-none font-medium text-lg md:font-bold md:text-xl">
         {props.value}
       </span>
     </li>

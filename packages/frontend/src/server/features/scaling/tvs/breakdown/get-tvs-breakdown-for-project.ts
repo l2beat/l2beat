@@ -5,7 +5,7 @@ import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 import { getTvsBreakdown } from './get-tvs-breakdown'
-import { BreakdownRecord } from './types'
+import type { BreakdownRecord } from './types'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
 type TvsBreakdownForProject = {

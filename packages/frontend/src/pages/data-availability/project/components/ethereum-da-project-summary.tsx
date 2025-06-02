@@ -33,7 +33,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
   ]
 
   return (
-    <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
+    <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
       <section id="summary" className="w-full">
         <ProjectHeader project={project} />
         <div className="mt-6 flex w-full flex-col gap-4">
@@ -68,7 +68,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
           </div>
           <div className="flex flex-col lg:hidden">
             <div>
-              <div className="-mx-4 border-y border-divider px-4 md:hidden">
+              <div className="-mx-4 border-divider border-y px-4 md:hidden">
                 <MobileProjectLinks projectLinks={project.header.links} />
               </div>
             </div>

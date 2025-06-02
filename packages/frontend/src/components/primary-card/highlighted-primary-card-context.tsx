@@ -41,7 +41,7 @@ export function HighlightedPrimaryCardProvider({
     setHighlightedId(toHighlight.id)
   }, [])
 
-  useEffect(handleHashChange, [handleHashChange])
+  useEffect(handleHashChange, [])
 
   useEffect(() => {
     if (!highlightedId) return

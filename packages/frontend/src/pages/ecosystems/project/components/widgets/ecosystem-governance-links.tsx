@@ -50,14 +50,14 @@ function GovernanceLink({
 }: { href: string; bankImage: ImageParams; className?: string }) {
   return (
     <EcosystemWidget
-      className={cn('flex flex-col overflow-hidden !pt-0', className)}
+      className={cn('!pt-0 flex flex-col overflow-hidden', className)}
     >
       <div className="relative flex h-full select-none items-center justify-between gap-2 text-primary">
         <div className="flex flex-col justify-center whitespace-nowrap">
-          <div className="text-2xs font-medium uppercase transition-opacity">
+          <div className="font-medium text-2xs uppercase transition-opacity">
             Governance
           </div>
-          <div className="origin-left text-xl font-bold transition-all will-change-transform">
+          <div className="origin-left font-bold text-xl transition-all will-change-transform">
             L2BEAT Review
           </div>
         </div>
@@ -71,11 +71,11 @@ function GovernanceLink({
       </div>
 
       <a
-        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke bg-link/[0.07] px-3 py-2 text-[13px] font-bold leading-none text-link"
+        className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke bg-link/[0.07] px-3 py-2 font-bold text-[13px] text-link leading-none"
         href={href}
       >
         Governance Review
-        <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
+        <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
       </a>
     </EcosystemWidget>
   )
@@ -103,10 +103,10 @@ function TopDelegatesLink({
         />
         <div className="absolute inset-y-0 left-0 w-1/2 bg-gradient-to-r from-black"></div>
         <div className="relative flex h-full flex-col justify-center">
-          <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
+          <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance
           </div>
-          <div className="origin-left text-xl font-bold transition-all ease-in-out will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125">
+          <div className="group-hover:-translate-y-2 origin-left font-bold text-xl transition-all ease-in-out will-change-transform group-hover:translate-x-4 group-hover:scale-125">
             Top Delegates
           </div>
         </div>
@@ -131,10 +131,10 @@ function ProposalsLink({
         )}
       >
         <div className="relative flex h-full flex-col justify-center">
-          <div className="text-2xs font-medium uppercase transition-opacity group-hover:opacity-0">
+          <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Governance
           </div>
-          <div className="origin-left text-xl font-bold transition-all will-change-transform group-hover:-translate-y-2 group-hover:translate-x-4 group-hover:scale-125">
+          <div className="group-hover:-translate-y-2 origin-left font-bold text-xl transition-all will-change-transform group-hover:translate-x-4 group-hover:scale-125">
             Proposals
           </div>
         </div>

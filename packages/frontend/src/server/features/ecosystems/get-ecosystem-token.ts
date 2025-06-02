@@ -32,7 +32,7 @@ export async function getEcosystemToken(
   if (env.MOCK) {
     return getMockEcosystemToken(ecosystem)
   }
-  return getCachedEcosystemToken(ecosystem, ecosystemProjects)
+  return await getCachedEcosystemToken(ecosystem, ecosystemProjects)
 }
 
 const getCachedEcosystemToken = async (

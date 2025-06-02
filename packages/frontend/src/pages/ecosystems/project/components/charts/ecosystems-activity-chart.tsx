@@ -182,14 +182,14 @@ function Header({
   return (
     <div className="mb-3 flex items-center justify-between">
       <div>
-        <div className="text-xl font-bold">Activity</div>
-        <div className="text-xs font-medium text-secondary">
+        <div className="font-bold text-xl">Activity</div>
+        <div className="font-medium text-secondary text-xs">
           <EcosystemChartTimeRange range={range} />
         </div>
       </div>
       <div className="text-right">
         {stats?.latestUops !== undefined ? (
-          <div className="text-xl font-bold">
+          <div className="font-bold text-xl">
             {formatActivityCount(stats.latestUops)} UOPS
           </div>
         ) : (

@@ -30,7 +30,7 @@ export const FindL2 = command({
     const fetchers = [
       new CeleniumFetcher(),
       new RollupWtfFetcher(),
-      new BlobsFetcher(logger, args.blocksToDownload),
+      new BlobsFetcher(args.blocksToDownload),
     ]
 
     const results = await Promise.all(

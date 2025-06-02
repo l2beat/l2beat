@@ -1,4 +1,3 @@
-import type { CliLogger } from '@l2beat/shared'
 import { z } from 'zod'
 import type { Column, FetchProjects, FetchResult } from './FetchInterface'
 
@@ -50,10 +49,10 @@ const receiverMapping: Record<string, string> = {
   '0x005969bf0ecbf6edb6c47e5e94693b1c3651be97': 'ink',
   '0x005de5857e38dfd703a1725c0900e9c6f24cbde0': 'swell',
   '0x008dc74cecc9deda8595b2fe210ce5979f0bfa8e': 'soneium',
-  '0x00f9bcee08dce4f0e7906c1f6cfb10c77802eed0': 'arena-z',
+  '0x00f9bcee08dce4f0e7906c1f6cfb10c77802eed0': 'arenaz',
   '0x01e9eac07e96957c2335cf112e039bd766c68281':
     'unknown op-stack 0x01e9eac07e96957c2335cf112e039bd766c68281',
-  '0x3b4d794a66304f130a4db8f2551b0070dfcf5ca7': 'lighter.xyz',
+  '0x3b4d794a66304f130a4db8f2551b0070dfcf5ca7': 'zklighter',
   '0x5a2a0698355d06cd5c4e3872d2bc6b9f6a89d39b': 'phala',
   '0x60130ae3eff4334a4646d7a2240283bb8c05cb01':
     '?? 0x60130ae3eff4334a4646d7a2240283bb8c05cb01',
@@ -67,7 +66,7 @@ const receiverMapping: Record<string, string> = {
   '0xff00000000000000000000000000000000002800': 'layer.ai?',
   '0xff00000000000000000000000000000000074202': 'amc chain?',
   '0xff00000000000000000000000000000000086397': 'ethernity(2?)',
-  '0xff00000000000000000000000000000000193939': 'r0ar.io chain',
+  '0xff00000000000000000000000000000000193939': 'r0ar',
   '0xff00000000000000000000000000000000420000': 'infinaeon.com',
 }
 
@@ -100,10 +99,7 @@ const EnvioResponseSchema = z.object({
 })
 
 export class BlobsFetcher implements FetchProjects {
-  constructor(
-    private readonly logger: CliLogger,
-    private readonly blocksToDownload: number,
-  ) {}
+  constructor(private readonly blocksToDownload: number) {}
 
   getInput(fromBlock: number, toBlock: number) {
     return {
@@ -147,9 +143,6 @@ export class BlobsFetcher implements FetchProjects {
         }
       }
 
-      this.logger.logLine(
-        `Downloaded ${blockNumber}-${content.next_block} in ${content.total_execution_time}ms`,
-      )
       blockNumber = content.next_block
     }
 

@@ -10,6 +10,7 @@ export function RequestTokenBox() {
         className="font-bold tracking-wide underline"
         href={externalLinks.tokenRequest}
         target="_blank"
+        rel="noreferrer"
       >
         Request it here
       </a>

@@ -35,14 +35,14 @@ export function OtherMigrationTabNotice({
       )}
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-2xl font-bold leading-none">Recategorisation</h2>
+        <h2 className="font-bold text-2xl leading-none">Recategorisation</h2>
         <Countdown
           expiresAt={PROJECT_COUNTDOWNS.otherMigration}
           className="max-md:hidden"
           size="md"
         />
       </div>
-      <p className="text-xs font-medium md:text-base">
+      <p className="font-medium text-xs md:text-base">
         More projects will be classifed as &quot;Other&quot; due to specific
         risks that set them apart from the standard classifications.
         <span className="max-md:hidden">
@@ -57,7 +57,7 @@ export function OtherMigrationTabNotice({
         size="sm"
       />
       <DynamicLogoList projects={projectsToBeMigrated} />
-      <p className="text-xs font-bold md:text-base">
+      <p className="font-bold text-xs md:text-base">
         Learn more about the recategorisation{' '}
         <CustomLink href={externalLinks.articles.recategorisation}>
           here

@@ -88,7 +88,7 @@ function BridgeCells({
     <>
       <TableCell
         className={cn(
-          'text-sm font-medium first:pl-0',
+          'font-medium text-sm first:pl-0',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
         )}
       >
@@ -127,7 +127,7 @@ function BridgeCells({
       </TableCell>
       <TableCell
         className={cn(
-          'pr-[30px] text-sm font-medium md:pr-[42px]',
+          'pr-[30px] font-medium text-sm md:pr-[42px]',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
         )}
         align="right"
@@ -136,7 +136,7 @@ function BridgeCells({
       </TableCell>
       <TableCell
         className={cn(
-          'text-sm font-medium',
+          'font-medium text-sm',
           isUnverified && UNVERIFIED_DA_CLASSNAME,
         )}
       >

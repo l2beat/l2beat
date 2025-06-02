@@ -24,6 +24,7 @@ export const UltimatePermissionToPrefix: {
   governStarknet: 'A Governor',
   member: 'Is a member of',
   metisGameCreator: 'A dispute game creator',
+  stateDeleterMetis: 'A state deleter',
 }
 
 export const RoleDescriptions: {
@@ -118,5 +119,10 @@ export const RoleDescriptions: {
   metisGameCreator: {
     name: 'Game Creator',
     description: 'Can create new dispute games.',
+  },
+  stateDeleterMetis: {
+    name: 'State Deleter',
+    description:
+      'Can delete any state root from the StateCommitmentChain, preventing withdrawals based on that root.',
   },
 }

@@ -9,10 +9,10 @@ interface Props {
 export function SingleBridgeDetails({ project }: Props) {
   return (
     <div className="grid gap-y-2 max-md:mt-4 md:grid-cols-5 md:gap-x-3">
-      <div className="text-xs text-secondary md:col-span-2">
+      <div className="text-secondary text-xs md:col-span-2">
         {project.name} risks
       </div>
-      <div className="col-span-3 text-xs text-secondary max-md:hidden">
+      <div className="col-span-3 text-secondary text-xs max-md:hidden">
         DA Bridge risks
       </div>
       {project.header.daLayerGrissiniValues.map((value) => (
@@ -23,7 +23,7 @@ export function SingleBridgeDetails({ project }: Props) {
           info="compact"
         />
       ))}
-      <div className="mt-3 text-xs text-secondary md:hidden">
+      <div className="mt-3 text-secondary text-xs md:hidden">
         DA Bridge risks
       </div>
       {project.selectedBridge.isNoBridge ? (
