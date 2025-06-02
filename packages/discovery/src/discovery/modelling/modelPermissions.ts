@@ -30,6 +30,27 @@ export class Discoveries {
     this.discoveries[project] ??= {}
     this.discoveries[project][chain] = discovery
   }
+
+  getBlockNumbers() {
+    const result: {
+      [project: string]: {
+        [chain: string]: {
+          blockNumber: number
+        }
+      }
+    } = {}
+
+    for (const [project, chains] of Object.entries(this.discoveries)) {
+      result[project] = {}
+      for (const [chain, discovery] of Object.entries(chains)) {
+        result[project][chain] = {
+          blockNumber: discovery.blockNumber,
+        }
+      }
+    }
+
+    return result
+  }
 }
 
 export async function modelPermissions(
@@ -39,6 +60,9 @@ export async function modelPermissions(
   paths: DiscoveryPaths,
   debug: boolean,
   discoveries: Discoveries,
+  options: {
+    ignoreMissingDependencies?: boolean
+  } = {},
 ): Promise<PermissionsOutput> {
   const { permissionFacts, permissionsConfigHash } =
     await modelPermissionFactsUsingClingo(
@@ -48,6 +72,7 @@ export async function modelPermissions(
       paths,
       debug,
       discoveries,
+      options,
     )
   return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
 }
@@ -106,12 +131,16 @@ export async function modelPermissionFactsUsingClingo(
   paths: DiscoveryPaths,
   debug: boolean,
   discoveries: Discoveries,
+  options: {
+    ignoreMissingDependencies?: boolean
+  },
 ) {
   const clingoForProject = generateClingoForProject(
     project,
     configReader,
     templateService,
     discoveries,
+    options,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
@@ -154,6 +183,9 @@ export function generateClingoForProject(
   configReader: ConfigReader,
   templateService: TemplateService,
   discoveries: Discoveries,
+  options: {
+    ignoreMissingDependencies?: boolean
+  },
 ): string {
   const generatedClingo: string[] = []
 
@@ -165,8 +197,14 @@ export function generateClingoForProject(
   for (const { project, chain } of dependenciesToDiscover) {
     const discovery = discoveries.get(project, chain)
     if (!discovery) {
+      if (options.ignoreMissingDependencies) {
+        console.log(
+          `Ignoring missing dependency: ${project} on ${chain}, as requested.`,
+        )
+        continue
+      }
       throw new Error(
-        `Discovery for ${project} on ${chain} is required but not provided`,
+        `Discovery for ${project} on ${chain} is required as a dependency but is not provided.`,
       )
     }
     const config = configReader.readConfig(project, chain)

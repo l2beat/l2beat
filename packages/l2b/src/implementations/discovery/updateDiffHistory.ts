@@ -86,7 +86,7 @@ export async function updateDiffHistoryForChain(
   }
 
   if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
-    const rerun = await performDiscoveryOnPreviousBlock(
+    const rerun = await performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       discoveryFolder,
       discoveryFromMainBranch,
       projectName,
@@ -189,7 +189,7 @@ async function revertDiffHistory(
   }
 }
 
-async function performDiscoveryOnPreviousBlock(
+async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   discoveryFolder: string,
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
@@ -204,16 +204,30 @@ async function performDiscoveryOnPreviousBlock(
   }
 
   const discoveries = new Discoveries()
+  // We rediscover on the past block number, but with current configs and dependencies
   const dependencies = getDependenciesToDiscoverForProject(
     projectName,
     configReader,
   )
 
   for (const dependency of dependencies) {
+    let blockNumber =
+      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
+        dependency.chain
+      ]?.blockNumber
+    if (dependency.project === projectName && dependency.chain === chain) {
+      blockNumber = discoveryFromMainBranch.blockNumber
+    }
+    if (blockNumber === undefined) {
+      console.log(
+        `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+      )
+      continue
+    }
     const prevStructure = await rediscoverStructureOnBlock(
       dependency.project,
       dependency.chain,
-      discoveryFromMainBranch.blockNumber,
+      blockNumber,
       saveSources,
       overwriteCache,
     )
@@ -229,13 +243,18 @@ async function performDiscoveryOnPreviousBlock(
     discoveryPaths,
     false,
     discoveries,
+    {
+      // We rediscover on the past block number, but with current configs and dependencies.
+      // Those dependencies might not have been referenced in the old discovery.
+      ignoreMissingDependencies: true,
+    },
   )
 
   const mainDiscovery = discoveries.get(projectName, chain)
   if (mainDiscovery === undefined) {
     throw new Error(`Main discovery not found for ${projectName} on ${chain}`)
   }
-  combinePermissionsIntoDiscovery(mainDiscovery, permissionsOutput)
+  combinePermissionsIntoDiscovery(mainDiscovery, permissionsOutput, discoveries)
   const prevDiscovery = withoutUndefinedKeys(mainDiscovery)
 
   // get code diff with main branch
