@@ -42,6 +42,13 @@ const SERVER_CONFIG = {
   VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
+
+  // Elastic Search
+  ES_ENABLED: coerceBoolean.default('false'),
+  ES_NODE: z.string().url().optional(),
+  ES_API_KEY: z.string().optional(),
+  ES_INDEX_PREFIX: z.string().optional(),
+  ES_FLUSH_INTERVAL: z.coerce.number().optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -93,6 +100,14 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
+
+    // Elastic Search
+    ES_ENABLED: process.env.ES_ENABLED,
+    ES_NODE: process.env.ES_NODE,
+    ES_API_KEY: process.env.ES_API_KEY,
+    ES_INDEX_PREFIX: process.env.ES_INDEX_PREFIX,
+    ES_FLUSH_INTERVAL: process.env.ES_FLUSH_INTERVAL,
+
     // Client
     NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING:
       process.env.NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING,

@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
@@ -17,7 +18,9 @@ const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
 
-export function createServer() {
+export function createServer(logger: Logger) {
+  const appLogger = logger.for('HTTP Server')
+
   const app = express()
   if (isProduction) {
     app.use(compression())
@@ -32,7 +35,7 @@ export function createServer() {
     app.use('/', express.static('./static'))
   }
 
-  app.use(MetricsMiddleware)
+  app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
 
   app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -41,7 +44,7 @@ export function createServer() {
   app.use('/plausible', createPlausibleRouter())
 
   app.listen(port, () => {
-    console.log(`[HTTP] Server started at http://localhost:${port}`)
+    appLogger.info(`Started at http://localhost:${port}`)
   })
 }
 
