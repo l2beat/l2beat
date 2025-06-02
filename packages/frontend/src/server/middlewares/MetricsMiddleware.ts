@@ -1,6 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
-import { round } from 'lodash'
 
 export function MetricsMiddleware(
   req: Request,
@@ -49,8 +48,4 @@ export function MetricsMiddleware(
   }
 
   next()
-}
-
-function formatBytes(bytes: number) {
-  return (bytes / 1024).toFixed(2) + 'KiB'
 }

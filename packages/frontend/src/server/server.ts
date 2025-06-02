@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'

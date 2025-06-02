@@ -1,5 +1,5 @@
 import { createServer } from 'http'
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { WebSocketServer } from 'ws'
 
 export function setupDevReload(logger: Logger) {

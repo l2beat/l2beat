@@ -3,11 +3,11 @@ import {
   LogFormatterJson,
   LogFormatterPretty,
   Logger,
-  LoggerOptions,
-  LoggerTransportOptions,
+  type LoggerOptions,
+  type LoggerTransportOptions,
 } from '@l2beat/backend-tools'
-import { Env } from '~/env'
-import { type ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
+import type { Env } from '~/env'
+import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
 export async function createLogger(env: Env): Promise<Logger> {
   const isLocal = env.NODE_ENV !== 'production'
