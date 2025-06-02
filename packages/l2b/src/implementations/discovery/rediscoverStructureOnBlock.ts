@@ -17,9 +17,7 @@ export async function rediscoverStructureOnBlock(
   saveSources: boolean = false,
   overwriteCache: boolean = false,
 ): Promise<DiscoveryOutput> {
-  console.log(
-    `Rediscovering ${projectName} on ${chain} at block ${blockNumber}`,
-  )
+  process.stdout.write(`Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `)
   const paths = getDiscoveryPaths()
   const discoveryFolder =
     '.' +
@@ -52,6 +50,6 @@ export async function rediscoverStructureOnBlock(
 
   // Remove discovered@... file, we don't need it
   await rimraf(`${discoveryFolder}/discovered@${blockNumber}.json`)
-  console.log('structure discovery completed')
+  process.stdout.write('done\n')
   return prevDiscovery
 }

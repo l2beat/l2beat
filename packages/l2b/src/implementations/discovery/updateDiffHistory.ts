@@ -9,6 +9,7 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
 import {
   ConfigReader,
+  Discoveries,
   type DiscoveryDiff,
   type DiscoveryOutput,
   TemplateService,
@@ -16,7 +17,7 @@ import {
   diffDiscovery,
   discoveryDiffToMarkdown,
   getDiscoveryPaths,
-  modelPermissionsForIsolatedDiscovery,
+  modelPermissions,
 } from '@l2beat/discovery'
 import {
   assert,
@@ -27,6 +28,7 @@ import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
 import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
+import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -91,6 +93,7 @@ export async function updateDiffHistoryForChain(
       chain,
       saveSources,
       overwriteCache,
+      configReader,
     )
     codeDiff = rerun.codeDiff
 
@@ -193,21 +196,47 @@ async function performDiscoveryOnPreviousBlock(
   chain: string,
   saveSources: boolean,
   overwriteCache: boolean,
+  configReader: ConfigReader,
 ) {
   if (discoveryFromMainBranch === undefined) {
+    console.log(`No previous discovery found for ${projectName} on ${chain}`)
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
-  const prevStructure = await rediscoverStructureOnBlock(
+  const discoveries = new Discoveries()
+  const dependencies = getDependenciesToDiscoverForProject(
     projectName,
-    chain,
-    discoveryFromMainBranch.blockNumber,
-    saveSources,
-    overwriteCache,
+    configReader,
   )
 
-  await modelAndInjectPermissions(prevStructure, projectName, chain)
-  const prevDiscovery = withoutUndefinedKeys(prevStructure)
+  for (const dependency of dependencies) {
+    const prevStructure = await rediscoverStructureOnBlock(
+      dependency.project,
+      dependency.chain,
+      discoveryFromMainBranch.blockNumber,
+      saveSources,
+      overwriteCache,
+    )
+    discoveries.set(prevStructure.name, prevStructure.chain, prevStructure)
+  }
+
+  const discoveryPaths = getDiscoveryPaths()
+  const templateService = new TemplateService(discoveryPaths.discovery)
+  const permissionsOutput = await modelPermissions(
+    projectName,
+    configReader,
+    templateService,
+    discoveryPaths,
+    false,
+    discoveries,
+  )
+
+  const mainDiscovery = discoveries.get(projectName, chain)
+  if (mainDiscovery === undefined) {
+    throw new Error(`Main discovery not found for ${projectName} on ${chain}`)
+  }
+  combinePermissionsIntoDiscovery(mainDiscovery, permissionsOutput)
+  const prevDiscovery = withoutUndefinedKeys(mainDiscovery)
 
   // get code diff with main branch
   const flatDiff = compareFolders(
@@ -435,21 +464,4 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
-}
-
-async function modelAndInjectPermissions(
-  prevDiscovery: DiscoveryOutput,
-  projectName: string,
-  chain: string,
-) {
-  const discoveryPaths = getDiscoveryPaths()
-  const configReader = new ConfigReader(discoveryPaths.discovery)
-  const templateService = new TemplateService(discoveryPaths.discovery)
-  const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
-    prevDiscovery,
-    configReader.readConfig(projectName, chain).permission,
-    templateService,
-    discoveryPaths,
-  )
-  combinePermissionsIntoDiscovery(prevDiscovery, permissionsOutput)
 }
