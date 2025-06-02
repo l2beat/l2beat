@@ -1,3 +1,4 @@
 {
-  "extends": ["../../biome.jsonc"]
+  "extends": ["../../biome.jsonc"],
+  "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
 }
