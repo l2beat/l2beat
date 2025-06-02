@@ -1,3 +1,5 @@
+'use client'
+import type { Milestone } from '@l2beat/config'
 import uniq from 'lodash/uniq'
 import { useMemo } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
@@ -18,6 +20,7 @@ interface Props {
   selectedProjects: string[] | undefined
   setSelectedProjects: (projects: string[] | undefined) => void
   customColors: Record<string, string>
+  milestones: Milestone[]
 }
 
 export function ThroughputSectionByProjectChart({
@@ -27,6 +30,7 @@ export function ThroughputSectionByProjectChart({
   selectedProjects,
   setSelectedProjects,
   customColors,
+  milestones,
 }: Props) {
   const { data, isLoading } = api.da.projectChartByProject.useQuery({
     range,
@@ -93,6 +97,7 @@ export function ThroughputSectionByProjectChart({
         isLoading={isLoading}
         projectsToShow={projectsToShow}
         customColors={customColors}
+        milestones={milestones}
       />
     </div>
   )
