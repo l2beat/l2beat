@@ -13,7 +13,7 @@ import {
 } from '~/utils/elastic-search/ElasticSearchTransport'
 
 export function createLogger(env: Env): Logger {
-  const isLocal = true
+  const isLocal = env.NODE_ENV !== 'production'
 
   const loggerTransports: LoggerTransportOptions[] = [
     {
@@ -22,19 +22,21 @@ export function createLogger(env: Env): Logger {
     },
   ]
 
-  // Elastic Search logging
-  const esEnabled = false
-
-  if (esEnabled) {
+  if (env.ES_ENABLED) {
     console.log('Elastic Search logging enabled')
+
+    if (!env.ES_NODE || !env.ES_API_KEY || !env.ES_INDEX_PREFIX) {
+      throw new Error('ES_NODE, ES_API_KEY, and ES_INDEX_PREFIX must be set')
+    }
+
     const elasticSearchModule = require('~/utils/elastic-search/ElasticSearchTransport')
     const ElasticSearchTransport =
       elasticSearchModule.ElasticSearchTransport as ElasticSearchTransport
     const options: ElasticSearchTransportOptions = {
-      node: 'https://4cfbaa6edd864b3ea10f247d9ea36c6b.us-east-1.aws.found.io',
-      apiKey: 'MUNnd0M0OEJmTVdXVE9yMEtwZ3M6QmFZckFKd2hTb2k2eVdGZmJKTktGQQ==',
-      indexPrefix: 'l2beat-frontend',
-      flushInterval: 1000,
+      node: env.ES_NODE,
+      apiKey: env.ES_API_KEY,
+      indexPrefix: env.ES_INDEX_PREFIX,
+      flushInterval: env.ES_FLUSH_INTERVAL,
     }
 
     loggerTransports.push({
@@ -48,7 +50,8 @@ export function createLogger(env: Env): Logger {
     logLevel: 'INFO',
     utc: isLocal ? false : true,
     transports: loggerTransports,
-    metricsEnabled: true,
+    // TODO: make this configurable
+    metricsEnabled: false,
   }
 
   return new Logger(options)
