@@ -10,7 +10,7 @@ interface MessageProps {
   className?: string
 }
 
-function Message({
+export function Message({
   authorName,
   timestamp,
   content,
@@ -87,5 +87,3 @@ function Message({
     </div>
   )
 }
-
-export default Message

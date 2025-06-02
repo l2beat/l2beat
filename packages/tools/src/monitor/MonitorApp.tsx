@@ -4,7 +4,7 @@ import { LoadingState } from '../common/LoadingState'
 import { DISCORD_BOT_AVATAR_URL, DISCORD_BOT_NAME } from './api/const'
 import { fetchData } from './api/fetchData'
 import { DiffPreview } from './components/diff-preview'
-import Message from './components/message'
+import { Message } from './components/message'
 
 export function MonitorApp() {
   const result = useQuery({
