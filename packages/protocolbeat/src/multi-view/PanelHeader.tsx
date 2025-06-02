@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
-import type { ApiProjectContract } from '../api/types'
 import { findSelected } from '../common/findSelected'
 import { isReadOnly } from '../config'
 import { IconChatbot } from '../icons/IconChatbot'
@@ -69,7 +68,12 @@ export function PanelHeader(props: { id: PanelId }) {
 }
 
 // Helper to format code for a contract
-async function formatContractCode(project: string, address: string | undefined, name?: string, chain?: string) {
+async function formatContractCode(
+  project: string,
+  address: string | undefined,
+  name?: string,
+  chain?: string,
+) {
   if (!address) return []
   const sources = (await getCode(project, address))?.sources ?? []
   const result: string[] = []
@@ -86,8 +90,17 @@ async function formatContractCode(project: string, address: string | undefined, 
 }
 
 // Helper to format values/fields for a contract
-function formatContractValues(contract: any, blockNumber?: number, chain?: string) {
-  if (!('fields' in contract) || !contract.fields || contract.fields.length === 0) return []
+function formatContractValues(
+  contract: any,
+  blockNumber?: number,
+  chain?: string,
+) {
+  if (
+    !('fields' in contract) ||
+    !contract.fields ||
+    contract.fields.length === 0
+  )
+    return []
   const result: string[] = []
   let header = 'Contract state from public functions and event handlers'
   if (blockNumber !== undefined && chain) {
@@ -95,20 +108,24 @@ function formatContractValues(contract: any, blockNumber?: number, chain?: strin
   }
   if (contract.address) header += ` (${contract.address})`
   result.push(header + ':')
+  result.push('```')
   for (const f of contract.fields) {
     result.push(`${f.name}: ${JSON.stringify(f.value)}`)
   }
+  result.push('```')
   return result
 }
 
 // Helper to format ABI for a contract
 function formatContractAbi(contract: any, chain?: string) {
-  if (!('abis' in contract) || !contract.abis || contract.abis.length === 0) return []
+  if (!('abis' in contract) || !contract.abis || contract.abis.length === 0)
+    return []
   const result: string[] = []
   let header = 'Contract ABI'
   if (contract.address) header += ` for ${contract.address}`
   if (chain) header += ` on chain ${chain}`
   result.push('\n' + header + ':')
+  result.push('```')
   for (const a of contract.abis) {
     for (const e of a.entries) {
       let abi = e.value
@@ -120,6 +137,7 @@ function formatContractAbi(contract: any, chain?: string) {
       result.push(abi)
     }
   }
+  result.push('```')
   return result
 }
 
@@ -142,7 +160,11 @@ const toClipboard = async (
       const projectData = await getProject(project)
       const contract = findSelected(projectData.entries, selectedAddress)
       if (!contract) break
-      const fields = formatContractValues(contract, contract.blockNumber, contract.chain)
+      const fields = formatContractValues(
+        contract,
+        contract.blockNumber,
+        contract.chain,
+      )
       const abis = formatContractAbi(contract, contract.chain)
       navigator.clipboard.writeText([...fields, ...abis].join('\n'))
       break
@@ -151,10 +173,22 @@ const toClipboard = async (
       const projectData = await getProject(project)
       const message: string[] = []
       for (const chain of projectData.entries) {
-        const contracts = [...chain.initialContracts, ...chain.discoveredContracts]
+        const contracts = [
+          ...chain.initialContracts,
+          ...chain.discoveredContracts,
+        ]
         for (const contract of contracts) {
-          const code = await formatContractCode(project, contract.address, contract.name, chain.chain)
-          const values = formatContractValues(contract, chain.blockNumber, chain.chain)
+          const code = await formatContractCode(
+            project,
+            contract.address,
+            contract.name,
+            chain.chain,
+          )
+          const values = formatContractValues(
+            contract,
+            chain.blockNumber,
+            chain.chain,
+          )
           const abi = formatContractAbi(contract, chain.chain)
           message.push(...code, ...values, ...abi)
         }
