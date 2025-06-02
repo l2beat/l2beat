@@ -6,7 +6,11 @@ import {
   getDiscoveryPaths,
 } from '../discovery/config/getDiscoveryPaths'
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
-import { modelPermissions } from '../discovery/modelling/modelPermissions'
+import {
+  type Discoveries,
+  getDependenciesToDiscoverForProject,
+  modelPermissions,
+} from '../discovery/modelling/modelPermissions'
 import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
 import { sortEntry } from '../discovery/output/toDiscoveryOutput'
 import type { PermissionsOutput } from '../discovery/output/types'
@@ -25,12 +29,27 @@ export async function modelPermissionsCommand(
   debug = debug ?? false
 
   logger.info(`Modelling: ${project}`)
+  logger.info('Reading all related discoveries:')
+  const dependencies = getDependenciesToDiscoverForProject(
+    project,
+    configReader,
+  )
+  const discoveries: Discoveries = {}
+  for (const dependency of dependencies) {
+    const project = dependency.project
+    logger.info(` - ${project} on ${dependency.chain}`)
+    const discovery = configReader.readDiscovery(project, dependency.chain)
+    discoveries[project] ??= {}
+    discoveries[project][dependency.chain] = discovery
+  }
+
   const ultimatePermissions = await modelPermissions(
     project,
     configReader,
     templateService,
     paths,
     debug,
+    discoveries,
   )
 
   await writePermissionsIntoDiscovery(
