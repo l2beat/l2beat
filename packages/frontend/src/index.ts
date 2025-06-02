@@ -6,9 +6,13 @@ import { setupDevReload } from './server/devReload'
 import { createServer } from './server/server'
 import { createLogger } from './server/utils/logger'
 
-const logger = createLogger(env)
+async function main() {
+  const logger = await createLogger(env)
 
-createServer(logger)
-if (env.NODE_ENV !== 'production') {
-  setupDevReload(logger)
+  createServer(logger)
+  if (env.NODE_ENV !== 'production') {
+    setupDevReload(logger)
+  }
 }
+
+main().catch(console.error)

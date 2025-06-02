@@ -7,12 +7,9 @@ import {
   LoggerTransportOptions,
 } from '@l2beat/backend-tools'
 import { Env } from '~/env'
-import {
-  type ElasticSearchTransport,
-  type ElasticSearchTransportOptions,
-} from '~/utils/elastic-search/ElasticSearchTransport'
+import { type ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
-export function createLogger(env: Env): Logger {
+export async function createLogger(env: Env): Promise<Logger> {
   const isLocal = env.NODE_ENV !== 'production'
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -29,9 +26,9 @@ export function createLogger(env: Env): Logger {
       throw new Error('ES_NODE, ES_API_KEY, and ES_INDEX_PREFIX must be set')
     }
 
-    const elasticSearchModule = require('~/utils/elastic-search/ElasticSearchTransport')
-    const ElasticSearchTransport =
-      elasticSearchModule.ElasticSearchTransport as ElasticSearchTransport
+    const { ElasticSearchTransport } = await import(
+      '~/utils/elastic-search/ElasticSearchTransport'
+    )
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
@@ -40,7 +37,6 @@ export function createLogger(env: Env): Logger {
     }
 
     loggerTransports.push({
-      // @ts-expect-error - dynamic import messes it up although it's correct
       transport: new ElasticSearchTransport(options),
       formatter: new LogFormatterEcs(),
     })
