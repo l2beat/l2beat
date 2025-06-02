@@ -22,7 +22,7 @@ export class Editor {
   private decorationsCollection: monaco.editor.IEditorDecorationsCollection | null =
     null
 
-  constructor(element: HTMLElement) {
+  constructor(element: HTMLElement, readOnly = true) {
     if (!initialized) {
       init()
       initialized = true
@@ -30,7 +30,7 @@ export class Editor {
 
     this.editor = monaco.editor.create(element, {
       minimap: { enabled: false },
-      readOnly: true,
+      readOnly,
       colorDecorators: false,
       renderWhitespace: 'none',
       renderControlCharacters: false,
