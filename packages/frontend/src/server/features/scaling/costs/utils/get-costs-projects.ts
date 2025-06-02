@@ -46,11 +46,15 @@ function filterToCondition(
         (p.scalingInfo.type === 'Optimistic Rollup' ||
           p.scalingInfo.type === 'ZK Rollup') &&
         !isProjectOther(p.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && p.statuses.reviewStatus) // If previewRecategorisation is true, we exclude projects that are under review
+        !(
+          previewRecategorisation && p.statuses.reviewStatus === 'initialReview'
+        ) // If previewRecategorisation is true, we exclude projects that are under initial review
     case 'others':
       return (p) =>
         isProjectOther(p.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && p.statuses.reviewStatus)
+        !(
+          previewRecategorisation && p.statuses.reviewStatus === 'initialReview'
+        )
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
     default:

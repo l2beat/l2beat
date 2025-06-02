@@ -38,7 +38,10 @@ export function createTvsProjectsFilter(
     case 'layer2':
       return (project) =>
         !!project.scalingInfo &&
-        !(previewRecategorisation && project.statuses.reviewStatus)
+        !(
+          previewRecategorisation &&
+          project.statuses.reviewStatus === 'initialReview'
+        )
     case 'bridge':
       return (project) => !!project.isBridge
     case 'projects':
@@ -47,14 +50,20 @@ export function createTvsProjectsFilter(
       return (project) =>
         !!project.scalingInfo &&
         !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.reviewStatus) && // If previewRecategorisation is true, we exclude projects that are under review
+        !(
+          previewRecategorisation &&
+          project.statuses.reviewStatus === 'initialReview'
+        ) && // If previewRecategorisation is true, we exclude projects that are under initial review
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
         !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.reviewStatus) &&
+        !(
+          previewRecategorisation &&
+          project.statuses.reviewStatus === 'initialReview'
+        ) &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
@@ -62,7 +71,10 @@ export function createTvsProjectsFilter(
       return (project) =>
         !!project.scalingInfo &&
         isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(previewRecategorisation && project.statuses.reviewStatus)
+        !(
+          previewRecategorisation &&
+          project.statuses.reviewStatus === 'initialReview'
+        )
     default:
       assertUnreachable(filter)
   }
