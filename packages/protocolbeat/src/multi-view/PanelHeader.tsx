@@ -68,8 +68,61 @@ export function PanelHeader(props: { id: PanelId }) {
   )
 }
 
-// Ideas:
-// - make it configurable per-project per-panel and store in browser cache
+// Helper to format code for a contract
+async function formatContractCode(project: string, address: string | undefined, name?: string, chain?: string) {
+  if (!address) return []
+  const sources = (await getCode(project, address))?.sources ?? []
+  const result: string[] = []
+  for (const s of sources) {
+    let header = `Flattened source code of ${s.name}`
+    if (address) header += ` (${address})`
+    if (chain) header += ` on chain ${chain}`
+    result.push(header + ':')
+    result.push('```')
+    result.push(s.code)
+    result.push('```')
+  }
+  return result
+}
+
+// Helper to format values/fields for a contract
+function formatContractValues(contract: any, blockNumber?: number, chain?: string) {
+  if (!('fields' in contract) || !contract.fields || contract.fields.length === 0) return []
+  const result: string[] = []
+  let header = 'Contract state from public functions and event handlers'
+  if (blockNumber !== undefined && chain) {
+    header += ` for block number ${blockNumber} on chain ${chain}`
+  }
+  if (contract.address) header += ` (${contract.address})`
+  result.push(header + ':')
+  for (const f of contract.fields) {
+    result.push(`${f.name}: ${JSON.stringify(f.value)}`)
+  }
+  return result
+}
+
+// Helper to format ABI for a contract
+function formatContractAbi(contract: any, chain?: string) {
+  if (!('abis' in contract) || !contract.abis || contract.abis.length === 0) return []
+  const result: string[] = []
+  let header = 'Contract ABI'
+  if (contract.address) header += ` for ${contract.address}`
+  if (chain) header += ` on chain ${chain}`
+  result.push('\n' + header + ':')
+  for (const a of contract.abis) {
+    for (const e of a.entries) {
+      let abi = e.value
+      if (e.signature) {
+        abi += ` //${e.signature}`
+      } else if (e.value.startsWith('event') && e.topic) {
+        abi += ` //${e.topic}`
+      }
+      result.push(abi)
+    }
+  }
+  return result
+}
+
 const toClipboard = async (
   panel: PanelId,
   project: string | undefined,
@@ -81,56 +134,16 @@ const toClipboard = async (
 
   switch (panel) {
     case 'code': {
-      const sources = (await getCode(project, selectedAddress))?.sources ?? []
-
-      const message: string[] = []
-
-      for (const s of sources) {
-        message.push(`Flattened source code of ${s.name}:`)
-        message.push(`\`\`\``)
-        message.push(s.code)
-        message.push(`\`\`\``)
-      }
-
+      const message = await formatContractCode(project, selectedAddress)
       navigator.clipboard.writeText(message.join('\n'))
       break
     }
     case 'values': {
       const projectData = await getProject(project)
-
       const contract = findSelected(projectData.entries, selectedAddress)
       if (!contract) break
-
-      const fields: string[] = []
-      if ('fields' in contract) {
-        fields.push(
-          `Contract state from public functions and event handlers for block number ${contract.blockNumber} on chain ${contract.chain}:`,
-        )
-
-        for (const f of (contract as ApiProjectContract).fields) {
-          fields.push(`${f.name}: ${JSON.stringify(f.value)}`)
-        }
-      }
-
-      const abis: string[] = []
-      if ('abis' in contract) {
-        abis.push(
-          `\nContract ABI:`,
-        )
-
-        for (const a of (contract as ApiProjectContract).abis) {
-          for (const e of a.entries) {
-            let abi = e.value
-            if (e.signature) {
-              abi += ` //${e.signature}`
-            } else if (e.value.startsWith('event') && e.topic) {
-              abi += ` //${e.topic}`
-            }
-            abis.push(abi)
-          }
-        }
-      }
-
+      const fields = formatContractValues(contract, contract.blockNumber, contract.chain)
+      const abis = formatContractAbi(contract, contract.chain)
       navigator.clipboard.writeText([...fields, ...abis].join('\n'))
       break
     }
@@ -140,39 +153,10 @@ const toClipboard = async (
       for (const chain of projectData.entries) {
         const contracts = [...chain.initialContracts, ...chain.discoveredContracts]
         for (const contract of contracts) {
-          // Fetch code for this contract
-          const codeResp = await getCode(project, contract.address)
-          const sources = codeResp?.sources ?? []
-          for (const s of sources) {
-            message.push(`Flattened source code of ${s.name} (${contract.address}) on chain ${chain.chain}:`)
-            message.push('```')
-            message.push(s.code)
-            message.push('```')
-          }
-          // Add values/fields
-          if ('fields' in contract && contract.fields.length > 0) {
-            message.push(
-              `Contract state from public functions and event handlers for block number ${chain.blockNumber} on chain ${chain.chain} (${contract.address}):`,
-            )
-            for (const f of contract.fields) {
-              message.push(`${f.name}: ${JSON.stringify(f.value)}`)
-            }
-          }
-          // Add ABI
-          if ('abis' in contract && contract.abis.length > 0) {
-            message.push(`\nContract ABI for ${contract.address} on chain ${chain.chain}:`)
-            for (const a of contract.abis) {
-              for (const e of a.entries) {
-                let abi = e.value
-                if (e.signature) {
-                  abi += ` //${e.signature}`
-                } else if (e.value.startsWith('event') && e.topic) {
-                  abi += ` //${e.topic}`
-                }
-                message.push(abi)
-              }
-            }
-          }
+          const code = await formatContractCode(project, contract.address, contract.name, chain.chain)
+          const values = formatContractValues(contract, chain.blockNumber, chain.chain)
+          const abi = formatContractAbi(contract, chain.chain)
+          message.push(...code, ...values, ...abi)
         }
       }
       navigator.clipboard.writeText(message.join('\n'))
