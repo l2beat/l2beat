@@ -99,7 +99,7 @@ function getCustomDaSection(
     props: {
       items: daSubsections,
       description: project.customDa?.description,
-      isUnderReview: project.statuses.isUnderReview,
+      isUnderReview: !!project.statuses.reviewStatus,
     },
   }
 }

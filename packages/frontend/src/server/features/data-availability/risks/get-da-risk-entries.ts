@@ -77,7 +77,7 @@ function getDaRiskEntry(
       statuses: {
         verificationWarning: b.statuses.isUnverified,
         underReview:
-          layer.statuses.isUnderReview || b.statuses.isUnderReview
+          layer.statuses.reviewStatus || b.statuses.reviewStatus
             ? 'config'
             : undefined,
       },

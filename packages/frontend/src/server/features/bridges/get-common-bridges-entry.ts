@@ -38,7 +38,7 @@ export function getCommonBridgesEntry({
       yellowWarning: project.statuses.yellowWarning,
       verificationWarning: project.statuses.isUnverified,
       underReview: getUnderReviewStatus({
-        isUnderReview: project.statuses.isUnderReview,
+        isUnderReview: !!project.statuses.reviewStatus,
         ...changes,
       }),
     },

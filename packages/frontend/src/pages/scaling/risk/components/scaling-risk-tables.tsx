@@ -11,6 +11,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import {
   OthersInfo,
   RollupsInfo,
+  UnderReviewInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
@@ -32,6 +33,7 @@ export function ScalingRiskTables(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: props.underReview.filter(filterEntries),
   }
   const entries = checked
     ? getRecategorisedEntries(props, compareStageAndTvs)
@@ -63,6 +65,7 @@ export function ScalingRiskTables(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
+          ...props.underReview,
         ]}
       />
 
@@ -78,6 +81,12 @@ export function ScalingRiskTables(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
+          {entries.underReview.length > 0 && (
+            <DirectoryTabsTrigger value="underReview">
+              Under initial review
+              <CountBadge>{entries.underReview.length}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -99,6 +108,12 @@ export function ScalingRiskTables(props: Props) {
               projectsToBeMigrated={projectToBeMigratedToOthers}
               className="mt-2"
             />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="underReview">
+            <UnderReviewInfo />
+            <ScalingRiskTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

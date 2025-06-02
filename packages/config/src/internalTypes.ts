@@ -26,6 +26,7 @@ import type {
   ProjectLivenessConfig,
   ProjectLivenessInfo,
   ProjectPermissions,
+  ProjectReviewStatus,
   ProjectScalingCapability,
   ProjectScalingCategory,
   ProjectScalingDa,
@@ -56,8 +57,8 @@ export interface ScalingProject {
   archivedAt?: UnixTime
   /** Is this project an upcoming rollup? */
   isUpcoming?: boolean
-  /** Has this project changed and is under review? */
-  isUnderReview?: boolean
+  /** What is the review status of this project? */
+  reviewStatus?: ProjectReviewStatus
   /** Colors used in the project's branding. E.g. ecosystem gradient, project page accents */
   colors?: ProjectColors
   /** Information displayed about the project on the frontend */
@@ -244,7 +245,7 @@ export interface Bridge {
   addedAt: UnixTime
   archivedAt?: UnixTime
   isUpcoming?: boolean
-  isUnderReview?: boolean
+  reviewStatus?: ProjectReviewStatus
   display: BridgeDisplay
   config: BridgeConfig
   chainConfig?: ChainConfig

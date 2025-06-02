@@ -14,6 +14,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import {
   OthersInfo,
   RollupsInfo,
+  UnderReviewInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
@@ -37,6 +38,7 @@ export function ScalingActivityTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
+    underReview: props.underReview.filter(filterEntries),
   }
 
   const entries = checked
@@ -71,6 +73,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
+            ...props.underReview,
           ]}
         />
         <UopsExplorerLink />
@@ -85,8 +88,14 @@ export function ScalingActivityTabs(props: Props) {
             <CountBadge>{entries.validiumsAndOptimiums.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
-            Others <CountBadge>{entries.others.length}</CountBadge>
+            Others <CountBadge>{entries.others.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
+          {entries.underReview.length > 0 && (
+            <DirectoryTabsTrigger value="underReview">
+              Under initial review
+              <CountBadge>{entries.underReview.length - 1}</CountBadge>
+            </DirectoryTabsTrigger>
+          )}
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups" className="pt-4 sm:pt-3">
@@ -131,6 +140,12 @@ export function ScalingActivityTabs(props: Props) {
               projectsToBeMigrated={projectToBeMigratedToOthers}
               className="mt-2"
             />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
+            <UnderReviewInfo />
+            <ScalingActivityTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

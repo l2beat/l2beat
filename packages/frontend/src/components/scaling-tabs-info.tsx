@@ -36,3 +36,12 @@ export function OthersInfo() {
     />
   )
 }
+
+export function UnderReviewInfo() {
+  return (
+    <TabInfoWithDrawer
+      title="What are projects under initial review?"
+      content="The projects listed here have not yet undergone an initial research review, meaning L2BEAT has not confirmed their type or risk properties."
+    />
+  )
+}

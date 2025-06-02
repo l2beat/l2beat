@@ -44,7 +44,7 @@ export interface BasicTableProps<T extends CommonProjectEntry> {
    * If the table is inside a main page card - bypass right margin by adding classes
    */
   insideMainPageCard?: boolean
-  rowColoringMode?: 'default' | 'ethereum-only'
+  rowColoringMode?: 'default' | 'ignore-colors'
 }
 
 export function BasicTable<T extends CommonProjectEntry>(
