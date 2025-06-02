@@ -53,7 +53,7 @@ export function PanelHeader(props: { id: PanelId }) {
         <button
           onClick={() => toClipboard(props.id, project, selectedAddress)}
           className="w-4"
-          hidden={!['code', 'values'].includes(props.id)}
+          hidden={!['code', 'values', 'list'].includes(props.id)}
         >
           <IconChatbot />
         </button>
@@ -132,6 +132,51 @@ const toClipboard = async (
       }
 
       navigator.clipboard.writeText([...fields, ...abis].join('\n'))
+      break
+    }
+    case 'list': {
+      const projectData = await getProject(project)
+      const message: string[] = []
+      for (const chain of projectData.entries) {
+        const contracts = [...chain.initialContracts, ...chain.discoveredContracts]
+        for (const contract of contracts) {
+          // Fetch code for this contract
+          const codeResp = await getCode(project, contract.address)
+          const sources = codeResp?.sources ?? []
+          for (const s of sources) {
+            message.push(`Flattened source code of ${s.name} (${contract.address}) on chain ${chain.chain}:`)
+            message.push('```')
+            message.push(s.code)
+            message.push('```')
+          }
+          // Add values/fields
+          if ('fields' in contract && contract.fields.length > 0) {
+            message.push(
+              `Contract state from public functions and event handlers for block number ${chain.blockNumber} on chain ${chain.chain} (${contract.address}):`,
+            )
+            for (const f of contract.fields) {
+              message.push(`${f.name}: ${JSON.stringify(f.value)}`)
+            }
+          }
+          // Add ABI
+          if ('abis' in contract && contract.abis.length > 0) {
+            message.push(`\nContract ABI for ${contract.address} on chain ${chain.chain}:`)
+            for (const a of contract.abis) {
+              for (const e of a.entries) {
+                let abi = e.value
+                if (e.signature) {
+                  abi += ` //${e.signature}`
+                } else if (e.value.startsWith('event') && e.topic) {
+                  abi += ` //${e.topic}`
+                }
+                message.push(abi)
+              }
+            }
+          }
+        }
+      }
+      navigator.clipboard.writeText(message.join('\n'))
+      break
     }
   }
 }
