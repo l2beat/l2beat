@@ -31,7 +31,7 @@ export async function getDaThroughputChart({
 
   const db = getDb()
   const days = rangeToDays(range)
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = days ? to - days * UnixTime.DAY : null
   const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly

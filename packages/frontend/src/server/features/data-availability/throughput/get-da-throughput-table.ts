@@ -22,7 +22,7 @@ export type ThroughputTableData = Awaited<
 >
 const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
-  const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day') - 1
+  const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, daLayers] = await Promise.all([
     db.dataAvailability2.getByDaLayersAndTimeRange(daLayerIds, [
       lastDay - 7 * UnixTime.DAY,

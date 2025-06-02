@@ -68,7 +68,7 @@ export class DataAvailabilityRepository2 extends BaseRepository {
       .selectFrom('DataAvailability2')
       .select(selectDataAvailability2)
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
@@ -96,7 +96,7 @@ export class DataAvailabilityRepository2 extends BaseRepository {
       // Exclude the daLayer itself because we only want to sum the projects
       .whereRef('projectId', '!=', 'daLayer')
       .groupBy(['timestamp', 'daLayer'])
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
@@ -122,7 +122,7 @@ export class DataAvailabilityRepository2 extends BaseRepository {
       .selectFrom('DataAvailability2')
       .select(selectDataAvailability2)
       .where('daLayer', 'in', daLayers)
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
