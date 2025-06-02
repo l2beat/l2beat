@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 22581193,
-  "configHash": "0x7ab516c5d8aef8c71fd24bc8b5fae36d95825b2a50b4fbafcfc7e06dc6ab20bf",
+  "configHash": "0x05a98cebf6849b7cc2c759d6dd5236beef72df6423b684b4346808e7b422eafc",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -467,6 +467,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -992,7 +995,7 @@
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
   "permissionsConfigHash": "0x178be063dafd4607b9ee6ca25f05efa4de432a046ec50a68bac80d80781fcf96"
 }

@@ -1,5 +1,5 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -46,6 +46,8 @@ export const worldchain = opStackL2({
   associatedTokens: ['WLD'],
   chainConfig: {
     name: 'worldchain',
+    coingeckoPlatform: 'world-chain',
+    sinceTimestamp: genesisTimestamp,
     chainId: 480,
     apis: [
       {
@@ -75,13 +77,4 @@ export const worldchain = opStackL2({
     },
   ],
   hasProperSecurityCouncil: false,
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB'),
-      name: 'External USDC Vault',
-      ...ESCROW.CANONICAL_EXTERNAL,
-      description: 'Custom external escrow for USDC bridged to Worldchain.',
-      tokens: ['USDC'],
-    }),
-  ],
 })

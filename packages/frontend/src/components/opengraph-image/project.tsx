@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 interface Props {
   baseUrl: string
   slug: string

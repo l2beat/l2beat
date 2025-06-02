@@ -1,5 +1,3 @@
-'use client'
-
 import clamp from 'lodash/clamp'
 import React, { useEffect, useRef, useState } from 'react'
 import { useEventCallback } from '~/hooks/use-event-callback'

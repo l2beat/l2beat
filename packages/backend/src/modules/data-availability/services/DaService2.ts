@@ -117,6 +117,16 @@ function matchEthereumProject(
   blob: EthereumBlob,
   config: EthereumDaTrackingConfig,
 ) {
+  if (config.topics) {
+    const hasTopicMatch = config.topics.some((topic) =>
+      blob.topics.includes(topic.toLowerCase()),
+    )
+
+    if (hasTopicMatch) {
+      return true
+    }
+  }
+
   const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
 
   if (!config.sequencers || config.sequencers.length === 0) {

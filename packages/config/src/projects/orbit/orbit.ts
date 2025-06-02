@@ -156,11 +156,6 @@ export const orbit: Bridge = {
       description: 'MultiSig, quorum depends on destination',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Contract can be upgraded by the ${orbitMultisigThreshold} Orbit MultiSig.`,
-      sentiment: 'bad',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.WRAPPED,
       description:

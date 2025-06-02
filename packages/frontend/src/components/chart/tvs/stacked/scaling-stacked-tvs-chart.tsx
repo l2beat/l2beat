@@ -1,12 +1,10 @@
-'use client'
-
 import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
-import { useScalingAssociatedTokensContext } from '~/app/(side-nav)/scaling/_components/scaling-associated-tokens-context'
 import { TvsChartUnitControls } from '~/components/chart/tvs/tvs-chart-unit-controls'
 import { Checkbox } from '~/components/core/checkbox'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useLocalStorage } from '~/hooks/use-local-storage'
+import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/scaling-associated-tokens-context'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
 
 import { useTableFilterContext } from '~/components/table/filters/table-filter-context'

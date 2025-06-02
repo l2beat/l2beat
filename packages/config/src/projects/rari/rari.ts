@@ -121,10 +121,19 @@ export const rari: ScalingProject = orbitStackL3({
     },
     {
       title: 'RARI disables proof system',
-      url: 'https://arbiscan.io/address/0x01ad6e65e01928938448a1fcf5c93bf7bfe720e0#readContract#F5',
+      url: 'https://app.blocksec.com/explorer/tx/arbitrum/0x4eacd17837407047b65635abdfb9d2693b58efa4040f33baca7b9d27271b0a2c?line=36',
       date: '2025-05-05T00:00:00.00Z',
-      description: 'The proof system and reference to Blobstream are disabled.',
+      description:
+        'Proof system and reference to Blobstream are disabled due to an incompatibility with Pectra.',
       type: 'incident',
+    },
+    {
+      title: 'RARI re-enables proof system',
+      url: 'https://app.blocksec.com/explorer/tx/arbitrum/0x1ff1a74aaa6a58e0a3389de2761ed84c9051a4ffea080265aae0d62aaf9df75c?line=36',
+      date: '2025-05-20T00:00:00.00Z',
+      description:
+        'The proof system and blobstream reference are fully re-enabled.',
+      type: 'general',
     },
   ],
 })

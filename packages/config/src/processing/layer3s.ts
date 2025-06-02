@@ -37,6 +37,7 @@ import { molten } from '../projects/molten/molten'
 import { moonchain } from '../projects/moonchain/moonchain'
 import { muster } from '../projects/muster/muster'
 import { mvchain } from '../projects/mvchain/mvchain'
+import { novastro } from '../projects/novastro/novastro'
 import { nums } from '../projects/nums/nums'
 import { onchain } from '../projects/onchain/onchain'
 import { onyx } from '../projects/onyx/onyx'
@@ -116,6 +117,7 @@ export const layer3s: ScalingProject[] = [
   muster,
   mvchain,
   moonchain,
+  novastro,
   nums,
   unite,
   vessel,

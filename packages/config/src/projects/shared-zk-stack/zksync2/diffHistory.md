@@ -1,4 +1,58 @@
-Generated with discovered.json: 0x423a4322600f7b524807ecb2845e1ecf6147d225
+Generated with discovered.json: 0x66e09a338c5fdf919b52b430e8c49791529665de
+
+# Diff at Fri, 30 May 2025 07:58:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 60946125
+- current block number: 61100811
+
+## Description
+
+ZK minter add.
+
+## Watched changes
+
+```diff
+    contract ZkToken (0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E) {
+    +++ description: The ZK token contract on ZKsync Era. Mintable through access control roles. Used for voting in the ZK stack governance system.
+      values.accessControl.MINTER_ROLE.members.11:
++        "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d"
+      values.accessControl.MINTER_ROLE.members.10:
++        "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4"
+      values.accessControl.MINTER_ROLE.members.9:
+-        "0xb294F411cB52c7C6B6c0B0b61DBDf398a8b0725d"
++        "0x51E818785dEa065D392ac21F04E9cac5B601Cfd8"
+      values.accessControl.MINTER_ROLE.members.8:
+-        "0x66Fd4FC8FA52c9bec2AbA368047A0b27e24ecfe4"
++        "0x0681E3808a0aA12004fb815ebB4515DC823cfbb4"
+      values.accessControl.MINTER_ROLE.members.7:
+-        "0x0681E3808a0aA12004fb815ebB4515DC823cfbb4"
++        "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b"
+      values.accessControl.MINTER_ROLE.members.6:
+-        "0xf29D698E74EF1904BCFDb20Ed38f9F3EF0A89E5b"
++        "0x721b6d77a58FaaF540bE49F28D668a46214Ba44c"
+      values.accessControl.MINTER_ROLE.members.5:
+-        "0x721b6d77a58FaaF540bE49F28D668a46214Ba44c"
++        "0x0Ad50686C159040E57ddcE137Db0b63c67473450"
+      values.accessControl.MINTER_ROLE.members.4:
+-        "0x0Ad50686C159040E57ddcE137Db0b63c67473450"
++        "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      values.accessControl.MINTER_ROLE.members.3:
+-        "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "0x70F6998FC0c492d9DD08b1105259252329be9Db6"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      values.proposalQueuedCount:
+-        9
++        11
+    }
+```
+
+Generated with discovered.json: 0x6ac3ef0025475d671bf9fe885e5d3bbd10e96e8d
 
 # Diff at Tue, 27 May 2025 08:31:33 GMT:
 

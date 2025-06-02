@@ -14,6 +14,8 @@
     - [Example](#example-1)
   - [Scroll](#scroll)
     - [Time to withdrawal calculation](#time-to-withdrawal-calculation)
+  - [Orbit Stack](#orbit-stack)
+    - [Time to withdrawal calculation](#time-to-withdrawal-calculation-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -311,7 +313,7 @@ event FinalizeBatch(
 #### Time to withdrawal calculation
 
 1. **Track initiation on L2**  
-   Listen for `AppendMessage` on the L2 Message Queue, store `messageHash`
+   Listen for the `AppendMessage` on the L2 Message Queue, store `messageHash`
    together with the L2 block timestamp in which the event was emitted.
 
 2. **Track execution on L1**  
@@ -337,3 +339,78 @@ event FinalizeBatch(
      `RelayedMessage.timestamp − AppendMessage.timestamp`  
      (includes any additional delay introduced by the relayer)
 
+### Orbit Stack
+
+
+When users initiate a withdrawal on L2 (for example, calling ArbSys.withdrawEth() or an ERC-20 bridge's withdraw function), the sequence of events is:
+- The withdrawal triggers an L2-to-L1 message. Internally this is done via ArbSys.sendTxToL1, which emits an L2 event and adds the message to Arbitrum's outgoing message Merkle tree.
+- The L2 transaction (and its outgoing message) get included in a rollup assertion that the validator posts to the L1 rollup contract (SequencerInbox/Bridge) in a batch. This marks the inclusion of the withdrawal request on L1. 
+- Once the assertion is posted, it enters the dispute window on L1. For Arbitrum One this is roughly 7 days (currently ~6.4 days in seconds). During this period, any validator can challenge the posted state if they detect fraud. In the normal case with no fraud proofs, the assertion simply "ages" for the full challenge period.
+- Once the dispute period expires without a successful challenge, at least one honest validator will confirm the rollup assertion on L1. The Arbitrum Rollup contract finalizes the L2 state root and posts the assertion's outgoing message Merkle root to the Outbox contract on L1. At this point the L2 transaction's effects are fully finalized on L1 (equivalent to an L1 transaction's finality, aside from Ethereum's own finalization delay). The withdrawal message is now provably included in the Outbox's Merkle root of pending messages.
+
+#### Time to withdrawal calculation
+
+1. **Track initiation on L2**  
+   Listen for the `L2ToL1Tx` event from the `ArbSys` pre-compile  
+   (`0x0000000000000000000000000000000000000064`):
+
+   ```solidity
+   event L2ToL1Tx(
+       address caller,              // sender on L2
+       address indexed destination, // receiver on L1
+       uint256 indexed hash,       // unique message hash
+       uint256 indexed position,   // (level<<192)|leafIndex
+       uint256 arbBlockNum,        // L2 block number
+       uint256 ethBlockNum,        // 0 at emission
+       uint256 timestamp,          // L2 timestamp
+       uint256 callvalue,          // ETH value
+       bytes   data                // calldata for L1
+   );
+   ```
+   
+   Store:
+   - `position` - the global message index
+   - `hash` - unique identifier (for quick look-ups)
+   - `timestamp` - L2 time of initiation
+
+   From `position` you can extract:
+   - `level = position >> 192` (always 0 in Nitro)
+   - `leafIndex = position & ((1<<192) - 1)`
+   - `arbBlockNum` - the L2 block number where the withdrawal was initiated.
+
+2. **Detect when the withdrawal becomes executable**  
+   After the ≈7-day fraud-proof window a validator confirms the rollup
+   assertion. Assertion confirmation could also incur in a “challenge grace period” delay, which allows the Security Council to intervene at the end of a dispute in case of any severe bugs in the OneStepProver contracts. 
+   During assertion confirmation the Rollup contract emits:
+
+   ```solidity
+   event AssertionConfirmed(
+       bytes32 indexed assertionHash,
+       bytes32 indexed blockHash,  // L2 block hash of the assertion's end
+       bytes32   sendRoot          // root of the Outbox tree
+   );
+   ```  
+
+   The confirmation routine calls `Outbox.updateSendRoot(sendRoot, l2ToL1Block)`, which emits:
+
+   ```solidity
+   event SendRootUpdated(
+       bytes32 indexed outputRoot,  // == sendRoot above
+       bytes32 indexed l2BlockHash  // L2 block hash corresponding to this root
+   );
+   ```  
+
+   This `l2BlockHash` signifies that all L2-to-L1 messages initiated in L2 blocks up to and including the L2 block represented by this `l2BlockHash` are now covered by the `outputRoot` and are executable.
+
+   To check if the specific withdrawal (with `leafIndex` and `arbBlockNum` from Step 1) is executable:
+   - Find the `SendRootUpdated` event.
+   - Get the L2 block number corresponding to `SendRootUpdated.l2BlockHash`.
+   - If `your_withdrawal.arbBlockNum <= L2_block_number_of_SendRootUpdated_event`, then your withdrawal (identified by its `leafIndex`) can be executed.
+   The L1 timestamp of this `SendRootUpdated` event is the earliest time your withdrawal becomes executable.
+
+3. **Compute the intervals**  
+
+   - *Earliest withdrawal time*  
+     `SendRootUpdated.timestamp − L2ToL1Tx.timestamp` (where SendRootUpdated meets the condition in Step 2)
+
+This [PoC script](https://gist.github.com/vincfurc/7fd3b88e95d6d7105fac3ca2dca075d5) calculates the time to withdrawal for Arbitrum One.

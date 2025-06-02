@@ -1,4 +1,35 @@
-Generated with discovered.json: 0x3ea12c5cfc918fe68e3c2b22147c1b83d657dab1
+Generated with discovered.json: 0x6fe8be024ddfdd63f678f5f10f734712970a9677
+
+# Diff at Fri, 30 May 2025 05:42:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 22495675
+- current block number: 22593528
+
+## Description
+
+signer change.
+
+## Watched changes
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$members.4:
+-        "0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+      values.$members.3:
+-        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
++        "0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+      values.$members.2:
+-        "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
++        "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x99705a40e53a2b9dab9f191801b29a462857285d
 
 # Diff at Fri, 16 May 2025 12:38:11 GMT:
 

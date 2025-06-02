@@ -13,7 +13,7 @@ export function Folder(props: {
     <div className="border-coffee-600 border-t">
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
+        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
       >
         {open && <IconChevronDown />}
         {!open && <IconChevronRight />}

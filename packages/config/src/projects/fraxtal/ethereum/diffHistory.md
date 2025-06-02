@@ -1,3 +1,65 @@
+Generated with discovered.json: 0xc2ff0e5cd6f50ea9288da4b0803e312a832b742a
+
+# Diff at Fri, 30 May 2025 06:58:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 22567345
+- current block number: 22567345
+
+## Description
+
+config: change comment about eip1559 fee val
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567345 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
+Generated with discovered.json: 0x2edd543e34599e1002b597b6c064a881dcce34c6
+
+# Diff at Wed, 28 May 2025 13:56:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 22567345
+- current block number: 22567345
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567345 (main branch discovery), not current.
+
+```diff
+    contract Frax Ether Token (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: frxETH token contract. Fraxtal uses Frax Ether as the designated gas token, allowing users to pay for blockspace with frxETH.
+      name:
+-        "frxETH Token"
++        "Frax Ether Token"
+    }
+```
+
+```diff
+    contract Staked Frax Ether Token (0xac3E018457B222d93114458476f3E3416Abbe38F) {
+    +++ description: Vault token contract (ERC-4626) for staked frxETH. The smart contract receives frxETH tokens and mints sfrxETH tokens.
+      name:
+-        "sfrxETH"
++        "Staked Frax Ether Token"
+    }
+```
+
 Generated with discovered.json: 0xb78ab2c8468e608eaa86912d476194a7d209fdc3
 
 # Diff at Mon, 26 May 2025 13:45:17 GMT:

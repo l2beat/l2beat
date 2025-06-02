@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).",
+  "ignoreMethods": ["canExecute", "getProposal", "proxiableUUID"],
+  "fields": {
+    "proposalCount": {
+      "description": "The total count of encrypted emergency proposals created."
+    }
+    // "getProposal": {
+    //   "handler": {
+    //     "type": "array",
+    //     "maxLength": 20
+    //   },
+    //   "description": "encrypted emergency proposals",
+    //   "edit": [
+    //     "map",
+    //     [
+    //       "shape",
+    //       "executed",
+    //       "approvals",
+    //       "parameters",
+    //       "encryptedPayloadURI",
+    //       "publicMetadataUriHash",
+    //       "destinationActionsHash",
+    //       "destinationPlugin"
+    //     ]
+    //   ]
+    // }
+    // TODO: set severity high as soon as gov is live
+    // "multisigSettings":{
+    //     "severity": "HIGH"
+    // },
+    // "proposalCount":{
+    //     "severity": "HIGH"
+    // }
+  }
+}

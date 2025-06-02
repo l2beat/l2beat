@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "blockNumber": 336620777,
-  "configHash": "0x13c3d11a7407154746708a4a36638b9af63241d09472812e950926735cacf9da",
+  "configHash": "0x7926379d1866c3f8a9a9e41ecdedea5372d370418de8260a0578561403a4274a",
   "entries": [
     {
       "name": "Blessnet Multisig 2",

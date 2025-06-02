@@ -4,7 +4,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import type { HttpClient } from '../http/HttpClient'
 import { RpcClient } from './RpcClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
-
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
@@ -144,6 +143,63 @@ describe(RpcClient.name, () => {
         JSON.stringify({
           method: 'eth_getBalance',
           params: [address, 'latest'],
+          id: 'unique-id',
+          jsonrpc: '2.0',
+        }),
+      )
+    })
+  })
+
+  describe(RpcClient.prototype.getLogs.name, () => {
+    it('fetches logs from rpc and parsers response', async () => {
+      const mockAdresses = [EthereumAddress.random(), EthereumAddress.random()]
+      const mockTopics = ['0xabcd', '0xdcba']
+      const mockFromBlock = 100
+      const mockToBlock = 200
+
+      const http = mockObject<HttpClient>({
+        fetch: async () => ({
+          result: [
+            {
+              address: mockAdresses[0],
+              topics: mockTopics,
+              blockNumber: `0x${mockFromBlock.toString(16)}`,
+              transactionHash:
+                '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+            },
+          ],
+        }),
+      })
+      const rpc = mockClient({ http, generateId: () => 'unique-id' })
+
+      const result = await rpc.getLogs(
+        mockAdresses,
+        mockTopics,
+        mockFromBlock,
+        mockToBlock,
+      )
+
+      expect(result).toEqual([
+        {
+          address: mockAdresses[0],
+          topics: mockTopics,
+          blockNumber: mockFromBlock,
+          transactionHash:
+            '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+        },
+      ])
+
+      expect(http.fetch.calls[0].args[1]?.body).toEqual(
+        JSON.stringify({
+          method: 'eth_getLogs',
+          params: [
+            {
+              address: mockAdresses,
+              topics: [mockTopics],
+              fromBlock: `0x${mockFromBlock.toString(16)}`,
+              toBlock: `0x${mockToBlock.toString(16)}`,
+            },
+          ],
           id: 'unique-id',
           jsonrpc: '2.0',
         }),

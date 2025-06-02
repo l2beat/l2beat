@@ -1,4 +1,5 @@
 {
+  "import": ["globalTokens.jsonc"],
   "chains": {
     "all": {
       "categories": {
@@ -80,7 +81,16 @@
         "0x4d1c96b9a49c4469a0b720a22b74b034eddfe051": "Protofire EOA 1",
         "0x459a3bd49f1ff109bc90b76125533699aaaaf9a6": "Protofire EOA 2",
         "0x1312e98995bbcc30fc63db3cef807e20cdd33dca": "Safe EOA 1",
-        "0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2"
+        "0x258667E543C913264388B33328337257aF208a8f": "Safe EOA 2",
+        //Taiko SC Agents
+        "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55": "Daniel Wang Agent",
+        "0x22aD66bcEaeff83e1461772Fa85CbeB01f0915f4": "Chainbound Agent",
+        "0x884c3e8235788ae52C2106E847e30BD84F2FBCb8": "L2BEAT Agent",
+        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678": "Aragon Agent",
+        "0x1d955983044548E03DAA583B36A37cA4bdE6F556": "Halborn Agent",
+        "0x4236f57E9dBc238878EFac4AeF0A16D4dD06DC1A": "Nethermind Agent",
+        "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656": "Drew Van der Werff Agent",
+        "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6": "Toni Wahrstätter Agent"
       },
       "types": {
         "Undecimal2": {
@@ -448,7 +458,17 @@
 
         "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Near Omni Multisig",
 
-        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": "Hyperlane Multisig"
+        "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": "Hyperlane Multisig",
+
+        // Taiko SC
+        "0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",
+        "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": "Chainbound",
+        "0xf1cF63589A1e012F9124182c9eAa36B5333e5f06": "L2BEAT",
+        "0xb284810536C0dAB6A8e48153B58588A9B9e0F701": "Aragon",
+        "0x0F40268Ec0Dc8D88CF2f22E227A29a0b478b6351": "Halborn",
+        "0x5353c607e6eca6C63FEC5c6C0F5CC3a5348d5c95": "Nethermind",
+        "0x25d3E89bAcE2040Ed3aF7c4c7B505cfBB72fD6f1": "Drew Van der Werff",
+        "0xa384E224A3F3D664F43eBE33395eF0DCcE67e894": "Toni Wahrstätter"
       },
       "types": {
         "StarknetProgramHash": {

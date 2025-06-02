@@ -1,5 +1,3 @@
-'use client'
-
 import { SearchIcon } from '~/icons/search'
 import { useSearchBarContext } from './search-bar-context'
 

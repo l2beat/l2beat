@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -17,60 +16,46 @@ interface CostsForProject {
   usd: LatestCostsValues
 }
 
-export function getCostsForProject(
+export async function getCostsForProject(
   projectId: string,
   timeRange: CostsTimeRange,
-) {
+): Promise<CostsForProject | undefined> {
   if (env.MOCK) {
     return getMockedCostsForProject()
   }
 
-  return getCachedCostsForProject(projectId, timeRange)
+  const db = getDb()
+  const fullySyncedRange = getFullySyncedCostsRange(timeRange)
+
+  const project = await ps.getProject({
+    id: ProjectId(projectId),
+    select: ['trackedTxsConfig'],
+  })
+  if (!project) return undefined
+  const [configurations, records] = await Promise.all([
+    db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
+    db.aggregatedL2Cost.getByProjectAndTimeRange(project.id, fullySyncedRange),
+  ])
+
+  const trackedTxsProject = getTrackedTxsProject(
+    project,
+    configurations,
+    'l2costs',
+  )
+  if (!trackedTxsProject || records.length === 0) return undefined
+
+  const timestamps = records.map((r) => r.timestamp)
+  const range: [UnixTime, UnixTime] = [
+    Math.min(...timestamps),
+    Math.max(...timestamps),
+  ]
+
+  return {
+    ...sumCostValues(records),
+    syncedUntil: trackedTxsProject.syncedUntil,
+    range,
+  }
 }
-
-const getCachedCostsForProject = cache(
-  async (
-    projectId: string,
-    timeRange: CostsTimeRange,
-  ): Promise<CostsForProject | undefined> => {
-    const db = getDb()
-    const fullySyncedRange = getFullySyncedCostsRange(timeRange)
-
-    const project = await ps.getProject({
-      id: ProjectId(projectId),
-      select: ['trackedTxsConfig'],
-    })
-    if (!project) return undefined
-    const [configurations, records] = await Promise.all([
-      db.indexerConfiguration.getByIndexerId('tracked_txs_indexer'),
-      db.aggregatedL2Cost.getByProjectAndTimeRange(
-        project.id,
-        fullySyncedRange,
-      ),
-    ])
-
-    const trackedTxsProject = getTrackedTxsProject(
-      project,
-      configurations,
-      'l2costs',
-    )
-    if (!trackedTxsProject || records.length === 0) return undefined
-
-    const timestamps = records.map((r) => r.timestamp)
-    const range: [UnixTime, UnixTime] = [
-      Math.min(...timestamps),
-      Math.max(...timestamps),
-    ]
-
-    return {
-      ...sumCostValues(records),
-      syncedUntil: trackedTxsProject.syncedUntil,
-      range,
-    }
-  },
-  ['costs-for-project'],
-  { tags: ['hourly-data'], revalidate: UnixTime.HOUR },
-)
 
 function getMockedCostsForProject(): CostsForProject {
   return {

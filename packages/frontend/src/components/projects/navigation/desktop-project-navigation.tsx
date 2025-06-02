@@ -1,4 +1,3 @@
-'use client'
 import type { CSSProperties } from 'react'
 import {
   Fragment,
@@ -9,8 +8,6 @@ import {
   useState,
 } from 'react'
 
-import Image from 'next/image'
-import { usePathname } from 'next/navigation'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import {
   Select,
@@ -19,8 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '~/components/core/select'
-import { useRouterWithProgressBar } from '~/components/navigation-progress-bar'
 import { useCurrentSection } from '~/hooks/use-current-section'
+import { usePathname } from '~/hooks/usePathname'
+import { useRouter } from '~/hooks/useRouter'
 import { SummaryIcon } from '~/icons/summary'
 import { cn } from '~/utils/cn'
 import { scrollVerticallyToItem } from '~/utils/scroll-to-item'
@@ -44,7 +42,7 @@ export function DesktopProjectNavigation({
   projectVariants,
   sections,
 }: ProjectNavigationProps) {
-  const router = useRouterWithProgressBar()
+  const router = useRouter()
   const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
@@ -77,7 +75,7 @@ export function DesktopProjectNavigation({
         >
           <div className="flex flex-row items-center gap-4">
             {project.slug && (
-              <Image
+              <img
                 width={32}
                 height={32}
                 src={project.icon}

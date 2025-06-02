@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 30000033,
-  "configHash": "0x14b0077584ea68c806301e0d536ea4f630e441e500448de348cd4a1ab2ff23b5",
+  "blockNumber": 30861907,
+  "configHash": "0xc97e62c0d87ced669d1c94155a299ea7d2989bf241209c54b65c6188e8dda4e1",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -311,7 +311,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 171,
+        "nonce": 187,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -415,7 +415,7 @@
       }
     },
     {
-      "name": "USDC",
+      "name": "USD Coin Token",
       "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "type": "Contract",
       "template": "tokens/circle/USDC",
@@ -469,7 +469,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3748968857132008,
+        "totalSupply": 3710293676111619,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -644,7 +644,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 548181,
+        "nextAvailableNonce": 569705,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -738,7 +738,7 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "15879267724555126756958"
+        "totalSupply": "14459876057944130917402"
       },
       "implementationNames": {
         "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
@@ -1474,5 +1474,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x01a1c819bddac79917f9a2670111a55b63ac9c668607dd945b9698d0c106e24e"
+  "permissionsConfigHash": "0x9e1d8682b534dd111d9877c45c6e76f0c393d41ef1f677f4fc6abcc4b190112a"
 }

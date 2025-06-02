@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '~/utils/cn'
 import type { CustomLinkProps } from '../custom-link'
 import { CustomLink } from '../custom-link'

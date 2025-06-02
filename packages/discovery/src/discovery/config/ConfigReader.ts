@@ -143,12 +143,13 @@ export class ConfigReader {
     if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
       return []
     }
-    const config = readFileSync(
-      path.join(this.rootPath, name, 'config.jsonc'),
-      'utf-8',
-    )
 
-    const parsed = JSON.parse(config)
+    const parsed = readJsonc(path.join(this.rootPath, name, 'config.jsonc'))
+    assert(
+      'chains' in parsed &&
+        typeof parsed.chains === 'object' &&
+        parsed.chains !== null,
+    )
     return Object.keys(parsed.chains)
   }
 
@@ -160,30 +161,8 @@ export class ConfigReader {
     const projects = []
 
     for (const folder of folders) {
-      const contents = readdirSync(path.join(this.rootPath, folder.name), {
-        withFileTypes: true,
-      })
-        .filter((x) => x.isDirectory())
-        .map((x) => x.name)
-
-      if (!contents.includes(chain)) {
-        continue
-      }
-
-      const chainFiles = readdirSync(
-        path.join(this.rootPath, folder.name, chain),
-        {
-          withFileTypes: true,
-        },
-      )
-        .filter((x) => x.isFile())
-        .map((x) => x.name)
-
       const allChains = this.readAllChainsForProject(folder.name)
-
-      const hasConfig = allChains.includes(chain)
-      const hasDiscovered = chainFiles.includes('discovered.json')
-      if (!hasConfig && !hasDiscovered) {
+      if (!allChains.includes(chain)) {
         continue
       }
 

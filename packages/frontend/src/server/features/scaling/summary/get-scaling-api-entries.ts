@@ -1,6 +1,6 @@
 import type { Badge } from '@l2beat/config'
-import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
 import type { RosetteValue } from '~/components/rosette/types'
+import { getL2Risks } from '~/pages/scaling/utils/get-l2-risks'
 import { ps } from '~/server/projects'
 import { getUnderReviewStatus } from '~/utils/project/under-review'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'

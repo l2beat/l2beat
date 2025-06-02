@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const UpdateMessage = z.object({
-  projectName: z.string(),
+  projectId: z.string(),
   chain: z.string(),
   blockNumber: z.number(),
   timestamp: z.number(),
