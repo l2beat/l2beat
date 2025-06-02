@@ -92,7 +92,7 @@ export function getScalingTab(
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
-  return project.statuses.reviewStatus
+  return project.statuses.reviewStatus === 'initialReview'
     ? 'underReview'
     : project.scalingInfo.isOther
       ? 'others'
