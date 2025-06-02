@@ -25,7 +25,7 @@ export function TopNavLink({
             : 'pr-3 group-last/top-nav-link:pr-0 max-xl:text-sm',
           pathname.startsWith(href) && [
             'pt-0.5 text-brand',
-            !withoutUnderline && 'border-b-2 border-current',
+            !withoutUnderline && 'border-current border-b-2',
           ],
         )}
         href={href}

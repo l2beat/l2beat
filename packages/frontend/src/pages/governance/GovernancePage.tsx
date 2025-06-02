@@ -59,7 +59,7 @@ function Header({
 }: { delegatedProjects: DelegatedProjectWithIcon[] }) {
   return (
     <PrimaryCard className="md:p-8">
-      <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
+      <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="paragraph-18">
@@ -69,7 +69,7 @@ function Header({
             ecosystem towards a safer, more secure decentralized future.
           </p>
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-[-0.14px] text-purple-100 dark:text-pink-200">
+            <span className="font-medium text-purple-100 text-xs uppercase tracking-[-0.14px] dark:text-pink-200">
               Delegate your tokens
             </span>
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">

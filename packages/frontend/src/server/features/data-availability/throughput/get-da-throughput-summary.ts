@@ -7,7 +7,7 @@ export async function getDaThroughputSummary() {
   if (env.MOCK) {
     return getMockDaThroughputSummaryData()
   }
-  return getDaThroughputSummaryData()
+  return await getDaThroughputSummaryData()
 }
 
 export type ThroughputSummaryData = Awaited<

@@ -83,7 +83,7 @@ const tvsColumn = (href?: (row: DaSummaryEntry) => string) =>
           ctx.row.original.tvs.latest > 0 ? href?.(ctx.row.original) : undefined
         }
       >
-        <div className="w-full text-right text-sm font-medium">
+        <div className="w-full text-right font-medium text-sm">
           {formatDollarValueNumber(ctx.row.original.tvs.latest)}
         </div>
       </TableLink>
@@ -101,7 +101,7 @@ const slashableStakeColumn = columnHelper.accessor('economicSecurity', {
     const value = ctx.getValue()
 
     return (
-      <div className="w-full pr-[18px] text-right text-xs font-medium md:text-sm">
+      <div className="w-full pr-[18px] text-right font-medium text-xs md:text-sm">
         {formatDollarValueNumber(value ?? 0)}
       </div>
     )

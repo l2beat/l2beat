@@ -418,6 +418,24 @@ export class TemplateService {
 
     return { name: shapeKey, shape, criteria: entry.criteria }
   }
+
+  readTemplateFile(templateId: string) {
+    const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const filePath = join(templatePath, 'template.jsonc')
+    return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
+  }
+
+  readShapeFile(templateId: string) {
+    const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const filePath = join(templatePath, 'shapes.json')
+    return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
+  }
+
+  readCriteriaFile(templateId: string) {
+    const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const filePath = join(templatePath, 'criteria.json')
+    return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
+  }
 }
 
 function listAllPaths(path: string): string[] {

@@ -13,7 +13,7 @@ export function PrimaryCard({
   return (
     <Component
       className={cn(
-        'group/primary-card bg-surface-primary p-4 primary-card md:rounded-xl md:px-6 md:py-5',
+        'group/primary-card primary-card bg-surface-primary p-4 md:rounded-xl md:px-6 md:py-5',
         className,
       )}
       {...props}

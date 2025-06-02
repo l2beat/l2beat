@@ -1,0 +1,52 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "An optimistic governance module. Proposals pass and can be executed unless {{minVetoPercent}}% of votable TAIKO veto them within {{governanceSettings_timelockPeriod_fmt}}.",
+  "ignoreMethods": [
+    "getProposal",
+    "bridgedVotingPower",
+    "canExecute",
+    "isMinVetoRatioReached",
+    "parseProposalId",
+    "proxiableUUID",
+    "totalVotingPower"
+  ],
+  "types": {
+    "Undecimal4": {
+      "typeCaster": "Undecimal",
+      "arg": { "decimals": 4 }
+    }
+  },
+  "fields": {
+    "proposalIds": {
+      "handler": {
+        "type": "array",
+        "length": "{{ proposalCount }}"
+      }
+    },
+    "minVetoRatio": {
+      "description": "this value /1000000 is the threshold ratio (relative to voting supply) to veto a proposal."
+    },
+    "minVetoPercent": {
+      "handler": {
+        "type": "call",
+        "method": "minVetoRatio",
+        "args": []
+      },
+      "edit": ["format", "Undecimal4"]
+    },
+    "governanceSettings": {
+      "description": ""
+    },
+    "governanceSettings_timelockPeriod_fmt": {
+      "handler": {
+        "type": "call",
+        "method": "governanceSettings",
+        "args": []
+      },
+      "edit": ["pipe", ["get", "timelockPeriod"], ["format", "FormatSeconds"]]
+    }
+  },
+  "proposalCount": {
+    "description": "The total count of standard proposals created."
+  }
+}

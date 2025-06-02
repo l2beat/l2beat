@@ -8,9 +8,9 @@ import {
 } from '~/components/table/sorting/sort-table-values'
 import { TableLink } from '~/components/table/table-link'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/common-project-columns'
-import { EM_DASH } from '~/consts/characters'
 import { TotalCell } from '~/pages/scaling/summary/components/table/total-cell'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/get-bridges-summary-entries'
+import { OthersConsiderationCell } from './others-consideration-cell'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
@@ -69,6 +69,10 @@ export const bridgesSummarySingleChainColumns = [
   }),
   columnHelper.accessor((e) => adjustTableValue(e.livenessFailure), {
     header: 'Liveness\nfailure',
+    meta: {
+      tooltip:
+        'Indicates whether there is a mechanism to reclaim deposited funds in case the bridge operators are down.',
+    },
     cell: (ctx) => {
       if (!ctx.row.original.livenessFailure) return 'None'
       return <TableValueCell value={ctx.row.original.livenessFailure} />
@@ -77,31 +81,43 @@ export const bridgesSummarySingleChainColumns = [
     sortingFn: (a, b) =>
       sortTableValues(a.original.livenessFailure, b.original.livenessFailure),
   }),
-  columnHelper.accessor((e) => adjustTableValue(e.sourceUpgradeability), {
+  columnHelper.accessor((e) => e.governance, {
     header: 'Governance',
+    meta: {
+      tooltip:
+        'Shows the entities allowed to perform upgrades and pause the bridge.',
+    },
     cell: (ctx) => (
       <>
-        <div>
+        <div className="flex items-center gap-px">
           <span className="font-bold">Upgrades: </span>
-          {ctx.row.original.sourceUpgradeability?.value ?? EM_DASH}
+          <TableValueCell
+            value={ctx.row.original.governance?.upgrade}
+            emptyMode="em-dash"
+          />
         </div>
-        <div>
+        <div className="flex items-center gap-px">
           <span className="font-bold">Pause: </span>
-          {ctx.row.original.sourceUpgradeability?.secondLine ?? EM_DASH}
+          <TableValueCell
+            value={ctx.row.original.governance?.pause}
+            emptyMode="em-dash"
+          />
         </div>
       </>
     ),
     sortUndefined: 'last',
     sortingFn: (a, b) =>
       sortTableValues(
-        a.original.sourceUpgradeability,
-        b.original.sourceUpgradeability,
+        a.original.governance?.upgrade,
+        b.original.governance?.upgrade,
       ),
   }),
   columnHelper.accessor((e) => e.otherConsiderations, {
     header: 'Other\nconsiderations',
     cell: (ctx) => (
-      <span>{ctx.row.original.otherConsiderations?.length ?? 'None'}</span>
+      <OthersConsiderationCell
+        otherConsiderations={ctx.row.original.otherConsiderations}
+      />
     ),
     sortUndefined: 'last',
   }),

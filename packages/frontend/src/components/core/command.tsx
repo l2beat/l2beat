@@ -15,7 +15,7 @@ const Command = ({
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary focus-visible:border-brand focus-visible:outline-none primary-card:bg-surface-secondary',
+      'flex size-full flex-col overflow-hidden rounded-md border border-divider bg-surface-primary primary-card:bg-surface-secondary focus-visible:border-brand focus-visible:outline-none',
       className,
     )}
     {...props}
@@ -61,14 +61,14 @@ const CommandInput = ({
 }: React.ComponentProps<typeof CommandPrimitive.Input>) => {
   return (
     <div
-      className="flex items-center border-b border-divider px-3"
+      className="flex items-center border-divider border-b px-3"
       cmdk-input-wrapper=""
     >
       <SearchIcon className="mr-2 size-4 shrink-0 fill-secondary" />
       <CommandPrimitive.Input
         ref={ref}
         className={cn(
-          'flex h-11 w-full bg-transparent py-3 text-sm outline-none placeholder:!text-secondary disabled:cursor-not-allowed disabled:opacity-50',
+          'placeholder:!text-secondary flex h-11 w-full bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         {...props}
@@ -133,7 +133,7 @@ const CommandGroup = ({
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'overflow-hidden border-b border-divider px-1.5 py-1 last:border-none only:border-none [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
+      'overflow-hidden border-divider border-b px-1.5 py-1 last:border-none only:border-none [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-xs',
       className,
     )}
     {...props}
@@ -163,7 +163,7 @@ const CommandItem = ({
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-surface-secondary data-[disabled=true]:opacity-50 primary-card:data-[selected=true]:bg-surface-tertiary',
+      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[selected=true]:bg-surface-secondary primary-card:data-[selected=true]:bg-surface-tertiary data-[disabled=true]:opacity-50',
       className,
     )}
     {...props}

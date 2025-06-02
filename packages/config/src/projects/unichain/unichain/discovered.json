@@ -1,7 +1,7 @@
 {
   "name": "unichain",
   "chain": "unichain",
-  "blockNumber": 16289384,
+  "blockNumber": 17837889,
   "configHash": "0x28c01f5f68cb9068353c3ca9e12c1f5cc66e8625728b95c52521da574cc9d5f1",
   "entries": [
     {
@@ -55,7 +55,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620690",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621018",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -108,7 +108,7 @@
         "isEcotone": true,
         "isFjord": true,
         "isIsthmus": true,
-        "l1BaseFee": 5781724235,
+        "l1BaseFee": 1329892833,
         "version": "1.4.0"
       },
       "implementationNames": {
@@ -295,7 +295,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "basefee": 5781724235,
+        "basefee": 1329892833,
         "baseFeeScalar": 2000,
         "batcherHash": "0x0000000000000000000000002f60a5184c63ca94f82a27100643dbabe4f3f7fd",
         "blobBaseFee": 1,
@@ -307,15 +307,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0xdd361c294dca555e051c16d75b3cc7748fecfd584651ebf6eff6a4ff0baea695",
+        "hash": "0xc8a804e966cef48cf84f1fb803644f0309b89d21b0198a29ece6bf8f5a10a9b6",
         "isCustomGasToken": false,
         "l1FeeOverhead": 0,
         "l1FeeScalar": 0,
-        "number": 22465953,
+        "number": 22593738,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 6,
-        "timestamp": 1747037675,
+        "sequenceNumber": 2,
+        "timestamp": 1748586191,
         "version": "1.6.0"
       },
       "implementationNames": {

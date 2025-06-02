@@ -76,11 +76,18 @@ export const omni: Bridge = {
       description: `${discovery.getMultisigStats('BridgeValidators_DAI')} BridgeValidators Multisig with publicly disclosed, external signers (DAI and Omni bridges each have their own validator set).`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
-      secondLine: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
-      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} Gnosis Bridge MultiSig`,
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+        description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('Gnosis Bridge Multisig')} Gnosis Bridge MultiSig`,
+        sentiment: 'bad',
+      },
+      pause: {
+        value: `Multisig (${discovery.getMultisigStats('Gnosis Bridge Multisig')})`,
+        sentiment: 'bad',
+        description:
+          'Although there is no formal pause function, the liveness of the bridge depends on the Multisig and operators.',
+      },
     },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL,

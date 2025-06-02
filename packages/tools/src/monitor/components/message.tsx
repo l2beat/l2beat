@@ -10,7 +10,7 @@ interface MessageProps {
   className?: string
 }
 
-function Message({
+export function Message({
   authorName,
   timestamp,
   content,
@@ -18,7 +18,7 @@ function Message({
   title,
   className = '',
 }: MessageProps) {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isExpanded, setIsExpanded] = useState(true)
 
   const toggleExpand: MouseEventHandler<HTMLDivElement> = (e) => {
     // Toggle on parent element dispatch only
@@ -87,5 +87,3 @@ function Message({
     </div>
   )
 }
-
-export default Message

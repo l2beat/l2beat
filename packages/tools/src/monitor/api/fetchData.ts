@@ -9,5 +9,12 @@ export async function fetchData(): Promise<UpdateMessagesResponse> {
     throw new Error('Failed to fetch data')
   }
 
-  return UpdateMessagesResponse.parse(result)
+  const safeParse = UpdateMessagesResponse.safeParse(result)
+
+  if (!safeParse.success) {
+    console.error(safeParse.error)
+    throw new Error('Failed to parse data')
+  }
+
+  return safeParse.data
 }

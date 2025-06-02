@@ -58,12 +58,6 @@ export const portal: Bridge = {
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then relayed to the destination chain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'The code that secures the system can be changed arbitrarily and without notice.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {

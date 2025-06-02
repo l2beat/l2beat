@@ -92,7 +92,7 @@ function AnomalyTooltipContent(props: {
           const isLive = UnixTime.now() - 4 * UnixTime.HOUR <= endDateUnixTime
           return (
             <div
-              className="space-y-0.5 border-t border-divider px-4 py-2"
+              className="space-y-0.5 border-divider border-t px-4 py-2"
               key={anomaly.timestamp}
             >
               {isLive && (
@@ -163,7 +163,7 @@ function AnomalyTooltipContent(props: {
         })}
       </div>
       {anomalies.length > 4 && (
-        <div className="-mx-4 border-t border-divider px-4 pt-2">
+        <div className="-mx-4 border-divider border-t px-4 pt-2">
           And {anomalies.length - SHOWN_ANOMALIES} more
         </div>
       )}

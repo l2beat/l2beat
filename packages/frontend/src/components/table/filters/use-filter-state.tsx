@@ -3,7 +3,7 @@ import uniq from 'lodash/uniq'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/use-tracking'
-import useQueryParam from '~/hooks/useQueryParam'
+import { useQueryParam } from '~/hooks/useQueryParam'
 import { FilterableValueId } from './filterable-value'
 
 export type FilterValue = z.infer<typeof FilterValue>

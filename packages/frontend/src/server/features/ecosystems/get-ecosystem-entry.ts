@@ -183,7 +183,7 @@ function getEcosystemLogo(slug: string) {
   const light = getImageParams(`/ecosystems/${slug}/logo.png`)
   assert(light, 'Ecosystem logo not found')
   const hasDark = existsSync(
-    path.join(process.cwd(), 'public', `ecosystems/${slug}/logo.dark.png`),
+    path.join(process.cwd(), 'static', `ecosystems/${slug}/logo.dark.png`),
   )
   const dark = hasDark
     ? getImageParams(`/ecosystems/${slug}/logo.dark.png`)

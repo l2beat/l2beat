@@ -103,7 +103,7 @@ export function BasicDaTable<T extends BasicEntry>({
                     <th
                       colSpan={header.colSpan}
                       className={cn(
-                        'font-medium tracking-[-0.13px] text-primary',
+                        'font-medium text-primary tracking-[-0.13px]',
                         header.column.getIsPinned() &&
                           getRowTypeClassNamesWithoutOpacity(),
 

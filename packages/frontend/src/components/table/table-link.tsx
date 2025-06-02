@@ -13,7 +13,7 @@ export function TableLink({
     return (
       <a
         className={cn(
-          'inline-flex h-[calc(100%_-_8px)] max-h-[52px] w-max items-center rounded transition-colors md:-mx-3 md:px-3',
+          'md:-mx-3 inline-flex h-[calc(100%_-_8px)] max-h-[52px] w-max items-center rounded transition-colors md:px-3',
           'md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10',
           className,
         )}

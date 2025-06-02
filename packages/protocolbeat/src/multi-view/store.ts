@@ -8,7 +8,9 @@ export const PANEL_IDS = [
   'code',
   'preview',
   'terminal',
+  'template',
 ] as const
+
 export type PanelId = (typeof PANEL_IDS)[number]
 
 export type Panel = { id: PanelId; size: number }

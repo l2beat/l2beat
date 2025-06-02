@@ -7,19 +7,6 @@ import type { Bridge } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('near')
 
-const threshold = discovery.getContractValue<number>(
-  'BridgeAdminMultisig',
-  '$threshold',
-)
-
-const owners: string[] = discovery.getContractValue<string[]>(
-  'BridgeAdminMultisig',
-  '$members',
-)
-
-const size = owners.length
-const adminThresholdString = `${threshold} / ${size}`
-
 const lockDurationSeconds = discovery.getContractValue<number>(
   'NearBridge',
   'lockDuration',
@@ -76,11 +63,6 @@ export const near: Bridge = {
       description:
         'Transfers out of the bridge are validated using Optimistic Light Client of Near Chain on Ethereum. Transfers into NEAR are validated by Ethereum light client on NEAR side.',
       sentiment: 'warning',
-    },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Bridge cannot be upgraded but ${adminThresholdString} Admin Multisig can move all funds out of the bridge via admin functions with no warning.`,
-      sentiment: 'bad',
     },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,

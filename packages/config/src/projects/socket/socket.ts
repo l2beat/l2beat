@@ -40,12 +40,6 @@ export const socket: Bridge = {
         'Depending on the Switchboard, transfers may need to be independently confirmed by third parties, for example when using FastSwitchboard there is a set of WATCHERS that need to authorize the transfer event.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'Vaults can be individually upgradable and the security assumptions must be individually assessed for each individual vault.',
-      sentiment: 'bad',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:

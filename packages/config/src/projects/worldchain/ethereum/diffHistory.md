@@ -1,3 +1,62 @@
+Generated with discovered.json: 0x1729182621371e6b97d2c26f4984ec539b471e90
+
+# Diff at Fri, 30 May 2025 05:49:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 22567927
+- current block number: 22593567
+
+## Description
+
+burncaller burns all USDC and is then removed. USDC is now native (adjusted tvs conf).
+
+https://world.org/blog/announcements/world-integrates-circles-usdc-and-cctp
+
+## Watched changes
+
+```diff
+    contract L1OpUSDCBridgeAdapter (0x153A69e4bb6fEDBbAaF463CB982416316c84B2dB) {
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+      values.burnCaller:
+-        "0x2ba529D229FDc1DA08e67F536588aE45932d030A"
++        "0x0000000000000000000000000000000000000000"
+      values.messengerStatus:
+-        2
++        3
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Burn Caller (0x2ba529D229FDc1DA08e67F536588aE45932d030A)
+    +++ description: None
+```
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        33000000
++        36000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567927 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
 Generated with discovered.json: 0x87a73ef702848d310209e24d6d735c715f347061
 
 # Diff at Mon, 26 May 2025 16:02:09 GMT:

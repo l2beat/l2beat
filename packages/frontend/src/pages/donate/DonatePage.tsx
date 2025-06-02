@@ -64,7 +64,7 @@ interface HeaderProps {
 function Header({ networks, qrCodeUrl }: HeaderProps) {
   return (
     <PrimaryCard className="overflow-hidden">
-      <h1 className="mb-4 text-3xl font-bold md:hidden">Donate</h1>
+      <h1 className="mb-4 font-bold text-3xl md:hidden">Donate</h1>
       <div className="grid md:grid-cols-12">
         <div className="leading-normal md:col-span-7">
           <DonationDescription />
@@ -112,7 +112,7 @@ function QrCodeSection({
             }}
           />
         </div>
-        <p className="mx-auto mt-4 inline-block w-[21ch] break-all font-mono text-lg font-normal">
+        <p className="mx-auto mt-4 inline-block w-[21ch] break-all font-mono font-normal text-lg">
           {DONATE_ADDRESS}
         </p>
       </div>
@@ -131,11 +131,11 @@ function QrCodeSection({
 function DonationDescription() {
   return (
     <div className="space-y-4 text-primary">
-      <p className="text-xl font-bold">
+      <p className="font-bold text-xl">
         Thank you for supporting L2BEAT&apos;s mission to bring education and
         transparency to the blockchain space.
       </p>
-      <p className="text-base font-normal">
+      <p className="font-normal text-base">
         We&apos;re committed to delivering accurate and reliable information. We
         strive to be an impartial and independent watchdog that acts in the best
         interest of users and the broader ecosystem while always remaining
@@ -143,7 +143,7 @@ function DonationDescription() {
         tools that allow our community to educate themselves, transact securely,
         and make well-informed decisions.
       </p>
-      <p className="text-base font-normal">
+      <p className="font-normal text-base">
         Your support means a lot to our small, independent team. Thank you!
       </p>
     </div>
@@ -153,7 +153,7 @@ function DonationDescription() {
 function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
   return (
     <div className="z-10 mt-4">
-      <span className="text-xs font-medium uppercase text-purple-100 dark:text-pink-200">
+      <span className="font-medium text-purple-100 text-xs uppercase dark:text-pink-200">
         Donate through
       </span>
       <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
@@ -175,8 +175,8 @@ function DonationNetworks({ networks }: { networks: HeaderProps['networks'] }) {
 
 function FundingSourcesSection() {
   return (
-    <PrimaryCard className="border-t border-divider md:mt-6 md:border-t-0">
-      <h2 className="text-xl font-bold">Funding sources</h2>
+    <PrimaryCard className="border-divider border-t md:mt-6 md:border-t-0">
+      <h2 className="font-bold text-xl">Funding sources</h2>
       <p className="mt-4 text-base leading-5">
         As a public goods company, L2BEAT is financed in the open by the
         community. For transparency, we are providing L2BEAT&apos;s funding
@@ -195,7 +195,7 @@ function FundingTierDescriptions() {
         Those funding sources have been categorized based on the contribution
         amounts:
       </p>
-      <ul className="ml-6 mt-2 list-disc">
+      <ul className="mt-2 ml-6 list-disc">
         <li>
           <strong>Significant</strong>: Above 500,000 USD
         </li>
@@ -215,7 +215,7 @@ function FundingSourcesTable() {
     <div className="mt-4 overflow-x-auto pb-3">
       <table>
         <thead>
-          <tr className="h-8 border-b border-divider pb-2.5 pt-2 text-left text-[13px] font-semibold uppercase tracking-[-0.13px] text-zinc-500 dark:text-secondary">
+          <tr className="h-8 border-divider border-b pt-2 pb-2.5 text-left font-semibold text-[13px] text-zinc-500 uppercase tracking-[-0.13px] dark:text-secondary">
             <th className="min-w-[300px] md:pl-4">Source / Project</th>
             <th className="md:pl-4">Tier</th>
             <th className="md:pl-4">Description</th>
@@ -225,7 +225,7 @@ function FundingSourcesTable() {
           {fundingSources.map((item) => (
             <tr
               key={item.source}
-              className="h-14 border-b border-divider text-base last:border-b-0"
+              className="h-14 border-divider border-b text-base last:border-b-0"
             >
               <td className="pr-4 md:px-4">{item.source}</td>
               <td className="pr-4 md:px-4">{item.tier}</td>

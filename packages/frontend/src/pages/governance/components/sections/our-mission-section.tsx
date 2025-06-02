@@ -13,7 +13,7 @@ export function OurMissionSection({ className }: Props) {
         At L2BEAT we believe that crypto is the new infrastructure for the
         future financial system. As such, we believe that in order for it to be
         successful, it needs to be:
-        <ul className="md:paragraph-15 paragraph-16 ml-6 mt-2 list-disc">
+        <ul className="md:paragraph-15 paragraph-16 mt-2 ml-6 list-disc">
           <li>
             Permissionless, no one should need a third party&apos;s permission
             to join the network,

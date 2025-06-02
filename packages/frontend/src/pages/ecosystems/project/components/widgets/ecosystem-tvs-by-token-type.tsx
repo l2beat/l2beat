@@ -98,12 +98,12 @@ export function EcosystemTvsByTokenType({
                         backgroundColor={data.fill}
                         type={{ shape: 'square' }}
                       />
-                      <div className="text-xs font-medium">
+                      <div className="font-medium text-xs">
                         {tokenTypeLabels[data.tokenType]}
                       </div>
                     </div>
                   </td>
-                  <td className="text-xs font-medium text-secondary">
+                  <td className="font-medium text-secondary text-xs">
                     {formatPercent(data.tvs / totalTvs)}
                   </td>
                 </tr>
@@ -113,7 +113,7 @@ export function EcosystemTvsByTokenType({
         </table>
         <SimpleChartContainer
           meta={chartMeta}
-          className="aspect-square h-[116px] min-h-[116px] xs:h-[140px] xs:min-h-[140px]"
+          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
         >
           <PieChart>
             <ChartTooltip
@@ -138,14 +138,14 @@ export function EcosystemTvsByTokenType({
                         <tspan
                           x="50%"
                           dy={-1}
-                          className="fill-secondary text-2xs font-medium leading-none"
+                          className="fill-secondary font-medium text-2xs leading-none"
                         >
                           Token
                         </tspan>
                         <tspan
                           x="50%"
                           dy={12}
-                          className="fill-secondary text-2xs font-medium leading-none"
+                          className="fill-secondary font-medium text-2xs leading-none"
                         >
                           types
                         </tspan>

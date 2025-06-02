@@ -151,7 +151,6 @@ export const cBridge: Bridge = {
     },
   },
   riskView: {
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
     validatedBy: {
       value: 'Third Party',

@@ -24,7 +24,7 @@ export function ZkCatalogPage({ entries, ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>ZK Catalog</MainPageHeader>
-        <p className="mx-6 text-xs text-secondary max-md:mt-6">
+        <p className="mx-6 text-secondary text-xs max-md:mt-6">
           ZK Catalog by L2BEAT is a community-driven resource offering detailed
           insights into the ZK technology utilized by various blockchain
           projects. It aims to enhance transparency and understanding of ZK tech
@@ -56,7 +56,7 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                       src={entry.icon}
                       className="size-[18px]"
                     />
-                    <span className="text-lg font-bold">{entry.name}</span>
+                    <span className="font-bold text-lg">{entry.name}</span>
                   </div>
                   <DetailsItem
                     title="Name"
@@ -98,22 +98,22 @@ function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
                     className="self-center justify-self-center"
                   />
                   <div className="flex items-center justify-center">
-                    <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
-                      <span className="text-base font-bold">Verifiers</span>
-                      <ChevronIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
+                    <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
+                      <span className="font-bold text-base">Verifiers</span>
+                      <ChevronIcon className="group-data-[state=open]:-rotate-180 fill-current transition-transform duration-300 ease-out" />
                     </div>
-                    <ChevronIcon className="hidden fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180 md:block" />
+                    <ChevronIcon className="group-data-[state=open]:-rotate-180 hidden fill-current transition-transform duration-300 ease-out md:block" />
                   </div>
                 </div>
               </AccordionTrigger>
             </AccordionHeader>
-            <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-divider bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
+            <AccordionContent className="-top-3 relative rounded-b-xl border border-divider border-t-0 bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
               {entry.shortDescription ? (
                 <div className="my-7 flex flex-col gap-0.5 px-5">
-                  <div className="text-2xs font-medium uppercase text-secondary">
+                  <div className="font-medium text-2xs text-secondary uppercase">
                     Description
                   </div>
-                  <div className="text-sm font-medium">
+                  <div className="font-medium text-sm">
                     {entry.shortDescription}
                   </div>
                 </div>

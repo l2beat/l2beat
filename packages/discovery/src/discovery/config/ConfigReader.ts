@@ -143,12 +143,13 @@ export class ConfigReader {
     if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
       return []
     }
-    const config = readFileSync(
-      path.join(this.rootPath, name, 'config.jsonc'),
-      'utf-8',
-    )
 
-    const parsed = JSON.parse(config)
+    const parsed = readJsonc(path.join(this.rootPath, name, 'config.jsonc'))
+    assert(
+      'chains' in parsed &&
+        typeof parsed.chains === 'object' &&
+        parsed.chains !== null,
+    )
     return Object.keys(parsed.chains)
   }
 

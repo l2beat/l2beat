@@ -34,7 +34,7 @@ export function ScrollToTopButton() {
     <button
       onClick={scrollToTop}
       className={cn(
-        'fixed -bottom-12 right-8 z-999 size-12 rounded-lg bg-brand transition-[bottom,background-color] ease-out hover:bg-fuchsia-700 dark:hover:bg-purple-450',
+        '-bottom-12 fixed right-8 z-999 size-12 rounded-lg bg-brand transition-[bottom,background-color] ease-out hover:bg-fuchsia-700 dark:hover:bg-purple-450',
         isVisible && 'bottom-8',
       )}
     >

@@ -220,6 +220,7 @@ function blob(timestamp: number, size: number): DaBlob {
     type: 'ethereum',
     inbox: '',
     sequencer: '',
+    topics: [],
   }
 }
 

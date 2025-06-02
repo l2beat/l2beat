@@ -89,10 +89,18 @@ export const sonicgateway: Bridge = {
       description: `${validatorThresholdString} Validators with onchain signer addresses. Identities of the signers are not publicly disclosed.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
-      description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
-      sentiment: 'bad',
+    governance: {
+      upgrade: {
+        value: `Multisig (${discovery.getMultisigStats('SonicGatewayMultisig')})`,
+        description: `Critical contracts can be upgraded by the ${discovery.getMultisigStats('SonicGatewayMultisig')} SonicGatewayMultisig`,
+        sentiment: 'bad',
+      },
+      pause: {
+        value: 'Not pausable',
+        sentiment: 'good',
+        description:
+          "There is no pause function in the bridge's smart contract.",
+      },
     },
     livenessFailure: {
       value: 'Reclaim funds',

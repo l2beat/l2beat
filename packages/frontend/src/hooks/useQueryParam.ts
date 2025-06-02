@@ -5,10 +5,10 @@ const getURLSearchParams = () => {
   if (typeof window !== 'undefined') {
     return new URLSearchParams(window.location.search)
   }
-  return new URLSearchParams((globalThis as any).__FIX_SSR_URL__.split('?')[1])
+  return new URLSearchParams(globalThis.__FIX_SSR_URL__.split('?')[1])
 }
 
-const useQueryParam = (
+export const useQueryParam = (
   key: string,
   defaultVal: string,
   opts?: {
@@ -55,5 +55,3 @@ const useQueryParam = (
 
   return [query, updateUrl]
 }
-
-export default useQueryParam

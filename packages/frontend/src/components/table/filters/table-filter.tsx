@@ -36,16 +36,16 @@ export function TableFilter({ filter, possibleValues }: Props) {
   return (
     <div
       className={cn(
-        'flex h-8 w-max select-none items-center rounded-lg bg-surface-primary text-xs font-medium leading-none primary-card:bg-surface-secondary md:text-sm',
-        'animate-in fade-in-0 zoom-in-95 slide-in-from-left-2',
+        'flex h-8 w-max select-none items-center rounded-lg bg-surface-primary primary-card:bg-surface-secondary font-medium text-xs leading-none md:text-sm',
+        'fade-in-0 zoom-in-95 slide-in-from-left-2 animate-in',
       )}
     >
-      <div className="flex h-full items-center justify-center pl-2.5 pr-2">
+      <div className="flex h-full items-center justify-center pr-2 pl-2.5">
         {filterIdToLabel[filter.id]}
       </div>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
+        className="flex h-full items-center justify-center rounded-none px-2 font-medium focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
         onClick={() => {
           dispatch({
             type: 'setInversed',
@@ -61,7 +61,7 @@ export function TableFilter({ filter, possibleValues }: Props) {
       </TableFilterInternalContextProvider>
       <VerticalSeparator className="h-[30px]" />
       <button
-        className="h-full rounded-r-lg pl-2 pr-2.5 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
+        className="h-full rounded-r-lg pr-2.5 pl-2 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-inset"
         onClick={() => dispatch({ type: 'remove', payload: { id: filter.id } })}
       >
         <div className="inline-flex size-3 items-center justify-center rounded-sm bg-brand">

@@ -1,3 +1,4 @@
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -44,15 +45,29 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
     const adjustedTo =
       from + this.$.batchSize < to ? from + this.$.batchSize : to
 
+    const logFilters = configurations
+      .filter(
+        (c) => c.properties.type === 'ethereum' && c.properties.topics?.length,
+      )
+      .map((c) => {
+        const ethereumConfig = c.properties as EthereumDaTrackingConfig
+        return {
+          address: ethereumConfig.inbox,
+          topics: ethereumConfig.topics ?? [],
+        }
+      })
+
     this.logger.info('Fetching blobs', {
       from,
       to: adjustedTo,
+      filters: logFilters.length,
     })
 
     const blobs = await this.$.daProvider.getBlobs(
       this.daLayer,
       from,
       adjustedTo,
+      logFilters,
     )
 
     if (blobs.length === 0) {

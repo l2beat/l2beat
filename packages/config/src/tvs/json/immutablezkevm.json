@@ -61,6 +61,72 @@
     },
     {
       "mode": "auto",
+      "id": "immutablezkevm-OIK",
+      "priceId": "space-nation-oikos",
+      "symbol": "OIK",
+      "name": "Space Nation Oikos",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54823/large/oik-logo.jpeg?1741858662",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "space-nation-oikos",
+            "decimals": 18,
+            "sinceTimestamp": 1741824000,
+            "address": "0x6E7F11641c1EC71591828E531334192d622703F7",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x6E7F11641c1EC71591828E531334192d622703F7",
+            "escrowAddress": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1741824000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "immutablezkevm-QUEST",
+      "priceId": "ravenquest",
+      "symbol": "QUEST",
+      "name": "Quest Ecosystem",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55071/large/token_200x200.png?1743598440",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "ravenquest",
+            "decimals": 6,
+            "sinceTimestamp": 1743552000,
+            "address": "0x1Fc122FE8b6Fa6b8598799baF687539b5D3B2783",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1Fc122FE8b6Fa6b8598799baF687539b5D3B2783",
+            "escrowAddress": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+            "chain": "ethereum",
+            "decimals": 6,
+            "sinceTimestamp": 1743552000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "immutablezkevm-TGT",
       "priceId": "tokyo-games-token",
       "symbol": "TGT",

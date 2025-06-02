@@ -36,11 +36,6 @@ export const symbiosis: Bridge = {
         '2/3 of the MPC group (the Symbiosis relayers network) is required to create a cross-chain message with the MPC signature.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Contracts are upgradable using a Multisig.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
   },
   technology: {

@@ -303,7 +303,6 @@ export type BridgeCategory =
 
 export interface ProjectBridgeRisks {
   validatedBy?: TableReadyValue
-  sourceUpgradeability?: TableReadyValue
   destinationToken?: TableReadyValue
   livenessFailure?: TableReadyValue
   governance?: {
@@ -881,6 +880,7 @@ export interface EthereumDaTrackingConfig {
   daLayer: ProjectId
   inbox: string
   sequencers?: string[]
+  topics?: string[]
   sinceBlock: number
   untilBlock?: number
 }

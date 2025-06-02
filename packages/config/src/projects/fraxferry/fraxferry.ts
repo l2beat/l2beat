@@ -437,11 +437,6 @@ export const fraxferry: Bridge = {
       description: `Transfers out of the bridge are considered valid if no challenge is submitted within the challenge period of ${challengePeriod}.`,
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: `Admin Multisig can move all funds out of the bridge via admin functions with no warning.`,
-      sentiment: 'bad',
-    },
   },
   technology: {
     canonical: true,

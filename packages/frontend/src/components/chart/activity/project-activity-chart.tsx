@@ -82,7 +82,7 @@ export function ProjectActivityChart({
         metric={metric}
         isLoading={isLoading}
         syncedUntil={chart?.syncedUntil}
-        className="mb-2 mt-4"
+        className="mt-4 mb-2"
         type={type}
         projectName={projectName}
       />

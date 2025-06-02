@@ -20,9 +20,9 @@ export function HighlightableLink({
         className,
         current === props.address && [
           'relative z-10',
-          'before:absolute before:-inset-x-1 before:-inset-y-0.5',
+          'before:-inset-x-1 before:-inset-y-0.5 before:absolute',
           'before:-z-10 before:rounded before:border',
-          'before:border-dashed before:border-yellow-700 before:bg-yellow-250/50 before:content-[""]',
+          'before:border-yellow-700 before:border-dashed before:bg-yellow-250/50 before:content-[""]',
           'before:dark:border-yellow-250 before:dark:bg-yellow-250/10',
         ],
       )}

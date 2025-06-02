@@ -18,7 +18,7 @@ export function SideNavLayout({ children }: { children: React.ReactNode }) {
         {children}
       </div>
       <Footer
-        className="md:px-12 md:pt-8 lg:pl-6 lg:pr-9"
+        className="md:px-12 md:pt-8 lg:pr-9 lg:pl-6"
         innerContainerClassName="max-w-[1142px]"
       />
     </NavLayout>

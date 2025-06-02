@@ -54,12 +54,6 @@ export const lzOmnichain: Bridge = {
         'Transfers need to be independently confirmed by oracle attesting to source chain checkpoints and Relayer providing proof of the transfer event.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        "Omnichain tokens can be individually upgradable and it's security assumptions must be individually assessed for each individual token.",
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   technology: {

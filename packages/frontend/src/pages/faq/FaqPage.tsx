@@ -23,7 +23,7 @@ export function FaqPage(props: AppLayoutProps) {
       <SideNavLayout>
         <MainPageHeader>FAQ</MainPageHeader>
         <Header />
-        <main className="mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
+        <main className="mt-0 flex gap-8 border-divider border-t md:mt-6 md:border-t-0">
           <PrimaryCard>
             {faqItemsWithId.map((item) => {
               const answer = Array.isArray(item.answer)
@@ -37,11 +37,11 @@ export function FaqPage(props: AppLayoutProps) {
                 >
                   <a
                     href={`#${item.id}`}
-                    className="mb-4 block text-2xl font-bold leading-[115%] text-primary no-underline"
+                    className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
                   >
                     {item.question}
                   </a>
-                  <Markdown className="text-base font-normal leading-7 text-secondary ">
+                  <Markdown className="font-normal text-base text-secondary leading-7 ">
                     {answer}
                   </Markdown>
                 </section>
@@ -59,8 +59,8 @@ export function FaqPage(props: AppLayoutProps) {
 function Header() {
   return (
     <PrimaryCard className="flex flex-col">
-      <h1 className="mb-4 text-3xl font-bold md:hidden">FAQ</h1>
-      <p className="text-lg font-bold">
+      <h1 className="mb-4 font-bold text-3xl md:hidden">FAQ</h1>
+      <p className="font-bold text-lg">
         Hi! We are glad you&apos;ve made it to FAQs!
       </p>
       <p>

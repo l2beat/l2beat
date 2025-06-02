@@ -46,7 +46,7 @@ export function ChartStatsItem({
       )}
     >
       <div className="flex items-center gap-1.5">
-        <span className="whitespace-nowrap text-xs font-medium text-secondary">
+        <span className="whitespace-nowrap font-medium text-secondary text-xs">
           {label}
         </span>
         {tooltip && (
@@ -60,12 +60,12 @@ export function ChartStatsItem({
       </div>
       {children ? (
         <SyncStatusWrapper isSynced={isSynced}>
-          <span className="text-sm font-medium text-primary xs:text-lg md:font-bold">
+          <span className="font-medium text-primary text-sm xs:text-lg md:font-bold">
             {children}
           </span>
         </SyncStatusWrapper>
       ) : isLoading ? (
-        <Skeleton className="h-[22px] w-20 xs:h-7 xs:w-24" />
+        <Skeleton className="h-[22px] xs:h-7 w-20 xs:w-24" />
       ) : (
         <NoDataBadge />
       )}
