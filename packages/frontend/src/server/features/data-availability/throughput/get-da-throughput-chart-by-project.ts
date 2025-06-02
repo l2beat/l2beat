@@ -1,7 +1,7 @@
 import type { Project } from '@l2beat/config'
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { z } from 'zod'
 import { env } from '~/env'
