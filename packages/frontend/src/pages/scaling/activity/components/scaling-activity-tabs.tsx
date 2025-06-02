@@ -88,12 +88,12 @@ export function ScalingActivityTabs(props: Props) {
             <CountBadge>{entries.validiumsAndOptimiums.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
           <DirectoryTabsTrigger value="others">
-            Others <CountBadge>{entries.others.length}</CountBadge>
+            Others <CountBadge>{entries.others.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
           {entries.underReview.length > 0 && (
             <DirectoryTabsTrigger value="underReview">
               Under initial review
-              <CountBadge>{entries.underReview.length}</CountBadge>
+              <CountBadge>{entries.underReview.length - 1}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
