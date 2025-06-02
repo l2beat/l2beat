@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.7.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
   "files": {
     "ignore": ["node_modules/", ".cache/", "dist/", ".next/", "build/"]
   },
@@ -21,7 +21,6 @@
   "organizeImports": { "enabled": true },
   "linter": {
     "enabled": true,
-    "ignore": ["packages/frontend"],
     "rules": {
       "recommended": false,
       "complexity": {
@@ -156,10 +155,6 @@
       }
     },
     {
-      "include": ["src/**/*.stories.ts", "src/**/*.tsx"],
-      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
-    },
-    {
       "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
       "linter": {
         "rules": {
@@ -187,6 +182,35 @@
             "noRedeclare": "off",
             "noUnsafeNegation": "off",
             "useGetterReturn": "off"
+          }
+        }
+      }
+    },
+    {
+      // I know it's dumb to do it here in overrides but if I place
+      // it in the frontend/biome.json, it will be ignored by the
+      // IDE extension as it only reads the root biome.json file.
+      // This will be fixed in biome 2.0 so remove this once we migrate.
+      "include": ["packages/frontend/src/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "a11y": {
+            "noBlankTarget": "error"
+          },
+          "complexity": {
+            "noUselessFragments": "error"
+          },
+          "correctness": {
+            "useExhaustiveDependencies": "error",
+            "useHookAtTopLevel": "error",
+            "noChildrenProp": "error",
+            "noVoidElementsWithChildren": "error"
+          },
+          "suspicious": {
+            "noDuplicateJsxProps": "error"
+          },
+          "style": {
+            "useFragmentSyntax": "error"
           }
         }
       }

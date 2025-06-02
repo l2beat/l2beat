@@ -150,7 +150,7 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <div className={tooltipContentVariants()}>
-      <div className="flex !w-[158px] flex-col [@media(min-width:600px)]:!w-60">
+      <div className="!w-[158px] [@media(min-width:600px)]:!w-60 flex flex-col">
         <div className="label-value-14-medium mb-3 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })
@@ -206,13 +206,13 @@ function Header({ total, unit, change, timeRange }: Props) {
     <div className="flex items-start justify-between">
       <div>
         <div className="flex items-center gap-3">
-          <span className="text-xl font-bold">Value Secured</span>
+          <span className="font-bold text-xl">Value Secured</span>
           <a
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 font-bold text-[13px] text-link leading-none max-md:hidden"
             href="/scaling/tvs"
           >
             View details
-            <ChevronIcon className="size-2.5 -rotate-90 fill-current" />
+            <ChevronIcon className="-rotate-90 size-2.5 fill-current" />
           </a>
         </div>
         <CustomLink
@@ -221,11 +221,11 @@ function Header({ total, unit, change, timeRange }: Props) {
           underline={false}
         >
           Details
-          <ChevronIcon className="size-2 -rotate-90 fill-current" />
+          <ChevronIcon className="-rotate-90 size-2 fill-current" />
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
-        <div className="whitespace-nowrap text-right text-xl font-bold">
+        <div className="whitespace-nowrap text-right font-bold text-xl">
           {total === undefined ? (
             <Skeleton className="my-[5px] h-5 w-32" />
           ) : (

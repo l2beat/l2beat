@@ -48,7 +48,7 @@ export function getBridgesArchivedColumns(isOthers?: boolean) {
         }
 
         return (
-          <span className="text-xs font-bold md:text-base">
+          <span className="font-bold text-xs md:text-base">
             {formatCurrency(value, 'usd')}
           </span>
         )

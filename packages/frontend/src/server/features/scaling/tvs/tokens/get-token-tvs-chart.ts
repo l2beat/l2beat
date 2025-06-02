@@ -19,7 +19,6 @@ export const TokenTvsChartParams = z.object({
 })
 
 export type TokenTvsChartParams = z.infer<typeof TokenTvsChartParams>
-type TokenParams = z.infer<typeof TokenParams>
 
 type TokenTvsChart = [timestamp: number, amount: number, usdValue: number][]
 

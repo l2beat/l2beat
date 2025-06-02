@@ -50,7 +50,7 @@ export function ThroughputSection({
       {syncStatus.warning && (
         <div className="my-3.5 flex items-start gap-3 rounded-lg bg-surface-secondary p-4">
           <ClockIcon className="mt-px size-[18px] shrink-0" />
-          <span className="text-sm font-medium text-primary">
+          <span className="font-medium text-primary text-sm">
             {syncStatus.warning}
           </span>
         </div>

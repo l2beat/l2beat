@@ -87,7 +87,6 @@ export function getCollectionEntry<T extends CollectionKey>(
       default:
         assertUnreachable(collection)
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (_) {
     return undefined
   }

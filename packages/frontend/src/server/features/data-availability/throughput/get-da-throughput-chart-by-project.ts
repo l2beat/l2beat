@@ -30,7 +30,7 @@ export async function getDaThroughputChartByProject(
   if (env.MOCK) {
     return getMockDaThroughputChartByProjectData(...parameters)
   }
-  return getDaThroughputChartByProjectData(...parameters)
+  return await getDaThroughputChartByProjectData(...parameters)
 }
 
 const getDaThroughputChartByProjectData = async (

@@ -106,7 +106,7 @@ export function EcosystemTvsByStage({
             return (
               <div key={stage} className="flex gap-2">
                 <StageBadge stage={stage as Stage} isAppchain={false} />
-                <div className="text-xs font-medium leading-[28px] text-secondary">
+                <div className="font-medium text-secondary text-xs leading-[28px]">
                   {formatPercent(tvs / totalTvs)}
                 </div>
               </div>
@@ -115,7 +115,7 @@ export function EcosystemTvsByStage({
         </div>
         <SimpleChartContainer
           meta={chartMeta}
-          className="aspect-square h-[116px] min-h-[116px] xs:h-[140px] xs:min-h-[140px]"
+          className="aspect-square h-[116px] xs:h-[140px] min-h-[116px] xs:min-h-[140px]"
         >
           <PieChart>
             <ChartTooltip
@@ -140,7 +140,7 @@ export function EcosystemTvsByStage({
                       <tspan
                         x="50%"
                         y="50%"
-                        className="fill-secondary text-2xs font-medium leading-none"
+                        className="fill-secondary font-medium text-2xs leading-none"
                         dy={5}
                       >
                         Stages

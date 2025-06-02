@@ -39,7 +39,7 @@ function BannerActionButton() {
       className="text-white dark:text-white"
     >
       <div className="flex items-center justify-center gap-1 rounded-lg border border-[#9360BC] bg-[#53227A] px-5 py-1 transition-colors duration-200 hover:bg-[#53227A]/80">
-        <span className="text-center text-xs font-medium">Learn more</span>
+        <span className="text-center font-medium text-xs">Learn more</span>
       </div>
     </CustomLink>
   )

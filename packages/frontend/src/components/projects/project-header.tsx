@@ -16,7 +16,7 @@ export function ProjectHeader({ project }: { project: Project }) {
           alt={`${project.name} logo`}
         />
       )}
-      <span className="text-3xl font-bold !leading-none md:text-4xl">
+      <span className="!leading-none font-bold text-3xl md:text-4xl">
         {project.name}
       </span>
     </h1>

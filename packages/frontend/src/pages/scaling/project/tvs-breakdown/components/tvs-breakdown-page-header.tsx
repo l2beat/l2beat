@@ -35,10 +35,10 @@ export function TvsBreakdownPageHeader({
       />
 
       <div className="flex flex-col items-start justify-between gap-[10px] md:mb-4 md:flex-row md:items-center">
-        <h2 className="text-[28px] font-bold md:text-3xl">TVS Breakdown</h2>
-        <div className="text-xs font-medium text-secondary">
+        <h2 className="font-bold text-[28px] md:text-3xl">TVS Breakdown</h2>
+        <div className="font-medium text-secondary text-xs">
           Timestamp:&nbsp;
-          <span className="text-base font-medium text-primary">
+          <span className="font-medium text-base text-primary">
             {formatTimestampToDateWithHour(tvsBreakdownTimestamp)}
           </span>
         </div>

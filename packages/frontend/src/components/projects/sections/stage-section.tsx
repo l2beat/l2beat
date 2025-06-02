@@ -69,7 +69,7 @@ export function StageSection({
             alt={name}
             width={18}
             height={18}
-            className="relative -top-px inline-block size-[18px]"
+            className="-top-px relative inline-block size-[18px]"
           />
           <p>{name}&apos;s stage is currently</p>
           <UnderReviewBadge />
@@ -99,12 +99,12 @@ export function StageSection({
           alt={name}
           width={18}
           height={18}
-          className="relative -top-0.5 mr-2 inline-block"
+          className="-top-0.5 relative mr-2 inline-block"
         />
         {name} is a{' '}
         <StageBadge
           stage={stageConfig.stage}
-          className="relative -top-px inline-flex"
+          className="-top-px relative inline-flex"
           isAppchain={isAppchain}
           appchainClassName="text-base md:text-lg inline"
           inline
@@ -128,7 +128,7 @@ export function StageSection({
           <p>{additionalConsiderations.long}</p>
           {isAppchain && (
             <div>
-              <div className="text-[13px] font-semibold uppercase leading-none text-secondary">
+              <div className="font-semibold text-[13px] text-secondary uppercase leading-none">
                 Note:
               </div>
               <div>
@@ -180,7 +180,7 @@ export function StageSection({
 
           return (
             <AccordionItem key={stage.stage} value={stage.stage}>
-              <AccordionTrigger className="py-4 text-lg font-normal md:px-6">
+              <AccordionTrigger className="py-4 font-normal text-lg md:px-6">
                 <div className="flex select-none items-center justify-start gap-3 max-md:text-base">
                   <StageBadge stage={stage.stage} isAppchain={false} />
                   {missingForLabel.length === 0 ? (

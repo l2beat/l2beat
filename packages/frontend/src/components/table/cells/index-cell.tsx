@@ -10,7 +10,7 @@ export function IndexCell({ children, className }: IndexCellProps) {
   return (
     <div
       className={cn(
-        'ml-auto text-right text-xs font-medium tabular-nums text-zinc-500 dark:font-normal dark:text-n-zinc-300',
+        'ml-auto text-right font-medium text-xs text-zinc-500 tabular-nums dark:font-normal dark:text-n-zinc-300',
         className,
       )}
     >

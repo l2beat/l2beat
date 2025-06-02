@@ -67,7 +67,7 @@ export function DaThroughputByProjectChart({
           color:
             project === 'Unknown'
               ? 'hsl(var(--secondary))'
-              : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+              : // biome-ignore lint/style/noNonNullAssertion: we know it's there
                 (customColors[project] ?? colors[colorIndex++]!),
           indicatorType: { shape: 'square' },
         }
@@ -183,7 +183,7 @@ function CustomTooltip({
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium tabular-nums text-primary">
+              <span className="label-value-15-medium text-primary tabular-nums">
                 {formattedValue} {unit}
               </span>
             </div>

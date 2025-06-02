@@ -26,7 +26,7 @@ export function MobileProjectNavigation({ sections }: Props) {
   useEffect(() => {
     if (!selectedItem.current || !overflowContainer.current) return
     scrollToItem(selectedItem.current, overflowContainer.current)
-  }, [currentSection, scrollToItem])
+  }, [scrollToItem])
 
   if (sections.length === 0) return null
 
@@ -81,8 +81,8 @@ function Item({
       ref={ref}
       href={href}
       className={cn(
-        'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-divider px-4 text-center text-xs transition-colors',
-        selected && 'border-b border-current text-brand',
+        'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b px-4 text-center text-xs transition-colors',
+        selected && 'border-current border-b text-brand',
       )}
     >
       {children}

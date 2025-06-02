@@ -131,7 +131,7 @@ function DefaultChart({
         milestones={milestones}
         unit={unit}
         isLoading={isLoading}
-        className="mb-2 mt-4"
+        className="mt-4 mb-2"
       />
       <div className="flex flex-wrap items-center justify-between gap-1">
         <TvsChartUnitControls unit={unit} setUnit={setUnit}>

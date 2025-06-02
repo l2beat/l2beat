@@ -27,7 +27,7 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
   if (!value) {
     if (emptyMode === 'em-dash') {
       return (
-        <div className="text-xs text-gray-500 dark:text-gray-400">
+        <div className="text-gray-500 text-xs dark:text-gray-400">
           {EM_DASH}
         </div>
       )
@@ -84,7 +84,7 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
               ignoreMarkdown
             />
           )}
-          {!!value.description ? value.description : null}
+          {value.description ? value.description : null}
         </TooltipContent>
       </Tooltip>
     )

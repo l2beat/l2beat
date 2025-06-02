@@ -78,7 +78,7 @@ export function BasicTable<T extends CommonProjectEntry>(
                     <th
                       colSpan={header.colSpan}
                       className={cn(
-                        'font-medium tracking-[-0.13px] text-primary',
+                        'font-medium text-primary tracking-[-0.13px]',
                         !header.isPlaceholder &&
                           !!header.column.columnDef.header &&
                           'rounded-t-lg px-6 pt-4',
