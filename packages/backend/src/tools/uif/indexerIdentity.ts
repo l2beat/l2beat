@@ -4,6 +4,7 @@ export function createIndexerId(name: string, tag: string | undefined) {
 
 export const INDEXER_NAMES = {
   DA: 'da_indexer',
+  DA2: 'da_indexer_v2',
   // TVS
   TVS_BLOCK_TIMESTAMP: 'tvs_block_timestamp_indexer',
   TVS_CHAIN_AMOUNT: 'tvs_chain_amount_indexer',

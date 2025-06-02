@@ -5,7 +5,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
-import { unstable_cache as cache } from 'next/cache'
 import { env } from 'process'
 import { z } from 'zod'
 import { getDb } from '~/server/database'
@@ -23,110 +22,107 @@ export const ProjectLivenessChartParams = z.object({
   projectId: z.string(),
 })
 
+export type ProjectLivenessChartData = {
+  data: (
+    | readonly [number, null, null, null]
+    | readonly [number, number, number | null, number]
+  )[]
+  stats: Partial<
+    Record<'stateUpdates' | 'batchSubmissions' | 'proofSubmissions', number>
+  >
+}
+
 /**
  * A function that computes values for chart data of the liveness over time.
  * @returns [timestamp, min, avg, max][] - all numbers
  */
-export async function getProjectLivenessChart(
-  ...parameters: Parameters<typeof getCachedProjectLivenessChartData>
-) {
+export async function getProjectLivenessChart({
+  range,
+  subtype,
+  projectId,
+}: ProjectLivenessChartParams) {
   if (env.MOCK) {
-    return getMockLivenessChart(...parameters)
+    return getMockProjectLivenessChartData({ range, subtype, projectId })
   }
-  return getCachedProjectLivenessChartData(...parameters)
-}
 
-export type ProjectLivenessChartData = Awaited<
-  ReturnType<typeof getCachedProjectLivenessChartData>
->
+  const db = getDb()
+  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
-export const getCachedProjectLivenessChartData = cache(
-  async ({ range, subtype, projectId }: ProjectLivenessChartParams) => {
-    const db = getDb()
-    const target =
-      UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
+  const resolution = rangeToResolution(range)
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: target,
+  })
 
-    const resolution = rangeToResolution(range)
-    const [from, to] = getRangeWithMax(range, resolution, {
-      now: target,
-    })
+  const [livenessProject] = await ps.getProjects({
+    ids: [ProjectId(projectId)],
+    optional: ['livenessConfig'],
+  })
+  const livenessConfig = livenessProject?.livenessConfig
 
-    const [livenessProject] = await ps.getProjects({
-      ids: [ProjectId(projectId)],
-      optional: ['livenessConfig'],
-    })
-    const livenessConfig = livenessProject?.livenessConfig
+  let effectiveSubtype = subtype
+  if (livenessConfig?.duplicateData.to === subtype) {
+    effectiveSubtype = livenessConfig.duplicateData.from
+  }
 
-    let effectiveSubtype = subtype
-    if (livenessConfig?.duplicateData.to === subtype) {
-      effectiveSubtype = livenessConfig.duplicateData.from
-    }
+  const [chartEntries, subtypeAverages] = await Promise.all([
+    db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
+      ProjectId(projectId),
+      effectiveSubtype,
+      [from, to],
+    ),
+    db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
+      from,
+      to,
+    ]),
+  ])
 
-    const [chartEntries, subtypeAverages] = await Promise.all([
-      db.aggregatedLiveness.getByProjectAndSubtypeInTimeRange(
-        ProjectId(projectId),
-        effectiveSubtype,
-        [from, to],
-      ),
-      db.aggregatedLiveness.getAvgByProjectAndTimeRange(ProjectId(projectId), [
-        from,
-        to,
-      ]),
-    ])
+  const stats = Object.fromEntries(
+    subtypeAverages.map(({ subtype, avg }) => [subtype, avg]),
+  ) as Partial<Record<TrackedTxsConfigSubtype, number>>
 
-    const stats = Object.fromEntries(
-      subtypeAverages.map(({ subtype, avg }) => [subtype, avg]),
-    ) as Partial<Record<TrackedTxsConfigSubtype, number>>
-
-    if (chartEntries.length === 0) {
-      return {
-        data: [],
-        stats: undefined,
-      }
-    }
-
-    if (livenessConfig?.duplicateData.to) {
-      const { from, to } = livenessConfig.duplicateData
-      stats[to] = stats[from]
-    }
-
-    const groupedByResolution = groupBy(chartEntries, (e) =>
-      UnixTime.toStartOf(
-        e.timestamp,
-        resolution === 'hourly'
-          ? 'hour'
-          : resolution === 'daily'
-            ? 'day'
-            : 'six hours',
-      ),
-    )
-
-    const startTimestamp = Math.min(
-      ...Object.keys(groupedByResolution).map(Number),
-    )
-    const timestamps = generateTimestamps([startTimestamp, to], resolution, {
-      addTarget: true,
-    })
-
-    const data = timestamps.map((timestamp) => {
-      const entry = groupedByResolution[timestamp]
-      if (!entry) {
-        return [+timestamp, null, null, null] as const
-      }
-      const { min, max, avg } = calculateLivenessStats(entry)
-      return [+timestamp, min, avg, max] as const
-    })
+  if (chartEntries.length === 0) {
     return {
-      data,
-      stats,
+      data: [],
+      stats: undefined,
     }
-  },
-  ['liveness-chart-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
+  }
+
+  if (livenessConfig?.duplicateData.to) {
+    const { from, to } = livenessConfig.duplicateData
+    stats[to] = stats[from]
+  }
+
+  const groupedByResolution = groupBy(chartEntries, (e) =>
+    UnixTime.toStartOf(
+      e.timestamp,
+      resolution === 'hourly'
+        ? 'hour'
+        : resolution === 'daily'
+          ? 'day'
+          : 'six hours',
+    ),
+  )
+
+  const startTimestamp = Math.min(
+    ...Object.keys(groupedByResolution).map(Number),
+  )
+  const timestamps = generateTimestamps([startTimestamp, to], resolution, {
+    addTarget: true,
+  })
+
+  const data = timestamps.map((timestamp) => {
+    const entry = groupedByResolution[timestamp]
+    if (!entry) {
+      return [+timestamp, null, null, null] as const
+    }
+    const { min, max, avg } = calculateLivenessStats(entry)
+    return [+timestamp, min, avg, max] as const
+  })
+  return {
+    data,
+    stats,
+  }
+}
 
 function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
   let min = Infinity
@@ -143,7 +139,7 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
   return { min, max, avg }
 }
 
-function getMockLivenessChart({
+function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
   const [from, to] = getRangeWithMax(range, 'daily')

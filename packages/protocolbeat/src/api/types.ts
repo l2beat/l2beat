@@ -48,6 +48,12 @@ export interface ApiProjectChain {
 
 export type ApiListTemplatesResponse = Record<string, string[]>
 
+export interface ApiTemplateFileResponse {
+  template: string
+  shapes?: string
+  criteria?: string
+}
+
 export type ApiCreateShapeResponse =
   | {
       success: true
@@ -160,7 +166,6 @@ export interface ApiProjectContract extends ApiAddressEntry {
   proxyType?: string
   fields: Field[]
   abis: ApiAbi[]
-  sources: { name: string; code: string }[]
   implementationNames?: Record<string, string>
 }
 

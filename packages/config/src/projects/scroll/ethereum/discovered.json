@@ -2,7 +2,7 @@
   "name": "scroll",
   "chain": "ethereum",
   "blockNumber": 22574521,
-  "configHash": "0xc5a89e822abe1ce68551f123621d3c98a0dd8f974d5a4aebd9551cdaf72bdfdd",
+  "configHash": "0x124d5627d2c685f88e9256f505b73708891f653329096cbce7c4690d4cb102c6",
   "entries": [
     {
       "name": "ZkEvmVerifierPostEuclid",

@@ -74,12 +74,6 @@ export const chainport: Bridge = {
       description: 'Transfers are controlled by the Chainport Congress.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description:
-        'The code that secures the system can be changed arbitrarily and without notice.',
-      sentiment: 'bad',
-    },
   },
   technology: {
     destination: [

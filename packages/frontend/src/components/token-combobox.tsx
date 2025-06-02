@@ -1,6 +1,4 @@
-'use client'
 import { useCommandState } from 'cmdk'
-import Image from 'next/image'
 import React from 'react'
 import { externalLinks } from '~/consts/external-links'
 import { CheckIcon } from '~/icons/check'
@@ -167,7 +165,7 @@ interface TokenItemProps {
 function TokenItem({ token }: TokenItemProps) {
   return (
     <div className="flex items-center gap-1.5">
-      <Image
+      <img
         src={token.iconUrl}
         alt={token.name}
         width={18}

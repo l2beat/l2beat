@@ -1,5 +1,3 @@
-'use client'
-
 import { cn } from '~/utils/cn'
 import type { RosetteValue } from '../types'
 import { GrissiniStick } from './grissini-stick'

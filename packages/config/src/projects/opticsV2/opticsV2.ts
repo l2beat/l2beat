@@ -100,11 +100,6 @@ export const opticsV2: Bridge = {
       )} fraud proof window, but the slashing mechanism is not implemented yet.`,
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'Yes',
-      description: 'Bridge can be upgraded by the Governor MultiSig.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
   contracts: {

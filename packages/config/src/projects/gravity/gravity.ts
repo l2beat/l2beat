@@ -51,12 +51,19 @@ export const gravity: Bridge = {
         '2/3 of the validator set operating the Gravity Bridge blockchain (Cosmos). ',
       sentiment: 'warning',
     },
-    sourceUpgradeability: {
-      value: 'Not upgradable',
-      secondLine: 'Not pausable',
-      description:
-        'The smart contract code on Ethereum that secures the system cannot change nor be paused.',
-      sentiment: 'good',
+    governance: {
+      upgrade: {
+        value: 'Not upgradable',
+        description:
+          'The smart contract code on Ethereum that secures the system cannot change.',
+        sentiment: 'good',
+      },
+      pause: {
+        value: 'Not pausable',
+        sentiment: 'good',
+        description:
+          "There is no pause function in the bridge's smart contract.",
+      },
     },
     livenessFailure: {
       value: 'No mechanism',

@@ -1,4 +1,3 @@
-import { LinkWithOnHoverPrefetch } from '~/components/link/link-with-on-hover-prefetch'
 import { cn } from '~/utils/cn'
 
 export function TableLink({
@@ -12,7 +11,7 @@ export function TableLink({
 }) {
   if (href) {
     return (
-      <LinkWithOnHoverPrefetch
+      <a
         className={cn(
           'inline-flex h-[calc(100%_-_8px)] max-h-[52px] w-max items-center rounded transition-colors md:-mx-3 md:px-3',
           'md:hover:bg-pure-black/5 md:dark:hover:bg-pure-white/10',
@@ -21,7 +20,7 @@ export function TableLink({
         href={href}
       >
         {children}
-      </LinkWithOnHoverPrefetch>
+      </a>
     )
   }
   return children

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "blessnet",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": ["0x46B6462301182B393ac5f014779687d3B6d4FB57"],
+      "names": {
+        "0x571D6CA61B979A967E055696c822CF8C928d3556": "Blessnet Multisig 1",
+        "0x089E12e795b3292BcC16f29817bE124C720615b0": "Blessnet Multisig 2"
+      }
+    }
+  }
+}

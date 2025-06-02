@@ -72,7 +72,6 @@ export const sollet: Bridge = {
       description: 'Withdrawals need to be signed by an EOA account.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: {
       ...BRIDGE_RISK_VIEW.WRAPPED,
       description:

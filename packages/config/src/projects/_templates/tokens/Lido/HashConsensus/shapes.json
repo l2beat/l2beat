@@ -4,5 +4,11 @@
     "address": "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "HashConsensus_v2": {
+    "hash": "0xd7c073e5462dc74227ab219c6db299253e6a83e1a470f27a9d5dcff04fd6b46f",
+    "address": "0x71093efF8D8599b5fA340D665Ad60fA7C80688e4",
+    "chain": "ethereum",
+    "blockNumber": 22587696
   }
 }

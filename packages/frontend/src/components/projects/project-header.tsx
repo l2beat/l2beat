@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 interface Project {
   name: string
   slug: string
@@ -10,7 +8,7 @@ export function ProjectHeader({ project }: { project: Project }) {
   return (
     <h1 className="flex items-center justify-start gap-3">
       {project.slug && (
-        <Image
+        <img
           className="max-md:size-8"
           width={40}
           height={40}

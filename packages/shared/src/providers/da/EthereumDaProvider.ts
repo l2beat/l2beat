@@ -3,14 +3,14 @@ import { utils } from 'ethers'
 import type {
   BeaconChainBlob,
   BeaconChainClient,
+  EVMLog,
   RpcClient,
 } from '../../clients'
-import type { DaBlobProvider } from './DaProvider'
+import type { DaBlobProvider, LogsFilter } from './DaProvider'
 import type { EthereumBlob } from './types'
 
 // each blob is 128 KiB so 131,072 B
 const BLOB_SIZE_BYTES = 131072n
-const BEACON_CHAIN_GENESIS_TIMESTAMP = 1606824023
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
@@ -19,10 +19,29 @@ export class EthereumDaProvider implements DaBlobProvider {
     readonly daLayer: string,
   ) {}
 
-  async getBlobs(from: number, to: number): Promise<EthereumBlob[]> {
+  async getBlobs(
+    from: number,
+    to: number,
+    logFilters?: LogsFilter[],
+  ): Promise<EthereumBlob[]> {
+    // to be able to track internal call we need to get logs
+    let logs: EVMLog[] = []
+    if (logFilters) {
+      const addresses = []
+      const topics = []
+
+      for (const filter of logFilters) {
+        addresses.push(filter.address)
+        topics.push(...filter.topics)
+      }
+
+      logs = await this.rpcClient.getLogs(addresses, topics, from, to)
+    }
+
     const getBlobs = []
+
     for (let blockNumber = from; blockNumber <= to; blockNumber++) {
-      getBlobs.push(this.getBlobsFromBeaconChain(blockNumber))
+      getBlobs.push(this.getBlobsForBlock(blockNumber, logs))
     }
 
     return (await Promise.all(getBlobs)).flat()
@@ -59,14 +78,11 @@ export class EthereumDaProvider implements DaBlobProvider {
     return filterOutIrrelevant(blockSidecar, tx.blobVersionedHashes)
   }
 
-  private async getBlobsFromBeaconChain(
+  private async getBlobsForBlock(
     blockNumber: number,
+    logs: EVMLog[],
   ): Promise<EthereumBlob[]> {
     const block = await this.rpcClient.getBlock(blockNumber, true)
-    const slot = await this.getBeaconSlot(block.timestamp)
-    const blockSidecar = await this.beaconChainClient.getBlockSidecar(
-      slot.toString(),
-    )
 
     const blobs: EthereumBlob[] = []
     for (const tx of block.transactions) {
@@ -75,12 +91,9 @@ export class EthereumDaProvider implements DaBlobProvider {
         continue
       }
 
-      const relevantBlobs = filterOutIrrelevant(
-        blockSidecar,
-        tx.blobVersionedHashes,
-      )
+      const log = logs.find((l) => l.transactionHash === tx.hash)
 
-      relevantBlobs.forEach(() =>
+      tx.blobVersionedHashes.forEach(() =>
         blobs.push({
           type: 'ethereum',
           daLayer: this.daLayer,
@@ -88,15 +101,12 @@ export class EthereumDaProvider implements DaBlobProvider {
           size: BLOB_SIZE_BYTES,
           inbox: tx.to ?? '',
           sequencer: tx.from,
+          topics: log?.topics ?? [],
         }),
       )
     }
 
     return blobs
-  }
-
-  private getBeaconSlot(blockTimestamp: number): number {
-    return (blockTimestamp - BEACON_CHAIN_GENESIS_TIMESTAMP) / 12
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id

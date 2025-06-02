@@ -50,6 +50,7 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
+  readonly da2: DataAvailabilityTrackingConfig2 | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -245,4 +246,35 @@ export interface DataAvailabilityTrackingConfig {
     configurationId: string
     config: DaTrackingConfig
   }[]
+}
+
+// DataAvailability2
+type LayerAsProjectDaTrackingConfig = {
+  type: 'baseLayer'
+  daLayer: string
+  sinceBlock: number
+  untilBlock?: number
+}
+
+export type DaIndexedConfig = (
+  | ProjectDaTrackingConfig
+  | LayerAsProjectDaTrackingConfig
+) & {
+  /** Hash computed automatically based on fields */
+  configurationId: string
+  projectId: ProjectId
+}
+
+export type LayerDaTrackingConfig = {
+  type: 'ethereum' | 'celestia' | 'avail'
+  name: string
+  url: string
+  callsPerMinute: number
+  batchSize: number
+  startingBlock: number
+}
+
+export interface DataAvailabilityTrackingConfig2 {
+  readonly layers: LayerDaTrackingConfig[]
+  readonly projects: DaIndexedConfig[]
 }

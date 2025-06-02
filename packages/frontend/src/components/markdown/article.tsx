@@ -1,5 +1,4 @@
 import MarkdownIt from 'markdown-it'
-import React from 'react'
 import { cn } from '~/utils/cn'
 import { outLinksPlugin } from '~/utils/markdown/outlinks-plugin'
 

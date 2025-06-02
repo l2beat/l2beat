@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "aevo",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x4082C9647c098a6493fb499EaE63b5ce3259c574"],
+      "names": {}
+    }
+  }
+}

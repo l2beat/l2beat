@@ -1,5 +1,3 @@
-'use client'
-
 import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/overflow-wrapper'

@@ -1,4 +1,3 @@
-'use client'
 import { UnixTime } from '@l2beat/shared-pure'
 import { memo, useState } from 'react'
 import { useInterval } from '~/hooks/use-interval'

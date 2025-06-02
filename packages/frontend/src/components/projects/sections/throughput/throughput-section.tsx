@@ -1,6 +1,5 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
-import Link from 'next/link'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/throughput-section-chart'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/chart-stats'
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
@@ -87,9 +86,9 @@ export function ThroughputSection({
           isSynced={syncStatus.isSynced}
         >
           {largestPoster ? (
-            <Link href={largestPoster.href}>
+            <a href={largestPoster.href}>
               {largestPoster.name} ({largestPoster.percentage}%)
-            </Link>
+            </a>
           ) : undefined}
         </ChartStatsItem>
         <ChartStatsItem

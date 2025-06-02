@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract that allows users to enqueue forced transactions via L1. The system guarantees that at least one pending forced transaction from the queue will be processed every {{ inclusionDelay }} batches. Individual transactions may face longer delays if the queue is extensive.",
+  "ignoreMethods": ["proxiableUUID", "queue"]
+}

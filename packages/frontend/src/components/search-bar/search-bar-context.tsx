@@ -1,5 +1,3 @@
-'use client'
-
 import { createContext, useContext, useState } from 'react'
 import { useIsMobile } from '~/hooks/use-is-mobile'
 import { SearchBarDialog } from './search-bar-dialog'

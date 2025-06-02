@@ -1,0 +1,27 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "eigenda",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"
+      ],
+      "names": {
+        "0xC06Fd4F821eaC1fF1ae8067b36342899b57BAa2d": "TimelockControllerOwning",
+        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN Token",
+        "0x461854d84Ee845F905e0eCf6C288DDEEb4A9533F": "EigenLayerProtocolCouncil"
+      },
+      "overrides": {
+        "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
+          "ignoreRelatives": ["bEIGEN"]
+        },
+        "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
+          "extends": "eigenlayer/Strategy"
+        }
+      },
+      "sharedModules": ["shared-eigenlayer"]
+    }
+  }
+}

@@ -140,7 +140,7 @@
   }
 
   body {
-    @apply bg-background text-base text-primary md:text-lg font-sans selection:bg-brand/30 dark:selection:bg-brand/50;
+    @apply bg-background text-base text-primary md:text-lg font-roboto selection:bg-brand/30 dark:selection:bg-brand/50;
   }
 
   body:has(.reading) {
@@ -226,10 +226,6 @@
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-  }
-
-  .word-break-word {
-    word-break: break-word;
   }
 }
 

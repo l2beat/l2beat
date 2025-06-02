@@ -1,5 +1,3 @@
-'use client'
-
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
 import React from 'react'
 import { useIsClient } from '~/hooks/use-is-client'

@@ -1,4 +1,3 @@
-'use client'
 import type { Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { useEffect, useMemo, useState } from 'react'

@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "VerifierGateway",
+  "description": "Gateway contract for the multi-proof system. It redirects proof to the appropriate verifier based on the proof type.",
+  "ignoreMethods": ["proxiableUUID"]
+}

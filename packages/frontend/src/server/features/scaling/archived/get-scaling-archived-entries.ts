@@ -3,9 +3,9 @@ import type {
   ProjectScalingCategory,
   ProjectScalingStack,
 } from '@l2beat/config'
-import { getL2Risks } from '~/app/(side-nav)/scaling/_utils/get-l2-risks'
-import { groupByScalingTabs } from '~/app/(side-nav)/scaling/_utils/group-by-scaling-tabs'
 import type { RosetteValue } from '~/components/rosette/types'
+import { getL2Risks } from '~/pages/scaling/utils/get-l2-risks'
+import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
 import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/get-projects-change-report'
 import { getProjectsChangeReport } from '../../projects-change-report/get-projects-change-report'

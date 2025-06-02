@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "popapex",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": ["0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1"]
+    }
+  }
+}

@@ -1,6 +1,4 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
+import { usePathname } from '~/hooks/usePathname'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import type { NavGroup } from '../types'
 

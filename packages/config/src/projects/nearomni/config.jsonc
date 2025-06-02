@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "nearomni",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0xe00c629aFaCCb0510995A2B95560E446A24c85B9"]
+    }
+  }
+}

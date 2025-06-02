@@ -1,0 +1,49 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
+  "ignoreMethods": ["proxiableUUID"],
+  "types": {
+    "Bytes32ToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x7461696b6f5f746f6b656e000000000000000000000000000000000000000000": "taiko_token",
+        "0x626f6e645f746f6b656e00000000000000000000000000000000000000000000": "bond_token",
+        "0x6272696467650000000000000000000000000000000000000000000000000000": "bridge",
+        "0x7369676e616c5f73657276696365000000000000000000000000000000000000": "signal_service",
+        "0x65726332305f7661756c74000000000000000000000000000000000000000000": "erc20_vault",
+        "0x6572633732315f7661756c740000000000000000000000000000000000000000": "erc721_vault",
+        "0x657263313135355f7661756c7400000000000000000000000000000000000000": "erc1155_vault",
+        "0x6272696467655f7761746368646f670000000000000000000000000000000000": "bridge_watchdog",
+        "0x627269646765645f657263323000000000000000000000000000000000000000": "bridged_erc20",
+        "0x627269646765645f657263373231000000000000000000000000000000000000": "bridged_erc721",
+        "0x627269646765645f657263313135350000000000000000000000000000000000": "bridged_erc1155"
+      }
+    }
+  },
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the contract address for a given name"
+        }
+      ]
+    },
+    "namedAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "newAddress",
+        "groupBy": "name",
+        "set": {
+          "event": "AddressRegistered"
+        },
+        "ignoreRelative": true
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["shape", ["name", ["format", "Bytes32ToName"]], "address"]]
+      ]
+    }
+  }
+}

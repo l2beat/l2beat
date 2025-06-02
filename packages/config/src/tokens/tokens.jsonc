@@ -1,6 +1,18 @@
 {
   "ethereum": [
     {
+      "symbol": "OIK",
+      "address": "0x6E7F11641c1EC71591828E531334192d622703F7"
+    },
+    {
+      "symbol": "QUEST",
+      "address": "0x1fc122fe8b6fa6b8598799baf687539b5d3b2783"
+    },
+    {
+      "symbol": "SOPH",
+      "address": "0x6b7774cb12ed7573a7586e7d0e62a2a563ddd3f0"
+    },
+    {
       "symbol": "deUSD",
       "category": "stablecoin",
       "address": "0x15700b564ca08d9439c58ca5053166e8317aa138"
@@ -6817,6 +6829,15 @@
       "address": "0x0FA1d8Ffa9B414ABF0F47183e088bddC32e084F3",
       "source": "native",
       "supply": "circulatingSupply"
+    }
+  ],
+  "worldchain": [
+    {
+      "symbol": "USDC",
+      "category": "stablecoin",
+      "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
+      "source": "native",
+      "supply": "totalSupply"
     }
   ]
 }

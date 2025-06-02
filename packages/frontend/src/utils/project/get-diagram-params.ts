@@ -49,7 +49,7 @@ export function getDiagramParams(
   const paths = Object.fromEntries(
     Object.entries(imagePaths)
       .filter(([_, filePath]) =>
-        existsSync(path.join(process.cwd(), 'public', filePath)),
+        existsSync(path.join(process.cwd(), 'static', filePath)),
       )
       .map(([key, filePath]) => [key, getImageParams(filePath)]),
   )

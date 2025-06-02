@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "linea",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"]
+    }
+  }
+}

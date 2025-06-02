@@ -2,7 +2,7 @@
   "name": "loopring",
   "chain": "ethereum",
   "blockNumber": 21973864,
-  "configHash": "0x69a252ec9db5b7c0c4ea55c07626a3d9ec2af60288f4291ee3fcef92b34891aa",
+  "configHash": "0xd21f5f47155311f5a3812740fa3eb3484d91c814521de5065b51651581e40a38",
   "entries": [
     {
       "name": "ExchangeV3",
@@ -501,7 +501,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "LRC_v2",
+      "name": "LoopringCoin V2 Token",
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD",
       "type": "Contract",
       "sourceHashes": [
@@ -1019,5 +1019,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x1849084bbe62d8bb924cebbcf032befda4fe22f8bb21dffe12587505f6835d2c"
+  "permissionsConfigHash": "0xf1a241fd1ddbc6d8fff6bd449db4cb4c7da320101e49080c36f457f709232610"
 }

@@ -1,61 +1,52 @@
 import type { Project } from '@l2beat/config'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { unstable_cache as cache } from 'next/cache'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getTvsTargetTimestamp } from '../utils/get-tvs-target-timestamp'
 import { getTvsBreakdown } from './get-tvs-breakdown'
+import { BreakdownRecord } from './types'
 
 export type ProjectTvsBreakdown = Awaited<ReturnType<typeof getTvsBreakdown>>
+type TvsBreakdownForProject = {
+  dataTimestamp: number
+  breakdown: BreakdownRecord
+}
 
 export async function getTvsBreakdownForProject(
   project: Project<'tvsConfig', 'chainConfig' | 'contracts'>,
-) {
+): Promise<TvsBreakdownForProject> {
   if (env.MOCK) {
     return getMockTvsBreakdownForProjectData()
   }
-  return getCachedTvsBreakdownForProjectData(project)
+
+  const db = getDb()
+  const targetTimestamp = getTvsTargetTimestamp()
+
+  const [projects, tokenValues] = await Promise.all([
+    ps.getProjects({
+      select: ['chainConfig'],
+    }),
+    db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
+  ])
+
+  const chains = projects.map((x) => x.chainConfig)
+  const tokenValuesMap = new Map(
+    tokenValues.map((x) => [TokenId(x.tokenId), x]),
+  )
+
+  const breakdown = await getTvsBreakdown(
+    project,
+    tokenValuesMap,
+    chains,
+    targetTimestamp,
+  )
+
+  return {
+    dataTimestamp: targetTimestamp,
+    breakdown,
+  }
 }
-
-type TvsBreakdownForProject = Awaited<
-  ReturnType<typeof getCachedTvsBreakdownForProjectData>
->
-export const getCachedTvsBreakdownForProjectData = cache(
-  async (project: Project<'tvsConfig', 'chainConfig' | 'contracts'>) => {
-    const db = getDb()
-    const targetTimestamp = getTvsTargetTimestamp()
-
-    const [projects, tokenValues] = await Promise.all([
-      ps.getProjects({
-        select: ['chainConfig'],
-      }),
-      db.tvsTokenValue.getByProjectAtOrBefore(project.id, targetTimestamp),
-    ])
-
-    const chains = projects.map((x) => x.chainConfig)
-    const tokenValuesMap = new Map(
-      tokenValues.map((x) => [TokenId(x.tokenId), x]),
-    )
-
-    const breakdown = await getTvsBreakdown(
-      project,
-      tokenValuesMap,
-      chains,
-      targetTimestamp,
-    )
-
-    return {
-      dataTimestamp: targetTimestamp,
-      breakdown,
-    }
-  },
-  ['getCachedTvsBreakdownForProject'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
 
 function getMockTvsBreakdownForProjectData(): TvsBreakdownForProject {
   return {

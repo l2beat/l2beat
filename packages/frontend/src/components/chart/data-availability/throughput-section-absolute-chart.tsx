@@ -1,5 +1,3 @@
-'use client'
-
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'

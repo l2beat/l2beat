@@ -8,6 +8,42 @@
         "args": [],
         "expectRevert": true
       }
+    },
+    "mrEnclaves": {
+      "handler": {
+        "type": "event",
+        "select": "mrEnclave",
+        "add": {
+          "event": "MrEnclaveUpdated",
+          "where": ["=", "#trusted", true]
+        },
+        "remove": {
+          "event": "MrEnclaveUpdated",
+          "where": ["!=", "#trusted", true]
+        }
+      }
+    },
+    "mrSigners": {
+      "handler": {
+        "type": "event",
+        "select": "mrSigner",
+        "add": {
+          "event": "MrSignerUpdated",
+          "where": ["=", "#trusted", true]
+        },
+        "remove": {
+          "event": "MrSignerUpdated",
+          "where": ["!=", "#trusted", true]
+        }
+      }
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can update the program being verified"
+        }
+      ]
     }
   }
 }

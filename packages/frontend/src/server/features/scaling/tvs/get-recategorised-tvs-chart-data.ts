@@ -1,8 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
 import { env } from '~/env'
@@ -27,67 +25,57 @@ export type RecategorisedTvsChartDataParams = z.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
+export type RecategorisedTvsChartData = (readonly [
+  timestamp: number,
+  rollups: number,
+  validiumsAndOptimiums: number,
+  others: number,
+])[]
+
 /**
  * A function that computes values for chart data of the TVS over time.
  * @returns {
  *  [timestamp, rollups, validiumsAndOptimiums, others][] - all numbers
  * }
  */
-export async function getRecategorisedTvsChart(
-  ...args: Parameters<typeof getCachedRecategorisedTvsChartData>
-) {
+export async function getRecategorisedTvsChart({
+  range,
+  filter,
+  previewRecategorisation,
+}: RecategorisedTvsChartDataParams): Promise<RecategorisedTvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData(...args)
+    return getMockTvsChartData({ range, filter, previewRecategorisation })
   }
-  return getCachedRecategorisedTvsChartData(...args)
-}
 
-export type RecategorisedTvsChartData = Awaited<
-  ReturnType<typeof getCachedRecategorisedTvsChartData>
->
-export const getCachedRecategorisedTvsChartData = cache(
-  async ({
-    range,
+  const projectsFilter = createTvsProjectsFilter(
     filter,
     previewRecategorisation,
-  }: RecategorisedTvsChartDataParams) => {
-    const projectsFilter = createTvsProjectsFilter(
-      filter,
-      previewRecategorisation,
-    )
+  )
 
-    const tvsProjects = await getTvsProjects(
-      projectsFilter,
-      previewRecategorisation,
-    )
+  const tvsProjects = await getTvsProjects(
+    projectsFilter,
+    previewRecategorisation,
+  )
 
-    if (tvsProjects.length === 0) {
-      return []
-    }
+  if (tvsProjects.length === 0) {
+    return []
+  }
 
-    const groupedByType = groupBy(tvsProjects, (p) => p.category)
-    const rollups =
-      groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
-    const validiumsAndOptimiums =
-      groupedByType.validiumsAndOptimiums?.map(({ projectId }) => projectId) ??
-      []
-    const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
+  const groupedByType = groupBy(tvsProjects, (p) => p.category)
+  const rollups = groupedByType.rollups?.map(({ projectId }) => projectId) ?? []
+  const validiumsAndOptimiums =
+    groupedByType.validiumsAndOptimiums?.map(({ projectId }) => projectId) ?? []
+  const others = groupedByType.others?.map(({ projectId }) => projectId) ?? []
 
-    const [rollupValues, validiumAndOptimiumsValues, othersValues] =
-      await Promise.all([
-        getSummedTvsValues(rollups, range, 'SUMMARY'),
-        getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
-        getSummedTvsValues(others, range, 'SUMMARY'),
-      ])
+  const [rollupValues, validiumAndOptimiumsValues, othersValues] =
+    await Promise.all([
+      getSummedTvsValues(rollups, range, 'SUMMARY'),
+      getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
+      getSummedTvsValues(others, range, 'SUMMARY'),
+    ])
 
-    return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
-  },
-  ['recategorised-tvs-chart-data'],
-  {
-    tags: ['hourly-data'],
-    revalidate: UnixTime.HOUR,
-  },
-)
+  return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
+}
 
 function getChartData(
   rollupsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],

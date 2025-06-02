@@ -1,12 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import {
-  mapBridgeRisksToRosetteValues,
-  mapLayerRisksToRosetteValues,
-} from '~/app/(side-nav)/data-availability/_utils/map-risks-to-rosette-values'
 import type { GroupSectionProps } from '~/components/projects/sections/group-section'
 import type { TechnologyChoicesSectionProps } from '~/components/projects/sections/technology-choices-section'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
+import {
+  mapBridgeRisksToRosetteValues,
+  mapLayerRisksToRosetteValues,
+} from '~/pages/data-availability/utils/map-risks-to-rosette-values'
 import { getDaLayerRisks } from '~/server/features/data-availability/utils/get-da-layer-risks'
 import type { DaSolution } from '~/server/features/scaling/project/get-scaling-da-solution'
 import { getProjectIcon } from '~/server/features/utils/get-project-icon'

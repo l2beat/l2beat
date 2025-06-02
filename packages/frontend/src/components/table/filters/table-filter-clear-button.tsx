@@ -1,5 +1,3 @@
-'use client'
-
 import { useTableFilterContext } from './table-filter-context'
 
 export function TableFilterClearButton() {

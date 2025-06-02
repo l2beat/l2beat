@@ -1,4 +1,3 @@
-'use client'
 import partition from 'lodash/partition'
 import { DiagramImage } from '~/components/diagram-image'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'

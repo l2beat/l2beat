@@ -1,4 +1,5 @@
 import { expect } from 'earl'
+import type { ContractValue } from '../discovery/output/types'
 import { executeBlip } from './executeBlip'
 
 describe(executeBlip.name, () => {
@@ -1027,6 +1028,40 @@ describe(executeBlip.name, () => {
           ['outerKey', ['get', 'subKey']],
         ]),
       ).toEqual({ test: 'test', outerKey: 'subValue' })
+    })
+  })
+
+  describe('shape operations', () => {
+    it('works with objects', () => {
+      const input = { x: 'one', y: 'two', z: 'three' }
+      const result = executeBlip(input, ['to_entries'])
+      expect(result).toEqual([
+        ['x', 'one'],
+        ['y', 'two'],
+        ['z', 'three'],
+      ])
+    })
+
+    it('works with arrays', () => {
+      const input = [1, 2, 3]
+      const result = executeBlip(input, ['to_entries'])
+      expect(result).toEqual([
+        ['0', 1],
+        ['1', 2],
+        ['2', 3],
+      ])
+    })
+
+    it('works with empty objects', () => {
+      const input = {}
+      const result = executeBlip(input, ['to_entries'])
+      expect(result).toEqual([])
+    })
+
+    it('works with empty arrays', () => {
+      const input: ContractValue[] = []
+      const result = executeBlip(input, ['to_entries'])
+      expect(result).toEqual([])
     })
   })
 })

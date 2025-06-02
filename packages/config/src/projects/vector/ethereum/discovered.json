@@ -2,7 +2,7 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 22431133,
-  "configHash": "0xe30bd3992feab4bbebc9033627ce6ff564c0b22e800fb9b3c9254c95c9f587e9",
+  "configHash": "0x0573327a695b2211e98d2dff287b91632161196d1353a4460801688c7c71df46",
   "entries": [
     {
       "name": "Vector",
@@ -571,7 +571,7 @@
         "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
       ],
       "proxyType": "immutable",
-      "description": "SP1Verifier is a contract used to verify proofs given public values and verification key.",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1735949699,
       "sinceBlock": 21547470,
       "values": {

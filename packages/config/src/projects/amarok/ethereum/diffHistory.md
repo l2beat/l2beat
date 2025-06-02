@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x20e38c0003e234c7b64e1ea0f61294ba1beacc8e
+Generated with discovered.json: 0xdc4ee93d1c2dcd9ad0bfa1a862a133db50be2f7e
+
+# Diff at Wed, 28 May 2025 13:55:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@498e4fbc23b0148c96248f03ca33a8415e632b71 block: 21629064
+- current block number: 21629064
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+    contract UMA Voting Token v1 (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828) {
+    +++ description: None
+      name:
+-        "VotingToken"
++        "UMA Voting Token v1"
+    }
+```
+
+Generated with discovered.json: 0x328f907a17728e2eb724575691bfa48e2b4db29c
 
 # Diff at Tue, 27 May 2025 08:26:17 GMT:
 

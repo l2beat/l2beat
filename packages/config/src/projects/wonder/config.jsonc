@@ -1,0 +1,66 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "wonder",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "zksync2": { "initialAddresses": [], "sharedModules": ["shared-zk-stack"] },
+    "ethereum": {
+      "initialAddresses": ["0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"],
+      "names": {
+        "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92": "zkVmDiamond",
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
+      },
+      "overrides": {
+        "0x742A28e22277945BBAAa34810393bf6e8512576C": {
+          "fields": {
+            "validators": {
+              "handler": {
+                "type": "hardcoded",
+                "value": ["0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
+              }
+            }
+          }
+        },
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9637]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9637]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        },
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9637]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 9637]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        }
+      },
+      "sharedModules": ["shared-zk-stack"]
+    }
+  }
+}

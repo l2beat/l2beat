@@ -1,15 +1,14 @@
-import { writeFileSync } from 'fs'
-import { mkdirSync } from 'fs'
+import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import {
   TemplateService,
+  combineImplementationHashes,
   flattenStartingFrom,
   flatteningHash,
   getChainConfig,
   getDiscoveryPaths,
+  getExplorerClient,
 } from '@l2beat/discovery'
-import { getExplorerClient } from '@l2beat/discovery'
-import { combineImplementationHashes } from '@l2beat/discovery'
 import { CliLogger, HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
@@ -28,12 +27,57 @@ export const DownloadShapes = command({
     const logger = new CliLogger()
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
+
     if (templateService.exists(args.template) === false) {
       logger.logLine(`Couldn't find template "${args.template}"`)
       return
     }
 
-    const templatePath = templateService.getTemplatePath(args.template)
+    const downloadShape = createShapeDownloader(templateService, logger)
+
+    await downloadShape(args.template)
+  },
+})
+
+export const DownloadAllShapes = command({
+  name: 'download-all-shapes',
+  description:
+    'Download all Solidity files for shapes defined in all templates.',
+  args: {},
+  handler: async () => {
+    const logger = new CliLogger()
+    const paths = getDiscoveryPaths()
+    const templateService = new TemplateService(paths.discovery)
+
+    const allTemplates = templateService.listAllTemplates()
+
+    const templatesWithShapes = Object.entries(allTemplates)
+      .filter(([_, { shapePath }]) => shapePath !== undefined)
+      .map(([templateId]) => templateId)
+
+    const downloadShape = createShapeDownloader(templateService, logger)
+    let progress = 0
+    const total = templatesWithShapes.length
+
+    for (const templateId of templatesWithShapes) {
+      await downloadShape(templateId)
+      progress++
+      const percent = (progress / total) * 100
+      logger.updateStatus('lastDownloaded', `Last downloaded: ${templateId}`)
+      logger.updateStatus(
+        'progress',
+        `Progress: ${percent.toFixed(2)}% (${progress}/${total})`,
+      )
+    }
+  },
+})
+
+function createShapeDownloader(
+  templateService: TemplateService,
+  logger: CliLogger,
+) {
+  return async (templateId: string) => {
+    const templatePath = templateService.getTemplatePath(templateId)
     const shapeSchema = templateService.readShapeSchema(
       join(templatePath, 'shapes.json'),
     )
@@ -110,5 +154,5 @@ export const DownloadShapes = command({
         writeFileSync(filePath, content)
       }
     }
-  },
-})
+  }
+}

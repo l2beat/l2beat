@@ -2,7 +2,7 @@
   "name": "corn",
   "chain": "ethereum",
   "blockNumber": 22437609,
-  "configHash": "0x190013b5b71d28e387bd12204071c121ba54b65b9b3846125ed158ab590f30e5",
+  "configHash": "0x15f18e3d35b43f8eed3842bf3e8e59e5f9314105f11449416d666e010b4e4b12",
   "entries": [
     {
       "name": "wBTC Escrow",

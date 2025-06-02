@@ -210,7 +210,7 @@ export const metis: ScalingProject = {
       references: [
         {
           title: 'Decentralized Sequencer - Metis documentation',
-          url: 'https://docs.metis.io/dev/decentralized-sequencer/overview',
+          url: 'https://docs.metis.io/andromeda/sequencer/architecture/mpc',
         },
       ],
     },
@@ -228,8 +228,8 @@ export const metis: ScalingProject = {
         ...EXITS.REGULAR_MESSAGING('optimistic'),
         references: [
           {
-            title: 'Withdrawing from Metis - Metis documentation',
-            url: 'https://docs.metis.io/building-on-metis/metis-bridge#withdrawing-from-metis',
+            title: 'Transaction finality - Metis documentation',
+            url: 'https://docs.metis.io/andromeda/sequencer/architecture/transaction',
           },
         ],
         risks: [EXITS.RISK_CENTRALIZED_VALIDATOR],

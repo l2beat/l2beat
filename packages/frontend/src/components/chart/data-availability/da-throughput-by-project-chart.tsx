@@ -1,4 +1,5 @@
 'use client'
+import type { Milestone } from '@l2beat/config'
 import sum from 'lodash/sum'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
@@ -25,6 +26,7 @@ interface Props {
   isLoading: boolean
   projectsToShow: string[]
   customColors: Record<string, string>
+  milestones: Milestone[]
 }
 
 export function DaThroughputByProjectChart({
@@ -32,6 +34,7 @@ export function DaThroughputByProjectChart({
   isLoading,
   projectsToShow,
   customColors,
+  milestones,
 }: Props) {
   const colors = useMemo(
     () => generateAccessibleColors(projectsToShow.length),
@@ -97,7 +100,12 @@ export function DaThroughputByProjectChart({
   }, [data, projectsToShow, denominator])
 
   return (
-    <ChartContainer data={chartData} meta={chartMeta} isLoading={isLoading}>
+    <ChartContainer
+      data={chartData}
+      meta={chartMeta}
+      isLoading={isLoading}
+      milestones={milestones}
+    >
       <BarChart
         accessibilityLayer
         data={chartData}

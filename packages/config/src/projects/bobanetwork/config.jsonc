@@ -1,0 +1,10 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "bobanetwork",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"]
+    }
+  }
+}

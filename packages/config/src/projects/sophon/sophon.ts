@@ -99,7 +99,9 @@ export const sophon: ScalingProject = zkStackL2({
         'stAZUR',
         'stAVAIL',
         'OPN',
-      ], // 'SOPH' not on CG yet
+        'SOPH',
+      ],
+      premintedTokens: ['SOPH'],
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',
       sharedEscrow: {
@@ -110,7 +112,7 @@ export const sophon: ScalingProject = zkStackL2({
         l2EtherAddress: EthereumAddress(
           '0x72af9F169B619D85A47Dfa8fefbCD39dE55c567D',
         ),
-        tokensToAssignFromL1: [], // 'SOPH' not on CG yet
+        tokensToAssignFromL1: ['SOPH'],
       },
     }),
   ],
@@ -249,6 +251,13 @@ export const sophon: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'SOPH TGE',
+      url: 'https://x.com/sophon/status/1927697463655219692', // TODO better announcement link
+      date: '2025-05-28T00:00:00.00Z',
+      description: 'SOPH, the gas token of Sophon, is officially live.',
+      type: 'general',
+    },
     {
       title: 'Avail Vector DA Bridge',
       url: 'https://blog.availproject.org/avail-to-power-consumer-entertainment-onchain-with-sophon/', // TODO better announcement link

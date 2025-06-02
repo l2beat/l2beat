@@ -48,7 +48,6 @@ export const wormholeV1: Bridge = {
         'Transfers need to be signed offchain by a set of 2/3 of Guardians and then in a permissionless way relayed to the destination chain.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: BRIDGE_RISK_VIEW.UPGRADABLE_NO,
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
 }

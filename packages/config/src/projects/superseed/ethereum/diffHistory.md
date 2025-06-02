@@ -1,4 +1,54 @@
-Generated with discovered.json: 0xadf2b45c65f1c1e3b84594a66be7dfc4cd9ee72b
+Generated with discovered.json: 0x73014f34e7641cc383261dba7137e03ed11b489b
+
+# Diff at Fri, 30 May 2025 07:16:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a4d8c436027d17df0f9b76843cd6deb1888fa381 block: 22437747
+- current block number: 22437747
+
+## Description
+
+config: change comment about eip1559 fee val
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437747 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x525a2744134805516a45B8abb6Aa0aA1dA3809F6) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta.eip1559Denominator:
++        {"description":"volatility param: lower denominator -> quicker fee changes on L2"}
+    }
+```
+
+Generated with discovered.json: 0xf818af72be5290fc750a94e9d64cbaa9e7f2be2f
+
+# Diff at Thu, 29 May 2025 07:50:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9764537dfab122079ee09c9ec95835b322e2dd25 block: 22437747
+- current block number: 22437747
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437747 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x573a55046d4bdc818bccef5ed084b9a6658de38d
 
 # Diff at Fri, 23 May 2025 09:41:06 GMT:
 

@@ -2,7 +2,7 @@
   "name": "chainport",
   "chain": "ethereum",
   "blockNumber": 22567327,
-  "configHash": "0x0678f0a3d09f3577463a232d606c42f750aa93b04676b8738966c164c91c3706",
+  "configHash": "0x1a3ec9f69452b8803da9e2a0e144355875ab48ec44f715e22482eb4f77555215",
   "entries": [
     {
       "name": "ChainportCongressMembersRegistry",

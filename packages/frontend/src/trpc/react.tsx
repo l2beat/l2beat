@@ -1,5 +1,3 @@
-'use client'
-
 import type { QueryClient } from '@tanstack/react-query'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
@@ -11,7 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import React from 'react'
 import { env } from '~/env'
 import { useIsClient } from '~/hooks/use-is-client'
-import type { AppRouter } from '~/server/api/root'
+import type { AppRouter } from '~/server/trpc/root'
 import { createQueryClient } from './query-client'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined

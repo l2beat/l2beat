@@ -4,6 +4,6 @@
     "enabled": false
   },
   "files": {
-    "ignore": ["./rewrite/static"]
+    "ignore": ["./static"]
   }
 }

@@ -1,4 +1,3 @@
-'use client'
 import type { Milestone } from '@l2beat/config'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import capitalize from 'lodash/capitalize'
@@ -13,7 +12,9 @@ import {
   ChartTooltip,
   useChart,
 } from '~/components/core/chart/chart'
+import { ChartControlsWrapper } from '~/components/core/chart/chart-controls-wrapper'
 import { ChartDataIndicator } from '~/components/core/chart/chart-data-indicator'
+import { ProjectChartTimeRange } from '~/components/core/chart/chart-time-range'
 import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
@@ -34,8 +35,6 @@ import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/number-format/format-currency'
-import { ChartControlsWrapper } from '../../core/chart/chart-controls-wrapper'
-import { ProjectChartTimeRange } from '../../core/chart/chart-time-range'
 import { getChartRange } from '../../core/chart/utils/get-chart-range-from-columns'
 import type { ChartUnit } from '../types'
 import { TvsChartTimeRangeControls } from './tvs-chart-time-range-controls'

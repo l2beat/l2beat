@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lens",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "zksync2": { "initialAddresses": [], "sharedModules": ["shared-zk-stack"] },
+    "ethereum": {
+      "initialAddresses": [
+        "0xc29d04A93F893700015138E3E334eB828dAC3cef",
+        "0xf553E6D903AA43420ED7e3bc2313bE9286A8F987"
+      ],
+      "names": {
+        "0xc29d04A93F893700015138E3E334eB828dAC3cef": "LensZkEvm",
+        "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433": "LensZkEvmAdmin",
+        "0x4968A0E4b025eD7d095753E54058377969b41abC": "Lens Multisig",
+        "0x5C03468829A26981c410a7930bD4853622F0B2E5": "ValidatorTimelock3",
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
+      },
+      "overrides": {
+        "0xc29d04A93F893700015138E3E334eB828dAC3cef": {
+          "extends": "shared-zk-stack/v26/Diamond"
+        },
+        "0x5C03468829A26981c410a7930bD4853622F0B2E5": {
+          "ignoreRelatives": ["stateTransitionManager"],
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        },
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        },
+        "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 232]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        }
+      },
+      "sharedModules": ["shared-zk-stack"]
+    }
+  }
+}

@@ -94,12 +94,6 @@ export const multichain: Bridge = {
       description: '2/3rd of MPC.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: 'No / EOA',
-      description:
-        'Depending on the router configuration escrow contracts are EOAs or Any tokens which cannot be upgraded.',
-      sentiment: 'bad',
-    },
     destinationToken: {
       ...BRIDGE_RISK_VIEW.CANONICAL_OR_WRAPPED,
       description:

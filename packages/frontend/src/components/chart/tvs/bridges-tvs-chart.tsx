@@ -1,4 +1,3 @@
-'use client'
 import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/use-local-storage'

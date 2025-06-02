@@ -1,5 +1,3 @@
-'use client'
-
 import type { Milestone } from '@l2beat/config'
 
 import type { TooltipProps } from 'recharts'

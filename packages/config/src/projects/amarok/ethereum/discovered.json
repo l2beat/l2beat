@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 21629064,
-  "configHash": "0xe941eb785df790dada84bc63b47f12330920c085b252803dffad51dbc512245c",
+  "configHash": "0x188ce03aa83cba5b9fe39d5b8d2272aba0ecbea0d9dfb9db8b17e37c247b9565",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -73,7 +73,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "VotingToken",
+      "name": "UMA Voting Token v1",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
       "type": "Contract",
       "sourceHashes": [
@@ -3955,5 +3955,5 @@
     "amarok/RelayerProxyHub": "0xabf44b5af1f5a5287b387cf1ec1d54a3d609495fa34a36162765992d7d896fc0",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xaff971005b7f9fe9e249c27ca19bcf45b8791292618fc4bc59c860360dca7c6c"
+  "permissionsConfigHash": "0xd5b3df2db889d725ad257d56d9f83d9faecf68bca73b218e63d805ee2b56b9c3"
 }

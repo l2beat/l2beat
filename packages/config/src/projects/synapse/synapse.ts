@@ -111,12 +111,6 @@ export const synapse: Bridge = {
       description: 'Withdraws are validated by EOA.',
       sentiment: 'bad',
     },
-    sourceUpgradeability: {
-      value: '3 minutes delay',
-      description:
-        'Bridge can be upgraded after 3 minutes delay by a 2/3 Admin MultiSig.',
-      sentiment: 'bad',
-    },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
   },
   contracts: {

@@ -1,5 +1,3 @@
-'use client'
-
 import type { ColumnSort, SortingState } from '@tanstack/react-table'
 import type { Dispatch, SetStateAction } from 'react'
 import { createContext, useContext, useState } from 'react'

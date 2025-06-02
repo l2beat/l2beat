@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x6e076b6ae626d11a00e12d34aa5241e8751ae670
+
+# Diff at Wed, 28 May 2025 11:34:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@13b95854804f5ec749939a5230d24dfeedf19d1e block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      sourceHashes.10:
+-        "0xe98e94b140bcf95af7426dfd8ef8d9898155a8f2b1b0ba63ac31d11dd3c6bc4a"
+      sourceHashes.9:
+-        "0x7330507f8514566e42d7ae9942cb8825f30a89685dfadea06e8f02d6477e9ec8"
+      sourceHashes.8:
+-        "0xbe47fc752b9cc901076df497fc8cb6a2ddbcb637a2bd4933e613cceb18dd3402"
+      sourceHashes.7:
+-        "0x1b6b15362c8920645517802d39895f30af39a6b2f35827f36b2dc5bb93165043"
+      sourceHashes.6:
+-        "0xdc8abdeeb2ddb258e61ab5c393c746cf9dde680b929037b31a3741aea32fd2b5"
+      sourceHashes.5:
+-        "0xfe9a185d63abab90311e0fe1c1ac9cf8ff75eb18b8894eec37fc861eaad40d34"
+      sourceHashes.4:
+-        "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24"
+      sourceHashes.3:
+-        "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24"
+      sourceHashes.2:
+-        "0x642645c3c922206e870ca2360d10224c192a227d6d54c8faa196f25ad2611213"
+      sourceHashes.1:
+-        "0xa0a7ab911e7d45110b829d570dafda338f8d219d6019764635afa4bca84fc59a"
++        "0xaf4593a06cce3e50624c82a06b485e27462a6374717492c2830694f306501a24"
+      sourceHashes.0:
+-        "0xf7c59de1978d9e9fc84cd56a13c68c6e5ed1927c1ae7254246618c7060ffcae5"
++        "0x5726c0198a0c274ad32ac9194a369dd3709ac0a790c50b9708d15aeeeaa16fea"
+    }
+```
+
 Generated with discovered.json: 0x6038d81224ad3eb4e1ced6af3924fa952959ebb3
 
 # Diff at Tue, 18 Mar 2025 08:14:23 GMT:

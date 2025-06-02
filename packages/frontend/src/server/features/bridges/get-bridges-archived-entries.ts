@@ -1,6 +1,6 @@
 import type { BridgeCategory, TableReadyValue } from '@l2beat/config'
-import type { TabbedBridgeEntries } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
-import { groupByBridgeTabs } from '~/app/(side-nav)/bridges/_utils/group-by-bridge-tabs'
+import type { TabbedBridgeEntries } from '~/pages/bridges/utils/group-by-bridge-tabs'
+import { groupByBridgeTabs } from '~/pages/bridges/utils/group-by-bridge-tabs'
 import { ps } from '~/server/projects'
 import { getProjectsChangeReport } from '../projects-change-report/get-projects-change-report'
 import { get7dTvsBreakdown } from '../scaling/tvs/get-7d-tvs-breakdown'

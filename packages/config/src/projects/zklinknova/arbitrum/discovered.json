@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "blockNumber": 314504547,
-  "configHash": "0x186dd3e787af6cd1a7ac4c7e4af51c7c5b97612cda015d7b30e6956d76370c5b",
+  "configHash": "0x2d61111abb1cceaa43547117e3d4c1aa91c54c16a21e13b786c64bf524d3d777",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",

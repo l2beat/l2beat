@@ -10,6 +10,7 @@ export interface EthereumBlob extends DaBlobBase {
   type: 'ethereum'
   inbox: string
   sequencer: string
+  topics: string[]
 }
 
 export interface AvailBlob extends DaBlobBase {

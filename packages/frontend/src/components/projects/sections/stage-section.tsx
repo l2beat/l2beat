@@ -3,7 +3,6 @@ import type {
   StageConfigured,
   StageUnderReview,
 } from '@l2beat/config'
-import Image from 'next/image'
 import { UnderReviewBadge } from '~/components/badge/under-review-badge'
 import {
   Accordion,
@@ -65,7 +64,7 @@ export function StageSection({
     return (
       <ProjectSection {...sectionProps} isUnderReview>
         <div className="mb-6 flex flex-wrap items-center gap-2 font-medium">
-          <Image
+          <img
             src={icon}
             alt={name}
             width={18}
@@ -95,7 +94,7 @@ export function StageSection({
         />
       )}
       <span className="mb-4 inline-block w-full rounded-lg bg-surface-secondary p-4 font-medium md:px-6">
-        <Image
+        <img
           src={icon}
           alt={name}
           width={18}

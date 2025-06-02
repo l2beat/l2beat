@@ -1,4 +1,3 @@
-'use client'
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { useState } from 'react'
@@ -58,6 +57,7 @@ export function ThroughputSectionChart({
           selectedProjects={selectedProjects}
           setSelectedProjects={setSelectedProjects}
           customColors={customColors}
+          milestones={milestones}
         />
       )}
     </div>

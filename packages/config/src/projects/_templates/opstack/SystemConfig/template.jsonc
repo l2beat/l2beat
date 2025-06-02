@@ -35,6 +35,9 @@
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
         }
       ]
+    },
+    "eip1559Denominator": {
+      "description": "volatility param: lower denominator -> quicker fee changes on L2"
     }
   },
   "ignoreInWatchMode": ["scalar", "overhead"],

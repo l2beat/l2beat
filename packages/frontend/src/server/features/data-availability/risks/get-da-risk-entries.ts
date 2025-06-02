@@ -1,7 +1,7 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import type { TabbedDaEntries } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
-import { groupByDaTabs } from '~/app/(side-nav)/data-availability/_utils/group-by-da-tabs'
+import type { TabbedDaEntries } from '~/pages/data-availability/utils/group-by-da-tabs'
+import { groupByDaTabs } from '~/pages/data-availability/utils/group-by-da-tabs'
 import { ps } from '~/server/projects'
 import {
   type CommonDaEntry,

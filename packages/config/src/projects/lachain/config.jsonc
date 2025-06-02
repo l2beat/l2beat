@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lachain",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "zksync2": { "initialAddresses": [], "sharedModules": ["shared-zk-stack"] },
+    "ethereum": {
+      "initialAddresses": ["0x742A28e22277945BBAAa34810393bf6e8512576C"],
+      "names": { "0x742A28e22277945BBAAa34810393bf6e8512576C": "zkVmDiamond" },
+      "overrides": {
+        "0x742A28e22277945BBAAa34810393bf6e8512576C": {
+          "fields": {
+            "validators": {
+              "handler": {
+                "type": "hardcoded",
+                "value": ["0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"]
+              }
+            }
+          }
+        },
+        "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
+          "fields": {
+            "validatorsVTL": {
+              "handler": {
+                "type": "event",
+                "select": ["validator"],
+                "add": {
+                  "event": "event ValidatorAdded(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 2904]
+                },
+                "remove": {
+                  "event": "event ValidatorRemoved(uint256 indexed chainId, address validator)",
+                  "where": ["=", "#chainId", 2904]
+                }
+              },
+              "permissions": [{ "type": "validateZkStack" }]
+            }
+          }
+        }
+      },
+      "sharedModules": ["shared-zk-stack"]
+    }
+  }
+}

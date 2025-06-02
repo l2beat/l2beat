@@ -1,8 +1,8 @@
 import type { Milestone } from '@l2beat/config'
 import { ProjectCostsChart } from '~/components/chart/costs/project-costs-chart'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/get-tracked-transactions'
 
+import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
 import { TrackedTransactions } from './tracked-transactions'

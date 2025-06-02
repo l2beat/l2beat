@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-
 export interface MainPage {
   type?: 'scaling' | 'bridges' | 'data-availability'
   title: string

@@ -22,6 +22,7 @@ import {
   readGeneratedFile,
   readTokensFile,
   saveResults,
+  saveTokenNames,
 } from './utils/fsIntegration'
 import { getCoingeckoId } from './utils/getCoingeckoId'
 import { getTokenInfo } from './utils/getTokenInfo'
@@ -173,6 +174,8 @@ export async function getTokenData(
       tokenLogger.processed()
     }
   }
+
+  saveTokenNames(result, chainConverter)
 }
 
 function getCoingeckoClient() {

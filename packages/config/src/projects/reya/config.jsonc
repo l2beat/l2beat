@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "reya",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x672109752635177ebcb17F2C7e04575A709014BD",
+        "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
+      ],
+      "names": {
+        "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "SocketVault_Reya"
+      },
+      "overrides": {
+        "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": {
+          "ignoreMethods": ["hook__", "token"]
+        }
+      }
+    }
+  }
+}

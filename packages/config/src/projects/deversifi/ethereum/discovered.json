@@ -2,7 +2,7 @@
   "name": "deversifi",
   "chain": "ethereum",
   "blockNumber": 21981331,
-  "configHash": "0xc009478d2475271f52d98fab0b4256839b7b8ed62d563a003dad5f43cd37b4f9",
+  "configHash": "0x1f1192085329b3526b4964a7cb805ff67de0592f2a781f9b4360e9dc8bdc03c3",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {

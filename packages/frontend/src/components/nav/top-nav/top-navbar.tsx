@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { Logo } from '~/components/logo'
 import { VerticalSeparator } from '../../core/vertical-separator'
 import { DarkThemeToggle } from '../../dark-theme-toggle'
@@ -21,9 +20,9 @@ export function TopNavbar({
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
         <ul className="flex items-center py-4">
           <li className="mr-8">
-            <Link href={logoLink}>
+            <a href={logoLink}>
               <Logo className="h-8 w-auto" />
-            </Link>
+            </a>
           </li>
           {groups.map((group) => {
             if (group.type === 'single') {

@@ -1,10 +1,6 @@
-'use client'
-
 import { Slot } from '@radix-ui/react-slot'
 import * as React from 'react'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import {
   Sheet,
   SheetContent,
@@ -13,6 +9,7 @@ import {
   SheetTitle,
 } from '~/components/core/sheet'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
+import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 
@@ -202,11 +199,11 @@ function SidebarGroupLink({
   isActive = false,
   className,
   ...props
-}: React.ComponentProps<typeof Link> & {
+}: React.ComponentProps<'a'> & {
   isActive?: boolean
 }) {
   return (
-    <Link
+    <a
       data-active={isActive}
       className={cn(
         'flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
@@ -221,15 +218,14 @@ function SidebarGroupSmallLink({
   isActive = false,
   className,
   ...props
-}: React.ComponentProps<typeof Link> & {
+}: React.ComponentProps<'a'> & {
   href: string
   isActive?: boolean
 }) {
   const isInternalLink = props.href.startsWith('/')
-  const Comp = isInternalLink ? Link : 'a'
 
   return (
-    <Comp
+    <a
       target={isInternalLink ? undefined : '_blank'}
       className={cn(
         'pl-1.5 text-xs leading-none text-primary transition-colors hover:text-secondary',
@@ -262,11 +258,11 @@ function SidebarGroupSubButton({
   isActive,
   className,
   ...props
-}: React.ComponentProps<typeof Link> & {
+}: React.ComponentProps<'a'> & {
   asChild?: boolean
   isActive?: boolean
 }) {
-  const Comp = asChild ? Slot : Link
+  const Comp = asChild ? Slot : 'a'
 
   return (
     <Comp

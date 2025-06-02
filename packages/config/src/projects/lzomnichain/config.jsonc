@@ -1,0 +1,161 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "lzomnichain",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
+        "0x7122985656e38BDC0302Db86685bb972b145bD3C",
+        "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
+        "0x92CC36D66e9d739D50673d1f27929a371FB83a67",
+        "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+        "0xEe381e476b4335B8584A2026f3E845edaC2c69de",
+        "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E",
+        "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55",
+        "0xB0003eB166654f7e57c0463F8D1a438eB238c490",
+        "0x6F537839714761388B6d7ED61Bc09579d5dA2F41"
+      ],
+      "names": {
+        "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": "UltraLightNodeV2",
+        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint",
+        "0x902F09715B6303d4173037652FA7377e5b98089E": "LayerZero Relayer",
+        "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "Google Cloud Oracle",
+        "0x5a54fe5234E811466D5366846283323c954310B2": "TSS Oracle",
+        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
+        "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97": "Stargate Bridge",
+        "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6": "Stargate Token",
+        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed",
+        "0x7122985656e38BDC0302Db86685bb972b145bD3C": "StoneEscrow",
+        "0x92CC36D66e9d739D50673d1f27929a371FB83a67": "WagmiEscrow",
+        "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982": "EuraEscrow",
+        "0xEe381e476b4335B8584A2026f3E845edaC2c69de": "LinkEscrow",
+        "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E": "UsdcEscrow",
+        "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55": "BobaEscrow1",
+        "0xB0003eB166654f7e57c0463F8D1a438eB238c490": "BobaEscrow2",
+        "0x6F537839714761388B6d7ED61Bc09579d5dA2F41": "BobaEscrow3"
+      },
+      "overrides": {
+        "0x7122985656e38BDC0302Db86685bb972b145bD3C": {
+          "ignoreRelatives": ["token", "minter"],
+          "ignoreMethods": ["quota"],
+          "ignoreInWatchMode": ["circulatingSupply", "getQuota", "totalSupply"]
+        },
+        "0x92CC36D66e9d739D50673d1f27929a371FB83a67": {
+          "ignoreInWatchMode": ["circulatingSupply", "totalSupply"],
+          "ignoreRelatives": ["token"]
+        },
+        "0xEe381e476b4335B8584A2026f3E845edaC2c69de": {
+          "ignoreInWatchMode": ["circulatingSupply"],
+          "ignoreRelatives": ["token"]
+        },
+        "0x4F52b41a778761bd2EEa5b7b7ed8cBDAA02cEF3E": {
+          "ignoreInWatchMode": ["circulatingSupply"],
+          "ignoreRelatives": ["token"]
+        },
+        "0x1A36E24D61BC1aDa68C21C2Da1aD53EaB8E03e55": {
+          "ignoreRelatives": ["token"]
+        },
+        "0xB0003eB166654f7e57c0463F8D1a438eB238c490": {
+          "ignoreRelatives": ["token"]
+        },
+        "0x6F537839714761388B6d7ED61Bc09579d5dA2F41": {
+          "ignoreRelatives": ["token"]
+        },
+        "0x4Fa745FCCC04555F2AFA8874cd23961636CdF982": {
+          "ignoreRelatives": ["treasury", "canonicalToken"]
+        },
+        "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": {
+          "ignoreDiscovery": true
+        },
+        "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97": {
+          "ignoreDiscovery": true
+        },
+        "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": {
+          "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
+          "fields": {
+            "libraryLookup": {
+              "handler": {
+                "type": "array",
+                "method": "libraryLookup",
+                "startIndex": 1,
+                "length": "{{ latestVersion }}",
+                "ignoreRelative": true
+              }
+            }
+          }
+        },
+        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": {
+          "ignoreInWatchMode": ["nonce"]
+        },
+        "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2": {
+          "ignoreInWatchMode": [
+            "chainAddressSizeMap",
+            "defaultAppConfig",
+            "defaultAdapterParams",
+            "inboundProofLibrary",
+            "supportedOutboundProof",
+            "ulnLookup"
+          ],
+          "fields": {
+            "chainAddressSizeMap": {
+              "handler": {
+                "type": "event",
+                "select": "size",
+                "set": { "event": "SetChainAddressSize" },
+                "groupBy": "chainId"
+              }
+            },
+            "ulnLookup": {
+              "handler": {
+                "type": "event",
+                "select": "uln",
+                "set": { "event": "SetRemoteUln" },
+                "groupBy": "chainId"
+              }
+            },
+            "defaultAppConfig": {
+              "handler": {
+                "type": "event",
+                "select": [
+                  "inboundProofLib",
+                  "inboundBlockConfirm",
+                  "outboundProofType",
+                  "outboundBlockConfirm",
+                  "oracle",
+                  "relayer"
+                ],
+                "set": { "event": "SetDefaultConfigForChainId" },
+                "groupBy": "chainId"
+              }
+            },
+            "defaultAdapterParams": {
+              "handler": {
+                "type": "event",
+                "select": ["proofType", "adapterParams"],
+                "set": { "event": "SetDefaultAdapterParamsForChainId" },
+                "groupBy": "chainId"
+              }
+            },
+            "inboundProofLibrary": {
+              "handler": {
+                "type": "event",
+                "select": "lib",
+                "add": { "event": "AddInboundProofLibraryForChain" },
+                "groupBy": "chainId"
+              }
+            },
+            "supportedOutboundProof": {
+              "handler": {
+                "type": "event",
+                "select": "proofType",
+                "add": { "event": "EnableSupportedOutboundProof" },
+                "groupBy": "chainId"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

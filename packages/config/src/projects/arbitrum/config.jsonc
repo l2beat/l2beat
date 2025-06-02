@@ -1,0 +1,165 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "arbitrum",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": [
+        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
+        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
+        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
+        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
+        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B",
+        "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
+        "0x6D2457a4ad276000A615295f7A80F79E48CcD318",
+        "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649",
+        "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d",
+        "0x1D62fFeB72e4c360CcBbacf7c965153b00260417"
+      ],
+      "names": {
+        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "CoreGovernor",
+        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": "L2Timelock",
+        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TreasuryGovernor",
+        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "TreasuryTimelock",
+        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "L2UpgradeExecutor",
+        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "SecurityCouncilManager",
+        "0x1D62fFeB72e4c360CcBbacf7c965153b00260417": "ConstitutionHash",
+        "0xdb216562328215E010F819B5aBe947bad4ca961e": "L2ProxyAdmin",
+        "0xbF5041Fc07E1c866D15c749156657B8eEd0fb649": "L2BaseFee",
+        "0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d": "L2SurplusFee",
+        "0x912CE59144191C1204E64559FE8253a0e49E6548": "L2ArbitrumToken",
+        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933": "L2GatewayRouter",
+        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe": "L2ERC20Gateway",
+        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B": "L2WethGateway",
+        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E": "L2ARBGateway",
+        "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65": "L2DAIGateway",
+        "0x6D2457a4ad276000A615295f7A80F79E48CcD318": "L2LPTGateway",
+        "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86": "L2GatewaysProxyAdmin",
+        "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641": "L2SecurityCouncilEmergency",
+        "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941": "L2SecurityCouncilPropose",
+        "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a": "UpgradeExecRouteBuilder",
+        "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a": "SecurityCouncilMemberSyncAction",
+        "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B": "KeyValueStore",
+        "0xf7951D92B0C345144506576eC13Ecf5103aC905a": "L1Timelock_l2alias"
+      },
+      "overrides": {
+        "0xF06E95eF589D9c38af242a8AAee8375f14023F85": {
+          "ignoreDiscovery": true
+        }
+      }
+    },
+    "ethereum": {
+      "initialAddresses": [
+        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
+        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "0xcEe284F754E854890e311e3280b767F80797180d",
+        "0xD3B5b60020504bc3489D6949d545893982BA3011",
+        "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a",
+        "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A"
+      ],
+      "names": {
+        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Bridge",
+        "0xcEe284F754E854890e311e3280b767F80797180d": "L1CustomGateway",
+        "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC": "L1ERC20Gateway",
+        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ArbitrumProxyAdmin",
+        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "UpgradeExecutorAdmin",
+        "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
+        "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0": "RollupProxy",
+        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
+        "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
+        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": "OutboxV0",
+        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": "OutboxV1",
+        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": "Outbox",
+        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": "GatewaysAdmin",
+        "0xD3B5b60020504bc3489D6949d545893982BA3011": "L1DaiGateway",
+        "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": "ValidatorUtils",
+        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58": "ChallengeManager",
+        "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": "wstETHEscrow",
+        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
+        "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": "LPTL1Escrow",
+        "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": "UpgradeableBeacon",
+        "0xA5565d266c3c3Ee90B16Be8A5b13d587ef559fB0": "EdgeChallengeManager",
+        "0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow",
+        "0xc4940069140142236D4065b866018f7b2BeC77fD": "OutboxEntry"
+      },
+      "overrides": {
+        "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840": {
+          "description": "Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1. Is also used to relay governance action messages from Arbitrum One to Ethereum, allowing the L2Timelock and its Governance actors on L2 to act as this address and inherit all its listed permissions."
+        },
+        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": {
+          "fields": {
+            "mainOutboxAddress": {
+              "handler": {
+                "type": "call",
+                "method": "function allowedOutboxList(uint256) view returns (address)",
+                "args": [0]
+              },
+              "permissions": [{ "type": "act" }]
+            }
+          }
+        },
+        "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A": {
+          "ignoreDiscovery": true
+        },
+        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
+          "ignoreMethods": ["outboxEntries", "outboxEntryExists"]
+        },
+        "0xD3B5b60020504bc3489D6949d545893982BA3011": {
+          "ignoreRelatives": [
+            "counterpartGateway",
+            "inbox",
+            "l1Dai",
+            "l1Router",
+            "l2Counterpart",
+            "l2Dai"
+          ],
+          "category": "bridge-external"
+        },
+        "0x9E40625F52829Cf04bC4839F186D621ee33b0E67": {
+          "fields": {
+            "ARBITRUM_STAKERS": {
+              "handler": {
+                "type": "call",
+                "method": "function getStakers(address rollup, uint64 startIndex, uint64 max) view returns (address[], bool hasMore)",
+                "args": ["0x5eF0D09d1E6204141B4d37530808eD19f60FBa35", 0, 100]
+              }
+            }
+          },
+          "ignoreRelatives": ["ARBITRUM_STAKERS"]
+        },
+        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": {
+          "ignoreMethods": [
+            "l2ToL1BatchNum",
+            "l2ToL1OutputId",
+            "outboxEntryExists",
+            "outboxes"
+          ]
+        },
+        "0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a": {
+          "category": "bridge-external",
+          "ignoreRelatives": ["l2Token", "l1Token"],
+          "fields": {
+            "accessControl": { "handler": { "type": "accessControl" } }
+          }
+        },
+        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": {
+          "ignoreDiscovery": true
+        },
+        "0x73b047fe6337183A454c5217241D780a932777bD": {
+          "ignoreDiscovery": true
+        },
+        "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": {
+          "category": "bridge-external"
+        },
+        "0xA10c7CE4b876998858b1a9E12b10092229539400": {
+          "category": "bridge-external"
+        },
+        "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": { "category": "spam" },
+        "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": { "category": "spam" },
+        "0x14797f5432f699Cb4d4dB04DF599B74952d78d7b": { "category": "spam" },
+        "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa": { "category": "spam" },
+        "0xc4940069140142236D4065b866018f7b2BeC77fD": { "category": "spam" }
+      }
+    }
+  }
+}

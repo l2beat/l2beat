@@ -30,7 +30,8 @@ export const theElasticNetwork: BaseProject = {
     token: {
       tokenId: 'zksync2-ZK',
       projectId: ProjectId('zksync2'),
-      description: 'ZK is the governance token for the Elastic Network.',
+      description:
+        'The ZK token is a governance token that allows token holders to introduce and vote on protocol upgrades within the Elastic Network.',
     },
   },
 }

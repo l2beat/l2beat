@@ -108,3 +108,16 @@ export const RPCError = z.object({
     message: z.string(),
   }),
 })
+
+export type EVMLog = z.infer<typeof EVMLog>
+export const EVMLog = z.object({
+  address: z.string(),
+  topics: z.array(z.string()),
+  blockNumber: Quantity.decode.transform((n) => Number(n)),
+  transactionHash: z.string(),
+})
+
+export type EVMLogsResponse = z.infer<typeof EVMLogsResponse>
+export const EVMLogsResponse = z.object({
+  result: z.array(EVMLog),
+})

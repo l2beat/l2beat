@@ -1,0 +1,222 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "kinto",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "kinto": {
+      "maxAddresses": 200,
+      "initialAddresses": [
+        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b",
+        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a",
+        "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d",
+        "0x340487b92808B84c2bd97C87B590EE81267E04a7",
+        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd",
+        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75",
+        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7",
+        "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb"
+      ],
+      "names": {
+        "0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b": "KintoAppRegistry",
+        "0xf369f78E3A0492CC4e96a90dae0728A38498e9c7": "KintoID",
+        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": "Kinto Multisig 2",
+        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": "KintoWalletFactory",
+        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": "SponsorPaymaster",
+        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": "Faucet",
+        "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": "RewardsDistributor",
+        "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": "BridgedKinto",
+        "0x793500709506652Fcc61F0d2D0fDa605638D4293": "Treasury",
+        "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": "Socket",
+        "0xacC000818e5Bbd911D5d449aA81CB5cA24024739": "AccessManager",
+        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": "NioGovernor",
+        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": "NioGuardians",
+        "0x87f0eE85bF3198654900a422832157abBba30828": "BeaconKintoWallet",
+        "0x28fC10E12A78f986c78F973Fc70ED88072b34c8e": "KintoSecurityCouncil_L2Alias"
+      },
+      "overrides": {
+        "0xD157904639E89df05e89e0DabeEC99aE3d74F9AA": {
+          "ignoreDiscovery": true
+        },
+        "0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb": {
+          "description": "Used as entrypoint to transact using smartwallets and UserOps."
+        },
+        "0x87f0eE85bF3198654900a422832157abBba30828": {
+          "description": "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.",
+          "ignoreRelatives": ["implementation"]
+        },
+        "0x2e2B1c42E38f5af81771e65D87729E57ABD1337a": {
+          "ignoreMethods": ["owners", "getOwners"],
+          "ignoreInWatchMode": ["getNonce"],
+          "fields": {
+            "$members": {
+              "handler": { "type": "call", "method": "getOwners", "args": [] }
+            },
+            "$threshold": {
+              "severity": "HIGH",
+              "description": "Current multisig threshold. Check the IMPROVISED mapping for the signer policy whenever this changes.",
+              "handler": {
+                "type": "call",
+                "method": "signerPolicy",
+                "args": []
+              },
+              "edit": ["format", "SignerPolicyToThreshold"]
+            }
+          }
+        },
+        "0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a": {
+          "category": "spam",
+          "description": "Governance contract allowing token- and NFT based voting.",
+          "ignoreMethods": [
+            "proposalDeadline",
+            "proposalEta",
+            "proposalExecutionPlan",
+            "proposalNeedsQueuing",
+            "proposalProposer",
+            "proposalSnapshot",
+            "proposalVotes",
+            "quorum"
+          ],
+          "ignoreInWatchMode": ["clock"]
+        },
+        "0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9": {
+          "category": "spam",
+          "description": "Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.",
+          "ignoreMethods": ["exists", "getPastTotalSupply"],
+          "ignoreInWatchMode": ["clock"],
+          "fields": {
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "mint Nio Guardian NFTs to any address, inheriting the permissions of the NFT."
+                }
+              ]
+            }
+          }
+        },
+        "0x3e9727470C66B1e77034590926CDe0242B5A3dCc": {
+          "description": "Central contract for bridging via the external socket bridge.",
+          "category": "bridge-external",
+          "ignoreInWatchMode": ["globalMessageCount"],
+          "ignoreRelatives": [
+            "capacitorFactory__",
+            "executionManager__",
+            "hasher__",
+            "transmitManager__"
+          ]
+        },
+        "0x793500709506652Fcc61F0d2D0fDa605638D4293": {
+          "category": "spam",
+          "description": "Kinto Treasury.",
+          "ignoreMethods": ["proxiableUUID"],
+          "fields": {
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "send tokens and ETH from the Treasury to any address without delay."
+                }
+              ]
+            }
+          }
+        },
+        "0x010700808D59d2bb92257fCafACfe8e5bFF7aB87": {
+          "description": "KINTO token contract.",
+          "ignoreMethods": ["proxiableUUID", "getPastTotalSupply"],
+          "ignoreInWatchMode": ["totalSupply", "clock"],
+          "ignoreRelatives": ["miningContract", "SALE", "VAULT"]
+        },
+        "0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03": {
+          "category": "spam",
+          "ignoreMethods": ["proxiableUUID"]
+        },
+        "0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd": {
+          "category": "spam",
+          "description": "Paymaster used for user transactions eligible for sponsorship.",
+          "ignoreMethods": ["proxiableUUID"],
+          "ignoreInWatchMode": ["getDeposit"]
+        },
+        "0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75": {
+          "category": "core",
+          "canActIndependently": false,
+          "description": "Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.",
+          "ignoreMethods": ["proxiableUUID"],
+          "ignoreInWatchMode": ["totalWallets"],
+          "fields": {
+            "owner": {
+              "severity": "HIGH",
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "update the central KintoWallet implementation of all users on Kinto L2 and approve specific wallets for recovery via the turnkey recoverer."
+                }
+              ]
+            }
+          }
+        },
+        "0x340487b92808B84c2bd97C87B590EE81267E04a7": {
+          "ignoreDiscovery": true
+        },
+        "0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d": { "category": "spam" },
+        "0x5A1e00984Af33BED5520Fd13e9c940F9f913cF10": {
+          "ignoreDiscovery": true,
+          "category": "spam"
+        }
+      },
+      "types": {
+        "SignerPolicyToThreshold": {
+          "typeCaster": "Mapping",
+          "arg": { "1": 1, "2": 1, "3": 1, "4": 2 }
+        }
+      }
+    },
+    "ethereum": {
+      "initialAddresses": [
+        "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
+        "0x0f1b7bd7762662B23486320AA91F30312184f70C",
+        "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
+        "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82"
+      ],
+      "names": { "0x0f1b7bd7762662B23486320AA91F30312184f70C": "Bridger" },
+      "overrides": {
+        "0x0f1b7bd7762662B23486320AA91F30312184f70C": {
+          "description": "Bridger gateway that can swap assets to 'L2 final assets' defined by the admin before bridging them to the L2. It does not have a function to bridge via the canonical bridge and uses the external socket bridge by default.",
+          "ignoreRelatives": [
+            "DAI",
+            "ETH",
+            "sDAI",
+            "sUSDe",
+            "USDe",
+            "weETH",
+            "WETH",
+            "wstETH",
+            "PERMIT2",
+            "USDM",
+            "USDC",
+            "usdmCurvePool",
+            "wUSDM",
+            "swapRouter",
+            "SOLV_BTC",
+            "SOLV_SFT_WRAP_ROUTER",
+            "WBTC",
+            "USDA",
+            "stUSD"
+          ],
+          "ignoreMethods": [
+            "proxiableUUID",
+            "depositCount",
+            "domainSeparator",
+            "__depositCount"
+          ]
+        },
+        "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": {
+          "references": [
+            {
+              "text": "Security Council members - Kinto Docs",
+              "href": "https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/security-council"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

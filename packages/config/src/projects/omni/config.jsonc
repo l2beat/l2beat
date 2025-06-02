@@ -1,0 +1,175 @@
+{
+  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "name": "omni",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x88ad09518695c6c3712AC10a214bE5109a655671",
+        "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418",
+        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      ],
+      "overrides": {
+        "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43": { "category": "spam" },
+        "0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016": {
+          "category": "core",
+          "description": "Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.",
+          "displayName": "DaiForeignBridge",
+          "proxyType": "Eternal Storage proxy",
+          "ignoreRelatives": [
+            "compToken",
+            "cDaiToken",
+            "sDaiToken",
+            "erc20token",
+            "daiToken"
+          ],
+          "ignoreMethods": [
+            "totalExecutedPerDay",
+            "totalSpentPerDay",
+            "withinExecutionLimit",
+            "withinLimit",
+            "getCurrentDay"
+          ],
+          "ignoreInWatchMode": ["maxAvailablePerTx", "nonce"],
+          "fields": {
+            "validatorContract": {
+              "permissions": [{ "type": "validateBridge3" }]
+            },
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references."
+                }
+              ]
+            }
+          }
+        },
+        "0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E": {
+          "description": "Custom Multisignature contract for Validators.",
+          "displayName": "BridgeValidators_DAI",
+          "proxyType": "Eternal Storage proxy"
+        },
+        "0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD": {
+          "displayName": "HashiManager_DAI",
+          "proxyType": "Eternal Storage proxy"
+        },
+        "0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418": {
+          "ignoreRelatives": ["LAYER_ZERO_ENDPOINT", "endpoint"]
+        },
+        "0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9": {
+          "displayName": "HashiManager_Omni",
+          "proxyType": "Eternal Storage proxy"
+        },
+        "0x88ad09518695c6c3712AC10a214bE5109a655671": {
+          "category": "core",
+          "description": "Token bridge implementation and escrow for ERC-20 tokens.",
+          "proxyType": "Eternal Storage proxy",
+          "ignoreMethods": ["getCurrentDay"],
+          "fields": {
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "change all critical configurations like yield farming for escrowed funds and limits."
+                }
+              ]
+            }
+          }
+        },
+        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e": {
+          "category": "core",
+          "description": "Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.",
+          "proxyType": "Eternal Storage proxy",
+          "fields": {
+            "validatorContract": {
+              "permissions": [{ "type": "validateBridge3" }]
+            },
+            "owner": {
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "change external validation logic refered to by this contract (e.g. Hashi)."
+                }
+              ]
+            }
+          }
+        },
+        "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064": {
+          "displayName": "BridgeValidators_Omni",
+          "proxyType": "Eternal Storage proxy"
+        }
+      }
+    },
+    "gnosis": {
+      "initialAddresses": [
+        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+        "0xceb436489e9c6d9e4db76145a6cce2a06411ea0a"
+      ],
+      "overrides": {
+        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
+          "proxyType": "Eternal Storage proxy",
+          "ignoreInWatchMode": ["getCurrentDay"]
+        },
+        "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59": {
+          "proxyType": "Eternal Storage proxy",
+          "ignoreMethods": ["getCurrentDay", "isAlreadyProcessed"]
+        },
+        "0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008": {
+          "displayName": "BridgeValidators_Gnosis",
+          "proxyType": "Eternal Storage proxy"
+        },
+        "0xD9a3039cfC70aF84AC9E566A2526fD3b683B995B": {
+          "proxyType": "Eternal Storage proxy"
+        },
+        "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": {
+          "ignoreMethods": ["getPendingMessageHash"]
+        },
+        "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": {
+          "ignoreMethods": ["executed"]
+        },
+        "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": {
+          "ignoreMethods": [
+            "executionStateRoots",
+            "getSyncCommitteePeriod",
+            "headers",
+            "syncCommittees"
+          ],
+          "ignoreInWatchMode": ["getCurrentEpoch", "head"]
+        },
+        "0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E": {
+          "displayName": "HashiManager_Gnosis",
+          "proxyType": "Eternal Storage proxy",
+          "fields": {
+            "targetAddress": {
+              "description": "Address of the target contract on Ethereum",
+              "severity": "HIGH",
+              "edit": ["format", "EthereumAddress"]
+            },
+            "adapters": {
+              "description": "Array of the adapters on Ethereum",
+              "severity": "HIGH",
+              "edit": ["map", ["format", "EthereumAddress"]]
+            },
+            "reporters": {
+              "description": "Array of the reporters on Ethereum",
+              "severity": "HIGH",
+              "edit": ["map", ["format", "EthereumAddress"]]
+            },
+            "threshold": {
+              "description": "Threshold of the adapters on Ethereum",
+              "severity": "HIGH"
+            },
+            "AdaptersFromStorage": {
+              "handler": {
+                "type": "storage",
+                "slot": "0x21aa67cae9293b939ada82eb9133293e592da66aa847a5596523bd6d2bf2529b",
+                "returnType": "address"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

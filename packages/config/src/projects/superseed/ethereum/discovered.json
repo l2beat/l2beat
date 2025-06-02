@@ -2,7 +2,7 @@
   "name": "superseed",
   "chain": "ethereum",
   "blockNumber": 22437747,
-  "configHash": "0x084e5abb51f1af9ef7da517e1fece5d7a82ae1d92db634952b73d37d43dda2e6",
+  "configHash": "0x3afbf43ed216a7787c5cbe8fa4ef0395b2adefd90ec90287ac27740cdf5b2171",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -193,6 +193,33 @@
       "address": "0x1822b35B09f5ce1C78ecbC06AC0A4e17885b925e",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LivenessGuard",
+      "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xe771f3d1c51456e08e2c93a904b12010870dc4fa79ee82e4bc90433557931f05"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+          "description": "can remove members of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 inactive for 98d.",
+          "role": ".livenessGuard"
+        }
+      ],
+      "sinceTimestamp": 1717149791,
+      "sinceBlock": 19989094,
+      "values": {
+        "$immutable": true,
+        "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x24424336F04440b1c28685a38303aC33C9D14a25": "LivenessGuard"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -646,6 +673,9 @@
         "gasLimit": {
           "severity": "LOW",
           "description": "Gas limit for blocks on L2."
+        },
+        "eip1559Denominator": {
+          "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
       },
       "implementationNames": {
@@ -1441,6 +1471,16 @@
       "function usedNonces(bytes32) view returns (bool)",
       "function version() view returns (string)"
     ],
+    "0x24424336F04440b1c28685a38303aC33C9D14a25": [
+      "constructor(address _safe)",
+      "event OwnerRecorded(address owner)",
+      "function checkAfterExecution(bytes32, bool)",
+      "function checkTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, address msgSender)",
+      "function lastLive(address) view returns (uint256)",
+      "function safe() view returns (address safe_)",
+      "function showLiveness()",
+      "function version() view returns (string)"
+    ],
     "0x2c2150aa5c75A24fB93d4fD2F2a895D618054f07": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1956,7 +1996,7 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig": "0x7dcf9b5cc83a51901e84bd4dcaec4d535273d0534be22bd9184a1e4afc7a9ccc"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xe258a7d9a31066277ed65b93d538aeaa2b74239e0938e9164f1796956e09a481"
+  "permissionsConfigHash": "0x49cd4390d5e1324429f990848dfaad071ee18e2eeae363693780ba2b6838137e"
 }

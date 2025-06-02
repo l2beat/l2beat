@@ -45,15 +45,6 @@ export function getCode(
     address,
   )
 
-  const allFilesExist = codePaths.every(({ path }) => existsSync(path))
-
-  if (!allFilesExist) {
-    return {
-      entryName,
-      sources: [],
-    }
-  }
-
   return {
     entryName,
     sources: codePaths

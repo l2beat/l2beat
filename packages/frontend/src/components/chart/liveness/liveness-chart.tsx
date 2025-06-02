@@ -1,5 +1,3 @@
-'use client'
-
 import type { Milestone } from '@l2beat/config'
 import {
   type TrackedTxsConfigSubtype,

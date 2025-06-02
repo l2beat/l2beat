@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "TaikoL1",
+  "description": "Main contract implementing the logic for proposing and proving Taiko blocks on L1.",
+  "ignoreMethods": [
+    "addressManager",
+    "getLastSyncedBlock",
+    "lastUnpausedAt",
+    "proxiableUUID"
+  ],
+  "ignoreInWatchMode": [
+    "getLastSyncedTransition",
+    "getLastVerifiedBlock",
+    "getLastVerifiedTransition",
+    "getStateVariables",
+    "getStats1",
+    "getStats2",
+    "lastProposedIn",
+    "state"
+  ]
+}
