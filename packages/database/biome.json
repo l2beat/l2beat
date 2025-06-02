@@ -1,5 +1,5 @@
 {
-  "extends": ["../../biome.json"],
+  "extends": ["../../biome.jsonc"],
   "files": {
     "ignore": ["src/kysely/generated"]
   }
