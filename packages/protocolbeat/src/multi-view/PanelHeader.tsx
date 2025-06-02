@@ -71,7 +71,7 @@ export function PanelHeader(props: { id: PanelId }) {
 async function formatContractCode(
   project: string,
   address: string | undefined,
-  name?: string,
+  _name?: string,
   chain?: string,
 ) {
   if (!address) return []
