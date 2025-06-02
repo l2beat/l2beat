@@ -80,7 +80,7 @@ async function formatContractCode(
     let header = `Flattened source code of ${s.name}`
     if (address) header += ` (${address})`
     if (chain) header += ` on chain ${chain}`
-    result.push(header + ':')
+    result.push('\n' + header + ':')
     result.push('```')
     result.push(s.code)
     result.push('```')
@@ -105,7 +105,7 @@ function formatContractValues(
     header += ` for block number ${blockNumber} on chain ${chain}`
   }
   if (contract.address) header += ` (${contract.address})`
-  result.push(header + ':')
+  result.push('\n' + header + ':')
   result.push('```')
   for (const f of contract.fields) {
     result.push(`${f.name}: ${JSON.stringify(f.value)}`)
