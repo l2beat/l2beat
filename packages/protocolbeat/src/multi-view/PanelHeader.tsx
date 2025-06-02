@@ -67,7 +67,6 @@ export function PanelHeader(props: { id: PanelId }) {
   )
 }
 
-// Helper to format code for a contract
 async function formatContractCode(
   project: string,
   address: string | undefined,
@@ -89,7 +88,6 @@ async function formatContractCode(
   return result
 }
 
-// Helper to format values/fields for a contract
 function formatContractValues(
   contract: any,
   blockNumber?: number,
@@ -116,7 +114,6 @@ function formatContractValues(
   return result
 }
 
-// Helper to format ABI for a contract
 function formatContractAbi(contract: any, chain?: string) {
   if (!('abis' in contract) || !contract.abis || contract.abis.length === 0)
     return []
