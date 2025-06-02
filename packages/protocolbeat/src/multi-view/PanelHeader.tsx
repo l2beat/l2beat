@@ -86,7 +86,7 @@ const toClipboard = async (
       const message: string[] = []
 
       for (const s of sources) {
-        message.push(`This is a source code for contract ${s.name}`)
+        message.push(`Flattened source code of ${s.name}:`)
         message.push(`\`\`\``)
         message.push(s.code)
         message.push(`\`\`\``)
@@ -104,8 +104,7 @@ const toClipboard = async (
       const fields: string[] = []
       if ('fields' in contract) {
         fields.push(
-          `In our logic for fetching values we map proxy owners to $admin field.`,
-          `These are the values for block number ${contract.blockNumber} on chain ${contract.chain}:`,
+          `Contract state from public functions and event handlers for block number ${contract.blockNumber} on chain ${contract.chain}:`,
         )
 
         for (const f of (contract as ApiProjectContract).fields) {
@@ -116,7 +115,7 @@ const toClipboard = async (
       const abis: string[] = []
       if ('abis' in contract) {
         abis.push(
-          `\nThis is the ABI. If there is a selector it will be put after //`,
+          `\nContract ABI:`,
         )
 
         for (const a of (contract as ApiProjectContract).abis) {
