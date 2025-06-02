@@ -57,7 +57,7 @@ export async function modelPermissionsCommand(
     project,
     ultimatePermissions,
     configReader,
-    discoveries
+    discoveries,
   )
 }
 
@@ -73,7 +73,11 @@ export async function writePermissionsIntoDiscovery(
 
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
-    combinePermissionsIntoDiscovery(discovery, permissionsOutput, dependentDiscoveries)
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissionsOutput,
+      dependentDiscoveries,
+    )
 
     const projectDiscoveryFolder = configReader.getProjectChainPath(
       config.name,

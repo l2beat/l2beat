@@ -31,7 +31,7 @@ export class Discoveries {
     this.discoveries[project][chain] = discovery
   }
 
-  getBlockNumbers() {
+  getBlockNumbers(options: { skip?: { name: string; chain: string } } = {}) {
     const result: {
       [project: string]: {
         [chain: string]: {
@@ -41,8 +41,15 @@ export class Discoveries {
     } = {}
 
     for (const [project, chains] of Object.entries(this.discoveries)) {
-      result[project] = {}
       for (const [chain, discovery] of Object.entries(chains)) {
+        if (
+          options.skip &&
+          options.skip.name === project &&
+          options.skip.chain === chain
+        ) {
+          continue
+        }
+        result[project] ??= {}
         result[project][chain] = {
           blockNumber: discovery.blockNumber,
         }

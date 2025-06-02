@@ -17,7 +17,9 @@ export async function rediscoverStructureOnBlock(
   saveSources: boolean = false,
   overwriteCache: boolean = false,
 ): Promise<DiscoveryOutput> {
-  process.stdout.write(`Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `)
+  process.stdout.write(
+    `Rediscovering ${projectName} on ${chain} at block ${blockNumber}... `,
+  )
   const paths = getDiscoveryPaths()
   const discoveryFolder =
     '.' +

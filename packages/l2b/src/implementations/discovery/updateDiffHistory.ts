@@ -19,6 +19,7 @@ import {
   getDiscoveryPaths,
   modelPermissions,
 } from '@l2beat/discovery'
+import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
   assert,
   formatAsciiBorder,
@@ -28,7 +29,6 @@ import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
 import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
-import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 

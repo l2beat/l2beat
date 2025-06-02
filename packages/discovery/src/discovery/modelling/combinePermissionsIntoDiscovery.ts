@@ -66,12 +66,13 @@ export async function combinePermissionsIntoDiscovery(
     }
   }
 
-  const blockNumbers = dependentDiscoveries.getBlockNumbers()
-  const entryForCurrentProject = blockNumbers[discovery.name]
-  if (entryForCurrentProject) {
+  const blockNumbers = dependentDiscoveries.getBlockNumbers({
     // Don't add current project to its own dependencies
-    delete entryForCurrentProject[discovery.chain]
-  }
+    skip: {
+      name: discovery.name,
+      chain: discovery.chain,
+    },
+  })
   discovery.dependentDiscoveries = blockNumbers
 }
 
