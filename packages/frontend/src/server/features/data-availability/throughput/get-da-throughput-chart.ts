@@ -35,11 +35,11 @@ export async function getDaThroughputChart({
   const from = days ? to - days * UnixTime.DAY : null
   const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly
-    ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+    ? await db.dataAvailability2.getSummedProjectsByDaLayersAndTimeRange(
         daLayerIds,
         [from, to],
       )
-    : await db.dataAvailability.getByProjectIdsAndTimeRange(daLayerIds, [
+    : await db.dataAvailability2.getByProjectIdsAndTimeRange(daLayerIds, [
         from,
         to,
       ])
@@ -69,7 +69,7 @@ export function groupByTimestampAndDaLayerId(
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
-    const timestamp = record.timestamp
+    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
     const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {
@@ -77,6 +77,8 @@ export function groupByTimestampAndDaLayerId(
     }
     if (!result[timestamp][daLayerId]) {
       result[timestamp][daLayerId] = Number(value)
+    } else {
+      result[timestamp][daLayerId] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
