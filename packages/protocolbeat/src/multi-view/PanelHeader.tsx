@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
+import type { ApiAbi, Field } from '../api/types'
 import { findSelected } from '../common/findSelected'
 import { isReadOnly } from '../config'
 import { IconChatbot } from '../icons/IconChatbot'
@@ -88,17 +89,20 @@ async function formatContractCode(
   return result
 }
 
+interface ContractValues {
+  address: string
+  fields?: Field[]
+}
+
 function formatContractValues(
-  contract: any,
+  contract: ContractValues,
   blockNumber?: number,
   chain?: string,
 ) {
-  if (
-    !('fields' in contract) ||
-    !contract.fields ||
-    contract.fields.length === 0
-  )
+  if (contract.fields === undefined || contract.fields.length === 0) {
     return []
+  }
+
   const result: string[] = []
   let header = 'Contract state from public functions and event handlers'
   if (blockNumber !== undefined && chain) {
@@ -114,9 +118,16 @@ function formatContractValues(
   return result
 }
 
-function formatContractAbi(contract: any, chain?: string) {
-  if (!('abis' in contract) || !contract.abis || contract.abis.length === 0)
+interface ContractAbi {
+  address: string
+  abis?: ApiAbi[]
+}
+
+function formatContractAbi(contract: ContractAbi, chain?: string) {
+  if (contract.abis === undefined || contract.abis.length === 0) {
     return []
+  }
+
   const result: string[] = []
   let header = 'Contract ABI'
   if (contract.address) header += ` for ${contract.address}`
