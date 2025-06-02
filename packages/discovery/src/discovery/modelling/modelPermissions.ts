@@ -19,8 +19,17 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
-export type Discoveries = {
-  [name: string]: { [chain: string]: DiscoveryOutput }
+export class Discoveries {
+  discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
+
+  get(project: string, chain: string): DiscoveryOutput | undefined {
+    return this.discoveries[project]?.[chain]
+  }
+
+  set(project: string, chain: string, discovery: DiscoveryOutput) {
+    this.discoveries[project] ??= {}
+    this.discoveries[project][chain] = discovery
+  }
 }
 
 export async function modelPermissions(
@@ -154,7 +163,7 @@ export function generateClingoForProject(
   )
 
   for (const { project, chain } of dependenciesToDiscover) {
-    const discovery = discoveries[project]?.[chain]
+    const discovery = discoveries.get(project, chain)
     if (!discovery) {
       throw new Error(
         `Discovery for ${project} on ${chain} is required but not provided`,

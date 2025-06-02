@@ -7,7 +7,6 @@
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
-import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -15,10 +14,7 @@ import {
   TemplateService,
   combinePermissionsIntoDiscovery,
   diffDiscovery,
-  discover,
   discoveryDiffToMarkdown,
-  getChainConfig,
-  getChainConfigs,
   getDiscoveryPaths,
   modelPermissionsForIsolatedDiscovery,
 } from '@l2beat/discovery'
@@ -30,6 +26,7 @@ import {
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
+import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -201,50 +198,20 @@ async function performDiscoveryOnPreviousBlock(
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
-  // To check for changes to source code,
-  // download sources for block number from main branch
-  // Remove any old sources we fetched before, so that their count doesn't grow
-  await rimraf(`${discoveryFolder}/.code@*`, { glob: true })
-  await rimraf(`${discoveryFolder}/.flat@*`, { glob: true })
-
-  const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
-
-  console.log('Discovering on previous block...')
-  await discover(
-    {
-      project: projectName,
-      chain: getChainConfig(chain),
-      blockNumber: blockNumberFromMainBranch,
-      sourcesFolder: `.code@${blockNumberFromMainBranch}`,
-      flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
-      discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
-      saveSources,
-      overwriteCache,
-    },
-    getChainConfigs(),
-    Logger.SILENT,
+  const prevStructure = await rediscoverStructureOnBlock(
+    projectName,
+    chain,
+    discoveryFromMainBranch.blockNumber,
+    saveSources,
+    overwriteCache,
   )
-  console.log('Discovery completed')
 
-  const prevDiscoveryFile = readFileSync(
-    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
-    'utf-8',
-  )
-  let prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
-
-  // This is a temporary solution to model project in isolation
-  // until we refactor diffHistory to support cross-chain discovery
-  await modelAndInjectPermissions(prevDiscovery, projectName, chain)
-  prevDiscovery = withoutUndefinedKeys(prevDiscovery)
-
-  // Remove discovered@... file, we don't need it
-  await rimraf(
-    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
-  )
+  await modelAndInjectPermissions(prevStructure, projectName, chain)
+  const prevDiscovery = withoutUndefinedKeys(prevStructure)
 
   // get code diff with main branch
   const flatDiff = compareFolders(
-    `${discoveryFolder}/.flat@${blockNumberFromMainBranch}`,
+    `${discoveryFolder}/.flat@${discoveryFromMainBranch.blockNumber}`,
     `${discoveryFolder}/.flat`,
   )
 

@@ -2,6 +2,7 @@ export { discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
 export {
+  type Discoveries,
   modelPermissions,
   modelPermissionsForIsolatedDiscovery,
   generateClingoForProject,
