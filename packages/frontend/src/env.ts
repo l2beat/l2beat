@@ -48,7 +48,7 @@ const SERVER_CONFIG = {
   ES_NODE: z.string().url().optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
-  ES_FLUSH_INTERVAL: z.number().optional(),
+  ES_FLUSH_INTERVAL: z.coerce.number().optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 

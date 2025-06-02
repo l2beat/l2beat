@@ -35,7 +35,7 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
-  app.use(MetricsMiddleware)
+  app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
 
   app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -44,7 +44,7 @@ export function createServer(logger: Logger) {
   app.use('/plausible', createPlausibleRouter())
 
   app.listen(port, () => {
-    console.log(`[HTTP] Server started at http://localhost:${port}`)
+    appLogger.info(`Started at http://localhost:${port}`)
   })
 }
 

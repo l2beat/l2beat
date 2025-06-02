@@ -1,11 +1,18 @@
+import { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
+import { round } from 'lodash'
 
 export function MetricsMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
+  logger: Logger,
 ) {
-  console.log(`[${req.method}] ${req.originalUrl} - processing...`)
+  const appLogger = logger.for('Metrics')
+  appLogger.info(`Processing request`, {
+    method: req.method,
+    url: req.originalUrl,
+  })
 
   const start = process.hrtime.bigint()
 
@@ -31,9 +38,12 @@ export function MetricsMiddleware(
 
     res.setHeader('metrics-execution-time', durationMs.toFixed(2))
     res.setHeader('metrics-data-size', size)
-    console.log(
-      `[${req.method}] ${req.originalUrl} - ${durationMs.toFixed(2)}ms - ${formatBytes(size)}`,
-    )
+    appLogger.info(`Request processed`, {
+      method: req.method,
+      url: req.originalUrl,
+      duration: Math.round(durationMs),
+      size,
+    })
 
     return originalSend.call(this, body)
   }
