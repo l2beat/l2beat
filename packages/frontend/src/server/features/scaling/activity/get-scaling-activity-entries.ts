@@ -42,6 +42,7 @@ export async function getScalingActivityEntries() {
       getEthereumEntry(ethereumData, 'rollups'),
       getEthereumEntry(ethereumData, 'validiumsAndOptimiums'),
       getEthereumEntry(ethereumData, 'others'),
+      getEthereumEntry(ethereumData, 'underReview'),
     ])
     .sort(compareActivityEntry)
 
