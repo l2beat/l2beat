@@ -28,6 +28,14 @@ const idRemapping: Record<string, string> = {
   ancient8: 'ancient',
   'manta-network': 'mantapacific',
   'public-good-networks': 'publicgoodsnetwork',
+  derive: 'lyra',
+  'gravity-alpha': 'gravity',
+  'pepe-unchained': 'pepeunchained',
+  'rari-chain': 'rari',
+  'winr-protocol': 'winr',
+  'molten-network': 'molten',
+  'manta-pacific': 'mantapacific',
+  k2: 'karak',
 }
 
 export class CeleniumFetcher implements FetchProjects {
