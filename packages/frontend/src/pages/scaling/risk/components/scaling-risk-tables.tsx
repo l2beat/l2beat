@@ -11,6 +11,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import {
   OthersInfo,
   RollupsInfo,
+  UnderReviewInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/scaling-tabs-info'
 import { TableFilters } from '~/components/table/filters/table-filters'
@@ -82,7 +83,7 @@ export function ScalingRiskTables(props: Props) {
           </DirectoryTabsTrigger>
           {entries.underReview.length > 0 && (
             <DirectoryTabsTrigger value="underReview">
-              Under review
+              Under initial review
               <CountBadge>{entries.underReview.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
@@ -111,6 +112,7 @@ export function ScalingRiskTables(props: Props) {
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="underReview">
+            <UnderReviewInfo />
             <ScalingRiskTable entries={entries.underReview} underReview />
           </DirectoryTabsContent>
         </TableSortingProvider>
