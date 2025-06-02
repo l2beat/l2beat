@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
@@ -17,7 +18,9 @@ const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
 
-export function createServer() {
+export function createServer(logger: Logger) {
+  const appLogger = logger.for('HTTP Server')
+
   const app = express()
   if (isProduction) {
     app.use(compression())

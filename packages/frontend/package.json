@@ -22,6 +22,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
+    "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
     "@l2beat/shared": "workspace:*",
@@ -73,6 +75,7 @@
     "sirv": "^3.0.1",
     "sqlite3": "5.1.7",
     "tailwind-merge": "^2.3.0",
+    "uuid": "^11.1.0",
     "vaul": "^0.9.1",
     "ws": "^8.18.2",
     "zod": "^3.23.8"
