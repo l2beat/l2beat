@@ -10,7 +10,8 @@
         "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
         "0x2affadeb2ef5e1f2a7f58964ee191f1e88317ecd", // SC: emrgMultisig
         "0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
-        "0x989E348275b659d36f8751ea1c10D146211650BE" // OptimisticTokenVotingPlugin
+        "0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
+        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9" // TaikoLabs Prover
       ],
       "names": {},
       "overrides": {
