@@ -54,7 +54,7 @@ export function DesktopProjectNavigation({
     if (!header) return
 
     setHeaderHeight(header.getBoundingClientRect().height)
-  }, [headerRef])
+  }, [])
 
   const style = useMemo(() => {
     if (!headerHeight) return undefined
@@ -146,7 +146,7 @@ function ProjectNavigationList({
     if (currentMenuEntry.current && menuContainer.current) {
       scrollToItem(currentMenuEntry.current, menuContainer.current)
     }
-  }, [currentSection, scrollToItem])
+  }, [scrollToItem])
 
   return (
     <div

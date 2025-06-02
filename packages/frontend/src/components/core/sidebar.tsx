@@ -9,7 +9,6 @@ import {
   SheetTitle,
 } from '~/components/core/sheet'
 import { useBreakpoint } from '~/hooks/use-breakpoint'
-import { usePathname } from '~/hooks/usePathname'
 import { cn } from '~/utils/cn'
 import { HorizontalSeparator } from './horizontal-separator'
 
@@ -42,7 +41,6 @@ function SidebarProvider({
   open?: boolean
   onOpenChange?: (open: boolean) => void
 }) {
-  const pathname = usePathname()
   const [openMobile, setOpenMobile] = React.useState(false)
 
   const contextValue = React.useMemo<SidebarContextProps>(
@@ -50,12 +48,8 @@ function SidebarProvider({
       openMobile,
       setOpenMobile,
     }),
-    [openMobile, setOpenMobile],
+    [openMobile],
   )
-
-  React.useEffect(() => {
-    setOpenMobile(false)
-  }, [pathname])
 
   return (
     <SidebarContext.Provider value={contextValue}>

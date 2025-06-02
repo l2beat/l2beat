@@ -40,7 +40,7 @@ export function ShowMoreText({
         setIsOverflowing(scrollWidth > clientWidth)
       }
     }
-  }, [isMobile, contentRef])
+  }, [isMobile])
 
   useEffect(() => {
     handleResize()

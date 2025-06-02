@@ -1,6 +1,5 @@
 import clamp from 'lodash/clamp'
 import React, { useEffect, useRef, useState } from 'react'
-import { useEventCallback } from '~/hooks/use-event-callback'
 import { useEventListener } from '~/hooks/use-event-listener'
 
 import { ChevronIcon } from '~/icons/chevron'
@@ -50,7 +49,7 @@ export const OverflowWrapper = ({
     })
   }
 
-  const onScroll = useEventCallback(() => {
+  const onScroll = () => {
     if (!contentRef.current) return
     const content = contentRef.current
 
@@ -68,11 +67,9 @@ export const OverflowWrapper = ({
             ? 'left'
             : 'both'
     setVisibleArrows(visibleArrows)
-  })
+  }
 
-  useEffect(() => {
-    onScroll()
-  }, [children, onScroll])
+  useEffect(onScroll, [])
 
   useEventListener('scroll', onScroll, contentRef)
   useEventListener('resize', onScroll)
