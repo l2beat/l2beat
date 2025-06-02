@@ -200,6 +200,6 @@ export const scalingSummaryOthersColumns = [
 
 export const scalingSummaryUnderReviewColumns = [
   ...scalingSummaryColumns.slice(0, 3),
-  scalingSummaryColumns[4]!,
+  ...scalingSummaryColumns.slice(4, 5),
   ...scalingSummaryColumns.slice(6, 8),
 ]
