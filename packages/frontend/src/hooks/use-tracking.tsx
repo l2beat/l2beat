@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { env } from '~/env'
 
 export const PlausibleEvents = z.object({
   switchChanged: z.object({ name: z.string(), value: z.string() }),
@@ -39,6 +40,10 @@ export function useTracking() {
         ? []
         : [{ props: PlausibleEvents[T] }]
     ) => {
+      if (env.NODE_ENV !== 'production') {
+        return
+      }
+
       fetch('/plausible/event', {
         method: 'POST',
         headers: {
