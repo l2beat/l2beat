@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x7ea15e3379242794809a9bb1213c3c661a26f015
+
+# Diff at Mon, 02 Jun 2025 08:00:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22437738
+- current block number: 22615670
+
+## Description
+
+conduit ms signer change.
+
+## Watched changes
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      values.$members.10:
++        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
+      values.$members.9:
+-        "0xA0737fea60F0601A192E3d2c98865A883ab0bda2"
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.$members.8:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.$members.7:
+-        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.$members.6:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac"
+      values.multisigThreshold:
+-        "4 of 10 (40%)"
++        "4 of 11 (36%)"
+    }
+```
+
 Generated with discovered.json: 0x97d33320c9f98fdc8da2d3a0bd3e1fda573ff425
 
 # Diff at Fri, 30 May 2025 07:09:45 GMT:

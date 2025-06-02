@@ -1,7 +1,7 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22467145,
+  "blockNumber": 22615677,
   "configHash": "0x24c5004aaf6a239e6ed1926aca9fe5cda0346a6c4c6b75b8fe82e6b7be1393e4",
   "entries": [
     {
@@ -158,7 +158,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619830",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619831",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -440,7 +440,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 70,
+        "nonce": 72,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -541,6 +541,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -556,8 +557,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 101,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -692,7 +693,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 15,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -765,6 +766,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OpFoundationUpgradeSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "type": "Contract",
@@ -818,7 +824,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 26,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -923,7 +929,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 22170188
+          "prevBlockNum": 22520098
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -999,7 +1005,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 106,
+        "nonce": 107,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1128,7 +1134,7 @@
         ],
         "$upgradeCount": 3,
         "additionalProposers": ["0xb6c7448Ad01AfAF34217FFd0eCaCf2c29bdc38fE"],
-        "aggregationVkey": "0x00a4fec570ddb93572e5312e1debb095562fea9ae099622c6f7c9d145d87517f",
+        "aggregationVkey": "0x009db7eba2814292b350d8b18e3861fcf8cb387de821c3d4546b79552ee2afa5",
         "challenger": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "CHALLENGER": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "FINALIZATION_PERIOD_SECONDS": 28800,
@@ -1136,15 +1142,15 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1260660,
-        "latestOutputIndex": 335,
-        "nextBlockNumber": 1264980,
-        "nextOutputIndex": 336,
+        "latestBlockNumber": 1444260,
+        "latestOutputIndex": 369,
+        "nextBlockNumber": 1448580,
+        "nextOutputIndex": 370,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
         "PROPOSER": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
-        "rangeVkeyCommitment": "0x5614b4dc4d7a1c33681c404a27aa1db265ea84b75047859667fed5a303a8dc43",
+        "rangeVkeyCommitment": "0x0ea16a87731757ad1753d1906cb006de1fdd6a760add547c0c691bcd0914de7e",
         "rollupConfigHash": "0x2aee88f2b7f9f1edfab6c535edeb8a7d969c162fe974650fc3c1e4d3c75ecb8b",
         "startingBlockNumber": 0,
         "startingTimestamp": 1734387239,
@@ -1222,7 +1228,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 27,
+        "nonce": 29,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1294,7 +1300,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2210,5 +2216,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
   },
-  "permissionsConfigHash": "0xb4d49275c3cbaa5a85f1f97cb9fee73f41888f572acf4855a0436be46b9af7a5"
+  "permissionsConfigHash": "0x618a19f03b646b6a12a63dcfce6af270e27c991df4b3fa3edfeaa88ca73ce9fd"
 }
