@@ -1,6 +1,11 @@
+import { partition } from 'lodash'
 import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
-import { ContractEntry, technologyContractKey } from '../contract-entry'
+import {
+  ContractEntry,
+  ContractsWithImpactfulChanges,
+  technologyContractKey,
+} from '../contract-entry'
 import { PermissionedEntityEntry } from '../permissioned-entity-entry'
 import { ProjectSection } from '../project-section'
 import type { ProjectSectionProps } from '../types'
@@ -33,6 +38,14 @@ export function PermissionsSection({
       ))}
       <div>
         {Object.entries(permissionsByChain).map(([chain, permissions]) => {
+          const [changedRoles, unchangedRoles] = partition(
+            permissions.roles,
+            (contract) => contract.impactfulChange,
+          )
+          const [changedActors, unchangedActors] = partition(
+            permissions.actors,
+            (contract) => contract.impactfulChange,
+          )
           return (
             <div key={chain} className="mt-8">
               <div className="flex items-baseline gap-3">
@@ -42,25 +55,31 @@ export function PermissionsSection({
               {permissions.roles.length > 0 && (
                 <div className="mt-3">
                   <h4 className="font-bold text-xl">Roles:</h4>
-                  {permissions.roles.map((permission) => (
+                  {unchangedRoles.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
                     />
                   ))}
+                  {changedRoles.length > 0 && (
+                    <ContractsWithImpactfulChanges contracts={changedRoles} />
+                  )}
                 </div>
               )}
               {permissions.actors.length > 0 && (
                 <div className="mt-3">
                   <h4 className="font-bold text-xl">Actors:</h4>
-                  {permissions.actors.map((permission) => (
+                  {unchangedActors.map((permission) => (
                     <ContractEntry
                       key={technologyContractKey(permission)}
                       contract={permission}
                       className="my-4"
                     />
                   ))}
+                  {changedActors.length > 0 && (
+                    <ContractsWithImpactfulChanges contracts={changedActors} />
+                  )}
                 </div>
               )}
             </div>

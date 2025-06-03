@@ -9,6 +9,7 @@ import type { UsedInProject } from '../../../components/projects/sections/permis
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import type { ContractUtils } from './get-contract-utils'
 import { toVerificationStatus } from './to-verification-status'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/get-projects-change-report'
 
 type ProjectParams = {
   id: ProjectId
@@ -44,6 +45,7 @@ function permissionsAreEmpty(
 export function getPermissionsSection(
   projectParams: ProjectParams,
   contractUtils: ContractUtils,
+  projectsChangeReport: ProjectsChangeReport,
 ): PermissionSection | undefined {
   if (!projectParams.permissions) {
     return undefined
@@ -70,6 +72,10 @@ export function getPermissionsSection(
     return undefined
   }
 
+  const projectChangeReport = projectParams.id
+    ? projectsChangeReport?.projects[projectParams.id]
+    : undefined
+
   const permissionsByChain = {
     ...Object.fromEntries(
       Object.entries(projectParams.permissions ?? {}).map(
@@ -80,6 +86,7 @@ export function getPermissionsSection(
               projectParams,
               permissions,
               contractUtils,
+              projectChangeReport,
             ),
           ]
         },
@@ -97,15 +104,26 @@ function getGroupedTechnologyContracts(
   projectParams: ProjectParams,
   permissions: ProjectPermissions,
   contractUtils: ContractUtils,
+  projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): PermissionSection['permissionsByChain'][string] {
   return {
     roles:
       permissions.roles?.flatMap((permission) =>
-        toTechnologyContract(projectParams, permission, contractUtils),
+        toTechnologyContract(
+          projectParams,
+          permission,
+          contractUtils,
+          projectChangeReport,
+        ),
       ) ?? [],
     actors:
       permissions.actors?.flatMap((permission) =>
-        toTechnologyContract(projectParams, permission, contractUtils),
+        toTechnologyContract(
+          projectParams,
+          permission,
+          contractUtils,
+          projectChangeReport,
+        ),
       ) ?? [],
   }
 }
@@ -114,6 +132,7 @@ function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ProjectPermission,
   contractUtils: ContractUtils,
+  projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
 ): TechnologyContract[] {
   const addresses: TechnologyContractAddress[] = permission.accounts.map(
     (account) => ({
@@ -148,6 +167,16 @@ function toTechnologyContract(
     address: account.address,
   }))
 
+  const changes = Object.values(projectChangeReport ?? {}).flat()
+  const impactfulChangeAddresses = changes.flatMap((c) =>
+    c.implementationChange
+      .concat(c.highSeverityFieldChange)
+      .concat(c.ultimateUpgraderChange),
+  )
+  const impactfulChange = impactfulChangeAddresses.some((changedAddress) =>
+    addresses.map((a) => a.address).includes(changedAddress),
+  )
+
   const result: TechnologyContract[] = [
     {
       name,
@@ -158,7 +187,7 @@ function toTechnologyContract(
       description: permission.description,
       participants,
       references: permission.references ?? [],
-      impactfulChange: false,
+      impactfulChange,
     },
   ]
 

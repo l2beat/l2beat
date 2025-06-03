@@ -3,7 +3,11 @@ import { DiagramImage } from '~/components/diagram-image'
 import type { DiagramParams } from '~/utils/project/get-diagram-params'
 import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
-import { ContractEntry, technologyContractKey } from '../contract-entry'
+import {
+  ContractEntry,
+  ContractsWithImpactfulChanges,
+  technologyContractKey,
+} from '../contract-entry'
 import { ProjectSection } from '../project-section'
 import type { TechnologyRisk } from '../risk-list'
 import { RiskList } from '../risk-list'
@@ -127,26 +131,6 @@ function ChainNameHeader(props: { children: React.ReactNode }) {
     <div className="flex items-baseline gap-3">
       <h3 className="whitespace-pre font-bold text-2xl">{props.children}</h3>
       <div className="w-full border-divider border-b-2" />
-    </div>
-  )
-}
-
-function ContractsWithImpactfulChanges(props: {
-  contracts: TechnologyContract[]
-}) {
-  return (
-    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
-      <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are impactful changes to the following contracts, and part of the
-        information might be outdated.
-      </div>
-      {props.contracts.map((contract) => (
-        <ContractEntry
-          key={technologyContractKey(contract)}
-          contract={contract}
-          className="my-4 p-0"
-        />
-      ))}
     </div>
   )
 }
