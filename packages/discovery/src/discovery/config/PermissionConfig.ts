@@ -34,7 +34,7 @@ export const RolePermissionEntries = [
   'metisGameCreator',
   'stateDeleterMetis',
   'hotValidatorHyperliquid',
-  'coldValidatorHyperliquid'
+  'coldValidatorHyperliquid',
 ] as const
 
 export type Permission = z.infer<typeof Permission>

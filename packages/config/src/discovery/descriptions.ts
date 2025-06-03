@@ -126,6 +126,7 @@ export const RoleDescriptions: {
   disperse: {
     name: 'Disperser',
     description: 'Can disperse EigenDA blobs to the EigenDA node operators.',
+  },
   stateDeleterMetis: {
     name: 'State Deleter',
     description:
