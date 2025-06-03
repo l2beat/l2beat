@@ -4,8 +4,8 @@
   "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
   "ignoreRelatives": ["quoteVerifier"], // broken, trips GnosisSafe detector
   "fields": {
-    "mrEnclaves":{
-        "handler": {
+    "mrEnclaves": {
+      "handler": {
         "type": "event",
         "select": "mrEnclave",
         "add": {
@@ -18,8 +18,8 @@
         }
       }
     },
-    "mrSigners":{
-        "handler": {
+    "mrSigners": {
+      "handler": {
         "type": "event",
         "select": "mrSigner",
         "add": {
