@@ -1,4 +1,4 @@
-import { partition } from 'lodash'
+import partition from 'lodash/partition'
 import { DiscoUiBanner } from '../../disco-ui-banner'
 import type { TechnologyContract } from '../contract-entry'
 import {
