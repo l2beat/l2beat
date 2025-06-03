@@ -9,7 +9,8 @@
         "type": "event",
         "select": ["relay", "relayURL"],
         "add": { "event": "RelayAdded" }
-      }
+      },
+      "permissions": [{ "type": "relayDA" }]
     }
   }
 }

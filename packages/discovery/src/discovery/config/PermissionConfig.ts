@@ -20,6 +20,7 @@ export const RolePermissionEntries = [
   'sequence',
   'validate',
   'disperse',
+  'relayDA',
   'operateLinea',
   'fastconfirm',
   'validateZkStack',

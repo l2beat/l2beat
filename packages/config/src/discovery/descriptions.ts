@@ -12,6 +12,7 @@ export const UltimatePermissionToPrefix: {
   sequence: 'A Sequencer',
   validate: 'A Validator',
   disperse: 'A Disperser',
+  relayDA: 'A DA Relayer',
   operateLinea: 'An Operator',
   fastconfirm: 'A FastConfirmer',
   validateZkStack: 'A Validator',
@@ -126,6 +127,10 @@ export const RoleDescriptions: {
   disperse: {
     name: 'Disperser',
     description: 'Can disperse EigenDA blobs to the EigenDA node operators.',
+  },
+  relayDA: {
+    name: 'Relayer',
+    description: 'Can relay blob attestations to the DA bridge.',
   },
   stateDeleterMetis: {
     name: 'State Deleter',
