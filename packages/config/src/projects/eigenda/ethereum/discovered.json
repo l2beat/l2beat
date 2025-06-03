@@ -1205,7 +1205,14 @@
     {
       "address": "0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relayDA",
+          "from": "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": ".relayers"
+        }
+      ]
     },
     {
       "address": "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
@@ -1821,5 +1828,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x0509dd885def48fa5c3f9949c62a9ff5435a7aa355a3ebbe8162168ae24e82fe"
+  "permissionsConfigHash": "0x8f849f98638d0a59ec6045196a986fcf0406a2bca0b82e548beae6dc3d02f904"
 }
