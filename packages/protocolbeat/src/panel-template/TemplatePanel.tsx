@@ -116,7 +116,7 @@ function getTemplateFiles(
 
   if (data.template) {
     sources.push({
-      id: `template`,
+      id: `template-${selectedAddress}`,
       name: 'template.jsonc',
       content: data.template,
       language: 'json',
@@ -126,7 +126,7 @@ function getTemplateFiles(
 
   if (data.shapes) {
     sources.push({
-      id: `shapes`,
+      id: `shapes-${selectedAddress}`,
       name: 'shapes.json',
       content: data.shapes,
       language: 'json',
@@ -136,7 +136,7 @@ function getTemplateFiles(
 
   if (data.criteria) {
     sources.push({
-      id: `criteria`,
+      id: `criteria-${selectedAddress}`,
       name: 'criteria.json',
       content: data.criteria,
       language: 'json',
