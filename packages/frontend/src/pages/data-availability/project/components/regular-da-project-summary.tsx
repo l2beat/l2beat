@@ -11,6 +11,7 @@ import type { ProjectStat } from './da-project-stats'
 import { DaProjectStats, getCommonDaProjectStats } from './da-project-stats'
 import { MultipleBridgeDetails } from './multiple-bridge-details'
 import { SingleBridgeDetails } from './single-bridge-details'
+import { ArchivedBar } from '~/components/projects/archived-bar'
 
 interface Props {
   project: DaProjectPageEntry
@@ -44,6 +45,11 @@ export function RegularDaProjectSummary({ project }: Props) {
               <div className="!mb-8 hidden md:flex">
                 <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
               </div>
+              {project.archivedAt && (
+                <div className="-mt-4 mb-4">
+                  <ArchivedBar />
+                </div>
+              )}
               <div className="flex-1">
                 <div className="flex flex-col gap-4">
                   <div className="max-md:hidden">

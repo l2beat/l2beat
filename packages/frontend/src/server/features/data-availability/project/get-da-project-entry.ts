@@ -31,6 +31,7 @@ interface CommonDaProjectPageEntry {
   description: string
   isUnderReview: boolean
   isUpcoming: boolean
+  archivedAt: number | undefined
   projectVariants?: {
     title: string
     href: string
@@ -89,7 +90,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 export async function getDaProjectEntry(
   layer: Project<
     'daLayer' | 'display' | 'statuses',
-    'isUpcoming' | 'milestones'
+    'isUpcoming' | 'milestones' | 'archivedAt'
   >,
   bridgeSlug: string,
 ): Promise<DaProjectPageEntry | undefined> {
@@ -103,8 +104,8 @@ export async function getDaProjectEntry(
   const selected = bridges.find((x) => x.slug === bridgeSlug)
   if (
     !selected &&
-    (bridgeSlug !== 'no-bridge' ||
-      layer.daLayer.usedWithoutBridgeIn.length === 0)
+    bridgeSlug !== 'no-bridge' &&
+    layer.daLayer.usedWithoutBridgeIn.length === 0
   ) {
     return
   }
@@ -153,6 +154,7 @@ export async function getDaProjectEntry(
     description: `${layer.display.description} ${selected?.display.description ?? ''}`,
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: layer.isUpcoming ?? false,
+    archivedAt: layer.archivedAt,
     selectedBridge: {
       name: selected?.daBridge.name ?? 'No DA Bridge',
       slug: selected?.slug ?? 'no-bridge',
@@ -276,6 +278,7 @@ export async function getEthereumDaProjectEntry(
     description: `${layer.display.description} ${bridge.display.description}`,
     isUnderReview: !!layer.statuses.reviewStatus,
     isUpcoming: false,
+    archivedAt: undefined,
     header: {
       links: getProjectLinks(layer.display.links),
       tvs: layerTvs,
