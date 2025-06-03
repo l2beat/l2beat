@@ -1,4 +1,3 @@
-import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
@@ -30,8 +29,11 @@ import { IndexerConfigurationRepository } from './uif/indexer-configuration/repo
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
-  const db = new DatabaseClient({ ...config })
+export function createDatabase(
+  config?: PoolConfig,
+  opts?: { loggerEnabled?: boolean },
+) {
+  const db = new DatabaseClient({ ...config }, opts)
 
   return {
     transaction: db.transaction.bind(db),

@@ -1,21 +1,23 @@
 import type { Database } from '@l2beat/database'
-import { compiledToSqlQuery, createDatabase } from '@l2beat/database'
-import type { LogEvent } from 'kysely'
+import { createDatabase } from '@l2beat/database'
 import { env } from '~/env'
-import { createLogger } from './utils/logger'
 
 let db: Database | undefined
 
 export function getDb() {
   if (!db) {
     db = !env.MOCK
-      ? createDatabase({
-          application_name: createConnectionTag(),
-          connectionString: env.DATABASE_URL,
-          ssl: ssl(),
-          ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? makeLogger() : undefined,
-        })
+      ? createDatabase(
+          {
+            application_name: createConnectionTag(),
+            connectionString: env.DATABASE_URL,
+            ssl: ssl(),
+            ...pool(),
+          },
+          {
+            loggerEnabled: env.DATABASE_LOG_ENABLED,
+          },
+        )
       : createThrowingProxy()
   }
 
@@ -62,23 +64,5 @@ function pool() {
   return {
     min: 2,
     max: 5,
-  }
-}
-
-function makeLogger() {
-  const appLogger = createLogger().for('Database')
-  return (event: LogEvent) => {
-    if (event.level === 'error') {
-      appLogger.error('Query failed', {
-        durationMs: event.queryDurationMillis,
-        error: event.error,
-        sql: compiledToSqlQuery(event.query),
-      })
-    } else {
-      appLogger.info('Query executed', {
-        durationMs: event.queryDurationMillis,
-        sql: compiledToSqlQuery(event.query),
-      })
-    }
   }
 }
