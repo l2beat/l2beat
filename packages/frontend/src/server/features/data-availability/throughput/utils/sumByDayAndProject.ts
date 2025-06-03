@@ -1,4 +1,4 @@
-import { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 
