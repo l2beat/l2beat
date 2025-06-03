@@ -3,7 +3,7 @@
   "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
   "fields": {
     "getQuorumAdversaryThresholdPercentage": {
-        "severity": "HIGH",
+      "severity": "HIGH",
       "type": "RISK_PARAMETER"
     },
     "getQuorumConfirmationThresholdPercentage": {
