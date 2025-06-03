@@ -9,8 +9,7 @@ import * as solidity from './languages/solidity'
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import type { EditorFile } from './store'
 import { theme } from './theme'
-
-import * as contractSchema from '../../../../discovery/schemas/contract.v2.schema.json'
+import { jsonDiagnostics } from './languages/json'
 
 let initialized = false
 
@@ -251,25 +250,7 @@ function init() {
   monaco.languages.setMonarchTokensProvider('solidity', solidity.language)
   monaco.languages.setLanguageConfiguration('solidity', solidity.configuration)
 
-  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-    allowComments: true,
-    validate: true,
-    enableSchemaRequest: true,
-    schemaValidation: 'error',
-    schemas: [
-      {
-        uri: 'inmemory:/discovery/schemas/contract.v2.schema.json',
-        fileMatch: ['template.jsonc'],
-        schema: {
-          $schema: contractSchema.$schema,
-          additionalProperties: contractSchema.additionalProperties,
-          definitions: contractSchema.definitions,
-          properties: contractSchema.properties,
-          type: contractSchema.type,
-        },
-      },
-    ],
-  })
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions(jsonDiagnostics)
 
   monaco.editor.defineTheme('default', theme)
   monaco.editor.setTheme('default')
