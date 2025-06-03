@@ -1,4 +1,4 @@
-import { useTracking } from '~/hooks/UseTracking'
+import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 
 export function UopsExplorerLink() {

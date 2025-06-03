@@ -1,7 +1,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import type * as React from 'react'
-import { useTracking } from '~/hooks/UseTracking'
 import { useQueryParam } from '~/hooks/useQueryParam'
+import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 import { OverflowWrapper } from './OverflowWrapper'
 

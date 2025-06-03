@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useTracking } from '~/hooks/UseTracking'
+import { useTracking } from '~/hooks/useTracking'
 import type { FilterableValueId } from './filterableValue'
 
 type TableFilterInternalContextValue = {

@@ -1,6 +1,6 @@
 import * as SwitchPrimitives from '@radix-ui/react-switch'
 import type * as React from 'react'
-import { useTracking } from '~/hooks/UseTracking'
+import { useTracking } from '~/hooks/useTracking'
 import { cn } from '~/utils/cn'
 
 function Switch({

@@ -16,9 +16,9 @@ import {
   PopoverTrigger,
   popoverTriggerClasses,
 } from '~/components/core/Popover'
-import { useGlobalShortcut } from '~/hooks/UseGlobalShortcut'
-import { useTracking } from '~/hooks/UseTracking'
+import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useIsMobile } from '~/hooks/useIsMobile'
+import { useTracking } from '~/hooks/useTracking'
 import { FilterIcon } from '~/icons/Filter'
 import { PlusIcon } from '~/icons/Plus'
 import { cn } from '~/utils/cn'

@@ -2,8 +2,8 @@ import { assertUnreachable } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { useEffect, useReducer } from 'react'
 import { z } from 'zod'
-import { useTracking } from '~/hooks/UseTracking'
 import { useQueryParam } from '~/hooks/useQueryParam'
+import { useTracking } from '~/hooks/useTracking'
 import { FilterableValueId } from './filterableValue'
 
 export type FilterValue = z.infer<typeof FilterValue>

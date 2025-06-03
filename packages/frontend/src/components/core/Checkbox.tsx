@@ -1,7 +1,7 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import type * as React from 'react'
 import { useId } from 'react'
-import { useTracking } from '~/hooks/UseTracking'
+import { useTracking } from '~/hooks/useTracking'
 import { CheckIcon } from '~/icons/Check'
 import { cn } from '~/utils/cn'
 

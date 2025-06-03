@@ -12,10 +12,10 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
-import { useGlobalShortcut } from '~/hooks/UseGlobalShortcut'
-import { useTracking } from '~/hooks/UseTracking'
+import { useGlobalShortcut } from '~/hooks/useGlobalShortcut'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
+import { useTracking } from '~/hooks/useTracking'
 import { useSearchBarContext } from './SearchBarContext'
 import type { AnySearchBarEntry, SearchBarProject } from './SearchBarEntry'
 import type { SearchBarCategory } from './searchBarCategories'
