@@ -1,12 +1,14 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
+import timeout from 'connect-timeout'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/ServerEntry'
 import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
@@ -35,6 +37,9 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
+  app.use(timeout('25s'))
+  app.use((req, res, next) => haltOnTimedout(req, res, next, appLogger))
+
   app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
 
   app.use('/', createMigratedProjectsRouter())
@@ -42,6 +47,15 @@ export function createServer(logger: Logger) {
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
+
+  app.use(
+    (
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => ErrorHandler(err, req, res, next, appLogger),
+  )
 
   app.listen(port, () => {
     appLogger.info(`Started at http://localhost:${port}`)
@@ -68,6 +82,22 @@ function renderToHtml(data: RenderData, url: string) {
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
     .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
+}
+
+function haltOnTimedout(
+  req: express.Request,
+  _res: express.Response,
+  next: express.NextFunction,
+  appLogger: Logger,
+) {
+  if (!req.timedout) {
+    next()
+  } else {
+    appLogger.error('Request timed out', {
+      method: req.method,
+      url: req.originalUrl,
+    })
+  }
 }
 
 function getTemplate(manifest: Manifest) {
