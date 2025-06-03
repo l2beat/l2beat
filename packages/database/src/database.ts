@@ -27,13 +27,11 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
+import type { LogConfig } from 'kysely'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(
-  config?: PoolConfig,
-  opts?: { loggerEnabled?: boolean },
-) {
-  const db = new DatabaseClient({ ...config }, opts)
+export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
+  const db = new DatabaseClient({ ...config })
 
   return {
     transaction: db.transaction.bind(db),
