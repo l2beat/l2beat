@@ -5,15 +5,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
-import { MainPageHeader } from '~/components/main-page-header'
-import { ChevronIcon } from '~/icons/chevron'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import { VerifiedCountWithDetails } from '~/pages/zk-catalog/project/components/verified-count-with-details'
-import { DetailsItem } from './components/details-item'
-import { DetailsLink } from './components/details-link'
-import { VerifierCard } from './components/verifier-card'
-import type { ZkCatalogEntry } from './utils/get-zk-catalog-entries'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { ChevronIcon } from '~/icons/Chevron'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { VerifiedCountWithDetails } from '~/pages/zk-catalog/project/components/VerifiedCountWithDetails'
+import { DetailsItem } from './components/DetailsItem'
+import { DetailsLink } from './components/DetailsLink'
+import { VerifierCard } from './components/VerifierCard'
+import type { ZkCatalogEntry } from './utils/getZkCatalogEntries'
 
 interface Props extends AppLayoutProps {
   entries: ZkCatalogEntry[]

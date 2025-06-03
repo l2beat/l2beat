@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { getScalingSummaryEntries } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'

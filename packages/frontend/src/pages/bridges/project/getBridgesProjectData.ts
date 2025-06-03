@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { getBridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

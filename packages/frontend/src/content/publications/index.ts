@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { defineCollection } from '../define-collections'
+import { defineCollection } from '../defineCollections'
 
 export const publicationsCollection = defineCollection({
   type: 'content',
