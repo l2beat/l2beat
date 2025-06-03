@@ -11,13 +11,13 @@ const columnHelper = createColumnHelper<DaArchivedEntry>()
 
 export const [indexColumn, logoColumn] = getDaCommonProjectColumns(
   columnHelper,
-  (row) => `${row.href}#da-layer`,
+  (row) => row.href ?? '',
 )
 
 const daLayerColumn = columnHelper.accessor('name', {
   header: 'DA Layer',
   cell: (ctx) => (
-    <TableLink href={`${ctx.row.original.href}#da-layer`}>
+    <TableLink href={ctx.row.original.href}>
       <ProjectNameCell project={ctx.row.original} />
     </TableLink>
   ),
