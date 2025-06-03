@@ -1,3 +1,4 @@
+import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
@@ -27,7 +28,6 @@ import { ProjectValueRepository } from './tvs/project-value/repository'
 import { TokenValueRepository } from './tvs/token-value/repository'
 import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
 import { IndexerStateRepository } from './uif/indexer-state/repository'
-import type { LogConfig } from 'kysely'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
