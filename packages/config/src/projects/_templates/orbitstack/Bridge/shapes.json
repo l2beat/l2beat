@@ -1,9 +1,9 @@
 {
   "Bridge": {
-    "hash": "0x51c0020e16ab14fa334bbb0c637103c261dee3865d1816e88356aaaa5b629bb9",
-    "address": "0x480214c3B0707a1e083A3Ae97209FCb671471109",
+    "hash": "0xb920455f1e366c7a89719abdd8d8174e4e7d353f2d4b7dea11b0571bf9526eae",
+    "address": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
     "chain": "ethereum",
-    "blockNumber": 22622481
+    "blockNumber": 22188285
   },
   "Bridge_BoLD": {
     "hash": "0xbce819ea96dfba398ca731b4457e9b9a01621df028c459eb74b15b6a687130b1",
@@ -64,5 +64,11 @@
     "address": "0xF0bb18D200D4CB7b36853Eaa0D902F729B4602AB",
     "chain": "arbitrum",
     "blockNumber": 322488866
+  },
+  "Bridge_202506": {
+    "hash": "0x51c0020e16ab14fa334bbb0c637103c261dee3865d1816e88356aaaa5b629bb9",
+    "address": "0x480214c3B0707a1e083A3Ae97209FCb671471109",
+    "chain": "ethereum",
+    "blockNumber": 22622481
   }
 }
