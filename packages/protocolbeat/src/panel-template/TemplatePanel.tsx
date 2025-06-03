@@ -4,8 +4,8 @@ import { readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
 import { EditorView } from '../components/editor/EditorView'
 import type { EditorFile } from '../components/editor/store'
-import { useProjectData } from '../hooks/useProjectData'
 import { isReadOnly } from '../config'
+import { useProjectData } from '../hooks/useProjectData'
 
 export function TemplatePanel() {
   const { project, selectedAddress, projectResponse } = useProjectData()
