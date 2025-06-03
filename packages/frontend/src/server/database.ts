@@ -14,7 +14,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? logger : undefined,
+          log: env.DATABASE_LOG_ENABLED ? makeLogger : undefined,
         })
       : createThrowingProxy()
   }
@@ -65,9 +65,8 @@ function pool() {
   }
 }
 
-function makeLogger() {
+function makeLogger(event: LogEvent) {
   const appLogger = createLogger().for('Database')
-  return function logger(event: LogEvent) {
   if (event.level === 'error') {
     appLogger.error('Query failed', {
       durationMs: event.queryDurationMillis,
