@@ -38,7 +38,7 @@ export function createServerPageRouter(
   })
 
   router.get('/', (_req, res) => {
-    res.redirect('/scaling/summary')
+    res.redirect('.//scaling/Summary')
   })
 
   const routers = [

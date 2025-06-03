@@ -1,8 +1,8 @@
 import express from 'express'
 import { z } from 'zod'
-import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/project-filter-utils'
+import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
-import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/project-filter-utils'
+import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { validateRoute } from '~/utils/validateRoute'
 import { getScalingActivityApiData } from './getScalingActivityApiData'
@@ -107,7 +107,7 @@ export function createPublicApiRouter() {
   )
 
   router.get(
-    '/api/scaling/tvs/:slug/breakdown',
+    './/api/scaling/tvs/:slug/Breakdown',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
@@ -117,7 +117,7 @@ export function createPublicApiRouter() {
     },
   )
 
-  router.get('/api/scaling/summary', async (_, res) => {
+  router.get('.//api/scaling/Summary', async (_, res) => {
     const data = await getScalingSummaryApiData()
     res.json(data)
   })

@@ -1,0 +1,70 @@
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'React'
+import { BasicTable } from '~/components/table/BasicTable'
+import { RollupsTable } from '~/components/table/RollupsTable'
+import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
+import { useTable } from '~/hooks/useTable'
+import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
+import { compareActivityEntry } from '~/server/features/scaling/activity/utils/compareActivityEntry'
+import type { ActivityMetric } from '../ActivityMetricContext'
+import { useActivityMetricContext } from '../ActivityMetricContext'
+import { getScalingActivityColumns } from './Columns'
+
+interface Props {
+  entries: ScalingActivityEntry[]
+  rollups?: boolean
+  underReview?: boolean
+}
+
+export function ScalingActivityTable({ entries, rollups, underReview }: Props) {
+  const { metric } = useActivityMetricContext()
+  const { sorting, setSorting } = useTableSorting()
+
+  const tableEntries = useMemo(() => {
+    const tableEntries = entries
+      .sort((a, b) => compareActivityEntry(a, b, { metric }))
+      .map((e) => mapToTableEntry(e, metric))
+    return tableEntries ?? []
+  }, [entries, metric])
+
+  const table = useTable({
+    columns: getScalingActivityColumns(metric, {
+      activity: true,
+    }),
+    data: tableEntries,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    state: {
+      sorting,
+    },
+    onSortingChange: setSorting,
+    initialState: {
+      columnPinning: {
+        left: ['#', './Logo'],
+      },
+    },
+  })
+  return rollups ? (
+    <RollupsTable table={table} />
+  ) : (
+    <BasicTable
+      table={table}
+      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+    />
+  )
+}
+
+function mapToTableEntry(entry: ScalingActivityEntry, metric: ActivityMetric) {
+  return {
+    ...entry,
+    data: entry.data
+      ? {
+          ...entry.data,
+          change: entry.data[metric].change,
+          pastDayCount: entry.data[metric].pastDayCount,
+          summedCount: entry.data[metric].summedCount,
+          maxCount: entry.data[metric].maxCount,
+        }
+      : undefined,
+  }
+}

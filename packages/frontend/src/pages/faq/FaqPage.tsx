@@ -1,13 +1,13 @@
-import { MainPageHeader } from '~/components/main-page-header'
-import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import { FaqSideNav } from '~/pages/faq/components/faq-side-nav'
-import type { FaqItem } from '~/pages/faq/faq-items'
-import { faqItems } from '~/pages/faq/faq-items'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { Markdown } from '~/components/markdown/Markdown'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { FaqSideNav } from '~/pages/faq/components/FaqSideNav'
+import type { FaqItem } from '~/pages/faq/FaqItems'
+import { faqItems } from '~/pages/faq/FaqItems'
 
 export interface FaqItemWithId extends FaqItem {
   id: string

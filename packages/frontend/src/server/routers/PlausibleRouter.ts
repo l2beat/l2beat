@@ -1,7 +1,7 @@
 import express from 'express'
 import { z } from 'zod'
 import { env } from '~/env'
-import { PlausibleEvents } from '~/hooks/use-tracking'
+import { PlausibleEvents } from '~/hooks/UseTracking'
 import { validateRoute } from '~/utils/validateRoute'
 
 // This is a proxy for Plausible.io events.

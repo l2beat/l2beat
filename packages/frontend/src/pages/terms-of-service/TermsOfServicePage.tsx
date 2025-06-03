@@ -1,10 +1,10 @@
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
-import { Article } from '~/components/markdown/article'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { CollectionEntry } from '~/content/get-collection'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { TopNavLayout } from '~/layouts/top-nav-layout'
+import { ContentWrapper } from '~/components/ContentWrapper'
+import { FullPageHeader } from '~/components/FullPageHeader'
+import { Article } from '~/components/markdown/Article'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import type { CollectionEntry } from '~/content/getCollection'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { TopNavLayout } from '~/layouts/TopNavLayout'
 import { cn } from '~/utils/cn'
 
 interface Props extends AppLayoutProps {

@@ -3,7 +3,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import {
   getDaProjectEntry,
   getEthereumDaProjectEntry,
-} from '~/server/features/data-availability/project/get-da-project-entry'
+} from '~/server/features/data-availability/project/getDaProjectEntry'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 

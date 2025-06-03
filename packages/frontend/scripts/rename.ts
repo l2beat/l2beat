@@ -1,3 +1,4 @@
+import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -51,6 +52,9 @@ function renameFiles(files: string[], rootDir: string): Map<string, string> {
 
     const dirname = path.dirname(relPath)
     const oldBase = path.basename(relPath, ext)
+    if (!oldBase.includes('-') && ext === '.ts') {
+      continue
+    }
     const newBase =
       ext === '.tsx' ? toPascalCase(oldBase) : toCamelCase(oldBase)
 
@@ -60,9 +64,13 @@ function renameFiles(files: string[], rootDir: string): Map<string, string> {
     const newRelPath = path.join(dirname, newBase + ext)
     const newFullPath = path.join(rootDir, newRelPath)
 
-    fs.renameSync(oldFullPath, newFullPath)
-    renamedMap.set(relPath.replace(/\\/g, '/'), newRelPath.replace(/\\/g, '/'))
-    console.log(`Renamed: ${relPath} → ${newRelPath}`)
+    try {
+      execSync(`git mv -f ${oldFullPath} ${newFullPath}`)
+      renamedMap.set(relPath, newRelPath)
+      console.log(`Renamed via git: ${oldFullPath} → ${newFullPath}`)
+    } catch (err) {
+      console.error(`Failed to rename ${oldFullPath}:`, (err as Error).message)
+    }
   }
 
   return renamedMap
@@ -100,7 +108,10 @@ function updateImportReferences(
         let updatedPath = normalizeImportPath(
           path.join(prefix || '', path.basename(newImport)),
         )
-        if (updatedPath.startsWith('./~')) {
+        if (
+          updatedPath.startsWith('./~') ||
+          updatedPath.startsWith('./React')
+        ) {
           updatedPath = updatedPath.slice(2)
         }
 

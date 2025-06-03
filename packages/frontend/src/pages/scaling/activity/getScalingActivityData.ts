@@ -2,7 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'
@@ -17,7 +17,7 @@ export async function getScalingActivityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['scaling', 'activity', 'data'],
+        key: ['./Scaling', 'activity', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

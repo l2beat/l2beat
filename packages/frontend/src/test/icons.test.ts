@@ -2,7 +2,7 @@ import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { ProjectService } from '@l2beat/config'
 import { expect } from 'earl'
-import { getImageDimensions } from '~/utils/project/get-image-params'
+import { getImageDimensions } from '~/utils/project/getImageParams'
 
 describe('icons', () => {
   const ps = new ProjectService()
@@ -47,14 +47,14 @@ describe('icons', () => {
     })
   })
 
-  describe('ecosystems', () => {
+  describe('./Ecosystems', () => {
     it('every ecosystem has an icon', async () => {
       const ecosystems = await ps.getProjects({
         where: ['ecosystemConfig'],
       })
       for (const ecosystem of ecosystems) {
         const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
-        expect(icons).toInclude('logo')
+        expect(icons).toInclude('./Logo')
       }
     })
 

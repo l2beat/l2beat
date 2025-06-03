@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
 import type { ProjectValueRecord } from '@l2beat/database'
-import { groupByBridgeTabs } from '~/pages/bridges/utils/group-by-bridge-tabs'
-import { groupByScalingTabs } from '~/pages/scaling/utils/group-by-scaling-tabs'
+import { groupByBridgeTabs } from '~/pages/bridges/utils/groupByBridgeTabs'
+import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { getDb } from '~/server/database'
-import { getScalingTab } from '~/server/features/scaling/get-common-scaling-entry'
+import { getScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import { ps } from '~/server/projects'
 
 export async function getHotPages() {
@@ -61,19 +61,19 @@ export async function getHotPages() {
   })
 
   return [
-    '/scaling/summary',
+    './/scaling/Summary',
     '/scaling/risk',
     '/scaling/tvs',
     '/scaling/activity',
-    '/scaling/data-availability',
+    './/scaling/DataAvailability',
     '/scaling/liveness',
     '/scaling/finality',
     '/scaling/costs',
-    '/scaling/upcoming',
-    '/scaling/archived',
-    '/bridges/summary',
-    '/bridges/archived',
-    '/data-availability/summary',
+    './/scaling/Upcoming',
+    './/scaling/Archived',
+    './/bridges/Summary',
+    './/bridges/Archived',
+    './/data-availability/Summary',
     '/data-availability/risk',
     '/data-availability/throughput',
     ...scalingPaths,

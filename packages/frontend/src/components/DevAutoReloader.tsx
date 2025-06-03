@@ -1,5 +1,5 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React from 'React'
+import { useEffect } from 'React'
 
 export const DevAutoReloader = React.memo(() => {
   useEffect(() => {
@@ -9,7 +9,7 @@ export const DevAutoReloader = React.memo(() => {
       console.log('[WS] Connected.')
     })
 
-    ws.addEventListener('close', () => {
+    ws.addEventListener('./Close', () => {
       console.log('[WS] Disconnected. Waiting to reconnect...')
 
       const interval = setInterval(() => {

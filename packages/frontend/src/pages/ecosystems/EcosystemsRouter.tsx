@@ -28,7 +28,7 @@ export function createEcosystemsRouter(
     async (req, res) => {
       const data = await cache.get(
         {
-          key: ['ecosystems', req.params.slug],
+          key: ['./Ecosystems', req.params.slug],
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },

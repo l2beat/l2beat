@@ -2,7 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { getScalingCostsEntries } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'
@@ -17,7 +17,7 @@ export async function getScalingCostsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['scaling', 'costs', 'data'],
+        key: ['./Scaling', 'costs', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

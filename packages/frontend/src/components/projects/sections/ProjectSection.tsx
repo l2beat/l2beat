@@ -1,0 +1,98 @@
+import type { ReactNode } from 'React'
+
+import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
+import { cn } from '~/utils/cn'
+import { UnderReviewCallout } from '../UnderReviewCallout'
+import type { ProjectSectionId } from './types'
+
+export interface ExtendedProjectSectionProps {
+  title: string
+  id: ProjectSectionId
+  nested?: boolean
+  sectionOrder: string | undefined
+  className?: string
+  children: ReactNode
+  isUnderReview?: boolean
+  hideChildrenIfUnderReview?: boolean
+  as?: 'section' | 'div'
+}
+
+export function ProjectSection(props: ExtendedProjectSectionProps) {
+  const Component = props.as ?? 'section'
+  return (
+    <HighlightablePrimaryCard
+      id={props.id}
+      data-role="./ProjectSection"
+      className={cn(
+        'scroll-mt-10 px-4 py-8 md:mt-10 md:scroll-mt-8 md:p-8',
+        'max-md:border-divider max-md:border-b max-md:last:border-none',
+        'md:rounded-lg',
+        props.nested && 'mt-10 p-0 md:p-0',
+        props.className,
+      )}
+      asChild
+    >
+      <Component>
+        <ProjectDetailsSectionHeader
+          title={props.title}
+          id={props.id}
+          sectionOrder={props.sectionOrder}
+          nested={props.nested}
+          className="mb-4"
+        />
+        {props.isUnderReview ? (
+          !props.hideChildrenIfUnderReview ? (
+            <>
+              <UnderReviewCallout className="mb-4" />
+              {props.children}
+            </>
+          ) : (
+            <UnderReviewCallout />
+          )
+        ) : (
+          props.children
+        )}
+      </Component>
+    </HighlightablePrimaryCard>
+  )
+}
+
+interface ProjectDetailsSectionHeaderProps {
+  id: string
+  title: string
+  sectionOrder: string | undefined
+  nested: boolean | undefined
+  className?: string
+}
+
+function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
+  return (
+    <a
+      href={`#${props.id}`}
+      className={cn(
+        'flex items-center gap-4 md:leading-normal',
+        props.nested && 'gap-3',
+        props.className,
+      )}
+    >
+      {props.sectionOrder && (
+        <div
+          className={cn(
+            'hidden size-10 items-center justify-center rounded bg-surface-secondary px-3 font-bold text-[26px] text-secondary tabular-nums md:flex',
+            props.nested && 'h-8 w-11 text-xl',
+          )}
+        >
+          {props.sectionOrder}
+        </div>
+      )}
+      <span
+        className={cn(
+          'font-bold text-2xl md:text-4xl',
+          props.nested && 'text-xl md:text-3xl',
+        )}
+      >
+        {props.title}
+      </span>
+    </a>
+  )
+}

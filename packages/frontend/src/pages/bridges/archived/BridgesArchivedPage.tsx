@@ -1,11 +1,11 @@
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { TabbedBridgeEntries } from '~/pages/bridges/utils/group-by-bridge-tabs'
-import type { BridgesArchivedEntry } from '~/server/features/bridges/get-bridges-archived-entries'
-import { BridgesHeader } from '../components/bridges-header'
-import { BridgesArchivedTables } from './components/bridges-archived-tables'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { TabbedBridgeEntries } from '~/pages/bridges/utils/groupByBridgeTabs'
+import type { BridgesArchivedEntry } from '~/server/features/bridges/getBridgesArchivedEntries'
+import { BridgesHeader } from '../components/BridgesHeader'
+import { BridgesArchivedTables } from './components/BridgesArchivedTables'
 
 interface Props extends AppLayoutProps {
   entries: TabbedBridgeEntries<BridgesArchivedEntry>

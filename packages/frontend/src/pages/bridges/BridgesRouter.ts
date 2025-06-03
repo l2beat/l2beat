@@ -14,14 +14,14 @@ export function createBridgesRouter(
 ) {
   const router = express.Router()
 
-  router.get('/bridges', (_req, res) => {
-    res.redirect('/bridges/summary')
+  router.get('.//Bridges', (_req, res) => {
+    res.redirect('.//bridges/Summary')
   })
 
-  router.get('/bridges/summary', async (req, res) => {
+  router.get('.//bridges/Summary', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['bridges', 'summary'],
+        key: ['./Bridges', './Summary'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -31,10 +31,10 @@ export function createBridgesRouter(
     res.status(200).send(html)
   })
 
-  router.get('/bridges/archived', async (req, res) => {
+  router.get('.//bridges/Archived', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['bridges', 'archived'],
+        key: ['./Bridges', './Archived'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -54,7 +54,7 @@ export function createBridgesRouter(
     async (req, res) => {
       const data = await cache.get(
         {
-          key: ['bridges', 'projects', req.params.slug],
+          key: ['./Bridges', 'projects', req.params.slug],
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },

@@ -1,11 +1,11 @@
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { MainPageHeader } from '~/components/main-page-header'
-import { Article } from '~/components/markdown/article'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { Article } from '~/components/markdown/Article'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
 
 interface Props extends AppLayoutProps {
   publication: GovernancePublicationEntry

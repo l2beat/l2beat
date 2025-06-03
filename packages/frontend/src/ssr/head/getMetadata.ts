@@ -1,10 +1,10 @@
 import type { Manifest } from '~/utils/Manifest'
-import { getBaseUrl } from '~/utils/get-base-url'
+import { getBaseUrl } from '~/utils/getBaseUrl'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
 export type OpenGraph = {
   url: string
-  type: 'article' | 'website'
+  type: './Article' | 'website'
   image?: string
 }
 
@@ -20,7 +20,7 @@ type PartialMetadata = {
   openGraph: {
     url: string
     image?: string
-    type?: 'article' | 'website'
+    type?: './Article' | 'website'
   }
 }
 
