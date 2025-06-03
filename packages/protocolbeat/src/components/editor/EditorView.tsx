@@ -34,16 +34,19 @@ export function EditorView(props: Props) {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
       if (activeFile) {
-        editor.setFile(activeFile, {
-          onSave: (content) => {
-            setDirtyFile(activeFile.id, false)
+        if (!activeFile.readOnly) {
+          editor.onSave((content) => {
             props.callbacks?.onSave?.(content)
-          },
-          onChange: (content) => {
-            setDirtyFile(activeFile.id, content !== activeFile.content)
+            setDirtyFile(activeFile.id, false)
+          })
+
+          editor.onChange((content) => {
             props.callbacks?.onChange?.(content)
-          },
-        })
+            setDirtyFile(activeFile.id, content !== activeFile.content)
+          })
+        }
+
+        editor.setFile(activeFile)
       }
     }
   }, [editor, props.files, activeFileIndex])

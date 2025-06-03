@@ -28,6 +28,9 @@ export class Editor {
     null
   private disposed = false
 
+  private onSaveCallback: ((content: string) => void) | null = null
+  private onChangeCallback: ((content: string) => void) | null = null
+
   constructor(element: HTMLElement) {
     if (!initialized) {
       init()
@@ -46,13 +49,27 @@ export class Editor {
       'bracketPairColorization.enabled': false,
       model: null, // Prevent Monaco from creating a default model
     })
+
+    this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      if (this.onSaveCallback) {
+        const value = this.editor.getModel()?.getValue() ?? ''
+        this.onSaveCallback(value)
+      }
+    })
+
+    this.editor.onDidChangeModelContent(() => {
+      if (this.onChangeCallback) {
+        const value = this.editor.getModel()?.getValue() ?? ''
+        this.onChangeCallback(value)
+      }
+    })
   }
 
-  createUri(file: EditorFile) {
+  private createUri(file: EditorFile) {
     return monaco.Uri.parse(`inmemory://${file.id}`)
   }
 
-  setFile(file: EditorFile, callbacks?: EditorCallbacks) {
+  setFile(file: EditorFile) {
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 
@@ -60,23 +77,18 @@ export class Editor {
       readOnly: file.readOnly,
     })
 
-    this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
-      if (callbacks?.onSave) {
-        callbacks.onSave(model.getValue())
-      }
-    })
-
-    this.editor.onDidChangeModelContent(() => {
-      if (callbacks?.onChange) {
-        callbacks.onChange(model.getValue())
-      }
-    })
-
     this.editor.setModel(model)
     this.restoreViewState()
   }
 
-  getOrCreateFileModel(file: EditorFile) {
+  onSave(onSaveCallback: (content: string) => void) {
+    this.onSaveCallback = onSaveCallback
+  }
+  onChange(onChangeCallback: (content: string) => void) {
+    this.onChangeCallback = onChangeCallback
+  }
+
+  private getOrCreateFileModel(file: EditorFile) {
     const uri = this.createUri(file).toString()
     if (this.models[uri] === undefined) {
       return this.addFile(file)
