@@ -135,6 +135,6 @@ export const RoleDescriptions: {
   coldValidatorHyperliquid: {
     name: 'Cold Validator',
     description:
-      'Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause), remove lockers and finalizers.',
+      'Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.',
   },
 }
