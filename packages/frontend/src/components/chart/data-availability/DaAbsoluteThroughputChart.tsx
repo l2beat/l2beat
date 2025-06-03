@@ -1,4 +1,4 @@
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 

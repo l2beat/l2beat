@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 
 const GlossaryContext = createContext<GlossaryTermWithoutDescription[] | null>(
   null,

@@ -1,4 +1,4 @@
-import type { ComponentProps, ReactNode } from 'React'
+import type { ComponentProps, ReactNode } from 'react'
 import { Area } from 'recharts'
 
 interface AreaChartProps {

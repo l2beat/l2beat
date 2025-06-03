@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
 import type { ChartMeta } from '~/components/core/chart/Chart'

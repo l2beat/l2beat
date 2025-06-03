@@ -1,4 +1,4 @@
-import { useCallback } from 'React'
+import { useCallback } from 'react'
 import { useTableFilterContext } from './TableFilterContext'
 import type { FilterableEntry, FilterableValueId } from './filterableValue'
 

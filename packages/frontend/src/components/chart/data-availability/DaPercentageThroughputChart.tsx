@@ -1,5 +1,5 @@
-import { useMemo } from 'React'
 import round from 'lodash/round'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
 

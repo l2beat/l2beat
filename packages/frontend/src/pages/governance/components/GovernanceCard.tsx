@@ -1,6 +1,6 @@
-import type React from 'React'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
+import type React from 'react'
 import { cn } from '~/utils/cn'
 
 type GovernanceCardProps = {

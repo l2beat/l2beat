@@ -1,4 +1,4 @@
-import type { ReactNode } from 'React'
+import type { ReactNode } from 'react'
 import { Breadcrumbs } from '~/components/Breadcrumbs'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import {

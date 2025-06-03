@@ -1,4 +1,4 @@
-import { useId } from 'React'
+import { useId } from 'react'
 import { cn } from '~/utils/cn'
 import type { SvgIconProps } from '../SvgIcon'
 import { SvgIcon } from '../SvgIcon'

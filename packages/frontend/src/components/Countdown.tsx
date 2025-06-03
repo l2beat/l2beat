@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { memo, useState } from 'React'
+import { memo, useState } from 'react'
 import { useInterval } from '~/hooks/useInterval'
 import { cn } from '~/utils/cn'
 

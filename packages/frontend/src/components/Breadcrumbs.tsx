@@ -1,5 +1,5 @@
-import React from 'React'
-import type { ReactNode } from 'React'
+import React from 'react'
+import type { ReactNode } from 'react'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 

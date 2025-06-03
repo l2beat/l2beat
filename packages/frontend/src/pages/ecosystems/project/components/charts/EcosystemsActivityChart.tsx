@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'React'
 import compact from 'lodash/compact'
+import { useMemo, useState } from 'react'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
 import { Checkbox } from '~/components/core/Checkbox'

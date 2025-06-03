@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'

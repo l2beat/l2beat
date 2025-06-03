@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'React'
+import { useCallback, useRef } from 'react'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import type { FaqItemWithId } from '~/pages/faq/FaqPage'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'

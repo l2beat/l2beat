@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'React'
+import { useCallback, useRef } from 'react'
 import type { CollectionEntry } from '~/content/getCollection'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { scrollVerticallyToItem } from '~/utils/scrollToItem'

@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 

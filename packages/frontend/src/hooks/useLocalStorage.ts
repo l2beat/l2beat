@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from 'React'
+import { useCallback, useEffect, useState } from 'react'
 
-import type { Dispatch, SetStateAction } from 'React'
+import type { Dispatch, SetStateAction } from 'react'
 
 import { useEventCallback } from './useEventCallback'
 import { useEventListener } from './useEventListener'

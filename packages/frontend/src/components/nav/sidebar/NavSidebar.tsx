@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'React'
+import { useEffect, useMemo, useState } from 'react'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { usePathname } from '~/hooks/usePathname'
 import { ChevronIcon } from '~/icons/Chevron'

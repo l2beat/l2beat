@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'React'
+import { useEffect, useRef } from 'react'
 
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 

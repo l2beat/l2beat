@@ -1,4 +1,4 @@
-import { useState } from 'React'
+import { useState } from 'react'
 import { EtherscanLink } from '~/components/EtherscanLink'
 import { Badge } from '~/components/badge/Badge'
 import { Checkbox } from '~/components/core/Checkbox'

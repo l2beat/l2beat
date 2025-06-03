@@ -1,4 +1,4 @@
-import { useState } from 'React'
+import { useState } from 'react'
 import { Markdown } from '~/components/markdown/Markdown'
 
 interface Props {

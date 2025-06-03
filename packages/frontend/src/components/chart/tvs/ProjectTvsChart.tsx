@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import type {
   ProjectToken,

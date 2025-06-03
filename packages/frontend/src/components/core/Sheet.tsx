@@ -1,6 +1,6 @@
 import * as SheetPrimitive from '@radix-ui/react-dialog'
-import type * as React from 'React'
 import { type VariantProps, cva } from 'class-variance-authority'
+import type * as React from 'react'
 
 import { cn } from '~/utils/cn'
 

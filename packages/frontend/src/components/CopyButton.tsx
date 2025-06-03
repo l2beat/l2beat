@@ -1,4 +1,4 @@
-import { useState } from 'React'
+import { useState } from 'react'
 
 import { useCopyToClipboard } from '~/hooks/useCopyToClipboard'
 import { useTimeout } from '~/hooks/useTimeout'

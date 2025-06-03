@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'React'
+import { useEffect, useRef, useState } from 'react'
 import {
   Tooltip,
   TooltipContent,

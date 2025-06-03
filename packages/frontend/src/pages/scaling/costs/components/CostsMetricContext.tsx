@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'React'
+import { createContext, useContext, useState } from 'react'
 
 export type CostsMetric = 'total' | 'per-l2-uop'
 

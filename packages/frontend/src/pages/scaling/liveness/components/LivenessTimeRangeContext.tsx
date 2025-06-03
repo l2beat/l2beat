@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 

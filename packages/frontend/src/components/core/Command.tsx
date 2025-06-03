@@ -1,7 +1,7 @@
 import type { DialogProps } from '@radix-ui/react-dialog'
 import { Slot } from '@radix-ui/react-slot'
-import type * as React from 'React'
 import { Command as CommandPrimitive } from 'cmdk'
+import type * as React from 'react'
 import { SearchIcon } from '~/icons/Search'
 import { cn } from '~/utils/cn'
 import { linkVariants } from '../link/CustomLink'

@@ -1,5 +1,5 @@
 import type { ProjectScalingStack } from '@l2beat/config'
-import type { JSX } from 'React'
+import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
 import { LoopringIcon } from '~/icons/providers/LoopringIcon'

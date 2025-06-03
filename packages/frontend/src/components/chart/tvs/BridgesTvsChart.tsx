@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { INFINITY } from '~/consts/characters'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'

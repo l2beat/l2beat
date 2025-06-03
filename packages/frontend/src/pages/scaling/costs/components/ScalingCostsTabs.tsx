@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useEffect, useMemo, useState } from 'React'
+import { useEffect, useMemo, useState } from 'react'
 import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingCostsChart } from '~/components/chart/costs/ScalingCostsChart'

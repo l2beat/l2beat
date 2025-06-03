@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { useRef, useState } from 'React'
+import { useRef, useState } from 'react'
 import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { MilestoneDrawerContent } from '~/components/core/chart/ChartMilestones'
 import {

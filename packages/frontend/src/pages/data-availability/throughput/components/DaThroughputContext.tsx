@@ -1,4 +1,4 @@
-import { type ReactNode, createContext, useContext, useState } from 'React'
+import { type ReactNode, createContext, useContext, useState } from 'react'
 
 interface IncludeScalingOnlyContextType {
   includeScalingOnly: boolean

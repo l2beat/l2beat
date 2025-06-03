@@ -1,4 +1,4 @@
-import type { ReactNode } from 'React'
+import type { ReactNode } from 'react'
 import { PercentChange } from '~/components/PercentChange'
 import { cn } from '~/utils/cn'
 

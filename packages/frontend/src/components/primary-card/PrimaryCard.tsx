@@ -1,5 +1,5 @@
 import { Slot } from '@radix-ui/react-slot'
-import type { ComponentProps } from 'React'
+import type { ComponentProps } from 'react'
 import { cn } from '~/utils/cn'
 
 export function PrimaryCard({

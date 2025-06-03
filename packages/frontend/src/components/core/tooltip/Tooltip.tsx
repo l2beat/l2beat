@@ -1,8 +1,8 @@
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
-import type React from 'React'
-import { useRef, useState } from 'React'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
+import type React from 'react'
+import { useRef, useState } from 'react'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { mergeRefs } from '~/utils/mergeRefs'
 import {

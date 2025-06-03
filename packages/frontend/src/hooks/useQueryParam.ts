@@ -1,4 +1,4 @@
-import { useState } from 'React'
+import { useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 const getURLSearchParams = () => {

@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'React'
+import type { ComponentProps } from 'react'
 import {
   HighlightedPrimaryCardProvider,
   useHighlightedPrimaryCardContext,

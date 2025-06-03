@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 
 type TooltipTriggerContextValue = {
   open: boolean

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'React'
+import type { ReactNode } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
 import { useIsClient } from '~/hooks/useIsClient'

@@ -1,7 +1,7 @@
 'use client'
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'React'
 import sum from 'lodash/sum'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'React'
+import type { ReactNode } from 'react'
 import { SentimentText } from '~/components/SentimentText'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'React'
+import React, { useCallback } from 'react'
 import { CheckIcon } from '~/icons/Check'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'

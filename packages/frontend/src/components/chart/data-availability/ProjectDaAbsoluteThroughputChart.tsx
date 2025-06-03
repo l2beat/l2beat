@@ -1,5 +1,5 @@
 import type { ProjectId } from '@l2beat/shared-pure'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 

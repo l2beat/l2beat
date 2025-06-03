@@ -1,5 +1,5 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import type * as React from 'React'
+import type * as React from 'react'
 import { useTracking } from '~/hooks/UseTracking'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { cn } from '~/utils/cn'

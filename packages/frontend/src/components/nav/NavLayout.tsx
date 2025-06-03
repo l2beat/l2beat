@@ -1,5 +1,5 @@
-import type { ReactNode } from 'React'
 import compact from 'lodash/compact'
+import type { ReactNode } from 'react'
 import { externalLinks } from '~/consts/externalLinks'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'

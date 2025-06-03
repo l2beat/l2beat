@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'React'
+import { useEffect, useMemo, useState } from 'react'
 import {
   OthersInfo,
   RollupsInfo,

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'React'
+import { createContext, useContext, useState } from 'react'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { SearchBarDialog } from './SearchBarDialog'
 import type { SearchBarProject } from './SearchBarEntry'

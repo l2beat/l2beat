@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { useQueryParam } from '~/hooks/useQueryParam'
 

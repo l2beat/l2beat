@@ -1,11 +1,11 @@
-import type { Dispatch, SetStateAction } from 'React'
+import type { Dispatch, SetStateAction } from 'react'
 import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useState,
-} from 'React'
+} from 'react'
 import { useTracking } from '~/hooks/UseTracking'
 import type { FilterableValueId } from './filterableValue'
 

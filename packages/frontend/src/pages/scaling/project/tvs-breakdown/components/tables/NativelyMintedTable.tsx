@@ -1,5 +1,5 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import { TokenTable } from '~/components/table/TokenBreakdownTable'
 import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
 import { renderFormulaSubComponent } from './FormulaSubRow'

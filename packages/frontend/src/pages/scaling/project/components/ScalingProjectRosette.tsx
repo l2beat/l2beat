@@ -1,4 +1,4 @@
-import { useState } from 'React'
+import { useState } from 'react'
 import { BigIndividualRosette } from '~/components/rosette/individual/BigIndividualRosette'
 import { BigPizzaRosette } from '~/components/rosette/pizza/BigPizzaRosette'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'

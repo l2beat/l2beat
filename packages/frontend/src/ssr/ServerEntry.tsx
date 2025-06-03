@@ -1,4 +1,4 @@
-import { StrictMode } from 'React'
+import { StrictMode } from 'react'
 import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { ClientPageRouter } from '../pages/ClientPageRouter'
 import { Head } from './head/Head'

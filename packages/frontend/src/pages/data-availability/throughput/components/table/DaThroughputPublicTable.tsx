@@ -1,5 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import { useTable } from '~/hooks/useTable'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { BasicDaTable } from '../../../components/BasicDaTable'

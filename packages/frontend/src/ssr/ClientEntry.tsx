@@ -1,4 +1,4 @@
-import { StrictMode } from 'React'
+import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { ClientPageRouter } from '../pages/ClientPageRouter'
 

@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { TokenCombobox } from '~/components/TokenCombobox'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { TvsBreakdownButton } from '~/components/projects/sections/StackedTvsSection'

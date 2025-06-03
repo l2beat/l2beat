@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'

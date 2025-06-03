@@ -1,5 +1,5 @@
-import type { ReactNode } from 'React'
-import { useCallback, useEffect, useRef, useState } from 'React'
+import type { ReactNode } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { cn } from '~/utils/cn'

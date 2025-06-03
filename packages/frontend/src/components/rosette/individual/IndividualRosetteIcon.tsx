@@ -1,4 +1,4 @@
-import { useRef } from 'React'
+import { useRef } from 'react'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { cn } from '~/utils/cn'

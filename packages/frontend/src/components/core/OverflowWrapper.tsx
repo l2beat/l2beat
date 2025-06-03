@@ -1,6 +1,6 @@
-import type React from 'React'
-import { useEffect, useRef, useState } from 'React'
 import clamp from 'lodash/clamp'
+import type React from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useEventListener } from '~/hooks/useEventListener'
 
 import { ChevronIcon } from '~/icons/Chevron'

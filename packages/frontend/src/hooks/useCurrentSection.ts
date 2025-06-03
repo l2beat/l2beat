@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'React'
+import { useCallback, useEffect, useState } from 'react'
 import { useEventListener } from './useEventListener'
 import { useIsMobile } from './useIsMobile'
 

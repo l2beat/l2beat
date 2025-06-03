@@ -1,4 +1,4 @@
-import type { RefCallback } from 'React'
+import type { RefCallback } from 'react'
 import { cn } from '~/utils/cn'
 
 interface CharProps {

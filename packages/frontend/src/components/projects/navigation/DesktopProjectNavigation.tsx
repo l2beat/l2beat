@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'React'
+import type { CSSProperties } from 'react'
 import {
   Fragment,
   useCallback,
@@ -6,7 +6,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'React'
+} from 'react'
 
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {

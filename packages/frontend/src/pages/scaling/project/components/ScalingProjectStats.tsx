@@ -1,8 +1,8 @@
 import { pluralize } from '@l2beat/shared-pure'
-import { Fragment, type ReactNode } from 'React'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
+import { Fragment, type ReactNode } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {

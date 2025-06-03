@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
   useState,
-} from 'React'
+} from 'react'
 
 interface HighlightedTableRowContextType {
   highlightedSlug: string | undefined

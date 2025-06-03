@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,

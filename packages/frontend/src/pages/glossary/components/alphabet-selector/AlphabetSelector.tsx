@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'React'
+import { useCallback, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 
 import { useCurrentSection } from '~/hooks/useCurrentSection'

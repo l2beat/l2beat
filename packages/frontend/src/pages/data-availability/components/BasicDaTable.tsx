@@ -6,9 +6,9 @@ import type {
   Table as TanstackTable,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import type { CSSProperties } from 'React'
-import React from 'React'
 import range from 'lodash/range'
+import type { CSSProperties } from 'react'
+import React from 'react'
 import { getBasicTableGroupParams } from '~/components/table/BasicTable'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
 import {

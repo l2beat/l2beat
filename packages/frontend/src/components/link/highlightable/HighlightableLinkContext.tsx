@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'React'
+import { createContext, useContext, useState } from 'react'
 
 type HighlightableLinkContextValue = {
   current: string | undefined

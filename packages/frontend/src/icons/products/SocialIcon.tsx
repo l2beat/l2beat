@@ -1,4 +1,4 @@
-import type { JSX, SVGAttributes } from 'React'
+import type { JSX, SVGAttributes } from 'react'
 
 import { DiscordIcon } from './Discord'
 import { GithubIcon } from './Github'

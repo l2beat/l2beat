@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useState } from 'React'
+import { useState } from 'react'
 import { Button } from '~/components/core/Button'
 import {
   Collapsible,

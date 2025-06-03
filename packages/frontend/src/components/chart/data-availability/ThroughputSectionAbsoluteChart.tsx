@@ -1,6 +1,6 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'

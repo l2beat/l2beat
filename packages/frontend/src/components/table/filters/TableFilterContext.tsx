@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'React'
+import { createContext, useContext } from 'react'
 import { useFilterState } from './UseFilterState'
 
 type TableFilterContextValue = ReturnType<typeof useFilterState>

@@ -1,5 +1,5 @@
-import type React from 'React'
-import { useState } from 'React'
+import type React from 'react'
+import { useState } from 'react'
 import { cn } from '~/utils/cn'
 
 export interface ReadMoreProps {

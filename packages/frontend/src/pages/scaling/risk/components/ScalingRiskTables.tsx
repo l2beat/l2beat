@@ -1,4 +1,4 @@
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,

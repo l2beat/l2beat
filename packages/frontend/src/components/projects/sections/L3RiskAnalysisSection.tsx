@@ -1,5 +1,5 @@
 import type { Sentiment } from '@l2beat/config'
-import type { ReactNode } from 'React'
+import type { ReactNode } from 'react'
 import { SentimentText } from '~/components/SentimentText'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { BigIndividualRosette } from '~/components/rosette/individual/BigIndividualRosette'

@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'React'
+import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'

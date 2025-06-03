@@ -1,6 +1,6 @@
 import type { Milestone } from '@l2beat/config'
 import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'React'
+import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { LivenessChartSubtypeControls } from '~/pages/scaling/liveness/components/LivenessChartSubtypeControls'

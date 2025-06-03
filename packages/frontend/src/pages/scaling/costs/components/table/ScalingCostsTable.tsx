@@ -1,5 +1,5 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useEffect, useMemo } from 'React'
+import { useEffect, useMemo } from 'react'
 import { BasicTable } from '~/components/table/BasicTable'
 import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'

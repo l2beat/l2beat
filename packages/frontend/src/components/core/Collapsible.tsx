@@ -1,5 +1,5 @@
 import * as CollapsiblePrimitive from '@radix-ui/react-collapsible'
-import type React from 'React'
+import type React from 'react'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
 

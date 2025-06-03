@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/shared-pure'
-import { useState } from 'React'
+import { useState } from 'react'
 import {
   Tooltip,
   TooltipContent,

@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes } from 'React'
+import type { AnchorHTMLAttributes } from 'react'
 
 interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
   allowReferrer?: boolean

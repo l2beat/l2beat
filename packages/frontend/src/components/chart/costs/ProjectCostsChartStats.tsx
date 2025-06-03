@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { Fragment } from 'React'
 import compact from 'lodash/compact'
+import { Fragment } from 'react'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { formatCostValue } from '~/pages/scaling/costs/utils/formatCostValue'
 import type { ProjectCostsChartResponse } from '~/server/features/scaling/costs/GetProjectCostsChart'

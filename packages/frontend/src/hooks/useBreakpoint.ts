@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'React'
+import { useEffect, useState } from 'react'
 import { useEventListener } from './useEventListener'
 
 type Breakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl'

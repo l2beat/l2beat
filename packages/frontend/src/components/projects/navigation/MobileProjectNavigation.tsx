@@ -1,5 +1,5 @@
-import type { RefObject } from 'React'
-import { useCallback, useEffect, useRef } from 'React'
+import type { RefObject } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { OverflowWrapper } from '~/components/core/OverflowWrapper'
 import { useCurrentSection } from '~/hooks/useCurrentSection'
 import { cn } from '~/utils/cn'

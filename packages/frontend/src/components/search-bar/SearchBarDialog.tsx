@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { useMemo, useRef, useState } from 'React'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
+import { useMemo, useRef, useState } from 'react'
 import {
   Command,
   CommandDialog,
