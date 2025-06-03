@@ -21,6 +21,7 @@ export class Editor {
   private highlightTimeout: NodeJS.Timeout | null = null
   private decorationsCollection: monaco.editor.IEditorDecorationsCollection | null =
     null
+  private disposed = false
 
   constructor(element: HTMLElement) {
     if (!initialized) {
@@ -57,6 +58,10 @@ export class Editor {
   }
 
   setActiveFile(file: EditorFile) {
+    if (this.disposed) {
+      console.warn('Cannot set active file on disposed editor')
+      return
+    }
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 
@@ -69,6 +74,10 @@ export class Editor {
   }
 
   openFile(file: EditorFile) {
+    if (this.disposed) {
+      console.warn('Cannot open file on disposed editor')
+      return
+    }
     const model = this.getOrCreateFileModel(file)
     this.editor.setModel(model)
   }
@@ -116,6 +125,10 @@ export class Editor {
       highlightDuration?: number
     },
   ) {
+    if (this.disposed) {
+      console.warn('Cannot show range on disposed editor')
+      return
+    }
     const model = this.editor.getModel()
     if (model !== null) {
       const start = model.getPositionAt(startOffset)
@@ -169,10 +182,19 @@ export class Editor {
   }
 
   resize() {
+    if (this.disposed) {
+      return
+    }
     this.editor.layout()
   }
 
   dispose() {
+    if (this.disposed) {
+      return
+    }
+
+    this.disposed = true
+
     // Clear any pending highlight timeout
     if (this.highlightTimeout !== null) {
       clearTimeout(this.highlightTimeout)

@@ -15,7 +15,7 @@ export function CodeView({
   readOnly?: boolean
 }) {
   const monacoEl = useRef(null)
-  const { setEditor, getEditor, showRange } = useCodeStore()
+  const { setEditor, getEditor, showRange, removeEditor } = useCodeStore()
   const editor = getEditor(editorKey)
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
@@ -36,10 +36,11 @@ export function CodeView({
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
-      // Dispose editor when component unmounts
+      // Remove editor from store and dispose it when component unmounts
+      removeEditor(editorKey)
       editor.dispose()
     }
-  }, [setEditor, editorKey])
+  }, [setEditor, editorKey, removeEditor])
 
   useEffect(() => {
     if (editor && files.length > 0) {

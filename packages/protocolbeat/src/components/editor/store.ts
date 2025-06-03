@@ -21,6 +21,7 @@ interface CodeState {
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
+  removeEditor: (key: string) => void
   setFiles: (editorId: string, files: EditorFile[]) => void
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
@@ -44,6 +45,11 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getEditor: (editorId: string) => {
     return get().editors[editorId]
   },
+  removeEditor: (editorId: string) =>
+    set((state) => {
+      const { [editorId]: removed, ...editors } = state.editors
+      return { editors }
+    }),
   setSourceIndex: (address: string, sourceIndex: number) =>
     set((state) => ({
       sourceIndex: { ...state.sourceIndex, [address]: sourceIndex },
