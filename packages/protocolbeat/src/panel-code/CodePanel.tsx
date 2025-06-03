@@ -12,6 +12,8 @@ import { usePanelStore } from '../store/store'
 import { RediscoverPrompt } from './RediscoverPrompt'
 import { EditorFileTabs } from '../components/editor/EditorFileTabs'
 
+const editorId = 'code-panel'
+
 export function CodePanel() {
   const { project } = useParams()
   if (!project) {
@@ -21,6 +23,7 @@ export function CodePanel() {
     queryKey: ['projects', project],
     queryFn: () => getProject(project),
   })
+  const editor = useCodeStore((store) => store.editors[editorId])
   const selectedAddress = usePanelStore((state) => state.selected)
 
   const selected = projectResponse.data
@@ -48,18 +51,6 @@ export function CodePanel() {
     }
   }, [codeResponse.data])
   const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
-
-  if (projectResponse.isError) {
-    return <div>Error</div>
-  }
-
-  if (projectResponse.isPending) {
-    return <div>Loading</div>
-  }
-
-  if (selected === undefined) {
-    return <div>Select a contract</div>
-  }
 
   let showRediscoverInfo = false
   const response = codeResponse.data?.sources ?? []
@@ -92,6 +83,37 @@ export function CodePanel() {
 
   const passedRange = codeResponse.isPending ? undefined : range
 
+  useEffect(() => {
+    if (editor && sources.length > 0) {
+      const activeFile =
+        sourceIndex !== undefined ? sources[sourceIndex] : undefined
+
+      if (activeFile) {
+        editor.setFile({
+          id: activeFile.name,
+          name: activeFile.name,
+          content: activeFile.code,
+          language: 'solidity',
+          readOnly: true,
+        })
+      }
+    }
+  }, [editor, sources, sourceIndex])
+
+  if (projectResponse.isError) {
+    return <div>Error</div>
+  }
+
+  if (projectResponse.isPending) {
+    return <div>Loading</div>
+  }
+
+  if (selected === undefined) {
+    return <div>Select a contract</div>
+  }
+
+  console.log('range', passedRange)
+
   return (
     <div className="flex h-full w-full select-none flex-col">
       <EditorFileTabs
@@ -104,7 +126,7 @@ export function CodePanel() {
         }))}
       />
       {showRediscoverInfo && <RediscoverPrompt chain={selected.chain} />}
-      <CodeView range={passedRange} editorKey="code-panel" />
+      <CodeView range={passedRange} editorKey={editorId} />
     </div>
   )
 }

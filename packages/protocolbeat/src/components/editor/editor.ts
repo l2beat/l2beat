@@ -49,7 +49,7 @@ export class Editor {
   }
 
   createUri(file: EditorFile) {
-    return monaco.Uri.parse(`memory://${file.id}`)
+    return monaco.Uri.parse(`inmemory://${file.id}`)
   }
 
   setFile(file: EditorFile, callbacks?: EditorCallbacks) {
@@ -230,6 +230,11 @@ function init() {
   monaco.languages.register({ id: 'solidity' })
   monaco.languages.setMonarchTokensProvider('solidity', solidity.language)
   monaco.languages.setLanguageConfiguration('solidity', solidity.configuration)
+
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    allowComments: true,
+    validate: true,
+  })
 
   monaco.editor.defineTheme('default', theme)
   monaco.editor.setTheme('default')

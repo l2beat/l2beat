@@ -29,11 +29,9 @@ function EditorFileTab(props: EditorFileTabProps) {
     <button
       onClick={props.onClick}
       className={clsx(
-        'flex h-6 items-center gap-1 px-2 text-sm transition-colors',
-        'hover:bg-coffee-700',
+        'flex h-6 items-center gap-1 px-2 text-sm',
         props.isActive && 'bg-autumn-300 text-black',
-        !props.isActive && 'text-coffee-200',
-        props.readOnly && !props.isActive && 'text-coffee-400 italic',
+        !props.isActive && 'text-coffee-200 hover:bg-coffee-200/20',
       )}
       title={`${props.name}${props.readOnly ? ' (read-only)' : ''}${props.isDirty ? ' (modified)' : ''}`}
     >
