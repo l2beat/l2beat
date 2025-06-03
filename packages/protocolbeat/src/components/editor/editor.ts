@@ -7,9 +7,9 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import * as solidity from './languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
+import { jsonDiagnostics } from './languages/json'
 import type { EditorFile } from './store'
 import { theme } from './theme'
-import { jsonDiagnostics } from './languages/json'
 
 let initialized = false
 
@@ -232,7 +232,6 @@ export class Editor {
 }
 
 function init() {
-  // @ts-ignore
   self.MonacoEnvironment = {
     getWorker(_: unknown, label: string) {
       if (label === 'editorWorkerService') {
