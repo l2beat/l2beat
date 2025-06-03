@@ -47,15 +47,11 @@ export async function getDaArchivedEntries(): Promise<
       ),
     )
 
-  const dacEntries = dacs.map((dac) => getDacEntry(dac, getTvs))
-
-  return groupByDaTabs(
-    [...layerEntries, ...dacEntries].sort((a, b) => b.tvs - a.tvs),
-  )
+  const dacEntries = dacs.map((dac) => getDacEntry(dac))
+  return groupByDaTabs([...layerEntries, ...dacEntries])
 }
 
 export interface DaArchivedEntry extends CommonDaEntry {
-  tvs: number
   risks: AdjustedDaLayerRisks
   bridges: DaBridgeArchivedEntry[]
 }
@@ -63,7 +59,6 @@ export interface DaArchivedEntry extends CommonDaEntry {
 export interface DaBridgeArchivedEntry
   extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
   risks: DaBridgeRisks
-  tvs: number
 }
 
 function getDaArchivedEntry(
@@ -85,7 +80,6 @@ function getDaArchivedEntry(
             : undefined,
       },
       risks: b.daBridge.risks,
-      tvs: getTvs(b.daBridge.usedIn.map((project) => project.id)).latest,
     }),
   )
 
@@ -96,13 +90,9 @@ function getDaArchivedEntry(
       href: `/data-availability/projects/${layer.slug}/no-bridge`,
       statuses: {},
       risks: { isNoBridge: true },
-      tvs: getTvs(
-        layer.daLayer.usedWithoutBridgeIn.map((project) => project.id),
-      ).latest,
     })
   }
 
-  daBridges.sort((a, b) => b.tvs - a.tvs)
   const tvs = getTvs(
     layer.daLayer.usedWithoutBridgeIn
       .concat(bridges.flatMap((p) => p.daBridge.usedIn))
@@ -110,7 +100,6 @@ function getDaArchivedEntry(
   ).latest
   return {
     ...getCommonDaEntry({ project: layer, href: daBridges[0]?.href }),
-    tvs,
     risks: getDaLayerRisks(layer.daLayer, tvs, economicSecurity),
     bridges: daBridges,
   }
@@ -118,21 +107,17 @@ function getDaArchivedEntry(
 
 function getDacEntry(
   project: Project<'customDa' | 'statuses'>,
-  getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
 ): DaArchivedEntry {
-  const tvs = getTvs([project.id])
   const bridgeEntry: DaBridgeArchivedEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
     href: `/scaling/projects/${project.slug}`,
     statuses: {},
-    tvs: tvs.latest,
     risks: project.customDa.risks,
   }
   return {
     ...getCommonDacDaEntry({ project }),
     risks: getDaLayerRisks(project.customDa),
-    tvs: tvs.latest,
     bridges: [bridgeEntry],
   }
 }

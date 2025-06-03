@@ -1,5 +1,6 @@
 import { HorizontalSeparator } from '~/components/core/horizontal-separator'
 import { FullPageHeader } from '~/components/full-page-header'
+import { ArchivedBar } from '~/components/projects/archived-bar'
 import { DesktopProjectLinks } from '~/components/projects/links/desktop-project-links'
 import { DiscoUiLink } from '~/components/projects/links/disco-ui-link'
 import { MobileProjectLinks } from '~/components/projects/links/mobile-project-links'
@@ -11,7 +12,6 @@ import type { ProjectStat } from './da-project-stats'
 import { DaProjectStats, getCommonDaProjectStats } from './da-project-stats'
 import { MultipleBridgeDetails } from './multiple-bridge-details'
 import { SingleBridgeDetails } from './single-bridge-details'
-import { ArchivedBar } from '~/components/projects/archived-bar'
 
 interface Props {
   project: DaProjectPageEntry

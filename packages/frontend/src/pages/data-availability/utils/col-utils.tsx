@@ -1,4 +1,5 @@
 import type { CellContext, ColumnDef } from '@tanstack/react-table'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 
@@ -22,8 +23,8 @@ export function virtual<T, C>(column: ColumnDef<T, C>) {
   }
 }
 
-function spanByBridges<T extends DaSummaryEntry | DaRiskEntry>(
-  ctx: CellContext<T, unknown>,
-) {
+function spanByBridges<
+  T extends DaSummaryEntry | DaRiskEntry | DaArchivedEntry,
+>(ctx: CellContext<T, unknown>) {
   return ctx.row.original.bridges.length
 }

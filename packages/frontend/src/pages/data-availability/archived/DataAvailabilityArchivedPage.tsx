@@ -9,12 +9,12 @@ import { MainPageHeader } from '~/components/main-page-header'
 import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
 import { AppLayout } from '~/layouts/app-layout.tsx'
 import { SideNavLayout } from '~/layouts/side-nav-layout'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
 import {
   CustomSystemInfo,
   PublicSystemInfo,
 } from '../components/da-category-info'
 import { DaArchivedTable } from './components/table/da-archived-table'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaArchivedEntry[]

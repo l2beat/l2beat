@@ -4,11 +4,11 @@ import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
 import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabilityThroughputData'
-import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 
 export function createDataAvailabilityRouter(
   manifest: Manifest,

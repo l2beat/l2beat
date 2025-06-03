@@ -4,13 +4,12 @@ import { TableValueCell } from '~/components/table/cells/table-value-cell'
 import { TableCell, TableRow } from '~/components/table/table'
 import { TableLink } from '~/components/table/table-link'
 import { useTable } from '~/hooks/use-table'
-import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
 } from '../../../components/basic-da-table'
 import { customColumns, publicColumns } from './columns'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
 
 export function DaArchivedTable({
   items,
@@ -28,7 +27,7 @@ export function DaArchivedTable({
     },
   })
 
-  const renderSpanFill = ({ row }: { row: Row<DaRiskEntry> }) => {
+  const renderSpanFill = ({ row }: { row: Row<DaArchivedEntry> }) => {
     const remainingBridges = row.original.bridges.slice(1)
 
     if (remainingBridges.length === 0) {
@@ -52,7 +51,7 @@ export function DaArchivedTable({
     )
   }
 
-  const renderInlineSpanFill = ({ row }: { row: Row<DaRiskEntry> }) => {
+  const renderInlineSpanFill = ({ row }: { row: Row<DaArchivedEntry> }) => {
     if (!row.original.bridges[0]) {
       return null
     }
@@ -78,7 +77,7 @@ function BridgeCells({
   bridge,
   excludeBridge = false,
 }: {
-  bridge: DaRiskEntry['bridges'][number]
+  bridge: DaArchivedEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
   return (
