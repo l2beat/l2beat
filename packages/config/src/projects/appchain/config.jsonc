@@ -2,5 +2,11 @@
   "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
   "name": "appchain",
   "import": ["../globalConfig.jsonc"],
-  "chains": {}
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x19df42E085e2c3fC4497172E412057F54D9f013E"
+      ],
+    }
+  }
 }
