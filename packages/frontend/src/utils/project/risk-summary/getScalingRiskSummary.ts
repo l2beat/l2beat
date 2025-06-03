@@ -10,7 +10,7 @@ export function getScalingRiskSummarySection(
 ): Omit<RiskSummarySectionProps, keyof ProjectSectionProps> {
   const sections = [
     {
-      id: './DataAvailability',
+      id: 'data-availability',
       value: project.scalingTechnology.dataAvailability,
     },
     { id: 'operator', value: project.scalingTechnology.operator },

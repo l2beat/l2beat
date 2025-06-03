@@ -17,7 +17,7 @@ export async function getScalingTvsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'tvs', 'data'],
+        key: ['scaling', 'tvs', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

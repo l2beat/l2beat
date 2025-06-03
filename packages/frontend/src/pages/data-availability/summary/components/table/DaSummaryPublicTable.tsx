@@ -32,7 +32,7 @@ export function DaSummaryPublicTable({ items }: { items: DaSummaryEntry[] }) {
     getSortedRowModel: getSortedRowModel(),
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

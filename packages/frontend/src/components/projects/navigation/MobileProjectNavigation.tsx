@@ -15,7 +15,7 @@ export function MobileProjectNavigation({ sections }: Props) {
   const overflowContainer = useRef<HTMLDivElement>(null)
 
   const currentSection = useCurrentSection()
-  const isSummarySection = currentSection && currentSection.id === './Summary'
+  const isSummarySection = currentSection && currentSection.id === 'summary'
 
   const scrollToItem = useCallback(
     (item: HTMLLIElement, overflowingContainer: HTMLElement) =>

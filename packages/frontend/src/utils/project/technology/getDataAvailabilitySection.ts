@@ -115,7 +115,7 @@ function getPublicDaSection(
 
   const props = getTechnologyChoicesSectionProps(project, [
     makeTechnologyChoice(
-      './DataAvailability',
+      'data-availability',
       project.scalingTechnology.dataAvailability,
       {
         relatedProjectBanner: daSolution
@@ -124,7 +124,7 @@ function getPublicDaSection(
               project: {
                 name: daSolution.layerName,
                 slug: `${daSolution.layerSlug}/${daSolution.bridgeSlug ?? 'no-bridge'}`,
-                type: './DataAvailability',
+                type: 'data-availability',
                 icon: getProjectIcon(daSolution.layerSlug),
               },
             }

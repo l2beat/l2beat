@@ -3,6 +3,7 @@ import { assert, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -30,7 +31,6 @@ import {
   YellowStrokeGradientDef,
 } from '~/components/core/chart/defs/YellowGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ActivityMetric } from '~/pages/scaling/activity/components/ActivityMetricContext'
 import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'

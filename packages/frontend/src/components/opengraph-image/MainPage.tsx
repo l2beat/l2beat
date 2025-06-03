@@ -1,5 +1,5 @@
 export interface MainPage {
-  type?: './Scaling' | './Bridges' | './DataAvailability'
+  type?: 'scaling' | 'bridges' | 'data-availability'
   title: string
 }
 
@@ -168,7 +168,7 @@ const typeToIcon: Record<NonNullable<MainPage['type']>, React.ReactNode> = {
       />
     </svg>
   ),
-  './DataAvailability': (
+  'data-availability': (
     <svg
       width="40"
       height="40"

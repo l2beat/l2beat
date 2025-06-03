@@ -4,6 +4,7 @@ import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
 
 import type { Milestone } from '@l2beat/config'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -24,7 +25,6 @@ import {
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
 
@@ -103,7 +103,7 @@ export function ProjectDaAbsoluteThroughputChart({
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
-          dataKey="./Project"
+          dataKey="project"
           fill={`url(#${projectId}-fill)`}
           fillOpacity={1}
           stroke={

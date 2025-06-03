@@ -1,4 +1,4 @@
-import * as React from 'React'
+import type * as React from 'React'
 import {
   HighlightedTableRowProvider,
   useHighlightedTableRowContext,

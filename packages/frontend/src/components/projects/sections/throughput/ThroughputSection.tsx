@@ -1,13 +1,10 @@
 import type { DaLayerThroughput, Milestone } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { ThroughputSectionChart } from '~/components/chart/data-availability/ThroughputSectionChart'
-import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { ClockIcon } from '~/icons/Clock'
-import {
-  formatBpsToMbps,
-  formatBytes,
-} from '~/utils/number-format/formatBytes'
+import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 

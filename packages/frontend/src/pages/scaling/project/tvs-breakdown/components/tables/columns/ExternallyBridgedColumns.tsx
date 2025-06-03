@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
+import type { ExternallyBridgedTokenEntry } from '../ExternallyBridgesTable'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenAmountCell } from '../cells/TokenAmountCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
 import { TokenValueCell } from '../cells/TokenValueCell'
-import type { ExternallyBridgedTokenEntry } from '../ExternallyBridgesTable'
 
 const columnHelper = createColumnHelper<ExternallyBridgedTokenEntry>()
 

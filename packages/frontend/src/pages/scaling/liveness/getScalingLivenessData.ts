@@ -15,7 +15,7 @@ export async function getScalingLivenessData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'liveness', 'entries'],
+        key: ['scaling', 'liveness', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

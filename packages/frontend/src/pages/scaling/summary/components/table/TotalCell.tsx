@@ -1,4 +1,5 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { WarningBar, sentimentToWarningBarColor } from '~/components/WarningBar'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   TokenBreakdown,
@@ -9,12 +10,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { TableLink } from '~/components/table/TableLink'
-import {
-  WarningBar,
-  sentimentToWarningBarColor,
-} from '~/components/WarningBar'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValueNumber'
 

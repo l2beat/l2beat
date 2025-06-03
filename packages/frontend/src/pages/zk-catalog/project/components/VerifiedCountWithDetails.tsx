@@ -5,7 +5,7 @@ import { VerifiedIcon } from '~/icons/Verified'
 import type { ZkCatalogProjectDetails } from '../utils/getZkCatalogProjectDetails'
 
 interface Props {
-  verifiers: ZkCatalogProjectDetails['./Verifiers']
+  verifiers: ZkCatalogProjectDetails['verifiers']
 }
 
 export function VerifiedCountWithDetails(props: Props) {

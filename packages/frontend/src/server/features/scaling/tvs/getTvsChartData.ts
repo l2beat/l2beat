@@ -87,7 +87,7 @@ export async function getTvsChart({
 }
 
 function getChartData(
-  values: Omit<ProjectValueRecord, 'type' | './Project'>[],
+  values: Omit<ProjectValueRecord, 'type' | 'project'>[],
   ethPrices: Record<number, number>,
 ) {
   return values.map((value) => {

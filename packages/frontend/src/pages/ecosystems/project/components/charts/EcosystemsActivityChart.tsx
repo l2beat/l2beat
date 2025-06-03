@@ -1,8 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
 import { useMemo, useState } from 'React'
+import compact from 'lodash/compact'
 import { AreaChart } from 'recharts'
 import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
+import { Checkbox } from '~/components/core/Checkbox'
+import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -16,11 +18,9 @@ import {
   EthereumFillGradientDef,
   EthereumStrokeGradientDef,
 } from '~/components/core/chart/defs/EthereumGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
-import { Checkbox } from '~/components/core/Checkbox'
-import { Skeleton } from '~/components/core/Skeleton'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'

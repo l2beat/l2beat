@@ -6,10 +6,7 @@ import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { addIfDefined } from './utils/addIfDefined'
-import {
-  CostsProjectsFilter,
-  getCostsProjects,
-} from './utils/getCostsProjects'
+import { CostsProjectsFilter, getCostsProjects } from './utils/getCostsProjects'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000

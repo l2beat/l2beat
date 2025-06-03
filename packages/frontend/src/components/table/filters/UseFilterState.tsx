@@ -1,6 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import uniq from 'lodash/uniq'
 import { useEffect, useReducer } from 'React'
+import uniq from 'lodash/uniq'
 import { z } from 'zod'
 import { useTracking } from '~/hooks/UseTracking'
 import { useQueryParam } from '~/hooks/useQueryParam'

@@ -6,7 +6,7 @@ import { RecategorisationPreviewBanner } from '~/components/recategorisation-pre
 export function SideNavLayout({ children }: { children: React.ReactNode }) {
   return (
     <NavLayout
-      logoLink=".//scaling/Summary"
+      logoLink="/scaling/summary"
       topChildren={
         <>
           <RecategorisationPreviewBanner className="only:lg:rounded-b-xl only:xl:rounded-br-none" />

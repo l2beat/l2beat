@@ -1,4 +1,6 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { WarningBar } from '~/components/WarningBar'
 import { Badge } from '~/components/badge/Badge'
 import { Skeleton } from '~/components/core/Skeleton'
 import {
@@ -6,8 +8,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
-import { WarningBar } from '~/components/WarningBar'
 import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { DurationCell } from '~/pages/scaling/finality/components/table/DurationCell'

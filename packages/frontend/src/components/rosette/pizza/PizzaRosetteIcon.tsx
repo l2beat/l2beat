@@ -11,14 +11,14 @@ interface Props {
   values: RosetteValue[]
   isUnderReview?: boolean
   className?: string
-  background?: './Header' | 'surface' | false
+  background?: 'header' | 'surface' | false
 }
 
 export function PizzaRosetteIcon({
   values,
   className,
   isUnderReview,
-  background = './Header',
+  background = 'header',
 }: Props) {
   const context = useRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -70,7 +70,7 @@ export function PizzaRosetteIcon({
             r="90"
             className={cn(
               'stroke-2 stroke-divider',
-              background === './Header' && 'fill-header-secondary',
+              background === 'header' && 'fill-header-secondary',
               background === 'surface' && 'fill-surface-secondary',
             )}
           />

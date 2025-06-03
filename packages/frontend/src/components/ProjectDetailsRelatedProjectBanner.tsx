@@ -4,7 +4,7 @@ export type ProjectDetailsRelatedProjectBannerProps = {
   text: string
   project: {
     name: string
-    type: './Scaling' | './Bridges' | './DataAvailability'
+    type: 'scaling' | 'bridges' | 'data-availability'
     slug: string
     icon: string
   }

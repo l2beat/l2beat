@@ -24,7 +24,7 @@ export function BridgesSummarySingleChainTable({ entries }: Props) {
         },
       ],
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

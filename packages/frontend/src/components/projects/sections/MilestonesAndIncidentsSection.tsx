@@ -67,7 +67,7 @@ function MilestonesBase(props: {
       <div className="ml-10">
         {props.milestones.map((milestone, i) => {
           const Icon =
-            milestone.type === './Incident' ? IncidentIcon : MilestoneIcon
+            milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
           const isLast = i === props.milestones.length - 1
 
           return (
@@ -79,12 +79,12 @@ function MilestonesBase(props: {
                     'from-green-400 dark:from-green-500',
                     milestone.next?.type === 'general' &&
                       'to-green-400 dark:to-green-500',
-                    milestone.next?.type === './Incident' &&
+                    milestone.next?.type === 'incident' &&
                       'to-red-700 dark:to-red-700',
                   ],
-                  milestone.type === './Incident' && [
+                  milestone.type === 'incident' && [
                     'from-red-700 dark:from-red-700',
-                    milestone.next?.type === './Incident' &&
+                    milestone.next?.type === 'incident' &&
                       'to-red-700 dark:to-red-700',
                     milestone.next?.type === 'general' &&
                       'to-green-400 dark:to-green-500',

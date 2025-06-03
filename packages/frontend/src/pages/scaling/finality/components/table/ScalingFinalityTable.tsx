@@ -26,7 +26,7 @@ export function ScalingFinalityTable({ entries, rollups }: Props) {
     onSortingChange: setSorting,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

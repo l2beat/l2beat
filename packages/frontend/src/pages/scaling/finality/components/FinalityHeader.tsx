@@ -1,5 +1,5 @@
-import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { CustomLink } from '~/components/link/CustomLink'
 import { externalLinks } from '~/consts/externalLinks'
 
 export function FinalityHeader() {

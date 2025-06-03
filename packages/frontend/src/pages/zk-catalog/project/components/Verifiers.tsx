@@ -16,7 +16,7 @@ import { SubVerifiersTable } from './SubVerifiersTable'
 import { VerifiedCell } from './VerifiedCell'
 
 interface Props {
-  items: ZkCatalogProjectDetails['./Verifiers']
+  items: ZkCatalogProjectDetails['verifiers']
 }
 
 export function Verifiers(props: Props) {

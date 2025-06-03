@@ -8,7 +8,7 @@ import { DetailsItem } from './DetailsItem'
 export function VerifierCard({
   verifier,
 }: {
-  verifier: ZkCatalogViewEntry['./Verifiers'][number]
+  verifier: ZkCatalogViewEntry['verifiers'][number]
 }) {
   return (
     <div className="border-divider border-t px-5 py-4 max-md:first:border-t-0 md:rounded-lg md:border md:first:mt-7">

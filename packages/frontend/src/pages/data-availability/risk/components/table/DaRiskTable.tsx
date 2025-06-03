@@ -1,8 +1,8 @@
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TableCell, TableRow } from '~/components/table/Table'
 import { TableLink } from '~/components/table/TableLink'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { useTable } from '~/hooks/useTable'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import {
@@ -22,7 +22,7 @@ export function DaRiskTable({
     getSortedRowModel: getSortedRowModel(),
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })
@@ -77,7 +77,7 @@ function BridgeCells({
   bridge,
   excludeBridge = false,
 }: {
-  bridge: DaRiskEntry['./Bridges'][number]
+  bridge: DaRiskEntry['bridges'][number]
   excludeBridge?: boolean
 }) {
   return (

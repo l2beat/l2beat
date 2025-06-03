@@ -1,14 +1,11 @@
 import type { WarningWithSentiment } from '@l2beat/config'
+import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { WarningBar, sentimentToWarningBarColor } from '~/components/WarningBar'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
-import {
-  WarningBar,
-  sentimentToWarningBarColor,
-} from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { FinalityDataPoint } from '~/server/features/scaling/finality/schema'
 import { DurationCell } from './DurationCell'

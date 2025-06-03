@@ -12,7 +12,7 @@ export function DaSummaryCustomTable({ items }: { items: DaSummaryEntry[] }) {
     getSortedRowModel: getSortedRowModel(),
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

@@ -1,5 +1,5 @@
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import * as React from 'React'
+import type * as React from 'React'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 

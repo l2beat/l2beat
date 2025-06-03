@@ -28,14 +28,14 @@ export function parseSocial(href: string): SocialDetails {
 
   if (link.startsWith('medium.com')) {
     return {
-      platform: './Medium',
+      platform: 'medium',
       text: link.slice('medium.com/'.length),
     }
   }
 
   if (link.endsWith('.medium.com')) {
     return {
-      platform: './Medium',
+      platform: 'medium',
       text: link.slice(0, -'.medium.com'.length),
     }
   }

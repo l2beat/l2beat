@@ -1,5 +1,5 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { WarningBar } from '~/components/WarningBar'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { ProjectSection } from './ProjectSection'

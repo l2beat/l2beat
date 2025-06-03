@@ -1,14 +1,14 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { FullPageHeader } from '~/components/FullPageHeader'
+import { WarningBar } from '~/components/WarningBar'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ArchivedBar } from '~/components/projects/ArchivedBar'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
+import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
+import { UpcomingBar } from '~/components/projects/UpcomingBar'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
-import { UnderReviewBar } from '~/components/projects/UnderReviewBar'
-import { UpcomingBar } from '~/components/projects/UpcomingBar'
-import { WarningBar } from '~/components/WarningBar'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'
 import { BridgesProjectStats } from './BridgesProjectStats'
@@ -20,7 +20,7 @@ interface Props {
 export function BridgesProjectSummary({ project }: Props) {
   return (
     <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
-      <section id="./Summary" className="w-full max-md:bg-header-primary">
+      <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader project={project} />
           <div className="space-y-2">
@@ -49,7 +49,7 @@ export function BridgesProjectSummary({ project }: Props) {
           <div className="max-md:hidden">
             <DesktopProjectLinks
               projectLinks={project.header.links}
-              variant="./Header"
+              variant="header"
               discoUiHref={project.discoUiHref}
             />
           </div>

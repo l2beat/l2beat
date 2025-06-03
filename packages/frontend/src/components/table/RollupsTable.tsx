@@ -1,5 +1,5 @@
 import type { Row, Table } from '@tanstack/react-table'
-import React from 'React'
+import type React from 'React'
 import { featureFlags } from '~/consts/featureFlags'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { cn } from '~/utils/cn'

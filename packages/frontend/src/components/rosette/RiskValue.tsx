@@ -1,8 +1,8 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import { SentimentText } from '../SentimentText'
+import { UnderReviewBadge } from '../badge/UnderReviewBadge'
 import type { RosetteValue } from './types'
 
 export function RiskValue(props: RosetteValue) {

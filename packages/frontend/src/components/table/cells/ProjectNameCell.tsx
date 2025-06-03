@@ -11,7 +11,7 @@ import { useRecategorisationPreviewContext } from '~/components/recategorisation
 import { featureFlags } from '~/consts/featureFlags'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { ShieldIcon } from '~/icons/Shield'
-import { UnderReviewIcon } from '~/icons/underReview'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getUnderReviewText } from '~/utils/project/underReview'

@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { TableLink } from '~/components/table/TableLink'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
 import { TwoRowCell } from '~/components/table/cells/TwoRowCell'
@@ -6,7 +7,6 @@ import {
   adjustTableValue,
   sortTableValues,
 } from '~/components/table/sorting/sortTableValues'
-import { TableLink } from '~/components/table/TableLink'
 import { getCommonProjectColumns } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { TotalCell } from '~/pages/scaling/summary/components/table/TotalCell'
 import type { BridgesSummaryEntry } from '~/server/features/bridges/getBridgesSummaryEntries'

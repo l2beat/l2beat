@@ -1,4 +1,4 @@
-import { UnderReviewIcon } from '~/icons/underReview'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { cn } from '~/utils/cn'
 
 interface Props {

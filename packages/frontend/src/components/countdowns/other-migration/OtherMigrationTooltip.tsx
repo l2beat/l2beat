@@ -1,12 +1,12 @@
 import { CloseIcon } from '~/icons/Close'
 import { StopwatchIcon } from '~/icons/Stopwatch'
 import type { ProjectCountdownsWithContext } from '~/server/features/scaling/utils/getCountdowns'
+import { Countdown } from '../../Countdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { Countdown } from '../../Countdown'
 
 type Props = NonNullable<ProjectCountdownsWithContext['otherMigration']>
 export function OtherMigrationTooltip({

@@ -78,9 +78,9 @@ export async function getRecategorisedTvsChart({
 }
 
 function getChartData(
-  rollupsValues: Omit<ProjectValueRecord, 'type' | './Project'>[],
-  validiumAndOptimiumsValues: Omit<ProjectValueRecord, 'type' | './Project'>[],
-  othersValues: Omit<ProjectValueRecord, 'type' | './Project'>[],
+  rollupsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  validiumAndOptimiumsValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
+  othersValues: Omit<ProjectValueRecord, 'type' | 'project'>[],
 ) {
   const rolupsGroupedByTimestamp = groupBy(rollupsValues, (v) => v.timestamp)
   const validiumAndOptimiumsGroupedByTimestamp = groupBy(

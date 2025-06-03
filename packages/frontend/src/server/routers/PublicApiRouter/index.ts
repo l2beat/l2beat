@@ -107,7 +107,7 @@ export function createPublicApiRouter() {
   )
 
   router.get(
-    './/api/scaling/tvs/:slug/Breakdown',
+    '/api/scaling/tvs/:slug/breakdown',
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
@@ -117,7 +117,7 @@ export function createPublicApiRouter() {
     },
   )
 
-  router.get('.//api/scaling/Summary', async (_, res) => {
+  router.get('/api/scaling/summary', async (_, res) => {
     const data = await getScalingSummaryApiData()
     res.json(data)
   })

@@ -5,14 +5,14 @@ import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
+import { SentimentText } from '../../SentimentText'
+import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { UnderReviewBadge } from '../../badge/UnderReviewBadge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { SentimentText } from '../../SentimentText'
-import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { TableLink } from '../TableLink'
 import { NoInfoCell } from './NoInfoCell'
 import { TwoRowCell } from './TwoRowCell'

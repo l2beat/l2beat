@@ -1,6 +1,6 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
 import { Fragment } from 'React'
+import compact from 'lodash/compact'
 import { ChartStats, ChartStatsItem } from '~/components/core/chart/ChartStats'
 import { DurationCell } from '~/pages/scaling/finality/components/table/DurationCell'
 import { AnomalyIndicator } from '~/pages/scaling/liveness/components/AnomalyIndicator'

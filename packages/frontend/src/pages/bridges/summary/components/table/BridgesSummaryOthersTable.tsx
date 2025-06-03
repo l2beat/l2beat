@@ -24,7 +24,7 @@ export function BridgesSummaryOthersTable({ entries }: Props) {
         },
       ],
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

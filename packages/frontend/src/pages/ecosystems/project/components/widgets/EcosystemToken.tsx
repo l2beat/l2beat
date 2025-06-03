@@ -1,5 +1,5 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PercentChange } from '~/components/PercentChange'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { EcosystemToken } from '~/server/features/ecosystems/getEcosystemToken'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'

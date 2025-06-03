@@ -5,6 +5,7 @@ import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
 import { TvsChartTimeRangeControls } from '~/components/chart/tvs/TvsChartTimeRangeControls'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import type { ChartUnit } from '~/components/chart/types'
+import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -14,9 +15,8 @@ import {
 } from '~/components/core/chart/Chart'
 import { ChartControlsWrapper } from '~/components/core/chart/ChartControlsWrapper'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { Skeleton } from '~/components/core/Skeleton'
+import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'

@@ -8,8 +8,8 @@ import type {
 import type { UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
+import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { env } from '~/env'
 import {
@@ -168,7 +168,7 @@ export async function getScalingProjectEntry(
   const category = isProjectOther(project.scalingInfo)
     ? 'Other'
     : project.scalingInfo.type
-  const header: ProjectScalingEntry['./Header'] = {
+  const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,

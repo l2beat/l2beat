@@ -1,5 +1,5 @@
-import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 import { Skeleton } from '../Skeleton'

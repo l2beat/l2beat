@@ -1,13 +1,13 @@
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
+import { SentimentText } from '../../SentimentText'
+import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { UpcomingBadge } from '../../badge/UpcomingBadge'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
-import { SentimentText } from '../../SentimentText'
-import { WarningBar, sentimentToWarningBarColor } from '../../WarningBar'
 import { PizzaRosetteLabels } from '../pizza/PizzaRosetteLabels'
 import type { RosetteValueTuple } from './IndividualRosetteIcon'
 import { IndividualPizzaRosetteIcon } from './IndividualRosetteIcon'
@@ -28,7 +28,7 @@ export interface Props {
   isUpcoming?: boolean
   isUnderReview?: boolean
   className?: string
-  background?: './Header' | 'surface'
+  background?: 'header' | 'surface'
 }
 
 export function BigIndividualRosette(props: Props) {

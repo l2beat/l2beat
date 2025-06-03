@@ -30,7 +30,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
     }
 
     const common = {
-      type: './Project',
+      type: 'project',
       id: p.id,
       name: p.name,
       iconUrl: getProjectIcon(p.slug),
@@ -53,7 +53,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       results.push({
         ...common,
         href: `/scaling/projects/${p.slug}`,
-        category: './Scaling',
+        category: 'scaling',
       })
     }
 
@@ -61,7 +61,7 @@ export async function getSearchBarProjects(): Promise<SearchBarProject[]> {
       results.push({
         ...common,
         href: `/bridges/projects/${p.slug}`,
-        category: './Bridges',
+        category: 'bridges',
       })
     }
 

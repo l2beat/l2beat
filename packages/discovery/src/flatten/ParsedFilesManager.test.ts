@@ -163,8 +163,8 @@ describe(ParsedFilesManager.name, () => {
         {
           path: 'Importing.sol',
           content: `
-          import "./src/////ImportedAsAll.sol";
-          import { S1 as Alias1 } from ".////src//ImportedSelective.sol";
+          import "./src/ImportedAsAll.sol";
+          import { S1 as Alias1 } from "./src/ImportedSelective.sol";
           contract R1 { function r1() public {} }
           `,
         },

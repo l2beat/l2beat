@@ -15,7 +15,7 @@ export async function getScalingFinalityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'finality', 'entries'],
+        key: ['scaling', 'finality', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

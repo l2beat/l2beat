@@ -1,9 +1,9 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { FullPageHeader } from '~/components/FullPageHeader'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { GrissiniDetails } from '~/components/rosette/grissini/GrissiniDetails'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
@@ -34,7 +34,7 @@ export function RegularDaProjectSummary({ project }: Props) {
 
   return (
     <FullPageHeader className="pt-8 pb-4 md:pt-12 md:pb-8">
-      <section id="./Summary" className="w-full">
+      <section id="summary" className="w-full">
         <ProjectHeader project={project} />
         {/* Details row */}
         <div className="mt-6 flex w-full flex-col gap-6 md:gap-8">
@@ -49,7 +49,7 @@ export function RegularDaProjectSummary({ project }: Props) {
                   <div className="max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={project.header.links}
-                      variant="./Header"
+                      variant="header"
                       discoUiHref={project.discoUiHref}
                     />
                   </div>

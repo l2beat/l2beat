@@ -1,5 +1,5 @@
-import { useCommandState } from 'cmdk'
 import React from 'React'
+import { useCommandState } from 'cmdk'
 import { externalLinks } from '~/consts/externalLinks'
 import { CheckIcon } from '~/icons/Check'
 import { ChevronIcon } from '~/icons/Chevron'

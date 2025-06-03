@@ -16,7 +16,7 @@ export type SocialIconType =
   | './Github'
   | './Instagram'
   | './Linkedin'
-  | './Medium'
+  | 'medium'
   | './Reddit'
   | './Telegram'
   | './X'
@@ -37,7 +37,7 @@ export function SocialIcon({ product, ...props }: Props): JSX.Element {
       return <InstagramIcon {...props} />
     case './Linkedin':
       return <LinkedInIcon {...props} />
-    case './Medium':
+    case 'medium':
       return <MediumIcon {...props} />
     case './Reddit':
       return <RedditIcon {...props} />

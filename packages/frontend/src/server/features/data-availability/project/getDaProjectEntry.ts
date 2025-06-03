@@ -16,10 +16,7 @@ import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
-import {
-  getDaProjectsTvs,
-  pickTvsForProjects,
-} from '../utils/getDaProjectsTvs'
+import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaProjectEconomicSecurity } from './utils/getDaProjectEconomicSecurity'
 
 interface CommonDaProjectPageEntry {

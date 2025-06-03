@@ -1,4 +1,3 @@
-import React from 'React'
 import { Markdown } from '../../markdown/Markdown'
 import { ProjectSection } from './ProjectSection'
 import type { ProjectSectionProps } from './types'

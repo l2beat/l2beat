@@ -1,12 +1,12 @@
 import type { ReactNode } from 'React'
 import { Breadcrumbs } from '~/components/Breadcrumbs'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
-import { MainPageHeader } from '~/components/MainPageHeader'
 import { Markdown } from '~/components/markdown/Markdown'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { InfoIcon } from '~/icons/Info'

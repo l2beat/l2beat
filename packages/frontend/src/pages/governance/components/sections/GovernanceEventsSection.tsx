@@ -28,7 +28,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
   return (
     <GovernanceCard
       type={event.highlighted ? 'purple' : isMobile ? 'primary' : 'secondary'}
-      size="./Medium"
+      size="medium"
       className="flex flex-col justify-start gap-4 md:h-[304px]"
     >
       <div className="flex flex-col gap-0.5 md:min-h-20">

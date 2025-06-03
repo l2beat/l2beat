@@ -13,10 +13,7 @@ import {
   getDaLayerRisks,
 } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
-import {
-  getDaProjectsTvs,
-  pickTvsForProjects,
-} from '../utils/getDaProjectsTvs'
+import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
 
 export async function getDaRiskEntries(): Promise<

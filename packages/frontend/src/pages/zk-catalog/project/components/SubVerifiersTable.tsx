@@ -10,7 +10,7 @@ import { cn } from '~/utils/cn'
 import type { ZkCatalogProjectDetails } from '../utils/getZkCatalogProjectDetails'
 
 interface Props {
-  verifier: ZkCatalogProjectDetails['./Verifiers'][number]
+  verifier: ZkCatalogProjectDetails['verifiers'][number]
   className?: string
 }
 

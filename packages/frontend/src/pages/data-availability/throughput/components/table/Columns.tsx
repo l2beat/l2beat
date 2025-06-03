@@ -1,14 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { SyncStatusWrapper } from '~/components/SyncStatusWrapper'
+import { TableLink } from '~/components/table/TableLink'
 import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
 import { TableValueCell } from '~/components/table/cells/TableValueCell'
-import { TableLink } from '~/components/table/TableLink'
 import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
 import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
-import {
-  formatBpsToMbps,
-  formatBytes,
-} from '~/utils/number-format/formatBytes'
+import { formatBpsToMbps, formatBytes } from '~/utils/number-format/formatBytes'
 
 export type DaThroughputTableData = Omit<DaThroughputEntry, 'scalingOnlyData'>
 

@@ -1,5 +1,5 @@
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import * as React from 'React'
+import type * as React from 'React'
 
 import { cn } from '~/utils/cn'
 

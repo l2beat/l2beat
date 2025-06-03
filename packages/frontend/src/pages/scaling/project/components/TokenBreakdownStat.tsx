@@ -1,3 +1,4 @@
+import { WarningBar, sentimentToWarningBarColor } from '~/components/WarningBar'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   TokenBreakdown,
@@ -8,16 +9,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import {
-  WarningBar,
-  sentimentToWarningBarColor,
-} from '~/components/WarningBar'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 
 interface Props {
   tokenTvs:
-    | NonNullable<ProjectScalingEntry['./Header']['tvs']>['tokens']
+    | NonNullable<ProjectScalingEntry['header']['tvs']>['tokens']
     | undefined
 }
 

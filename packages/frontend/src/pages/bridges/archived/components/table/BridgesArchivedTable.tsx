@@ -34,7 +34,7 @@ export function BridgesArchivedTable({ entries, isOthers }: Props) {
         },
       ],
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

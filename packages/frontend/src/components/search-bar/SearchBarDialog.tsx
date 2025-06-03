@@ -1,7 +1,7 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { useMemo, useRef, useState } from 'React'
 import fuzzysort from 'fuzzysort'
 import groupBy from 'lodash/groupBy'
-import { useMemo, useRef, useState } from 'React'
 import {
   Command,
   CommandDialog,
@@ -13,13 +13,13 @@ import {
   CommandList,
 } from '~/components/core/Command'
 import { useGlobalShortcut } from '~/hooks/UseGlobalShortcut'
-import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useTracking } from '~/hooks/UseTracking'
+import { useOnClickOutside } from '~/hooks/useOnClickOutside'
 import { useRouter } from '~/hooks/useRouter'
-import type { SearchBarCategory } from './searchBarCategories'
-import { searchBarCategories } from './searchBarCategories'
 import { useSearchBarContext } from './SearchBarContext'
 import type { AnySearchBarEntry, SearchBarProject } from './SearchBarEntry'
+import type { SearchBarCategory } from './searchBarCategories'
+import { searchBarCategories } from './searchBarCategories'
 import { searchBarPages } from './searchBarPages'
 interface Props {
   allProjects: SearchBarProject[]
@@ -160,7 +160,7 @@ export function SearchBarDialog({ recentlyAdded, allProjects }: Props) {
                           : `${item.category}-${item.name}-${item.type}${'kind' in item ? `-${item.kind}` : ''}`
                       }
                     >
-                      {item.type === './Project' && (
+                      {item.type === 'project' && (
                         <img
                           src={item.iconUrl}
                           alt={`${item.name} logo`}

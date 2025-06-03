@@ -1,11 +1,11 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { useRef, useState } from 'React'
+import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { MilestoneDrawerContent } from '~/components/core/chart/ChartMilestones'
 import {
   getTickCondition,
   getTickFormatter,
 } from '~/components/core/chart/utils/getXAxisProps'
-import { Drawer, DrawerContent, DrawerTrigger } from '~/components/core/Drawer'
 import { CustomLink } from '~/components/link/CustomLink'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import { ChevronIcon } from '~/icons/Chevron'
@@ -175,7 +175,7 @@ function MilestoneItem({
   style: React.CSSProperties
 }) {
   const breakpoint = useBreakpoint()
-  const Icon = milestone.type === './Incident' ? IncidentIcon : MilestoneIcon
+  const Icon = milestone.type === 'incident' ? IncidentIcon : MilestoneIcon
   const isSelected = milestone.index === selectedMilestoneIndex
 
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {

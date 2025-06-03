@@ -6,7 +6,7 @@ import type { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { useState } from 'React'
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import React from 'React'
+import type React from 'React'
 import { env } from '~/env'
 import { useIsClient } from '~/hooks/useIsClient'
 import type { AppRouter } from '~/server/trpc/root'

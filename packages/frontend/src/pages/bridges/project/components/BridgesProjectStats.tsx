@@ -1,4 +1,5 @@
 import type { ReactNode } from 'React'
+import { SentimentText } from '~/components/SentimentText'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import {
   TokenBreakdown,
@@ -9,7 +10,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { SentimentText } from '~/components/SentimentText'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { InfoIcon } from '~/icons/Info'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'

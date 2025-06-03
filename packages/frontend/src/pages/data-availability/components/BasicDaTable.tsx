@@ -6,12 +6,11 @@ import type {
   Table as TanstackTable,
 } from '@tanstack/react-table'
 import { flexRender } from '@tanstack/react-table'
-import range from 'lodash/range'
 import type { CSSProperties } from 'React'
 import React from 'React'
+import range from 'lodash/range'
 import { getBasicTableGroupParams } from '~/components/table/BasicTable'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
-import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import {
   Table,
   TableBody,
@@ -22,6 +21,7 @@ import {
   TableRow,
 } from '~/components/table/Table'
 import { TableEmptyState } from '~/components/table/TableEmptyState'
+import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import { cn } from '~/utils/cn'
 
 interface BasicEntry {

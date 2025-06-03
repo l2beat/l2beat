@@ -1,4 +1,4 @@
-import * as React from 'React'
+import type * as React from 'React'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
 

@@ -7,13 +7,13 @@ import {
   CommandItem,
   CommandList,
 } from '~/components/core/Command'
-import type { FilterableValueId } from './filterableValue'
-import { filterValuesSortFn } from './filterableValue'
-import { emptyStateLabel, inputPlaceholder } from './filterableValue'
 import { TableFilterCheckbox } from './TableFilterCheckbox'
 import { useTableFilterContext } from './TableFilterContext'
 import { useTableFilterInternalContext } from './TableFilterInternalContext'
 import { TableFilterValue } from './TableFilterValue'
+import type { FilterableValueId } from './filterableValue'
+import { filterValuesSortFn } from './filterableValue'
+import { emptyStateLabel, inputPlaceholder } from './filterableValue'
 
 interface Props {
   filterId: FilterableValueId

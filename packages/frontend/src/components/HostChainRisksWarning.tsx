@@ -24,7 +24,7 @@ export function HostChainRisksWarning({
         name: hostChainName,
         slug: hostChainSlug,
         icon: hostChainIcon,
-        type: './Scaling',
+        type: 'scaling',
       }}
     />
   )

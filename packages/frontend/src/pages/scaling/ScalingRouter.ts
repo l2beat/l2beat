@@ -24,11 +24,11 @@ export function createScalingRouter(
 ) {
   const router = express.Router()
 
-  router.get('.//Scaling', (_req, res) => {
-    res.redirect('.//scaling/Summary')
+  router.get('/scaling', (_req, res) => {
+    res.redirect('/scaling/summary')
   })
 
-  router.get('.//scaling/Summary', async (req, res) => {
+  router.get('/scaling/summary', async (req, res) => {
     const data = await getScalingSummaryData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
@@ -52,7 +52,7 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('.//scaling/DataAvailability', async (req, res) => {
+  router.get('/scaling/data-availability', async (req, res) => {
     const data = await getScalingDataAvailabilityData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
@@ -76,13 +76,13 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('.//scaling/Archived', async (req, res) => {
+  router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
-  router.get('.//scaling/Upcoming', async (req, res) => {
+  router.get('/scaling/upcoming', async (req, res) => {
     const data = await getScalingUpcomingData(req, manifest, cache)
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
@@ -96,7 +96,7 @@ export function createScalingRouter(
     async (req, res) => {
       const data = await cache.get(
         {
-          key: ['./Scaling', 'projects', req.params.slug],
+          key: ['scaling', 'projects', req.params.slug],
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },
@@ -119,7 +119,7 @@ export function createScalingRouter(
     async (req, res) => {
       const data = await cache.get(
         {
-          key: ['./Scaling', 'projects', req.params.slug, 'tvs-breakdown'],
+          key: ['scaling', 'projects', req.params.slug, 'tvs-breakdown'],
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },

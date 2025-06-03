@@ -25,7 +25,7 @@ export function ScalingDaTable({ entries, rollups }: Props) {
     onSortingChange: setSorting,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

@@ -1,6 +1,6 @@
 import type { StageConfigured } from '@l2beat/config'
-import { StageBadge } from '~/components/badge/StageBadge'
 import { Countdown } from '~/components/Countdown'
+import { StageBadge } from '~/components/badge/StageBadge'
 import { CustomLink } from '~/components/link/CustomLink'
 import { externalLinks } from '~/consts/externalLinks'
 import { useIsMobile } from '~/hooks/useIsMobile'

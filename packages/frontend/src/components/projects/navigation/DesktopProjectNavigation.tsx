@@ -47,7 +47,7 @@ export function DesktopProjectNavigation({
   const headerRef = useRef<HTMLDivElement>(null)
   const [headerHeight, setHeaderHeight] = useState<number>()
   const currentSection = useCurrentSection()
-  const isSummarySection = currentSection && currentSection.id === './Summary'
+  const isSummarySection = currentSection && currentSection.id === 'summary'
 
   useEffect(() => {
     const header = headerRef.current
@@ -158,7 +158,7 @@ function ProjectNavigationList({
         href="#"
         className={cn(
           'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
-          currentSection && currentSection.id !== './Summary' && 'opacity-60',
+          currentSection && currentSection.id !== 'summary' && 'opacity-60',
         )}
       >
         <SummaryIcon className="size-6" />

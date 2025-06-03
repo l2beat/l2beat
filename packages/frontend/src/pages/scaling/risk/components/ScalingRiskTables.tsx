@@ -1,4 +1,10 @@
 import { useMemo } from 'React'
+import {
+  OthersInfo,
+  RollupsInfo,
+  UnderReviewInfo,
+  ValidiumsAndOptimiumsInfo,
+} from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
@@ -8,12 +14,6 @@ import {
 } from '~/components/core/DirectoryTabs'
 import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
-import {
-  OthersInfo,
-  RollupsInfo,
-  UnderReviewInfo,
-  ValidiumsAndOptimiumsInfo,
-} from '~/components/ScalingTabsInfo'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'

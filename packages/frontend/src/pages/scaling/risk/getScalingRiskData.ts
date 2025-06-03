@@ -15,7 +15,7 @@ export async function getScalingRiskData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'risk', 'entries'],
+        key: ['scaling', 'risk', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

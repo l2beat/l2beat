@@ -2,6 +2,7 @@ import type { Stage } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import type { TooltipProps } from 'recharts'
 import { Label, Pie, PieChart } from 'recharts'
+import { CssVariables } from '~/components/CssVariables'
 import { StageBadge } from '~/components/badge/StageBadge'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
@@ -11,7 +12,6 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { CssVariables } from '~/components/CssVariables'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
 import type { TvsByStage } from '~/server/features/ecosystems/getTvsByStage'
 import { formatPercent } from '~/utils/calculatePercentageChange'

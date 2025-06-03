@@ -1,9 +1,9 @@
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
+import { ShowMoreText } from './ShowMoreText'
 import { useRecategorisationPreviewContext } from './recategorisation-preview/RecategorisationPreviewProvider'
 import { RecategorisationPreviewSwitch } from './recategorisation-preview/RecategorisationPreviewSwitch'
 import { SearchBarButton } from './search-bar/SearchBarButton'
-import { ShowMoreText } from './ShowMoreText'
 
 interface Props {
   children: React.ReactElement | string

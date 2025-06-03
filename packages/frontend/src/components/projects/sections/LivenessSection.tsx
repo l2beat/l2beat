@@ -4,8 +4,8 @@ import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenes
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { TrackedTransactionsByType } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import { TrackedTransactions } from './costs/TrackedTransactions'
 import { ProjectSection } from './ProjectSection'
+import { TrackedTransactions } from './costs/TrackedTransactions'
 import type { ProjectSectionProps } from './types'
 
 export interface LivenessSectionProps extends ProjectSectionProps {

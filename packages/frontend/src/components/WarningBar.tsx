@@ -1,13 +1,13 @@
 import type { Sentiment } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { cva } from 'class-variance-authority'
 import type { FC } from 'React'
+import { cva } from 'class-variance-authority'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import { ShieldIcon } from '~/icons/Shield'
 import { cn } from '~/utils/cn'
 import { Callout } from './Callout'
-import { Markdown } from './markdown/Markdown'
 import { PlainLink } from './PlainLink'
+import { Markdown } from './markdown/Markdown'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'

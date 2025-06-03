@@ -12,13 +12,13 @@ import { SocialIcon } from '~/icons/products/SocialIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/formatLink'
 import { DiscoUiLink } from './DiscoUiLink'
-import { parseSocial } from './parseSocial'
 import { ProjectLinkIcon } from './ProjectLinkIcon'
+import { parseSocial } from './parseSocial'
 import type { ProjectLink } from './types'
 
 interface Props {
   projectLinks: ProjectLink[]
-  variant: 'primary' | './Header'
+  variant: 'primary' | 'header'
   discoUiHref?: string
 }
 
@@ -50,7 +50,7 @@ function ProjectLinkItem({
   variant,
 }: {
   projectLink: ProjectLink
-  variant: 'primary' | './Header'
+  variant: 'primary' | 'header'
 }) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
@@ -61,7 +61,7 @@ function ProjectLinkItem({
           target="_blank"
           className={cn(
             navigationMenuTriggerStyle(),
-            variant === './Header' && 'bg-header-secondary',
+            variant === 'header' && 'bg-header-secondary',
             'ring-brand ring-inset focus:ring-2',
             'flex flex-row items-center gap-1.5',
           )}
@@ -80,20 +80,20 @@ function ProjectLinkItem({
 function MultiProjectLink({
   projectLink,
   variant,
-}: { projectLink: ProjectLink; variant: 'primary' | './Header' }) {
+}: { projectLink: ProjectLink; variant: 'primary' | 'header' }) {
   return (
     <NavigationMenuItem>
       <NavigationMenuTrigger
         className={cn(
           'ring-brand ring-inset focus:ring-2',
-          variant === './Header' && 'bg-header-secondary',
+          variant === 'header' && 'bg-header-secondary',
         )}
       >
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}
       </NavigationMenuTrigger>
       <NavigationMenuContent
-        className={cn(variant === './Header' && 'bg-header-secondary')}
+        className={cn(variant === 'header' && 'bg-header-secondary')}
       >
         {projectLink.links.map((link) => {
           const parsedSocial =
@@ -108,7 +108,7 @@ function MultiProjectLink({
                 navigationMenuTriggerStyle(),
                 variant === 'primary' &&
                   'bg-surface-primary hover:bg-surface-secondary focus:bg-surface-secondary',
-                variant === './Header' &&
+                variant === 'header' &&
                   'bg-header-secondary hover:bg-surface-tertiary focus:bg-surface-tertiary',
                 'flex w-full justify-start gap-1.5',
               )}

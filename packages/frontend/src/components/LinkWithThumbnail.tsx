@@ -1,4 +1,4 @@
-import React from 'React'
+import type React from 'React'
 
 import { ArrowRightIcon } from '~/icons/ArrowRight'
 import { cn } from '~/utils/cn'

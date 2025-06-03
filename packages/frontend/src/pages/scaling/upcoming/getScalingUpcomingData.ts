@@ -15,7 +15,7 @@ export async function getScalingUpcomingData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', './Upcoming', 'entries'],
+        key: ['scaling', 'upcoming', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

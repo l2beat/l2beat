@@ -1,5 +1,5 @@
 import { Slot } from '@radix-ui/react-slot'
-import React from 'React'
+import type React from 'React'
 import { cn } from '~/utils/cn'
 
 interface Props {

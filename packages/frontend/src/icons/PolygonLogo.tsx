@@ -1,5 +1,3 @@
-import React from 'React'
-
 export function PolygonLogo() {
   return (
     <svg

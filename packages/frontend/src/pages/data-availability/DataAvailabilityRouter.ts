@@ -16,14 +16,14 @@ export function createDataAvailabilityRouter(
 ) {
   const router = express.Router()
 
-  router.get('.//DataAvailability', (_req, res) => {
-    res.redirect('.//data-availability/Summary')
+  router.get('/data-availability', (_req, res) => {
+    res.redirect('/data-availability/summary')
   })
 
-  router.get('.//data-availability/Summary', async (req, res) => {
+  router.get('/data-availability/summary', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['./DataAvailability', './Summary'],
+        key: ['data-availability', 'summary'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -36,7 +36,7 @@ export function createDataAvailabilityRouter(
   router.get('/data-availability/risk', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['./DataAvailability', 'risk'],
+        key: ['data-availability', 'risk'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -49,7 +49,7 @@ export function createDataAvailabilityRouter(
   router.get('/data-availability/throughput', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['./DataAvailability', 'throughput'],
+        key: ['data-availability', 'throughput'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -71,7 +71,7 @@ export function createDataAvailabilityRouter(
       const data = await cache.get(
         {
           key: [
-            './DataAvailability',
+            'data-availability',
             'projects',
             req.params.layer,
             req.params.bridge,

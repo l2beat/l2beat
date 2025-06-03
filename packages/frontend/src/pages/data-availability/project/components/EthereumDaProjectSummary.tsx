@@ -1,8 +1,8 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { FullPageHeader } from '~/components/FullPageHeader'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
-import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import type { ProjectStat } from './DaProjectStats'
@@ -34,7 +34,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
 
   return (
     <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
-      <section id="./Summary" className="w-full">
+      <section id="summary" className="w-full">
         <ProjectHeader project={project} />
         <div className="mt-6 flex w-full flex-col gap-4">
           <div className="flex flex-row items-start gap-10">
@@ -47,7 +47,7 @@ export function EthereumDaProjectSummary({ project }: Props) {
                   <div className="max-md:hidden">
                     <DesktopProjectLinks
                       projectLinks={project.header.links}
-                      variant="./Header"
+                      variant="header"
                     />
                   </div>
                   <DaProjectStats

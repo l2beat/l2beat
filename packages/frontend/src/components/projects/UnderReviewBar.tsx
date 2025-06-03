@@ -1,4 +1,4 @@
-import { UnderReviewIcon } from '~/icons/underReview'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 
 export function UnderReviewBar({ text }: { text: string }) {
   return (

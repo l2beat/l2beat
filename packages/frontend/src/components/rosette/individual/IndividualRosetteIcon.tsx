@@ -25,7 +25,7 @@ interface Props {
   }
   isUnderReview?: boolean
   className?: string
-  background?: './Header' | 'surface'
+  background?: 'header' | 'surface'
 }
 
 export function IndividualPizzaRosetteIcon({
@@ -33,7 +33,7 @@ export function IndividualPizzaRosetteIcon({
   l3,
   className,
   isUnderReview,
-  background = './Header',
+  background = 'header',
 }: Props) {
   const context = useIndividualRosetteTooltipContext()
   const svgRef = useRef(null)
@@ -110,7 +110,7 @@ export function IndividualPizzaRosetteIcon({
           r="90"
           className={cn(
             'stroke-2 stroke-divider',
-            background === './Header' && 'fill-header-secondary',
+            background === 'header' && 'fill-header-secondary',
             background === 'surface' && 'fill-surface-secondary',
           )}
         />
@@ -323,7 +323,7 @@ export function IndividualPizzaRosetteIcon({
             cy="90"
             r="52"
             className={cn(
-              background === './Header' && 'stroke-header-secondary',
+              background === 'header' && 'stroke-header-secondary',
               background === 'surface' && 'stroke-surface-secondary',
             )}
             strokeWidth="10"

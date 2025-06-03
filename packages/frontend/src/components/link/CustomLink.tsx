@@ -1,6 +1,6 @@
+import type React from 'React'
 import type { VariantProps } from 'class-variance-authority'
 import { cva } from 'class-variance-authority'
-import React from 'React'
 
 export type CustomLinkProps = Omit<React.ComponentProps<'a'>, 'href'> &
   VariantProps<typeof linkVariants> & {

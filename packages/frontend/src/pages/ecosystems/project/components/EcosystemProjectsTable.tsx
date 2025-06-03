@@ -18,7 +18,7 @@ export function EcosystemProjectsTable({ entries }: Props) {
     manualFiltering: true,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
       sorting: [
         {

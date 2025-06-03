@@ -40,7 +40,7 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
     onSortingChange: setSorting,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

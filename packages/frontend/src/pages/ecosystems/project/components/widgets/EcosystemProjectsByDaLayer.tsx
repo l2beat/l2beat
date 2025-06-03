@@ -1,5 +1,5 @@
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ProgressBar } from '~/components/ProgressBar'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { BlobsData } from '~/server/features/ecosystems/getBlobsData'
 import type { ProjectsByDaLayer } from '~/server/features/ecosystems/getProjectsByDaLayer'
 import { formatPercent } from '~/utils/calculatePercentageChange'

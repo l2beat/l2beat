@@ -24,7 +24,7 @@ export function ScalingUpcomingTable({ entries }: Props) {
     onSortingChange: setSorting,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

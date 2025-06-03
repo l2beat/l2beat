@@ -1,6 +1,6 @@
 import compact from 'lodash/compact'
-import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'

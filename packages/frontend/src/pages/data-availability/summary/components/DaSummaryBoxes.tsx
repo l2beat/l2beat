@@ -1,13 +1,13 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import round from 'lodash/round'
+import { PercentChange } from '~/components/PercentChange'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { PercentChange } from '~/components/PercentChange'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
 import { InfoIcon } from '~/icons/Info'

@@ -1,5 +1,5 @@
-import { CustomLink } from '~/components/link/CustomLink'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { CollectionEntry } from '~/content/getCollection'
 import { CustomLinkIcon } from '~/icons/Outlink'

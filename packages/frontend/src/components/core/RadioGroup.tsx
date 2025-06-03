@@ -1,5 +1,5 @@
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
-import * as React from 'React'
+import type * as React from 'React'
 import { useTracking } from '~/hooks/UseTracking'
 import { cn } from '~/utils/cn'
 

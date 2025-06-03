@@ -5,7 +5,7 @@ import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { toTableRows } from '../../utils/ToTableRows'
+import { toTableRows } from '../../utils/toTableRows'
 import { scalingSummaryOthersColumns } from './Columns'
 
 interface Props {
@@ -37,7 +37,7 @@ export function ScalingSummaryOthersTable({ entries }: Props) {
     onSortingChange: setSorting,
     initialState: {
       columnPinning: {
-        left: ['#', './Logo'],
+        left: ['#', 'logo'],
       },
     },
   })

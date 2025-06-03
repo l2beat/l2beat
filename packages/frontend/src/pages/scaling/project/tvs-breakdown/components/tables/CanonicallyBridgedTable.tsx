@@ -6,10 +6,10 @@ import {
 import { useMemo } from 'React'
 import { TokenTable } from '~/components/table/TokenBreakdownTable'
 import type { ProjectTvsBreakdown } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
-import { canonicallyBridgedColumns } from './columns/CanonicallyBridgedColumns'
 import { renderFormulaSubComponent } from './FormulaSubRow'
-import { sumTokensValue } from './sumTokensValue'
 import { TableSum } from './TableSum'
+import { canonicallyBridgedColumns } from './columns/CanonicallyBridgedColumns'
+import { sumTokensValue } from './sumTokensValue'
 
 export type CanonicallyBridgedTokenEntry =
   ProjectTvsBreakdown['canonical'][number]

@@ -17,7 +17,7 @@ export async function getScalingCostsData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'costs', 'data'],
+        key: ['scaling', 'costs', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

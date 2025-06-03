@@ -1,8 +1,8 @@
 import { pluralize } from '@l2beat/shared-pure'
+import { Fragment, type ReactNode } from 'React'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
-import { Fragment, type ReactNode } from 'React'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -10,9 +10,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
+import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'

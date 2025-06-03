@@ -17,7 +17,7 @@ export async function getScalingSummaryData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', './Summary', 'data'],
+        key: ['scaling', 'summary', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

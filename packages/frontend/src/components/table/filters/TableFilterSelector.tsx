@@ -17,23 +17,23 @@ import {
   popoverTriggerClasses,
 } from '~/components/core/Popover'
 import { useGlobalShortcut } from '~/hooks/UseGlobalShortcut'
-import { useIsMobile } from '~/hooks/useIsMobile'
 import { useTracking } from '~/hooks/UseTracking'
+import { useIsMobile } from '~/hooks/useIsMobile'
 import { FilterIcon } from '~/icons/Filter'
 import { PlusIcon } from '~/icons/Plus'
 import { cn } from '~/utils/cn'
-import type { FilterableEntry } from './filterableValue'
-import {
-  emptyStateLabel,
-  filterIdToLabel,
-  inputPlaceholder,
-} from './filterableValue'
 import { useTableFilterContext } from './TableFilterContext'
 import {
   TableFilterInternalContextProvider,
   useTableFilterInternalContext,
 } from './TableFilterInternalContext'
 import { TableFilterValueMenuItems } from './TableFilterValueMenu'
+import type { FilterableEntry } from './filterableValue'
+import {
+  emptyStateLabel,
+  filterIdToLabel,
+  inputPlaceholder,
+} from './filterableValue'
 
 export function TableFilterSelector({
   entries,

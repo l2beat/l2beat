@@ -1,8 +1,8 @@
 import { Logo } from '~/components/Logo'
-import { VerticalSeparator } from '../../core/VerticalSeparator'
 import { DarkThemeToggle } from '../../DarkThemeToggle'
-import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
 import { SocialLinks } from '../../SocialLinks'
+import { VerticalSeparator } from '../../core/VerticalSeparator'
+import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
 import type { NavGroup, NavLink } from '../types'
 import { TopNavLink } from './TopNavLink'
 

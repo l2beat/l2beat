@@ -15,7 +15,7 @@ export async function getScalingDataAvailabilityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', './DataAvailability', 'entries'],
+        key: ['scaling', 'data-availability', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

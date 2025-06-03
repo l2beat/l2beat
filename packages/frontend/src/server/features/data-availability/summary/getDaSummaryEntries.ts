@@ -7,12 +7,12 @@ import type {
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
-import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
-import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
+import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
+import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
@@ -22,10 +22,7 @@ import {
 } from '../getCommonDaEntry'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
-import {
-  getDaProjectsTvs,
-  pickTvsForProjects,
-} from '../utils/getDaProjectsTvs'
+import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
 
 export async function getDaSummaryEntries(): Promise<

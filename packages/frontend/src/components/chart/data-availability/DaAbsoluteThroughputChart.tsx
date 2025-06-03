@@ -2,6 +2,7 @@ import { useMemo } from 'React'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
 
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   ChartContainer,
   ChartLegend,
@@ -22,7 +23,6 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'

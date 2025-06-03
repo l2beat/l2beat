@@ -54,7 +54,7 @@ describe('icons', () => {
       })
       for (const ecosystem of ecosystems) {
         const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
-        expect(icons).toInclude('./Logo')
+        expect(icons).toInclude('logo')
       }
     })
 

@@ -1,5 +1,5 @@
 import type { SortDirection } from '@tanstack/react-table'
-import React from 'React'
+import type React from 'React'
 
 import { cn } from '~/utils/cn'
 

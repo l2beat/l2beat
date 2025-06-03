@@ -36,7 +36,7 @@ export function getCommonProjectColumns<T extends CommonProjectColumnsEntry>(
       size: 44,
     }),
     columnHelper.display({
-      id: './Logo',
+      id: 'logo',
       cell: (ctx) => {
         const image = (
           <img

@@ -9,9 +9,9 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import type { LivenessChartTimeRange } from '~/server/features/scaling/liveness/utils/chartRange'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
-import { getDefaultSubtype } from './getDefaultSubtype'
 import { LivenessChart } from './LivenessChart'
 import { LivenessChartStats } from './LivenessChartStats'
+import { getDefaultSubtype } from './getDefaultSubtype'
 
 interface Props {
   projectId: string

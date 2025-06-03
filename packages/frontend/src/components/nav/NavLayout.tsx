@@ -1,5 +1,5 @@
-import compact from 'lodash/compact'
 import type { ReactNode } from 'React'
+import compact from 'lodash/compact'
 import { externalLinks } from '~/consts/externalLinks'
 import { env } from '~/env'
 import { BridgesIcon } from '~/icons/pages/Bridges'
@@ -34,14 +34,14 @@ export function NavLayout({
     {
       type: 'multiple',
       title: 'Scaling',
-      match: './Scaling',
+      match: 'scaling',
       icon: (
         <ScalingIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       links: [
         {
           title: 'Summary',
-          href: './/scaling/Summary',
+          href: '/scaling/summary',
         },
         {
           title: 'Risk Analysis',
@@ -60,7 +60,7 @@ export function NavLayout({
         {
           title: 'Data Availability',
           shortTitle: 'DA',
-          href: './/scaling/DataAvailability',
+          href: '/scaling/data-availability',
         },
         {
           title: 'Liveness',
@@ -78,45 +78,45 @@ export function NavLayout({
       secondaryLinks: [
         {
           title: 'Upcoming',
-          href: './/scaling/Upcoming',
+          href: '/scaling/upcoming',
         },
         {
           title: 'Archived',
-          href: './/scaling/Archived',
+          href: '/scaling/archived',
         },
       ],
     },
     {
       type: 'multiple',
       title: 'Bridges',
-      match: './Bridges',
+      match: 'bridges',
       icon: (
         <BridgesIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
       links: [
         {
           title: 'Summary',
-          href: './/bridges/Summary',
+          href: '/bridges/summary',
         },
       ],
       secondaryLinks: [
         {
           title: 'Archived',
-          href: './/bridges/Archived',
+          href: '/bridges/archived',
         },
       ],
     },
     {
       type: 'multiple',
       title: 'Data Availability',
-      match: './DataAvailability',
+      match: 'data-availability',
       icon: (
         <DataAvailabilityIcon className="transition-colors duration-300 group-data-[active=true]:fill-brand" />
       ),
       links: [
         {
           title: 'Summary',
-          href: './/data-availability/Summary',
+          href: '/data-availability/summary',
         },
         {
           title: 'Risk Analysis',
@@ -133,8 +133,8 @@ export function NavLayout({
     {
       type: 'single',
       title: 'ZK Catalog',
-      match: './ZkCatalog',
-      href: './/ZkCatalog',
+      match: 'zk-catalog',
+      href: '/zk-catalog',
       icon: (
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
@@ -142,7 +142,7 @@ export function NavLayout({
     env.NEXT_PUBLIC_ECOSYSTEMS && {
       type: 'multiple',
       title: 'Ecosystems',
-      match: './Ecosystems',
+      match: 'ecosystems',
       disableMobileTabs: true,
       icon: (
         <EcosystemsIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />

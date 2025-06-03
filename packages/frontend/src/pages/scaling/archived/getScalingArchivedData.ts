@@ -15,7 +15,7 @@ export async function getScalingArchivedData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', './Archived', 'entries'],
+        key: ['scaling', 'archived', 'entries'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

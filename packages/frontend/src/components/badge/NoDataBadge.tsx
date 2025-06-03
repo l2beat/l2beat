@@ -1,4 +1,3 @@
-import React from 'React'
 import { Badge } from './Badge'
 
 export interface Props {

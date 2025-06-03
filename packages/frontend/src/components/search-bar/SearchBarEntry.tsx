@@ -12,7 +12,7 @@ export type SearchBarPage = SearchBarEntry & {
 }
 
 export type SearchBarProject = SearchBarEntry & {
-  type: './Project'
+  type: 'project'
   id: string
   isUpcoming: boolean
   iconUrl: string

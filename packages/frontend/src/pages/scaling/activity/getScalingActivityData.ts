@@ -17,7 +17,7 @@ export async function getScalingActivityData(
     getAppLayoutProps(),
     cache.get(
       {
-        key: ['./Scaling', 'activity', 'data'],
+        key: ['scaling', 'activity', 'data'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

@@ -30,7 +30,7 @@ export function RecategorisationPreviewContextProvider({ children }: Props) {
   }
 
   const isScalingMainPage =
-    pathname.startsWith('.//Scaling') && !pathname.startsWith('/scaling/projects')
+    pathname.startsWith('/scaling') && !pathname.startsWith('/scaling/projects')
   return (
     <RecategorisationPreviewContext.Provider
       value={{
