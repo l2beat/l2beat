@@ -25,6 +25,8 @@ export const UltimatePermissionToPrefix: {
   member: 'Is a member of',
   metisGameCreator: 'A dispute game creator',
   stateDeleterMetis: 'A state deleter',
+  hotValidatorHyperliquid: 'A Hot Validator',
+  coldValidatorHyperliquid: 'A Cold Validator',
 }
 
 export const RoleDescriptions: {
@@ -124,5 +126,15 @@ export const RoleDescriptions: {
     name: 'State Deleter',
     description:
       'Can delete any state root from the StateCommitmentChain, preventing withdrawals based on that root.',
+  },
+  hotValidatorHyperliquid: {
+    name: 'Hot Validator',
+    description:
+      'Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).',
+  },
+  coldValidatorHyperliquid: {
+    name: 'Cold Validator',
+    description:
+      'Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause), remove lockers and finalizers.',
   },
 }
