@@ -4,7 +4,8 @@
 
 - [Sequencing](#sequencing)
   - [High-level flow](#high-level-flow)
-  - [The `proposeBlockV2` function](#the-proposeblockv2-function)
+  - [The `storeForcedInclusion` function](#the-storeforcedinclusion-function)
+  - [The `proposeBatch` function](#the-proposebatch-function)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
