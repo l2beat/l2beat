@@ -11,7 +11,7 @@ export async function getActivityProjectStats(projectId: ProjectId) {
     return getMockActivityProjectStatsData()
   }
 
-  return getActivityProjectStatsData(projectId)
+  return await getActivityProjectStatsData(projectId)
 }
 
 type ActivityProjectStats = Awaited<

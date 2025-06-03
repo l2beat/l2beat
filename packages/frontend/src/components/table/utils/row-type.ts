@@ -11,14 +11,14 @@ export function getRowType(
   if (entry.id === ProjectId.ETHEREUM) {
     return 'ethereum'
   }
-  if (rowColoringMode === 'ethereum-only') {
+  if (rowColoringMode === 'ignore-colors') {
     return undefined
   }
 
   if (!!entry.statuses?.verificationWarning || !!entry.statuses?.redWarning) {
     return 'unverified'
   }
-  if (!!entry.statuses?.underReview) {
+  if (entry.statuses?.underReview) {
     return 'under-review'
   }
 }

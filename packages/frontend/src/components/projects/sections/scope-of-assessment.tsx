@@ -24,7 +24,7 @@ export function ScopeOfAssessment({
     >
       <CollapsibleTrigger className="flex w-full items-center justify-between px-4 py-3 font-bold md:px-6">
         Scope of assessment
-        <ChevronIcon className="size-4 transition-transform duration-300 group-data-[state=open]:-rotate-180" />
+        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-4 transition-transform duration-300" />
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-4 px-4 pb-6 md:px-6">
         {scopeOfAssessment.inScope && (
@@ -50,7 +50,7 @@ function Section({
     <div className="flex flex-col gap-2">
       <span
         className={cn(
-          'text-xs font-medium',
+          'font-medium text-xs',
           checked ? 'text-positive' : 'text-negative',
         )}
       >
@@ -70,7 +70,7 @@ function Section({
                 checked ? 'fill-positive' : 'fill-negative',
               )}
             />
-            <Markdown className="text-base font-bold leading-[170%] text-primary">
+            <Markdown className="font-bold text-base text-primary leading-[170%]">
               {item}
             </Markdown>
           </div>

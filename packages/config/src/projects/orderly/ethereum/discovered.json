@@ -1,7 +1,7 @@
 {
   "name": "orderly",
   "chain": "ethereum",
-  "blockNumber": 22046069,
+  "blockNumber": 22615672,
   "configHash": "0x6fb49b937e2e4cb174c74c06ef1c1349dd4ccd34b2532ef6bc3a7e60e42d0ca6",
   "entries": [
     {
@@ -89,6 +89,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -104,8 +105,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -157,10 +158,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 22676400,
-        "latestOutputIndex": 12597,
-        "nextBlockNumber": 22678200,
-        "nextOutputIndex": 12598,
+        "latestBlockNumber": 26118000,
+        "latestOutputIndex": 14509,
+        "nextBlockNumber": 26119800,
+        "nextOutputIndex": 14510,
         "PROPOSER": "0x74BaD482a7f73C8286F50D8Aa03e53b7d24A5f3B",
         "startingBlockNumber": 0,
         "startingTimestamp": 1696608227,
@@ -197,6 +198,11 @@
           "role": ".PROPOSER"
         }
       ]
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -320,7 +326,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 21975989
+          "prevBlockNum": 22398366
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
@@ -479,7 +485,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619876",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619888",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -907,5 +913,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x2f46ee2c12abd9f08949960da44634f386d2bc64afe4cfc6e4eb4d8e7a66c691"
+  "permissionsConfigHash": "0x6df4699ebc40af53c19b67a47ab69d43035bab734219efe91bc5da6207e2850c"
 }

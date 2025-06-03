@@ -24,7 +24,7 @@ export function createScalingRouter(
 ) {
   const router = express.Router()
 
-  router.get('/scaling', async (req, res) => {
+  router.get('/scaling', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 

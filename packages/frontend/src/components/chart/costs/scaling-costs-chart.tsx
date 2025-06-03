@@ -5,7 +5,7 @@ import { Skeleton } from '~/components/core/skeleton'
 import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/recategorisation-preview-provider'
 import { useTableFilterContext } from '~/components/table/filters/table-filter-context'
 import {
-  CostsMetric,
+  type CostsMetric,
   useCostsMetricContext,
 } from '~/pages/scaling/costs/components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/pages/scaling/costs/components/costs-time-range-context'
@@ -120,7 +120,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
         milestones={milestones}
         range={range}
         showDataPosted={false}
-        className="mb-2 mt-4"
+        className="mt-4 mb-2"
       />
       <ChartControlsWrapper>
         <div className="flex flex-wrap gap-1">
@@ -143,7 +143,7 @@ function Header({
 }: { resolution: CostsResolution; chartRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="text-xl font-bold first-letter:capitalize md:text-2xl">
+      <h1 className="font-bold text-xl first-letter:capitalize md:text-2xl">
         {resolution} onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h1>

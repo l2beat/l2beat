@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x287517d33b3633841ff8cdced485ab5de6e0e5d0
+
+# Diff at Mon, 02 Jun 2025 10:17:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22595405
+- current block number: 22616262
+
+## Description
+
+add labs prover proxy template, add to initial addresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22595405 (main branch discovery), not current.
+
+```diff
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      template:
++        "taiko/ProverSet"
+      description:
++        "An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses."
+    }
+```
+
 Generated with discovered.json: 0x3b97d3b6d2abbe01b8e7fc47f5297e091a1fc8bb
 
 # Diff at Fri, 30 May 2025 14:28:14 GMT:

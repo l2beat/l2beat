@@ -57,7 +57,7 @@ export function EcosystemMilestonesAndIncidents({
                 viewBox="0 0 12 9"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="absolute -right-0.5 -top-1 fill-secondary"
+                className="-right-0.5 -top-1 absolute fill-secondary"
               >
                 <path d="M12 4.177L-3.93401e-07 8.99996L0 -4.55091e-05L12 4.177Z" />
               </svg>
@@ -115,14 +115,14 @@ function Details({
       )}
     >
       <div>
-        <p className="text-2xs font-bold uppercase text-secondary">
+        <p className="font-bold text-2xs text-secondary uppercase">
           {formatDate(selectedMilestone.date.slice(0, 10))} •{' '}
           {selectedMilestone.projectName}
         </p>
-        <p className="text-base font-bold leading-tight">
+        <p className="font-bold text-base leading-tight">
           {selectedMilestone.title}
         </p>
-        <p className="text-xs leading-tight text-secondary">
+        <p className="text-secondary text-xs leading-tight">
           {selectedMilestone.description}
         </p>
       </div>
@@ -137,7 +137,7 @@ function Details({
           >
             <ChevronIcon className="size-2.5 rotate-90 fill-primary group-disabled:opacity-50" />
           </button>
-          <span className="relative top-px text-3xs font-medium leading-none text-secondary">
+          <span className="relative top-px font-medium text-3xs text-secondary leading-none">
             {selectedMilestoneIndex + 1} of {milestones.length}
           </span>
           <button
@@ -147,12 +147,12 @@ function Details({
               setSelectedMilestoneIndex(selectedMilestoneIndex + 1)
             }
           >
-            <ChevronIcon className="size-2.5 -rotate-90 fill-primary group-disabled:opacity-50" />
+            <ChevronIcon className="-rotate-90 size-2.5 fill-primary group-disabled:opacity-50" />
           </button>
         </div>
         <CustomLink
           href={selectedMilestone.url}
-          className="-mr-1 p-1 text-3xs font-medium leading-none"
+          className="-mr-1 p-1 font-medium text-3xs leading-none"
         >
           Learn more
         </CustomLink>
@@ -181,7 +181,7 @@ function MilestoneItem({
   if (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') {
     return (
       <Drawer>
-        <DrawerTrigger className="absolute -top-2.5" style={style}>
+        <DrawerTrigger className="-top-2.5 absolute" style={style}>
           <Icon />
         </DrawerTrigger>
         <DrawerContent>
@@ -198,7 +198,7 @@ function MilestoneItem({
     <button
       onClick={onClick}
       className={cn(
-        'absolute -top-2.5 scale-75 lg:scale-100',
+        '-top-2.5 absolute scale-75 lg:scale-100',
         isSelected &&
           'z-10 scale-100 transition-transform duration-200 ease-in-out lg:scale-150',
       )}
@@ -225,7 +225,7 @@ function Timeline({
     return (
       <span
         key={timestamp}
-        className="absolute top-2.5 whitespace-nowrap text-3xs leading-none text-secondary"
+        className="absolute top-2.5 whitespace-nowrap text-3xs text-secondary leading-none"
         style={{ left: `${(index / timestamps.length) * 100}%` }}
       >
         {label}

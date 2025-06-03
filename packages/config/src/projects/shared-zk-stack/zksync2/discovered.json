@@ -1770,5 +1770,5 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "permissionsConfigHash": "0x2935c555bd9a1ec8441e688488acdba69abdf99782a7a1de272da4b7a9bb7994"
+  "permissionsConfigHash": "0xb2cb814d4aafe1969237961dea56a9eb1fc8ed6f4143e3c4a11a5f53c3fdb52c"
 }

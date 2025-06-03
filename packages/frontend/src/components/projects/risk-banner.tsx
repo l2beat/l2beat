@@ -54,12 +54,12 @@ export function RiskBanner({
           )}
         />
         <div className="flex flex-1 flex-col items-start justify-center gap-1 p-4">
-          <div className="text-3xs font-semibold uppercase md:text-2xs">
+          <div className="font-semibold text-3xs uppercase md:text-2xs">
             {name}
           </div>
           <div
             className={cn(
-              'text-sm font-bold !leading-none md:text-lg',
+              '!leading-none font-bold text-sm md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}
           >
@@ -96,7 +96,7 @@ export function RiskBanner({
         </div>
       )}
       {description && info === 'full' && (
-        <Markdown className="mt-2 font-normal leading-snug text-black/80 dark:text-white/80 md:text-lg">
+        <Markdown className="mt-2 font-normal text-black/80 leading-snug md:text-lg dark:text-white/80">
           {description}
         </Markdown>
       )}

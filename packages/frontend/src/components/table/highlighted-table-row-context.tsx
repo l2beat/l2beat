@@ -32,7 +32,7 @@ export function HighlightedTableRowProvider({
     setHighlightedSlug(highlight ?? undefined)
   }, [])
 
-  useEffect(handleHighlightChange, [handleHighlightChange])
+  useEffect(handleHighlightChange, [])
 
   return (
     <HighlightedTableRowContext.Provider value={{ highlightedSlug }}>

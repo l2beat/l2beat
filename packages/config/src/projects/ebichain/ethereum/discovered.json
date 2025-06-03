@@ -1,7 +1,7 @@
 {
   "name": "ebichain",
   "chain": "ethereum",
-  "blockNumber": 22046061,
+  "blockNumber": 22615664,
   "configHash": "0xe949c2031c57750628784bdff51fa179ebdb4802c36f44c487027711730660c2",
   "entries": [
     {
@@ -34,7 +34,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 12649,
+        "batchCount": 12650,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0x11AaeeDd19D4daf99925231b982CA0A35F77d812"],
         "bridge": "0x73CF739b0233027cd516998e177d473D0a45E037",
@@ -64,7 +64,7 @@
         "rollup": "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 12701,
+        "totalDelayedMessagesRead": 12702,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -334,6 +334,7 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -349,8 +350,8 @@
         "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 84,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 103,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -443,7 +444,7 @@
           "0x191738BDecD7f73a79F64D689cf91ef873fb4172"
         ],
         "allowedOutboxList": ["0xf2dC65BdDb21c5DCC070067434D34a342907b5aE"],
-        "delayedMessageCount": 12702,
+        "delayedMessageCount": 12703,
         "inboxHistory": [
           "0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
           "0x191738BDecD7f73a79F64D689cf91ef873fb4172"
@@ -451,8 +452,8 @@
         "outboxHistory": ["0xf2dC65BdDb21c5DCC070067434D34a342907b5aE"],
         "rollup": "0xaA9904D4d4261dc0f927306f3f5c74439eBa0b90",
         "sequencerInbox": "0x0D51c6664A773873971336850C51A5caE8e63e89",
-        "sequencerMessageCount": 12649,
-        "sequencerReportedSubMessageCount": 14646402
+        "sequencerMessageCount": 12650,
+        "sequencerReportedSubMessageCount": 14646404
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -477,6 +478,11 @@
         "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F": "Bridge"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -577,13 +583,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 678,
+        "firstUnresolvedNode": 679,
         "inbox": "0xeb8307Fc8c1bEe7DfDCedf7e8c85778a81CB150f",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19687561,
-        "latestConfirmed": 677,
-        "latestNodeCreated": 677,
+        "latestConfirmed": 678,
+        "latestNodeCreated": 678,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xf2dC65BdDb21c5DCC070067434D34a342907b5aE",
@@ -1485,5 +1491,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x2e354a19ecded7165234797b4a334a6b46bf6bcd11e45231dea72cd9d632a161"
+  "permissionsConfigHash": "0xa748aa55c3cf1d753f22d32f0e39757b2a5399ca5c3f106fea761ddda4090d52"
 }

@@ -41,7 +41,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
     return (
       <div
         className={cn(
-          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
+          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center font-medium text-xs uppercase leading-tight',
           props.className,
         )}
       >
@@ -52,7 +52,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           background={props.background}
         />
         {props.isUpcoming && (
-          <UpcomingBadge className="absolute left-[90px] top-[130px]" />
+          <UpcomingBadge className="absolute top-[130px] left-[90px]" />
         )}
         <PizzaRosetteLabels
           values={props.values}

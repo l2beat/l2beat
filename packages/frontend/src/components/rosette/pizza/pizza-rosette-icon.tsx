@@ -69,7 +69,7 @@ export function PizzaRosetteIcon({
             cy="90"
             r="90"
             className={cn(
-              'stroke-divider stroke-2',
+              'stroke-2 stroke-divider',
               background === 'header' && 'fill-header-secondary',
               background === 'surface' && 'fill-surface-secondary',
             )}

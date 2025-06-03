@@ -82,7 +82,7 @@ export function BridgesProjectStats({ project }: Props) {
             <TooltipTrigger disabled={!project.header.destination.description}>
               <SentimentText
                 sentiment={project.header.destination.sentiment ?? 'neutral'}
-                className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+                className="!leading-none font-medium text-lg md:font-bold md:text-xl"
               >
                 {project.header.destination.value}
               </SentimentText>
@@ -100,7 +100,7 @@ export function BridgesProjectStats({ project }: Props) {
           project.header.validatedBy ? (
             <SentimentText
               sentiment={project.header.validatedBy.sentiment ?? 'neutral'}
-              className="text-lg font-medium !leading-none md:text-xl md:font-bold"
+              className="!leading-none font-medium text-lg md:font-bold md:text-xl"
             >
               {project.header.validatedBy.value}
             </SentimentText>
@@ -130,7 +130,7 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row items-center gap-1.5">
-        <span className="text-xs text-secondary">{props.title}</span>
+        <span className="text-secondary text-xs">{props.title}</span>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
@@ -141,7 +141,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className="text-lg font-medium !leading-none md:text-xl md:font-bold">
+      <span className="!leading-none font-medium text-lg md:font-bold md:text-xl">
         {props.value}
       </span>
     </li>

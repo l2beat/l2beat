@@ -237,7 +237,7 @@ function CustomTooltip({
         </div>
         <div className="heading-16 flex w-full items-center justify-between gap-2">
           <span>Total</span>
-          <span className="whitespace-nowrap tabular-nums text-primary">
+          <span className="whitespace-nowrap text-primary tabular-nums">
             {formatCostValue(total, unit, 'total')}
           </span>
         </div>

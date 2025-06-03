@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x233bb6f188823f54b8e41087c6ba0bc51c2bcbdb
+
+# Diff at Mon, 02 Jun 2025 08:33:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22431133
+- current block number: 22615832
+
+## Description
+
+new program key for vector.
+
+## Watched changes
+
+```diff
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d) {
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+      values.vectorXProgramVkey:
+-        "0x00e9bba2a9360f570b9ba99e5186825ac723bedebd486b6a818870c44e3e4d4f"
++        "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1"
+    }
+```
+
 Generated with discovered.json: 0xcf56224779008bb8c4b22ccf91db002ed0eda00a
 
 # Diff at Wed, 28 May 2025 11:34:04 GMT:

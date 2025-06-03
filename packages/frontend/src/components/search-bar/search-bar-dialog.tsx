@@ -199,7 +199,7 @@ function SearchBarItem({
       value={value}
     >
       {children}
-      {label && <div className="ml-auto text-xs text-secondary">{label}</div>}
+      {label && <div className="ml-auto text-secondary text-xs">{label}</div>}
     </CommandItem>
   )
 }

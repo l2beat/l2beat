@@ -18,7 +18,7 @@ export function UnderReviewCallout({ small, className }: Props) {
       <div>
         <UnderReviewIcon
           className={cn(
-            'relative -top-0.5 inline-block',
+            '-top-0.5 relative inline-block',
             small ? 'size-4' : 'size-6',
           )}
         />

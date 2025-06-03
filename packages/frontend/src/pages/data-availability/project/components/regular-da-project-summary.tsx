@@ -33,7 +33,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   ]
 
   return (
-    <FullPageHeader className="pb-4 pt-8 md:pb-8 md:pt-12">
+    <FullPageHeader className="pt-8 pb-4 md:pt-12 md:pb-8">
       <section id="summary" className="w-full">
         <ProjectHeader project={project} />
         {/* Details row */}
@@ -64,7 +64,7 @@ export function RegularDaProjectSummary({ project }: Props) {
             {hasMultipleBridges && (
               <div className="hidden lg:block">
                 <div className="flex flex-col gap-4 pt-3">
-                  <div className="whitespace-pre text-xs text-secondary">
+                  <div className="whitespace-pre text-secondary text-xs">
                     {project.name} risks
                   </div>
                   <GrissiniDetails
@@ -79,10 +79,10 @@ export function RegularDaProjectSummary({ project }: Props) {
 
           {project.discoUiHref && (
             <div className="-mb-4 md:hidden">
-              <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+              <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
               <div className="flex items-center justify-between">
                 <a
-                  className="text-xs text-link underline"
+                  className="text-link text-xs underline"
                   href={project.discoUiHref}
                 >
                   Explore more in Discovery UI
@@ -94,7 +94,7 @@ export function RegularDaProjectSummary({ project }: Props) {
 
           <div className="flex flex-col">
             <div>
-              <div className="-mx-4 border-y border-divider px-4 md:hidden">
+              <div className="-mx-4 border-divider border-y px-4 md:hidden">
                 <MobileProjectLinks projectLinks={project.header.links} />
               </div>
             </div>

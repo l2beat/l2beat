@@ -19,7 +19,7 @@ interface Props {
 
 export function BridgesProjectSummary({ project }: Props) {
   return (
-    <FullPageHeader className="pb-0 pt-8 md:pb-8 md:pt-12">
+    <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
       <section id="summary" className="w-full max-md:bg-header-primary">
         <div className="w-full space-y-4 md:space-y-6">
           <ProjectHeader project={project} />
@@ -44,7 +44,7 @@ export function BridgesProjectSummary({ project }: Props) {
               <AboutSection description={project.header.description} />
             </div>
           )}
-          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
+          <HorizontalSeparator className="max-md:-mx-4 md:!my-6 my-4 max-md:w-screen md:hidden" />
 
           <div className="max-md:hidden">
             <DesktopProjectLinks
@@ -57,10 +57,10 @@ export function BridgesProjectSummary({ project }: Props) {
         </div>
 
         <div className="md:hidden">
-          <HorizontalSeparator className="mb-2 mt-4 max-md:-mx-4 max-md:w-screen md:hidden" />
+          <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
           <div className="flex items-center justify-between">
             <a
-              className="text-xs text-link underline"
+              className="text-link text-xs underline"
               href={project.discoUiHref}
             >
               Explore more in Discovery UI
@@ -69,7 +69,7 @@ export function BridgesProjectSummary({ project }: Props) {
           </div>
         </div>
 
-        <HorizontalSeparator className="mt-2 max-md:-mx-4 max-md:w-screen md:my-6" />
+        <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-screen md:my-6" />
         <div className="md:hidden">
           <MobileProjectLinks projectLinks={project.header.links} />
         </div>

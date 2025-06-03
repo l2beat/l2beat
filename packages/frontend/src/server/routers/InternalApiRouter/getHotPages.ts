@@ -12,7 +12,7 @@ export async function getHotPages() {
   const [scaling, bridges, daLayers, daBridges, latestValues] =
     await Promise.all([
       ps.getProjects({
-        select: ['scalingInfo'],
+        select: ['scalingInfo', 'statuses'],
         where: ['isScaling'],
       }),
       ps.getProjects({

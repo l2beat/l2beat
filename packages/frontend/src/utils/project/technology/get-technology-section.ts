@@ -1,4 +1,4 @@
-import { type Project } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import compact from 'lodash/compact'
 import { makeTechnologyChoice } from './make-technology-section'
 
@@ -27,6 +27,6 @@ export function getBridgeTechnologySection(
   return {
     items,
     isUnderReview:
-      items.every((x) => x.isUnderReview) || project.statuses.isUnderReview,
+      items.every((x) => x.isUnderReview) || !!project.statuses.reviewStatus,
   }
 }

@@ -33,7 +33,7 @@ export function DataAvailabilityThroughputPage({
       <HydrationBoundary state={queryState}>
         <SideNavLayout>
           <MainPageHeader>Throughput</MainPageHeader>
-          <div className="flex flex-col gap-6 lg:-mt-4">
+          <div className="lg:-mt-4 flex flex-col gap-6">
             <IncludeScalingOnlyProvider>
               <DirectoryTabs defaultValue="public">
                 <DirectoryTabsList>

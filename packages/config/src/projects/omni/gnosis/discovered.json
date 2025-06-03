@@ -1,7 +1,7 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 40322200,
+  "blockNumber": 40374393,
   "configHash": "0x6c69e223ee1b10aa2139fdaeaead05e81c86c531498bb835d803e2958342789a",
   "entries": [
     {
@@ -40,8 +40,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract handling inbound messages for the Hashi protocol.",
-      "sinceTimestamp": 1726019595,
-      "sinceBlock": 35938697,
       "values": {
         "$immutable": true,
         "HASHI": "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615",
@@ -60,8 +58,6 @@
         "0x064c46a3015079f17e93b171ff684cda28a0ecdbd55ecec09c4ddf50e0a5c312"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634244030,
-      "sinceBlock": 18573208,
       "values": {
         "$immutable": true,
         "bridgeContract": "0x0000000000000000000000000000000000000000",
@@ -147,8 +143,6 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1686655675,
-      "sinceBlock": 28432566,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -198,8 +192,6 @@
         "0xdcb8211bc83ab560c19e3bc532a958bc0582fa7a02d0c53df72f3cf293f598d5"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634245065,
-      "sinceBlock": 18573414,
       "values": {
         "$immutable": true,
         "FOREIGN_TO_HOME_FEE": "0x03be2b2875cb41e0e77355e802a16769bb8dfcf825061cde185c73bf94f12625",
@@ -238,8 +230,6 @@
         "0x40a5e7e16f2ed78de499e7ab33bb60f2d3e668b003b8253c8ed3659066c6bee2"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634246385,
-      "sinceBlock": 18573677,
       "values": {
         "$immutable": true,
         "bridge": "0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
@@ -262,8 +252,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.",
-      "sinceTimestamp": 1726022850,
-      "sinceBlock": 35939330,
       "values": {
         "$admin": "0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E",
         "$implementation": "0x694bEeB84f912d0951e88cFCf76900B7C728B5B5",
@@ -329,8 +317,6 @@
         "0x42c489ed63dc75d73bab6e89bc470b7c805b0c16cbbc0e9287cc824cc88b0b79"
       ],
       "proxyType": "Eternal Storage proxy",
-      "sinceTimestamp": 1579258310,
-      "sinceBlock": 7904954,
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0xA033535983d1aBcc2648af730EDCb198909903D7",
@@ -408,8 +394,6 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1651741965,
-      "sinceBlock": 21984719,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -474,8 +458,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1603125660,
-      "sinceBlock": 12596066,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -556,8 +538,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "description": "Custom multisignature contract for Validator addresses.",
-      "sinceTimestamp": 1579258260,
-      "sinceBlock": 7904944,
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0xb056BFEdc397D427697a75E3ff115a0954de4791",
@@ -627,8 +607,6 @@
       ],
       "proxyType": "immutable",
       "ignoreInWatchMode": ["getCurrentEpoch", "head"],
-      "sinceTimestamp": 1740474195,
-      "sinceBlock": 38740156,
       "values": {
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
@@ -655,8 +633,6 @@
         "0x43d4a4b8ebf5f34d224efe2343c5abc3fc5042025c06fb8dd82efc9257fbaa92"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1720614180,
-      "sinceBlock": 34894600,
       "values": { "$immutable": true },
       "implementationNames": {
         "0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615": "Hashi"
@@ -686,8 +662,6 @@
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1729072540,
-      "sinceBlock": 36532291,
       "values": {
         "$immutable": false,
         "$implementation": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
@@ -735,8 +709,6 @@
       ],
       "proxyType": "immutable",
       "description": "Contract handling outbound messages for the Hashi protocol.",
-      "sinceTimestamp": 1720614455,
-      "sinceBlock": 34894655,
       "values": { "$immutable": true },
       "implementationNames": {
         "0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8": "Yaho"
@@ -766,8 +738,6 @@
         "0x60d07c93914cdb5d0143dd5d1680ecfcf5f6702a103d2e33513b564dbd55eb52"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1740476145,
-      "sinceBlock": 38740538,
       "values": {
         "$immutable": true,
         "PROVIDER": "sp1-helios",
@@ -797,8 +767,6 @@
         "0x7f6c0a3df8db7d08785d2a343cc1b3c8584ec7c60e54c2cf81d7bc9898d441d5"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634246015,
-      "sinceBlock": 18573603,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -826,8 +794,6 @@
         "0x5ebb775f2803d074da1b09f713044da7c8b74dd951913810947e8560b3a45845"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1740472845,
-      "sinceBlock": 38739894,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0x11b6a09d63d255ad425ee3a7f6211d5ec63fbde9805b40551c3136275b6f4eb4",
@@ -855,8 +821,6 @@
         "0xc3fc18a2178145d16d7d8d6b50d97b6d7a405421b3fae66cdeb31fb52f4e7eed"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1634244420,
-      "sinceBlock": 18573286,
       "values": {
         "$immutable": true,
         "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
@@ -883,8 +847,6 @@
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1686041905,
-      "sinceBlock": 28315765,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -921,8 +883,6 @@
       ],
       "proxyType": "Eternal Storage proxy",
       "ignoreInWatchMode": ["getCurrentDay"],
-      "sinceTimestamp": 1596501010,
-      "sinceBlock": 11300566,
       "values": {
         "$admin": "0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd",
         "$implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
@@ -975,7 +935,7 @@
         "gasLimitManager": "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20238,
+        "getCurrentDay": 20241,
         "implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x88ad09518695c6c3712AC10a214bE5109a655671",

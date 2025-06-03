@@ -16,10 +16,8 @@ export function getTvsByStage(
       }
 
       const stageTvs = acc[stage.stage]
-      return {
-        ...acc,
-        [stage.stage]: stageTvs + (projectTvs?.breakdown.total ?? 0),
-      }
+      acc[stage.stage] = stageTvs + (projectTvs?.breakdown.total ?? 0)
+      return acc
     },
     {
       'Stage 0': 0,

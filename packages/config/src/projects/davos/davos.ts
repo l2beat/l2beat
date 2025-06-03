@@ -6,7 +6,7 @@ export const davos: Bridge = {
   type: 'bridge',
   id: ProjectId('davos'),
   addedAt: UnixTime(1710858245), // 2024-03-19T14:24:05Z
-  isUnderReview: true,
+  reviewStatus: 'inReview',
   display: {
     name: 'Davos',
     slug: 'davos',

@@ -44,7 +44,7 @@ export function MobileNavTabs({ groups }: { groups: NavGroup[] }) {
                 key={link.href}
                 data-state={isSelected ? 'selected' : undefined}
                 className={cn(
-                  'flex h-10 w-full items-center justify-center whitespace-nowrap border-b border-divider bg-header-primary px-4 text-xs font-medium leading-none',
+                  'flex h-10 w-full items-center justify-center whitespace-nowrap border-divider border-b bg-header-primary px-4 font-medium text-xs leading-none',
                   'data-[state=selected]:border-brand data-[state=selected]:text-brand',
                 )}
               >

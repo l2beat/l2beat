@@ -246,13 +246,13 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
     <div className="flex items-start justify-between">
       <div>
         <div className="flex items-center gap-3">
-          <span className="text-xl font-bold">Activity</span>
+          <span className="font-bold text-xl">Activity</span>
           <a
-            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 text-[13px] font-bold leading-none text-link max-md:hidden"
+            className="flex h-[28px] items-center justify-center gap-1 rounded-md border border-link-stroke px-3 py-2 font-bold text-[13px] text-link leading-none max-md:hidden"
             href="/scaling/activity"
           >
             View details
-            <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+            <ChevronIcon className="-rotate-90 size-[10px] fill-current" />
           </a>
         </div>
         <CustomLink
@@ -261,13 +261,13 @@ function Header({ stats }: { stats: ActivityChartStats | undefined }) {
           underline={false}
         >
           Details
-          <ChevronIcon className="size-[10px] -rotate-90 fill-current" />
+          <ChevronIcon className="-rotate-90 size-[10px] fill-current" />
         </CustomLink>
       </div>
       <div className="flex flex-col items-end">
         {stats !== undefined ? (
           <>
-            <div className="whitespace-nowrap text-right text-xl font-bold">
+            <div className="whitespace-nowrap text-right font-bold text-xl">
               {formatActivityCount(
                 countPerSecond(stats.uops.latestProjectsTxCount),
               )}{' '}

@@ -42,7 +42,7 @@ export function BigIndividualRosette(props: Props) {
     return (
       <div
         className={cn(
-          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
+          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center font-medium text-xs uppercase leading-tight',
           props.className,
         )}
       >
@@ -54,7 +54,7 @@ export function BigIndividualRosette(props: Props) {
           background={props.background}
         />
         {props.isUpcoming && (
-          <UpcomingBadge className="absolute left-[90px] top-[130px]" />
+          <UpcomingBadge className="absolute top-[130px] left-[90px]" />
         )}
         <PizzaRosetteLabels
           values={props.l3.risks}
@@ -104,7 +104,7 @@ function RosetteTooltipContent() {
       className="flex w-[300px] flex-col gap-2"
     >
       <div className="flex flex-col gap-1">
-        <span className="text-[13px] uppercase text-[#787E8D]">
+        <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.outerProjectName}
         </span>
         <SentimentText
@@ -124,7 +124,7 @@ function RosetteTooltipContent() {
         <span className="text-xs">{content.outer.description}</span>
       </div>
       <div className="flex flex-col gap-1">
-        <span className="text-[13px] uppercase text-[#787E8D]">
+        <span className="text-[#787E8D] text-[13px] uppercase">
           {context.content?.innerProjectName}
         </span>
         <SentimentText

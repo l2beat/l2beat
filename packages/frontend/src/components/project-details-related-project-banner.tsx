@@ -21,7 +21,7 @@ export function ProjectDetailsRelatedProjectBanner({
   return (
     <div
       className={cn(
-        'flex w-full items-center rounded-lg bg-surface-secondary px-4 py-2 text-xs font-medium',
+        'flex w-full items-center rounded-lg bg-surface-secondary px-4 py-2 font-medium text-xs',
         className,
       )}
     >
@@ -37,7 +37,7 @@ export function ProjectDetailsRelatedProjectBanner({
           />
           <a
             href={href}
-            className="inline-block text-xs font-medium text-link underline hover:text-blue-550 dark:hover:text-blue-550"
+            className="inline-block font-medium text-link text-xs underline hover:text-blue-550 dark:hover:text-blue-550"
           >
             {project.name}
           </a>

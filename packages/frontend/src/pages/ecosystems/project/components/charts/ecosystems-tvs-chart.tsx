@@ -135,12 +135,12 @@ function Header({
   return (
     <div className="mb-3 flex items-center justify-between">
       <div>
-        <div className="text-xl font-bold">TVS</div>
+        <div className="font-bold text-xl">TVS</div>
         <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
         {stats?.total ? (
-          <div className="text-xl font-bold">
+          <div className="font-bold text-xl">
             {formatCurrency(stats?.total, unit)}
           </div>
         ) : (

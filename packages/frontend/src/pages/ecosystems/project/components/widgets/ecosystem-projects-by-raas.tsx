@@ -42,7 +42,7 @@ export function EcosystemProjectsByRaas({
         </div>
         <div className="flex items-center gap-2">
           <ArrowIcon
-            className="size-3 -rotate-90 cursor-pointer fill-brand"
+            className="-rotate-90 size-3 cursor-pointer fill-brand"
             onClick={() =>
               setSelectedRaas(
                 selectedRaas === 0
@@ -64,7 +64,7 @@ export function EcosystemProjectsByRaas({
           />
         </div>
       </div>
-      <div className="subtitle-12 mb-2 mt-4 uppercase text-secondary">
+      <div className="subtitle-12 mt-4 mb-2 text-secondary uppercase">
         Used by
       </div>
       {projects.length <= 4 ? (
@@ -79,7 +79,7 @@ export function EcosystemProjectsByRaas({
                   width={18}
                   height={18}
                 />
-                <div className="whitespace-nowrap text-xs font-bold">
+                <div className="whitespace-nowrap font-bold text-xs">
                   {p.name}
                 </div>
               </div>
@@ -116,7 +116,7 @@ function ProjectLinkWithTooltip({
       <TooltipPortal>
         <TooltipContent>
           <p className="font-bold">{project.name}</p>
-          <p className="text-xs text-secondary">Click to view project page</p>
+          <p className="text-secondary text-xs">Click to view project page</p>
         </TooltipContent>
       </TooltipPortal>
     </Tooltip>
