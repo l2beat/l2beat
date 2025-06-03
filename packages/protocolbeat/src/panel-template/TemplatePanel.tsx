@@ -1,14 +1,11 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
-import { useEffect } from 'react'
-import { getProject, readTemplateFile } from '../api/api'
+import { useMemo } from 'react'
+import { getProject, readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
 import { usePanelStore } from '../store/store'
 import { EditorView } from '../components/editor/EditorView'
-import { useCodeStore } from '../components/editor/store'
-
-const editorId = 'template-panel'
 
 export function TemplatePanel() {
   const { project } = useParams()
@@ -20,7 +17,6 @@ export function TemplatePanel() {
     queryFn: () => getProject(project),
   })
   const selectedAddress = usePanelStore((state) => state.selected)
-  const setFiles = useCodeStore((state) => state.setFiles)
   const template = findTemplateId(
     projectResponse.data?.entries ?? [],
     selectedAddress,
@@ -32,10 +28,18 @@ export function TemplatePanel() {
     enabled: template !== undefined,
   })
 
-  useEffect(() => {
-    const sources = getSources(templateResponse.data)
-    setFiles(editorId, sources)
-  }, [templateResponse.data, setFiles])
+  const saveTemplate = useMutation({
+    mutationFn: async (content: string) => {
+      if (!template) {
+        return
+      }
+      await writeTemplateFile(template, content)
+    },
+  })
+
+  const files = useMemo(() => {
+    return getSources(templateResponse.data)
+  }, [templateResponse.data])
 
   if (projectResponse.isError) {
     return <div>Error</div>
@@ -49,7 +53,13 @@ export function TemplatePanel() {
     return <div>Select a contract</div>
   }
 
-  return <EditorView editorId="template-panel" />
+  return (
+    <EditorView
+      editorId="template-panel"
+      files={files}
+      callbacks={{ onSave: saveTemplate.mutate }}
+    />
+  )
 }
 
 export function findTemplateId(

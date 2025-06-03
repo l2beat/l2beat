@@ -14,6 +14,11 @@ let initialized = false
 
 export type EditorSupportedLanguage = 'solidity' | 'json'
 
+export type EditorCallbacks = {
+  onSave?: (content: string) => void
+  onChange?: (content: string) => void
+}
+
 export class Editor {
   private readonly editor: monaco.editor.IStandaloneCodeEditor
   private models: Record<string, editor.IModel | null> = {}
@@ -43,25 +48,11 @@ export class Editor {
     })
   }
 
-  registerFiles(files: EditorFile[]) {
-    for (const file of files) {
-      const uri = this.createUri(file).toString()
-      // Only add file if it doesn't already exist
-      if (this.models[uri] === undefined) {
-        this.addFile(file)
-      }
-    }
-  }
-
   createUri(file: EditorFile) {
     return monaco.Uri.parse(`memory://${file.id}`)
   }
 
-  setActiveFile(file: EditorFile) {
-    if (this.disposed) {
-      console.warn('Cannot set active file on disposed editor')
-      return
-    }
+  setFile(file: EditorFile, callbacks?: EditorCallbacks) {
     this.saveViewState()
     const model = this.getOrCreateFileModel(file)
 
@@ -69,17 +60,20 @@ export class Editor {
       readOnly: file.readOnly,
     })
 
+    this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+      if (callbacks?.onSave) {
+        callbacks.onSave(model.getValue())
+      }
+    })
+
+    this.editor.onDidChangeModelContent(() => {
+      if (callbacks?.onChange) {
+        callbacks.onChange(model.getValue())
+      }
+    })
+
     this.editor.setModel(model)
     this.restoreViewState()
-  }
-
-  openFile(file: EditorFile) {
-    if (this.disposed) {
-      console.warn('Cannot open file on disposed editor')
-      return
-    }
-    const model = this.getOrCreateFileModel(file)
-    this.editor.setModel(model)
   }
 
   getOrCreateFileModel(file: EditorFile) {
@@ -91,7 +85,7 @@ export class Editor {
     return this.models[uri]!
   }
 
-  addFile(file: EditorFile) {
+  private addFile(file: EditorFile) {
     const uri = this.createUri(file)
     const model = monaco.editor.createModel(file.content, file.language, uri)
     this.models[uri.toString()] = model
@@ -99,7 +93,7 @@ export class Editor {
     return model
   }
 
-  saveViewState() {
+  private saveViewState() {
     const model = this.editor.getModel()
     if (model === null) {
       return
@@ -108,7 +102,7 @@ export class Editor {
     this.viewStates[model.uri.toString()] = this.editor.saveViewState()
   }
 
-  restoreViewState() {
+  private restoreViewState() {
     const model = this.editor.getModel()
     if (model === null) {
       return

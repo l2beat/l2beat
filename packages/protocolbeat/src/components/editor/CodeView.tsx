@@ -20,7 +20,6 @@ export function CodeView({
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
   const fullScreen = useMultiViewStore((state) => state.fullScreen)
-  const files = useCodeStore((state) => state.files[editorKey]) ?? []
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -41,12 +40,6 @@ export function CodeView({
       editor.dispose()
     }
   }, [setEditor, editorKey, removeEditor])
-
-  useEffect(() => {
-    if (editor && files.length > 0) {
-      editor.registerFiles(files)
-    }
-  }, [editor, files])
 
   useEffect(() => {
     editor?.resize()

@@ -22,22 +22,15 @@ interface CodeState {
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
   removeEditor: (key: string) => void
-  setFiles: (editorId: string, files: EditorFile[]) => void
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
   showRange: (range: Range | undefined) => void
-  files: Record<string, EditorFile[]>
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   sourceIndex: {},
   range: undefined,
   editors: {},
-  files: {},
-  setFiles: (editorId: string, files: EditorFile[]) =>
-    set((state) => ({
-      files: { ...state.files, [editorId]: files },
-    })),
   setEditor: (editorId: string, editor: Editor) =>
     set((state) => ({
       editors: { ...state.editors, [editorId]: editor },

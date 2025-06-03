@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCode, getProject } from '../api/api'
@@ -9,9 +8,9 @@ import { toShortenedAddress } from '../common/toShortenedAddress'
 import { CodeView } from '../components/editor/CodeView'
 import { useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
-import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
 import { RediscoverPrompt } from './RediscoverPrompt'
+import { EditorFileTabs } from '../components/editor/EditorFileTabs'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -95,27 +94,17 @@ export function CodePanel() {
 
   return (
     <div className="flex h-full w-full select-none flex-col">
-      <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-        {sources.map((x, i) => (
-          <button
-            key={i}
-            onClick={() => setSourceIndex(selectedAddress ?? 'Loading', i)}
-            className={clsx(
-              'flex h-6 items-center gap-1 px-2 text-sm',
-              sourceIndex === i && 'bg-autumn-300 text-black',
-            )}
-          >
-            <IconCodeFile />
-            {x.name}
-          </button>
-        ))}
-      </div>
-      {showRediscoverInfo && <RediscoverPrompt chain={selected.chain} />}
-      <CodeView
-        code={sources[sourceIndex ?? 0]?.code ?? '// No code'}
-        range={passedRange}
-        editorKey="code-panel"
+      <EditorFileTabs
+        files={sources.map((x, i) => ({
+          id: x.name,
+          name: x.name,
+          readOnly: true,
+          isActive: sourceIndex === i,
+          onClick: () => setSourceIndex(selectedAddress ?? 'Loading', i),
+        }))}
       />
+      {showRediscoverInfo && <RediscoverPrompt chain={selected.chain} />}
+      <CodeView range={passedRange} editorKey="code-panel" />
     </div>
   )
 }
