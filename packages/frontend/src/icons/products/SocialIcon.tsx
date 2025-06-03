@@ -12,16 +12,16 @@ import { XIcon } from './X'
 import { YouTubeIcon } from './Youtube'
 
 export type SocialIconType =
-  | './Discord'
-  | './Github'
-  | './Instagram'
-  | './Linkedin'
+  | 'discord'
+  | 'github'
+  | 'instagram'
+  | 'linked-in'
   | 'medium'
-  | './Reddit'
-  | './Telegram'
-  | './X'
-  | './Youtube'
-  | './Mirror'
+  | 'reddit'
+  | 'telegram'
+  | 'x'
+  | 'youtube'
+  | 'mirror'
 
 interface Props extends SVGAttributes<SVGElement> {
   product: SocialIconType
@@ -29,25 +29,25 @@ interface Props extends SVGAttributes<SVGElement> {
 
 export function SocialIcon({ product, ...props }: Props): JSX.Element {
   switch (product) {
-    case './Discord':
+    case 'discord':
       return <DiscordIcon {...props} />
-    case './Github':
+    case 'github':
       return <GithubIcon {...props} />
-    case './Instagram':
+    case 'instagram':
       return <InstagramIcon {...props} />
-    case './Linkedin':
+    case 'linked-in':
       return <LinkedInIcon {...props} />
     case 'medium':
       return <MediumIcon {...props} />
-    case './Reddit':
+    case 'reddit':
       return <RedditIcon {...props} />
-    case './Telegram':
+    case 'telegram':
       return <TelegramIcon {...props} />
-    case './X':
+    case 'x':
       return <XIcon {...props} />
-    case './Youtube':
+    case 'youtube':
       return <YouTubeIcon {...props} />
-    case './Mirror':
+    case 'mirror':
       return <MirrorIcon {...props} />
   }
 }

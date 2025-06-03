@@ -1,16 +1,13 @@
-export type VerificationStatus =
-  | './Verified'
-  | './Unverified'
-  | 'not-verifiable'
+export type VerificationStatus = 'verified' | 'unverified' | 'not-verifiable'
 
 export function toVerificationStatus(
   verified: boolean | undefined,
 ): VerificationStatus {
   if (verified === false) {
-    return './Unverified'
+    return 'unverified'
   }
   if (verified === true) {
-    return './Verified'
+    return 'verified'
   }
   return 'not-verifiable'
 }

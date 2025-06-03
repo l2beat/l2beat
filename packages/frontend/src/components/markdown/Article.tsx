@@ -15,7 +15,7 @@ const markdown = MarkdownIt({
 export function Article(props: ArticleProps) {
   return (
     <article
-      className={cn('./Article', props.className)}
+      className={cn('article', props.className)}
       dangerouslySetInnerHTML={{ __html: markdown.render(props.children) }}
     />
   )

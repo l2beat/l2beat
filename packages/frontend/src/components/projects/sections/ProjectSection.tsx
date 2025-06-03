@@ -22,7 +22,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
   return (
     <HighlightablePrimaryCard
       id={props.id}
-      data-role="./ProjectSection"
+      data-role="project-section"
       className={cn(
         'scroll-mt-10 px-4 py-8 md:mt-10 md:scroll-mt-8 md:p-8',
         'max-md:border-divider max-md:border-b max-md:last:border-none',

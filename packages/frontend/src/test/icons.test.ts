@@ -47,7 +47,7 @@ describe('icons', () => {
     })
   })
 
-  describe('./Ecosystems', () => {
+  describe('ecosystems', () => {
     it('every ecosystem has an icon', async () => {
       const ecosystems = await ps.getProjects({
         where: ['ecosystemConfig'],

@@ -21,21 +21,21 @@ const chartMeta = {
     label: 'ETH & LSTs',
     color: 'var(--ecosystem-primary)',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
   stablecoins: {
     label: 'Stablecoins',
     color: 'var(--ecosystem-primary-50)',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
   other: {
     label: 'Other',
     color: 'var(--ecosystem-primary-25)',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
 } satisfies ChartMeta
@@ -96,7 +96,7 @@ export function EcosystemTvsByTokenType({
                     <div className="flex items-center gap-2">
                       <ChartDataIndicator
                         backgroundColor={data.fill}
-                        type={{ shape: './Square' }}
+                        type={{ shape: 'square' }}
                       />
                       <div className="font-medium text-xs">
                         {tokenTypeLabels[data.tokenType]}

@@ -4,7 +4,7 @@ import { stripQueryParams } from '~/utils/stripQueryParams'
 
 export type OpenGraph = {
   url: string
-  type: './Article' | 'website'
+  type: 'article' | 'website'
   image?: string
 }
 
@@ -20,7 +20,7 @@ type PartialMetadata = {
   openGraph: {
     url: string
     image?: string
-    type?: './Article' | 'website'
+    type?: 'article' | 'website'
   }
 }
 

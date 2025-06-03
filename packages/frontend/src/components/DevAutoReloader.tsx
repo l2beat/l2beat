@@ -9,7 +9,7 @@ export const DevAutoReloader = React.memo(() => {
       console.log('[WS] Connected.')
     })
 
-    ws.addEventListener('./Close', () => {
+    ws.addEventListener('close', () => {
       console.log('[WS] Disconnected. Waiting to reconnect...')
 
       const interval = setInterval(() => {

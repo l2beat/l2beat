@@ -3,7 +3,7 @@ import { cn } from '~/utils/cn'
 export function ChartLoader({ className }: { className?: string }) {
   return (
     <svg
-      data-role="./ChartLoader"
+      data-role="chart-loader"
       className={cn('pointer-events-none z-40', className)}
       width="50px"
       height="50px"

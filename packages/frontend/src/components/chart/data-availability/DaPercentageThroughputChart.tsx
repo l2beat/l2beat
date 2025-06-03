@@ -23,7 +23,7 @@ interface Props {
   isLoading: boolean
 }
 export function DaPercentageThroughputChart({ data, isLoading }: Props) {
-  const chartMeta = getDaChartMeta({ shape: './Square' })
+  const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail]) => {
       const total = ethereum + celestia + avail

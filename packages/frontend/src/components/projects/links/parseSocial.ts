@@ -10,14 +10,14 @@ export function parseSocial(href: string): SocialDetails {
   const link = formatLink(href)
   if (link.startsWith('discord.gg') || link.startsWith('discord.com/invite/')) {
     return {
-      platform: './Discord',
+      platform: 'discord',
       text: 'Discord',
     }
   }
 
   if (link.startsWith('twitter.com') || link.startsWith('x.com')) {
     return {
-      platform: './X',
+      platform: 'x',
       text:
         '@' +
         (link.startsWith('x.com')
@@ -42,7 +42,7 @@ export function parseSocial(href: string): SocialDetails {
 
   if (link.startsWith('youtube.com')) {
     return {
-      platform: './Youtube',
+      platform: 'youtube',
       text: link.includes('/c/')
         ? link.slice('youtube.com/c/'.length)
         : 'youtube.com',
@@ -51,41 +51,41 @@ export function parseSocial(href: string): SocialDetails {
 
   if (link.startsWith('t.me')) {
     return {
-      platform: './Telegram',
+      platform: 'telegram',
       text: link.slice('t.me/'.length),
     }
   }
 
   if (link.startsWith('reddit.com')) {
     return {
-      platform: './Reddit',
+      platform: 'reddit',
       text: link.slice('reddit.com/'.length),
     }
   }
 
   if (link.startsWith('linkedin.com')) {
     return {
-      platform: './Linkedin',
+      platform: 'linked-in',
       text: link.slice('linkedin.com/company/'.length),
     }
   }
 
   if (link.startsWith('instagram.com')) {
     return {
-      platform: './Instagram',
+      platform: 'instagram',
       text: link.slice('instagram.com/'.length),
     }
   }
 
   if (link === 'https://join.zksync.dev/' /* ONE-OFF HACK */)
     return {
-      platform: './Discord',
+      platform: 'discord',
       text: link,
     }
 
   if (link.endsWith('mirror.xyz')) {
     return {
-      platform: './Mirror',
+      platform: 'mirror',
       text: 'Mirror',
     }
   }

@@ -83,7 +83,7 @@ export function ProjectTokenChart({
       color: sourceToColor(token.source),
       legendLabel: capitalize(token.source),
       indicatorType: {
-        shape: './Square',
+        shape: 'square',
       },
     },
   } satisfies ChartMeta

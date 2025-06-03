@@ -36,17 +36,17 @@ const chartMeta = {
   canonical: {
     label: 'Canonical',
     color: 'hsl(var(--chart-stacked-purple))',
-    indicatorType: { shape: './Square' },
+    indicatorType: { shape: 'square' },
   },
   native: {
     label: 'Native',
     color: 'hsl(var(--chart-stacked-pink))',
-    indicatorType: { shape: './Square' },
+    indicatorType: { shape: 'square' },
   },
   external: {
     label: 'External',
     color: 'hsl(var(--chart-stacked-yellow))',
-    indicatorType: { shape: './Square' },
+    indicatorType: { shape: 'square' },
   },
 } satisfies ChartMeta
 

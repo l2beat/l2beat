@@ -26,7 +26,7 @@ export async function getGovernancePublicationData(
         openGraph: {
           url,
           image: `/meta-images/governance/publications/${publication.id}.png`,
-          type: './Article',
+          type: 'article',
         },
       }),
     },

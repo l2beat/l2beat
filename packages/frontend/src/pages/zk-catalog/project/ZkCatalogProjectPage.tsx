@@ -30,7 +30,7 @@ export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
           <MainPageHeader>
             <Breadcrumbs
               items={[
-                { content: './ZK Catalog', href: '/ZkCatalog' },
+                { content: 'ZK Catalog', href: '/zk-catalog' },
                 {
                   content: (
                     <span className="flex items-center gap-1.5">

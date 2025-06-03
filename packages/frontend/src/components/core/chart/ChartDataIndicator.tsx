@@ -6,7 +6,7 @@ export type ChartDataIndicatorType =
       strokeDasharray?: string
     }
   | {
-      shape: './Square'
+      shape: 'square'
     }
 
 interface Props {
@@ -18,7 +18,7 @@ export function ChartDataIndicator({ type, backgroundColor }: Props) {
   switch (type.shape) {
     case 'line':
       return <LineShape type={type} backgroundColor={backgroundColor} />
-    case './Square':
+    case 'square':
       return <SquareShape backgroundColor={backgroundColor} />
     default:
       assertUnreachable(type)

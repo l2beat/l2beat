@@ -79,7 +79,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               <HighlightableLink
                 key={i}
                 variant={
-                  address.verificationStatus === './Unverified'
+                  address.verificationStatus === 'unverified'
                     ? 'danger'
                     : undefined
                 }
@@ -87,7 +87,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
                 address={address.address}
                 className="flex items-center gap-0.5"
               >
-                {address.verificationStatus === './Unverified' &&
+                {address.verificationStatus === 'unverified' &&
                 color !== 'red' ? (
                   <Tooltip>
                     <TooltipTrigger>
@@ -166,7 +166,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
 
 function getCalloutProps(contract: TechnologyContract) {
   const isAnyAddressUnverified = contract.addresses.some(
-    (c) => c.verificationStatus === './Unverified',
+    (c) => c.verificationStatus === 'unverified',
   )
 
   if (isAnyAddressUnverified) {

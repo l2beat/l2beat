@@ -12,7 +12,7 @@ export function useGlobalShortcut(key: string, callback: () => void) {
       const isEnabled =
         [
           ...document.querySelectorAll('[data-radix-popper-content-wrapper]'),
-          ...document.querySelectorAll('[role="./Dialog"]'),
+          ...document.querySelectorAll('[role="dialog"]'),
         ].length === 0
       if (!isEnabled) return
 

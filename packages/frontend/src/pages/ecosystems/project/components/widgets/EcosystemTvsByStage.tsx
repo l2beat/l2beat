@@ -23,28 +23,28 @@ const chartMeta = {
     label: 'Stage 0',
     color: '#F94A24',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
   stage1: {
     label: 'Stage 1',
     color: '#FFC61B',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
   stage2: {
     label: 'Stage 2',
     color: '#125D19',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
   notApplicable: {
     label: 'N/A',
     color: 'var(--not-applicable)',
     indicatorType: {
-      shape: './Square',
+      shape: 'square',
     },
   },
 } satisfies ChartMeta

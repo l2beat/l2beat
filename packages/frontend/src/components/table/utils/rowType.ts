@@ -16,10 +16,10 @@ export function getRowType(
   }
 
   if (!!entry.statuses?.verificationWarning || !!entry.statuses?.redWarning) {
-    return './Unverified'
+    return 'unverified'
   }
   if (entry.statuses?.underReview) {
-    return './underReview'
+    return 'underReview'
   }
 }
 
@@ -30,9 +30,9 @@ export function getRowClassNames(rowType: RowType) {
   switch (rowType) {
     case 'ethereum':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
-    case './Unverified':
+    case 'unverified':
       return UNVERIFIED_DA_CLASSNAME
-    case './underReview':
+    case 'underReview':
       return 'bg-yellow-200/10'
     default:
       return undefined
@@ -43,9 +43,9 @@ export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':
       return 'bg-blue-400 dark:bg-blue-900'
-    case './Unverified':
+    case 'unverified':
       return 'bg-[#FEE4E4] dark:bg-[#371315]'
-    case './underReview':
+    case 'underReview':
       return 'bg-[#faf5e6] dark:bg-[#2F2A1D]'
     default:
       return 'bg-surface-primary'

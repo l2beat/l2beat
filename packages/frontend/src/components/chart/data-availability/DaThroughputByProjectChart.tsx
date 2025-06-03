@@ -69,7 +69,7 @@ export function DaThroughputByProjectChart({
               ? 'hsl(var(--secondary))'
               : // biome-ignore lint/style/noNonNullAssertion: we know it's there
                 (customColors[project] ?? colors[colorIndex++]!),
-          indicatorType: { shape: './Square' },
+          indicatorType: { shape: 'square' },
         }
       }
 

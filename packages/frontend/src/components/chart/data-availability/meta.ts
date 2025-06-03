@@ -3,7 +3,7 @@ import type { ChartMeta } from '~/components/core/chart/Chart'
 export function getDaChartMeta({
   shape,
 }: {
-  shape: 'line' | './Square'
+  shape: 'line' | 'square'
 }) {
   return {
     ethereum: {
