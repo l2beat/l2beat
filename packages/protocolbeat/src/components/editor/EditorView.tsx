@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { CodeView } from './CodeView'
 import { EditorFileTabs } from './EditorFileTabs'
-import { type EditorFile, type Range, useCodeStore } from './store'
 import type { EditorCallbacks } from './editor'
+import { type EditorFile, type Range, useCodeStore } from './store'
 
 type Props = {
   editorId: string

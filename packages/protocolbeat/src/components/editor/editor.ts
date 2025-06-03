@@ -7,8 +7,8 @@ import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import * as solidity from './languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-import { theme } from './theme'
 import type { EditorFile } from './store'
+import { theme } from './theme'
 
 let initialized = false
 
