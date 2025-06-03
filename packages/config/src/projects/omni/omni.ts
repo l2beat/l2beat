@@ -8,6 +8,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('omni')
 
@@ -177,4 +178,5 @@ export const omni: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

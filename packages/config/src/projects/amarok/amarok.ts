@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('amarok')
 
@@ -258,4 +259,5 @@ Although the values can be different for every message-receiving contract on eac
       sentiment: 'warning',
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 export const davos: Bridge = {
   type: 'bridge',
@@ -56,4 +57,5 @@ export const davos: Bridge = {
       'Polygon zkEVM',
     ],
   },
+  discoveryInfo: getDiscoveryInfo([]),
 }

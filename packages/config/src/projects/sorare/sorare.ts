@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('sorare')
@@ -154,4 +155,5 @@ export const sorare: ScalingProject = {
     },
   ],
   customDa: StarkexDAC({ discovery }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

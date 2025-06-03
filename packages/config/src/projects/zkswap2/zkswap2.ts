@@ -9,6 +9,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { zkswap } from '../zkswap/zkswap'
 
 const discovery = new ProjectDiscovery('zkswap2')
@@ -121,4 +122,5 @@ export const zkswap2: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

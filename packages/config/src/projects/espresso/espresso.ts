@@ -8,6 +8,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('espresso')
@@ -304,4 +305,5 @@ Users can retrieve data by querying any of Espresso DA's layers, though the VID 
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

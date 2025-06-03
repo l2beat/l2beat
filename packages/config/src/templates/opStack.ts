@@ -67,6 +67,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -346,6 +347,7 @@ function opStackCommon(
       computedStage(templateVars, postsToEthereum(templateVars)),
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 
@@ -427,6 +429,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
     templateVars,
     EXPLORER_URLS['ethereum'],
   )
+
   return {
     type: 'layer2',
     ...common,

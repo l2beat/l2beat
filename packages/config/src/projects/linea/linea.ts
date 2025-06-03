@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { ProjectPermissionedAccount } from '../../types'
 
 const discovery = new ProjectDiscovery('linea')
@@ -619,4 +620,5 @@ export const linea: ScalingProject = {
     },
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }
