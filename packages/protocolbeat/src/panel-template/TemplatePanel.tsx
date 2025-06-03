@@ -5,6 +5,7 @@ import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
 import { EditorView } from '../components/editor/EditorView'
 import type { EditorFile } from '../components/editor/store'
 import { useProjectData } from '../hooks/useProjectData'
+import { isReadOnly } from '../config'
 
 export function TemplatePanel() {
   const { project, selectedAddress, projectResponse } = useProjectData()
@@ -101,7 +102,7 @@ function getTemplateFiles(
         name: 'template.jsonc',
         content: '// No template files - no template response',
         language: 'json',
-        readOnly: false,
+        readOnly: isReadOnly,
       },
     ]
   }
