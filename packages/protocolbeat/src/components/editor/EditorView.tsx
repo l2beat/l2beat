@@ -13,6 +13,13 @@ export function EditorView(props: Props) {
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
 
+  // Reset to first file when files change (e.g., when switching contracts)
+  useEffect(() => {
+    if (files.length > 0) {
+      setActiveFileIndex(0)
+    }
+  }, [files])
+
   useEffect(() => {
     if (editor && files.length > 0) {
       const activeFile = files[activeFileIndex]
