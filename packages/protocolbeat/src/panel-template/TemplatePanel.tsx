@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 import { getProject, readTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
-import { CodeView } from '../components/editor/CodeView'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
-import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
+import { EditorView } from '../components/editor/EditorView'
+import { useCodeStore } from '../components/editor/store'
+
+const editorId = 'template-panel'
 
 export function TemplatePanel() {
   const { project } = useParams()
@@ -19,7 +20,7 @@ export function TemplatePanel() {
     queryFn: () => getProject(project),
   })
   const selectedAddress = usePanelStore((state) => state.selected)
-  const [fileIndex, setFileIndex] = useState(0)
+  const setFiles = useCodeStore((state) => state.setFiles)
   const template = findTemplateId(
     projectResponse.data?.entries ?? [],
     selectedAddress,
@@ -31,11 +32,10 @@ export function TemplatePanel() {
     enabled: template !== undefined,
   })
 
-  const sources = getSources(templateResponse.data)
-
   useEffect(() => {
-    setFileIndex(0)
-  }, [template])
+    const sources = getSources(templateResponse.data)
+    setFiles(editorId, sources)
+  }, [templateResponse.data, setFiles])
 
   if (projectResponse.isError) {
     return <div>Error</div>
@@ -49,31 +49,7 @@ export function TemplatePanel() {
     return <div>Select a contract</div>
   }
 
-  return (
-    <div className="flex h-full w-full select-none flex-col">
-      <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-        {sources.map((x, i) => (
-          <button
-            key={i}
-            onClick={() => setFileIndex(i)}
-            className={clsx(
-              'flex h-6 items-center gap-1 px-2 text-sm',
-              fileIndex === i && 'bg-autumn-300 text-black',
-            )}
-          >
-            <IconCodeFile />
-            {x.name}
-          </button>
-        ))}
-      </div>
-      <CodeView
-        code={sources[fileIndex]?.code ?? 'No contents'}
-        range={undefined}
-        language={sources[fileIndex]?.language}
-        editorKey="template-panel"
-      />
-    </div>
-  )
+  return <EditorView editorId="template-panel" />
 }
 
 export function findTemplateId(
@@ -100,32 +76,40 @@ export function findTemplateId(
 
 function getSources(response: ApiTemplateFileResponse | undefined) {
   const sources: {
+    id: string
     name: string
-    code: string
-    language?: EditorSupportedLanguage
+    content: string
+    readOnly: boolean
+    language: EditorSupportedLanguage
   }[] = []
 
   if (response?.template) {
     sources.push({
+      id: 'template',
       name: 'template.jsonc',
-      code: response.template,
+      content: response.template,
       language: 'json',
+      readOnly: false,
     })
   }
 
   if (response?.shapes) {
     sources.push({
+      id: 'shapes',
       name: 'shapes.json',
-      code: response.shapes,
+      content: response.shapes,
       language: 'json',
+      readOnly: true,
     })
   }
 
   if (response?.criteria) {
     sources.push({
+      id: 'criteria',
       name: 'criteria.json',
-      code: response.criteria,
+      content: response.criteria,
       language: 'json',
+      readOnly: true,
     })
   }
 

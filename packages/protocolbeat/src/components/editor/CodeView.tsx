@@ -2,20 +2,17 @@ import { useEffect } from 'react'
 
 import { useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
-import { Editor, type EditorSupportedLanguage } from './editor'
+import { Editor } from './editor'
 import { useCodeStore } from './store'
 import type { Range } from './store'
 
 export function CodeView({
-  code,
   range,
-  language,
   editorKey = 'default',
 }: {
-  code: string
   range: Range | undefined
-  language?: EditorSupportedLanguage
   editorKey?: string
+  readOnly?: boolean
 }) {
   const monacoEl = useRef(null)
   const { setEditor, getEditor, showRange } = useCodeStore()
@@ -23,6 +20,7 @@ export function CodeView({
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
   const fullScreen = useMultiViewStore((state) => state.fullScreen)
+  const files = useCodeStore((state) => state.files[editorKey]) ?? []
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -38,12 +36,16 @@ export function CodeView({
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
+      // Dispose editor when component unmounts
+      editor.dispose()
     }
   }, [setEditor, editorKey])
 
   useEffect(() => {
-    editor?.setCode(code, language ?? 'solidity')
-  }, [editor, code])
+    if (editor && files.length > 0) {
+      editor.registerFiles(files)
+    }
+  }, [editor, files])
 
   useEffect(() => {
     editor?.resize()

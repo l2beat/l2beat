@@ -1,13 +1,14 @@
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
-import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
 import * as solidity from './languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-import { cyrb64 } from './cyrb-hash'
 import { theme } from './theme'
+import type { EditorFile } from './store'
 
 let initialized = false
 
@@ -17,12 +18,11 @@ export class Editor {
   private readonly editor: monaco.editor.IStandaloneCodeEditor
   private models: Record<string, editor.IModel | null> = {}
   private viewStates: Record<string, editor.ICodeEditorViewState | null> = {}
-  private currentCode: string = ''
   private highlightTimeout: NodeJS.Timeout | null = null
   private decorationsCollection: monaco.editor.IEditorDecorationsCollection | null =
     null
 
-  constructor(element: HTMLElement, readOnly = true) {
+  constructor(element: HTMLElement) {
     if (!initialized) {
       init()
       initialized = true
@@ -30,7 +30,7 @@ export class Editor {
 
     this.editor = monaco.editor.create(element, {
       minimap: { enabled: false },
-      readOnly,
+      readOnly: true,
       colorDecorators: false,
       renderWhitespace: 'none',
       renderControlCharacters: false,
@@ -42,25 +42,70 @@ export class Editor {
     })
   }
 
-  setCode(code: string, language: EditorSupportedLanguage) {
-    const staleCodeHash = cyrb64(this.currentCode)
-    const currentModel = this.editor.getModel()
+  registerFiles(files: EditorFile[]) {
+    for (const file of files) {
+      const uri = this.createUri(file).toString()
+      // Only add file if it doesn't already exist
+      if (this.models[uri] === undefined) {
+        this.addFile(file)
+      }
+    }
+  }
 
-    // Only cache the model if it exists and has content
-    if (currentModel && this.currentCode.trim() !== '') {
-      this.models[staleCodeHash] = currentModel
-      this.viewStates[staleCodeHash] = this.editor.saveViewState()
+  createUri(file: EditorFile) {
+    return monaco.Uri.parse(`memory://${file.id}`)
+  }
+
+  setActiveFile(file: EditorFile) {
+    this.saveViewState()
+    const model = this.getOrCreateFileModel(file)
+
+    this.editor.updateOptions({
+      readOnly: file.readOnly,
+    })
+
+    this.editor.setModel(model)
+    this.restoreViewState()
+  }
+
+  openFile(file: EditorFile) {
+    const model = this.getOrCreateFileModel(file)
+    this.editor.setModel(model)
+  }
+
+  getOrCreateFileModel(file: EditorFile) {
+    const uri = this.createUri(file).toString()
+    if (this.models[uri] === undefined) {
+      return this.addFile(file)
+    }
+    // biome-ignore lint/style/noNonNullAssertion: it's there
+    return this.models[uri]!
+  }
+
+  addFile(file: EditorFile) {
+    const uri = this.createUri(file)
+    const model = monaco.editor.createModel(file.content, file.language, uri)
+    this.models[uri.toString()] = model
+
+    return model
+  }
+
+  saveViewState() {
+    const model = this.editor.getModel()
+    if (model === null) {
+      return
     }
 
-    this.currentCode = code
-    const newCodeHash = cyrb64(code)
-    if (this.models[newCodeHash] === undefined) {
-      const model = monaco.editor.createModel(code, language)
-      this.models[newCodeHash] = model
+    this.viewStates[model.uri.toString()] = this.editor.saveViewState()
+  }
+
+  restoreViewState() {
+    const model = this.editor.getModel()
+    if (model === null) {
+      return
     }
 
-    this.editor.setModel(this.models[newCodeHash] ?? null)
-    this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
+    this.editor.restoreViewState(this.viewStates[model.uri.toString()] ?? null)
   }
 
   showRange(
@@ -128,6 +173,16 @@ export class Editor {
   }
 
   dispose() {
+    // Clear any pending highlight timeout
+    if (this.highlightTimeout !== null) {
+      clearTimeout(this.highlightTimeout)
+      this.highlightTimeout = null
+    }
+
+    // Clear decorations
+    this.clearHighlight()
+
+    // Dispose all models
     Object.values(this.models).forEach((model) => {
       if (model) {
         model.dispose()
@@ -136,6 +191,7 @@ export class Editor {
     this.models = {}
     this.viewStates = {}
 
+    // Dispose the editor instance
     this.editor.dispose()
   }
 }
@@ -146,6 +202,9 @@ function init() {
     getWorker(_: unknown, label: string) {
       if (label === 'editorWorkerService') {
         return new editorWorker()
+      }
+      if (label === 'json') {
+        return new jsonWorker()
       }
       console.error('Unknown worker type!', label)
       return new editorWorker()
