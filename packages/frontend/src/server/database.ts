@@ -14,7 +14,7 @@ export function getDb() {
           connectionString: env.DATABASE_URL,
           ssl: ssl(),
           ...pool(),
-          log: env.DATABASE_LOG_ENABLED ? makeLogger : undefined,
+          log: env.DATABASE_LOG_ENABLED ? makeLogger() : undefined,
         })
       : createThrowingProxy()
   }
@@ -65,18 +65,20 @@ function pool() {
   }
 }
 
-function makeLogger(event: LogEvent) {
+function makeLogger() {
   const appLogger = createLogger().for('Database')
-  if (event.level === 'error') {
-    appLogger.error('Query failed', {
-      durationMs: event.queryDurationMillis,
-      error: event.error,
-      sql: compiledToSqlQuery(event.query),
-    })
-  } else {
-    appLogger.info('Query executed', {
-      durationMs: event.queryDurationMillis,
-      sql: compiledToSqlQuery(event.query),
-    })
+  return (event: LogEvent) => {
+    if (event.level === 'error') {
+      appLogger.error('Query failed', {
+        durationMs: event.queryDurationMillis,
+        error: event.error,
+        sql: compiledToSqlQuery(event.query),
+      })
+    } else {
+      appLogger.info('Query executed', {
+        durationMs: event.queryDurationMillis,
+        sql: compiledToSqlQuery(event.query),
+      })
+    }
   }
 }
