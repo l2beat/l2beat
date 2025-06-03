@@ -1,22 +1,22 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { CountBadge } from '~/components/badge/count-badge'
-import { DaThroughputChart } from '~/components/chart/data-availability/da-throughput-chart'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CountBadge } from '~/components/badge/CountBadge'
+import { DaThroughputChart } from '~/components/chart/data-availability/DaThroughputChart'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
-} from '~/components/core/directory-tabs'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { MainPageHeader } from '~/components/main-page-header'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
-import { PublicSystemInfo } from '../components/da-category-info'
-import { IncludeScalingOnlyProvider } from './components/da-throughput-context'
-import { DaThroughputPublicTable } from './components/table/da-throughput-public-table'
+} from '~/components/core/DirectoryTabs'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { DaThroughputEntry } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
+import { PublicSystemInfo } from '../components/DaCategoryInfo'
+import { IncludeScalingOnlyProvider } from './components/DaThroughputContext'
+import { DaThroughputPublicTable } from './components/table/DaThroughputPublicTable'
 
 interface Props extends AppLayoutProps {
   entries: DaThroughputEntry[]

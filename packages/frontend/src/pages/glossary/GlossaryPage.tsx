@@ -1,12 +1,12 @@
-import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { CollectionEntry } from '~/content/get-collection'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import { GlossaryItem } from './components/glossary-item'
-import { Header } from './components/header'
-import { GlossarySideNav } from './components/side-nav/glossary-side-nav'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { CollectionEntry } from '~/content/getCollection'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { GlossaryItem } from './components/GlossaryItem'
+import { Header } from './components/Header'
+import { GlossarySideNav } from './components/side-nav/GlossarySideNav'
 
 interface Props extends AppLayoutProps {
   glossaryEntries: CollectionEntry<'glossary'>[]

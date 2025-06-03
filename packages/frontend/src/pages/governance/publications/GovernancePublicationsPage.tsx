@@ -1,10 +1,10 @@
-import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
-import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
+import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
 
 interface Props extends AppLayoutProps {
   publications: GovernancePublicationEntry[]

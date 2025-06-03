@@ -4,7 +4,7 @@ import { createServerSideHelpers } from '@trpc/react-query/server'
 import type { AppRouter } from '~/server/trpc/root'
 import { appRouter, createCaller } from '~/server/trpc/root'
 import { createTRPCContext } from '~/server/trpc/trpc'
-import { createQueryClient } from './query-client'
+import { createQueryClient } from './queryClient'
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
