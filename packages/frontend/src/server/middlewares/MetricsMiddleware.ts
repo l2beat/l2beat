@@ -17,12 +17,10 @@ export function MetricsMiddleware(
 
   const originalSend = res.send
 
-  // Intercept response to measure size
   res.send = function (body) {
     const end = process.hrtime.bigint()
-    const durationMs = Number(end - start) / 1_000_000 // Convert nanoseconds to milliseconds
+    const durationMs = Number(end - start) / 1_000_000
 
-    // Determine response size
     let size
     if (body === undefined || body === null) {
       size = 0
@@ -40,6 +38,7 @@ export function MetricsMiddleware(
     appLogger.info(`Request processed`, {
       method: req.method,
       url: req.originalUrl,
+      status: res.statusCode,
       duration: Math.round(durationMs),
       size,
     })
