@@ -8,6 +8,7 @@ import { getDataAvailabilityProjectData } from './project/getDataAvailabilityPro
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
 import { getDataAvailabilityThroughputData } from './throughput/getDataAvailabilityThroughputData'
+import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 
 export function createDataAvailabilityRouter(
   manifest: Manifest,
@@ -54,6 +55,19 @@ export function createDataAvailabilityRouter(
         staleWhileRevalidate: 25 * 60,
       },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
+    )
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/data-availability/archived', async (req, res) => {
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'archived'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)

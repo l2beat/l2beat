@@ -19,19 +19,16 @@ import {
 } from '../utils/get-da-projects-tvs'
 import { getDaUsers } from '../utils/get-da-users'
 
-export async function getDaRiskEntries(): Promise<
-  TabbedDaEntries<DaRiskEntry>
+export async function getDaArchivedEntries(): Promise<
+  TabbedDaEntries<DaArchivedEntry>
 > {
   const [layers, bridges, dacs, economicSecurity] = await Promise.all([
     ps.getProjects({
       select: ['daLayer', 'statuses'],
-      whereNot: ['archivedAt'],
+      where: ['archivedAt'],
     }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({
-      select: ['customDa', 'statuses'],
-      whereNot: ['archivedAt'],
-    }),
+    ps.getProjects({ select: ['customDa', 'statuses'], where: ['archivedAt'] }),
     getDaProjectsEconomicSecurity(),
   ])
 
@@ -42,7 +39,7 @@ export async function getDaRiskEntries(): Promise<
   const layerEntries = layers
     .filter((project) => project.id !== ProjectId.ETHEREUM)
     .map((project) =>
-      getDaRiskEntry(
+      getDaArchivedEntry(
         project,
         bridges.filter((x) => x.daBridge.daLayer === project.id),
         getTvs,
@@ -57,26 +54,26 @@ export async function getDaRiskEntries(): Promise<
   )
 }
 
-export interface DaRiskEntry extends CommonDaEntry {
+export interface DaArchivedEntry extends CommonDaEntry {
   tvs: number
   risks: AdjustedDaLayerRisks
-  bridges: DaBridgeRiskEntry[]
+  bridges: DaBridgeArchivedEntry[]
 }
 
-export interface DaBridgeRiskEntry
+export interface DaBridgeArchivedEntry
   extends Omit<CommonDaEntry, 'id' | 'tab' | 'icon'> {
   risks: DaBridgeRisks
   tvs: number
 }
 
-function getDaRiskEntry(
+function getDaArchivedEntry(
   layer: Project<'daLayer' | 'statuses'>,
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
-): DaRiskEntry {
+): DaArchivedEntry {
   const daBridges = bridges.map(
-    (b): DaBridgeRiskEntry => ({
+    (b): DaBridgeArchivedEntry => ({
       name: b.daBridge.name,
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
@@ -122,9 +119,9 @@ function getDaRiskEntry(
 function getDacEntry(
   project: Project<'customDa' | 'statuses'>,
   getTvs: (projectIds: ProjectId[]) => { latest: number; sevenDaysAgo: number },
-): DaRiskEntry {
+): DaArchivedEntry {
   const tvs = getTvs([project.id])
-  const bridgeEntry: DaBridgeRiskEntry = {
+  const bridgeEntry: DaBridgeArchivedEntry = {
     name: project.customDa.name ?? `${project.name} DAC`,
     slug: project.slug,
     href: `/scaling/projects/${project.slug}`,

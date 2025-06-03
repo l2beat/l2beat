@@ -32,9 +32,15 @@ export async function getDaSummaryEntries(): Promise<
   TabbedDaEntries<DaSummaryEntry>
 > {
   const [layers, bridges, dacs] = await Promise.all([
-    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({
+      select: ['daLayer', 'statuses'],
+      whereNot: ['archivedAt'],
+    }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({ select: ['customDa', 'statuses'] }),
+    ps.getProjects({
+      select: ['customDa', 'statuses'],
+      whereNot: ['archivedAt'],
+    }),
   ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
