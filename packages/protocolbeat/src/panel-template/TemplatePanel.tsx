@@ -43,14 +43,19 @@ export function TemplatePanel() {
 
   const files = useMemo(
     () => getTemplateFiles(templateResponse, selectedAddress),
-    [templateResponse, projectResponse, selectedAddress],
+    [templateResponse, selectedAddress],
   )
 
-  if (templateResponse.isError) {
+  if (projectResponse.isError) {
     return <div>Error</div>
   }
-  if (templateResponse.isPending) {
+
+  if (projectResponse.isPending) {
     return <div>Loading</div>
+  }
+
+  if (selectedAddress === undefined) {
+    return <div>Select a contract</div>
   }
 
   return (
@@ -111,7 +116,7 @@ function getTemplateFiles(
 
   if (data.template) {
     sources.push({
-      id: `template-${selectedAddress}`,
+      id: `template`,
       name: 'template.jsonc',
       content: data.template,
       language: 'json',
@@ -121,7 +126,7 @@ function getTemplateFiles(
 
   if (data.shapes) {
     sources.push({
-      id: `shapes-${selectedAddress}`,
+      id: `shapes`,
       name: 'shapes.json',
       content: data.shapes,
       language: 'json',
@@ -131,7 +136,7 @@ function getTemplateFiles(
 
   if (data.criteria) {
     sources.push({
-      id: `criteria-${selectedAddress}`,
+      id: `criteria`,
       name: 'criteria.json',
       content: data.criteria,
       language: 'json',

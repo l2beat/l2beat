@@ -26,6 +26,11 @@ export function CodeView({
       return
     }
 
+    const existingEditor = getEditor(editorKey)
+    if (existingEditor) {
+      return
+    }
+
     const editor = new Editor(monacoEl.current)
     setEditor(editorKey, editor)
 
@@ -39,7 +44,7 @@ export function CodeView({
       removeEditor(editorKey)
       editor.dispose()
     }
-  }, [setEditor, editorKey, removeEditor])
+  }, [setEditor, editorKey, removeEditor, getEditor])
 
   useEffect(() => {
     editor?.resize()

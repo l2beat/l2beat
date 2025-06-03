@@ -90,11 +90,17 @@ export class Editor {
 
   private getOrCreateFileModel(file: EditorFile) {
     const uri = this.createUri(file).toString()
-    if (this.models[uri] === undefined) {
+    const existingModel = this.models[uri]
+
+    if (!existingModel) {
       return this.addFile(file)
     }
-    // biome-ignore lint/style/noNonNullAssertion: it's there
-    return this.models[uri]!
+
+    if (existingModel.getValue() !== file.content) {
+      existingModel.setValue(file.content)
+    }
+
+    return existingModel
   }
 
   private addFile(file: EditorFile) {
