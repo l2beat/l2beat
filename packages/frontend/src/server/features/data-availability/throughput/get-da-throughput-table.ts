@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { sumByDayAndProject } from './utils/sumByDayAndProject'
 
 export async function getDaThroughputTable(
   ...parameters: Parameters<typeof getDaThroughputTableData>
@@ -37,8 +38,14 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const [daLayerValues, projectValues] = partition(values, (v) =>
     daLayerIds.includes(v.projectId),
   )
-  const groupedDaLayerValues = aggregateByDay(daLayerValues)
-  const groupedProjectValues = aggregateByDay(projectValues)
+  const groupedDaLayerValues = groupBy(
+    sumByDayAndProject(daLayerValues),
+    (v) => v.daLayer,
+  )
+  const groupedProjectValues = groupBy(
+    sumByDayAndProject(projectValues),
+    (v) => v.daLayer,
+  )
   const onlyScalingDaLayerValues = Object.fromEntries(
     daLayerIds.map((daLayer) => [
       daLayer,
@@ -114,37 +121,6 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     data: getData(groupedDaLayerValues),
     scalingOnlyData: getData(onlyScalingDaLayerValues),
   }
-}
-
-function aggregateByDay(
-  values: DataAvailabilityRecord[],
-): Record<string, DataAvailabilityRecord[]> {
-  const result: DataAvailabilityRecord[] = []
-  const groupedByProject = groupBy(values, (v) => v.projectId)
-  for (const projectId in groupedByProject) {
-    const projectValues = groupedByProject[projectId]
-    const groupedByDay = groupBy(projectValues, (v) =>
-      UnixTime.toStartOf(v.timestamp, 'day'),
-    )
-
-    const daLayer = projectValues?.[0]?.daLayer
-    if (!daLayer) continue
-
-    for (const day in groupedByDay) {
-      const dayValues = groupedByDay[day]
-      if (!dayValues) continue
-      const totalSize = dayValues.reduce((acc, v) => acc + v.totalSize, 0n)
-
-      result.push({
-        projectId,
-        timestamp: Number(day),
-        totalSize,
-        daLayer,
-      })
-    }
-  }
-
-  return groupBy(result, (v) => v.daLayer)
 }
 
 function getMockDaThroughputTableData(
@@ -224,9 +200,7 @@ function sumByTimestamp(
   groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
 ): DataAvailabilityRecord[] {
   const projectValues = groupedProjectValues[daLayer] ?? []
-  const timestampedValues = groupBy(projectValues, (v) =>
-    UnixTime.toStartOf(v.timestamp, 'day'),
-  )
+  const timestampedValues = groupBy(projectValues, (v) => v.timestamp)
   const values = Object.entries(timestampedValues).map(
     ([timestamp, values]) => {
       const totalSize = values.reduce((acc, v) => acc + v.totalSize, 0n)

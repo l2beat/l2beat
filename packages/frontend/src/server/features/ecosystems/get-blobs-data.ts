@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { sumByDayAndProject } from '../data-availability/throughput/utils/sumByDayAndProject'
 
 export interface BlobsData {
   totalData: number
@@ -21,15 +22,17 @@ export async function getBlobsData(
 const getCachedBlobsData = async (
   projects: Project<'scalingInfo'>[],
 ): Promise<BlobsData> => {
-  const now = UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.DAY
+  const now = UnixTime.toStartOf(UnixTime.now(), 'day')
 
   const db = getDb()
-  const records = await db.dataAvailability.getForDaLayerByTimestamp(
+  const records = await db.dataAvailability2.getForDaLayerInTimeRange(
     ProjectId.ETHEREUM,
+    now - UnixTime.DAY,
     now,
   )
+  const summedRecords = sumByDayAndProject(records)
 
-  const ethereumRecord = records.find(
+  const ethereumRecord = summedRecords.find(
     (record) => record.projectId === ProjectId.ETHEREUM,
   )
   if (!ethereumRecord) {
@@ -39,7 +42,7 @@ const getCachedBlobsData = async (
     }
   }
 
-  const recordsByProjectId = keyBy(records, (e) => e.projectId)
+  const recordsByProjectId = keyBy(summedRecords, (e) => e.projectId)
 
   const totalData = projects.reduce((acc, project) => {
     const projectRecord = recordsByProjectId[project.id]

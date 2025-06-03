@@ -40,7 +40,7 @@ export class DataAvailabilityRepository2 extends BaseRepository {
       .select(selectDataAvailability2)
       .where('daLayer', '=', daLayer)
       .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .execute()
     return rows.map(toRecord)
   }

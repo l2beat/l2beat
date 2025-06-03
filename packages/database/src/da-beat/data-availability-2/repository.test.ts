@@ -111,7 +111,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
       const results = await repository.getForDaLayerInTimeRange(
         'layer-a',
         START,
-        START + 2 * UnixTime.DAY,
+        START + 3 * UnixTime.DAY,
       )
 
       expect(results).toEqualUnsorted([

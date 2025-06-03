@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -11,6 +10,7 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 import { generateTimestamps } from '../../utils/generate-timestamps'
 import { DaThroughputTimeRange } from './utils/range'
+import { sumByDayAndProject } from './utils/sumByDayAndProject'
 
 export type DaThroughputChartDataByChart = [
   timestamp: number,
@@ -59,7 +59,7 @@ const getDaThroughputChartByProjectData = async (
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord[],
+  records: DataAvailabilityRecord2[],
   allProjects: Project[],
 ) {
   let minTimestamp = Infinity
@@ -70,39 +70,24 @@ function groupByTimestampAndProjectId(
     (r) => r.daLayer === r.projectId,
   )
 
-  for (const record of projectRecords) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
+  const summedProjectsByDay = sumByDayAndProject(projectRecords)
+  for (const record of summedProjectsByDay) {
+    const timestamp = record.timestamp
     const value = record.totalSize
     const project = allProjects.find((p) => p.id === record.projectId)
     assert(project, `Project ${record.projectId} not found`)
-    const currentValue = result[timestamp]?.[project.name]
-
     result[timestamp] = {
       ...result[timestamp],
-      [project.name]: currentValue
-        ? currentValue + Number(value)
-        : Number(value),
+      [project.name]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   // Add the difference between the total size and the sum of the other projects as 'Unknown'
-  const summedByDayDay: DataAvailabilityRecord[] = Object.entries(
-    groupBy(daLayerRecords, (r) => UnixTime.toStartOf(r.timestamp, 'day')),
-  ).map(([day, records]) => {
-    const daLayer = records[0]?.daLayer
-    assert(daLayer, 'DaLayer not found')
-    return {
-      timestamp: Number(day),
-      totalSize: records.reduce((acc, r) => acc + BigInt(r.totalSize), 0n),
-      projectId: daLayer,
-      daLayer,
-    }
-  })
-
-  for (const record of summedByDayDay) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
+  const summedDaLayerByDay = sumByDayAndProject(daLayerRecords)
+  for (const record of summedDaLayerByDay) {
+    const timestamp = record.timestamp
     const value = record.totalSize
     const restSummed = Object.values(result[timestamp] ?? {}).reduce(
       (acc, curr) => acc + curr,
