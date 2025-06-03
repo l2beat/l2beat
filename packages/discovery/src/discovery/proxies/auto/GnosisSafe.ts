@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -51,7 +51,7 @@ export async function detectGnosisSafe(
   address: EthereumAddress,
 ): Promise<ProxyDetails | undefined> {
   const masterCopy = await getMasterCopy(provider, address)
-  if (!masterCopy) {
+  if (!masterCopy || masterCopy === EthereumAddress.ZERO) {
     return
   }
 
