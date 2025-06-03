@@ -54,6 +54,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
     "compression": "^1.8.0",
+    "connect-timeout": "^1.9.0",
     "dotenv": "^16.4.5",
     "express": "^5.0.0",
     "fuzzysort": "^3.1.0",
@@ -82,6 +83,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",

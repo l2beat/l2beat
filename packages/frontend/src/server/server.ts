@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
+import timeout from 'connect-timeout'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
@@ -35,6 +36,9 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
+  app.use(timeout('25s'))
+  app.use((req, res, next) => haltOnTimedout(req, res, next, appLogger))
+
   app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
 
   app.use('/', createMigratedProjectsRouter())
@@ -68,6 +72,22 @@ function renderToHtml(data: RenderData, url: string) {
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
     .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
+}
+
+function haltOnTimedout(
+  req: express.Request,
+  _res: express.Response,
+  next: express.NextFunction,
+  appLogger: Logger,
+) {
+  if (!req.timedout) {
+    next()
+  } else {
+    appLogger.error('Request timed out', {
+      method: req.method,
+      url: req.originalUrl,
+    })
+  }
 }
 
 function getTemplate(manifest: Manifest) {
