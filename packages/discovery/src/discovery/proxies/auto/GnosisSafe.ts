@@ -56,7 +56,7 @@ export async function detectGnosisSafe(
   }
 
   const modules = await getModules(provider, address)
-  assert(modules, 'Could not find modules for GnosisSafe')
+  assert(modules, 'Could not find modules for GnosisSafe at address ' + address)
 
   const owners = await getOwners(provider, address)
   const ownerCount = owners.length
