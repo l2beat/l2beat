@@ -10,6 +10,8 @@ import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import type { EditorFile } from './store'
 import { theme } from './theme'
 
+import * as contractSchema from '../../../../discovery/schemas/contract.v2.schema.json'
+
 let initialized = false
 
 export type EditorSupportedLanguage = 'solidity' | 'json'
@@ -32,6 +34,7 @@ export class Editor {
   private onChangeCallback: ((content: string) => void) | null = null
 
   constructor(element: HTMLElement) {
+    console.log('Editor constructor', contractSchema)
     if (!initialized) {
       init()
       initialized = true
@@ -66,7 +69,7 @@ export class Editor {
   }
 
   private createUri(file: EditorFile) {
-    return monaco.Uri.parse(`inmemory://${file.id}`)
+    return monaco.Uri.parse(`inmemory://${file.id}.${file.language}`)
   }
 
   setFile(file: EditorFile) {
@@ -252,6 +255,21 @@ function init() {
   monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
     allowComments: true,
     validate: true,
+    enableSchemaRequest: true,
+    schemaValidation: 'error',
+    schemas: [
+      {
+        uri: 'inmemory:/discovery/schemas/contract.v2.schema.json',
+        fileMatch: ['template.jsonc'],
+        schema: {
+          $schema: contractSchema.$schema,
+          additionalProperties: contractSchema.additionalProperties,
+          definitions: contractSchema.definitions,
+          properties: contractSchema.properties,
+          type: contractSchema.type,
+        },
+      },
+    ],
   })
 
   monaco.editor.defineTheme('default', theme)
