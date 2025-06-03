@@ -6,10 +6,10 @@ import {
   type LoggerOptions,
   type LoggerTransportOptions,
 } from '@l2beat/backend-tools'
-import { env } from '~/env'
+import type { Env } from '~/env'
 import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
-export function createLogger(): Logger {
+export async function createLogger(env: Env): Promise<Logger> {
   const isLocal = env.NODE_ENV !== 'production'
 
   const loggerTransports: LoggerTransportOptions[] = [
@@ -26,9 +26,9 @@ export function createLogger(): Logger {
       throw new Error('ES_NODE, ES_API_KEY, and ES_INDEX_PREFIX must be set')
     }
 
-    const {
-      ElasticSearchTransport,
-    } = require('~/utils/elastic-search/ElasticSearchTransport')
+    const { ElasticSearchTransport } = await import(
+      '~/utils/elastic-search/ElasticSearchTransport'
+    )
     const options: ElasticSearchTransportOptions = {
       node: env.ES_NODE,
       apiKey: env.ES_API_KEY,
