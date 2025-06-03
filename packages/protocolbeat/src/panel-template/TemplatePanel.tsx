@@ -1,30 +1,28 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { getProject, readTemplateFile, writeTemplateFile } from '../api/api'
+import { readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
-import type { EditorSupportedLanguage } from '../components/editor/editor'
-import { usePanelStore } from '../store/store'
+import type { EditorFile } from '../components/editor/store'
 import { EditorView } from '../components/editor/EditorView'
+import { useProjectData } from '../hooks/useProjectData'
 
 export function TemplatePanel() {
-  const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
-  const projectResponse = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const selectedAddress = usePanelStore((state) => state.selected)
-  const template = findTemplateId(
-    projectResponse.data?.entries ?? [],
-    selectedAddress,
+  const { project, selectedAddress, projectResponse } = useProjectData()
+  const queryClient = useQueryClient()
+
+  const template = useMemo(
+    () => findTemplateId(projectResponse.data?.entries ?? [], selectedAddress),
+    [projectResponse.data?.entries, selectedAddress],
   )
 
   const templateResponse = useQuery({
-    queryKey: ['projects', project, 'template', template],
-    queryFn: () => readTemplateFile(template),
+    queryKey: ['projects', project, 'template', template, selectedAddress],
+    queryFn: () => {
+      if (!template) {
+        return null
+      }
+      return readTemplateFile(template)
+    },
     enabled: template !== undefined,
   })
 
@@ -35,22 +33,23 @@ export function TemplatePanel() {
       }
       await writeTemplateFile(template, content)
     },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['projects', project, 'template', template],
+      })
+    },
   })
 
-  const files = useMemo(() => {
-    return getSources(templateResponse.data)
-  }, [templateResponse.data])
+  const files = useMemo(
+    () => getTemplateFiles(templateResponse, selectedAddress),
+    [templateResponse, projectResponse, selectedAddress],
+  )
 
-  if (projectResponse.isError) {
+  if (templateResponse.isError) {
     return <div>Error</div>
   }
-
-  if (projectResponse.isPending) {
+  if (templateResponse.isPending) {
     return <div>Loading</div>
-  }
-
-  if (selectedAddress === undefined) {
-    return <div>Select a contract</div>
   }
 
   return (
@@ -62,12 +61,12 @@ export function TemplatePanel() {
   )
 }
 
-export function findTemplateId(
+function findTemplateId(
   chains: ApiProjectChain[],
   address: string | undefined,
 ): string | undefined {
   if (!address) {
-    return
+    return undefined
   }
 
   for (const chain of chains) {
@@ -82,42 +81,58 @@ export function findTemplateId(
       }
     }
   }
+  return undefined
 }
 
-function getSources(response: ApiTemplateFileResponse | undefined) {
-  const sources: {
-    id: string
-    name: string
-    content: string
-    readOnly: boolean
-    language: EditorSupportedLanguage
-  }[] = []
+function getTemplateFiles(
+  templateResponse: ReturnType<typeof useQuery<ApiTemplateFileResponse | null>>,
+  selectedAddress: string | undefined,
+): EditorFile[] {
+  if (!selectedAddress) {
+    return []
+  }
 
-  if (response?.template) {
+  const data = templateResponse.data
+
+  if (!data) {
+    return [
+      {
+        id: 'template',
+        name: 'template.jsonc',
+        content: '// No template files - no template response',
+        language: 'json',
+        readOnly: false,
+      },
+    ]
+  }
+
+  const sources: EditorFile[] = []
+
+  if (data.template) {
     sources.push({
-      id: 'template',
+      id: `template-${selectedAddress}`,
       name: 'template.jsonc',
-      content: response.template,
+      content: data.template,
       language: 'json',
       readOnly: false,
     })
   }
 
-  if (response?.shapes) {
+  if (data.shapes) {
     sources.push({
-      id: 'shapes',
+      id: `shapes-${selectedAddress}`,
       name: 'shapes.json',
-      content: response.shapes,
+      content: data.shapes,
       language: 'json',
       readOnly: true,
     })
   }
 
-  if (response?.criteria) {
+  if (data.criteria) {
     sources.push({
-      id: 'criteria',
+      id: `criteria-${selectedAddress}`,
       name: 'criteria.json',
-      content: response.criteria,
+      content: data.criteria,
       language: 'json',
       readOnly: true,
     })

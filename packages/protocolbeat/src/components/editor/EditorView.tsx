@@ -1,18 +1,22 @@
 import { useEffect, useState } from 'react'
 import { CodeView } from './CodeView'
 import { EditorFileTabs } from './EditorFileTabs'
-import { type EditorFile, useCodeStore } from './store'
+import { type EditorFile, type Range, useCodeStore } from './store'
 import type { EditorCallbacks } from './editor'
 
 type Props = {
   editorId: string
   callbacks?: EditorCallbacks
   files: EditorFile[]
+  initialFileIndex?: number
+  range?: Range
 }
 
 export function EditorView(props: Props) {
   const [dirtyFiles, setDirtyFiles] = useState<Record<string, boolean>>({})
-  const [activeFileIndex, setActiveFileIndex] = useState(0)
+  const [activeFileIndex, setActiveFileIndex] = useState(
+    props.initialFileIndex ?? 0,
+  )
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
 
@@ -22,7 +26,7 @@ export function EditorView(props: Props) {
 
   useEffect(() => {
     if (props.files.length > 0) {
-      setActiveFileIndex(0)
+      setActiveFileIndex(props.initialFileIndex ?? 0)
     }
   }, [props.files])
 
@@ -44,10 +48,6 @@ export function EditorView(props: Props) {
     }
   }, [editor, props.files, activeFileIndex])
 
-  if (props.files.length === 0) {
-    return <div>No files</div>
-  }
-
   return (
     <div className="flex h-full w-full select-none flex-col">
       <EditorFileTabs
@@ -58,7 +58,7 @@ export function EditorView(props: Props) {
           onClick: () => setActiveFileIndex(index),
         }))}
       />
-      <CodeView range={undefined} editorKey={props.editorId} />
+      <CodeView range={props.range} editorKey={props.editorId} />
     </div>
   )
 }
