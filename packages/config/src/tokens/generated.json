@@ -5771,6 +5771,20 @@
       "supply": "zero"
     },
     {
+      "name": "TRALA TOKEN",
+      "coingeckoId": "trala-token",
+      "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b",
+      "symbol": "TRALA",
+      "decimals": 18,
+      "deploymentTimestamp": 1718327183,
+      "coingeckoListingTimestamp": 1719446400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38900/large/TRALA.png?1719456891",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Trestle",
       "coingeckoId": "trestle",
       "address": "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD",
