@@ -1,8 +1,8 @@
 {
   "name": "appchain",
   "chain": "ethereum",
-  "blockNumber": 22622481,
-  "configHash": "0xcf89e9cc96137ec522b0443cc3a2889a4880316ec99495f657f908d4b6b9c690",
+  "blockNumber": 22623572,
+  "configHash": "0x56900095c54542b06fcb249b953e01e6cf5a7fcb936e9cc0932501c385b4f3e8",
   "entries": [
     {
       "name": "Inbox",
@@ -667,6 +667,28 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "name": "QuoteVerifier",
+      "address": "0x816ADa3B63F3c643fb04152eA32B58Db89aadd89",
+      "type": "Contract",
+      "template": "espresso/Sequencing/QuoteVerifier",
+      "sourceHashes": [
+        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
+      ],
+      "proxyType": "immutable",
+      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
+      "sinceTimestamp": 1742466119,
+      "sinceBlock": 22087444,
+      "values": {
+        "$immutable": true,
+        "P256_VERIFIER": "0xc2b78104907F722DABAc4C69f826a522B2754De4",
+        "pccsRouter": "0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a",
+        "quoteVersion": 3
+      },
+      "implementationNames": {
+        "0x816ADa3B63F3c643fb04152eA32B58Db89aadd89": "V3QuoteVerifier"
+      }
+    },
+    {
       "name": "ValidatorUtils",
       "address": "0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1",
       "type": "Contract",
@@ -1210,6 +1232,14 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x816ADa3B63F3c643fb04152eA32B58Db89aadd89": [
+      "constructor(address _ecdsaVerifier, address _router)",
+      "function P256_VERIFIER() view returns (address)",
+      "function pccsRouter() view returns (address)",
+      "function quoteVersion() view returns (uint16)",
+      "function verifyQuote(tuple(uint16 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, bytes rawQuote) view returns (bool success, bytes output)",
+      "function verifyZkOutput(bytes outputBytes) view returns (bool success, bytes output)"
+    ],
     "0xA79305c7D5Ad6F8AF0292c863957a2488F13f0d1": [
       "function areUnresolvedNodesLinear(address rollup) view returns (bool)",
       "function checkDecidableNextNode(address rollup) view returns (uint8)",
@@ -1547,7 +1577,8 @@
     ]
   },
   "usedTemplates": {
-    "espresso/Sequencing/EspressoTEEVerifier_v2": "0x51dba07874ab998b1b8c807555a57cfe1e2194ee712d18f4790a12f2f74c7a38",
+    "espresso/Sequencing/EspressoTEEVerifier_v2": "0xbb5726dec0eae47236eb08e9d02f3eeb89493786f83d138e4a01ad506c52e3a2",
+    "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
@@ -1565,5 +1596,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x6414edaaafd309e504d1738c62f1face25ccc97bc830a619a08730f64b709c93"
+  "permissionsConfigHash": "0xccf094f03597ddfae547a72351be509ca85cd9d50d49fddba8c2d7bacae2271f"
 }

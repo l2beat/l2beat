@@ -1,8 +1,6 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "QuoteVerifier",
-  "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.",
-  "ignoreInWatchMode": [""],
-  "ignoreRelatives": ["pccsRouter"],
-  "fields": {}
+  "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter ({{pccsRouter}}), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
+  "ignoreRelatives": ["pccsRouter", "P256_VERIFIER"]
 }

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2a128735869962a79d9bce23469f6bf1f5b0f7dc
+Generated with discovered.json: 0xc4a3a3cd6e899997e28b9c07456b2587ce3b84a3
 
-# Diff at Tue, 03 Jun 2025 07:13:50 GMT:
+# Diff at Tue, 03 Jun 2025 11:45:52 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 22622481
+- current block number: 22623572
 
 ## Description
 
@@ -69,6 +69,12 @@ intial discovery of an orbit stack chain with espresso sequencing and anytrust D
 +   Status: CREATED
     contract SequencerInbox (0x8045B2aa6b823CbA8f99ef3D3404F711619d3473)
     +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (0x816ADa3B63F3c643fb04152eA32B58Db89aadd89)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0xe20C4d54afBbea5123728d5b7dAcD9CB3c65C39a), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
 ```
 
 ```diff
