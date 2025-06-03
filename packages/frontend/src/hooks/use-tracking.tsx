@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { env } from '~/env'
 
 export const PlausibleEvents = z.object({
   switchChanged: z.object({ name: z.string(), value: z.string() }),
@@ -26,34 +25,16 @@ export type PlausibleEvents = z.infer<typeof PlausibleEvents>
 export type Plausible = {
   <T extends keyof PlausibleEvents>(
     event: T,
-    ...args: PlausibleEvents[T] extends never
+    ...args: PlausibleEvents[T] extends undefined
       ? []
       : [{ props: PlausibleEvents[T] }]
   ): void
 }
 
-export function useTracking() {
+export function useTracking(): { track: Plausible } {
   return {
-    track: <T extends keyof PlausibleEvents>(
-      key: T,
-      ...args: PlausibleEvents[T] extends undefined
-        ? []
-        : [{ props: PlausibleEvents[T] }]
-    ) => {
-      if (env.NODE_ENV !== 'production') {
-        return
-      }
-
-      fetch('/plausible/event', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: key,
-          props: args[0]?.props,
-        }),
-      })
+    track: (event, ...args) => {
+      window.plausible?.(event, ...args)
     },
   }
 }
