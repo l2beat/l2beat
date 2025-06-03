@@ -7,6 +7,7 @@ import { createServerPageRouter } from '../pages/ServerPageRouter'
 import { render } from '../ssr/server-entry'
 import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
@@ -42,6 +43,15 @@ export function createServer(logger: Logger) {
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
+
+  app.use(
+    (
+      err: Error,
+      req: express.Request,
+      res: express.Response,
+      next: express.NextFunction,
+    ) => ErrorHandler(err, req, res, next, appLogger),
+  )
 
   app.listen(port, () => {
     appLogger.info(`Started at http://localhost:${port}`)
