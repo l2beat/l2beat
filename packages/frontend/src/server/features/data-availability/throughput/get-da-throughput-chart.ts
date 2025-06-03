@@ -1,4 +1,4 @@
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database/dist/da-beat/data-availability/entity'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
@@ -63,7 +63,7 @@ export async function getDaThroughputChart({
 }
 
 export function groupByTimestampAndDaLayerId(
-  records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
+  records: (DataAvailabilityRecord2 | ProjectsSummedDataAvailabilityRecord)[],
 ) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity

@@ -1,5 +1,5 @@
 import type { DaLayerThroughput } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
@@ -58,7 +58,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     groupedProjectValues,
   )
 
-  const getData = (values: Record<string, DataAvailabilityRecord[]>) => {
+  const getData = (
+    values: Record<string, Omit<DataAvailabilityRecord2, 'configurationId'>[]>,
+  ) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
@@ -197,8 +199,11 @@ function getMaxThroughputPerSecond(
 
 function sumByTimestamp(
   daLayer: string,
-  groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
-): DataAvailabilityRecord[] {
+  groupedProjectValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
+): Omit<DataAvailabilityRecord2, 'configurationId'>[] {
   const projectValues = groupedProjectValues[daLayer] ?? []
   const timestampedValues = groupBy(projectValues, (v) => v.timestamp)
   const values = Object.entries(timestampedValues).map(
@@ -217,8 +222,14 @@ function sumByTimestamp(
 }
 
 async function getLargestPosters(
-  groupedDaLayerValues: Record<string, DataAvailabilityRecord[]>,
-  groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
+  groupedDaLayerValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
+  groupedProjectValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
 ) {
   const largestPosters = Object.fromEntries(
     Object.entries(groupedProjectValues)
