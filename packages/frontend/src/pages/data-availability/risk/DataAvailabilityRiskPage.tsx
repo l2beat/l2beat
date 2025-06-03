@@ -1,20 +1,20 @@
-import { CountBadge } from '~/components/badge/count-badge'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
-} from '~/components/core/directory-tabs'
-import { MainPageHeader } from '~/components/main-page-header'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
+} from '~/components/core/DirectoryTabs'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import {
   CustomSystemInfo,
   PublicSystemInfo,
-} from '../components/da-category-info'
-import { DaRiskTable } from './components/table/da-risk-table'
+} from '../components/DaCategoryInfo'
+import { DaRiskTable } from './components/table/DaRiskTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaRiskEntry[]
@@ -36,7 +36,7 @@ export function DataAvailabilityRiskPage({
     Padding from directory tabs can not be removed because it is needed
     for the tabs to be sticky
   */}
-          <div className="flex flex-col gap-6 lg:-mt-4">
+          <div className="lg:-mt-4 flex flex-col gap-6">
             <DirectoryTabs defaultValue="public">
               <DirectoryTabsList>
                 <DirectoryTabsTrigger value="public">

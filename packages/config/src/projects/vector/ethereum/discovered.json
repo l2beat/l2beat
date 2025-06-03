@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22431133,
+  "blockNumber": 22615832,
   "configHash": "0x0573327a695b2211e98d2dff287b91632161196d1353a4460801688c7c71df46",
   "entries": [
     {
@@ -60,13 +60,13 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 338,
-        "latestBlock": 1325760,
+        "latestAuthoritySetId": 366,
+        "latestBlock": 1438080,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
-        "vectorXProgramVkey": "0x00e9bba2a9360f570b9ba99e5186825ac723bedebd486b6a818870c44e3e4d4f",
+        "vectorXProgramVkey": "0x0057b7de6dcd8ff25e7b41089f4b5fa586067fbb107756d1f66d92fe71dd6ad1",
         "verifier": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
         "VERSION": "2.0.0"
       },
@@ -119,7 +119,7 @@
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1408,
+        "messageId": 1423,
         "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -474,7 +474,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -549,7 +549,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

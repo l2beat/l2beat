@@ -106,6 +106,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
 function useSynchronizeSelection() {
   const [lastSelection, rememberSelection] = useState<readonly string[]>([])
   const selectedGlobal = usePanelStore((state) => state.selected)
+  const highlightGlobal = usePanelStore((state) => state.highlight)
   const selectGlobal = usePanelStore((state) => state.select)
   const selectedNodes = useStore((state) => state.selected)
   const selectNodes = useStore((state) => state.selectAndFocus)
@@ -114,6 +115,7 @@ function useSynchronizeSelection() {
     const eq = (a: readonly string[], b: readonly string[]) =>
       a.length === b.length && a.every((x, i) => b[i] === x)
 
+    highlightGlobal(selectedNodes)
     if (selectedNodes.length > 0 && !eq(lastSelection, selectedNodes)) {
       rememberSelection(selectedNodes)
       selectGlobal(selectedNodes[0])

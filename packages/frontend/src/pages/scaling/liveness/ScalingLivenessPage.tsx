@@ -1,12 +1,12 @@
-import { TableFilterContextProvider } from '~/components/table/filters/table-filter-context'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { TabbedScalingEntries } from '~/pages/scaling/utils/group-by-scaling-tabs'
-import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
-import { LivenessHeader } from './components/liveness-header'
-import { LivenessTimeRangeContextProvider } from './components/liveness-time-range-context'
-import { ScalingLivenessTables } from './components/scaling-liveness-tables'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
+import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
+import { LivenessHeader } from './components/LivenessHeader'
+import { LivenessTimeRangeContextProvider } from './components/LivenessTimeRangeContext'
+import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>

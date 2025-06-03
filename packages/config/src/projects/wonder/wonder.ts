@@ -1,5 +1,10 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import {
+  DA_BRIDGES,
+  DA_LAYERS,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -13,6 +18,7 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const wonder: ScalingProject = zkStackL2({
   addedAt: UnixTime(1741634331), // 2025/03/10 19:18 UTC
   additionalBadges: [BADGES.DA.CustomDA],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Wonder',
     slug: 'wonder',

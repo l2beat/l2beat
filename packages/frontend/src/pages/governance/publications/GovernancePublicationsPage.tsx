@@ -1,10 +1,10 @@
-import { LinkWithThumbnail } from '~/components/link-with-thumbnail'
-import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
+import { LinkWithThumbnail } from '~/components/LinkWithThumbnail'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
 
 interface Props extends AppLayoutProps {
   publications: GovernancePublicationEntry[]
@@ -16,7 +16,7 @@ export function GovernancePublicationsPage({ publications, ...props }: Props) {
       <SideNavLayout>
         <MainPageHeader>Governance Publications</MainPageHeader>
         <PrimaryCard className="md:p-8">
-          <h1 className="mb-4 text-3xl font-bold md:hidden">
+          <h1 className="mb-4 font-bold text-3xl md:hidden">
             Governance Publications
           </h1>
           <p className="md:paragraph-18 paragraph-16">
@@ -48,7 +48,7 @@ function PublicationCard({
       href={`/governance/publications/${publication.id}`}
       title={publication.shortTitle ?? publication.title}
       topAccessory={
-        <p className="subtitle-12 uppercase text-purple-100 dark:text-pink-200">
+        <p className="subtitle-12 text-purple-100 uppercase dark:text-pink-200">
           {publication.readTimeInMinutes} min read • Published on{' '}
           {publication.publishedOn}
         </p>

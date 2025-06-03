@@ -1,22 +1,22 @@
 import type { ReactNode } from 'react'
-import { Breadcrumbs } from '~/components/breadcrumbs'
+import { Breadcrumbs } from '~/components/Breadcrumbs'
+import { MainPageHeader } from '~/components/MainPageHeader'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/components/core/tooltip/tooltip'
-import { CustomLink } from '~/components/link/custom-link'
-import { MainPageHeader } from '~/components/main-page-header'
-import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { InfoIcon } from '~/icons/info'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { ZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/get-zk-catalog-project-details'
-import { ProjectHeader } from './components/project-header'
-import { RequiredTools } from './components/required-tools'
-import { VerifiedCountWithDetails } from './components/verified-count-with-details'
-import { Verifiers } from './components/verifiers'
+} from '~/components/core/tooltip/Tooltip'
+import { CustomLink } from '~/components/link/CustomLink'
+import { Markdown } from '~/components/markdown/Markdown'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { InfoIcon } from '~/icons/Info'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/getZkCatalogProjectDetails'
+import { ProjectHeader } from './components/ProjectHeader'
+import { RequiredTools } from './components/RequiredTools'
+import { VerifiedCountWithDetails } from './components/VerifiedCountWithDetails'
+import { Verifiers } from './components/Verifiers'
 
 interface Props extends AppLayoutProps {
   projectDetails: ZkCatalogProjectDetails
@@ -50,7 +50,7 @@ export function ZkCatalogProjectPage({ projectDetails, ...props }: Props) {
               ]}
             />
           </MainPageHeader>
-          <div className="border-divider max-lg:pt-8 max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6">
+          <div className="border-divider max-md:border-b max-md:bg-header-primary max-md:px-4 max-md:pb-6 max-lg:pt-8">
             <div className="flex flex-col gap-1 md:flex-row md:items-end md:gap-4 md:px-6">
               <ProjectHeader
                 icon={projectDetails.icon}
@@ -126,7 +126,7 @@ function HeaderItem({
 }) {
   return (
     <div className="flex items-baseline justify-between md:block">
-      <h3 className="flex items-center gap-1.5 text-xs text-secondary md:mb-2">
+      <h3 className="flex items-center gap-1.5 text-secondary text-xs md:mb-2">
         {title}
         {tooltip ? (
           <Tooltip>
@@ -137,7 +137,7 @@ function HeaderItem({
           </Tooltip>
         ) : null}
       </h3>
-      <span className="text-lg font-bold">{children}</span>
+      <span className="font-bold text-lg">{children}</span>
     </div>
   )
 }
@@ -145,7 +145,7 @@ function HeaderItem({
 function Section({ title, children }: { title: string; children: ReactNode }) {
   return (
     <PrimaryCard>
-      <h2 className="mb-4 text-2xl font-bold">{title}</h2>
+      <h2 className="mb-4 font-bold text-2xl">{title}</h2>
       {children}
     </PrimaryCard>
   )

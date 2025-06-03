@@ -1,20 +1,20 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
-import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
-import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
+import { ContentWrapper } from '~/components/ContentWrapper'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
+import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
-import { ProjectDetails } from '~/components/projects/project-details'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { TopNavLayout } from '~/layouts/top-nav-layout'
-import { EthereumDaProjectSummary } from '~/pages/data-availability/project/components/ethereum-da-project-summary'
-import { RegularDaProjectSummary } from '~/pages/data-availability/project/components/regular-da-project-summary'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { TopNavLayout } from '~/layouts/TopNavLayout'
+import { EthereumDaProjectSummary } from '~/pages/data-availability/project/components/EthereumDaProjectSummary'
+import { RegularDaProjectSummary } from '~/pages/data-availability/project/components/RegularDaProjectSummary'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,
-} from '~/server/features/data-availability/project/get-da-project-entry'
+} from '~/server/features/data-availability/project/getDaProjectEntry'
 
 interface Props extends AppLayoutProps {
   projectEntry: DaProjectPageEntry | EthereumDaProjectPageEntry

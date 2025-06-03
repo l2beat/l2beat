@@ -1,3 +1,4 @@
+import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
@@ -14,6 +15,7 @@ import { DatabaseClient } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
+import { AnomalyStatsRepository } from './other/anomaly-stats/repository'
 import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
@@ -28,11 +30,8 @@ import { IndexerConfigurationRepository } from './uif/indexer-configuration/repo
 import { IndexerStateRepository } from './uif/indexer-state/repository'
 
 export type Database = ReturnType<typeof createDatabase>
-export function createDatabase(
-  config?: PoolConfig,
-  opts?: { loggerEnabled?: boolean },
-) {
-  const db = new DatabaseClient({ ...config }, opts)
+export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
+  const db = new DatabaseClient({ ...config })
 
   return {
     transaction: db.transaction.bind(db),
@@ -67,6 +66,7 @@ export function createDatabase(
     aggregatedL2Cost: new AggregatedL2CostRepository(db),
     aggregatedLiveness: new AggregatedLivenessRepository(db),
     anomalies: new AnomaliesRepository(db),
+    anomalyStats: new AnomalyStatsRepository(db),
     finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),

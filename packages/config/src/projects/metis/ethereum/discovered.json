@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22567898,
+  "blockNumber": 22610669,
   "configHash": "0x830f0d66787d79b301a2b867082dd69e366911873940965548fc26f06b2264b4",
   "entries": [
     {
@@ -90,7 +90,7 @@
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "423601833691609371299528",
+        "totalLocked": "422809625916317936452410",
         "totalRewardsLiquidated": "43141403568895808876180"
       },
       "implementationNames": {
@@ -119,10 +119,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x00000000000000000000000000000000000068347d63000138c3f9",
-        "getGlobalMetadataByChainId": "0x00000000000000000000000000000000000068347d63000138c3f9",
-        "length": 28855,
-        "lengthByChainId": 28855,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000683c68eb0001395c68",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000683c68eb0001395c68",
+        "length": 29086,
+        "lengthByChainId": 29086,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -407,6 +407,12 @@
           "role": ".gameCreator"
         },
         {
+          "permission": "stateDeleterMetis",
+          "from": "0x918778e825747a892b17C66fe7D24C618262867d",
+          "description": "Can delete batches from the StateCommitmentChain.",
+          "role": ".1088_MVM_FraudVerifier"
+        },
+        {
           "permission": "upgrade",
           "from": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
           "role": "admin",
@@ -541,8 +547,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 3997,
-        "getQueueLength": 40281,
+        "getNumPendingQueueElements": 4015,
+        "getQueueLength": 40299,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -606,7 +612,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 18,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -846,12 +852,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1748270435,
-        "getLastSequencerTimestampByChainId": 1748270435,
-        "getTotalBatches": 28855,
-        "getTotalBatchesByChainId": 28855,
-        "getTotalElements": 20497401,
-        "getTotalElementsByChainId": 20497401,
+        "getLastSequencerTimestamp": 1748789483,
+        "getLastSequencerTimestampByChainId": 1748789483,
+        "getTotalBatches": 29086,
+        "getTotalBatchesByChainId": 29086,
+        "getTotalElements": 20536424,
+        "getTotalElementsByChainId": 20536424,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -982,7 +988,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 122,
+        "currentBatch": 124,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -1063,7 +1069,15 @@
     {
       "address": "0xDD6FFC7D9a4Fb420b637747edc6456340d12d377",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+          "description": "block (censor) specific L2->L1 messages (e.g. withdrawals), so that they cannot be relayed, pause the contract.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
@@ -2062,7 +2076,7 @@
     "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "metis/DisputeGameFactory_Metis": "0xcdbcc4615d43ff98023bd06e2e0baa3e022d7540474389a1aab75f0f5d409716",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
-    "metis/L1CrossDomainMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/Lib_AddressManager": "0x8a7b8bafae04f9be8a5026a865b494737de12d4c845b772f1845b4905013f86f",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
@@ -2077,5 +2091,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xaf13f70d5fd48bd4ea50e5169b310cfb1a5912ee6eac4c876d88557132b2868c"
+  "permissionsConfigHash": "0xd6880460948b5609e59b43805915443ee7676e63241f752ce49c802bbb425344"
 }

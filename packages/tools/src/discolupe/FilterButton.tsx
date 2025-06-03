@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import Popover from './Popover'
+import { Popover } from './Popover'
 import { FilterIcon } from './icons/FilterIcon'
 
 export interface FilterButtonProps {

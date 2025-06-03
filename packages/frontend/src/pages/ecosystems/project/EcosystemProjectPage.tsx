@@ -1,26 +1,26 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { CssVariables } from '~/components/css-variables'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import { CssVariables } from '~/components/CssVariables'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
-import { EcosystemsActivityChart } from './components/charts/ecosystems-activity-chart'
-import { EcosystemsProjectsChart } from './components/charts/ecosystems-projects-chart'
-import { EcosystemsTvsChart } from './components/charts/ecosystems-tvs-chart'
-import { EcosystemPageHeader } from './components/ecosystem-page-header'
-import { EcosystemProjectsTable } from './components/ecosystem-projects-table'
-import { EcosystemBuildOnLink } from './components/widgets/ecosystem-build-on-link'
-import { EcosystemGovernanceLinks } from './components/widgets/ecosystem-governance-links'
-import { EcosystemLearnMoreLink } from './components/widgets/ecosystem-learn-more-link'
-import { EcosystemMilestonesAndIncidents } from './components/widgets/ecosystem-milestones-and-incidents'
-import { EcosystemMobileProjectLinks } from './components/widgets/ecosystem-mobile-project-links'
-import { EcosystemProjectsByDaLayer } from './components/widgets/ecosystem-projects-by-da-layer'
-import { EcosystemProjectsByRaas } from './components/widgets/ecosystem-projects-by-raas'
-import { EcosystemToken } from './components/widgets/ecosystem-token'
-import { EcosystemTvsByStage } from './components/widgets/ecosystem-tvs-by-stage'
-import { EcosystemTvsByTokenType } from './components/widgets/ecosystem-tvs-by-token-type'
+import { EcosystemPageHeader } from './components/EcosystemPageHeader'
+import { EcosystemProjectsTable } from './components/EcosystemProjectsTable'
+import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
+import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
+import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
+import { EcosystemBuildOnLink } from './components/widgets/EcosystemBuildOnLink'
+import { EcosystemGovernanceLinks } from './components/widgets/EcosystemGovernanceLinks'
+import { EcosystemLearnMoreLink } from './components/widgets/EcosystemLearnMoreLink'
+import { EcosystemMilestonesAndIncidents } from './components/widgets/EcosystemMilestonesAndIncidents'
+import { EcosystemMobileProjectLinks } from './components/widgets/EcosystemMobileProjectLinks'
+import { EcosystemProjectsByDaLayer } from './components/widgets/EcosystemProjectsByDaLayer'
+import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsByRaas'
+import { EcosystemToken } from './components/widgets/EcosystemToken'
+import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
+import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
   queryState: DehydratedState
@@ -45,8 +45,7 @@ export function EcosystemProjectPage({
                 spacing: '0.75rem',
               }}
             />
-            {/* eslint-disable-next-line tailwindcss/no-contradicting-classname */}
-            <div className="absolute right-[20%] top-44 -z-1 h-[400vh] w-screen -translate-y-1/2 translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-[--ecosystem-secondary] via-25% to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
+            <div className="-z-1 -translate-y-1/2 absolute top-44 right-[20%] h-[400vh] w-screen translate-x-1/2 bg-gradient-radial from-[--ecosystem-primary] via-25% via-[--ecosystem-secondary] to-transparent md:h-[180vh] lg:top-20 lg:w-[calc(100vw_-_15rem)]"></div>
             <div>
               <EcosystemPageHeader
                 logo={ecosystem.logo}

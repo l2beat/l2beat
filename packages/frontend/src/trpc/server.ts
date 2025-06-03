@@ -1,26 +1,25 @@
 import { createHydrationHelpers } from '@trpc/react-query/rsc'
 import { createServerSideHelpers } from '@trpc/react-query/server'
-import { cache } from 'react'
 
 import type { AppRouter } from '~/server/trpc/root'
 import { appRouter, createCaller } from '~/server/trpc/root'
 import { createTRPCContext } from '~/server/trpc/trpc'
-import { createQueryClient } from './query-client'
+import { createQueryClient } from './queryClient'
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
  * handling a tRPC call from a React Server Component.
  */
-const createContext = cache(async () => {
+const createContext = () => {
   const heads = new Headers()
   heads.set('x-trpc-source', 'rsc')
 
   return createTRPCContext({
     headers: heads,
   })
-})
+}
 
-const getQueryClient = cache(createQueryClient)
+const getQueryClient = createQueryClient
 const caller = createCaller(createContext)
 
 export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
@@ -40,9 +39,7 @@ export const getExpressHelpers = () =>
     //       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     //     )
     transformer: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       serialize: (data) => data,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
       deserialize: (data) => data,
     },
   })

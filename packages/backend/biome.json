@@ -1,5 +1,5 @@
 {
-  "extends": ["../../biome.json"],
+  "extends": ["../../biome.jsonc"],
   "files": { "maxSize": 10485760 },
   "linter": {
     "rules": {

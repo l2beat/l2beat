@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
+import { getDaRiskEntries } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

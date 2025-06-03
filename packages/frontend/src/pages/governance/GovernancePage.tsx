@@ -1,19 +1,19 @@
-import { CustomLink } from '~/components/link/custom-link'
-import { MainPageHeader } from '~/components/main-page-header'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import type { CollectionEntry } from '~/content/get-collection'
-import { CustomLinkIcon } from '~/icons/outlink'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { GovernanceEventEntry } from '~/pages/governance/utils/get-governance-event-entries'
-import type { GovernancePublicationEntry } from '~/pages/governance/utils/get-governance-publication-entry'
-import { GovernanceHeaderIllustration } from './assets/governance-header'
-import { GovernanceEventsSection } from './components/sections/governance-events-section'
-import { OfficeHoursSection } from './components/sections/office-hours-section'
-import { OurApproachSection } from './components/sections/our-approach-section'
-import { OurMissionSection } from './components/sections/our-mission-section'
-import { RecentPublicationsSection } from './components/sections/recent-publications-section'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CustomLink } from '~/components/link/CustomLink'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { CollectionEntry } from '~/content/getCollection'
+import { CustomLinkIcon } from '~/icons/Outlink'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { GovernanceEventEntry } from '~/pages/governance/utils/getGovernanceEventEntries'
+import type { GovernancePublicationEntry } from '~/pages/governance/utils/getGovernancePublicationEntry'
+import { GovernanceHeaderIllustration } from './assets/GovernanceHeader'
+import { GovernanceEventsSection } from './components/sections/GovernanceEventsSection'
+import { OfficeHoursSection } from './components/sections/OfficeHoursSection'
+import { OurApproachSection } from './components/sections/OurApproachSection'
+import { OurMissionSection } from './components/sections/OurMissionSection'
+import { RecentPublicationsSection } from './components/sections/RecentPublicationsSection'
 
 interface Props extends AppLayoutProps {
   publications: GovernancePublicationEntry[]
@@ -59,7 +59,7 @@ function Header({
 }: { delegatedProjects: DelegatedProjectWithIcon[] }) {
   return (
     <PrimaryCard className="md:p-8">
-      <h1 className="mb-4 text-3xl font-bold md:hidden">Governance</h1>
+      <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
           <p className="paragraph-18">
@@ -69,7 +69,7 @@ function Header({
             ecosystem towards a safer, more secure decentralized future.
           </p>
           <div className="flex flex-col gap-2.5">
-            <span className="text-xs font-medium uppercase tracking-[-0.14px] text-purple-100 dark:text-pink-200">
+            <span className="font-medium text-purple-100 text-xs uppercase tracking-[-0.14px] dark:text-pink-200">
               Delegate your tokens
             </span>
             <div className="grid grid-cols-2 gap-2 md:flex md:flex-wrap">

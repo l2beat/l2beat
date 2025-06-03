@@ -11,6 +11,7 @@ export const UltimatePermissionToPrefix: {
   propose: 'A Proposer',
   sequence: 'A Sequencer',
   validate: 'A Validator',
+  disperse: 'A Disperser',
   operateLinea: 'An Operator',
   fastconfirm: 'A FastConfirmer',
   validateZkStack: 'A Validator',
@@ -24,7 +25,9 @@ export const UltimatePermissionToPrefix: {
   governStarknet: 'A Governor',
   member: 'Is a member of',
   metisGameCreator: 'A dispute game creator',
-  disperse: 'A Disperser',
+  stateDeleterMetis: 'A state deleter',
+  hotValidatorHyperliquid: 'A Hot Validator',
+  coldValidatorHyperliquid: 'A Cold Validator',
 }
 
 export const RoleDescriptions: {
@@ -123,5 +126,19 @@ export const RoleDescriptions: {
   disperse: {
     name: 'Disperser',
     description: 'Can disperse EigenDA blobs to the EigenDA node operators.',
+  stateDeleterMetis: {
+    name: 'State Deleter',
+    description:
+      'Can delete any state root from the StateCommitmentChain, preventing withdrawals based on that root.',
+  },
+  hotValidatorHyperliquid: {
+    name: 'Hot Validator',
+    description:
+      'Can request withdrawals, start a validator set change, add lockers and finalizers (Can also change cold validators by adding a finalizer and proposing/finalizing a new validator set).',
+  },
+  coldValidatorHyperliquid: {
+    name: 'Cold Validator',
+    description:
+      'Can change the dispute period, block duration and locker threshold. Can also invalidate withdrawals, emergencyUnlock (unpause and change the validator set), remove lockers and finalizers.',
   },
 }

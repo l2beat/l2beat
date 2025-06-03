@@ -1,5 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { AnomalyRecord, Database, LivenessRecord } from '@l2beat/database'
+import type {
+  AnomalyRecord,
+  AnomalyStatsRecord,
+  Database,
+  LivenessRecord,
+} from '@l2beat/database'
 import { type TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -64,9 +69,14 @@ describe(AnomaliesIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(1),
       })
 
+      const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
+        upsertMany: mockFn().resolvesTo(1),
+      })
+
       const indexer = createIndexer({
         tag: 'update',
         anomaliesRepository: mockAnomaliesRepository,
+        anomalyStatsRepository: mockAnomalyStatsRepository,
       })
 
       const mockAnomalies: AnomalyRecord[] = [
@@ -78,7 +88,20 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
-      const mockCalculateAnomalies = mockFn().resolvesTo(mockAnomalies)
+      const mockAnomalyStats: AnomalyStatsRecord[] = [
+        {
+          timestamp: NOW - 1 * UnixTime.DAY,
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'batchSubmissions',
+          mean: 100,
+          stdDev: 50,
+        },
+      ]
+
+      const mockCalculateAnomalies = mockFn().resolvesTo({
+        anomalyRecords: mockAnomalies,
+        anomalyStatsRecords: mockAnomalyStats,
+      })
       indexer.getAnomalies = mockCalculateAnomalies
 
       const from = NOW - 1 * UnixTime.DAY - 1 * UnixTime.HOUR
@@ -96,6 +119,10 @@ describe(AnomaliesIndexer.name, () => {
         mockAnomalies,
       )
 
+      expect(mockAnomalyStatsRepository.upsertMany).toHaveBeenCalledWith(
+        mockAnomalyStats,
+      )
+
       expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
     })
 
@@ -105,9 +132,14 @@ describe(AnomaliesIndexer.name, () => {
         upsertMany: mockFn().resolvesTo(1),
       })
 
+      const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
+        upsertMany: mockFn().resolvesTo(1),
+      })
+
       const indexer = createIndexer({
         tag: 'adjust-update',
         anomaliesRepository: mockAnomaliesRepository,
+        anomalyStatsRepository: mockAnomalyStatsRepository,
       })
 
       const mockAnomalies: AnomalyRecord[] = [
@@ -119,7 +151,20 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
-      const mockCalculateAnomalies = mockFn().resolvesTo(mockAnomalies)
+      const mockAnomalyStats: AnomalyStatsRecord[] = [
+        {
+          timestamp: NOW - 1 * UnixTime.DAY,
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'batchSubmissions',
+          mean: 100,
+          stdDev: 50,
+        },
+      ]
+
+      const mockCalculateAnomalies = mockFn().resolvesTo({
+        anomalyRecords: mockAnomalies,
+        anomalyStatsRecords: mockAnomalyStats,
+      })
       indexer.getAnomalies = mockCalculateAnomalies
 
       const from = MIN
@@ -135,6 +180,10 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockAnomaliesRepository.upsertMany).toHaveBeenCalledWith(
         mockAnomalies,
+      )
+
+      expect(mockAnomalyStatsRepository.upsertMany).toHaveBeenCalledWith(
+        mockAnomalyStats,
       )
 
       expect(result).toEqual(UnixTime.toStartOf(NOW, 'day'))
@@ -215,14 +264,47 @@ describe(AnomaliesIndexer.name, () => {
         },
       ]
 
+      const mockStats: AnomalyStatsRecord[] = [
+        {
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'batchSubmissions',
+          timestamp: NOW,
+          mean: 100,
+          stdDev: 100,
+        },
+        {
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'proofSubmissions',
+          timestamp: NOW,
+          mean: 200,
+          stdDev: 200,
+        },
+        {
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'stateUpdates',
+          timestamp: NOW,
+          mean: 300,
+          stdDev: 300,
+        },
+      ]
+
       const mockDetectAnomalies = mockFn()
-        .returnsOnce(
-          mockAnomalies.filter((a) => a.subtype === 'batchSubmissions'),
-        )
-        .returnsOnce(
-          mockAnomalies.filter((a) => a.subtype === 'proofSubmissions'),
-        )
-        .returnsOnce(mockAnomalies.filter((a) => a.subtype === 'stateUpdates'))
+        .returnsOnce({
+          anomalies: mockAnomalies.filter(
+            (a) => a.subtype === 'batchSubmissions',
+          ),
+          stats: mockStats[0],
+        })
+        .returnsOnce({
+          anomalies: mockAnomalies.filter(
+            (a) => a.subtype === 'proofSubmissions',
+          ),
+          stats: mockStats[1],
+        })
+        .returnsOnce({
+          anomalies: mockAnomalies.filter((a) => a.subtype === 'stateUpdates'),
+          stats: mockStats[2],
+        })
       indexer.detectAnomalies = mockDetectAnomalies
 
       const result = await indexer.getAnomalies(NOW)
@@ -262,7 +344,10 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual(mockAnomalies)
+      expect(result).toEqual({
+        anomalyRecords: mockAnomalies,
+        anomalyStatsRecords: mockStats,
+      })
     })
   })
 
@@ -277,7 +362,7 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual([])
+      expect(result).toEqual({ anomalies: [], stats: undefined })
     })
 
     it('should return empty if not enough liveness data', async () => {
@@ -300,7 +385,10 @@ describe(AnomaliesIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual([])
+      expect(result).toEqual({
+        anomalies: [],
+        stats: undefined,
+      })
     })
 
     it('should not detect anomalies', async () => {
@@ -323,7 +411,16 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toEqual([])
+      expect(result).toEqual({
+        anomalies: [],
+        stats: {
+          projectId: MOCK_PROJECTS[0].id,
+          subtype: 'batchSubmissions',
+          timestamp: lastHour,
+          mean: 3595,
+          stdDev: 134.0708767779192,
+        },
+      })
     })
 
     it('should detect anomalies', async () => {
@@ -347,14 +444,23 @@ describe(AnomaliesIndexer.name, () => {
         lastHour,
       )
 
-      expect(result).toEqual([
-        {
+      expect(result).toEqual({
+        anomalies: [
+          {
+            projectId: MOCK_PROJECTS[0].id,
+            subtype: 'batchSubmissions',
+            timestamp: lastHour - 1 * anomalyDuration * UnixTime.HOUR,
+            duration: anomalyDuration * 3600,
+          },
+        ],
+        stats: {
           projectId: MOCK_PROJECTS[0].id,
           subtype: 'batchSubmissions',
-          timestamp: lastHour - 1 * anomalyDuration * UnixTime.HOUR,
-          duration: anomalyDuration * 3600,
+          timestamp: lastHour,
+          mean: 3600,
+          stdDev: 0.00010861285656770133,
         },
-      ])
+      })
     })
   })
 })
@@ -363,6 +469,7 @@ function createIndexer(options: {
   tag: string
   livenessRepository?: Database['liveness']
   anomaliesRepository?: Database['anomalies']
+  anomalyStatsRepository?: Database['anomalyStats']
   indexerService?: IndexerService
   transaction?: Database['transaction']
 }) {
@@ -380,6 +487,9 @@ function createIndexer(options: {
         mockObject<Database['anomalies']>({
           upsertMany: mockFn().resolvesTo(1),
         }),
+      anomalyStats:
+        options.anomalyStatsRepository ??
+        mockObject<Database['anomalyStats']>(),
       transaction: options.transaction ?? (async (fun) => await fun()),
     }),
     projects: MOCK_PROJECTS,

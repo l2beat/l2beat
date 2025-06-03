@@ -1,12 +1,15 @@
 import { readFileSync } from 'node:fs'
+import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
-import { render } from '../ssr/server-entry'
-import { type RenderData } from '../ssr/types'
+import { render } from '../ssr/ServerEntry'
+import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { TimeoutHandler } from './middlewares/TimeoutHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
@@ -17,7 +20,9 @@ const port = process.env.PORT ?? 3000
 
 const template = getTemplate(manifest)
 
-export function createServer() {
+export function createServer(logger: Logger) {
+  const appLogger = logger.for('HTTP Server')
+
   const app = express()
   if (isProduction) {
     app.use(compression())
@@ -32,7 +37,9 @@ export function createServer() {
     app.use('/', express.static('./static'))
   }
 
-  app.use(MetricsMiddleware)
+  app.use(TimeoutHandler(appLogger))
+  app.use(ErrorHandler(appLogger))
+  app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -40,9 +47,10 @@ export function createServer() {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
-  app.listen(port, () => {
-    console.log(`[HTTP] Server started at http://localhost:${port}`)
+  const server = app.listen(port, () => {
+    appLogger.info(`Started at http://localhost:${port}`)
   })
+  server.setTimeout(25000)
 }
 
 function renderToHtml(data: RenderData, url: string) {

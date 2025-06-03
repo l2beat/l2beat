@@ -1,10 +1,10 @@
-import { ContentWrapper } from '~/components/content-wrapper'
-import { FullPageHeader } from '~/components/full-page-header'
-import { Article } from '~/components/markdown/article'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { CollectionEntry } from '~/content/get-collection'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { TopNavLayout } from '~/layouts/top-nav-layout'
+import { ContentWrapper } from '~/components/ContentWrapper'
+import { FullPageHeader } from '~/components/FullPageHeader'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { Article } from '~/components/markdown/Article'
+import type { CollectionEntry } from '~/content/getCollection'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { TopNavLayout } from '~/layouts/TopNavLayout'
 import { cn } from '~/utils/cn'
 
 interface Props extends AppLayoutProps {
@@ -34,10 +34,10 @@ export function TermsOfServicePage({ content, lastUpdated, ...props }: Props) {
 function Header({ lastUpdated }: { lastUpdated: string }) {
   return (
     <FullPageHeader contentWrapperClassName="flex-col items-start gap-2 md:gap-6">
-      <p className="text-2xs font-medium uppercase text-purple-100 dark:text-pink-200">
+      <p className="font-medium text-2xs text-purple-100 uppercase dark:text-pink-200">
         Last updated on {lastUpdated}
       </p>
-      <h1 className="text-2xl font-bold md:text-3xl lg:text-[44px] lg:leading-[1.2]">
+      <h1 className="font-bold text-2xl md:text-3xl lg:text-[44px] lg:leading-[1.2]">
         Terms of Service
       </h1>
     </FullPageHeader>

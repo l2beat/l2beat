@@ -27,6 +27,13 @@ const idRemapping: Record<string, string> = {
   'boba-network': 'bobanetwork',
   'arbitrum-nova': 'nova',
   'arbitrum-one': 'arbitrum',
+  'corn-mainnet': 'corn',
+  'pepe-unchained-gupg0lo9wf': 'pepeunchained',
+  'onyx-6l1k4gho61': 'onyx',
+  'g7-network': 'game7',
+  'corn-maizenet': 'corn',
+  pontem: 'superlumio',
+  polygon: 'polygon-pos',
 }
 
 export class RollupWtfFetcher implements FetchProjects {
