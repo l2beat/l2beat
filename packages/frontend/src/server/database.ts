@@ -65,8 +65,9 @@ function pool() {
   }
 }
 
-function logger(event: LogEvent) {
+function makeLogger() {
   const appLogger = createLogger().for('Database')
+  return function logger(event: LogEvent) {
   if (event.level === 'error') {
     appLogger.error('Query failed', {
       durationMs: event.queryDurationMillis,
