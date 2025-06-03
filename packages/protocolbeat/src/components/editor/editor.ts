@@ -34,7 +34,6 @@ export class Editor {
   private onChangeCallback: ((content: string) => void) | null = null
 
   constructor(element: HTMLElement) {
-    console.log('Editor constructor', contractSchema)
     if (!initialized) {
       init()
       initialized = true
