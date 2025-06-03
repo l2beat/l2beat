@@ -24,6 +24,7 @@ export const UltimatePermissionToPrefix: {
   governStarknet: 'A Governor',
   member: 'Is a member of',
   metisGameCreator: 'A dispute game creator',
+  disperse: 'A Disperser',
 }
 
 export const RoleDescriptions: {
@@ -118,5 +119,9 @@ export const RoleDescriptions: {
   metisGameCreator: {
     name: 'Game Creator',
     description: 'Can create new dispute games.',
+  },
+  disperse: {
+    name: 'Disperser',
+    description: 'Can disperse EigenDA blobs to the EigenDA node operators.',
   },
 }

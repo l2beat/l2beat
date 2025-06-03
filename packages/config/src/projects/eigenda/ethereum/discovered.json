@@ -1,7 +1,7 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22625160,
+  "blockNumber": 22625202,
   "configHash": "0xa5506cb2528e467c43b3f4090275fa86f6afe8354ab201f88960fba15179bb2a",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
@@ -917,7 +917,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 102525,
+        "batchId": 102526,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -953,7 +953,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 102525,
+        "taskNumber": 102526,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1215,7 +1215,14 @@
     {
       "address": "0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "disperse",
+          "from": "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": ".dispersers"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1814,5 +1821,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x6338889e6c1408d644ee7959854275570a9890d21f09a5a92e80777d2ff30d8a"
+  "permissionsConfigHash": "0x0509dd885def48fa5c3f9949c62a9ff5435a7aa355a3ebbe8162168ae24e82fe"
 }

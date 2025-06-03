@@ -31,6 +31,7 @@ export const RolePermissionEntries = [
   'operateStarkEx',
   'governStarknet',
   'metisGameCreator',
+  'disperse',
 ] as const
 
 export type Permission = z.infer<typeof Permission>

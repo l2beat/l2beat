@@ -9,7 +9,8 @@
         "type": "event",
         "select": "disperser",
         "add": { "event": "DisperserAdded" }
-      }
+      },
+      "permissions": [{ "type": "disperse" }]
     }
   }
 }
