@@ -132,6 +132,9 @@ export async function writeTemplateFile(templateId: string, content: string) {
   const res = await fetch('/api/template-files', {
     method: 'POST',
     body: JSON.stringify({ templateId, content }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   })
 
   if (!res.ok) {
