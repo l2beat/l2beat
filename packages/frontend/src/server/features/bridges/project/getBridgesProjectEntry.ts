@@ -248,6 +248,7 @@ export async function getBridgesProjectEntry(
       permissions: project.permissions,
     },
     contractUtils,
+    projectsChangeReport,
   )
   if (permissionsSection) {
     sections.push({

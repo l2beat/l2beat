@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { z } from 'zod'
@@ -10,6 +10,7 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { DaThroughputTimeRange } from './utils/range'
+import { sumByDayAndProject } from './utils/sumByDayAndProject'
 
 export type DaThroughputChartDataByChart = [
   timestamp: number,
@@ -37,11 +38,12 @@ const getDaThroughputChartByProjectData = async (
   params: DaThroughputChartByProjectParams,
 ): Promise<DaThroughputChartDataByChart> => {
   const db = getDb()
-  const [from, to] = getRangeWithMax(params.range, 'daily', {
-    offset: -1 * UnixTime.DAY,
-  })
+  const [from, to] = getRangeWithMax(params.range, 'daily')
   const [throughput, allProjects] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], [from, to]),
+    db.dataAvailability2.getByDaLayersAndTimeRange(
+      [params.daLayer],
+      [from, to],
+    ),
     ps.getProjects({}),
   ])
   if (throughput.length === 0) {
@@ -57,7 +59,7 @@ const getDaThroughputChartByProjectData = async (
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord[],
+  records: DataAvailabilityRecord2[],
   allProjects: Project[],
 ) {
   let minTimestamp = Infinity
@@ -68,7 +70,8 @@ function groupByTimestampAndProjectId(
     (r) => r.daLayer === r.projectId,
   )
 
-  for (const record of projectRecords) {
+  const summedProjectsByDay = sumByDayAndProject(projectRecords)
+  for (const record of summedProjectsByDay) {
     const timestamp = record.timestamp
     const value = record.totalSize
     const project = allProjects.find((p) => p.id === record.projectId)
@@ -82,13 +85,15 @@ function groupByTimestampAndProjectId(
   }
 
   // Add the difference between the total size and the sum of the other projects as 'Unknown'
-  for (const record of daLayerRecords) {
+  const summedDaLayerByDay = sumByDayAndProject(daLayerRecords)
+  for (const record of summedDaLayerByDay) {
     const timestamp = record.timestamp
     const value = record.totalSize
     const restSummed = Object.values(result[timestamp] ?? {}).reduce(
       (acc, curr) => acc + curr,
       0,
     )
+
     result[timestamp] = {
       ...result[timestamp],
       ['Unknown']: Number(value) - restSummed,

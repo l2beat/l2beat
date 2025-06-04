@@ -1,5 +1,5 @@
 import type { DaLayerThroughput } from '@l2beat/config'
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { sumByDayAndProject } from './utils/sumByDayAndProject'
 
 export async function getDaThroughputTable(
   ...parameters: Parameters<typeof getDaThroughputTableData>
@@ -22,9 +23,9 @@ export type ThroughputTableData = Awaited<
 >
 const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
-  const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+  const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, daLayers] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
+    db.dataAvailability2.getByDaLayersAndTimeRange(daLayerIds, [
       lastDay - 7 * UnixTime.DAY,
       lastDay,
     ]),
@@ -37,8 +38,14 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const [daLayerValues, projectValues] = partition(values, (v) =>
     daLayerIds.includes(v.projectId),
   )
-  const groupedDaLayerValues = groupBy(daLayerValues, 'daLayer')
-  const groupedProjectValues = groupBy(projectValues, 'daLayer')
+  const groupedDaLayerValues = groupBy(
+    sumByDayAndProject(daLayerValues),
+    (v) => v.daLayer,
+  )
+  const groupedProjectValues = groupBy(
+    sumByDayAndProject(projectValues),
+    (v) => v.daLayer,
+  )
   const onlyScalingDaLayerValues = Object.fromEntries(
     daLayerIds.map((daLayer) => [
       daLayer,
@@ -51,7 +58,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     groupedProjectValues,
   )
 
-  const getData = (values: Record<string, DataAvailabilityRecord[]>) => {
+  const getData = (
+    values: Record<string, Omit<DataAvailabilityRecord2, 'configurationId'>[]>,
+  ) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
@@ -190,10 +199,13 @@ function getMaxThroughputPerSecond(
 
 function sumByTimestamp(
   daLayer: string,
-  groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
-): DataAvailabilityRecord[] {
+  groupedProjectValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
+): Omit<DataAvailabilityRecord2, 'configurationId'>[] {
   const projectValues = groupedProjectValues[daLayer] ?? []
-  const timestampedValues = groupBy(projectValues, 'timestamp')
+  const timestampedValues = groupBy(projectValues, (v) => v.timestamp)
   const values = Object.entries(timestampedValues).map(
     ([timestamp, values]) => {
       const totalSize = values.reduce((acc, v) => acc + v.totalSize, 0n)
@@ -210,8 +222,14 @@ function sumByTimestamp(
 }
 
 async function getLargestPosters(
-  groupedDaLayerValues: Record<string, DataAvailabilityRecord[]>,
-  groupedProjectValues: Record<string, DataAvailabilityRecord[]>,
+  groupedDaLayerValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
+  groupedProjectValues: Record<
+    string,
+    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+  >,
 ) {
   const largestPosters = Object.fromEntries(
     Object.entries(groupedProjectValues)

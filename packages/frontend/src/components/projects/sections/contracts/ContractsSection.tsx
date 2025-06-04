@@ -3,7 +3,11 @@ import { DiagramImage } from '~/components/DiagramImage'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { DiscoUiBanner } from '../../DiscoUiBanner'
 import type { TechnologyContract } from '../ContractEntry'
-import { ContractEntry, technologyContractKey } from '../ContractEntry'
+import {
+  ContractEntry,
+  ContractsWithImpactfulChanges,
+  technologyContractKey,
+} from '../ContractEntry'
 import { ProjectSection } from '../ProjectSection'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'
@@ -82,6 +86,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                   {changedContracts.length > 0 && (
                     <ContractsWithImpactfulChanges
                       contracts={changedContracts}
+                      type="contracts"
                     />
                   )}
                 </div>
@@ -105,7 +110,10 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedEscrows.length > 0 && (
-              <ContractsWithImpactfulChanges contracts={changedEscrows} />
+              <ContractsWithImpactfulChanges
+                contracts={changedEscrows}
+                type="contracts"
+              />
             )}
           </div>
         </>
@@ -127,26 +135,6 @@ function ChainNameHeader(props: { children: React.ReactNode }) {
     <div className="flex items-baseline gap-3">
       <h3 className="whitespace-pre font-bold text-2xl">{props.children}</h3>
       <div className="w-full border-divider border-b-2" />
-    </div>
-  )
-}
-
-function ContractsWithImpactfulChanges(props: {
-  contracts: TechnologyContract[]
-}) {
-  return (
-    <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
-      <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are impactful changes to the following contracts, and part of the
-        information might be outdated.
-      </div>
-      {props.contracts.map((contract) => (
-        <ContractEntry
-          key={technologyContractKey(contract)}
-          contract={contract}
-          className="my-4 p-0"
-        />
-      ))}
     </div>
   )
 }

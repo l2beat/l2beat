@@ -1346,6 +1346,8 @@
   "static/icons/novastro.png": "3a551f4219e21ccd6a18223e8924c0a4",
   "static/meta-images/scaling/projects/novastro/opengraph-image.png": "dc3afc0c64ec1a9783d72205dadeb12e",
   "static/icons/hyperliquid.png": "191dcdcd7b0137e7787aa3489d778959",
+  "static/meta-images/data-availability/archived/opengraph-image.png": "c10a431701507be16ef129ccdc31264d",
   "static/images/architecture/hyperliquid.png": "377c1642e78c1cc45ff0114380a7e9b2",
-  "static/meta-images/bridges/projects/hyperliquid/opengraph-image.png": "a3cbe1ba08a11a937de5aaee9ecf0c2a"
+  "static/meta-images/bridges/projects/hyperliquid/opengraph-image.png": "a3cbe1ba08a11a937de5aaee9ecf0c2a",
+  "static/ens-avatar.png": "33e2f7c80f1d33bc327620a4f2964161"
 }

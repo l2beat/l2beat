@@ -1,5 +1,6 @@
 import { FullPageHeader } from '~/components/FullPageHeader'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ArchivedBar } from '~/components/projects/ArchivedBar'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
@@ -44,6 +45,11 @@ export function RegularDaProjectSummary({ project }: Props) {
               <div className="!mb-8 hidden md:flex">
                 <HorizontalSeparator className="max-md:-mx-4 max-md:w-screen" />
               </div>
+              {project.archivedAt && (
+                <div className="-mt-4 mb-4">
+                  <ArchivedBar />
+                </div>
+              )}
               <div className="flex-1">
                 <div className="flex flex-col gap-4">
                   <div className="max-md:hidden">

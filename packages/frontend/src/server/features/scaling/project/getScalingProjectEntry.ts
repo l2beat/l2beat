@@ -577,6 +577,7 @@ export async function getScalingProjectEntry(
       permissions: project.permissions,
     },
     contractUtils,
+    projectsChangeReport,
   )
   if (permissionsSection) {
     const permissionedEntities = project.customDa?.dac?.knownMembers

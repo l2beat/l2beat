@@ -1,4 +1,4 @@
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database/dist/da-beat/data-availability/entity'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
@@ -31,15 +31,15 @@ export async function getDaThroughputChart({
 
   const db = getDb()
   const days = rangeToDays(range)
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
+  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = days ? to - days * UnixTime.DAY : null
   const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly
-    ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+    ? await db.dataAvailability2.getSummedProjectsByDaLayersAndTimeRange(
         daLayerIds,
         [from, to],
       )
-    : await db.dataAvailability.getByProjectIdsAndTimeRange(daLayerIds, [
+    : await db.dataAvailability2.getByProjectIdsAndTimeRange(daLayerIds, [
         from,
         to,
       ])
@@ -63,13 +63,13 @@ export async function getDaThroughputChart({
 }
 
 export function groupByTimestampAndDaLayerId(
-  records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
+  records: (DataAvailabilityRecord2 | ProjectsSummedDataAvailabilityRecord)[],
 ) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
-    const timestamp = record.timestamp
+    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
     const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {
@@ -77,6 +77,8 @@ export function groupByTimestampAndDaLayerId(
     }
     if (!result[timestamp][daLayerId]) {
       result[timestamp][daLayerId] = Number(value)
+    } else {
+      result[timestamp][daLayerId] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
