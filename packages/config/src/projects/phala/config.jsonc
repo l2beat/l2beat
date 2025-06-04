@@ -21,7 +21,7 @@
               "handler": {
                 "type": "call",
                 "method": "routes",
-                "args": ["0x1b34fe11"]
+                "args": ["0xd4e8ecd2"]
               }
             }
           }

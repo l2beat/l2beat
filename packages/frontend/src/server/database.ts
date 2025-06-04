@@ -34,11 +34,16 @@ function createThrowingProxy() {
 
 // Tag is limited to 63 characters, so it will cut off the excess
 function createConnectionTag() {
-  const suffix = env.NODE_ENV === 'production' ? 'prod' : 'dev'
+  const suffix =
+    env.DEPLOYMENT_ENV === 'production'
+      ? 'prod'
+      : env.DEPLOYMENT_ENV === 'preview'
+        ? 'preview'
+        : 'dev'
   const base = `FE-${suffix}`
 
-  if (env.VERCEL_ENV === 'preview') {
-    return `${base}-${env.VERCEL_GIT_COMMIT_REF}-${env.VERCEL_GIT_COMMIT_SHA}`
+  if (env.HEROKU_APP_NAME) {
+    return `${base}-${env.HEROKU_APP_NAME}`
   }
 
   return base
@@ -52,16 +57,21 @@ function ssl() {
 }
 
 function pool() {
-  if (env.NODE_ENV === 'production') {
-    return {
-      min: 50,
-      max: 200,
-    }
-  }
-
-  return {
-    min: 2,
-    max: 5,
+  switch (env.DEPLOYMENT_ENV) {
+    case 'production':
+      return {
+        min: 50,
+        max: 200,
+      }
+    case 'preview':
+      return {
+        min: 2,
+        max: 5,
+      }
+    default:
+      return {
+        min: 2,
+      }
   }
 }
 

@@ -7,12 +7,13 @@ export function MetricsMiddleware(logger: Logger) {
     appLogger.info(`Processing request`, {
       method: req.method,
       url: req.originalUrl,
+      referer: req.headers.referer ?? 'unknown',
+      userAgent: req.headers['user-agent'] ?? 'unknown',
     })
 
     const start = process.hrtime.bigint()
 
     const originalSend = res.send
-
     res.send = function (body) {
       const end = process.hrtime.bigint()
       const durationMs = Number(end - start) / 1_000_000
@@ -37,6 +38,8 @@ export function MetricsMiddleware(logger: Logger) {
         status: res.statusCode,
         duration: Math.round(durationMs),
         size,
+        referer: req.headers.referer ?? 'unknown',
+        userAgent: req.headers['user-agent'] ?? 'unknown',
       })
 
       return originalSend.call(this, body)

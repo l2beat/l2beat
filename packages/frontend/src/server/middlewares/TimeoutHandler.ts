@@ -8,6 +8,8 @@ export function TimeoutHandler(appLogger: Logger) {
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,
+        referer: req.headers.referer ?? 'unknown',
+        userAgent: req.headers['user-agent'] ?? 'unknown',
       })
       res.status(524).send('Request timed out')
     })

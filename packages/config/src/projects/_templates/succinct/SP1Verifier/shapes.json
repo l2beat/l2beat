@@ -4,5 +4,11 @@
     "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "SP1Verifier_v5": {
+    "hash": "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42",
+    "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+    "chain": "arbitrum",
+    "blockNumber": 343837105
   }
 }

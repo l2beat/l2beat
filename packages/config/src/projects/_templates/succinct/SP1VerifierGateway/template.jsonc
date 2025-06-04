@@ -6,7 +6,8 @@
     "oldVerifier2",
     "oldVerifier3",
     "oldVerifier4",
-    "oldVerifier5"
+    "oldVerifier5",
+    "oldVerifier6"
   ],
   "fields": {
     "oldVerifier": {
@@ -64,7 +65,7 @@
         ]
       }
     },
-    "verifier": {
+    "oldVerifier6": {
       "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
       "handler": {
         "type": "call",
@@ -72,6 +73,17 @@
         "args": [
           // first 4 bytes of the blobstream proof are used as identifier
           "0x1b34fe11"
+        ]
+      }
+    },
+    "verifier": {
+      "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
+      "handler": {
+        "type": "call",
+        "method": "function routes(bytes4) view returns (address prover, bool frozen)",
+        "args": [
+          // first 4 bytes of the blobstream proof are used as identifier
+          "0xd4e8ecd2"
         ]
       }
     },

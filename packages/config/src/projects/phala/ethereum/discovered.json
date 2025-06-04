@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22615677,
-  "configHash": "0x24c5004aaf6a239e6ed1926aca9fe5cda0346a6c4c6b75b8fe82e6b7be1393e4",
+  "blockNumber": 22631701,
+  "configHash": "0x672ea305755cfffc78681d6dbf150c6015b96ef290dcd7cb2bbd204de5497b82",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -41,6 +41,27 @@
       },
       "implementationNames": {
         "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs.",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
     },
     {
@@ -158,7 +179,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619831",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619832",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -381,13 +402,17 @@
           "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
           "frozen": true
         },
+        "oldVerifier6": {
+          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "frozen": false
+        },
         "opSuccinctVerifier": {
-          "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
           "frozen": false
         },
         "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
         "verifier": {
-          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+          "prover": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
           "frozen": false
         }
       },
@@ -406,6 +431,9 @@
         },
         "oldVerifier5": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
+        },
+        "oldVerifier6": {
+          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
         },
         "verifier": {
           "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
@@ -558,7 +586,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 103,
+        "nonce": 104,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -928,8 +956,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 22520098
+          "prevBoughtGas": 492334,
+          "prevBlockNum": 22630260
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -1142,10 +1170,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1444260,
-        "latestOutputIndex": 369,
-        "nextBlockNumber": 1448580,
-        "nextOutputIndex": 370,
+        "latestBlockNumber": 1460460,
+        "latestOutputIndex": 372,
+        "nextBlockNumber": 1464780,
+        "nextOutputIndex": 373,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -1333,27 +1361,6 @@
         "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs.",
-      "sinceTimestamp": 1735949699,
-      "sinceBlock": 21547470,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      },
-      "implementationNames": {
-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
-      }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -1584,6 +1591,15 @@
       "function safe() view returns (address safe_)",
       "function thresholdPercentage() view returns (uint256 thresholdPercentage_)",
       "function version() view returns (string)"
+    ],
+    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": [
       "constructor(address _singleton)"
@@ -2125,15 +2141,6 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xeBf5859b7646ca9cf8A981613569bF28394F2571": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2214,7 +2221,7 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0x94f47b7c15ff917085543a7090119c8e8c6013109063339e8922079a5773d6c7"
+    "succinct/SP1VerifierGateway": "0x3f3a2098d4a63ac44ccbe2091c28eab33ddf6eadd3cc1a0833fa278532df267f"
   },
-  "permissionsConfigHash": "0x618a19f03b646b6a12a63dcfce6af270e27c991df4b3fa3edfeaa88ca73ce9fd"
+  "permissionsConfigHash": "0x8301c582ac7a7dd0d78aee6da4d1473f27adeab477821027eaf226fed8828aca"
 }

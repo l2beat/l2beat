@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xf0e82582295bc491bde72be3ecbbb393f4feee4a
+
+# Diff at Wed, 04 Jun 2025 13:55:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22615677
+- current block number: 22631701
+
+## Description
+
+SP1 verifier upgrade to v5 (plonky3 vuln related).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615677 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.opSuccinctVerifier.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.verifier.prover:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.oldVerifier6:
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+      fieldMeta.oldVerifier6:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen)."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
 Generated with discovered.json: 0xd9efd5b6a4e036ef02cb4f1a6af9865e8762c954
 
 # Diff at Mon, 02 Jun 2025 08:02:01 GMT:
