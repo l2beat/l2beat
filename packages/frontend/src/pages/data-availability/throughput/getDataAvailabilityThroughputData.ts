@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'

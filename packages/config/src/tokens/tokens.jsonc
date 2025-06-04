@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "TRALA",
+      "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b"
+    },
+    {
       "symbol": "OIK",
       "address": "0x6E7F11641c1EC71591828E531334192d622703F7"
     },

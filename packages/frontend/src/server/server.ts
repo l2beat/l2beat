@@ -1,15 +1,15 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
-import timeout from 'connect-timeout'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
-import { render } from '../ssr/server-entry'
+import { render } from '../ssr/ServerEntry'
 import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { TimeoutHandler } from './middlewares/TimeoutHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
@@ -37,10 +37,9 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
-  app.use(timeout('25s'))
-  app.use((req, res, next) => haltOnTimedout(req, res, next, appLogger))
-
-  app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
+  app.use(TimeoutHandler(appLogger))
+  app.use(ErrorHandler(appLogger))
+  app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -48,18 +47,10 @@ export function createServer(logger: Logger) {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
-  app.use(
-    (
-      err: Error,
-      req: express.Request,
-      res: express.Response,
-      next: express.NextFunction,
-    ) => ErrorHandler(err, req, res, next, appLogger),
-  )
-
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     appLogger.info(`Started at http://localhost:${port}`)
   })
+  server.setTimeout(25000)
 }
 
 function renderToHtml(data: RenderData, url: string) {
@@ -82,22 +73,6 @@ function renderToHtml(data: RenderData, url: string) {
       `window.__SSR_DATA__=${JSON.stringify(data.ssr)}`,
     )
     .replace(`<!--env-data-->`, `window.__ENV__=${JSON.stringify(envData)}`)
-}
-
-function haltOnTimedout(
-  req: express.Request,
-  _res: express.Response,
-  next: express.NextFunction,
-  appLogger: Logger,
-) {
-  if (!req.timedout) {
-    next()
-  } else {
-    appLogger.error('Request timed out', {
-      method: req.method,
-      url: req.originalUrl,
-    })
-  }
 }
 
 function getTemplate(manifest: Manifest) {

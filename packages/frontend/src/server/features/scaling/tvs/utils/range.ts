@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { rangeToDays } from '~/utils/range/range-to-days'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const TvsChartRange = z.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
 export type TvsChartRange = z.infer<typeof TvsChartRange>

@@ -1,5 +1,5 @@
 import { assert, UnixTime } from '@l2beat/shared-pure'
-import { rangeToDays } from './range-to-days'
+import { rangeToDays } from './rangeToDays'
 
 export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 export type Resolution = 'hourly' | 'daily' | 'sixHourly'

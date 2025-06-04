@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getBridgesArchivedEntries } from '~/server/features/bridges/get-bridges-archived-entries'
+import { getBridgesArchivedEntries } from '~/server/features/bridges/getBridgesArchivedEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
