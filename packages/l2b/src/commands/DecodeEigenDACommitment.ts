@@ -6,12 +6,12 @@ export const DecodeEigenDACommitment = command({
   description: 'Decodes the EigenDA commitment.',
   version: '1.0.0',
   args: {
-    rpcUrl: positional({ 
-      type: string, 
+    rpcUrl: positional({
+      type: string,
       displayName: 'rpcUrl',
-      description: 'Ethereum RPC URL'
+      description: 'Ethereum RPC URL',
     }),
-    txHash: positional({ type: string, displayName: 'txHash' })
+    txHash: positional({ type: string, displayName: 'txHash' }),
   },
   handler: ({ rpcUrl, txHash }) => {
     decodeEigenDACommitment(rpcUrl, txHash)
