@@ -31,10 +31,8 @@ export async function getProjectDaThroughputChart(
   }
 
   const db = getDb()
-  const [from, to] = getRangeWithMax(params.range, 'daily', {
-    offset: -1 * UnixTime.DAY,
-  })
-  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
+  const [from, to] = getRangeWithMax(params.range, 'daily')
+  const throughput = await db.dataAvailability2.getByProjectIdsAndTimeRange(
     [params.projectId],
     [from, to],
   )
@@ -58,10 +56,12 @@ function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
   let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
-    const timestamp = record.timestamp
+    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)
+    } else {
+      result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
     maxTimestamp = Math.max(maxTimestamp, timestamp)
