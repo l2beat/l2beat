@@ -11,6 +11,8 @@ export const UltimatePermissionToPrefix: {
   propose: 'A Proposer',
   sequence: 'A Sequencer',
   validate: 'A Validator',
+  disperse: 'A Disperser',
+  relayDA: 'A DA Relayer',
   operateLinea: 'An Operator',
   fastconfirm: 'A FastConfirmer',
   validateZkStack: 'A Validator',
@@ -121,6 +123,15 @@ export const RoleDescriptions: {
   metisGameCreator: {
     name: 'Game Creator',
     description: 'Can create new dispute games.',
+  },
+  disperse: {
+    name: 'Disperser',
+    description: 'Can disperse EigenDA blobs to the EigenDA node operators.',
+  },
+  relayDA: {
+    name: 'Relayer',
+    description:
+      'Can store and serve both unencoded blobs as well as encoded chunks.',
   },
   stateDeleterMetis: {
     name: 'State Deleter',

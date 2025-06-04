@@ -6,11 +6,12 @@ import { chain } from 'stream-chain'
 import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
-import type { Hex } from 'viem'
 
 interface QuickNodeClientOpts {
   callsPerMinute?: number
 }
+
+type Hex = `0x${string}`
 
 export class QuickNodeClient {
   constructor(

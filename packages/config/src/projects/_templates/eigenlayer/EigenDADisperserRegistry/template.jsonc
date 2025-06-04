@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+  "fields": {
+    "dispersers": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": "disperser",
+        "add": { "event": "DisperserAdded" }
+      },
+      "permissions": [{ "type": "disperse" }]
+    }
+  }
+}

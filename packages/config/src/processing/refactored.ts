@@ -6,6 +6,7 @@ import { eigenda } from '../projects/eigenda/eigenda'
 import { espresso } from '../projects/espresso/espresso'
 import { ethereum } from '../projects/ethereum/ethereum'
 import { gnosis } from '../projects/gnosis/gnosis'
+import { memo } from '../projects/memo/memo'
 import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { payy } from '../projects/payy/payy-zk-catalog'
@@ -38,6 +39,7 @@ export const refactored: BaseProject[] = [
   near,
   espresso,
   eigenda,
+  memo,
   // chains
   bsc,
   gnosis,
