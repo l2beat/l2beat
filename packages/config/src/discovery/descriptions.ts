@@ -130,7 +130,8 @@ export const RoleDescriptions: {
   },
   relayDA: {
     name: 'Relayer',
-    description: 'Can relay blob attestations to the DA bridge.',
+    description:
+      'Can store and serve both unencoded blobs as well as encoded chunks.',
   },
   stateDeleterMetis: {
     name: 'State Deleter',
