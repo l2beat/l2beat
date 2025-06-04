@@ -1,3 +1,263 @@
+Generated with discovered.json: 0xb36e9840e12b7f69f8a7350cd4060911a60fdb02
+
+# Diff at Wed, 04 Jun 2025 06:47:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22616262
+- current block number: 22629579
+
+## Description
+
+SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
+
+## Watched changes
+
+```diff
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.addresslistLength:
+-        9
++        8
+      values.getEncryptionAgents.8:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.7:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.6:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+      values.settings.minSignerListLength:
+-        9
++        8
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        21
++        23
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.11.name:
+-        "taiko_token"
++        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
+      values.namedAddresses.11.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.10.name:
+-        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
++        "taiko_token"
+      values.namedAddresses.10.address:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        13
++        14
+      values.proposalIds.13:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.12:
+-        "594516471058441525137805458817300690127055486982"
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.11:
+-        "594368007222883387369940600290236287695678603267"
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.10:
+-        "594789857995414210150628315872956409027640688649"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.9:
+-        "594333890512775894079591912881534348495153004546"
++        "594544283016854707280302755040001935835586887687"
+      values.proposalIds.8:
+-        "594544283016854707280302755040001935835586887687"
++        "594516360806954642753743290707182802352260251653"
+      values.proposalIds.7:
+-        "594516360806954642753743290707182802352260251653"
++        "594868197801926748603689506985812031612995502090"
+      values.proposalIds.6:
+-        "594868197801926748603689506985812031612995502090"
++        "594516275055798178677248899489514254466604335108"
+      values.proposalIds.5:
+-        "594516275055798178677248899489514254466604335108"
++        "594544466769332844587073035223531748793578946568"
+      values.proposalIds.4:
+-        "594544466769332844587073035223531748793578946568"
++        "595112788683881116119978678391417950963358498829"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.27:
+-        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.26.from:
+-        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.25.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.24.from:
+-        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.23.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.22.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.21.from:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.20.from:
+-        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      receivedPermissions.19.from:
+-        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.18.from:
+-        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.17.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.16.from:
+-        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.15.from:
+-        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.14.from:
+-        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.13.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.12.from:
+-        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.11.from:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.10.from:
+-        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.9.from:
+-        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.8.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.8.from:
+-        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.8.description:
+-        "can update the contract address for a given name"
+      receivedPermissions.8.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.7.from:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.7.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+      receivedPermissions.6.from:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.5.from:
+-        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.5.description:
+-        "can update the contract address for a given name"
++        "can update the program being verified"
+      receivedPermissions.4.from:
+-        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.4.description:
+-        "can update the program being verified"
++        "can update the contract address for a given name"
+    }
+```
+
+```diff
+    contract TaikoSP1Verifier (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: None
+      name:
+-        "SP1VerifierGateway"
++        "TaikoSP1Verifier"
+      template:
+-        "taiko/SP1VerifierGateway"
+      sourceHashes.1:
+-        "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca"
++        "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0"
+      description:
+-        "Entry contract to verify batches using SP1."
+      values.$implementation:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.$pastUpgrades.1:
++        ["2025-06-04T00:40:23.000Z","0xbdc86ada3808a5987cd1f4bbc49ecd2d7e577bf90642956442a3d14cffa827ec",["0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.sp1RemoteVerifier:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      implementationNames.0x35f26e14D0dAeDd1904843370f761C60B891D466:
+-        "SP1Verifier"
+      implementationNames.0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
++        "TaikoSP1Verifier"
+      errors:
++        {"proxiableUUID":"Processing error occurred."}
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        6
++        8
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22616262 => .flat}/SP1Verifier.sol      | 2682 ++++++++++----------
+ .../TaikoSP1Verifier}/ERC1967Proxy.p.sol           |    0
+ .../TaikoSP1Verifier/TaikoSP1Verifier.sol}         |   75 +-
+ 3 files changed, 1329 insertions(+), 1428 deletions(-)
+```
+
 Generated with discovered.json: 0x287517d33b3633841ff8cdced485ab5de6e0e5d0
 
 # Diff at Mon, 02 Jun 2025 10:17:30 GMT:
