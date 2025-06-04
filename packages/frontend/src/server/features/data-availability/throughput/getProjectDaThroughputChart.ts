@@ -18,7 +18,6 @@ export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 export const ProjectDaThroughputChartParams = z.object({
   range: DaThroughputTimeRange.or(CostsTimeRange),
   projectId: z.string(),
-  forCosts: z.boolean().optional(),
 })
 export type ProjectDaThroughputChartParams = z.infer<
   typeof ProjectDaThroughputChartParams
@@ -32,7 +31,7 @@ export async function getProjectDaThroughputChart(
   }
 
   const db = getDb()
-  const resolution = params.forCosts ? 'daily' : rangeToResolution(params.range)
+  const resolution = rangeToResolution(params.range)
   const [from, to] = getRangeWithMax(params.range, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })

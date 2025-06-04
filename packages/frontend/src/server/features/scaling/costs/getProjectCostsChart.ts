@@ -30,7 +30,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
       range: params.range,
     }),
     getCostsForProject(params.projectId, params.range),
-    getProjectDaThroughputChart({ ...params, forCosts: true }),
+    getProjectDaThroughputChart(params),
     getActivityForProjectAndRange(params.projectId, params.range),
   ])
 
@@ -46,15 +46,20 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     ? getSummedUopsCount(activityRecords, throughput.range)
     : undefined
 
+  const resolution = rangeToResolution(params.range)
+
   const timestampedDaData = Object.fromEntries(throughput?.chart ?? [])
   const chart = costsChart.map((cost) => {
-    const dailyTimestamp = UnixTime.toStartOf(cost[0], 'day')
-    const isHourlyRange = params.range === '1d' || params.range === '7d'
+    const dailyTimestamp = UnixTime.toStartOf(
+      cost[0],
+      resolution === 'daily'
+        ? 'day'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'hour',
+    )
     const posted = timestampedDaData[dailyTimestamp]
-    return [
-      ...cost,
-      posted !== undefined ? (isHourlyRange ? posted / 24 : posted) : undefined,
-    ] as const
+    return [...cost, posted !== undefined ? posted : undefined] as const
   })
 
   const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
@@ -65,7 +70,6 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
     posted: summedThroughput,
   })
 
-  const resolution = rangeToResolution(params.range)
   const perL2Uop =
     costsUopsCount !== undefined && resolution === 'daily'
       ? mapToPerL2UopsCost(total, {
