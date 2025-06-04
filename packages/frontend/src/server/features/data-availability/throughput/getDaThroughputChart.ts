@@ -4,10 +4,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
-import { getRangeWithMax } from '~/utils/range/range'
 export type DaThroughputDataPoint = [
   timestamp: number,
   ethereum: number,
