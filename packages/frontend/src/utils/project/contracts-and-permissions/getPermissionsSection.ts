@@ -1,6 +1,7 @@
 import type { ProjectPermission, ProjectPermissions } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import type { PermissionsSectionProps } from '~/components/projects/sections/permissions/PermissionsSection'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type {
   TechnologyContract,
   TechnologyContractAddress,
@@ -9,7 +10,6 @@ import type { UsedInProject } from '../../../components/projects/sections/permis
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import type { ContractUtils } from './getContractUtils'
 import { toVerificationStatus } from './toVerificationStatus'
-import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 
 type ProjectParams = {
   id: ProjectId
