@@ -1,7 +1,7 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 331093646,
+  "blockNumber": 343817776,
   "configHash": "0xeb98fdacbc759bba559d66895579cf889ff4f33c608d5af44e4817d871e1a78e",
   "entries": [
     {
@@ -74,7 +74,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1621,
+        "nonce": 2341,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -117,7 +117,7 @@
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
         ],
         "allowedOutboxList": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
-        "delayedMessageCount": 379,
+        "delayedMessageCount": 387,
         "inboxHistory": [
           "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
           "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
@@ -127,8 +127,8 @@
         "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 2490,
-        "sequencerReportedSubMessageCount": 1634995
+        "sequencerMessageCount": 3234,
+        "sequencerReportedSubMessageCount": 1645716
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -358,7 +358,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 2490,
+        "batchCount": 3234,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"],
         "bridge": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
@@ -388,7 +388,7 @@
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 379,
+        "totalDelayedMessagesRead": 387,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -459,13 +459,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1729,
+        "firstUnresolvedNode": 2449,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 20938249,
-        "latestConfirmed": 1728,
-        "latestNodeCreated": 1728,
+        "latestConfirmed": 2448,
+        "latestNodeCreated": 2448,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -668,6 +668,7 @@
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
+          "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
           "0x860e06Fe384D1A3340111e7D142E02642178c053",
           "0x50930d652266EF4127FA3A1906B7Cb9951076628",
           "0xA0737fea60F0601A192E3d2c98865A883ab0bda2",
@@ -683,8 +684,8 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 77,
+        "multisigThreshold": "4 of 11 (36%)",
+        "nonce": 80,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -733,6 +734,11 @@
         "0xd106EC93D2c1adaA65C4B17ffc7bB166Ce30DDAe": "L1OrbitGatewayRouter"
       },
       "category": { "name": "External Bridges", "priority": 1 }
+    },
+    {
+      "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "ChallengeManager",
@@ -1959,5 +1965,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x3bc3e07ddd9f8d27a337a15c0299dda39cde36fd985cf7bb4559bf47418379bb"
+  "permissionsConfigHash": "0x17f0682d10fca78d829ec06f1559f305c4eabec698517bd621c3bea8fd246c08"
 }
