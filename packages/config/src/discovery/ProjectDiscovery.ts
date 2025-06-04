@@ -271,7 +271,9 @@ export class ProjectDiscovery {
 
   getContract(identifier: string): EntryParameters {
     try {
-      identifier = utils.getAddress(identifier)
+      identifier = identifier.includes(':')
+        ? identifier
+        : utils.getAddress(identifier)
     } catch {
       const contracts = this.getContractByName(identifier)
 
@@ -593,9 +595,16 @@ export class ProjectDiscovery {
     )
   }
 
-  getEntryByAddress(
-    address: string | EthereumAddress,
+  getEntryByPrefixedAddress(
+    prefixedAddress: PrefixedEthereumAddress,
   ): EntryParameters | undefined {
+    const [chain, address] = prefixedAddress.toString().split(':')
+    const entries = this.discoveries
+      .filter((discovery) => discovery.chain === chain)
+      .flatMap((discovery) => discovery.entries)
+    return entries.find((entry) => entry.address === address)
+  }
+  getEntryByAddress(address: EthereumAddress): EntryParameters | undefined {
     const entries = this.discoveries.flatMap((discovery) => discovery.entries)
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
@@ -811,7 +820,10 @@ export class ProjectDiscovery {
 
     const permissions = entry.receivedPermissions.map((p) => p.from)
     const priority = permissions.reduce((acc, permission) => {
-      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+      return (
+        acc +
+        (this.getEntryByPrefixedAddress(permission)?.category?.priority ?? 0)
+      )
     }, 0)
 
     return priority
