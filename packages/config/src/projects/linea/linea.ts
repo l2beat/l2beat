@@ -15,7 +15,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -84,7 +83,6 @@ export const linea: ScalingProject = {
   id: ProjectId('linea'),
   capability: 'universal',
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Linea',
     slug: 'linea',
@@ -374,6 +372,7 @@ export const linea: ScalingProject = {
   },
   riskView: {
     stateValidation: {
+      // TODO: linea proof system is now complete
       ...RISK_VIEW.STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
