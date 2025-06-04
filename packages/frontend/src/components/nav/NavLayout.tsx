@@ -129,6 +129,12 @@ export function NavLayout({
           href: '/data-availability/throughput',
         },
       ],
+      secondaryLinks: [
+        {
+          title: 'Archived',
+          href: '/data-availability/archived',
+        },
+      ],
     },
     {
       type: 'single',
