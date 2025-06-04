@@ -74,7 +74,7 @@ function makeLogger() {
         durationMs: event.queryDurationMillis,
         error: event.error,
         sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV !== 'production'
+        ...(env.NODE_ENV === 'production'
           ? {
               sqlTemplate: event.query.sql,
               parameters: event.query.parameters,
@@ -85,7 +85,7 @@ function makeLogger() {
       appLogger.info('Query executed', {
         durationMs: event.queryDurationMillis,
         sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV !== 'production'
+        ...(env.NODE_ENV === 'production'
           ? {
               sqlTemplate: event.query.sql,
               parameters: event.query.parameters,
