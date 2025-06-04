@@ -63,7 +63,10 @@ export function PermissionsSection({
                     />
                   ))}
                   {changedRoles.length > 0 && (
-                    <ContractsWithImpactfulChanges contracts={changedRoles} />
+                    <ContractsWithImpactfulChanges
+                      contracts={changedRoles}
+                      type="permissions"
+                    />
                   )}
                 </div>
               )}
@@ -78,7 +81,10 @@ export function PermissionsSection({
                     />
                   ))}
                   {changedActors.length > 0 && (
-                    <ContractsWithImpactfulChanges contracts={changedActors} />
+                    <ContractsWithImpactfulChanges
+                      contracts={changedActors}
+                      type="permissions"
+                    />
                   )}
                 </div>
               )}

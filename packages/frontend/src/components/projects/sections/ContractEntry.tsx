@@ -199,12 +199,13 @@ export function technologyContractKey(contract: TechnologyContract) {
 
 export function ContractsWithImpactfulChanges(props: {
   contracts: TechnologyContract[]
+  type: 'contracts' | 'permissions'
 }) {
   return (
     <div className="rounded-lg border border-yellow-200 border-dashed px-4 py-3">
       <div className="flex w-full items-center rounded bg-yellow-700/20 p-4">
-        There are impactful changes to the following contracts, and part of the
-        information might be outdated.
+        There are impactful changes to the following {props.type}, and part of
+        the information might be outdated.
       </div>
       {props.contracts.map((contract) => (
         <ContractEntry

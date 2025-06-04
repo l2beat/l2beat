@@ -86,6 +86,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                   {changedContracts.length > 0 && (
                     <ContractsWithImpactfulChanges
                       contracts={changedContracts}
+                      type="contracts"
                     />
                   )}
                 </div>
@@ -109,7 +110,10 @@ export function ContractsSection(props: ContractsSectionProps) {
               />
             ))}
             {changedEscrows.length > 0 && (
-              <ContractsWithImpactfulChanges contracts={changedEscrows} />
+              <ContractsWithImpactfulChanges
+                contracts={changedEscrows}
+                type="contracts"
+              />
             )}
           </div>
         </>
