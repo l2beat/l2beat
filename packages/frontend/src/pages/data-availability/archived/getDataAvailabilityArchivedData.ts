@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getDaArchivedEntries } from '~/server/features/data-availability/archived/get-da-archived-entries'
+import { getDaArchivedEntries } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

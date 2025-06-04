@@ -1,15 +1,15 @@
 import type { Row } from '@tanstack/react-table'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { TableValueCell } from '~/components/table/cells/table-value-cell'
-import { TableCell, TableRow } from '~/components/table/table'
-import { TableLink } from '~/components/table/table-link'
-import { useTable } from '~/hooks/use-table'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
+import { TableCell, TableRow } from '~/components/table/Table'
+import { TableLink } from '~/components/table/TableLink'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
+import { useTable } from '~/hooks/useTable'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import {
   BasicDaTable,
   getRowTypeClassNames,
-} from '../../../components/basic-da-table'
-import { customColumns, publicColumns } from './columns'
+} from '../../../components/BasicDaTable'
+import { customColumns, publicColumns } from './Columns'
 
 export function DaArchivedTable({
   items,

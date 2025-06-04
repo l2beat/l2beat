@@ -1,23 +1,23 @@
 import type { DaBridgeRisks, Project } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import type { TabbedDaEntries } from '~/pages/data-availability/utils/group-by-da-tabs'
-import { groupByDaTabs } from '~/pages/data-availability/utils/group-by-da-tabs'
 import { ps } from '~/server/projects'
+
+import {
+  type TabbedDaEntries,
+  groupByDaTabs,
+} from '~/pages/data-availability/utils/groupByDaTabs'
 import {
   type CommonDaEntry,
   getCommonDaEntry,
   getCommonDacDaEntry,
-} from '../get-common-da-entry'
+} from '../getCommonDaEntry'
 import {
   type AdjustedDaLayerRisks,
   getDaLayerRisks,
-} from '../utils/get-da-layer-risks'
-import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
-import {
-  getDaProjectsTvs,
-  pickTvsForProjects,
-} from '../utils/get-da-projects-tvs'
-import { getDaUsers } from '../utils/get-da-users'
+} from '../utils/getDaLayerRisks'
+import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
+import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
+import { getDaUsers } from '../utils/getDaUsers'
 
 export async function getDaArchivedEntries(): Promise<
   TabbedDaEntries<DaArchivedEntry>

@@ -1,5 +1,5 @@
 import type { CellContext, ColumnDef } from '@tanstack/react-table'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import type { DaRiskEntry } from '~/server/features/data-availability/risks/getDaRiskEntries'
 import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
 

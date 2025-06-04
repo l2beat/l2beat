@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TableValueCell } from '~/components/table/cells/table-value-cell'
+import { TableValueCell } from '~/components/table/cells/TableValueCell'
 
-import { ProjectNameCell } from '~/components/table/cells/project-name-cell'
-import { TableLink } from '~/components/table/table-link'
-import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/da-common-project-columns'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
-import { virtual, withSpanByBridges } from '../../../utils/col-utils'
+import { TableLink } from '~/components/table/TableLink'
+import { ProjectNameCell } from '~/components/table/cells/ProjectNameCell'
+import { getDaCommonProjectColumns } from '~/components/table/utils/common-project-columns/DaCommonProjectColumns'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
+import { virtual, withSpanByBridges } from '../../../utils/ColUtils'
 
 const columnHelper = createColumnHelper<DaArchivedEntry>()
 

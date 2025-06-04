@@ -1,20 +1,19 @@
-import { CountBadge } from '~/components/badge/count-badge'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
-} from '~/components/core/directory-tabs'
-import { MainPageHeader } from '~/components/main-page-header'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { DaArchivedEntry } from '~/server/features/data-availability/archived/get-da-archived-entries'
+} from '~/components/core/DirectoryTabs'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { DaArchivedEntry } from '~/server/features/data-availability/archived/getDaArchivedEntries'
 import {
   CustomSystemInfo,
   PublicSystemInfo,
-} from '../components/da-category-info'
-import { DaArchivedTable } from './components/table/da-archived-table'
+} from '../components/DaCategoryInfo'
+import { DaArchivedTable } from './components/table/DaArchivedTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaArchivedEntry[]
