@@ -2849,10 +2849,12 @@
       "name": "SP1Verifier",
       "address": "0xFF5Adab685362DC4C33536a65aF5873738D1216B",
       "type": "Contract",
+      "template": "succinct/SP1Verifier",
       "sourceHashes": [
         "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
       ],
       "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs.",
       "sinceTimestamp": 1748931023,
       "sinceBlock": 22622255,
       "values": {
@@ -4662,6 +4664,7 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "taiko/AutomataDcapV3Attestation": "0xc94a2c7d4ef9c322e01a6da5facff05a1b6389e69360c642587aa3c98d59677d",
     "taiko/DAO": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "taiko/DefaultResolver": "0x53b32b1e255a1a1bdf21125cbb22170988a66cec3102548b5283ec54eaedf25e",

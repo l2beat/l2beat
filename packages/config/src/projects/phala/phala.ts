@@ -335,6 +335,14 @@ export const phala: ScalingProject = {
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [
     {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+    {
       title: 'Phala Network Launch',
       url: 'https://x.com/PhalaNetwork/status/1877052813383184606',
       date: '2025-01-08T00:00:00Z',

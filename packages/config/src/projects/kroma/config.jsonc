@@ -37,7 +37,7 @@
               "handler": {
                 "type": "call",
                 "method": "function routes(bytes4) view returns (address prover, bool frozen)",
-                "args": ["0x1b34fe11"]
+                "args": ["0xd4e8ecd2"]
               },
               "permissions": [
                 {

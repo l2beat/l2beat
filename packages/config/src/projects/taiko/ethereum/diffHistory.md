@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x36204ec9e0cb1f8be0717c65eb5ca08fcbeb827d
+Generated with discovered.json: 0x257b6a35275afc085ffc9d99f0a6f5f1d9bb6a64
 
-# Diff at Wed, 04 Jun 2025 09:49:03 GMT:
+# Diff at Wed, 04 Jun 2025 13:52:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22616262
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22616262
 - current block number: 22630425
 
 ## Description
 
-SP1 verifier upgrade to v5 (plonky3 vuln related?). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
+SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
 
 ## Watched changes
 
@@ -143,7 +143,7 @@ SP1 verifier upgrade to v5 (plonky3 vuln related?). Security Council signer remo
 ```diff
 +   Status: CREATED
     contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
-    +++ description: None
+    +++ description: Verifier contract for SP1 proofs.
 ```
 
 ## Source code changes
