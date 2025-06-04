@@ -1,4 +1,5 @@
 import { DaUpgradeabilityRisk } from '../common'
+import { DA_LAYERS } from '../common'
 import type { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type {
   DaBridgeRisks,
@@ -9,7 +10,6 @@ import type {
   TableReadyValue,
 } from '../types'
 import { DAC } from './dac-template'
-import { DA_LAYERS } from '../common'
 
 interface TemplateVars {
   dac?: {
