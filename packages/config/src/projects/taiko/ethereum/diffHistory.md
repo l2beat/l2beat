@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb36e9840e12b7f69f8a7350cd4060911a60fdb02
+Generated with discovered.json: 0x36204ec9e0cb1f8be0717c65eb5ca08fcbeb827d
 
-# Diff at Wed, 04 Jun 2025 06:47:00 GMT:
+# Diff at Wed, 04 Jun 2025 09:49:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22616262
-- current block number: 22629579
+- current block number: 22630425
 
 ## Description
 
-SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
+SP1 verifier upgrade to v5 (plonky3 vuln related?). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
 
 ## Watched changes
 
@@ -105,112 +105,11 @@ SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer remov
 ```
 
 ```diff
-    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
-    +++ description: None
-      receivedPermissions.27:
--        {"permission":"upgrade","from":"0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
-      receivedPermissions.26.from:
--        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-+        "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
-      receivedPermissions.25.from:
--        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-+        "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
-      receivedPermissions.24.from:
--        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
-+        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-      receivedPermissions.23.from:
--        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-+        "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
-      receivedPermissions.22.from:
--        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-+        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-      receivedPermissions.21.from:
--        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-+        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-      receivedPermissions.20.from:
--        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
-+        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
-      receivedPermissions.19.from:
--        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
-+        "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
-      receivedPermissions.18.from:
--        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
-+        "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
-      receivedPermissions.17.from:
--        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-+        "0x91f67118DD47d502B1f0C354D0611997B022f29E"
-      receivedPermissions.16.from:
--        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
-+        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-      receivedPermissions.15.from:
--        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
-+        "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
-      receivedPermissions.14.from:
--        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
-+        "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
-      receivedPermissions.13.from:
--        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-+        "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
-      receivedPermissions.12.from:
--        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
-+        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-      receivedPermissions.11.from:
--        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
-+        "0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
-      receivedPermissions.10.from:
--        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
-+        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
-      receivedPermissions.9.from:
--        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
-+        "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
-      receivedPermissions.8.permission:
--        "interact"
-+        "upgrade"
-      receivedPermissions.8.from:
--        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-+        "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
-      receivedPermissions.8.description:
--        "can update the contract address for a given name"
-      receivedPermissions.8.role:
--        ".owner"
-+        "admin"
-      receivedPermissions.7.from:
--        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-+        "0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
-      receivedPermissions.7.description:
--        "can update the program being verified"
-+        "can update the contract address for a given name"
-      receivedPermissions.6.from:
--        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-+        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
-      receivedPermissions.5.from:
--        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-+        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
-      receivedPermissions.5.description:
--        "can update the contract address for a given name"
-+        "can update the program being verified"
-      receivedPermissions.4.from:
--        "0xbee1040D0Aab17AE19454384904525aE4A3602B9"
-+        "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
-      receivedPermissions.4.description:
--        "can update the program being verified"
-+        "can update the contract address for a given name"
-    }
-```
-
-```diff
-    contract TaikoSP1Verifier (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
-    +++ description: None
-      name:
--        "SP1VerifierGateway"
-+        "TaikoSP1Verifier"
-      template:
--        "taiko/SP1VerifierGateway"
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
       sourceHashes.1:
 -        "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca"
 +        "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0"
-      description:
--        "Entry contract to verify batches using SP1."
       values.$implementation:
 -        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
 +        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
@@ -229,8 +128,6 @@ SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer remov
 -        "SP1Verifier"
       implementationNames.0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
 +        "TaikoSP1Verifier"
-      errors:
-+        {"proxiableUUID":"Processing error occurred."}
     }
 ```
 
@@ -239,7 +136,7 @@ SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer remov
     +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
       values.proposalCount:
 -        6
-+        8
++        9
     }
 ```
 
@@ -253,9 +150,8 @@ SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer remov
 
 ```diff
 .../{.flat@22616262 => .flat}/SP1Verifier.sol      | 2682 ++++++++++----------
- .../TaikoSP1Verifier}/ERC1967Proxy.p.sol           |    0
- .../TaikoSP1Verifier/TaikoSP1Verifier.sol}         |   75 +-
- 3 files changed, 1329 insertions(+), 1428 deletions(-)
+ .../SP1VerifierGateway/TaikoSP1Verifier.sol}       |   75 +-
+ 2 files changed, 1329 insertions(+), 1428 deletions(-)
 ```
 
 Generated with discovered.json: 0x287517d33b3633841ff8cdced485ab5de6e0e5d0
