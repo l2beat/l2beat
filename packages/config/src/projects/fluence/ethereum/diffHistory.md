@@ -1,3 +1,60 @@
+Generated with discovered.json: 0x0948d071e6eadd57629f852d5eebc37c2116572c
+
+# Diff at Wed, 04 Jun 2025 07:07:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22122735
+- current block number: 22629685
+
+## Description
+
+add fastconfirmer with worst possible config: EOA, minimum assertion period 1 block.
+
+## Watched changes
+
+```diff
+    EOA  (0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"fastconfirm","from":"0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"}]}
+      receivedPermissions.1:
++        {"permission":"validate","from":"0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"}]}
+    }
+```
+
+```diff
+    contract RollupProxy (0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.5:
++        "0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 ++++++++++++++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0xa9b33d8dcfda3d020edcd4ba387cc4d66256b306
 
 # Diff at Tue, 27 May 2025 08:26:53 GMT:
