@@ -42,6 +42,7 @@
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",
+    "@types/ws": "^8.18.1",
     "@polkadot/api": "^12.4.2",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
@@ -60,6 +61,7 @@
     "source-map-support": "^0.5.21",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
+    "ws": "^8.18.2",
     "viem": "^2.8.14",
     "zod": "^3.22.2",
     "uuid": "^9.0.1"
