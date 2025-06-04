@@ -97,10 +97,6 @@ export class Editor {
       return this.addFile(file)
     }
 
-    if (existingModel.getValue() !== file.content) {
-      existingModel.setValue(file.content)
-    }
-
     return existingModel
   }
 
