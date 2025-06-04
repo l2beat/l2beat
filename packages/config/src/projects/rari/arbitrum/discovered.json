@@ -5,11 +5,6 @@
   "configHash": "0x0f60c2666f179f7176f5f296dfcdde8bdd25538d0a9f5ede1f517092e6514375",
   "entries": [
     {
-      "address": "0x0000000000000000000000000000000000000100",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProxyAdmin",
       "address": "0x003e70B041abb993006C03E56c8515622a02928C",
       "type": "Contract",
@@ -584,8 +579,7 @@
         "0xc6f6a066bf8a07836eade893ff10802899d88d921053005f78e94d1e18dd8b84"
       ],
       "proxyType": "immutable",
-      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote.",
-      "ignoreInWatchMode": [""],
+      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x729E3e7542E8A6630818E9a14A67e0Cb7008a5E5), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
       "sinceTimestamp": 1732459265,
       "sinceBlock": 277848126,
       "values": {
@@ -1924,7 +1918,7 @@
   },
   "usedTemplates": {
     "espresso/Sequencing/EspressoTEEVerifier": "0x1b79cd76afba6e347d811f429fd36c08ddc9eb88b43d39abeeb230e6bd576105",
-    "espresso/Sequencing/QuoteVerifier": "0x26f7c13e6261304f965bc69d70ecfa46b6a1a1d95b07dc91876f8068366a3b0b",
+    "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
@@ -1945,5 +1939,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x1b34b56922911b5f524263b247473b7115420bcd214a4b48d8715ab30af11acd"
+  "permissionsConfigHash": "0xd203ce78d1de5b180c8b77e397ad60b083a0f8df74e7b0186185d7144c47fa76"
 }

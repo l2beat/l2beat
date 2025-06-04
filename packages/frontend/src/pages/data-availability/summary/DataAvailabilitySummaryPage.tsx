@@ -1,23 +1,23 @@
-import { CountBadge } from '~/components/badge/count-badge'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CountBadge } from '~/components/badge/CountBadge'
 import {
   DirectoryTabs,
   DirectoryTabsContent,
   DirectoryTabsList,
   DirectoryTabsTrigger,
-} from '~/components/core/directory-tabs'
-import { MainPageHeader } from '~/components/main-page-header'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
+} from '~/components/core/DirectoryTabs'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { DaSummaryEntry } from '~/server/features/data-availability/summary/getDaSummaryEntries'
+import type { ThroughputSummaryData } from '~/server/features/data-availability/throughput/getDaThroughputSummary'
 import {
   CustomSystemInfo,
   PublicSystemInfo,
-} from '../components/da-category-info'
-import { DaSummaryBoxes } from './components/da-summary-boxes'
-import { DaSummaryCustomTable } from './components/table/da-summary-custom-table'
-import { DaSummaryPublicTable } from './components/table/da-summary-public-table'
+} from '../components/DaCategoryInfo'
+import { DaSummaryBoxes } from './components/DaSummaryBoxes'
+import { DaSummaryCustomTable } from './components/table/DaSummaryCustomTable'
+import { DaSummaryPublicTable } from './components/table/DaSummaryPublicTable'
 
 interface Props extends AppLayoutProps {
   publicSystems: DaSummaryEntry[]

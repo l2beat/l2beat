@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

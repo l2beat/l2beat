@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { getScalingProjectEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

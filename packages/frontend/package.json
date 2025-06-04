@@ -9,7 +9,7 @@
     "start": "NODE_ENV=production node dist/server/index.js",
     "og-images": "tsx scripts/opengraph-images/index.ts",
     "tinify": "tsx scripts/tinify",
-    "new-project": "pnpm og-images && pnpm tinify",
+    "new-project": "cd ../config && pnpm build && cd ../frontend && pnpm og-images && pnpm tinify",
     "performance-test": "tsx scripts/performance-tests/performanceTest.ts",
     "size-test": "tsx scripts/performance-tests/detailedDataSizeTest.ts",
     "benchmark": "node -r esbuild-register scripts/benchmark.ts",
@@ -82,6 +82,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",

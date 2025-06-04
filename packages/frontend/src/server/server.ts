@@ -4,10 +4,12 @@ import compression from 'compression'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
-import { render } from '../ssr/server-entry'
+import { render } from '../ssr/ServerEntry'
 import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
+import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
+import { TimeoutHandler } from './middlewares/TimeoutHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
@@ -35,7 +37,9 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
-  app.use((req, res, next) => MetricsMiddleware(req, res, next, appLogger))
+  app.use(TimeoutHandler(appLogger))
+  app.use(ErrorHandler(appLogger))
+  app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
   app.use('/api/trpc', createTrpcRouter())
@@ -43,9 +47,10 @@ export function createServer(logger: Logger) {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     appLogger.info(`Started at http://localhost:${port}`)
   })
+  server.setTimeout(25000)
 }
 
 function renderToHtml(data: RenderData, url: string) {

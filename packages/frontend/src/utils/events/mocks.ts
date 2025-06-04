@@ -1,4 +1,4 @@
-import type { OneTimeEvent, RecurringEvent } from './get-one-time-events'
+import type { OneTimeEvent, RecurringEvent } from './getOneTimeEvents'
 
 export const oneTimeEventMock = (event?: {
   id?: string

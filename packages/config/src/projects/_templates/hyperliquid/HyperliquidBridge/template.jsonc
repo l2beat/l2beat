@@ -1,0 +1,57 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // HyperliquidBridge
+  "description": "Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is {{lockerThreshold}} and the minimum validator threshold is 2/3*{{totalValidatorPower}}.",
+  "ignoreRelatives": ["usdcToken"],
+  "fields": {
+    "validatorSetUpdates": {
+      "severity": "HIGH",
+      "description": "Validator set updates. See config.jsonc and update the hardcoded validator addresses.",
+      "handler": {
+        "type": "event",
+        "select": ["epoch", "hotValidatorSetHash", "coldValidatorSetHash"],
+        "add": { "event": "FinalizedValidatorSetUpdate" }
+      }
+    },
+    "lockers": {
+      "handler": {
+        "type": "event",
+        "select": "locker",
+        "add": {
+          "event": "ModifiedLocker",
+          "where": ["=", "#isLocker", true]
+        },
+        "remove": {
+          "event": "ModifiedLocker",
+          "where": ["!=", "#isLocker", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "vote for locking the bridge contract."
+        }
+      ]
+    },
+    "finalizers": {
+      "handler": {
+        "type": "event",
+        "select": "finalizer",
+        "add": {
+          "event": "ModifiedFinalizer",
+          "where": ["=", "#isFinalizer", true]
+        },
+        "remove": {
+          "event": "ModifiedFinalizer",
+          "where": ["!=", "#isFinalizer", true]
+        }
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "finalize withdrawals, finalize validator set updates."
+        }
+      ]
+    }
+  }
+}

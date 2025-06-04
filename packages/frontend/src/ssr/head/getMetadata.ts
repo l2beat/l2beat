@@ -1,5 +1,5 @@
 import type { Manifest } from '~/utils/Manifest'
-import { getBaseUrl } from '~/utils/get-base-url'
+import { getBaseUrl } from '~/utils/getBaseUrl'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
 export type OpenGraph = {

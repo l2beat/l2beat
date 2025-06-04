@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getCollectionEntry } from '~/content/get-collection'
+import { getCollectionEntry } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { formatPublicationDate } from '~/utils/dates'
