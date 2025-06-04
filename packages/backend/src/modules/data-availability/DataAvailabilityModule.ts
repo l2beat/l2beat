@@ -11,7 +11,6 @@ import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
-import type { DaIndexer } from './indexers/DaIndexer'
 import { DaIndexer2 } from './indexers/DaIndexer2'
 import { DaService2 } from './services/DaService2'
 
@@ -81,7 +80,7 @@ function createIndexers(
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: (DaIndexer | DaIndexer2)[] = []
+  const daIndexers: DaIndexer2[] = []
 
   for (const daLayer of config.layers) {
     const targetIndexer = new BlockTargetIndexer(
