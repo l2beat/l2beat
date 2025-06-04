@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22615832,
+  "blockNumber": 22631743,
   "configHash": "0x0573327a695b2211e98d2dff287b91632161196d1353a4460801688c7c71df46",
   "entries": [
     {
@@ -60,8 +60,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 366,
-        "latestBlock": 1438080,
+        "latestAuthoritySetId": 369,
+        "latestBlock": 1447680,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -140,7 +140,7 @@
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1423,
+        "messageId": 1425,
         "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
