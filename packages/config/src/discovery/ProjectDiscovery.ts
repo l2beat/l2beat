@@ -13,6 +13,7 @@ import {
   assert,
   EthereumAddress,
   type LegacyTokenBridgedUsing,
+  PrefixedEthereumAddress,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
@@ -286,7 +287,9 @@ export class ProjectDiscovery {
       return contracts[0]
     }
 
-    const contract = this.getContractByAddress(identifier)
+    const contract = identifier.includes(':')
+      ? this.getContractByPrefixedAddress(PrefixedEthereumAddress(identifier))
+      : this.getContractByAddress(EthereumAddress(identifier))
     assert(
       contract,
       `No contract of ${identifier} address found (${this.projectName})`,
@@ -303,7 +306,9 @@ export class ProjectDiscovery {
       return contracts.length === 1
     }
 
-    const contract = this.getContractByAddress(identifier)
+    const contract = identifier.includes(':')
+      ? this.getContractByPrefixedAddress(PrefixedEthereumAddress(identifier))
+      : this.getContractByAddress(EthereumAddress(identifier))
     return contract !== undefined
   }
 
@@ -565,13 +570,16 @@ export class ProjectDiscovery {
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
-  getContractByAddress(
-    address: string | EthereumAddress,
-  ): EntryParameters | undefined {
+  getContractByAddress(address: EthereumAddress): EntryParameters | undefined {
     const contracts = this.getContracts()
-    return contracts.find(
-      (contract) => contract.address === EthereumAddress(address.toString()),
-    )
+    return contracts.find((contract) => contract.address === address)
+  }
+
+  getContractByPrefixedAddress(
+    address: PrefixedEthereumAddress,
+  ): EntryParameters | undefined {
+    const contracts = this.getPrefixedContracts()
+    return contracts[address]
   }
 
   getEOAByAddress(
@@ -611,6 +619,26 @@ export class ProjectDiscovery {
 
   getEntries(): EntryParameters[] {
     return this.discoveries.flatMap((discovery) => discovery.entries)
+  }
+
+  getPrefixedContracts(): { [prefixedAddress: string]: EntryParameters } {
+    const result: { [prefixedAddress: string]: EntryParameters } = {}
+    this.discoveries.forEach((discovery) => {
+      discovery.entries.forEach((e) => {
+        if (e.type === 'Contract') {
+          const prefixedAddress = PrefixedEthereumAddress(
+            `${discovery.chain}:${e.address}`,
+          )
+          if (result[prefixedAddress] !== undefined) {
+            throw new Error(
+              `Duplicate contract address entry: ${prefixedAddress}`,
+            )
+          }
+          result[prefixedAddress] = e
+        }
+      })
+    })
+    return result
   }
 
   getContracts(): EntryParameters[] {
@@ -697,7 +725,7 @@ export class ProjectDiscovery {
           .map((p) =>
             this.formatViaPath(
               {
-                address: c.address,
+                address: PrefixedEthereumAddress(`${this.chain}:${c.address}`),
                 condition: p.condition,
                 delay: p.delay,
               },
@@ -736,7 +764,8 @@ export class ProjectDiscovery {
     skipName: boolean = false,
   ): string {
     const name =
-      this.getContractByAddress(path.address)?.name ?? path.address.toString()
+      this.getContractByPrefixedAddress(path.address)?.name ??
+      path.address.toString()
 
     const result = skipName ? [] : [name]
     if (path.delay) {
@@ -767,7 +796,7 @@ export class ProjectDiscovery {
     const addresses = s.match(ethereumAddressRegex) ?? []
 
     for (const address of addresses) {
-      const contract = this.getContractByAddress(address)
+      const contract = this.getContractByAddress(EthereumAddress(address))
       if (contract !== undefined && contract.name !== undefined) {
         s = s.replace(address, contract.name)
       }

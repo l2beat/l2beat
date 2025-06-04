@@ -1,5 +1,9 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
-import { type EthereumAddress, formatSeconds } from '@l2beat/shared-pure'
+import {
+  type EthereumAddress,
+  PrefixedEthereumAddress,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -186,6 +190,9 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
+    const prefixedFromAddress = PrefixedEthereumAddress(
+      `${this.projectDiscovery.chain}:${fromAddress}`,
+    )
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) =>
@@ -194,10 +201,15 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         })),
       )
-      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+      .filter(
+        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
+      )
   }
 
   getIssuedPermissions(fromAddress: EthereumAddress) {
+    const prefixedFromAddress = PrefixedEthereumAddress(
+      `${this.projectDiscovery.chain}:${fromAddress}`,
+    )
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) => {
@@ -210,7 +222,9 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         }))
       })
-      .filter((receivedPermission) => receivedPermission.from === fromAddress)
+      .filter(
+        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
+      )
   }
 
   getUpgradableBy(
