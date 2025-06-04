@@ -43,6 +43,7 @@ export async function getRegularDaProjectSections({
         permissions: bridge.permissions,
       },
       contractUtils,
+      projectsChangeReport,
     )
 
   const contractsSection =
