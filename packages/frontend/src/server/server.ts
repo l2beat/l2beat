@@ -58,7 +58,11 @@ function renderToHtml(data: RenderData, url: string) {
   const envData = Object.fromEntries(
     Object.entries(process.env)
       .map(([key, value]) => {
-        if (!key.startsWith('NEXT_PUBLIC_') && key !== 'NODE_ENV') {
+        if (
+          !key.startsWith('NEXT_PUBLIC_') &&
+          key !== 'NODE_ENV' &&
+          key !== 'DEPLOYMENT_ENV'
+        ) {
           return undefined
         }
         return [key, value] as const

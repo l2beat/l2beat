@@ -4,15 +4,15 @@ import { env } from '~/env'
 import { InMemoryCache } from './InMemoryCache'
 
 describe(InMemoryCache.name, () => {
-  let NODE_ENV: 'development' | 'test' | 'production'
+  let DEPLOYMENT_ENV: 'preview' | 'production' | undefined
 
   before(() => {
-    NODE_ENV = env.NODE_ENV
-    env.NODE_ENV = 'production'
+    DEPLOYMENT_ENV = env.DEPLOYMENT_ENV
+    env.DEPLOYMENT_ENV = 'production'
   })
 
   after(() => {
-    env.NODE_ENV = NODE_ENV
+    env.DEPLOYMENT_ENV = DEPLOYMENT_ENV
   })
 
   describe(InMemoryCache.prototype.get.name, () => {
