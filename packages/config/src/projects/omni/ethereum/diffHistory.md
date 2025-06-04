@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x2257141d826d74e622ef408d9156fb995f378269
+
+# Diff at Wed, 04 Jun 2025 08:36:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22495658
+- current block number: 22630069
+
+## Description
+
+New hashi adapters on gnosis chain.
+
+## Watched changes
+
+```diff
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"
++        "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"
+    }
+```
+
+```diff
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
++++ description: Array of the adapters on GnosisChain
++++ severity: HIGH
+      values.adapters.0:
+-        "gno:0x7820FBD555CEC4737242103C3B11E693d9aa7479"
++        "gno:0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22495658 (main branch discovery), not current.
+
+```diff
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671) {
+    +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+      values.mediatorContractOnOtherSide:
+-        "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
++        "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+      usedTypes:
++        [{"typeCaster":"ChainPrefix","arg":{"prefix":"gno"}}]
+    }
+```
+
 Generated with discovered.json: 0x6e3309bd21fce326fa8ea88404c830062e27e8ab
 
 # Diff at Fri, 23 May 2025 09:41:18 GMT:
