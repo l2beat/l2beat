@@ -6,14 +6,17 @@ import type {
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
+  TableReadyValue,
 } from '../types'
 import { DAC } from './dac-template'
+import { DA_LAYERS } from '../common'
 
 interface TemplateVars {
   dac?: {
     knownMembers?: DacInfo['knownMembers']
   }
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
+  fallback?: TableReadyValue
   discovery: ProjectDiscovery
 }
 
@@ -85,5 +88,6 @@ The sequencer distributes the data and collects signatures from Committee member
       upgradeability: DaUpgradeabilityRisk.LowOrNoDelay(),
       ...template.risks,
     },
+    fallback: DA_LAYERS.ETH_CALLDATA,
   })
 }

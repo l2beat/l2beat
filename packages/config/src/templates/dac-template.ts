@@ -11,6 +11,7 @@ import type {
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
+  TableReadyValue,
 } from '../types'
 
 export interface DacTemplateVars {
@@ -19,6 +20,7 @@ export interface DacTemplateVars {
   dac: DacInfo
   technology: DaTechnology
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
+  fallback?: TableReadyValue
 }
 
 export function DAC(template: DacTemplateVars): ProjectCustomDa {
