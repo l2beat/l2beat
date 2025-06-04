@@ -57,5 +57,6 @@ The DA bridge is a smart contract verifying a data availability claim from DAC M
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
       ...template.risks,
     },
+    fallback: template.fallback,
   }
 }
