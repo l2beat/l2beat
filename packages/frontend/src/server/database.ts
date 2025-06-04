@@ -67,17 +67,34 @@ function pool() {
 
 function makeLogger() {
   const appLogger = createLogger().for('Database')
+
   return (event: LogEvent) => {
     if (event.level === 'error') {
       appLogger.error('Query failed', {
         durationMs: event.queryDurationMillis,
         error: event.error,
         sql: compiledToSqlQuery(event.query),
+        ...(env.NODE_ENV === 'production'
+          ? [
+              {
+                sqlTemplate: event.query.sql,
+                parameters: event.query.parameters,
+              },
+            ]
+          : []),
       })
     } else {
       appLogger.info('Query executed', {
         durationMs: event.queryDurationMillis,
         sql: compiledToSqlQuery(event.query),
+        ...(env.NODE_ENV === 'production'
+          ? [
+              {
+                sqlTemplate: event.query.sql,
+                parameters: event.query.parameters,
+              },
+            ]
+          : []),
       })
     }
   }
