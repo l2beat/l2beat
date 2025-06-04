@@ -48,7 +48,9 @@ export function createServer(logger: Logger) {
   app.use('/plausible', createPlausibleRouter())
 
   const server = app.listen(port, () => {
-    appLogger.info(`Started at http://localhost:${port}`)
+    appLogger.info(`Started`, {
+      port,
+    })
   })
   server.setTimeout(25000)
 }
