@@ -3,7 +3,11 @@ import { DiagramImage } from '~/components/DiagramImage'
 import type { DiagramParams } from '~/utils/project/getDiagramParams'
 import { DiscoUiBanner } from '../../DiscoUiBanner'
 import type { TechnologyContract } from '../ContractEntry'
-import { ContractEntry, technologyContractKey } from '../ContractEntry'
+import {
+  ContractEntry,
+  ContractsWithImpactfulChanges,
+  technologyContractKey,
+} from '../ContractEntry'
 import { ProjectSection } from '../ProjectSection'
 import type { TechnologyRisk } from '../RiskList'
 import { RiskList } from '../RiskList'

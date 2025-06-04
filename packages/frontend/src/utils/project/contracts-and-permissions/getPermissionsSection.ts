@@ -9,7 +9,7 @@ import type { UsedInProject } from '../../../components/projects/sections/permis
 import type { ProjectSectionProps } from '../../../components/projects/sections/types'
 import type { ContractUtils } from './getContractUtils'
 import { toVerificationStatus } from './toVerificationStatus'
-import type type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 
 type ProjectParams = {
   id: ProjectId
