@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432",
+          "from": "ethereum:0x9B30061D077476a8B7e1b68c3da844Ed5FdE0432",
           "description": "add and remove whitelisted sender addresses.",
           "role": ".owner"
         }
@@ -348,7 +348,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -387,7 +387,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "role": ".getTransactionFilterer"
         }
@@ -436,7 +436,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -448,7 +448,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -460,7 +460,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "from": "ethereum:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
           "description": "set the conversion factor for gas token deposits.",
           "role": ".tokenMultiplierSetter"
         }
@@ -478,7 +478,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }

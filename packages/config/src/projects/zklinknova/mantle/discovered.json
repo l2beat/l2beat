@@ -17,25 +17,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+          "from": "mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
           "role": "admin",
-          "via": [{ "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82" }]
+          "via": [
+            { "address": "mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "from": "mantle:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "from": "mantle:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
+          "from": "mantle:0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
           "role": ".owner"
         }
       ],
@@ -282,7 +284,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
+          "from": "mantle:0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
           "role": "admin"
         }
       ],

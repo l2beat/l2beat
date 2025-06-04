@@ -221,7 +221,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
+          "from": "ethereum:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
           "delay": 691200,
           "role": ".$admin"
         }

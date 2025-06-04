@@ -18,12 +18,12 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "from": "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "from": "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
           "role": ".$admin"
         }
       ],
@@ -95,7 +95,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
+          "from": "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
           "role": ".operators"
         }
       ]
@@ -404,25 +404,25 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "from": "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "disable the withdrawal limit and manage the security agent role that can enable it.",
           "role": ".secAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "from": "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "enable the withdrawal limit.",
           "role": ".secAgentAC"
         },
         {
           "permission": "interact",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "from": "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "description": "manage critical access control roles related to upgrades and set the proxy governor that can upgrade the implementation.",
           "role": ".govAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+          "from": "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
           "role": ".$admin"
         }
       ],

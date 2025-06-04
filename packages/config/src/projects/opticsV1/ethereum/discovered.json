@@ -333,22 +333,22 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x42303634F37956687fB7ff2c6146AC842481A052",
+          "from": "ethereum:0x42303634F37956687fB7ff2c6146AC842481A052",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47",
+          "from": "ethereum:0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
+          "from": "ethereum:0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
+          "from": "ethereum:0xf25C5932bb6EFc7afA4895D9916F2abD7151BF97",
           "role": "admin"
         }
       ],

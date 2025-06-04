@@ -42,7 +42,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -228,13 +228,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "role": ".guardians"
         },
         {
           "permission": "upgrade",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "role": "admin"
         }
       ],
@@ -282,7 +282,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
+          "from": "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -306,7 +306,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "ethereum:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }

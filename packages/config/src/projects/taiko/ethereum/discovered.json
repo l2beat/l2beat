@@ -1832,151 +1832,151 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
+          "from": "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "from": "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "from": "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "from": "ethereum:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x91f67118DD47d502B1f0C354D0611997B022f29E",
+          "from": "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "from": "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "from": "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+          "from": "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
+          "from": "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+          "from": "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "role": "admin"
         }
       ],
@@ -2021,7 +2021,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
+          "from": "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
           "role": "admin"
         }
       ],

@@ -155,13 +155,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "from": "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "from": "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "role": "admin"
         }
       ],
@@ -242,22 +242,26 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "from": "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
-          "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
+          "via": [
+            { "address": "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "from": "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "role": "admin",
-          "via": [{ "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }]
+          "via": [
+            { "address": "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "from": "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
           "role": ".executors"
         }
       ]
@@ -288,37 +292,37 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
+          "from": "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
+          "from": "nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x383eFE8D410285c5CbE1B4F296022640759aA834",
+          "from": "nova:0x383eFE8D410285c5CbE1B4F296022640759aA834",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
+          "from": "nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
+          "from": "nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "from": "nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
+          "from": "nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad",
           "role": "admin"
         }
       ],
@@ -399,7 +403,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
+          "from": "nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -510,7 +514,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
+          "from": "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }

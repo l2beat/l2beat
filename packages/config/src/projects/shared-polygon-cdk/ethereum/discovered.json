@@ -26,17 +26,17 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "from": "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
           "role": "admin"
         }
       ],
@@ -57,7 +57,7 @@
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": ".trustedAggregatorAC"
         }
       ]
@@ -80,18 +80,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
           "role": ".createRollupAC"
         },
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "role": ".defaultAdminAC",
           "via": [
             {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -99,20 +99,20 @@
         },
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types.",
           "role": ".tweakParametersAC"
         },
         {
           "permission": "interact",
-          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)",
           "via": [
             {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -120,7 +120,7 @@
         },
         {
           "permission": "interact",
-          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
@@ -128,12 +128,14 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "role": "admin",
           "via": [
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+            },
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -141,12 +143,14 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": "admin",
           "via": [
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+            },
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -154,12 +158,14 @@
         },
         {
           "permission": "upgrade",
-          "from": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+          "from": "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
           "role": "admin",
           "via": [
-            { "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A" },
             {
-              "address": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+            },
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
               "delay": 259200,
               "condition": "(no delay if in emergency state)"
             }
@@ -169,7 +175,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
@@ -270,7 +276,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "activate the emergency state in the PolygonRollupManager and in the shared bridge immediately, effectively pausing all projects connected to them and making system contracts instantly upgradable.",
           "role": ".emergencyCouncilAdminAC"
         }
@@ -807,7 +813,7 @@
       "receivedPermissions": [
         {
           "permission": "aggregatePolygon",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "role": ".trustedAggregatorAC"
         }
       ]
@@ -855,7 +861,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
           "role": ".createRollupAC"
         }
@@ -922,25 +928,25 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+          "from": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
         },
         {
           "permission": "interact",
-          "from": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+          "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
           "description": "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager.",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+          "from": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
           "delay": 259200,
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
