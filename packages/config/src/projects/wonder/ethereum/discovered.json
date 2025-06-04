@@ -1,7 +1,7 @@
 {
   "name": "wonder",
   "chain": "ethereum",
-  "blockNumber": 22593198,
+  "blockNumber": 22630381,
   "configHash": "0xe3e409848db00a889a0c7e624cd6c43971497e6cb1e3205c16734c3b9bf54521",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -59,12 +59,7 @@
       }
     },
     {
-      "address": "0x28AB33ded680d3A64c6933D438771BeD2F5a7DC5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Safe",
+      "name": "Wonder Multisig",
       "address": "0x4665ad531c35b02dE090E21FC57B69946434bf2b",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -73,6 +68,22 @@
         "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
+          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
+          "role": ".getAdmin",
+          "via": [{ "address": "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6" }]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1745862095,
       "sinceBlock": 22369114,
@@ -90,7 +101,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -136,63 +147,6 @@
         "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
-    },
-    {
-      "name": "Safe",
-      "address": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
-        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "0xC8C4cB5AF7c723c7EfD360898B47920679f92C92",
-          "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
-          "role": ".getAdmin",
-          "via": [{ "address": "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6" }]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1729020743,
-      "sinceBlock": 20973072,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-        "$members": [
-          "0x28AB33ded680d3A64c6933D438771BeD2F5a7DC5",
-          "0x65876e2ecD53fa438859085Fd37426E4B097E256",
-          "0xcECeb72b0EC8f5a17B5EDf6073D2d3E8d4331FF7",
-          "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89",
-          "0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0xeaad2122e1e351c5b711b3112c69d1e63f2ff89cc5dbfeb7a2df0291b4518337",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 5 (40%)",
-        "nonce": 81,
-        "VERSION": "1.4.1"
-      },
-      "implementationNames": {
-        "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC": "SafeProxy",
-        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "address": "0x65876e2ecD53fa438859085Fd37426E4B097E256",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ValidatorTimelock",
@@ -272,8 +226,8 @@
       "sinceBlock": 21842838,
       "values": {
         "$immutable": true,
-        "owner": "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC",
-        "pendingOwner": "0x4665ad531c35b02dE090E21FC57B69946434bf2b",
+        "owner": "0x4665ad531c35b02dE090E21FC57B69946434bf2b",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
         "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
         "upgradeTimestamps": [
           { "_protocolVersion": 111669149696, "_upgradeTimestamp": 1742281200 },
@@ -541,7 +495,7 @@
           "0x907b30407249949521Bf0c89A43558dae200146A",
           "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 17,
+        "getFirstUnprocessedPriorityTx": 23,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -550,20 +504,20 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x47273439d63126209245405390af44b6971b422802f53c997dbe8f4a392adf35",
+        "getPriorityTreeRoot": "0x1ddcb070e026c615e42aabf89f5d7e0184d780c773a7cf39623aa951be64429e",
         "getPriorityTreeStartIndex": 7,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 687,
-        "getTotalBatchesExecuted": 684,
-        "getTotalBatchesVerified": 686,
-        "getTotalBlocksCommitted": 687,
-        "getTotalBlocksExecuted": 684,
-        "getTotalBlocksVerified": 686,
-        "getTotalPriorityTxs": 17,
+        "getTotalBatchesCommitted": 803,
+        "getTotalBatchesExecuted": 800,
+        "getTotalBatchesVerified": 803,
+        "getTotalBlocksCommitted": 803,
+        "getTotalBlocksExecuted": 800,
+        "getTotalBlocksVerified": 803,
+        "getTotalPriorityTxs": 23,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -628,11 +582,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "address": "0xcECeb72b0EC8f5a17B5EDf6073D2d3E8d4331FF7",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xd52145306Fc5F0f1a961D91DA53d198bc88614fc",
       "type": "EOA",
       "proxyType": "EOA"
@@ -643,22 +592,12 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xD767A6058c34E88Dc4Ce49114C362C8FAc265A76",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xE77207Eb0B345Bbe4C3345e0C5F6A626523fefd8",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0xee55ffc2a43d0641fD46EbB4a610E072Bf9d4FBf",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xf2BFa7c00aDDF7765B40e83Fc4207b16EBD6db89",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -925,9 +864,6 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x5e6C5551C1b0626e9061fD4Daca6DA866Fd405aC": [
-      "constructor(address _singleton)"
-    ],
     "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": [
       "constructor(address _initialOwner, uint32 _executionDelay)",
       "error AddressAlreadyValidator(uint256 _chainId)",
@@ -1103,5 +1039,5 @@
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x36da1d34f28453e919a8627bc0b1ab1004750c321022c1ef322323fa5f581365"
+  "permissionsConfigHash": "0x4598f44d3b703e83c9f331833472f58a7a5b51bf627e31a0bf78b1479b8072cc"
 }
