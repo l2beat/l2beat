@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x2534550fbff4677a109317e3ff94aaa7c9a187f0
+
+# Diff at Wed, 04 Jun 2025 07:03:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22566681
+- current block number: 22629662
+
+## Description
+
+new batch poster added: `0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A` (with 500 eth balance!?).
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.2:
++        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
+      values.batchPosters.1:
+-        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
++        "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A"
+      values.setIsBatchPosterCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x65a8ec361d09d2c18666b157c8d0657b58a680ec
 
 # Diff at Tue, 27 May 2025 08:31:02 GMT:

@@ -1,9 +1,22 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 22566681,
+  "blockNumber": 22629662,
   "configHash": "0xcd0a2d191e589c2ca18eab96705e4c9559cc532db2513deb8eaf08547cf9be5e",
   "entries": [
+    {
+      "address": "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
     {
       "name": "bartek.eth-L2BEAT",
       "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
@@ -484,9 +497,10 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 900046,
+        "batchCount": 906864,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
+          "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
           "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
         ],
@@ -496,9 +510,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 22566546,
+          "prevBlockNumber": 22629523,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22566614
+          "prevSequencedBlockNumber": 22629590
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -523,8 +537,8 @@
         "reader4844": "0x15b25E3fb8419dA4848a6f193bb9b43519D0d4ca",
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
-        "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1987150,
+        "setIsBatchPosterCount": 4,
+        "totalDelayedMessagesRead": 1996567,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -861,7 +875,7 @@
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0xe51ddbcdd10fad49c953809c547b6410abed5865d0dad2c91b50b20b06d0ef64",
+        "latestConfirmed": "0x2340c21533d9fd6c8598490933d14acbf8afbf102ab6062ff73cea9e02e4af13",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1327,7 +1341,7 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1987156,
+        "delayedMessageCount": 1996572,
         "inboxHistory": [
           "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -1341,8 +1355,8 @@
         ],
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 900046,
-        "sequencerReportedSubMessageCount": 318500106
+        "sequencerMessageCount": 906864,
+        "sequencerReportedSubMessageCount": 321532850
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1737,7 +1751,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -5036,5 +5050,5 @@
     "orbitstack/Timelock": "0x04f942abdcad9d7b2cb8d4a7d7ae99eb81b76e7872285ce0148c8cf27034a39c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "permissionsConfigHash": "0x31645c4d0c57fd361b9dcf830b4b242d88c4c1ec4c1013504650a2ec3b2ccfb4"
+  "permissionsConfigHash": "0x05265449bcc3f5ce73501b4299c69ba90e3648cf6d6a467c294b0ecf9925101f"
 }
