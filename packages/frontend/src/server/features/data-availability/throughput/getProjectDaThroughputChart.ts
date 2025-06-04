@@ -7,7 +7,7 @@ import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { CostsTimeRange } from '../../scaling/costs/utils/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { DaThroughputTimeRange } from './utils/range'
+import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 
 export type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputDataPoint[]
@@ -18,6 +18,7 @@ export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 export const ProjectDaThroughputChartParams = z.object({
   range: DaThroughputTimeRange.or(CostsTimeRange),
   projectId: z.string(),
+  forCosts: z.boolean().optional(),
 })
 export type ProjectDaThroughputChartParams = z.infer<
   typeof ProjectDaThroughputChartParams
@@ -31,7 +32,10 @@ export async function getProjectDaThroughputChart(
   }
 
   const db = getDb()
-  const [from, to] = getRangeWithMax(params.range, 'daily')
+  const resolution = params.forCosts ? 'daily' : rangeToResolution(params.range)
+  const [from, to] = getRangeWithMax(params.range, resolution, {
+    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
+  })
   const throughput = await db.dataAvailability2.getByProjectIdsAndTimeRange(
     [params.projectId],
     [from, to],
@@ -39,10 +43,15 @@ export async function getProjectDaThroughputChart(
   if (throughput.length === 0) {
     return undefined
   }
-  const { grouped, minTimestamp, maxTimestamp } =
-    groupByTimestampAndProjectId(throughput)
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+    throughput,
+    resolution,
+  )
 
-  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
+  const timestamps = generateTimestamps(
+    [minTimestamp, maxTimestamp],
+    resolution,
+  )
   return {
     chart: timestamps.map((timestamp) => {
       return [timestamp, grouped[timestamp] ?? 0]
@@ -51,12 +60,22 @@ export async function getProjectDaThroughputChart(
   }
 }
 
-function groupByTimestampAndProjectId(records: DataAvailabilityRecord[]) {
+function groupByTimestampAndProjectId(
+  records: DataAvailabilityRecord[],
+  resolution: 'hourly' | 'sixHourly' | 'daily',
+) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
+    const timestamp = UnixTime.toStartOf(
+      record.timestamp,
+      resolution === 'daily'
+        ? 'day'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'hour',
+    )
     const value = record.totalSize
     if (!result[timestamp]) {
       result[timestamp] = Number(value)

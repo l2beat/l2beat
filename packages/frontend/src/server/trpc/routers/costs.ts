@@ -2,7 +2,7 @@ import { z } from 'zod'
 import {
   ProjectCostsChartParams,
   getProjectCostsChart,
-} from '~/server/features/scaling/costs/GetProjectCostsChart'
+} from '~/server/features/scaling/costs/getProjectCostsChart'
 import {
   CostsChartParams,
   getCostsChart,
