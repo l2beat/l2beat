@@ -12,6 +12,8 @@ export function ErrorHandler(appLogger: Logger) {
       url: req.originalUrl,
       errorId,
       status: res.statusCode,
+      referer: req.headers.referer ?? 'unknown',
+      userAgent: req.headers['user-agent'] ?? 'unknown',
     })
     res.send(`Internal Server Error\n\n Error ID: ${errorId}`)
   }
