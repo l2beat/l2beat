@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".operators"
         }
       ]
@@ -24,7 +24,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -90,7 +90,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".operators"
         }
       ]
@@ -293,18 +293,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".$admin"
         }
       ]

@@ -92,47 +92,47 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
+          "from": "arbitrum:0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x211C9893653Aea2088E34765e7039617E95fD8fD",
+          "from": "arbitrum:0x211C9893653Aea2088E34765e7039617E95fD8fD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
+          "from": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
+          "from": "arbitrum:0x4fF3E70f30f0394Ad62428751Fe3858740595908",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
+          "from": "arbitrum:0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
+          "from": "arbitrum:0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf",
+          "from": "arbitrum:0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
+          "from": "arbitrum:0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15",
+          "from": "arbitrum:0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15",
           "role": "admin"
         }
       ],
@@ -165,18 +165,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x29994207C5AeDc83F27c5dc16E468f328832d42d",
+          "from": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+          "from": "arbitrum:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+          "from": "arbitrum:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "role": "admin"
         }
       ],
@@ -350,103 +350,125 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+          "from": "arbitrum:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
-          "via": [{ "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
-          "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x211C9893653Aea2088E34765e7039617E95fD8fD",
+          "from": "arbitrum:0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
+          "from": "arbitrum:0x211C9893653Aea2088E34765e7039617E95fD8fD",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4fF3E70f30f0394Ad62428751Fe3858740595908",
+          "from": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
+          "from": "arbitrum:0x4fF3E70f30f0394Ad62428751Fe3858740595908",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
+          "from": "arbitrum:0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf",
+          "from": "arbitrum:0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
-          "role": "admin",
-          "via": [{ "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
+          "from": "arbitrum:0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15",
+          "from": "arbitrum:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "role": "admin",
           "via": [
-            { "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d" },
-            { "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arbitrum:0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arbitrum:0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15",
+          "role": "admin",
+          "via": [
+            {
+              "address": "arbitrum:0x29994207C5AeDc83F27c5dc16E468f328832d42d"
+            },
+            { "address": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
+          "from": "arbitrum:0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
           "role": ".executors"
         }
       ]
@@ -854,7 +876,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
+          "from": "arbitrum:0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -884,7 +906,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
+          "from": "arbitrum:0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }

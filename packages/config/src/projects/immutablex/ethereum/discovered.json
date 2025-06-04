@@ -351,7 +351,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "role": ".operators"
         }
       ]
@@ -389,18 +389,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -444,7 +444,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -457,7 +457,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }

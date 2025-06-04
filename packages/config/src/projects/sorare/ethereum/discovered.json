@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "role": ".operators"
         }
       ]
@@ -46,18 +46,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -70,7 +70,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "role": ".operators"
         }
       ]
@@ -87,7 +87,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -142,7 +142,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -219,18 +219,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xF5C9F957705bea56a7e806943f98F7777B995826",
+          "from": "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826",
           "delay": 1209600,
           "role": ".$admin"
         }

@@ -13,23 +13,23 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "operateStarkEx",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".operators"
         },
         {
           "permission": "upgrade",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".$admin"
         }
       ]
@@ -276,7 +276,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "role": ".operators"
         }
       ]
@@ -311,7 +311,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -324,7 +324,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
+          "from": "ethereum:0x82123571C8a5e0910280C066bc634c4945FFcbC8",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }

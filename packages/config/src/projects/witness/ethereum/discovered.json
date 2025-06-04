@@ -30,7 +30,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "role": ".trustedSequencer"
         }
       ]
@@ -117,7 +117,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "role": "admin"
         }
       ],
@@ -185,15 +185,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "role": "admin",
-          "via": [{ "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }]
+          "via": [
+            { "address": "ethereum:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
+          "from": "ethereum:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
           "role": ".owner"
         }
       ]
@@ -210,19 +212,19 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         },
         {
           "permission": "interact",
-          "from": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         }

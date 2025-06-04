@@ -164,7 +164,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
           "role": ".fallbackOperator"
         }
@@ -238,7 +238,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "from": "ethereum:0xF24f1DC519d88246809B660eb56D94048575d083",
           "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
           "role": ".pausers"
         }
@@ -251,7 +251,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": ".Operators"
         }
       ]
@@ -273,7 +273,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": ".Operators"
         }
       ]
@@ -296,70 +296,76 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+          "from": "ethereum:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
           "description": "change the beacon implementation.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "cancel queued transactions.",
           "role": ".cancellerAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "execute transactions that are ready.",
           "role": ".executorAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
-          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+          "via": [
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions.",
           "role": ".proposerAC"
         },
         {
           "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "role": "admin",
           "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+            {
+              "address": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+            },
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": "admin",
           "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+            {
+              "address": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+            },
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "role": ".executorAC"
         }
       ],
@@ -689,12 +695,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "from": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -754,7 +760,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "from": "ethereum:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -837,12 +843,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": "admin"
         }
       ],

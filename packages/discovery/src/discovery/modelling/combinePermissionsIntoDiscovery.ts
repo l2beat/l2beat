@@ -1,3 +1,4 @@
+import { PrefixedEthereumAddress } from '@l2beat/shared-pure'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -37,8 +38,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${entry.address}`) &&
-          p.receiverChain === discovery.chain &&
+          p.receiver.startsWith(`${discovery.chain}:${entry.address}`) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -48,7 +48,7 @@ export async function combinePermissionsIntoDiscovery(
               sortReceivedPermissions(
                 ultimatePermissionsForEntry.map((p) => {
                   // Remove some fields for backwards compatibility
-                  const { receiver, receiverChain, isFinal, ...rest } = p
+                  const { receiver, isFinal, ...rest } = p
                   return rest
                 }),
               ),
@@ -57,7 +57,7 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          entry.address,
+          PrefixedEthereumAddress(`${discovery.chain}:${entry.address}`),
         )
           ? true
           : undefined

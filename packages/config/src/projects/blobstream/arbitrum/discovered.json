@@ -42,7 +42,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -147,13 +147,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "role": ".guardians"
         },
         {
           "permission": "upgrade",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "role": "admin"
         }
       ],
@@ -206,7 +206,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -311,7 +311,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "arbitrum:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
