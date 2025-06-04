@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x17c61a98454fb9e1b91edb1fb3e11a2c3dfd4b69
+
+# Diff at Wed, 04 Jun 2025 07:06:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 325165450
+- current block number: 343741997
+
+## Description
+
+programVKey changed.
+
+## Watched changes
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00eaf7d396acac046b54bc8d5ba17d3f1c7374d7158ac01c76dfeca6103163eb"
++        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
+    }
+```
+
 Generated with discovered.json: 0x3040e5b02ef842a53e6f44614f98406be1c77bda
 
 # Diff at Wed, 28 May 2025 11:34:26 GMT:
