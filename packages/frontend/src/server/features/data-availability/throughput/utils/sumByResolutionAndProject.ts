@@ -3,7 +3,10 @@ import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 
 /** This function sums up totalSize for each day and project */
-export function sumByDayAndProject(records: DataAvailabilityRecord2[]) {
+export function sumByResolutionAndProject(
+  records: DataAvailabilityRecord2[],
+  resolution?: 'hourly' | 'sixHourly' | 'daily',
+) {
   const groupedByProjectId = groupBy(records, (r) => r.projectId)
   const result: Omit<DataAvailabilityRecord2, 'configurationId'>[] = []
 
@@ -11,7 +14,14 @@ export function sumByDayAndProject(records: DataAvailabilityRecord2[]) {
     groupedByProjectId,
   )) {
     const groupedByDay = groupBy(projectRecords, (r) =>
-      UnixTime.toStartOf(r.timestamp, 'day'),
+      UnixTime.toStartOf(
+        r.timestamp,
+        resolution === 'hourly'
+          ? 'hour'
+          : resolution === 'sixHourly'
+            ? 'six hours'
+            : 'day',
+      ),
     )
     const daLayer = projectRecords[0]?.daLayer
     assert(daLayer, 'DaLayer not found')

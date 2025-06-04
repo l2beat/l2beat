@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import keyBy from 'lodash/keyBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { sumByDayAndProject } from '../data-availability/throughput/utils/sumByDayAndProject'
+import { sumByResolutionAndProject } from '../data-availability/throughput/utils/sumByResolutionAndProject'
 
 export interface BlobsData {
   totalData: number
@@ -30,7 +30,7 @@ const getCachedBlobsData = async (
     now - UnixTime.DAY,
     now,
   )
-  const summedRecords = sumByDayAndProject(records)
+  const summedRecords = sumByResolutionAndProject(records)
 
   const ethereumRecord = summedRecords.find(
     (record) => record.projectId === ProjectId.ETHEREUM,
