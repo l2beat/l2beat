@@ -74,27 +74,23 @@ function makeLogger() {
         durationMs: event.queryDurationMillis,
         error: event.error,
         sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV === 'production'
-          ? [
-              {
-                sqlTemplate: event.query.sql,
-                parameters: event.query.parameters,
-              },
-            ]
-          : []),
+        ...(env.NODE_ENV !== 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
       })
     } else {
       appLogger.info('Query executed', {
         durationMs: event.queryDurationMillis,
         sql: compiledToSqlQuery(event.query),
-        ...(env.NODE_ENV === 'production'
-          ? [
-              {
-                sqlTemplate: event.query.sql,
-                parameters: event.query.parameters,
-              },
-            ]
-          : []),
+        ...(env.NODE_ENV !== 'production'
+          ? {
+              sqlTemplate: event.query.sql,
+              parameters: event.query.parameters,
+            }
+          : {}),
       })
     }
   }
