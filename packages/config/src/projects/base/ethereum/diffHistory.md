@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x590cbf82d9abc37d87914d7c56eca775e03769a2
+
+# Diff at Wed, 04 Jun 2025 12:31:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22593373
+- current block number: 22631283
+
+## Description
+
+Base Multisig 1 signer rotation.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.13:
+-        "0xe32868ec7762650DdE723e945D638A05900974F4"
++        "0x9bF96DCf51959915c8c343a3E50820Ad069A1859"
+      values.$members.12:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0x541a833E4303EB56a45bE7E8E4A908db97568d1e"
+      values.$members.7:
+-        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
++        "0x4427683AA1f0ff25ccDC4a5Db83010c1DE9b5fF4"
+      values.$members.6:
+-        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
++        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
+      values.$members.5:
+-        "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
++        "0xA31E1c38d5c37D8ECd0e94C80C0F7FD624d009A3"
+      values.$members.4:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
+      values.$members.3:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
+      values.$members.2:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.1:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0xB37B2D42cb0C10ebf96279CcECa2cBFc47C6f236"
+    }
+```
+
 Generated with discovered.json: 0x9ea22db911b764a132aeb53caa4cf572aaaa7ee0
 
 # Diff at Fri, 30 May 2025 05:26:00 GMT:
