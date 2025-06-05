@@ -138,16 +138,6 @@
         "required": ["initialAddresses"],
         "additionalProperties": false
       }
-    },
-    "overrides": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "#/properties/chains/additionalProperties/properties/overrides/additionalProperties"
-      }
-    },
-    "types": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/DiscoveryCustomType" }
     }
   },
   "required": ["name", "chains"],

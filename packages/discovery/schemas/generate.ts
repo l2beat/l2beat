@@ -83,10 +83,6 @@ async function main() {
     sharedModules: z.array(z.string()).default([]),
     // Chain-specific configurations
     chains: z.record(z.string(), ChainConfig),
-    // Global overrides (if any)
-    overrides: z.record(MergedContract).optional(),
-    // Global types (if any)
-    types: z.optional(z.record(z.string(), DiscoveryCustomType)),
   })
 
   await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')
