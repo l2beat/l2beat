@@ -2201,15 +2201,29 @@
       "supply": "zero"
     },
     {
-      "name": "Frax",
+      "name": "Legacy Frax Dollar",
       "coingeckoId": "frax",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-      "symbol": "FRAX",
+      "symbol": "FRAX.legacy",
       "decimals": 18,
       "deploymentTimestamp": 1608140520,
       "coingeckoListingTimestamp": 1608508800,
       "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Frax (prev. FXS)",
+      "coingeckoId": "frax-share",
+      "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+      "symbol": "FRAX",
+      "decimals": 18,
+      "deploymentTimestamp": 1608140560,
+      "coingeckoListingTimestamp": 1608508800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2252,20 +2266,6 @@
       "coingeckoListingTimestamp": 1649462400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/24944/large/FPIS_icon.png?1696524099",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Frax Share",
-      "coingeckoId": "frax-share",
-      "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-      "symbol": "FXS",
-      "decimals": 18,
-      "deploymentTimestamp": 1608140560,
-      "coingeckoListingTimestamp": 1608508800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5155,15 +5155,15 @@
       "supply": "zero"
     },
     {
-      "name": "Staked FRAX",
+      "name": "Legaxy Staked FRAX Dollar",
       "coingeckoId": "staked-frax",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
-      "symbol": "sFRAX",
+      "symbol": "sFRAX.legacy",
       "decimals": 18,
       "deploymentTimestamp": 1697642351,
       "coingeckoListingTimestamp": 1708387200,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35383/large/sfrax-logo.png?1739780377",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

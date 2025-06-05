@@ -93,12 +93,12 @@
         "YFI",
         "UNI",
         "WBTC",
-        "FXS",
+        "FRAX",
         "LINK",
         "DAI",
         "SUSHI",
         "AAVE",
-        "FRAX",
+        "FRAX.legacy",
         "OCEAN",
         "USDC",
         "SNX",
@@ -145,7 +145,7 @@
     {
       "type": "basic",
       "address": "0x183D0dC5867c01bFB1dbBc41d6a9d3dE6e044626",
-      "tokens": ["FXS", "FRAX", "ETH"],
+      "tokens": ["FRAX", "FRAX.legacy", "ETH"],
       "sinceTimestamp": 1632319221
     },
     {
@@ -241,7 +241,7 @@
     {
       "type": "any",
       "address": "0x4f60a160D8C2DDdaAfe16FCC57566dB84D674BD6",
-      "tokens": ["FRAX"],
+      "tokens": ["FRAX.legacy"],
       "sinceTimestamp": 1636969283
     },
     {
@@ -250,12 +250,12 @@
       "tokens": [
         "BFC",
         "DAO",
-        "FXS",
+        "FRAX",
         "FEG",
         "BUSD",
         "DAI",
         "PEOPLE",
-        "FRAX",
+        "FRAX.legacy",
         "REQ",
         "OCEAN",
         "ACH",
@@ -268,7 +268,7 @@
     {
       "type": "basic",
       "address": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
-      "tokens": ["WBTC", "FXS", "DAI", "FRAX", "USDC", "USDT", "ETH"],
+      "tokens": ["WBTC", "FRAX", "DAI", "FRAX.legacy", "USDC", "USDT", "ETH"],
       "sinceTimestamp": 1659078034
     },
     {
@@ -298,7 +298,7 @@
     {
       "type": "any",
       "address": "0x685b63CFE0179b3EFb70A01dCb1D648549AA192d",
-      "tokens": ["FXS"],
+      "tokens": ["FRAX"],
       "sinceTimestamp": 1636968291
     },
     {
@@ -328,7 +328,16 @@
     {
       "type": "basic",
       "address": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
-      "tokens": ["RAI", "FXS", "ANKR", "FRAX", "CRV", "AMP", "ORBS", "ETH"],
+      "tokens": [
+        "RAI",
+        "FRAX",
+        "ANKR",
+        "FRAX.legacy",
+        "CRV",
+        "AMP",
+        "ORBS",
+        "ETH"
+      ],
       "sinceTimestamp": 1616747753
     },
     {
@@ -475,13 +484,13 @@
         "KP3R",
         "WBTC",
         "LEO",
-        "FXS",
+        "FRAX",
         "WOO",
         "LINK",
         "DAI",
         "SUSHI",
         "AAVE",
-        "FRAX",
+        "FRAX.legacy",
         "SHIB",
         "USDC",
         "NEXO",

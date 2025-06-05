@@ -1004,11 +1004,11 @@
       "address": "0xc2544A32872A91F4A553b404C6950e89De901fdb"
     },
     {
-      "symbol": "sFRAX",
+      "symbol": "sFRAX.legacy",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
     },
     {
-      "symbol": "FRAX",
+      "symbol": "FRAX.legacy",
       "category": "stablecoin",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
@@ -1040,7 +1040,7 @@
       "address": "0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057"
     },
     {
-      "symbol": "FXS",
+      "symbol": "FRAX",
       "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
     },
     {
