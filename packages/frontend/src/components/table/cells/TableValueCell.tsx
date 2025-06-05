@@ -16,11 +16,12 @@ import {
 import { TableLink } from '../TableLink'
 import { NoInfoCell } from './NoInfoCell'
 import { TwoRowCell } from './TwoRowCell'
+import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 
 interface Props {
   value: TableReadyValue | undefined
   href?: string
-  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data'
+  emptyMode?: 'em-dash' | 'no-info' | 'n/a' | 'no-data' | 'upcoming'
 }
 
 export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
@@ -37,6 +38,9 @@ export function TableValueCell({ value, href, emptyMode = 'no-info' }: Props) {
     }
     if (emptyMode === 'no-data') {
       return <NoDataBadge />
+    }
+    if (emptyMode === 'upcoming') {
+      return <UpcomingBadge />
     }
     return <NoInfoCell />
   }

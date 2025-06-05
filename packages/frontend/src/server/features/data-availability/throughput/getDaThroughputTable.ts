@@ -65,9 +65,6 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
       daLayers
         .map((daLayer) => {
           const lastRecord = values[daLayer.id]?.at(-1)
-          if (!lastRecord) {
-            return undefined
-          }
 
           const latestThroughput = daLayer.daLayer.throughput
             ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -79,39 +76,45 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           )
 
           const largestPoster = largestPosters[daLayer.id]
-          const pastDayAvgThroughputPerSecond =
-            Number(lastRecord.totalSize) / UnixTime.DAY
+          const pastDayAvgThroughputPerSecond = lastRecord
+            ? Number(lastRecord.totalSize) / UnixTime.DAY
+            : undefined
           const maxThroughputPerSecond = getMaxThroughputPerSecond(
             daLayer.id,
             latestThroughput,
           )
-          const pastDayAvgCapacityUtilization = round(
-            (pastDayAvgThroughputPerSecond / maxThroughputPerSecond) * 100,
-            2,
-          )
+          const pastDayAvgCapacityUtilization = pastDayAvgThroughputPerSecond
+            ? round(
+                (pastDayAvgThroughputPerSecond / maxThroughputPerSecond) * 100,
+                2,
+              )
+            : undefined
 
           return [
             daLayer.id,
             {
-              totalSize: Number(lastRecord.totalSize),
-              syncedUntil: lastRecord.timestamp,
+              totalSize: lastRecord ? Number(lastRecord.totalSize) : undefined,
+              syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
               pastDayAvgThroughputPerSecond,
-              largestPoster: largestPoster
-                ? {
-                    name: largestPoster.name,
-                    percentage: round(
-                      (Number(largestPoster.totalSize) /
-                        Number(lastRecord.totalSize)) *
-                        100,
-                      2,
-                    ),
-                    totalPosted: Number(largestPoster.totalSize),
-                    href: `/scaling/projects/${largestPoster.slug}`,
-                  }
-                : undefined,
+              largestPoster:
+                largestPoster && lastRecord
+                  ? {
+                      name: largestPoster.name,
+                      percentage: round(
+                        (Number(largestPoster.totalSize) /
+                          Number(lastRecord.totalSize)) *
+                          100,
+                        2,
+                      ),
+                      totalPosted: Number(largestPoster.totalSize),
+                      href: `/scaling/projects/${largestPoster.slug}`,
+                    }
+                  : undefined,
               maxThroughputPerSecond,
               pastDayAvgCapacityUtilization,
-              totalPosted: Number(lastRecord.totalSize),
+              totalPosted: lastRecord
+                ? Number(lastRecord.totalSize)
+                : undefined,
             },
           ] as const
         })
