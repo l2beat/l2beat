@@ -47,7 +47,9 @@ export function createServer(logger: Logger) {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
-  app.use(ErrorHandler(appLogger))
+  if (isProduction) {
+    app.use(ErrorHandler(appLogger))
+  }
 
   app.listen(port, () => {
     appLogger.info(`Started`, {
