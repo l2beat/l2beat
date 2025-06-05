@@ -21,7 +21,7 @@ export function MetricsMiddleware(logger: Logger) {
         url: req.originalUrl,
         status: res.statusCode,
         duration: Math.round(durationMs),
-        size: res.getHeader('Content-Length') ?? 0,
+        size: res.getHeader('Content-Length'),
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
       })
