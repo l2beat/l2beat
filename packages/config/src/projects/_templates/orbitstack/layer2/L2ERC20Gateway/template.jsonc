@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2ERC20Gateway",
   "category": "bridge-canonical",
   "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",

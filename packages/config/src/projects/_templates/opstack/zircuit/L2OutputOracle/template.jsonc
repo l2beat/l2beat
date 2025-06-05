@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "core",
   "description": "Entrypoint for permissioned proposers to propose new L2 outputs (state roots). New proposals have to be accompanied by a zk-SNARK proof of a correct state transition, but there currently is a backdoor that lets this contract accept a state root without proof if the operator has not updated the state in {{withdrawalKeepalivePeriodSecondsFmt}}.",
   "ignoreMethods": [
