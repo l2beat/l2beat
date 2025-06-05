@@ -507,6 +507,8 @@
         "propose",
         "sequence",
         "validate",
+        "disperse",
+        "relayDA",
         "operateLinea",
         "fastconfirm",
         "validateZkStack",
@@ -518,6 +520,10 @@
         "operateStarknet",
         "operateStarkEx",
         "governStarknet",
+        "metisGameCreator",
+        "stateDeleterMetis",
+        "hotValidatorHyperliquid",
+        "coldValidatorHyperliquid",
         "member",
         "act",
         "interact",
@@ -612,6 +618,7 @@
         "Axelar proxy",
         "LightLink proxy",
         "Everclear proxy",
+        "TaikoFork proxy",
         "immutable"
       ]
     },
