@@ -139,13 +139,13 @@ const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FRAX',
+  'FRAX.legacy',
   discovery.getContractValue<number>('FRAXBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FXS',
+  'FRAX',
   discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
@@ -505,13 +505,13 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FRAX_ADDRESS),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FXS_ADDRESS),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
       }),

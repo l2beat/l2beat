@@ -180,7 +180,7 @@ struct TransitionState {
 }
 ```
 
-The control then passes to the `MainnetInbox`'s `proposeBatch` function. It is first checked that `numBatches` is equal or greater than the `config.forkHeights.pacaya` value. The term "Pacaya" refers to the [Pacaya upgrade](https://docs.taiko.xyz/taiko-alethia-protocol/pacaya-fork/). It is then checked that the `numBatches` is less than `lastVerifiedBatchId + maxBatchesToVerify + 1`, which means that blocks cannot be proposed if sequenced batches are too much ahead of the last verified batch.
+The control then passes to the `MainnetInbox`'s `proposeBatch` function. It is first checked that `numBatches` is equal or greater than the `config.forkHeights.pacaya` value. The term "Pacaya" refers to the [Pacaya upgrade](https://docs.taiko.xyz/taiko-alethia-protocol/protocol-design/pacaya-fork-taiko-alethia/). It is then checked that the `numBatches` is less than `lastVerifiedBatchId + maxBatchesToVerify + 1`, which means that blocks cannot be proposed if sequenced batches are too much ahead of the last verified batch.
 
 The `_params` are then decoded into a `BatchParams` structure, which is defined as follows:
 

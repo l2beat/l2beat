@@ -141,18 +141,17 @@ export function CostsChart({
           isAnimationActive={false}
         />
 
-        {showDataPosted && range !== '1d' && (
+        {showDataPosted && (
           <Line
             yAxisId="right"
             dataKey="posted"
             strokeWidth={2}
             stroke={chartMeta.posted.color}
-            type={resolution === 'hourly' ? 'stepAfter' : undefined}
             dot={false}
             isAnimationActive={false}
           />
         )}
-        {showDataPosted && range !== '1d' && (
+        {showDataPosted && (
           <Line
             yAxisId="right"
             dataKey="notSyncedPosted"
@@ -161,7 +160,6 @@ export function CostsChart({
             strokeDasharray={
               chartMeta.notSyncedPosted.indicatorType.strokeDasharray
             }
-            type={resolution === 'hourly' ? 'stepAfter' : undefined}
             dot={false}
             isAnimationActive={false}
             legendType="none"

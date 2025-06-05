@@ -2050,10 +2050,29 @@
     {
       "mode": "auto",
       "id": "arbitrum-FRAX-2",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1623784100
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-FRAX.legacy-1",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -2124,7 +2143,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-FXS-1",
+      "id": "arbitrum-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -2138,25 +2157,6 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "arbitrum-FXS-2",
-      "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "decimals": 18,
-        "sinceTimestamp": 1623784100
-      },
-      "category": "other",
-      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -3905,6 +3905,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-pufETH-1",
+      "priceId": "pufeth",
+      "symbol": "pufETH",
+      "name": "pufETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/35176/large/pufETH-200-200-resolution.png?1707753174",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1707696000
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-PYR-1",
       "priceId": "vulcan-forged",
       "symbol": "PYR",
@@ -3955,6 +3974,25 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1633573008
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-RAD-1",
+      "priceId": "radicle",
+      "symbol": "RAD",
+      "name": "Radicle",
+      "iconUrl": "https://assets.coingecko.com/coins/images/14013/large/radicle.png?1696513741",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x31c8EAcBFFdD875c74b94b077895Bd78CF1E64A3",
+        "chain": "ethereum",
+        "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+        "decimals": 18,
+        "sinceTimestamp": 1623784100
       },
       "category": "other",
       "source": "canonical",
@@ -4301,7 +4339,7 @@
     },
     {
       "mode": "auto",
-      "id": "arbitrum-sFRAX-1",
+      "id": "arbitrum-sFRAX",
       "priceId": "staked-frax",
       "symbol": "sFRAX",
       "name": "Staked FRAX",
@@ -5887,7 +5925,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1715558400
+        "sinceTimestamp": 1715558400,
+        "untilTimestamp": 1749103200
       },
       "category": "stablecoin",
       "source": "canonical",

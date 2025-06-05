@@ -159,10 +159,10 @@
         "0x884255F543b40AcCB5feE3a4b2D1f74bc065C257": "Fortune Token",
         "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d": "FOX Token",
         "0x853d955aCEf822Db058eb8505911ED77F175b99e": "Frax Token",
+        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": "Frax (prev. FXS) Token",
         "0x5E8422345238F34275888049021821E8E08CAa1f": "Frax Ether Token",
         "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E": "Frax Price Index Token",
         "0xc2544A32872A91F4A553b404C6950e89De901fdb": "Frax Price Index Share Token",
-        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": "Frax Share Token",
         "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9": "FTT Token",
         "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c": "FUEL Token",
         "0x4eb8A4015A67975A23adc80aA50d2d996986F43D": "FUL Token",
@@ -784,6 +784,7 @@
         "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A": "Wrapped eETH Token",
         "0x4200000000000000000000000000000000000006": "Wrapped Ether Token",
         "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452": "Wrapped liquid staked Ether 2.0 Token",
+        "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "Wrapped OETH Token",
         "0x1111111111166b7FE7bd91427724B487980aFc69": "Zora Token"
       }
     },

@@ -70,7 +70,7 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": true
     },
     {
       "mode": "auto",

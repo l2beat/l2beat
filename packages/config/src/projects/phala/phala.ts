@@ -102,6 +102,7 @@ export const phala: ScalingProject = {
     ],
   },
   config: {
+    associatedTokens: ['PHA'],
     activityConfig: {
       type: 'block',
       startBlock: 1,

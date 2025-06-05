@@ -145,7 +145,7 @@ function getMockCostsChartData({
 
 function sumByTimestamp(
   records: AggregatedL2CostRecord[],
-  resolution: 'daily' | 'hourly',
+  resolution: 'daily' | 'hourly' | 'sixHourly',
 ) {
   const result = new Map<
     number,
@@ -168,7 +168,11 @@ function sumByTimestamp(
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(
       record.timestamp,
-      resolution === 'daily' ? 'day' : 'hour',
+      resolution === 'daily'
+        ? 'day'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'hour',
     )
 
     const existing = result.get(timestamp)

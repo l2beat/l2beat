@@ -691,7 +691,7 @@
       ]
     },
     {
-      "name": "BridgedWOETH",
+      "name": "Wrapped OETH Token",
       "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
       "type": "Contract",
       "template": "tokens/Origin/wOETH",
@@ -1474,5 +1474,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x9e1d8682b534dd111d9877c45c6e76f0c393d41ef1f677f4fc6abcc4b190112a"
+  "permissionsConfigHash": "0xa2a61858226733ec5a01c8f71ddcb222a96a4f254efae742e47ad058cc9e7d05"
 }
