@@ -9,11 +9,9 @@ export function parseUltimatePermissionFact(
 ) {
   const delay = Number(fact.params[3])
   return {
-    receiver: modelIdRegistry.idToChainChainSpecificAddress(
-      String(fact.params[0]),
-    ),
+    receiver: modelIdRegistry.idToChainSpecificAddress(String(fact.params[0])),
     permission: String(fact.params[1]) as Permission,
-    from: modelIdRegistry.idToChainChainSpecificAddress(String(fact.params[2])),
+    from: modelIdRegistry.idToChainSpecificAddress(String(fact.params[2])),
     delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
     role: orUndefined(String, fact.params[5]),
@@ -38,9 +36,7 @@ export function parseUltimatePermissionVia(
 ) {
   const delay = Number(via.params[2])
   return {
-    address: modelIdRegistry.idToChainChainSpecificAddress(
-      String(via.params[0]),
-    ),
+    address: modelIdRegistry.idToChainSpecificAddress(String(via.params[0])),
     // permission: String(via.params[1]),
     delay: delay === 0 ? undefined : delay,
     condition: orUndefined(String, via.params[3]),
@@ -53,7 +49,7 @@ export function parseEoaWithMajorityUpgradePermissionsFacts(
 ): ChainSpecificAddress[] | undefined {
   const result = facts.map((f) => {
     assert(f.atom === 'eoaWithMajorityUpgradePermissions')
-    return modelIdRegistry.idToChainChainSpecificAddress(String(f.params[0]))
+    return modelIdRegistry.idToChainSpecificAddress(String(f.params[0]))
   })
   return result.length === 0 ? undefined : result
 }

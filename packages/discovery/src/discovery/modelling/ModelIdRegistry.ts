@@ -77,7 +77,7 @@ export class ModelIdRegistry {
     return data
   }
 
-  idToChainChainSpecificAddress(modelId: string): ChainSpecificAddress {
+  idToChainSpecificAddress(modelId: string): ChainSpecificAddress {
     const data = this.getAddressData(modelId)
     return ChainSpecificAddress(`${data.chain}:${data.address}`)
   }
