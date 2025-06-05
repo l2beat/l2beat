@@ -546,10 +546,30 @@
     {
       "mode": "auto",
       "id": "zksync2-FRAX-2",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+        "decimals": 18,
+        "sinceTimestamp": 1676367083,
+        "untilTimestamp": 1749103200
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-FRAX.legacy-1",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -599,7 +619,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FXS-1",
+      "id": "zksync2-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -1424,6 +1444,24 @@
         "address": "0x4E14EC08875c88f9B0Cf2A075F481EDa0143d1f0",
         "chain": "zksync2",
         "decimals": 9,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "zksync2-TRALA-1",
+      "priceId": "trala-token",
+      "symbol": "TRALA",
+      "name": "TRALA TOKEN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38900/large/TRALA.png?1719456891",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x145e082E384A9fC86E95eEA805Dc9012f1B76cB7",
+        "chain": "zksync2",
+        "decimals": 18,
         "sinceTimestamp": 1739109131
       }
     },
