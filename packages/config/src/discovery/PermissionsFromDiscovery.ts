@@ -1,7 +1,7 @@
 import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
 import {
+  ChainSpecificAddress,
   type EthereumAddress,
-  PrefixedEthereumAddress,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
@@ -190,7 +190,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
-    const prefixedFromAddress = PrefixedEthereumAddress(
+    const prefixedFromAddress = ChainSpecificAddress(
       `${this.projectDiscovery.chain}:${fromAddress}`,
     )
     return this.projectDiscovery
@@ -207,7 +207,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getIssuedPermissions(fromAddress: EthereumAddress) {
-    const prefixedFromAddress = PrefixedEthereumAddress(
+    const prefixedFromAddress = ChainSpecificAddress(
       `${this.projectDiscovery.chain}:${fromAddress}`,
     )
     return this.projectDiscovery

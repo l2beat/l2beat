@@ -1,4 +1,4 @@
-import { PrefixedEthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { KnowledgeBase } from './KnowledgeBase'
 import type { ClingoFact } from './clingoparser'
 
@@ -77,9 +77,9 @@ export class ModelIdRegistry {
     return data
   }
 
-  idToChainPrefixedAddress(modelId: string): PrefixedEthereumAddress {
+  idToChainChainSpecificAddress(modelId: string): ChainSpecificAddress {
     const data = this.getAddressData(modelId)
-    return PrefixedEthereumAddress(`${data.chain}:${data.address}`)
+    return ChainSpecificAddress(`${data.chain}:${data.address}`)
   }
 
   replaceIdsWithNames(s: string): string {

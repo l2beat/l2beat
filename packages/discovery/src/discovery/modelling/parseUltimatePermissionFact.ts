@@ -1,4 +1,4 @@
-import { assert, type PrefixedEthereumAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { Permission } from '../config/PermissionConfig'
 import type { ModelIdRegistry } from './ModelIdRegistry'
 import type { ClingoFact } from './clingoparser'
@@ -9,9 +9,11 @@ export function parseUltimatePermissionFact(
 ) {
   const delay = Number(fact.params[3])
   return {
-    receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
+    receiver: modelIdRegistry.idToChainChainSpecificAddress(
+      String(fact.params[0]),
+    ),
     permission: String(fact.params[1]) as Permission,
-    from: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
+    from: modelIdRegistry.idToChainChainSpecificAddress(String(fact.params[2])),
     delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
     role: orUndefined(String, fact.params[5]),
@@ -36,7 +38,9 @@ export function parseUltimatePermissionVia(
 ) {
   const delay = Number(via.params[2])
   return {
-    address: modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
+    address: modelIdRegistry.idToChainChainSpecificAddress(
+      String(via.params[0]),
+    ),
     // permission: String(via.params[1]),
     delay: delay === 0 ? undefined : delay,
     condition: orUndefined(String, via.params[3]),
@@ -46,10 +50,10 @@ export function parseUltimatePermissionVia(
 export function parseEoaWithMajorityUpgradePermissionsFacts(
   facts: ClingoFact[],
   modelIdRegistry: ModelIdRegistry,
-): PrefixedEthereumAddress[] | undefined {
+): ChainSpecificAddress[] | undefined {
   const result = facts.map((f) => {
     assert(f.atom === 'eoaWithMajorityUpgradePermissions')
-    return modelIdRegistry.idToChainPrefixedAddress(String(f.params[0]))
+    return modelIdRegistry.idToChainChainSpecificAddress(String(f.params[0]))
   })
   return result.length === 0 ? undefined : result
 }
