@@ -145,7 +145,7 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       layer: ProjectId('near-da'),
       bridge: undefined,
     }),
-    // pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
+    pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
     // throughput: [
     //   {
     //     size: 16777216, // 16 MiB , 4MiB per 4 shards
