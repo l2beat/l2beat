@@ -4,7 +4,7 @@ export type ChainSpecificAddress = string & {
   _ChainSpecificAddressBrand: string
 }
 
-// Address format following EIP-3770
+// Address format following ERC-3770
 // https://eips.ethereum.org/EIPS/eip-3770
 // Format: "shortName:address"
 // Semantics:
