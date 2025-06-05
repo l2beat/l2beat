@@ -43,6 +43,7 @@ export function ThroughputSectionAbsoluteChart({
   const dataWithConfiguredThroughputs = getDataWithConfiguredThroughputs(
     data?.chart,
     configuredThroughputs,
+    range,
   )
 
   return (
@@ -82,6 +83,7 @@ export function ThroughputSectionAbsoluteChart({
 function getDataWithConfiguredThroughputs(
   data: ProjectDaThroughputDataPoint[] | undefined,
   configuredThroughputs: DaLayerThroughput[],
+  range: DaThroughputTimeRange,
 ): ProjectChartDataWithConfiguredThroughput[] | undefined {
   const processedConfigs = configuredThroughputs
     .sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -107,8 +109,25 @@ function getDataWithConfiguredThroughputs(
     return [
       timestamp,
       value ?? 0,
-      config?.targetDaily ?? null,
-      config?.maxDaily ?? null,
+      adjustThoughputToRange(range, config?.targetDaily),
+      adjustThoughputToRange(range, config?.maxDaily),
     ]
   })
+}
+
+function adjustThoughputToRange(
+  range: DaThroughputTimeRange,
+  throughput: number | null | undefined,
+) {
+  if (!throughput) return null
+
+  switch (range) {
+    case '7d':
+      return throughput / 24
+    case '30d':
+    case '90d':
+      return throughput / 4
+    default:
+      return throughput
+  }
 }

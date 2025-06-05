@@ -24,8 +24,10 @@ const getDaThroughputSummaryData = async () => {
   if (throughput.length === 0) {
     return undefined
   }
-  const { grouped, minTimestamp, maxTimestamp } =
-    groupByTimestampAndDaLayerId(throughput)
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
+    throughput,
+    'daily',
+  )
 
   return {
     latest: {
