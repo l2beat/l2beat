@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Collects the sequencer fees, which are withdrawable to the FeesCollector on L1.",
   "ignoreMethods": ["totalProcessed"]
 }

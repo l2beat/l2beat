@@ -17,6 +17,7 @@ import { FetchZkStack } from './FetchZkStack'
 import { FindCelestiaNamespace } from './FindCelestiaNamespace'
 import { FindL2 } from './FindL2'
 import { FindUnusedShapes } from './FindUnusedShapes'
+import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { Flatten } from './Flatten'
 import { FlattenAndDiff } from './FlattenAndDiff'
 import { GetTokenMinters } from './GetTokenMinters'
@@ -49,8 +50,8 @@ export function getSubcommands() {
     DeploymentTimestamp,
     DetectProxy,
     Discover,
-    DownloadShapes,
     DownloadAllShapes,
+    DownloadShapes,
     Events,
     FetchAgglayer,
     FetchDiscoveryCache,
@@ -59,6 +60,7 @@ export function getSubcommands() {
     FindCelestiaNamespace,
     FindL2,
     FindUnusedShapes,
+    FixDiscoverySchemaPaths,
     Flatten,
     FlattenAndDiff,
     GetTokenMinters,
