@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2fecd9221dbd4fba58ec44ea756dfad6f731087f
+Generated with discovered.json: 0x2f3417effe108cedcb2b9ccc6814066112393c08
 
-# Diff at Thu, 05 Jun 2025 10:20:27 GMT:
+# Diff at Thu, 05 Jun 2025 12:10:05 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22637654
@@ -19,13 +19,13 @@ initial katana predeposit disco.
 
 ```diff
 +   Status: CREATED
-    contract Yearn V3 Vault (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb)
+    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Yearn V3 Vault (0x7B5A0182E400b241b317e781a4e9dEdFc1429822)
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822)
     +++ description: None
 ```
 
@@ -37,7 +37,7 @@ initial katana predeposit disco.
 
 ```diff
 +   Status: CREATED
-    contract Yearn V3 Vault (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728)
+    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728)
     +++ description: None
 ```
 
@@ -49,7 +49,7 @@ initial katana predeposit disco.
 
 ```diff
 +   Status: CREATED
-    contract Yearn V3 Vault (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF)
+    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF)
     +++ description: None
 ```
 

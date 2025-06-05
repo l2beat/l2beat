@@ -1,8 +1,11 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 
-export const powerloom: ScalingProject = {
-  id: ProjectId('powerloom'),
+const discovery = new ProjectDiscovery('katana')
+
+export const katana: ScalingProject = {
+  id: ProjectId('katana'),
   isUpcoming: true,
   type: 'layer2',
   riskView: {
@@ -23,47 +26,47 @@ export const powerloom: ScalingProject = {
     },
   },
   capability: 'universal',
-  addedAt: UnixTime(1741768931),
+  addedAt: UnixTime(1749119953),
   display: {
     name: 'Katana',
     slug: 'katana',
-    description: '',
+    description:
+      'Katana is an upcoming app-specific Layer 2 specializing as a DEX. It is in predeposit mode, where users deposit funds to yearn contracts on ethereum of which the yield goes to the katana treasury.',
     purposes: ['Universal'],
-    category: 'Optimium',
-    stack: 'Arbitrum',
+    category: 'Validium',
+    stack: 'OP Stack',
     links: {
-      websites: ['https://powerloom.io/'],
-      apps: ['https://bridge-v2.powerloom.network/'],
-      documentation: ['https://docs.powerloom.io/'],
-      explorers: ['https://explorer.powerloom.network/'],
-      repositories: ['https://github.com/powerLoom'],
+      websites: ['https://katana.network/'],
+      apps: ['https://app.katana.network/krates?p=deposit'],
       socialMedia: [
-        'https://x.com/powerloom',
-        'https://t.me/PowerLoomProtocol',
-        'https://linkedin.com/company/powerloom/',
-        'https://youtube.com/@powerloom',
-        'https://discord.com/invite/powerloom',
+        'https://x.com/katana',
+        'https://discord.com/invite/KatanaNetwork',
       ],
     },
   },
   config: {
-    associatedTokens: ['APEX'],
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb'),
-        sinceTimestamp: UnixTime(1660252039),
-        tokens: ['USDC'],
+        address: EthereumAddress('0x7B5A0182E400b241b317e781a4e9dEdFc1429822'),
+        tokens: ['USDC.pdkatana'],
+        isUpcoming: true,
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b'),
-        tokens: ['USDT'],
+        address: EthereumAddress('0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb'),
+        tokens: ['USDT.pdkatana'],
+        isUpcoming: true,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x92C82f5F771F6A44CfA09357DD0575B81BF5F728'),
+        tokens: ['WBTC.pdkatana'],
+        isUpcoming: true,
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF'),
+        tokens: ['WETH.pdkatana'],
+        isUpcoming: true,
       }),
     ],
-    activityConfig: {
-      type: 'day',
-      sinceTimestamp: UnixTime(1660252039),
-      resyncLastDays: 7,
-    },
   },
   stage: { stage: 'UnderReview' },
 }

@@ -1349,5 +1349,7 @@
   "static/meta-images/data-availability/archived/opengraph-image.png": "c10a431701507be16ef129ccdc31264d",
   "static/images/architecture/hyperliquid.png": "377c1642e78c1cc45ff0114380a7e9b2",
   "static/meta-images/bridges/projects/hyperliquid/opengraph-image.png": "a3cbe1ba08a11a937de5aaee9ecf0c2a",
-  "static/ens-avatar.png": "33e2f7c80f1d33bc327620a4f2964161"
+  "static/ens-avatar.png": "33e2f7c80f1d33bc327620a4f2964161",
+  "static/icons/katana.png": "693eb30cf139115e637ba35b80dc9785",
+  "static/meta-images/scaling/projects/katana/opengraph-image.png": "a0e6d13cad4537d4f115f82b8777e203"
 }

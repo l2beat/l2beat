@@ -28,7 +28,7 @@
       }
     },
     {
-      "name": "Yearn V3 Vault",
+      "name": "Katana Pre-Deposit USDT Token",
       "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
       "type": "Contract",
       "template": "yearn/vaultv3",
@@ -103,7 +103,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Yearn V3 Vault",
+      "name": "Katana Pre-Deposit USDC Token",
       "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
       "type": "Contract",
       "template": "yearn/vaultv3",
@@ -181,7 +181,7 @@
       }
     },
     {
-      "name": "Yearn V3 Vault",
+      "name": "Katana Pre-Deposit WBTC Token",
       "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
       "type": "Contract",
       "template": "yearn/vaultv3",
@@ -279,7 +279,7 @@
       }
     },
     {
-      "name": "Yearn V3 Vault",
+      "name": "Katana Pre-Deposit WETH Token",
       "address": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF",
       "type": "Contract",
       "template": "yearn/vaultv3",
@@ -1061,5 +1061,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "yearn/vaultv3": "0xfa2c8148050d24bcc2f100b33c5f19da7574046371aa1b2622d2944f4facb0ff"
   },
-  "permissionsConfigHash": "0x62459573e928ba1400c3f9f81d381524af4cacf8686079f0c863c45ac8c5ed72"
+  "permissionsConfigHash": "0x0b5dfe96ee9833b81de57cb9e894b8bc96041f7f540ccd1ce0138557bfa47fa9"
 }
