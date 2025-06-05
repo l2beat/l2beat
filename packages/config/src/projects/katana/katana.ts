@@ -8,30 +8,13 @@ export const katana: ScalingProject = {
   id: ProjectId('katana'),
   isUpcoming: true,
   type: 'layer2',
-  riskView: {
-    stateValidation: {
-      value: '',
-    },
-    dataAvailability: {
-      value: '',
-    },
-    exitWindow: {
-      value: '',
-    },
-    sequencerFailure: {
-      value: '',
-    },
-    proposerFailure: {
-      value: '',
-    },
-  },
   capability: 'universal',
   addedAt: UnixTime(1749119953),
   display: {
     name: 'Katana',
     slug: 'katana',
     description:
-      'Katana is an upcoming app-specific Layer 2 specializing as a DEX. It is in predeposit mode, where users deposit funds to yearn contracts on ethereum of which the yield goes to the katana treasury.',
+      'Katana is an upcoming Layer 2 specializing on DeFi. It is in prelaunch predeposit mode, where users can deposit funds to standard yearn vaults on ethereum of which the yield goes to the Katana treasury.',
     purposes: ['Universal'],
     category: 'Validium',
     stack: 'OP Stack',
@@ -67,6 +50,23 @@ export const katana: ScalingProject = {
         isUpcoming: true,
       }),
     ],
+  },
+  riskView: {
+    stateValidation: {
+      value: '',
+    },
+    dataAvailability: {
+      value: '',
+    },
+    exitWindow: {
+      value: '',
+    },
+    sequencerFailure: {
+      value: '',
+    },
+    proposerFailure: {
+      value: '',
+    },
   },
   stage: { stage: 'UnderReview' },
 }
