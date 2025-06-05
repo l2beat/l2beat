@@ -145,24 +145,24 @@ Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximatel
       layer: ProjectId('near-da'),
       bridge: undefined,
     }),
-    pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
-    throughput: [
-      {
-        size: 16777216, // 16 MiB , 4MiB per 4 shards
-        frequency: 1, // 16 MiB/s
-        sinceTimestamp: 1587513600, // 2020-04-22
-      },
-      {
-        size: 33554432, // 32 MiB , 4MiB per 8 shards
-        frequency: 1, // 32 MiB/s
-        sinceTimestamp: 1742342400, // 2025-03-19
-      },
-      {
-        size: 33554432, // 32 MiB , 4MiB per 8 shards
-        frequency: 0.6, // 600ms block time
-        sinceTimestamp: 1747141200, // 2025-05-13
-      },
-    ],
+    // pruningWindow: 43200 * 3, // minimum 3 epochs (12 hours each), claimed in practice around 5 epochs (due to nodes garbage collection)
+    // throughput: [
+    //   {
+    //     size: 16777216, // 16 MiB , 4MiB per 4 shards
+    //     frequency: 1, // 16 MiB/s
+    //     sinceTimestamp: 1587513600, // 2020-04-22
+    //   },
+    //   {
+    //     size: 33554432, // 32 MiB , 4MiB per 8 shards
+    //     frequency: 1, // 32 MiB/s
+    //     sinceTimestamp: 1742342400, // 2025-03-19
+    //   },
+    //   {
+    //     size: 33554432, // 32 MiB , 4MiB per 8 shards
+    //     frequency: 0.6, // 600ms block time
+    //     sinceTimestamp: 1747141200, // 2025-05-13
+    //   },
+    // ],
     risks: {
       economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
