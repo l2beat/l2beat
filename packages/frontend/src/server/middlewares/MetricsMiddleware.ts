@@ -12,38 +12,20 @@ export function MetricsMiddleware(logger: Logger) {
     })
 
     const start = process.hrtime.bigint()
-
-    const originalSend = res.send
-    res.send = function (body) {
+    res.once('finish', () => {
       const end = process.hrtime.bigint()
       const durationMs = Number(end - start) / 1_000_000
 
-      let size
-      if (body === undefined || body === null) {
-        size = 0
-      } else if (Buffer.isBuffer(body)) {
-        size = body.length
-      } else if (typeof body === 'string') {
-        size = Buffer.byteLength(body)
-      } else {
-        const jsonString = JSON.stringify(body)
-        size = Buffer.byteLength(jsonString)
-      }
-
-      res.setHeader('metrics-execution-time', durationMs.toFixed(2))
-      res.setHeader('metrics-data-size', size)
       appLogger.info(`Request processed`, {
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,
         duration: Math.round(durationMs),
-        size,
+        size: res.getHeader('Content-Length') ?? 0,
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
       })
-
-      return originalSend.call(this, body)
-    }
+    })
 
     next()
   }
