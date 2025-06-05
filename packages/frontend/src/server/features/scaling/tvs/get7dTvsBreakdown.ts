@@ -56,12 +56,15 @@ export async function get7dTvsBreakdown(
   const db = getDb()
   const target = getTvsTargetTimestamp()
 
+  const projectIds = props.type === 'projects' ? props.projectIds : undefined
+
   const [tvsProjects, values] = await Promise.all([
     getTvsProjects(createTvsBreakdownProjectFilter(props)),
     db.tvsProjectValue.getProjectValuesAtTimestamps(
       target - 7 * UnixTime.DAY,
       target,
       ['PROJECT', 'PROJECT_WA'],
+      projectIds,
     ),
   ])
 
