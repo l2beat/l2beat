@@ -17,7 +17,11 @@ import {
   isTvsChartDataEmpty,
 } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
+import {
+  type WithDehydratedState,
+  getExpressHelpers,
+  mergeDehydratedStates,
+} from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -125,7 +129,8 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
   >,
-): Promise<ProjectScalingEntry> {
+): Promise<WithDehydratedState<ProjectScalingEntry>> {
+  const helpers = getExpressHelpers()
   const [
     projectsChangeReport,
     activityProjectStats,
@@ -141,19 +146,19 @@ export async function getScalingProjectEntry(
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    api.tvs.chart({
+    helpers.tvs.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
       previewRecategorisation: false,
     }),
-    api.activity.chart({
+    helpers.activity.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
-      ? api.costs.projectChart({
+      ? helpers.costs.projectChart.fetch({
           range: '1y',
           projectId: project.id,
         })
@@ -341,7 +346,7 @@ export async function getScalingProjectEntry(
         title: 'Liveness',
         projectId: project.id,
         milestones: sortedMilestones,
-        ...livenessSection,
+        ...livenessSection.data,
       },
     })
   }
@@ -395,7 +400,13 @@ export async function getScalingProjectEntry(
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
     })
-    return { ...common, sections }
+    return {
+      data: { ...common, sections },
+      queryState: mergeDehydratedStates(
+        livenessSection?.queryState,
+        helpers.dehydrate(),
+      ),
+    }
   }
 
   if (hostChain && common.rosette.host) {
@@ -618,5 +629,11 @@ export async function getScalingProjectEntry(
     })
   }
 
-  return { ...common, sections }
+  return {
+    data: { ...common, sections },
+    queryState: mergeDehydratedStates(
+      helpers.dehydrate(),
+      livenessSection?.queryState,
+    ),
+  }
 }

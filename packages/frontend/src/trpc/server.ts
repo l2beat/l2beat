@@ -1,10 +1,9 @@
-import { createHydrationHelpers } from '@trpc/react-query/rsc'
+import type { DehydratedState } from '@tanstack/react-query'
 import { createServerSideHelpers } from '@trpc/react-query/server'
-
-import type { AppRouter } from '~/server/trpc/root'
-import { appRouter, createCaller } from '~/server/trpc/root'
-import { createTRPCContext } from '~/server/trpc/trpc'
+import { createHydrationHelpers } from '@trpc/react-query/rsc'
+import { type AppRouter, createCaller, appRouter } from '~/server/trpc/root'
 import { createQueryClient } from './queryClient'
+import { createTRPCContext } from '~/server/trpc/trpc'
 
 /**
  * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
@@ -31,7 +30,7 @@ export type ExpressHelpers = ReturnType<typeof getExpressHelpers>
 export const getExpressHelpers = () =>
   createServerSideHelpers({
     router: appRouter,
-    queryClient: getQueryClient(),
+    queryClient: createQueryClient(),
     ctx: { headers: new Headers() },
     // Do not serialize data to JSON, because it will be serialized again by the render function
     //     .replace(
@@ -43,3 +42,26 @@ export const getExpressHelpers = () =>
       deserialize: (data) => data,
     },
   })
+
+export type WithDehydratedState<T> = {
+  data: T
+  queryState: DehydratedState
+}
+
+export const mergeDehydratedStates = (
+  ...states: (DehydratedState | undefined)[]
+) => {
+  return states.reduce(
+    (acc: DehydratedState, state) => {
+      if (state) {
+        acc.mutations.push(...state.mutations)
+        acc.queries.push(...state.queries)
+      }
+      return acc
+    },
+    {
+      mutations: [],
+      queries: [],
+    },
+  )
+}
