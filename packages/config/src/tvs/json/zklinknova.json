@@ -2202,6 +2202,14 @@
         "arguments": [
           {
             "type": "balanceOfEscrow",
+            "address": "0x5A7fACB970D094B6C7FF1df0eA68D99E6e73CBFF",
+            "chain": "optimism",
+            "escrowAddress": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
+            "decimals": 18,
+            "sinceTimestamp": 1717433111
+          },
+          {
+            "type": "balanceOfEscrow",
             "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
             "chain": "arbitrum",
             "escrowAddress": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
@@ -2230,6 +2238,16 @@
         "type": "calculation",
         "operator": "sum",
         "arguments": [
+          {
+            "type": "value",
+            "amount": {
+              "type": "const",
+              "value": "0",
+              "decimals": 0,
+              "sinceTimestamp": 1717433111
+            },
+            "priceId": "wrapped-eeth"
+          },
           {
             "type": "value",
             "amount": {

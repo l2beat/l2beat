@@ -242,7 +242,7 @@ To receive the original locked token back, a user would have to return to the ma
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E'),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         description: 'OFT adapter escrow for sFRX on Ethereum.',
       }),
       discovery.getEscrowDetails({
@@ -252,7 +252,7 @@ To receive the original locked token back, a user would have to return to the ma
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0x23432452B720C80553458496D4D9d7C5003280d0'),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         description: 'OFT adapter escrow for FraxShares on Ethereum.',
       }),
       discovery.getEscrowDetails({
