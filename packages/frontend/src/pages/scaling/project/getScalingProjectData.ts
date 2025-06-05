@@ -3,10 +3,12 @@ import { getScalingProjectEntry } from '~/server/features/scaling/project/getSca
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
+import type { ExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
   manifest: Manifest,
+  helpers: ExpressHelpers,
   slug: string,
   url: string,
 ): Promise<RenderData | undefined> {
@@ -39,7 +41,7 @@ export async function getScalingProjectData(
 
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getScalingProjectEntry(project),
+    getScalingProjectEntry(project, helpers),
   ])
 
   return {
@@ -58,8 +60,8 @@ export async function getScalingProjectData(
       page: 'ScalingProjectPage',
       props: {
         ...appLayoutProps,
-        projectEntry: projectEntry.data,
-        queryState: projectEntry.queryState,
+        projectEntry: projectEntry,
+        queryState: helpers.dehydrate(),
       },
     },
   }

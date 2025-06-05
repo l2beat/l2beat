@@ -17,11 +17,7 @@ import {
   isTvsChartDataEmpty,
 } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
-import {
-  type WithDehydratedState,
-  getExpressHelpers,
-  mergeDehydratedStates,
-} from '~/trpc/server'
+import type { ExpressHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -129,8 +125,8 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
   >,
-): Promise<WithDehydratedState<ProjectScalingEntry>> {
-  const helpers = getExpressHelpers()
+  helpers: ExpressHelpers,
+): Promise<ProjectScalingEntry> {
   const [
     projectsChangeReport,
     activityProjectStats,
@@ -334,6 +330,7 @@ export async function getScalingProjectEntry(
   }
 
   const livenessSection = await getLivenessSection(
+    helpers,
     project,
     liveness[project.id],
     projectsChangeReport.projects[project.id],
@@ -346,7 +343,7 @@ export async function getScalingProjectEntry(
         title: 'Liveness',
         projectId: project.id,
         milestones: sortedMilestones,
-        ...livenessSection.data,
+        ...livenessSection,
       },
     })
   }
@@ -400,13 +397,7 @@ export async function getScalingProjectEntry(
       type: 'UpcomingDisclaimer',
       excludeFromNavigation: true,
     })
-    return {
-      data: { ...common, sections },
-      queryState: mergeDehydratedStates(
-        livenessSection?.queryState,
-        helpers.dehydrate(),
-      ),
-    }
+    return { ...common, sections }
   }
 
   if (hostChain && common.rosette.host) {
@@ -629,11 +620,5 @@ export async function getScalingProjectEntry(
     })
   }
 
-  return {
-    data: { ...common, sections },
-    queryState: mergeDehydratedStates(
-      helpers.dehydrate(),
-      livenessSection?.queryState,
-    ),
-  }
+  return { ...common, sections }
 }
