@@ -3432,6 +3432,21 @@
   ],
   "base": [
     {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "coingeckoId": "wrapped-oeth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USR",
       "coingeckoId": "resolv-usr",
       "address": "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9",

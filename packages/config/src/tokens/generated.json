@@ -10525,6 +10525,28 @@
       "supply": "zero"
     },
     {
+      "name": "Wrapped OETH",
+      "coingeckoId": "wrapped-oeth",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "symbol": "wOETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1713443375,
+      "coingeckoListingTimestamp": 1699920000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Zora",
       "coingeckoId": "zora",
       "address": "0x1111111111166b7FE7bd91427724B487980aFc69",

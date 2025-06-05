@@ -2545,6 +2545,24 @@
     },
     {
       "mode": "auto",
+      "id": "base-wOETH",
+      "priceId": "wrapped-oeth",
+      "symbol": "wOETH",
+      "name": "Wrapped OETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1713443375
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-wstETH-1",
       "priceId": "wrapped-steth",
       "symbol": "wstETH",
@@ -2726,7 +2744,8 @@
         "chain": "ethereum",
         "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
         "decimals": 18,
-        "sinceTimestamp": 1715558400
+        "sinceTimestamp": 1715558400,
+        "untilTimestamp": 1749099600
       },
       "category": "stablecoin",
       "source": "canonical",
