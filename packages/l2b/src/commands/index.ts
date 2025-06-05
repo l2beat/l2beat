@@ -22,6 +22,7 @@ import { FlattenAndDiff } from './FlattenAndDiff'
 import { GetTokenMinters } from './GetTokenMinters'
 import { Init } from './Init'
 import { InitTemplate } from './InitTemplate'
+import { FixDiscoverySchemaPaths } from './FixDiscoverySchemaPaths'
 import { MatchFlat } from './MatchFlat'
 import { ModelPermissions } from './ModelPermissions'
 import { OPConfigs } from './OPConfigs'
@@ -49,8 +50,8 @@ export function getSubcommands() {
     DeploymentTimestamp,
     DetectProxy,
     Discover,
-    DownloadShapes,
     DownloadAllShapes,
+    DownloadShapes,
     Events,
     FetchAgglayer,
     FetchDiscoveryCache,
@@ -59,6 +60,7 @@ export function getSubcommands() {
     FindCelestiaNamespace,
     FindL2,
     FindUnusedShapes,
+    FixDiscoverySchemaPaths,
     Flatten,
     FlattenAndDiff,
     GetTokenMinters,
