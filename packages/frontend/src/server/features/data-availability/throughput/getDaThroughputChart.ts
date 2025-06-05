@@ -4,10 +4,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { DaThroughputTimeRange } from './utils/range'
-
+import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 export type DaThroughputDataPoint = [
   timestamp: number,
   ethereum: number,
@@ -28,11 +28,11 @@ export async function getDaThroughputChart({
   if (env.MOCK) {
     return getMockDaThroughputChartData({ range, includeScalingOnly })
   }
-
   const db = getDb()
-  const days = rangeToDays(range)
-  const to = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const from = days ? to - days * UnixTime.DAY : null
+  const resolution = rangeToResolution(range)
+  const [from, to] = getRangeWithMax(range, resolution, {
+    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
+  })
   const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly
     ? await db.dataAvailability2.getSummedProjectsByDaLayersAndTimeRange(
@@ -47,10 +47,15 @@ export async function getDaThroughputChart({
   if (throughput.length === 0) {
     return []
   }
-  const { grouped, minTimestamp, maxTimestamp } =
-    groupByTimestampAndDaLayerId(throughput)
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
+    throughput,
+    resolution,
+  )
 
-  const timestamps = generateTimestamps([minTimestamp, maxTimestamp], 'daily')
+  const timestamps = generateTimestamps(
+    [minTimestamp, maxTimestamp],
+    resolution,
+  )
   return timestamps.map((timestamp) => {
     const timestampValues = grouped[timestamp]
     return [
@@ -64,12 +69,20 @@ export async function getDaThroughputChart({
 
 export function groupByTimestampAndDaLayerId(
   records: (DataAvailabilityRecord2 | ProjectsSummedDataAvailabilityRecord)[],
+  resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
   let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   for (const record of records) {
-    const timestamp = UnixTime.toStartOf(record.timestamp, 'day')
+    const timestamp = UnixTime.toStartOf(
+      record.timestamp,
+      resolution === 'daily'
+        ? 'day'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'hour',
+    )
     const daLayerId = record.daLayer
     const value = record.totalSize
     if (!result[timestamp]) {

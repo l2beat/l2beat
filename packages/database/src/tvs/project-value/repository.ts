@@ -151,14 +151,15 @@ export class ProjectValueRepository extends BaseRepository {
     oldestTimestamp: number,
     latestTimestamp: number,
     types: ProjectValueType[],
+    projectIds?: string[],
   ): Promise<ProjectValueRecord[]> {
     if (types.length === 0) {
       return []
     }
 
     // Find latest records for each project/type combo before or at given timestamp
-    const subQuery = (timestamp: number) =>
-      this.db
+    const subQuery = (timestamp: number) => {
+      let query = this.db
         .selectFrom('ProjectValue')
         .select([
           'project',
@@ -166,10 +167,18 @@ export class ProjectValueRepository extends BaseRepository {
           this.db.fn.max('timestamp').as('maxTimestamp'),
         ])
         .where('type', 'in', types)
+
+      if (projectIds && projectIds.length > 0) {
+        query = query.where('project', 'in', projectIds)
+      }
+
+      query = query
         // We dont need to query whole database, we can limit it to 30 days
         .where('timestamp', '>=', sql<Date>`NOW() - INTERVAL '30 days'`)
         .where('timestamp', '<=', UnixTime.toDate(timestamp))
         .groupBy(['project', 'type'])
+      return query
+    }
 
     const rows = await this.db
       .selectFrom('ProjectValue as pv')

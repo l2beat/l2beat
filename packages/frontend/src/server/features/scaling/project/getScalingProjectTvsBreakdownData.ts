@@ -37,7 +37,10 @@ export async function getScalingProjectTvsBreakdownData(
 
   const [projects7dData, { dataTimestamp, breakdown }, projectTokens] =
     await Promise.all([
-      get7dTvsBreakdown({ type: 'layer2' }),
+      get7dTvsBreakdown({
+        type: 'projects',
+        projectIds: [project.id.toString()],
+      }),
       getTvsBreakdownForProject(project),
       getTokensForProject(project),
     ])
