@@ -5,7 +5,7 @@ import groupBy from 'lodash/groupBy'
 /** This function sums up totalSize for each day and project */
 export function sumByResolutionAndProject(
   records: DataAvailabilityRecord2[],
-  resolution?: 'hourly' | 'sixHourly' | 'daily',
+  resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   const groupedByProjectId = groupBy(records, (r) => r.projectId)
   const result: Omit<DataAvailabilityRecord2, 'configurationId'>[] = []
