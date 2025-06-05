@@ -17,7 +17,7 @@ export const katana: ScalingProject = {
       'Katana is an upcoming Layer 2 specializing on DeFi. It is in prelaunch predeposit mode, where users can deposit funds to standard yearn vaults on ethereum of which the yield goes to the Katana treasury.',
     purposes: ['Universal'],
     category: 'Validium',
-    stack: 'OP Stack',
+    stack: 'Agglayer CDK',
     links: {
       websites: ['https://katana.network/'],
       apps: ['https://app.katana.network/krates?p=deposit'],
