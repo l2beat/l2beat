@@ -1,6 +1,7 @@
 import type { TableReadyValue } from '@l2beat/config'
 import { NaBadge } from '~/components/badge/NaBadge'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
@@ -16,7 +17,6 @@ import {
 import { TableLink } from '../TableLink'
 import { NoInfoCell } from './NoInfoCell'
 import { TwoRowCell } from './TwoRowCell'
-import { UpcomingBadge } from '~/components/badge/UpcomingBadge'
 
 interface Props {
   value: TableReadyValue | undefined
