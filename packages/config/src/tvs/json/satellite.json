@@ -23,11 +23,11 @@
     },
     {
       "mode": "auto",
-      "id": "satellite-FRAX",
+      "id": "satellite-FRAX.legacy",
       "priceId": "frax",
-      "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",

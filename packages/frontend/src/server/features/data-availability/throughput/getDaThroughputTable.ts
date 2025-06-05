@@ -7,7 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
-import { sumByDayAndProject } from './utils/sumByDayAndProject'
+import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export async function getDaThroughputTable(
   ...parameters: Parameters<typeof getDaThroughputTableData>
@@ -39,11 +39,11 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     daLayerIds.includes(v.projectId),
   )
   const groupedDaLayerValues = groupBy(
-    sumByDayAndProject(daLayerValues),
+    sumByResolutionAndProject(daLayerValues, 'daily'),
     (v) => v.daLayer,
   )
   const groupedProjectValues = groupBy(
-    sumByDayAndProject(projectValues),
+    sumByResolutionAndProject(projectValues, 'daily'),
     (v) => v.daLayer,
   )
   const onlyScalingDaLayerValues = Object.fromEntries(

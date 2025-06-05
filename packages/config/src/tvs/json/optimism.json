@@ -661,10 +661,29 @@
     {
       "mode": "auto",
       "id": "optimism-FRAX-2",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+        "chain": "ethereum",
+        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
+        "decimals": 18,
+        "sinceTimestamp": 1624401464
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "optimism-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -697,7 +716,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-FXS-1",
+      "id": "optimism-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -711,25 +730,6 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "optimism-FXS-2",
-      "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1",
-        "decimals": 18,
-        "sinceTimestamp": 1624401464
-      },
-      "category": "other",
-      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -1435,7 +1435,7 @@
     },
     {
       "mode": "auto",
-      "id": "optimism-sFRAX-1",
+      "id": "optimism-sFRAX",
       "priceId": "staked-frax",
       "symbol": "sFRAX",
       "name": "Staked FRAX",

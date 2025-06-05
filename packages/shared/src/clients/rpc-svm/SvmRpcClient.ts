@@ -57,10 +57,7 @@ export class SvmRpcClient extends ClientCore {
 
       if (
         parsedError.success &&
-        parsedError.data.error.code === -32009 &&
-        parsedError.data.error.message.match(
-          /Slot \d+ was skipped, or missing in long-term storage/,
-        )
+        parsedError.data.error.message.match(/Slot \d+ was skipped/)
       ) {
         // in SvmRpc chains there can be a slot that is skipped
         return undefined
@@ -142,18 +139,13 @@ export class SvmRpcClient extends ClientCore {
     const parsedError = SvmRpcApiErrorResponse.safeParse(response)
 
     if (parsedError.success) {
-      if (
-        // in SvmRpc chains there can be a slot that is skipped
-        parsedError.data.error.code === -32009 &&
-        parsedError.data.error.message.match(
-          /Slot \d+ was skipped, or missing in long-term storage/,
-        )
-      ) {
+      // in SvmRpc chains there can be a slot that is skipped
+      if (parsedError.data.error.message.match(/Slot \d+ was skipped/)) {
         return { success: true }
       }
 
       this.$.logger.warn(`Response validation error`, {
-        message: parsedError.data.error.message,
+        errorMessage: parsedError.data.error.message,
       })
       return { success: false }
     }

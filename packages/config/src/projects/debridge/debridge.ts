@@ -40,7 +40,7 @@ export const debridge: Bridge = {
         tokens: [
           'USDC',
           'WETH',
-          'FRAX',
+          'FRAX.legacy',
           'ETH',
           'USDT',
           'WBTC',
