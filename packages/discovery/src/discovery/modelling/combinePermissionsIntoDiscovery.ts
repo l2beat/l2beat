@@ -1,4 +1,4 @@
-import { PrefixedEthereumAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -57,7 +57,7 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          PrefixedEthereumAddress(`${discovery.chain}:${entry.address}`),
+          ChainSpecificAddress(`${discovery.chain}:${entry.address}`),
         )
           ? true
           : undefined

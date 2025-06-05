@@ -1,7 +1,7 @@
 import type {
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
-  PrefixedEthereumAddress,
 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
@@ -49,7 +49,7 @@ export interface FieldMeta {
 }
 
 export interface ResolvedPermissionPath {
-  address: PrefixedEthereumAddress
+  address: ChainSpecificAddress
   delay?: number
   condition?: string
 }
@@ -64,7 +64,7 @@ export interface ResolvedPermissionDetails {
 }
 
 export type ReceivedPermission = ResolvedPermissionDetails & {
-  from: PrefixedEthereumAddress
+  from: ChainSpecificAddress
 }
 
 export type ExternalReference = {
@@ -115,17 +115,17 @@ export interface ColorOutput {
 }
 
 export type PermissionsOutput = {
-  eoasWithMajorityUpgradePermissions?: PrefixedEthereumAddress[]
+  eoasWithMajorityUpgradePermissions?: ChainSpecificAddress[]
   permissionsConfigHash: Hash256
   permissions: {
-    receiver: PrefixedEthereumAddress
+    receiver: ChainSpecificAddress
     permission: Permission
-    from: PrefixedEthereumAddress
+    from: ChainSpecificAddress
     delay?: number
     description?: string
     condition?: string
     via?: {
-      address: PrefixedEthereumAddress
+      address: ChainSpecificAddress
       delay?: number
       condition?: string
     }[]

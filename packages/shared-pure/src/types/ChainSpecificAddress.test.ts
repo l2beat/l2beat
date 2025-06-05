@@ -1,17 +1,17 @@
 import { expect } from 'earl'
 
-import { PrefixedEthereumAddress } from './PrefixedEthereumAddress'
+import { ChainSpecificAddress } from './ChainSpecificAddress'
 
-describe(PrefixedEthereumAddress.name, () => {
+describe(ChainSpecificAddress.name, () => {
   it('accepts lowercase addresses', () => {
-    const address = PrefixedEthereumAddress(
+    const address = ChainSpecificAddress(
       'ethereum:0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toBeA(String)
   })
 
   it('accepts addresses with checksum', () => {
-    const address = PrefixedEthereumAddress(
+    const address = ChainSpecificAddress(
       'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
     )
     expect(address).toBeA(String)
@@ -19,41 +19,41 @@ describe(PrefixedEthereumAddress.name, () => {
 
   it('checks the checksum', () => {
     expect(() =>
-      PrefixedEthereumAddress(
+      ChainSpecificAddress(
         'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
       ),
     ).toThrow(
       TypeError,
-      'Invalid PrefixedEthereumAddress: ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+      'Invalid ChainSpecificAddress: ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
     )
   })
 
   it('does not accept correct addresses but without a chain', () => {
     expect(() =>
-      PrefixedEthereumAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'),
+      ChainSpecificAddress('0xAbCdABCd12345678abcDabCd12345678ABcdaBcd'),
     ).toThrow(
       TypeError,
-      'Incorrect PrefixedEthereumAddress format: 0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      'Incorrect ChainSpecificAddress format: 0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
     )
   })
 
   it('does not accept invalid strings', () => {
-    expect(() => PrefixedEthereumAddress('foo')).toThrow(
+    expect(() => ChainSpecificAddress('foo')).toThrow(
       TypeError,
-      'Incorrect PrefixedEthereumAddress format: foo',
+      'Incorrect ChainSpecificAddress format: foo',
     )
-    expect(() => PrefixedEthereumAddress('kk:foo')).toThrow(
+    expect(() => ChainSpecificAddress('kk:foo')).toThrow(
       TypeError,
-      'Invalid PrefixedEthereumAddress: kk:foo',
+      'Invalid ChainSpecificAddress: kk:foo',
     )
   })
 
   it('converts to a representation with a checksum', () => {
-    const address = PrefixedEthereumAddress(
+    const address = ChainSpecificAddress(
       'ethereum:0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toEqual(
-      'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as PrefixedEthereumAddress,
+      'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
     )
   })
 })
