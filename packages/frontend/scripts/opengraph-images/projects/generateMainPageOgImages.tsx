@@ -3,8 +3,8 @@ import { mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
-import type { MainPage } from '~/components/opengraph-image/main-page'
-import { MainPageOpengraphImage } from '~/components/opengraph-image/main-page'
+import type { MainPage } from '~/components/opengraph-image/MainPage'
+import { MainPageOpengraphImage } from '~/components/opengraph-image/MainPage'
 
 const mainPages: MainPage[] = [
   {

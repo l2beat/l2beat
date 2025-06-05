@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x899ddebb720a55c9671db41b05fb25d9da964532
+
+# Diff at Mon, 02 Jun 2025 08:08:59 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22593522
+- current block number: 22615710
+
+## Description
+
++1 polygon pos validator.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        105
+    }
+```
+
 Generated with discovered.json: 0xd3d99a7370d4e9429aed2c939056fe8f1ecc1e9c
 
 # Diff at Fri, 30 May 2025 05:40:38 GMT:

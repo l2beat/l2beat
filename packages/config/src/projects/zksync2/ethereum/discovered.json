@@ -44,7 +44,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
+          "from": "ethereum:0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
           "description": "set addresses (validators) that can commit, prove, execute, revert batches through this contract.",
           "role": ".owner"
         }
@@ -71,7 +71,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         }
       ]
@@ -109,7 +109,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -580,7 +580,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         }
       ]
@@ -725,7 +725,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "from": "ethereum:0x32400084C286CF3E17e7B677ea9583e60a000324",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -764,7 +764,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "from": "ethereum:0x32400084C286CF3E17e7B677ea9583e60a000324",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -802,7 +802,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+          "from": "ethereum:0x32400084C286CF3E17e7B677ea9583e60a000324",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -867,7 +867,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]

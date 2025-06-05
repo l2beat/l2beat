@@ -224,17 +224,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "from": "ethereum:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+          "from": "ethereum:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+          "from": "ethereum:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "role": "admin"
         }
       ],

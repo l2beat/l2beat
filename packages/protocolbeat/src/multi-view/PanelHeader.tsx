@@ -22,6 +22,7 @@ export function PanelHeader(props: { id: PanelId }) {
   const removePanel = useMultiViewStore((state) => state.removePanel)
   const { project } = useParams()
   const selectedAddress = usePanelStore((state) => state.selected)
+  const highlighted = usePanelStore((state) => state.highlighted)
 
   const availablePanels = isReadOnly
     ? PANEL_IDS.filter((id) => id !== 'terminal')
@@ -51,9 +52,11 @@ export function PanelHeader(props: { id: PanelId }) {
       />
       <div className="hidden gap-1 md:group-hover:flex">
         <button
-          onClick={() => toClipboard(props.id, project, selectedAddress)}
+          onClick={() =>
+            toClipboard(props.id, project, selectedAddress, highlighted)
+          }
           className="w-4"
-          hidden={!['code', 'values', 'list'].includes(props.id)}
+          hidden={!['code', 'values', 'list', 'nodes'].includes(props.id)}
         >
           <IconChatbot />
         </button>
@@ -153,15 +156,21 @@ const toClipboard = async (
   panel: PanelId,
   project: string | undefined,
   selectedAddress: string | undefined,
+  highlighted: readonly string[],
 ) => {
   if (!project) {
     throw new Error('Cannot use component outside of project page!')
   }
 
+  const availablePanels = ['code', 'values', 'list', 'nodes']
+  if (!availablePanels.includes(panel)) {
+    return
+  }
+
+  let message: string[] = []
   switch (panel) {
     case 'code': {
-      const message = await formatContractCode(project, selectedAddress)
-      navigator.clipboard.writeText(message.join('\n'))
+      message = await formatContractCode(project, selectedAddress)
       break
     }
     case 'values': {
@@ -174,12 +183,11 @@ const toClipboard = async (
         contract.chain,
       )
       const abis = formatContractAbi(contract, contract.chain)
-      navigator.clipboard.writeText([...fields, ...abis].join('\n'))
+      message = [...fields, ...abis]
       break
     }
     case 'list': {
       const projectData = await getProject(project)
-      const message: string[] = []
       for (const chain of projectData.entries) {
         const contracts = [
           ...chain.initialContracts,
@@ -201,8 +209,36 @@ const toClipboard = async (
           message.push(...code, ...values, ...abi)
         }
       }
-      navigator.clipboard.writeText(message.join('\n'))
+      break
+    }
+    case 'nodes': {
+      const projectData = await getProject(project)
+      for (const chain of projectData.entries) {
+        const contracts = [
+          ...chain.initialContracts,
+          ...chain.discoveredContracts,
+        ].filter((c) => highlighted.includes(c.address))
+
+        for (const contract of contracts) {
+          const code = await formatContractCode(
+            project,
+            contract.address,
+            contract.name,
+            chain.chain,
+          )
+          const values = formatContractValues(
+            contract,
+            chain.blockNumber,
+            chain.chain,
+          )
+          const abi = formatContractAbi(contract, chain.chain)
+          message.push(...code, ...values, ...abi)
+        }
+      }
+
       break
     }
   }
+
+  navigator.clipboard.writeText(message.join('\n'))
 }

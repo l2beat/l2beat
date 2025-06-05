@@ -1,3 +1,34 @@
+Generated with discovered.json: 0xf1ecaded2ebfa21b7a954758d8aea74ee75e8ae8
+
+# Diff at Mon, 02 Jun 2025 08:10:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22594206
+- current block number: 22615717
+
+## Description
+
+sub ms signer change.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) {
+    +++ description: None
+      values.$members.3:
+-        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.$members.2:
+-        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
++        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.$members.1:
+-        "0xb9e3C7BbC0677dD018254C74B5ed2Ad90a0dba9F"
++        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
+      values.multisigThreshold:
+-        "1 of 4 (25%)"
++        "1 of 3 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x5083a32bfa506d97f8ca78a3930bce4d5e934a13
 
 # Diff at Fri, 30 May 2025 07:58:08 GMT:

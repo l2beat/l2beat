@@ -1,3 +1,74 @@
+Generated with discovered.json: 0x573ba4bfb7fa2c2db9f9c8ed9423b8ef1c9053c5
+
+# Diff at Wed, 04 Jun 2025 13:45:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 28782173
+- current block number: 31127629
+
+## Description
+
+programVKey changed. v5 verifier is now used (post plonky3 vulnerability).
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.verifier.prover:
+-        "0x0000000000000000000000000000000000000000"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00eaf7d396acac046b54bc8d5ba17d3f1c7374d7158ac01c76dfeca6103163eb"
++        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+## Source code changes
+
+```diff
+.../projects/blobstream/base/.flat/SP1Verifier.sol | 1396 ++++++++++++++++++++
+ 1 file changed, 1396 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28782173 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.verifier.prover:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0000000000000000000000000000000000000000"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.oldVerifier6:
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+      fieldMeta.oldVerifier6:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen)."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
 Generated with discovered.json: 0x56ad0349e63b3c8ca43d6f9b9f8bd019364808fd
 
 # Diff at Wed, 28 May 2025 11:34:26 GMT:

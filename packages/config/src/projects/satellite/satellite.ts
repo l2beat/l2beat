@@ -48,7 +48,7 @@ export const satellite: Bridge = {
           'USDT',
           'DAI',
           'LINK',
-          'FRAX',
+          'FRAX.legacy',
           'MKR',
           'UNI', //TODO: Add more tokens
         ],

@@ -24,14 +24,14 @@ export function createScalingRouter(
 ) {
   const router = express.Router()
 
-  router.get('/scaling', async (req, res) => {
+  router.get('/scaling', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 
   router.get('/scaling/summary', async (req, res) => {
     const data = await getScalingSummaryData(req, manifest, cache)
     const html = render(data, req.originalUrl)
-    res.status(200).set({ 'Content-Type': 'text/html' }).send(html)
+    res.status(200).send(html)
   })
 
   router.get('/scaling/activity', async (req, res) => {

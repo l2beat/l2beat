@@ -20,7 +20,7 @@ pnpm build:dependencies
 - `pnpm build:dependencies` - builds the dependencies of frontend
 - `pnpm format` - run biome automatic formatter
 - `pnpm format:fix` - run biome automatic formatter and apply the recommended changes
-- `pnpm lint` - run Next.js doctor and ESLint
+- `pnpm lint` - run linter
 - `pnpm test` - run the tests
 - `pnpm typecheck` - check if the code satisfies the typescript compiler
 - `pnpm tinify-logos` - resizes and optimizes logos

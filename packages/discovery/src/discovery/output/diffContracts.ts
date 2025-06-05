@@ -18,6 +18,8 @@ export function diffContracts(
   after: EntryParameters,
   ignore: string[],
 ): FieldDiff[] {
+  // TODO: why order-independent diff? It ignores the order in the arrays,
+  // so changes to things like .via are incorrectly displayed.
   const differences = orderIndependentDiff(before, after)
 
   if (differences === undefined) {

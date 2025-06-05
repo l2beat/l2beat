@@ -1,3 +1,187 @@
+Generated with discovered.json: 0x23992b35ffbf24a03ab26b97c00cb66f078a728a
+
+# Diff at Wed, 04 Jun 2025 13:52:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22616262
+- current block number: 22630425
+
+## Description
+
+SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
+
+## Watched changes
+
+```diff
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.addresslistLength:
+-        9
++        8
+      values.getEncryptionAgents.8:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.7:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.6:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+      values.settings.minSignerListLength:
+-        9
++        8
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        21
++        23
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.11.name:
+-        "taiko_token"
++        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
+      values.namedAddresses.11.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.10.name:
+-        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
++        "taiko_token"
+      values.namedAddresses.10.address:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        13
++        14
+      values.proposalIds.13:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.12:
+-        "594516471058441525137805458817300690127055486982"
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.11:
+-        "594368007222883387369940600290236287695678603267"
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.10:
+-        "594789857995414210150628315872956409027640688649"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.9:
+-        "594333890512775894079591912881534348495153004546"
++        "594544283016854707280302755040001935835586887687"
+      values.proposalIds.8:
+-        "594544283016854707280302755040001935835586887687"
++        "594516360806954642753743290707182802352260251653"
+      values.proposalIds.7:
+-        "594516360806954642753743290707182802352260251653"
++        "594868197801926748603689506985812031612995502090"
+      values.proposalIds.6:
+-        "594868197801926748603689506985812031612995502090"
++        "594516275055798178677248899489514254466604335108"
+      values.proposalIds.5:
+-        "594516275055798178677248899489514254466604335108"
++        "594544466769332844587073035223531748793578946568"
+      values.proposalIds.4:
+-        "594544466769332844587073035223531748793578946568"
++        "595112788683881116119978678391417950963358498829"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
+      sourceHashes.1:
+-        "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca"
++        "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0"
+      values.$implementation:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.$pastUpgrades.1:
++        ["2025-06-04T00:40:23.000Z","0xbdc86ada3808a5987cd1f4bbc49ecd2d7e577bf90642956442a3d14cffa827ec",["0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.sp1RemoteVerifier:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      implementationNames.0x35f26e14D0dAeDd1904843370f761C60B891D466:
+-        "SP1Verifier"
+      implementationNames.0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
++        "TaikoSP1Verifier"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        6
++        9
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22616262 => .flat}/SP1Verifier.sol      | 2682 ++++++++++----------
+ .../SP1VerifierGateway/TaikoSP1Verifier.sol}       |   75 +-
+ 2 files changed, 1329 insertions(+), 1428 deletions(-)
+```
+
+Generated with discovered.json: 0x287517d33b3633841ff8cdced485ab5de6e0e5d0
+
+# Diff at Mon, 02 Jun 2025 10:17:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22595405
+- current block number: 22616262
+
+## Description
+
+add labs prover proxy template, add to initial addresses.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22595405 (main branch discovery), not current.
+
+```diff
+    contract ProverSet (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses.
+      template:
++        "taiko/ProverSet"
+      description:
++        "An operator proxy used by the Taiko team for operating (proposing, proving) the based rollup from permissioned addresses."
+    }
+```
+
 Generated with discovered.json: 0x3b97d3b6d2abbe01b8e7fc47f5297e091a1fc8bb
 
 # Diff at Fri, 30 May 2025 14:28:14 GMT:

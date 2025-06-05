@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "validate bridge transactions (derived address of the MPC setup).",
           "role": ".nearBridgeDerivedAddress"
         }
@@ -35,13 +35,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "manage the pauser role and all pause flags (pause and unpause), manage token lists, claim ownership of token contracts and upgrade them, change the derived signer address for incoming message validation.",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "role": ".defaultAdminAC"
         }
       ],
@@ -115,7 +115,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "pause the bridge escrow for deposits and withdrawals.",
           "role": ".pauseAdminAC"
         }

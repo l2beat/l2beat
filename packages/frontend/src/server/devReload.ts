@@ -1,11 +1,15 @@
 import { createServer } from 'http'
+import type { Logger } from '@l2beat/backend-tools'
 import { WebSocketServer } from 'ws'
 
-export function setupDevReload() {
+const PORT = 9999
+
+export function setupDevReload(logger: Logger) {
+  const appLogger = logger.for('DevReload')
   const server = createServer()
   new WebSocketServer({ server })
 
-  server.listen(9999, () => {
-    console.log(`[WS] Server started at http://localhost:9999`)
+  server.listen(PORT, () => {
+    appLogger.info(`Started`, { port: PORT })
   })
 }

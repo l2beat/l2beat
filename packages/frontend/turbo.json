@@ -18,6 +18,7 @@
         "FEATURE_FLAG_HIRING",
         "MOCK",
         "NODE_ENV",
+        "DEPLOYMENT_ENV",
         "NEXT_RUNTIME",
         "PORT",
         "REWRITE",

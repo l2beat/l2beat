@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xadcb14b9c1a449176ba7710f7bc31c78cf0c5719
+
+# Diff at Mon, 02 Jun 2025 08:12:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22587696
+- current block number: 22615727
+
+## Description
+
+Oracle limit adjustments for lido.
+
+## Watched changes
+
+```diff
+    contract OracleReportSanityChecker (0x6232397ebac4f5772e53285B26c47914E9461E75) {
+    +++ description: None
+      values.getOracleReportLimits.exitedValidatorsPerDayLimit:
+-        9000
++        3600
+      values.getOracleReportLimits.appearedValidatorsPerDayLimit:
+-        43200
++        1800
+      values.getOracleReportLimits.initialSlashingAmountPWei:
+-        1000
++        8
+    }
+```
+
+```diff
+    contract CSModule (0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F) {
+    +++ description: None
+      values.keyRemovalCharge:
+-        "50000000000000000"
++        "20000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x27b306eae0c1a10ca0ab1b31e149d79dbccff513
 
 # Diff at Thu, 29 May 2025 13:13:30 GMT:

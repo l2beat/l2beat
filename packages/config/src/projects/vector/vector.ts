@@ -21,7 +21,7 @@ export const vector: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
+    reviewStatus: undefined,
     isUnverified: false,
   },
   display: {
@@ -98,4 +98,14 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
   permissions: {
     ethereum: discovery.getDiscoveredPermissions(),
   },
+  milestones: [
+    {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+  ],
 }

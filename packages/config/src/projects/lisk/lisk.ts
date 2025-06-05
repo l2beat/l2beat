@@ -85,6 +85,14 @@ export const lisk: ScalingProject = opStackL2({
       tokens: ['USDC'],
     }),
     discovery.getEscrowDetails({
+      address: EthereumAddress('0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677'),
+      name: 'External EURC Vault',
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom externally governed escrow for EURC bridged to Lisk.',
+      tokens: ['EURC'],
+    }),
+    discovery.getEscrowDetails({
       address: EthereumAddress('0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf'),
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,

@@ -1,24 +1,26 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
+import { AnytrustDAC } from '../../templates/anytrust-template'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
-export const appchain: ScalingProject = underReviewL2({
-  id: 'appchain',
+const discovery = new ProjectDiscovery('appchain')
+
+export const appchain: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1744635768), // 2025-04-14T14:42:48Z
   capability: 'universal',
-  badges: [
-    BADGES.RaaS.Caldera,
-    BADGES.Stack.Orbit,
-    BADGES.DA.DAC,
-    BADGES.VM.EVM,
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
+    REASON_FOR_BEING_OTHER.SMALL_DAC,
   ],
+  additionalBadges: [BADGES.RaaS.Caldera],
   display: {
     name: 'Appchain',
     slug: 'appchain',
     description:
       'AppChain is an incentivized Layer 2 that allows developers to capture the value their dApps create, enabling sustainable economic models.',
-    purposes: ['Universal'],
     category: 'Optimium',
     stack: 'Arbitrum',
     links: {
@@ -33,6 +35,34 @@ export const appchain: ScalingProject = underReviewL2({
       ],
     },
   },
+  nonTemplateTechnology: {
+    sequencing: {
+      name: 'Espresso TEE sequencer',
+      description: `Appchain integrates with Espresso sequencing. 
+        In addition to providing regular pre-confirmations, the sequencer publishes blocks to the Espresso Network.
+        The integration expects the transaction batch poster to run inside a Trusted Execution Environment (TEE), and it is programmed to verify batch inclusion in a Espresso Network block before publishing it to the host chain.
+        However, the confirmations provided by Espresso Network are additive, and the batch poster can skip Espresso inclusion checks should the Espresso Network be down or unavailable.
+        To ensure the batch poster is running inside a TEE, the sequencer inbox contract on the host chain was updated so that the data posting function also includes a TEE attestation as input, a "quote", that is verified onchain by the EspressoTEEVerifier for each batch transaction. 
+        The verifier checks the quote signature originates from inside the TEE and reverts if unsuccessful.`,
+      references: [
+        {
+          url: 'https://github.com/EspressoSystems/nitro-espresso-integration/blob/7ddcc6c036fa05cc47560552c85f30b5adedf32c/arbnode/batch_poster.go#L574',
+          title: 'Nitro Espresso Integration',
+        },
+        {
+          url: 'https://gramine.readthedocs.io/en/stable/sgx-intro.html#:~:text=The%20SGX%20quote%20is%20a%20signed%20report%20that%20contains%20the%20enclave%20measurement%20and%20the%20signer%20measurement%20of%20the%20enclave%20and%20the%20signer%20of%20the%20signer%20process%20that%20created%20the%20report.',
+          title: 'SGX Quote',
+        },
+      ],
+      risks: [
+        // Liveness attack, but there is forced inclusion to bypass it
+        {
+          category: 'Withdrawals can be delayed if',
+          text: 'the owner of EspressoTEEVerifier updates the contract verification values (mrEnclave, mrSigner) and it is no longer possible to verify the TEE quote.',
+        },
+      ],
+    },
+  },
   chainConfig: {
     name: 'appchain',
     chainId: 466,
@@ -44,20 +74,14 @@ export const appchain: ScalingProject = underReviewL2({
       },
     ],
   },
-  ecosystemInfo: {
-    id: ProjectId('arbitrum-orbit'),
-  },
   activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOne' },
   },
-  escrows: [
-    {
-      address: EthereumAddress('0x19df42E085e2c3fC4497172E412057F54D9f013E'), // bridge
-      sinceTimestamp: UnixTime(1731057011),
-      tokens: ['ETH'],
-      chain: 'ethereum',
-    },
-  ],
+  customDa: AnytrustDAC({ discovery }),
+  discovery,
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
 })

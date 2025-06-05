@@ -1,4 +1,4 @@
-import type { ChartMeta } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/Chart'
 
 export function getDaChartMeta({
   shape,

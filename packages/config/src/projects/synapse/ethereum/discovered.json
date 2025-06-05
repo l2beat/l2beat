@@ -289,7 +289,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2796317b0fF8538F253012862c06787Adfb8cEb6",
+          "from": "ethereum:0x2796317b0fF8538F253012862c06787Adfb8cEb6",
           "role": "admin"
         }
       ],
@@ -329,7 +329,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
+          "from": "ethereum:0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
           "role": ".GnosisSafe_modules"
         }
       ],

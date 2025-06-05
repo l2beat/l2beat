@@ -1,46 +1,32 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { NextFunction, Request, Response } from 'express'
 
-export function MetricsMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) {
-  console.log(`[${req.method}] ${req.originalUrl} - processing...`)
+export function MetricsMiddleware(logger: Logger) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const appLogger = logger.for('Metrics')
+    appLogger.info(`Processing request`, {
+      method: req.method,
+      url: req.originalUrl,
+      referer: req.headers.referer ?? 'unknown',
+      userAgent: req.headers['user-agent'] ?? 'unknown',
+    })
 
-  const start = process.hrtime.bigint()
+    const start = process.hrtime.bigint()
+    res.once('finish', () => {
+      const end = process.hrtime.bigint()
+      const durationMs = Number(end - start) / 1_000_000
 
-  const originalSend = res.send
+      appLogger.info(`Request processed`, {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.statusCode,
+        duration: Math.round(durationMs),
+        size: res.getHeader('Content-Length'),
+        referer: req.headers.referer ?? 'unknown',
+        userAgent: req.headers['user-agent'] ?? 'unknown',
+      })
+    })
 
-  // Intercept response to measure size
-  res.send = function (body) {
-    const end = process.hrtime.bigint()
-    const durationMs = Number(end - start) / 1_000_000 // Convert nanoseconds to milliseconds
-
-    // Determine response size
-    let size
-    if (body === undefined || body === null) {
-      size = 0
-    } else if (Buffer.isBuffer(body)) {
-      size = body.length
-    } else if (typeof body === 'string') {
-      size = Buffer.byteLength(body)
-    } else {
-      const jsonString = JSON.stringify(body)
-      size = Buffer.byteLength(jsonString)
-    }
-
-    res.setHeader('metrics-execution-time', durationMs.toFixed(2))
-    res.setHeader('metrics-data-size', size)
-    console.log(
-      `[${req.method}] ${req.originalUrl} - ${durationMs.toFixed(2)}ms - ${formatBytes(size)}`,
-    )
-
-    return originalSend.call(this, body)
+    next()
   }
-
-  next()
-}
-
-function formatBytes(bytes: number) {
-  return (bytes / 1024).toFixed(2) + 'KiB'
 }

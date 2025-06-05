@@ -2,7 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getImageParams } from '~/utils/project/get-image-params'
+import { getImageParams } from '~/utils/project/getImageParams'
 
 export async function getMultisigReportData(
   manifest: Manifest,

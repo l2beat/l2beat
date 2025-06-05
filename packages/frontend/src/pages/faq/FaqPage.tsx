@@ -1,13 +1,13 @@
-import { MainPageHeader } from '~/components/main-page-header'
-import { Markdown } from '~/components/markdown/markdown'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import { FaqSideNav } from '~/pages/faq/components/faq-side-nav'
-import type { FaqItem } from '~/pages/faq/faq-items'
-import { faqItems } from '~/pages/faq/faq-items'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { Markdown } from '~/components/markdown/Markdown'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { FaqItem } from '~/pages/faq/FaqItems'
+import { faqItems } from '~/pages/faq/FaqItems'
+import { FaqSideNav } from '~/pages/faq/components/FaqSideNav'
 
 export interface FaqItemWithId extends FaqItem {
   id: string
@@ -23,7 +23,7 @@ export function FaqPage(props: AppLayoutProps) {
       <SideNavLayout>
         <MainPageHeader>FAQ</MainPageHeader>
         <Header />
-        <main className="mt-0 flex gap-8 border-t border-divider md:mt-6 md:border-t-0">
+        <main className="mt-0 flex gap-8 border-divider border-t md:mt-6 md:border-t-0">
           <PrimaryCard>
             {faqItemsWithId.map((item) => {
               const answer = Array.isArray(item.answer)
@@ -37,11 +37,11 @@ export function FaqPage(props: AppLayoutProps) {
                 >
                   <a
                     href={`#${item.id}`}
-                    className="mb-4 block text-2xl font-bold leading-[115%] text-primary no-underline"
+                    className="mb-4 block font-bold text-2xl text-primary leading-[115%] no-underline"
                   >
                     {item.question}
                   </a>
-                  <Markdown className="text-base font-normal leading-7 text-secondary ">
+                  <Markdown className="font-normal text-base text-secondary leading-7 ">
                     {answer}
                   </Markdown>
                 </section>
@@ -59,8 +59,8 @@ export function FaqPage(props: AppLayoutProps) {
 function Header() {
   return (
     <PrimaryCard className="flex flex-col">
-      <h1 className="mb-4 text-3xl font-bold md:hidden">FAQ</h1>
-      <p className="text-lg font-bold">
+      <h1 className="mb-4 font-bold text-3xl md:hidden">FAQ</h1>
+      <p className="font-bold text-lg">
         Hi! We are glad you&apos;ve made it to FAQs!
       </p>
       <p>

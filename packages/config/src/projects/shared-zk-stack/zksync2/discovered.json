@@ -17,7 +17,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -77,32 +77,32 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+              "address": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -110,7 +110,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -177,7 +177,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -238,7 +238,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
+          "from": "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -300,32 +300,32 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+              "address": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -333,7 +333,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -485,13 +485,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "from": "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "role": ".VETO_GUARDIAN"
         },
         {
           "permission": "interact",
-          "from": "0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
+          "from": "zksync2:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160",
           "description": "cancel proposals while they are pending (after having been proposed) or active (during the voting period).",
           "role": ".VETO_GUARDIAN"
         }
@@ -510,51 +510,55 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
-          "via": [{ "address": "0x085b8B6407f150D62adB1EF926F7f304600ec714" }]
+          "via": [
+            { "address": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "description": "propose transactions.",
           "role": ".Proposer"
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
-          "via": [{ "address": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }]
+          "via": [
+            { "address": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -562,12 +566,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x085b8B6407f150D62adB1EF926F7f304600ec714",
+          "from": "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714",
           "role": ".Executor"
         },
         {
           "permission": "act",
-          "from": "0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
+          "from": "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8",
           "role": ".Executor"
         }
       ],
@@ -626,15 +630,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "role": "admin",
-          "via": [{ "address": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }]
+          "via": [
+            { "address": "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
+          "from": "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC",
           "role": ".owner"
         }
       ]
@@ -652,44 +658,44 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "role": ".MinterAdmin",
           "via": [
             {
-              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "address": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+              "address": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -697,7 +703,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -764,7 +770,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
+          "from": "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -826,7 +832,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -882,7 +888,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xb83FF6501214ddF40C91C9565d095400f3F45746",
+          "from": "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746",
           "description": "make direct proposals without owning ZK tokens. In propose-guarded mode, this address is the ONLY allowed proposer. Propose-guarded mode is currently set to false.",
           "role": ".PROPOSE_GUARDIAN"
         }
@@ -900,7 +906,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "role": "admin"
         }
       ],
@@ -927,13 +933,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "grant the MINTER_ROLE to arbitrary addresses, thus controlling the minting of the ZK token.",
           "role": ".MinterAdmin"
         },
         {
           "permission": "interact",
-          "from": "0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
+          "from": "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
@@ -1000,32 +1006,32 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "via": [
             {
-              "address": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+              "address": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
               "delay": 259200
             }
           ]
         },
         {
           "permission": "interact",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "cancel queued transactions.",
           "role": ".Canceller"
         },
         {
           "permission": "interact",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "execute transactions that are ready.",
           "role": ".Executor"
         },
         {
           "permission": "interact",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "description": "propose transactions.",
           "role": ".Proposer"
         }
@@ -1033,7 +1039,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xC9E442574958f96C026DeF9a50C3236cab17428a",
+          "from": "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a",
           "delay": 259200,
           "role": ".Executor"
         }
@@ -1093,7 +1099,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
+          "from": "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
           "description": "control all roles in the ZkToken access control, including the minter roles.",
           "role": ".DefaultAdmin"
         }
@@ -1770,5 +1776,5 @@
     "shared-zk-stack/ZkGovernor": "0x627a5b1cf3f7bfbb4bda2c2996de6a7e2d49c2fc9250811d48f3508071e07ac6",
     "shared-zk-stack/ZkToken": "0x22bee2bab1c58cdc909e86d516e6fbb69aa52fedff617cb6adca6c14d4dc0cd4"
   },
-  "permissionsConfigHash": "0x2935c555bd9a1ec8441e688488acdba69abdf99782a7a1de272da4b7a9bb7994"
+  "permissionsConfigHash": "0xb2cb814d4aafe1969237961dea56a9eb1fc8ed6f4143e3c4a11a5f53c3fdb52c"
 }

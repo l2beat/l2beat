@@ -28,7 +28,7 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
       tags: { tag: $.daLayer },
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configurationsTrimmingDisabled: true,
-      dataWipingAfterDeleteDisabled: true,
+      dataWipingAfterDeleteDisabled: false,
     })
 
     assert(

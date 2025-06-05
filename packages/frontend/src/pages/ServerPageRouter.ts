@@ -27,9 +27,8 @@ export function createServerPageRouter(
   router.use('/', (_, res, next) => {
     const headers = new Headers({
       'Content-Type': 'text/html; charset=utf-8',
-      'Cache-Control': 'public, max-age=300',
     })
-    if (env.NODE_ENV === 'production') {
+    if (env.DEPLOYMENT_ENV === 'production') {
       headers.set('Cache-Control', 'public, max-age=300')
     }
 
@@ -37,7 +36,7 @@ export function createServerPageRouter(
     next()
   })
 
-  router.get('/', async (_, res) => {
+  router.get('/', (_req, res) => {
     res.redirect('/scaling/summary')
   })
 

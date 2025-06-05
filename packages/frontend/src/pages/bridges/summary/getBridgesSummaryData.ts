@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridges-summary-entries'
+import { getBridgesSummaryEntries } from '~/server/features/bridges/getBridgesSummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getExpressHelpers } from '~/trpc/server'

@@ -16,7 +16,7 @@ export const celestia: BaseProject = {
     yellowWarning: undefined,
     redWarning: undefined,
     emergencyWarning: undefined,
-    isUnderReview: false,
+    reviewStatus: undefined,
     isUnverified: false,
   },
   display: {
@@ -123,7 +123,7 @@ export const celestia: BaseProject = {
     /*
       Node params sources:
       - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
-      - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-4.md
+      - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-004.md
       - block time: https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/consensus_consts.go
       - max block size: (DefaultMaxBytes) https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/initial_consts.go
     */

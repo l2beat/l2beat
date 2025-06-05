@@ -111,7 +111,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
       const results = await repository.getForDaLayerInTimeRange(
         'layer-a',
         START,
-        START + 2 * UnixTime.DAY,
+        START + 3 * UnixTime.DAY,
       )
 
       expect(results).toEqualUnsorted([
@@ -271,7 +271,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
 
       const results = await repository.getByProjectIdsAndTimeRange(
         ['project-a', 'project-b'],
-        [START, START + 1 * UnixTime.DAY],
+        [START, START + 2 * UnixTime.DAY],
       )
 
       expect(results).toEqualUnsorted([
@@ -320,13 +320,6 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
 
       expect(results).toEqualUnsorted([
         record('project-a', 'layer-a', 'config-id', START, 100n),
-        record(
-          'project-a',
-          'layer-a',
-          'config-id',
-          START + 1 * UnixTime.DAY,
-          1_000n,
-        ),
       ])
     })
   })
@@ -370,7 +363,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
 
       const results = await repository.getByDaLayersAndTimeRange(
         ['layer-b'],
-        [START, START + 1 * UnixTime.DAY],
+        [START, START + 2 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
@@ -414,7 +407,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
 
       const results = await repository.getByDaLayersAndTimeRange(
         ['layer-a'],
-        [null, START + 1 * UnixTime.DAY],
+        [null, START + 2 * UnixTime.DAY],
       )
 
       expect(results).toEqual([
@@ -483,7 +476,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
 
       const results = await repository.getSummedProjectsByDaLayersAndTimeRange(
         ['layer-a'],
-        [START, START + 1 * UnixTime.DAY],
+        [START, START + 2 * UnixTime.DAY],
       )
 
       expect(results).toEqual([

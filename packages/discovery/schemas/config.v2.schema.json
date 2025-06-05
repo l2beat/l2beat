@@ -3,115 +3,144 @@
   "properties": {
     "$schema": { "type": "string" },
     "name": { "type": "string", "minLength": 1 },
-    "chain": { "type": "string", "minLength": 1 },
-    "initialAddresses": { "type": "array", "items": { "type": "string" } },
     "import": { "type": "array", "items": { "type": "string" } },
-    "maxAddresses": { "type": "number", "exclusiveMinimum": 0, "default": 100 },
-    "maxDepth": { "type": "number", "default": 6 },
     "sharedModules": {
       "type": "array",
       "items": { "type": "string" },
       "default": []
     },
-    "types": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/DiscoveryCustomType" }
-    },
-    "categories": {
-      "type": "object",
-      "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
-    },
-    "names": { "type": "object", "additionalProperties": { "type": "string" } },
-    "overrides": {
+    "chains": {
       "type": "object",
       "additionalProperties": {
         "type": "object",
         "properties": {
-          "extends": {
-            "$ref": "#/definitions/DiscoveryContract/properties/extends"
+          "initialAddresses": {
+            "type": "array",
+            "items": { "type": "string" }
           },
-          "canActIndependently": { "type": "boolean" },
-          "ignoreDiscovery": {
-            "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
+          "import": { "type": "array", "items": { "type": "string" } },
+          "maxAddresses": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "default": 100
           },
-          "proxyType": {
-            "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
-          },
-          "ignoreInWatchMode": {
-            "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
-          },
-          "ignoreMethods": {
-            "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
-          },
-          "ignoreRelatives": {
-            "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
-          },
-          "methods": {
-            "$ref": "#/definitions/DiscoveryContract/properties/methods"
-          },
-          "manualSourcePaths": {
-            "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
+          "maxDepth": { "type": "number", "default": null },
+          "sharedModules": {
+            "type": "array",
+            "items": { "type": "string" },
+            "default": []
           },
           "types": {
-            "$ref": "#/definitions/DiscoveryContract/properties/types"
-          },
-          "displayName": {
-            "$ref": "#/definitions/ColorContract/properties/displayName"
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/definitions/DiscoveryCustomType"
+            }
           },
           "categories": {
-            "$ref": "#/definitions/ColorContract/properties/categories"
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/definitions/DiscoveryCategory"
+            }
           },
-          "category": {
-            "$ref": "#/definitions/ColorContract/properties/category"
+          "names": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
           },
-          "description": {
-            "$ref": "#/definitions/ColorContract/properties/description"
-          },
-          "references": {
-            "$ref": "#/definitions/ColorContract/properties/references"
-          },
-          "fields": {
+          "overrides": {
             "type": "object",
             "additionalProperties": {
               "type": "object",
               "properties": {
-                "permissions": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/RawPermissionConfiguration"
-                  }
+                "extends": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/extends"
+                },
+                "canActIndependently": { "type": "boolean" },
+                "ignoreDiscovery": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
+                },
+                "proxyType": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
+                },
+                "ignoreInWatchMode": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
+                },
+                "ignoreMethods": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
+                },
+                "ignoreRelatives": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
+                },
+                "methods": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/methods"
+                },
+                "manualSourcePaths": {
+                  "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
+                },
+                "types": {
+                  "$ref": "#/definitions/DiscoveryContract/properties/types"
+                },
+                "displayName": {
+                  "$ref": "#/definitions/ColorContract/properties/displayName"
+                },
+                "categories": {
+                  "$ref": "#/definitions/ColorContract/properties/categories"
+                },
+                "category": {
+                  "$ref": "#/definitions/ColorContract/properties/category"
                 },
                 "description": {
-                  "$ref": "#/definitions/ColorContractField/properties/description"
+                  "$ref": "#/definitions/ColorContract/properties/description"
                 },
-                "severity": {
-                  "$ref": "#/definitions/ColorContractField/properties/severity"
+                "references": {
+                  "$ref": "#/definitions/ColorContract/properties/references"
                 },
-                "type": {
-                  "$ref": "#/definitions/ColorContractField/properties/type"
-                },
-                "handler": {
-                  "$ref": "#/definitions/DiscoveryContractField/properties/handler"
-                },
-                "template": {
-                  "$ref": "#/definitions/DiscoveryContractField/properties/template"
-                },
-                "copy": {
-                  "$ref": "#/definitions/DiscoveryContractField/properties/copy"
-                },
-                "edit": {
-                  "$ref": "#/definitions/DiscoveryContractField/properties/edit"
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "properties": {
+                      "permissions": {
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/definitions/RawPermissionConfiguration"
+                        }
+                      },
+                      "description": {
+                        "$ref": "#/definitions/ColorContractField/properties/description"
+                      },
+                      "severity": {
+                        "$ref": "#/definitions/ColorContractField/properties/severity"
+                      },
+                      "type": {
+                        "$ref": "#/definitions/ColorContractField/properties/type"
+                      },
+                      "handler": {
+                        "$ref": "#/definitions/DiscoveryContractField/properties/handler"
+                      },
+                      "template": {
+                        "$ref": "#/definitions/DiscoveryContractField/properties/template"
+                      },
+                      "copy": {
+                        "$ref": "#/definitions/DiscoveryContractField/properties/copy"
+                      },
+                      "edit": {
+                        "$ref": "#/definitions/DiscoveryContractField/properties/edit"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
                 }
               },
               "additionalProperties": false
             }
           }
         },
+        "required": ["initialAddresses"],
         "additionalProperties": false
       }
     }
   },
-  "required": ["name", "chain", "initialAddresses"],
+  "required": ["name", "chains"],
   "additionalProperties": false,
   "definitions": {
     "UserHandlerDefinition": {
@@ -547,6 +576,8 @@
         "propose",
         "sequence",
         "validate",
+        "disperse",
+        "relayDA",
         "operateLinea",
         "fastconfirm",
         "validateZkStack",
@@ -558,6 +589,10 @@
         "operateStarknet",
         "operateStarkEx",
         "governStarknet",
+        "metisGameCreator",
+        "stateDeleterMetis",
+        "hotValidatorHyperliquid",
+        "coldValidatorHyperliquid",
         "member",
         "act",
         "interact",
@@ -652,6 +687,7 @@
         "Axelar proxy",
         "LightLink proxy",
         "Everclear proxy",
+        "TaikoFork proxy",
         "immutable"
       ]
     },

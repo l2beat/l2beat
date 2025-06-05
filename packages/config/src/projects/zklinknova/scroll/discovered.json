@@ -133,7 +133,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "from": "scroll:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
           "role": "admin"
         }
       ],
@@ -211,25 +211,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
+          "from": "scroll:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
+          "from": "scroll:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
           "role": "admin",
-          "via": [{ "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f" }]
+          "via": [
+            { "address": "scroll:0xC4673dAbfAf04D2A430e244B63F040D27199102f" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+          "from": "scroll:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+          "from": "scroll:0xC4673dAbfAf04D2A430e244B63F040D27199102f",
           "role": ".owner"
         }
       ],

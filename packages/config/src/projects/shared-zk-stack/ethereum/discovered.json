@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22594206,
+  "blockNumber": 22615717,
   "configHash": "0x07362f23e4fdfb3e27f69a86b2d10091486c940acc9f88ac9ffe25b40a73f78f",
   "entries": [
     {
@@ -48,7 +48,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "start (queue) upgrades.",
           "role": ".L2_PROTOCOL_GOVERNOR"
         }
@@ -148,7 +148,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "role": "admin"
         }
       ],
@@ -226,13 +226,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "revert batches for any connected chain (ZK cluster Admin role).",
           "role": ".admin"
         }
@@ -587,7 +587,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -629,23 +629,27 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role).",
           "role": ".admin",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+          "via": [
+            { "address": "ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "revert batches for any connected chain (ZK cluster Admin role).",
           "role": ".admin",
-          "via": [{ "address": "0x2cf3bD6a9056b39999F3883955E183F655345063" }]
+          "via": [
+            { "address": "ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+          "from": "ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063",
           "role": ".owner"
         }
       ],
@@ -838,13 +842,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "extend the legal veto period, approve a protocol upgrade.",
           "role": ".guardians"
         },
         {
           "permission": "interact",
-          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "from": "ethereum:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
           "description": "one of its 3/3 signers.",
           "role": ".GUARDIANS"
         }
@@ -957,13 +961,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "description": "soft freeze, hard freeze, approve a protocol upgrade.",
           "role": ".securityCouncil"
         },
         {
           "permission": "interact",
-          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "from": "ethereum:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
           "description": "one of its 3/3 signers.",
           "role": ".SECURITY_COUNCIL"
         }
@@ -1459,11 +1463,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "address": "0xb9e3C7BbC0677dD018254C74B5ed2Ad90a0dba9F",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xBab69188f07F2569A41C5B875e147216D974eB3e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1481,7 +1480,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
+          "from": "ethereum:0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6",
           "description": "one of its 3/3 signers.",
           "role": ".ZK_FOUNDATION_SAFE"
         }
@@ -1569,37 +1568,37 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "from": "ethereum:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "from": "ethereum:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "from": "ethereum:0x8829AD80E425C646DAB305381ff105169FeEcE56",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "from": "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "from": "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "role": "admin"
         }
       ],
@@ -1700,15 +1699,14 @@
         "$members": [
           "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252",
           "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735",
-          "0xb9e3C7BbC0677dD018254C74B5ed2Ad90a0dba9F",
           "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
         ],
         "$threshold": 1,
         "domainSeparator": "0x8a595a96d77e992bb9ff8b20fc59215c86b17154838b5386d6b264728a1f4462",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 4 (25%)",
-        "nonce": 10,
+        "multisigThreshold": "1 of 3 (33%)",
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1894,35 +1892,35 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
+          "from": "ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+          "from": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "from": "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "pause, unpause and set critical escrow address references.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+          "from": "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner"
         }
@@ -2037,109 +2035,133 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "description": "set critical system contract addresses, register settlement layers, pause and unpause and manage zk chain registration.",
           "role": ".owner",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
+          "via": [
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains.",
           "role": ".owner",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
+          "via": [
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "from": "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "description": "pause, unpause and set critical escrow address references.",
           "role": ".owner",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
+          "via": [
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
+          "from": "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
           "description": "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode).",
           "role": ".owner",
-          "via": [{ "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-          "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
+          "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
+          "from": "ethereum:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x8829AD80E425C646DAB305381ff105169FeEcE56",
+          "from": "ethereum:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
+          "from": "ethereum:0x8829AD80E425C646DAB305381ff105169FeEcE56",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+          "from": "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "from": "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
           "role": "admin",
           "via": [
-            { "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
           "role": "admin",
           "via": [
-            { "address": "0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e" },
-            { "address": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+            {
+              "address": "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+            },
+            { "address": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
+          "from": "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
           "role": ".emergencyUpgradeBoard"
         }
       ],
@@ -2208,7 +2230,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3097,5 +3119,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x2935c555bd9a1ec8441e688488acdba69abdf99782a7a1de272da4b7a9bb7994"
+  "permissionsConfigHash": "0xb2cb814d4aafe1969237961dea56a9eb1fc8ed6f4143e3c4a11a5f53c3fdb52c"
 }

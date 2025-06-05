@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x8ee884e637648483321f41f8c203b94f2755769f
+
+# Diff at Mon, 02 Jun 2025 08:07:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2fee84b782a329885c84742cf9cf43143842a2d5 block: 22517899
+- current block number: 22615702
+
+## Description
+
+multisig signer change.
+
+## Watched changes
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      values.$members.5:
+-        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
+      values.$members.4:
+-        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
++        "0xfF206f46453A9dd8e1664532788f4987c15B937d"
+      values.$members.3:
+-        "0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
++        "0x3552F50fFe9517d8c6913992F3d4bA8030Ca1512"
+      values.$members.2:
+-        "0x921D35Fc5e1667741c9f3af0303e29b8aB3dC79B"
++        "0xdaA9c7160E33d7c5C7D292f452c074Ec60f5C199"
+      values.multisigThreshold:
+-        "3 of 6 (50%)"
++        "3 of 5 (60%)"
+    }
+```
+
 Generated with discovered.json: 0xf6ef8c26f5df719343c2ab5716cb64bd279d3fc8
 
 # Diff at Fri, 23 May 2025 09:41:01 GMT:

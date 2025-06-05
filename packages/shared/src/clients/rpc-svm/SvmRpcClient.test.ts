@@ -69,7 +69,7 @@ describe(SvmRpcClient.name, () => {
       const mockResponse = {
         error: {
           code: -32009,
-          message: `Slot 2621692 was skipped, or missing in long-term storage`,
+          message: 'Slot 2621692 was skipped, <explanation here>',
         },
       }
 

@@ -1,6 +1,6 @@
 import '../src/dotenv'
 
-import { type Database } from '@l2beat/database'
+import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import { getDb } from '~/server/database'
@@ -38,7 +38,7 @@ async function benchmark() {
     const db = getDb()
     console.log(`Benchmarking ${name}`)
     const durations = []
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     for (const _ of range(BENCHMARK_ROUNDS)) {
       const start = process.hrtime()
       await fn(db)
@@ -48,7 +48,7 @@ async function benchmark() {
     const min = Math.min(...durations)
     const max = Math.max(...durations)
     const mean = durations.reduce((a, b) => a + b, 0) / durations.length
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    // biome-ignore lint/style/noNonNullAssertion: we know it's there
     const median = durations.sort()[Math.floor(durations.length / 2)]!
 
     result[name] = { min, max, mean, median }

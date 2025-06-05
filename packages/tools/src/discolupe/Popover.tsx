@@ -6,7 +6,7 @@ interface PopoverProps {
   children: ReactNode
 }
 
-const Popover: React.FC<PopoverProps> = ({ content, children }) => {
+export const Popover: React.FC<PopoverProps> = ({ content, children }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const popoverRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -56,7 +56,7 @@ const Popover: React.FC<PopoverProps> = ({ content, children }) => {
       {isOpen && (
         <div
           ref={popoverRef}
-          className="absolute z-50 mt-2 w-64 rounded-md border border-2 border-orange-500 bg-zinc-950 shadow-lg"
+          className="absolute z-50 mt-2 w-64 rounded-md border-2 border-orange-500 bg-zinc-950 shadow-lg"
           role="dialog"
           aria-modal="true"
         >
@@ -66,5 +66,3 @@ const Popover: React.FC<PopoverProps> = ({ content, children }) => {
     </div>
   )
 }
-
-export default Popover

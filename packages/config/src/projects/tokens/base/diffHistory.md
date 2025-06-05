@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x65fa9eff1682b1237a9a3c88c879f4651f71d75b
+Generated with discovered.json: 0x5588836725e8d23a42efff282dbf199aa1d83a50
+
+# Diff at Thu, 05 Jun 2025 08:23:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ae074e39e9b50cc71e360e470589f9a084de5fa2 block: 30861907
+- current block number: 30861907
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30861907 (main branch discovery), not current.
+
+```diff
+    contract Wrapped OETH Token (0xD8724322f44E5c58D7A815F542036fb17DbbF839) {
+    +++ description: None
+      name:
+-        "BridgedWOETH"
++        "Wrapped OETH Token"
+    }
+```
+
+Generated with discovered.json: 0x3477e4b5a945e52074a7d7f9480e52a0b7f6f7c0
 
 # Diff at Wed, 28 May 2025 13:56:28 GMT:
 

@@ -68,7 +68,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+          "from": "ethereum:0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
           "role": "admin"
         }
       ],
@@ -182,13 +182,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+          "from": "ethereum:0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "from": "ethereum:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         }
@@ -201,7 +201,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "from": "ethereum:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
           "role": ".trustedSequencer"
         }
       ]
@@ -213,7 +213,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
+          "from": "ethereum:0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         }
@@ -227,15 +227,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
+          "from": "ethereum:0x05652Ec92366F3C2255991a265c499E01Ba58e6a",
           "role": "admin",
-          "via": [{ "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204" }]
+          "via": [
+            { "address": "ethereum:0x1e37EA18e9515db29b3E94A00eD31484A3130204" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
+          "from": "ethereum:0x1e37EA18e9515db29b3E94A00eD31484A3130204",
           "role": ".owner"
         }
       ]

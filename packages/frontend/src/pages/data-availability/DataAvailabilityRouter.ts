@@ -4,6 +4,7 @@ import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { getDataAvailabilityArchivedData } from './archived/getDataAvailabilityArchivedData'
 import { getDataAvailabilityProjectData } from './project/getDataAvailabilityProjectData'
 import { getDataAvailabilityRiskData } from './risk/getDataAvailabilityRiskData'
 import { getDataAvailabilitySummaryData } from './summary/getDataAvailabilitySummaryData'
@@ -16,7 +17,7 @@ export function createDataAvailabilityRouter(
 ) {
   const router = express.Router()
 
-  router.get('/data-availability', async (_, res) => {
+  router.get('/data-availability', (_req, res) => {
     res.redirect('/data-availability/summary')
   })
 
@@ -54,6 +55,19 @@ export function createDataAvailabilityRouter(
         staleWhileRevalidate: 25 * 60,
       },
       () => getDataAvailabilityThroughputData(manifest, req.originalUrl),
+    )
+    const html = render(data, req.originalUrl)
+    res.status(200).send(html)
+  })
+
+  router.get('/data-availability/archived', async (req, res) => {
+    const data = await cache.get(
+      {
+        key: ['data-availability', 'archived'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getDataAvailabilityArchivedData(manifest, req.originalUrl),
     )
     const html = render(data, req.originalUrl)
     res.status(200).send(html)
