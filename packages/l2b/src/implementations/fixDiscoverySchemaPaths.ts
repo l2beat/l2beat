@@ -1,6 +1,6 @@
-import { readJsonc, type DiscoveryPaths } from '@l2beat/discovery'
 import fs from 'fs'
 import path from 'path'
+import { type DiscoveryPaths, readJsonc } from '@l2beat/discovery'
 
 const SCHEMA_CONFIG = {
   schemas: {

@@ -1,6 +1,6 @@
+import { getDiscoveryPaths } from '@l2beat/discovery'
 import { command } from 'cmd-ts'
 import { lintJsonFiles } from '../implementations/fixDiscoverySchemaPaths'
-import { getDiscoveryPaths } from '@l2beat/discovery'
 
 export const FixDiscoverySchemaPaths = command({
   name: 'fix-discovery-schema-paths',
