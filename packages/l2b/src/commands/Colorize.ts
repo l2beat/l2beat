@@ -27,11 +27,12 @@ export const Colorize = command({
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = await Promise.all(
-      configReader
-        .readAllChains()
-        .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
-    )
+    const chainConfigs = configReader
+      .readAllDiscoveredProjects()
+      .flatMap(({ project, chains }) =>
+        chains.map((chain) => configReader.readConfig(project, chain)),
+      )
+
     for (const config of chainConfigs) {
       const discovery = configReader.readDiscovery(config.name, config.chain)
       const color = colorize(config.color, discovery, templateService)

@@ -19,8 +19,10 @@ export const FindUnusedShapes = command({
     const shapes = templateService.getAllShapes()
 
     const chainConfigs = configReader
-      .readAllChains()
-      .flatMap((chain) => configReader.readAllConfigsForChain(chain))
+      .readAllDiscoveredProjects()
+      .flatMap(({ project, chains }) =>
+        chains.map((chain) => configReader.readConfig(project, chain)),
+      )
 
     const allSourceHashesUsed = new Set<string>()
 
