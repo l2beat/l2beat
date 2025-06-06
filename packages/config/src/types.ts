@@ -62,6 +62,11 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
+export interface ProjectUnverifiedContract {
+  chain: string
+  address: EthereumAddress
+}
+
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -138,7 +143,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  isUnverified: boolean
+  unverifiedContracts: ProjectUnverifiedContract[]
   // countdowns
   otherMigration?: {
     expiresAt: number

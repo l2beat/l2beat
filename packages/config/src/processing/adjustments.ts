@@ -6,7 +6,7 @@ import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
 import { bridges } from './bridges'
 import { getDiscoveryInfo } from './getProjects'
-import { isProjectVerified, isVerified } from './isVerified'
+import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
@@ -63,7 +63,8 @@ function adjustLegacy(project: ScalingProject | Bridge, chains: ChainConfig[]) {
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
   if (project.statuses) {
-    project.statuses.isUnverified ||= !isProjectVerified(project)
+    project.statuses.unverifiedContracts ||=
+      getProjectUnverifiedContracts(project)
   }
   if (project.proofVerification) {
     for (const verifier of project.proofVerification.verifiers) {
@@ -88,9 +89,8 @@ function adjustContracts(
         contract.url = `${chain.explorerUrl}/address/${contract.address}#code`
       }
     }
-    const verified =
-      'type' in project ? isVerified(project) : isProjectVerified(project)
-    if (!verified) {
+    const unverifiedContracts = getProjectUnverifiedContracts(project)
+    if (unverifiedContracts.length > 0) {
       project.contracts.risks.push(CONTRACTS.UNVERIFIED_RISK)
     }
   }

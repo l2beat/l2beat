@@ -14,7 +14,7 @@ export const bsc: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'EVM-compatible Layer 1.',
