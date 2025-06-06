@@ -96,6 +96,13 @@ export const unichain: ScalingProject = opStackL2({
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A'),
+      tokens: ['USDS', 'sUSDS'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
+    }),
   ],
   chainConfig: {
     name: 'unichain',

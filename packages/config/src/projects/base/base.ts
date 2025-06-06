@@ -60,7 +60,7 @@ export const base: ScalingProject = opStackL2({
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
+        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
   ],
   activityConfig: {
