@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x9ce400284a479aa2af9b01856e428c1b2a4b6c51
+
+# Diff at Fri, 06 Jun 2025 07:27:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1eba1823c240619119cd080ff8cbb757c1c3feda block: 22630425
+- current block number: 22630425
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630425 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      description:
+-        "Verifier contract for SP1 proofs."
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
 Generated with discovered.json: 0x23992b35ffbf24a03ab26b97c00cb66f078a728a
 
 # Diff at Wed, 04 Jun 2025 13:52:34 GMT:
