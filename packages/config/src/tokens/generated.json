@@ -4896,7 +4896,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1725455483,
       "coingeckoListingTimestamp": 1734048000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "chainId": 1,
       "source": "canonical",
