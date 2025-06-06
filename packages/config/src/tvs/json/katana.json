@@ -1,0 +1,78 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "katana",
+  "tokens": [
+    {
+      "mode": "custom",
+      "id": "katana-USDC.pdkatana",
+      "priceId": "usd-coin",
+      "symbol": "USDC.pdkatana",
+      "name": "Katana Pre-Deposit USDC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
+        "chain": "ethereum",
+        "decimals": 6,
+        "sinceTimestamp": 1747148987
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "katana-USDT.pdkatana",
+      "priceId": "tether",
+      "symbol": "USDT.pdkatana",
+      "name": "Katana Pre-Deposit USDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
+        "chain": "ethereum",
+        "decimals": 6,
+        "sinceTimestamp": 1747148987
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "katana-WBTC.pdkatana",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC.pdkatana",
+      "name": "Katana Pre-Deposit WBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
+        "chain": "ethereum",
+        "decimals": 8,
+        "sinceTimestamp": 1747148987
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "katana-WETH.pdkatana",
+      "priceId": "weth",
+      "symbol": "WETH.pdkatana",
+      "name": "Katana Pre-Deposit WETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
+        "chain": "ethereum",
+        "decimals": 6,
+        "sinceTimestamp": 1747148987
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    }
+  ]
+}

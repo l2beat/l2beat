@@ -159,7 +159,7 @@ export async function getScalingProjectEntry(
         })
       : undefined,
     getTokensForProject(project),
-    getLiveness(),
+    getLiveness(project.id),
     getScalingDaSolution(project),
     getContractUtils(),
   ])

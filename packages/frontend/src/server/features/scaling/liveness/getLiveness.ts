@@ -3,7 +3,7 @@ import type {
   IndexerConfigurationRecord,
 } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
-import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import isEmpty from 'lodash/isEmpty'
@@ -22,15 +22,15 @@ import type {
   LivenessResponse,
 } from './types'
 
-export async function getLiveness() {
+export async function getLiveness(projectId?: ProjectId) {
   if (env.MOCK) {
     return getMockLivenessData()
   }
 
-  return await getLivenessData()
+  return await getLivenessData(projectId)
 }
 
-async function getLivenessData() {
+async function getLivenessData(projectId?: ProjectId) {
   const db = getDb()
   const projects: LivenessResponse = {}
 
@@ -60,16 +60,22 @@ async function getLivenessData() {
 
   const [last30DaysRecords, last90DaysRecords, lastMaxRecords, anomalyRecords] =
     await Promise.all([
-      db.aggregatedLiveness.getAggregatesByTimeRange([
-        targetTimestamp - 30 * UnixTime.DAY,
-        targetTimestamp,
-      ]),
-      db.aggregatedLiveness.getAggregatesByTimeRange([
-        targetTimestamp - 90 * UnixTime.DAY,
-        targetTimestamp,
-      ]),
-      db.aggregatedLiveness.getAggregatesByTimeRange([null, targetTimestamp]),
-      db.anomalies.getByProjectIdsFrom(projectIds, last30Days),
+      db.aggregatedLiveness.getAggregatesByTimeRange(
+        [targetTimestamp - 30 * UnixTime.DAY, targetTimestamp],
+        projectId,
+      ),
+      db.aggregatedLiveness.getAggregatesByTimeRange(
+        [targetTimestamp - 90 * UnixTime.DAY, targetTimestamp],
+        projectId,
+      ),
+      db.aggregatedLiveness.getAggregatesByTimeRange(
+        [null, targetTimestamp],
+        projectId,
+      ),
+      db.anomalies.getByProjectIdsFrom(
+        projectId ? [projectId] : projectIds,
+        last30Days,
+      ),
     ])
 
   const groupedLast30Days = groupBy(last30DaysRecords, (r) => r.projectId)

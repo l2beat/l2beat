@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "kroma",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -30,24 +30,6 @@
         "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
       },
       "overrides": {
-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e": {
-          "fields": {
-            "verifier": {
-              "description": "The prover contract address for SP1, and whether it is frozen (true if frozen).",
-              "handler": {
-                "type": "call",
-                "method": "function routes(bytes4) view returns (address prover, bool frozen)",
-                "args": ["0xd4e8ecd2"]
-              },
-              "permissions": [
-                {
-                  "type": "interact",
-                  "description": "can verify proofs for the header range [latestBlock, targetBlock] proof."
-                }
-              ]
-            }
-          }
-        },
         "0xe57E217d8ed498992452791622711B866403E950": {
           "description": "Escrows a pool of KRO used as validator rewards by the AssetManager.",
           "ignoreRelatives": ["KGH"]
