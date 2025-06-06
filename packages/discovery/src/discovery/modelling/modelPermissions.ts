@@ -194,7 +194,7 @@ export function generateClingoForProject(
   discoveries: Discoveries,
   options: {
     ignoreMissingDependencies?: boolean
-  },
+  } = {},
 ): string {
   const generatedClingo: string[] = []
 
