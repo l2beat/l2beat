@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 22567739,
+  "blockNumber": 22646238,
   "configHash": "0x177160f3ac6819b2b28b6d0dc54ea477117d7b31cea9b3da41ede2a1186ce3d2",
   "entries": [
     {
@@ -83,7 +83,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "batchCount": 229634,
+        "batchCount": 233664,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -95,9 +95,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 300,
-          "prevBlockNumber": 22567622,
+          "prevBlockNumber": 22646144,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22567691
+          "prevSequencedBlockNumber": 22646212
         },
         "dacKeyset": {
           "requiredSignatures": 5,
@@ -130,7 +130,7 @@
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 475287,
+        "totalDelayedMessagesRead": 479334,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -576,13 +576,21 @@
       "name": "L1Escrow",
       "address": "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3",
       "type": "Contract",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0x0169e3ff6f3a2faeac5a4c76b30fbf87198a211ee683a1b22d33db036f863ee8"
       ],
       "proxyType": "immutable",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1659620187,
       "sinceBlock": 15276182,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+        ]
+      },
       "implementationNames": {
         "0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3": "L1Escrow"
       }
@@ -756,7 +764,7 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 475290,
+        "delayedMessageCount": 479336,
         "inboxHistory": [
           "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
@@ -764,8 +772,8 @@
         "outboxHistory": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
         "rollup": "0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 229634,
-        "sequencerReportedSubMessageCount": 83594660
+        "sequencerMessageCount": 233664,
+        "sequencerReportedSubMessageCount": 83640767
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -937,7 +945,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 0,
+        "nonce": 1,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3146,7 +3154,7 @@
         ],
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isPostBoLD": true,
-        "latestConfirmed": "0x20b4377f5e415bc602fa92bee39ba3580ff0457b1f79f17737a74a08dbc5f4bf",
+        "latestConfirmed": "0x8d96565f498fe472c05550acba7b606b7e228d2b0bedd4634c6118e01257b0d1",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -4443,6 +4451,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/CustomGateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",
