@@ -1,9 +1,12 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "across-v3",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "chains": {
     "ethereum": {
+      "maxDepth": 2,
       "initialAddresses": [
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
@@ -33,16 +36,23 @@
       },
       "overrides": {
         "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61": {
-          "ignoreMethods": ["relayMessageCallData"]
+          "ignoreMethods": [
+            "relayMessageCallData"
+          ]
         },
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda": {
-          "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
+          "ignoreMethods": [
+            "crossChainContracts",
+            "getCurrentTime"
+          ],
           "fields": {
             "CrossChainContracts": {
               "handler": {
                 "type": "event",
                 "select": "spokePool",
-                "set": { "event": "CrossChainContractsSet" },
+                "set": {
+                  "event": "CrossChainContractsSet"
+                },
                 "groupBy": "l2ChainId"
               }
             },
@@ -51,16 +61,24 @@
               "handler": {
                 "type": "event",
                 "select": "adapter",
-                "set": { "event": "CrossChainContractsSet" },
+                "set": {
+                  "event": "CrossChainContractsSet"
+                },
                 "groupBy": "l2ChainId"
               }
             }
           },
-          "ignoreRelatives": ["weth"],
-          "ignoreInWatchMode": ["rootBundleProposal"]
+          "ignoreRelatives": [
+            "weth"
+          ],
+          "ignoreInWatchMode": [
+            "rootBundleProposal"
+          ]
         },
         "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": {
-          "ignoreInWatchMode": ["totalSupply"],
+          "ignoreInWatchMode": [
+            "totalSupply"
+          ],
           "fields": {
             "proposers": {
               "handler": {
@@ -68,30 +86,56 @@
                 "select": "proposer",
                 "add": {
                   "event": "ProposerModified",
-                  "where": ["=", "#enabled", true]
+                  "where": [
+                    "=",
+                    "#enabled",
+                    true
+                  ]
                 },
                 "remove": {
                   "event": "ProposerModified",
-                  "where": ["!=", "#enabled", true]
+                  "where": [
+                    "!=",
+                    "#enabled",
+                    true
+                  ]
                 }
               }
             }
           }
         },
         "0x50efaC9619225d7fB4703C5872da978849B6E7cC": {
-          "ignoreMethods": ["bondedProposals"],
-          "ignoreInWatchMode": ["bond", "getCurrentTime"]
+          "ignoreMethods": [
+            "bondedProposals"
+          ],
+          "ignoreInWatchMode": [
+            "bond",
+            "getCurrentTime"
+          ]
         },
         "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": {
-          "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
-          "ignoreMethods": ["getProposal", "proposals"]
+          "ignoreInWatchMode": [
+            "getCurrentTime",
+            "numProposals"
+          ],
+          "ignoreMethods": [
+            "getProposal",
+            "proposals"
+          ]
         },
         "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
-          "ignoreInWatchMode": ["getCurrentTime"]
+          "ignoreInWatchMode": [
+            "getCurrentTime"
+          ]
         },
         "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": {
-          "ignoreMethods": ["rootBundles"],
-          "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
+          "ignoreMethods": [
+            "rootBundles"
+          ],
+          "ignoreInWatchMode": [
+            "numberOfDeposits",
+            "getCurrentTime"
+          ],
           "fields": {
             "proxiableUUID": {
               "handler": {
@@ -102,18 +146,32 @@
               }
             }
           },
-          "ignoreRelatives": ["wrappedNativeToken"]
+          "ignoreRelatives": [
+            "wrappedNativeToken"
+          ]
         },
         "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": {
-          "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
+          "ignoreInWatchMode": [
+            "totalSupply",
+            "totalSupplyAt"
+          ]
         },
         "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": {
-          "ignoreMethods": ["getCurrentTime"],
-          "ignoreRelatives": ["cachedOracle", "defaultCurrency"]
+          "ignoreMethods": [
+            "getCurrentTime"
+          ],
+          "ignoreRelatives": [
+            "cachedOracle",
+            "defaultCurrency"
+          ]
         },
         "0x8692B776d1Ff0664177c90465038056Dc64f8991": {
-          "ignoreMethods": ["getCurrentTime"],
-          "ignoreRelatives": ["collateral"]
+          "ignoreMethods": [
+            "getCurrentTime"
+          ],
+          "ignoreRelatives": [
+            "collateral"
+          ]
         },
         "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": {
           "ignoreRelatives": [
@@ -125,7 +183,9 @@
           ]
         },
         "0xeE3Afe347D5C74317041E2618C49534dAf887c24": {
-          "ignoreMethods": ["getCurrentTime"]
+          "ignoreMethods": [
+            "getCurrentTime"
+          ]
         }
       }
     }
