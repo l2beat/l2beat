@@ -5,11 +5,15 @@ export function getIsProjectVerified(
   unverifiedContracts: ProjectUnverifiedContract[],
   changes: ProjectChanges | undefined,
 ) {
-  if (!changes) {
+  if (unverifiedContracts.length === 0) {
     return true
   }
 
+  if (!changes) {
+    return false
+  }
+
   return unverifiedContracts.every((c) =>
-    changes?.verificationChangedContracts[c.chain]?.includes(c.address),
+    changes.verificationChangedContracts[c.chain]?.includes(c.address),
   )
 }
