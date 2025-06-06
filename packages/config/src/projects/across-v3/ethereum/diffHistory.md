@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2bccb6925faf00892e3dc16adddbddaffb9cb539
+Generated with discovered.json: 0x180e11a98df1b0345b35ef17cb225d7f38f6675b
 
-# Diff at Fri, 06 Jun 2025 21:14:12 GMT:
+# Diff at Fri, 06 Jun 2025 21:43:09 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@305afcf93e56ce863b326c24b83aa74224fd9140 block: 22517852
@@ -113,8 +113,65 @@ Discovery rerun on the same block number with only config-related changes.
 ```
 
 ```diff
+    contract ExpiringMultiParty (0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759) {
+    +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
+    contract ExpiringMultiParty (0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944) {
+    +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
     contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF) {
     +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
+    contract Governor (0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc) {
+    +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
+    contract ExpiringMultiParty (0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1) {
+    +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
+    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F) {
+    +++ description: None
+      values.totalSupply:
+-        "3650753795089258537789885428"
++        "3587832108109405750438427965"
+    }
+```
+
+```diff
+    contract Voting (0x8B1631ab830d11531aE83725fDa4D86012eCCd77) {
+    +++ description: None
+      values.getCurrentRoundId:
+-        10113
++        10122
       values.getCurrentTime:
 -        1747667903
 +        1749244439
@@ -134,6 +191,24 @@ Discovery rerun on the same block number with only config-related changes.
 -   Status: DELETED
     contract WorldChain_Adapter (0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32)
     +++ description: None
+```
+
+```diff
+    contract ExpiringMultiParty (0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5) {
+    +++ description: None
+      values.getCurrentTime:
+-        1747667903
++        1749244439
+    }
+```
+
+```diff
+    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
+    +++ description: None
+      values.totalSupply:
+-        "2738250941702557996451136"
++        "2658625110972206838807313"
+    }
 ```
 
 ```diff
@@ -174,12 +249,6 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22517852 (main branch discovery), not current.
 
 ```diff
--   Status: DELETED
-    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828)
-    +++ description: None
-```
-
-```diff
     contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
     +++ description: Maps interface names to contract addresses.
       values.namedAddresses:
@@ -194,24 +263,6 @@ discovery. Values are for block 22517852 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
-    +++ description: None
-```
-
-```diff
 +   Status: CREATED
     contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac)
     +++ description: None
@@ -219,7 +270,25 @@ discovery. Values are for block 22517852 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
+    contract SyntheticToken (0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExpiringMultiParty (0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExpiringMultiParty (0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944)
     +++ description: None
 ```
 
@@ -237,13 +306,73 @@ discovery. Values are for block 22517852 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
+    contract Governor (0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExpiringMultiParty (0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SyntheticToken (0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SyntheticToken (0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Voting (0x8B1631ab830d11531aE83725fDa4D86012eCCd77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FixedSlashSlashingLibrary (0x9a406ba5a99983250Fd663947b3c968D387ce5cd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
+    contract ExpiringMultiParty (0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SyntheticToken (0xc78Ce805599188eD734C943C912800658807fA14)
     +++ description: None
 ```
 
@@ -256,7 +385,7 @@ discovery. Values are for block 22517852 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
-    +++ description: None
+    +++ description: Implements a simple address whitelist.
 ```
 
 Generated with discovered.json: 0x6a374b7269092d9f4856136eb52f9a7cb8c8efbc

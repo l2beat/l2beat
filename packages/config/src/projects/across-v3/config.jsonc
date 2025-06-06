@@ -6,7 +6,6 @@
   ],
   "chains": {
     "ethereum": {
-      "maxDepth": 2,
       "initialAddresses": [
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
