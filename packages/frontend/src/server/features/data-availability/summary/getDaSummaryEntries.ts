@@ -24,6 +24,11 @@ import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import {
+  getProjectsChangeReport,
+  type ProjectsChangeReport,
+} from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 
 export async function getDaSummaryEntries(): Promise<
   TabbedDaEntries<DaSummaryEntry>
@@ -41,10 +46,12 @@ export async function getDaSummaryEntries(): Promise<
   ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
-  const [economicSecurity, tvsPerProject] = await Promise.all([
-    getDaProjectsEconomicSecurity(),
-    getDaProjectsTvs(uniqueProjectsInUse),
-  ])
+  const [economicSecurity, tvsPerProject, projectsChangeReport] =
+    await Promise.all([
+      getDaProjectsEconomicSecurity(),
+      getDaProjectsTvs(uniqueProjectsInUse),
+      getProjectsChangeReport(),
+    ])
   const getTvs = pickTvsForProjects(tvsPerProject)
 
   const layerEntries = layers.map((project) =>
@@ -60,6 +67,7 @@ export async function getDaSummaryEntries(): Promise<
           bridges.filter((x) => x.daBridge.daLayer === project.id),
           economicSecurity[project.id],
           getTvs,
+          projectsChangeReport,
         ),
   )
   const dacEntries = dacs.map((dac) => getDacEntry(dac, getTvs))
@@ -108,6 +116,7 @@ function getDaSummaryEntry(
     latest: number
     sevenDaysAgo: number
   },
+  projectsChangeReport: ProjectsChangeReport,
 ): DaSummaryEntry {
   const daBridges = bridges.map(
     (b): DaBridgeSummaryEntry => ({
@@ -115,7 +124,10 @@ function getDaSummaryEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: b.statuses.isUnverified,
+        verificationWarning: !getIsProjectVerified(
+          b.statuses.unverifiedContracts,
+          projectsChangeReport.getChanges(b.id),
+        ),
         underReview:
           !!layer.statuses.reviewStatus || !!b.statuses.reviewStatus
             ? 'config'

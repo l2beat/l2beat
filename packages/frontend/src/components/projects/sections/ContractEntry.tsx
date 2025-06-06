@@ -19,6 +19,7 @@ import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 
 export interface TechnologyContract {
   name: string
@@ -173,6 +174,17 @@ function getCalloutProps(contract: TechnologyContract) {
     return {
       color: 'red',
       icon: <UnverifiedIcon className="size-5 fill-red-300" />,
+    } as const
+  }
+
+  const isAnyAddressVerificationChange = contract.addresses.some(
+    (c) => c.verificationStatus === 'verification-change',
+  )
+
+  if (isAnyAddressVerificationChange) {
+    return {
+      color: 'yellow',
+      icon: <UnderReviewIcon className="size-5" />,
     } as const
   }
 

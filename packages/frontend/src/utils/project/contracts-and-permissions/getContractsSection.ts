@@ -111,6 +111,10 @@ function makeTechnologyContract(
     ? new URL(item.url).origin
     : 'https://etherscan.io'
 
+  const mainContractVerificationChange = projectChangeReport?.[
+    item.chain
+  ]?.verificationChange.includes(item.address)
+
   const getAddress = (opts: {
     address: EthereumAddress
     name?: string
@@ -121,7 +125,10 @@ function makeTechnologyContract(
     return {
       name: name,
       address: opts.address.toString(),
-      verificationStatus: toVerificationStatus(!isUnverified),
+      verificationStatus: toVerificationStatus(
+        !isUnverified,
+        mainContractVerificationChange,
+      ),
       href: `${explorerUrl}/address/${opts.address.toString()}#code`,
     }
   }
@@ -157,8 +164,11 @@ function makeTechnologyContract(
   let description = item.description
 
   if (isUnverified) {
-    const text =
-      'The source code of this contract is not verified on Etherscan.'
+    let text = 'The source code of this contract is not verified on Etherscan.'
+    if (mainContractVerificationChange) {
+      text =
+        'The source code of this contract was recently verified. It is under review.'
+    }
     if (!description) {
       description = text
     } else {

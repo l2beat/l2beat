@@ -5,6 +5,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -36,7 +37,10 @@ export function getCommonScalingEntry({
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
       redWarning: project.statuses.redWarning,
-      verificationWarning: project.statuses.isUnverified,
+      verificationWarning: !getIsProjectVerified(
+        project.statuses.unverifiedContracts,
+        changes,
+      ),
       underReview: getUnderReviewStatus({
         isUnderReview: !!project.statuses.reviewStatus,
         impactfulChange: !!changes?.impactfulChange,

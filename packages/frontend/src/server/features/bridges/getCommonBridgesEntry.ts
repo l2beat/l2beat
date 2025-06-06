@@ -4,6 +4,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 
 export interface CommonBridgesEntry
   extends CommonProjectEntry,
@@ -36,7 +37,10 @@ export function getCommonBridgesEntry({
     ],
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
-      verificationWarning: project.statuses.isUnverified,
+      verificationWarning: !getIsProjectVerified(
+        project.statuses.unverifiedContracts,
+        changes,
+      ),
       underReview: getUnderReviewStatus({
         isUnderReview: !!project.statuses.reviewStatus,
         ...changes,

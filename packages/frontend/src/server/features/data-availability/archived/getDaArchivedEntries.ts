@@ -18,19 +18,29 @@ import {
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import {
+  getProjectsChangeReport,
+  type ProjectsChangeReport,
+} from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 
 export async function getDaArchivedEntries(): Promise<
   TabbedDaEntries<DaArchivedEntry>
 > {
-  const [layers, bridges, dacs, economicSecurity] = await Promise.all([
-    ps.getProjects({
-      select: ['daLayer', 'statuses'],
-      where: ['archivedAt'],
-    }),
-    ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({ select: ['customDa', 'statuses'], where: ['archivedAt'] }),
-    getDaProjectsEconomicSecurity(),
-  ])
+  const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
+    await Promise.all([
+      ps.getProjects({
+        select: ['daLayer', 'statuses'],
+        where: ['archivedAt'],
+      }),
+      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+        select: ['customDa', 'statuses'],
+        where: ['archivedAt'],
+      }),
+      getDaProjectsEconomicSecurity(),
+      getProjectsChangeReport(),
+    ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
@@ -44,6 +54,7 @@ export async function getDaArchivedEntries(): Promise<
         bridges.filter((x) => x.daBridge.daLayer === project.id),
         getTvs,
         economicSecurity[project.id],
+        projectsChangeReport,
       ),
     )
 
@@ -66,6 +77,7 @@ function getDaArchivedEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
+  projectsChangeReport: ProjectsChangeReport,
 ): DaArchivedEntry {
   const daBridges = bridges.map(
     (b): DaBridgeArchivedEntry => ({
@@ -73,7 +85,10 @@ function getDaArchivedEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: b.statuses.isUnverified,
+        verificationWarning: !getIsProjectVerified(
+          b.statuses.unverifiedContracts,
+          projectsChangeReport.getChanges(b.id),
+        ),
         underReview:
           layer.statuses.reviewStatus || b.statuses.reviewStatus
             ? 'config'

@@ -10,6 +10,7 @@ export type ProjectsChangeReport = Awaited<
 
 export interface ProjectChanges {
   impactfulChange: boolean
+  verificationChangedContracts: Record<string, EthereumAddress[]>
 }
 
 type ProjectChangeReport = Record<
@@ -18,6 +19,7 @@ type ProjectChangeReport = Record<
     implementationChange: EthereumAddress[]
     highSeverityFieldChange: EthereumAddress[]
     ultimateUpgraderChange: EthereumAddress[]
+    verificationChange: EthereumAddress[]
   }
 >
 
@@ -52,6 +54,9 @@ async function getProjectsChangeReportWithFns() {
         ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
           EthereumAddress(c.address),
         ),
+        verificationChange: changesByType.verificationChange.map((c) =>
+          EthereumAddress(c.address),
+        ),
       }
     }
   }
@@ -64,6 +69,8 @@ async function getProjectsChangeReportWithFns() {
           this.hasImplementationChanged(projectId) ||
           this.hasHighSeverityFieldChanged(projectId) ||
           this.hasUltimateUpgraderChanged(projectId),
+        verificationChangedContracts:
+          this.getVerificationChangedContracts(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
@@ -87,6 +94,13 @@ async function getProjectsChangeReportWithFns() {
         !!ethereumChanges && ethereumChanges.ultimateUpgraderChange.length > 0
       )
     },
+    getVerificationChangedContracts: function (projectId: string) {
+      return Object.fromEntries(
+        Object.entries(this.projects[projectId] ?? {}).map(
+          ([chain, changes]) => [chain, changes.verificationChange],
+        ),
+      )
+    },
   }
 }
 
@@ -105,12 +119,33 @@ function groupByType(changes: UpdateDiffRecord[]) {
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
-    projects: {},
+    projects: {
+      geist: {
+        base: {
+          implementationChange: [],
+          highSeverityFieldChange: [],
+          ultimateUpgraderChange: [],
+          verificationChange: [
+            EthereumAddress(
+              '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
+            ),
+          ],
+        },
+      },
+    },
     getChanges: () => ({
       impactfulChange: false,
+      verificationChangedContracts: {
+        base: [
+          EthereumAddress(
+            '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
+          ),
+        ],
+      },
     }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
     hasUltimateUpgraderChanged: () => false,
+    getVerificationChangedContracts: () => ({}),
   }
 }

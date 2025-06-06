@@ -15,22 +15,29 @@ import {
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
+import {
+  getProjectsChangeReport,
+  type ProjectsChangeReport,
+} from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 
 export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
 > {
-  const [layers, bridges, dacs, economicSecurity] = await Promise.all([
-    ps.getProjects({
-      select: ['daLayer', 'statuses'],
-      whereNot: ['archivedAt'],
-    }),
-    ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({
-      select: ['customDa', 'statuses'],
-      whereNot: ['archivedAt'],
-    }),
-    getDaProjectsEconomicSecurity(),
-  ])
+  const [layers, bridges, dacs, economicSecurity, projectsChangeReport] =
+    await Promise.all([
+      ps.getProjects({
+        select: ['daLayer', 'statuses'],
+        whereNot: ['archivedAt'],
+      }),
+      ps.getProjects({ select: ['daBridge', 'statuses'] }),
+      ps.getProjects({
+        select: ['customDa', 'statuses'],
+        whereNot: ['archivedAt'],
+      }),
+      getDaProjectsEconomicSecurity(),
+      getProjectsChangeReport(),
+    ])
 
   const uniqueProjectsInUse = getDaUsers(layers, bridges, dacs)
   const tvsPerProject = await getDaProjectsTvs(uniqueProjectsInUse)
@@ -44,6 +51,7 @@ export async function getDaRiskEntries(): Promise<
         bridges.filter((x) => x.daBridge.daLayer === project.id),
         getTvs,
         economicSecurity[project.id],
+        projectsChangeReport,
       ),
     )
 
@@ -71,6 +79,7 @@ function getDaRiskEntry(
   bridges: Project<'daBridge' | 'statuses'>[],
   getTvs: (projects: ProjectId[]) => { latest: number; sevenDaysAgo: number },
   economicSecurity: number | undefined,
+  projectsChangeReport: ProjectsChangeReport,
 ): DaRiskEntry {
   const daBridges = bridges.map(
     (b): DaBridgeRiskEntry => ({
@@ -78,7 +87,10 @@ function getDaRiskEntry(
       slug: b.slug,
       href: `/data-availability/projects/${layer.slug}/${b.slug}`,
       statuses: {
-        verificationWarning: b.statuses.isUnverified,
+        verificationWarning: !getIsProjectVerified(
+          b.statuses.unverifiedContracts,
+          projectsChangeReport.getChanges(b.id),
+        ),
         underReview:
           layer.statuses.reviewStatus || b.statuses.reviewStatus
             ? 'config'
