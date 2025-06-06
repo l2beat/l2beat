@@ -80,7 +80,7 @@ function getUnverifiedDaLayerContracts(
 function getUnverifiedEscrows(
   project: ScalingProject | Bridge,
 ): ProjectUnverifiedContract[] {
-  return project.config.escrows.filter((e) => !e.contract?.isVerified)
+  return project.config.escrows.filter((e) => e.contract?.isVerified === false)
 }
 
 export function getProjectUnverifiedContracts(
