@@ -35,6 +35,13 @@ export interface DiscoveryOutput {
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   permissionsConfigHash?: Hash256
+  dependentDiscoveries?: {
+    [project: string]: {
+      [chain: string]: {
+        blockNumber: number
+      }
+    }
+  }
 }
 
 export interface DiscoveryCustomType {

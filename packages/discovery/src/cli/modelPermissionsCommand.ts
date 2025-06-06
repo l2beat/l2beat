@@ -6,7 +6,11 @@ import {
   getDiscoveryPaths,
 } from '../discovery/config/getDiscoveryPaths'
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
-import { modelPermissions } from '../discovery/modelling/modelPermissions'
+import {
+  Discoveries,
+  getDependenciesToDiscoverForProject,
+  modelPermissions,
+} from '../discovery/modelling/modelPermissions'
 import { saveDiscoveredJson } from '../discovery/output/saveDiscoveryResult'
 import { sortEntry } from '../discovery/output/toDiscoveryOutput'
 import type { PermissionsOutput } from '../discovery/output/types'
@@ -25,18 +29,35 @@ export async function modelPermissionsCommand(
   debug = debug ?? false
 
   logger.info(`Modelling: ${project}`)
+  logger.info('Reading all related discoveries:')
+  const dependencies = getDependenciesToDiscoverForProject(
+    project,
+    configReader,
+  )
+  const discoveries = new Discoveries()
+  for (const dependency of dependencies) {
+    const discovery = configReader.readDiscovery(
+      dependency.project,
+      dependency.chain,
+    )
+    logger.info(` - ${dependency.project} on ${dependency.chain}`)
+    discoveries.set(dependency.project, dependency.chain, discovery)
+  }
+
   const ultimatePermissions = await modelPermissions(
     project,
     configReader,
     templateService,
     paths,
     debug,
+    discoveries,
   )
 
   await writePermissionsIntoDiscovery(
     project,
     ultimatePermissions,
     configReader,
+    discoveries,
   )
 }
 
@@ -44,6 +65,7 @@ export async function writePermissionsIntoDiscovery(
   project: string,
   permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
+  dependentDiscoveries: Discoveries,
 ) {
   const chainConfigs = configReader
     .readAllChainsForProject(project)
@@ -51,7 +73,11 @@ export async function writePermissionsIntoDiscovery(
 
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
-    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+    combinePermissionsIntoDiscovery(
+      discovery,
+      permissionsOutput,
+      dependentDiscoveries,
+    )
 
     const projectDiscoveryFolder = configReader.getProjectChainPath(
       config.name,

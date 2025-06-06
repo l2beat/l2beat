@@ -67,6 +67,12 @@ function getDiscoveries(
     }
   }
 
+  const dependentDiscoveries = discovery.dependentDiscoveries ?? {}
+  for (const [projectName, chains] of Object.entries(dependentDiscoveries)) {
+    for (const chain of Object.keys(chains)) {
+      result.push(configReader.readDiscovery(projectName, chain))
+    }
+  }
   return result
 }
 

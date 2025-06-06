@@ -61,6 +61,12 @@ export class ProjectDiscovery {
       ...(discovery.sharedModules ?? []).map((module) =>
         configReader.readDiscovery(module, chain),
       ),
+      ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
+        ([projectName, chains]) =>
+          Object.keys(chains).map((chain) =>
+            configReader.readDiscovery(projectName, chain),
+          ),
+      ),
     ]
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
