@@ -35,6 +35,7 @@ import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTr
 import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
@@ -47,7 +48,6 @@ import { isProjectOther } from '../utils/isProjectOther'
 import { getScalingDaSolution } from './getScalingDaSolution'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'

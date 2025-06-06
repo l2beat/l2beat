@@ -10,6 +10,7 @@ import { HighlightableLink } from '~/components/link/highlightable/Highlightable
 import { Markdown } from '~/components/markdown/Markdown'
 import { BulletIcon } from '~/icons/Bullet'
 import { ShieldIcon } from '~/icons/Shield'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
@@ -19,7 +20,6 @@ import { ParticipantsEntry } from './permissions/Participants'
 import { UpgradeConsiderations } from './permissions/UpgradeConsiderations'
 import type { UsedInProject } from './permissions/UsedInProject'
 import { UsedInProjectEntry } from './permissions/UsedInProject'
-import { UnderReviewIcon } from '~/icons/UnderReview'
 
 export interface TechnologyContract {
   name: string

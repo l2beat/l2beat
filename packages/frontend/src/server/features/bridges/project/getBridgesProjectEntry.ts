@@ -24,8 +24,8 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
-import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
+import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string

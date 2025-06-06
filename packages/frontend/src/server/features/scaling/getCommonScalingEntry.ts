@@ -4,8 +4,8 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
-import { getProjectIcon } from '../utils/getProjectIcon'
 import { getIsProjectVerified } from '../utils/getIsProjectVerified'
+import { getProjectIcon } from '../utils/getProjectIcon'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,

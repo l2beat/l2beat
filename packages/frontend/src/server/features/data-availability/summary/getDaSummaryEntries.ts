@@ -14,6 +14,11 @@ import {
 import type { TabbedDaEntries } from '~/pages/data-availability/utils/groupByDaTabs'
 import { groupByDaTabs } from '~/pages/data-availability/utils/groupByDaTabs'
 import { ps } from '~/server/projects'
+import {
+  type ProjectsChangeReport,
+  getProjectsChangeReport,
+} from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import {
   type CommonDaEntry,
@@ -24,11 +29,6 @@ import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsEconomicSecurity } from '../utils/getDaProjectsEconomicSecurity'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
 import { getDaUsers } from '../utils/getDaUsers'
-import {
-  getProjectsChangeReport,
-  type ProjectsChangeReport,
-} from '../../projects-change-report/getProjectsChangeReport'
-import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 
 export async function getDaSummaryEntries(): Promise<
   TabbedDaEntries<DaSummaryEntry>
