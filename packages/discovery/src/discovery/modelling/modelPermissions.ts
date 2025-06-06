@@ -88,7 +88,9 @@ export function getDependenciesToDiscoverForProject(
   project: string,
   configReader: ConfigReader,
 ): { project: string; chain: string }[] {
-  // TODO: shared modules
+  // Currently, only instances of the same project on different chains are returned.
+  // In the future, we might want to return referenced shared-modules
+  // and recursively dependencies of those.
   return configReader
     .readAllChainsForProject(project)
     .map((chain) => ({ project, chain }))

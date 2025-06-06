@@ -246,18 +246,24 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     {
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
+      // In that case we don't fail - the diff will show all those "added".
       ignoreMissingDependencies: true,
     },
   )
 
-  const mainDiscovery = discoveries.get(projectName, chain)
-  if (mainDiscovery === undefined) {
-    throw new Error(`Main discovery not found for ${projectName} on ${chain}`)
+  const targetDiscovery = discoveries.get(projectName, chain)
+  if (targetDiscovery === undefined) {
+    throw new Error(`Target discovery not found for ${projectName} on ${chain}`)
   }
-  combinePermissionsIntoDiscovery(mainDiscovery, permissionsOutput, discoveries)
-  const prevDiscovery = withoutUndefinedKeys(mainDiscovery)
+  combinePermissionsIntoDiscovery(
+    targetDiscovery,
+    permissionsOutput,
+    discoveries,
+  )
+  const prevDiscovery = withoutUndefinedKeys(targetDiscovery)
 
   // get code diff with main branch
+  // (we only diff code for target discovery, not dependencies)
   const flatDiff = compareFolders(
     `${discoveryFolder}/.flat@${discoveryFromMainBranch.blockNumber}`,
     `${discoveryFolder}/.flat`,
