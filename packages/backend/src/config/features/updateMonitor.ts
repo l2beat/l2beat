@@ -18,7 +18,11 @@ export function getUpdateMonitorConfig(
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
 
-  const allChains = configReader.readAllChains()
+  const allChains = [
+    ...new Set(
+      configReader.readAllDiscoveredProjects().flatMap((x) => x.chains),
+    ),
+  ]
   const enabledChains = allChains.filter((chain) =>
     flags.isEnabled('updateMonitor', chain),
   )

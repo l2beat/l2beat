@@ -63,13 +63,15 @@ export const RefreshDiscovery = command({
     const configReader = new ConfigReader(paths.discovery)
     const templateService = new TemplateService(paths.discovery)
 
-    const chainConfigs = await Promise.all(
-      configReader
-        .readAllChains()
-        .filter((chain) => !args.excludeChains?.includes(chain))
-        .flatMap((chain) => configReader.readAllConfigsForChain(chain))
-        .filter((config) => !args.excludeProjects?.includes(config.name)),
-    )
+    const chainConfigs = configReader
+      .readAllDiscoveredProjects()
+      .filter((entry) => !args.excludeProjects?.includes(entry.project))
+      .flatMap(({ project, chains }) =>
+        chains.map((chain) => configReader.readConfig(project, chain)),
+      )
+      .filter((config) => !args.excludeChains?.includes(config.chain))
+      .sort((a, b) => a.chain.localeCompare(b.chain))
+
     const toRefresh: { config: ConfigRegistry; reason: string }[] = []
     let foundFrom = false
 

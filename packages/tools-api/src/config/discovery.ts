@@ -8,7 +8,7 @@ import type { Address, Chain, DiscoveredConfig } from './types'
 export function getDiscoveredConfig(chains: Chain[]): DiscoveredConfig {
   const paths = getDiscoveryPaths()
   const reader = new ConfigReader(paths.discovery)
-  const projects = reader.readAllProjectChainPairs()
+  const projects = reader.readAllDiscoveredProjects()
 
   const names: Record<Address, string> = {}
   const abis: Record<Address, string[]> = {}

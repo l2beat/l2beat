@@ -31,7 +31,6 @@ import type {
 } from './types'
 
 interface ProjectData {
-  chain: string
   config: ConfigRegistry
   discovery: DiscoveryOutput
 }
@@ -46,7 +45,6 @@ function readProject(
 
   return [
     {
-      chain,
       config: configReader.readConfig(project, chain),
       discovery,
     },
@@ -61,14 +59,15 @@ export function getProject(
   templateService: TemplateService,
   project: string,
 ): ApiProjectResponse {
-  const chains = configReader.readAllChainsForProject(project)
+  const chains = configReader.readAllDiscoveredChainsForProject(project)
   const data = chains.flatMap((chain) =>
     readProject(chain, project, configReader),
   )
 
   const response: ApiProjectResponse = { entries: [] }
   const meta = getMeta(data.map((x) => x.discovery))
-  for (const { chain, config, discovery } of data) {
+  for (const { config, discovery } of data) {
+    const chain = config.chain
     const contracts = discovery.entries
       .filter((e) => e.type === 'Contract')
       .map((entry) => {
