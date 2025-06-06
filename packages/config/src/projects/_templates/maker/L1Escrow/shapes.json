@@ -4,5 +4,11 @@
     "address": "0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "L1Escrow_v2": {
+    "hash": "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50",
+    "address": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+    "chain": "ethereum",
+    "blockNumber": 22645524
   }
 }

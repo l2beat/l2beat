@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 22629662,
+  "blockNumber": 22645621,
   "configHash": "0xcd0a2d191e589c2ca18eab96705e4c9559cc532db2513deb8eaf08547cf9be5e",
   "entries": [
     {
@@ -559,7 +559,7 @@
           ]
         ],
         "$upgradeCount": 6,
-        "batchCount": 906864,
+        "batchCount": 908730,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A",
@@ -572,9 +572,9 @@
           "bufferBlocks": 14400,
           "max": 14400,
           "threshold": 150,
-          "prevBlockNumber": 22629523,
+          "prevBlockNumber": 22645479,
           "replenishRateInBasis": 500,
-          "prevSequencedBlockNumber": 22629590
+          "prevSequencedBlockNumber": 22645540
         },
         "dacKeyset": {
           "requiredSignatures": 0,
@@ -600,7 +600,7 @@
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 1996567,
+        "totalDelayedMessagesRead": 1998986,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -937,7 +937,7 @@
         "getValidators": [],
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isPostBoLD": true,
-        "latestConfirmed": "0x2340c21533d9fd6c8598490933d14acbf8afbf102ab6062ff73cea9e02e4af13",
+        "latestConfirmed": "0x4975c1a5b91a382347aecdcbed14db5476113e718d6b5d8234a6d02f511c543e",
         "loserStakeEscrow": "0x40Cd7D713D7ae463f95cE5d342Ea6E7F5cF7C999",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -1403,7 +1403,7 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1996572,
+        "delayedMessageCount": 1998996,
         "inboxHistory": [
           "0x1c9DbddC9C2f1B29d4613E45BD5F35C0b1FBA8d6",
           "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
@@ -1417,8 +1417,8 @@
         ],
         "rollup": "0x4DCeB440657f21083db8aDd07665f8ddBe1DCfc0",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 906864,
-        "sequencerReportedSubMessageCount": 321532850
+        "sequencerMessageCount": 908730,
+        "sequencerReportedSubMessageCount": 322303161
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1520,13 +1520,21 @@
       "name": "L1Escrow",
       "address": "0xA10c7CE4b876998858b1a9E12b10092229539400",
       "type": "Contract",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0x0169e3ff6f3a2faeac5a4c76b30fbf87198a211ee683a1b22d33db036f863ee8"
       ],
       "proxyType": "immutable",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1632133470,
       "sinceBlock": 13262081,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "wards": [
+          "0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB",
+          "0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58"
+        ]
+      },
       "implementationNames": {
         "0xA10c7CE4b876998858b1a9E12b10092229539400": "L1Escrow"
       },
@@ -5125,6 +5133,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
     "orbitstack/CustomGateway2": "0x7c2c31bb9c6a7014043668aec6a82ae07a8b750c9ba8dcc2afdc3935438608d7",
     "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",
