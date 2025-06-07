@@ -19,6 +19,14 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
+export type DiscoveryBlockNumbers = {
+  [project: string]: {
+    [chain: string]: {
+      blockNumber: number
+    }
+  }
+}
+
 export class Discoveries {
   discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
 
@@ -31,24 +39,11 @@ export class Discoveries {
     this.discoveries[project][chain] = discovery
   }
 
-  getBlockNumbers(options: { skip?: { name: string; chain: string } } = {}) {
-    const result: {
-      [project: string]: {
-        [chain: string]: {
-          blockNumber: number
-        }
-      }
-    } = {}
+  getBlockNumbers() {
+    const result: DiscoveryBlockNumbers = {}
 
     for (const [project, chains] of Object.entries(this.discoveries)) {
       for (const [chain, discovery] of Object.entries(chains)) {
-        if (
-          options.skip &&
-          options.skip.name === project &&
-          options.skip.chain === chain
-        ) {
-          continue
-        }
         result[project] ??= {}
         result[project][chain] = {
           blockNumber: discovery.blockNumber,
@@ -81,7 +76,11 @@ export async function modelPermissions(
       discoveries,
       options,
     )
-  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
+  return buildPermissionsOutput(
+    permissionFacts,
+    permissionsConfigHash,
+    discoveries,
+  )
 }
 
 export function getDependenciesToDiscoverForProject(
@@ -99,6 +98,7 @@ export function getDependenciesToDiscoverForProject(
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
+  discoveries: Discoveries,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -115,6 +115,7 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
+    dependentDiscoveries: discoveries.getBlockNumbers(),
   }
 }
 
@@ -273,6 +274,8 @@ export async function modelPermissionsForIsolatedDiscovery(
   templateService: TemplateService,
   paths: DiscoveryPaths,
 ) {
+  const discoveries = new Discoveries()
+  discoveries.set(discovery.name, discovery.chain, discovery)
   const clingoForProject = generateClingoForProjectOnChain(
     permissionConfig,
     discovery,
@@ -282,5 +285,5 @@ export async function modelPermissionsForIsolatedDiscovery(
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
   const facts = await runClingoForSingleModel(combinedClingo)
   const parsedFacts = facts.map(parseClingoFact)
-  return buildPermissionsOutput(parsedFacts, Hash256.ZERO) // hash for isolated discovery is incorrect anyway
+  return buildPermissionsOutput(parsedFacts, Hash256.ZERO, discoveries) // hash for isolated discovery is incorrect anyway
 }

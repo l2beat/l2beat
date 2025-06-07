@@ -5,7 +5,6 @@ import type {
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
-import type { Discoveries } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -13,8 +12,7 @@ import type { Discoveries } from './modelPermissions'
 // and gives certainty that nothing has been broken.
 export async function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
-  permissionsOutput: PermissionsOutput,
-  dependentDiscoveries: Discoveries,
+  permissionsOutput: PermissionsOutput
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -66,13 +64,6 @@ export async function combinePermissionsIntoDiscovery(
     }
   }
 
-  const blockNumbers = dependentDiscoveries.getBlockNumbers({
-    // Don't add current project to its own dependencies
-    skip: {
-      name: discovery.name,
-      chain: discovery.chain,
-    },
-  })
   discovery.dependentDiscoveries = blockNumbers
 }
 
