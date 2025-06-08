@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x180e11a98df1b0345b35ef17cb225d7f38f6675b
+Generated with discovered.json: 0xf8851c1bf3f086811f38ff344b82c65f4724c503
 
-# Diff at Fri, 06 Jun 2025 21:43:09 GMT:
+# Diff at Sun, 08 Jun 2025 13:48:25 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - comparing to: main@305afcf93e56ce863b326c24b83aa74224fd9140 block: 22517852
@@ -379,7 +379,7 @@ discovery. Values are for block 22517852 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
-    +++ description: None
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol.
 ```
 
 ```diff
