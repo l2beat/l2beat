@@ -24,29 +24,10 @@
     {
       "mode": "auto",
       "id": "nomad-FRAX",
-      "priceId": "frax",
-      "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
-        "chain": "ethereum",
-        "escrowAddress": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
-        "decimals": 18,
-        "sinceTimestamp": 1641899423
-      },
-      "category": "stablecoin",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "nomad-FXS",
       "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+      "symbol": "FRAX",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
@@ -56,6 +37,25 @@
         "sinceTimestamp": 1641899423
       },
       "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "nomad-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
+        "decimals": 18,
+        "sinceTimestamp": 1641899423
+      },
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },

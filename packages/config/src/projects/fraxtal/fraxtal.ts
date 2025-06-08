@@ -50,7 +50,7 @@ export const fraxtal: ScalingProject = opStackL2({
     bridge: DA_BRIDGES.NONE,
     badge: BADGES.DA.CustomDA,
   },
-  associatedTokens: ['FXS', 'FPIS'],
+  associatedTokens: ['FRAX', 'FPIS'],
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -83,6 +83,7 @@ export const fraxtal: ScalingProject = opStackL2({
     // ~ Timestamp of block number 1
     sinceTimestamp: UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
+    gasTokens: ['FRAX'],
     apis: [
       {
         type: 'rpc',
@@ -96,7 +97,7 @@ export const fraxtal: ScalingProject = opStackL2({
     ],
   },
   nonTemplateEscrows: [],
-  nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
+  nonTemplateOptimismPortalEscrowTokens: ['frxETH', 'FRAX'],
   customDa: {
     type: 'Custom',
     name: 'FraxtalDA',

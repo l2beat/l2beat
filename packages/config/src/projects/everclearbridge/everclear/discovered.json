@@ -128,12 +128,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "from": "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
+          "from": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
           "role": "admin"
         }
       ],

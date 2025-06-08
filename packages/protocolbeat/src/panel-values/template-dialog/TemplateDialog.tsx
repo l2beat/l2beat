@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { createShape, listTemplates } from '../../api/api'
 import { Dialog } from '../../components/Dialog'
 import { DialogActions } from './DialogActions'
@@ -173,26 +173,16 @@ function SpecifyTemplate({
   formData,
   onFormChange,
 }: {
-  templates: Record<string, string[]>
+  templates: string[]
   formData: TemplateFormData
   onFormChange: (field: keyof TemplateFormData, value: string) => void
 }) {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const filteredTemplates = Object.entries(templates).reduce<
-    Record<string, string[]>
-  >((acc, [name, entries]) => {
-    const searchLower = searchQuery.toLowerCase()
-    const nameMatches = name.toLowerCase().includes(searchLower)
-    const filteredEntries = entries.filter((entry) =>
-      entry.toLowerCase().includes(searchLower),
-    )
-
-    if (nameMatches || filteredEntries.length > 0) {
-      acc[name] = filteredEntries.length > 0 ? filteredEntries : entries
-    }
-    return acc
-  }, {})
+  const filteredTemplates = useMemo(
+    () => groupByTopLevel(search(templates, searchQuery)),
+    [templates, searchQuery],
+  )
 
   return (
     <div className="flex flex-col gap-2">
@@ -304,3 +294,36 @@ function TemplateSummary({
 const templateIdRegex = new RegExp(
   '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
 )
+
+function search(templates: string[], searchQuery: string) {
+  return templates.filter((template) =>
+    template.toLowerCase().includes(searchQuery.toLowerCase()),
+  )
+}
+
+function groupByTopLevel(paths: string[]): Record<string, string[]> {
+  const pathMap = new Map<string, string[]>()
+
+  for (const path of paths) {
+    const elements = path.split('/')
+    if (elements.length === 1) {
+      pathMap.set(path, [])
+    } else {
+      const commonPath = elements.slice(0, -1).join('/')
+
+      const lastElement = elements[elements.length - 1]
+
+      if (!lastElement) {
+        continue
+      }
+
+      if (pathMap.has(commonPath)) {
+        pathMap.get(commonPath)?.push(lastElement)
+      } else {
+        pathMap.set(commonPath, [lastElement])
+      }
+    }
+  }
+
+  return Object.fromEntries(pathMap.entries())
+}

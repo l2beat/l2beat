@@ -99,7 +99,7 @@ export class UpdateMonitor {
     const result: Record<string, DailyReminderChainEntry[]> = {}
 
     for (const runner of this.discoveryRunners) {
-      const projectConfigs = this.configReader.readAllConfigsForChain(
+      const projectConfigs = this.configReader.readAllDiscoveredConfigsForChain(
         runner.chain,
       )
 
@@ -144,7 +144,7 @@ export class UpdateMonitor {
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
 
-    const projectConfigs = this.configReader.readAllConfigsForChain(
+    const projectConfigs = this.configReader.readAllDiscoveredConfigsForChain(
       runner.chain,
     )
 

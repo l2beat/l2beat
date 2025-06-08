@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "omni",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -67,6 +67,9 @@
           "proxyType": "Eternal Storage proxy",
           "ignoreMethods": ["getCurrentDay"],
           "fields": {
+            "mediatorContractOnOtherSide": {
+              "edit": ["format", "GnosisAddress"]
+            },
             "owner": {
               "permissions": [
                 {
@@ -104,7 +107,7 @@
     "gnosis": {
       "initialAddresses": [
         "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
-        "0xceb436489e9c6d9e4db76145a6cce2a06411ea0a"
+        "0x9C63010F056E4692A44A510F2F5E8A44B94960Bf"
       ],
       "overrides": {
         "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d": {
@@ -128,7 +131,7 @@
         "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5": {
           "ignoreMethods": ["executed"]
         },
-        "0xa809c536c85b63a2676CbAc3C4064748AD3a2562": {
+        "0x7CE84Eea8Fbe3cD9Afb40475E7257837E18745C8": {
           "ignoreMethods": [
             "executionStateRoots",
             "getSyncCommitteePeriod",

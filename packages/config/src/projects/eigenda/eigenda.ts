@@ -169,6 +169,15 @@ export const eigenda: BaseProject = {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    pruningWindow: 86400 * 14, // 14 days in seconds
+    throughput: [
+      {
+        size: 15728640, // 15 MB
+        frequency: 1, // x second
+        sinceTimestamp: 1726095600, // 2024-09-12,
+      },
+    ],
+    finality: 600, // ~10 minutes
   },
   daBridge: {
     name: 'Service Manager',

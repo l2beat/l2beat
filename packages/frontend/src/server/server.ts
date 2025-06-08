@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import type { Logger } from '@l2beat/backend-tools'
 import compression from 'compression'
+import timeout from 'connect-timeout'
 import express from 'express'
 import sirv from 'sirv'
 import { createServerPageRouter } from '../pages/ServerPageRouter'
@@ -9,7 +10,7 @@ import type { RenderData } from '../ssr/types'
 import { type Manifest, manifest } from '../utils/Manifest'
 import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
-import { TimeoutHandler } from './middlewares/TimeoutHandler'
+import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
@@ -26,7 +27,6 @@ export function createServer(logger: Logger) {
   const app = express()
   if (isProduction) {
     app.use(compression())
-    // TODO: immutable cache
     app.use(
       '/static',
       sirv('./dist/static', { maxAge: 31536000, immutable: true }),
@@ -37,8 +37,8 @@ export function createServer(logger: Logger) {
     app.use('/', express.static('./static'))
   }
 
-  app.use(TimeoutHandler(appLogger))
-  app.use(ErrorHandler(appLogger))
+  app.use(timeout('25s'))
+  app.use(SafeSendHandler)
   app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
@@ -47,10 +47,13 @@ export function createServer(logger: Logger) {
   app.use('/', createApiRouter())
   app.use('/plausible', createPlausibleRouter())
 
-  const server = app.listen(port, () => {
-    appLogger.info(`Started at http://localhost:${port}`)
+  app.use(ErrorHandler(appLogger))
+
+  app.listen(port, () => {
+    appLogger.info(`Started`, {
+      port,
+    })
   })
-  server.setTimeout(25000)
 }
 
 function renderToHtml(data: RenderData, url: string) {
@@ -58,7 +61,11 @@ function renderToHtml(data: RenderData, url: string) {
   const envData = Object.fromEntries(
     Object.entries(process.env)
       .map(([key, value]) => {
-        if (!key.startsWith('NEXT_PUBLIC_') && key !== 'NODE_ENV') {
+        if (
+          !key.startsWith('NEXT_PUBLIC_') &&
+          key !== 'NODE_ENV' &&
+          key !== 'DEPLOYMENT_ENV'
+        ) {
           return undefined
         }
         return [key, value] as const

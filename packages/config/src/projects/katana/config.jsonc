@@ -1,0 +1,46 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "katana",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": ["0xB01dADEC98308528ee57A17b24A473213c1704bb"],
+      "maxAddresses": 20,
+      "overrides": {
+        "0xB01dADEC98308528ee57A17b24A473213c1704bb": {
+          "ignoreRelatives": ["PRE_DEPOSIT_FACTORY", "acrossBridge", "WETH"],
+          "fields": {
+            "pdVaultUSDC": {
+              "handler": {
+                "type": "call",
+                "method": "function preDepositVault(address) view returns (address)",
+                "args": ["0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"]
+              }
+            },
+            "pdVaultWBTC": {
+              "handler": {
+                "type": "call",
+                "method": "function preDepositVault(address) view returns (address)",
+                "args": ["0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599"]
+              }
+            },
+            "pdVaultUSDT": {
+              "handler": {
+                "type": "call",
+                "method": "function preDepositVault(address) view returns (address)",
+                "args": ["0xdAC17F958D2ee523a2206206994597C13D831ec7"]
+              }
+            },
+            "pdVaultWETH": {
+              "handler": {
+                "type": "call",
+                "method": "function preDepositVault(address) view returns (address)",
+                "args": ["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

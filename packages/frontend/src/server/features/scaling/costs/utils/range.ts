@@ -37,6 +37,9 @@ export function rangeToResolution(value: CostsTimeRange) {
   if (days && days < 30) {
     return 'hourly'
   }
+  if (days && days <= 90) {
+    return 'sixHourly'
+  }
 
   return 'daily'
 }

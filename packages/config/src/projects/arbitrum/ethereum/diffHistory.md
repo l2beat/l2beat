@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x335af713a8ee6872d5fd8521ad80a90de650abfd
+
+# Diff at Fri, 06 Jun 2025 12:45:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53e2933f99050c9e14880373922d3232f9074832 block: 22629662
+- current block number: 22645621
+
+## Description
+
+config: silent maker/sky escrow template added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22629662 (main branch discovery), not current.
+
+```diff
+    contract L1Escrow (0xA10c7CE4b876998858b1a9E12b10092229539400) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58","0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
+Generated with discovered.json: 0x740f5a88c65451cff4015acc354073174aa702b6
+
+# Diff at Wed, 04 Jun 2025 07:03:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22566681
+- current block number: 22629662
+
+## Description
+
+new batch poster added: `0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A` (with 500 eth balance!?).
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.2:
++        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
+      values.batchPosters.1:
+-        "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
++        "0x0237e0EA0d86D53aF18dCf4CbE8182037b44ef1A"
+      values.setIsBatchPosterCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x65a8ec361d09d2c18666b157c8d0657b58a680ec
 
 # Diff at Tue, 27 May 2025 08:31:02 GMT:

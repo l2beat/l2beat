@@ -424,6 +424,14 @@ export const taiko: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+    {
       title: 'Taiko Pacaya Hardfork',
       url: 'https://taiko.mirror.xyz/pIchmo0E-DfSySCzL52BFbus54Z3XJEO0k0Ptqqpm_I',
       date: '2025-05-21T00:00:00.00Z',

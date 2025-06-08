@@ -32,7 +32,11 @@ export async function computeStackSimilarity(
   projects: Project[]
 }> {
   const configReader = new ConfigReader(paths.discovery)
-  const configs = configReader.readAllConfigs()
+  const configs = configReader
+    .readAllDiscoveredProjects()
+    .flatMap(({ project, chains }) =>
+      chains.map((chain) => configReader.readConfig(project, chain)),
+    )
 
   const stackProject = await Promise.all(
     configs.map((config) =>

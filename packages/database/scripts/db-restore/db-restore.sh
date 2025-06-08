@@ -2,11 +2,12 @@
 
 source .env
 
-FEATURES_NAMES=("da" "finality" "tvs")
+FEATURES_NAMES=("da" "finality" "tvs" "activity")
 FEATURES_TABLES=(
     "IndexerState IndexerConfiguration DataAvailability"
     "IndexerState IndexerConfiguration Liveness Finality"
     "IndexerState IndexerConfiguration TvsBlockTimestamp TvsPrice TvsAmount TokenValue ProjectValue"
+    "IndexerState IndexerConfiguration Activity"
 )
 
 clear_tables() {

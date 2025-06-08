@@ -20,7 +20,8 @@ export class UpdateDiffer {
   }
 
   async runForChain(chain: string, timestamp: UnixTime) {
-    const projectConfigs = this.configReader.readAllConfigsForChain(chain)
+    const projectConfigs =
+      this.configReader.readAllDiscoveredConfigsForChain(chain)
 
     for (const projectConfig of projectConfigs) {
       assert(

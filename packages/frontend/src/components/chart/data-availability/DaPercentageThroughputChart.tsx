@@ -99,7 +99,7 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="label-value-14-medium text-secondary">
-        {formatTimestamp(label, { longMonthName: true })}
+        {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex flex-col gap-2">

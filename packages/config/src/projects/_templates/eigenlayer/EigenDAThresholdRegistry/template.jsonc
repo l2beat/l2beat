@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+  "fields": {
+    "getQuorumAdversaryThresholdPercentage": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "getQuorumConfirmationThresholdPercentage": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    },
+    "quorumNumbersRequired": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER"
+    }
+  }
+}

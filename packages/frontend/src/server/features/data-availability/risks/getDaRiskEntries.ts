@@ -20,9 +20,15 @@ export async function getDaRiskEntries(): Promise<
   TabbedDaEntries<DaRiskEntry>
 > {
   const [layers, bridges, dacs, economicSecurity] = await Promise.all([
-    ps.getProjects({ select: ['daLayer', 'statuses'] }),
+    ps.getProjects({
+      select: ['daLayer', 'statuses'],
+      whereNot: ['archivedAt'],
+    }),
     ps.getProjects({ select: ['daBridge', 'statuses'] }),
-    ps.getProjects({ select: ['customDa', 'statuses'] }),
+    ps.getProjects({
+      select: ['customDa', 'statuses'],
+      whereNot: ['archivedAt'],
+    }),
     getDaProjectsEconomicSecurity(),
   ])
 

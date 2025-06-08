@@ -32,7 +32,10 @@ export async function getRegularDaProjectSections({
   layerGrissiniValues,
   bridgeGrissiniValues,
 }: RegularDetailsParams) {
-  const contractUtils = await getContractUtils()
+  const [contractUtils, throughputSection] = await Promise.all([
+    getContractUtils(),
+    getDaThroughputSection(layer),
+  ])
 
   const permissionsSection =
     bridge?.permissions &&
@@ -43,6 +46,7 @@ export async function getRegularDaProjectSections({
         permissions: bridge.permissions,
       },
       contractUtils,
+      projectsChangeReport,
     )
 
   const contractsSection =
@@ -64,7 +68,6 @@ export async function getRegularDaProjectSections({
     bridge,
     isVerified,
   )
-  const throughputSection = await getDaThroughputSection(layer)
 
   const daLayerItems: ProjectDetailsSection[] = []
 

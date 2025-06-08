@@ -17,7 +17,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
+          "from": "linea:0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
           "role": "admin"
         }
       ],
@@ -468,7 +468,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
+          "from": "linea:0x62cE247f34dc316f93D3830e4Bf10959FCe630f8",
           "role": "admin"
         }
       ],

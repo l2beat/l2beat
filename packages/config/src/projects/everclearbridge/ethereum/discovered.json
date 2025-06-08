@@ -127,12 +127,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
+          "from": "ethereum:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "from": "ethereum:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
           "role": "admin"
         }
       ],

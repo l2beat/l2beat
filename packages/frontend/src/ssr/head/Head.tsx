@@ -38,7 +38,7 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
-      {env.NODE_ENV === 'production' && (
+      {env.DEPLOYMENT_ENV === 'production' && (
         <>
           <script
             defer

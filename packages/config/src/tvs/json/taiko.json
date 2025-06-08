@@ -330,7 +330,8 @@
         "address": "0x19e26B0638bf63aa9fa4d14c6baF8D52eBE86C5C",
         "chain": "taiko",
         "decimals": 6,
-        "sinceTimestamp": 1718326427
+        "sinceTimestamp": 1718326427,
+        "untilTimestamp": 1749096000
       },
       "category": "stablecoin",
       "source": "external",
