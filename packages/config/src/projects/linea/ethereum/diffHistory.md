@@ -1,3 +1,123 @@
+Generated with discovered.json: 0x8133b24d8bba7ecb1a59111fe5b92ca633980db5
+
+# Diff at Sun, 08 Jun 2025 16:52:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@305afcf93e56ce863b326c24b83aa74224fd9140 block: 22415188
+- current block number: 22661176
+
+## Description
+
+the incomplete plonkverifier `0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F` is removed. 
+
+new proposer Multisig for the main timelock added.
+
+## Watched changes
+
+```diff
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      values.accessControl.SET_CUSTOM_CONTRACT_ROLE.members.1:
++        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.accessControl.REMOVE_RESERVED_TOKEN_ROLE.members.1:
++        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.accessControl.SET_RESERVED_TOKEN_ROLE.members.1:
++        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$members.7:
+-        "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
++        "0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5"
+      values.$members.6:
+-        "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
++        "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
+      values.$members.5:
+-        "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
++        "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
+      values.$members.4:
+-        "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
++        "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
+      values.$members.3:
+-        "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
++        "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
+      values.$members.2:
+-        "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9"
++        "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierForMultiTypeDataAggregation (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.18:
+-        "0x1111111111111111111111111111111111111111"
++        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.17:
+-        "0x1111111111111111111111111111111111111111"
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.16:
+-        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F"
++        "0x0000000000000000000000000000000000000000"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.15:
+-        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      values.accessControl.PROPOSER_ROLE.members.1:
++        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+      values.proposerAC.1:
++        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/ethereum/.flat/Linea Multisig 2/Safe.sol | 1088 ++++++++++++++++
+ .../.flat/Linea Multisig 2/SafeProxy.p.sol         |   37 +
+ .../dev/null                                       | 1348 --------------------
+ 3 files changed, 1125 insertions(+), 1348 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22415188 (main branch discovery), not current.
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      name:
+-        "Linea Multisig"
++        "Linea Multisig 1"
+    }
+```
+
 Generated with discovered.json: 0xbae205992a75ec7ace3eff9c93cca2e6e78d0f31
 
 # Diff at Fri, 23 May 2025 09:40:59 GMT:
