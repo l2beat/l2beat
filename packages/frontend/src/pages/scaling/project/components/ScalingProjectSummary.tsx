@@ -75,11 +75,7 @@ export function ProjectScalingSummary({ project }: Props) {
               <DesktopProjectLinks
                 projectLinks={project.header.links}
                 variant="header"
-                discoUiHref={
-                  project.header.isInitialReview
-                    ? undefined
-                    : project.discoUiHref
-                }
+                discoUiHref={project.discoUiHref}
               />
             </div>
             <div className="grid w-full md:gap-3 xl:grid-cols-3 [@media(min-width:1000px)]:grid-cols-[260px_1fr_1fr] [@media(min-width:1300px)]:grid-cols-[300px_1fr_1fr]">
