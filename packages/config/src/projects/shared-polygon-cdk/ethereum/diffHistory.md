@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x16c6efdc0212c9e6398f29ae6612d9a6981c2cd8
+
+# Diff at Mon, 09 Jun 2025 09:55:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22536886
+- current block number: 22666256
+
+## Description
+
+PolygonAdminMultisig adds members: 2/3 --> 5/12.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.11:
++        "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da"
+      values.$members.10:
++        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+      values.$members.9:
++        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
+      values.$members.8:
++        "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
+      values.$members.7:
++        "0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.6:
++        "0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.$members.5:
++        "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238"
+      values.$members.4:
++        "0x21618593F7147235aC8D511d68A547C935F9d417"
+      values.$members.3:
++        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
+      values.$members.2:
+-        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+      values.$members.1:
+-        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
+      values.$members.0:
+-        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
++        "0xAb3506507449bF1880f3337825efd19ac89E235E"
+      values.$threshold:
+-        2
++        5
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "5 of 12 (42%)"
+    }
+```
+
 Generated with discovered.json: 0x604bed436391fbb83141f0f1f0f85418469719f7
 
 # Diff at Fri, 23 May 2025 09:41:04 GMT:
