@@ -1,5 +1,5 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import type { Chain } from '../config/types'
+import type { Chain } from '../../../config/types'
 import type { DecodedCall, Value } from './DecodedResult'
 import { type AbiValue, decodeType } from './encoding'
 

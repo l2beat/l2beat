@@ -1,4 +1,4 @@
-import type { Address, Chain, TokenConfig } from '../config/types'
+import type { Address, Chain, TokenConfig } from '../../../config/types'
 import type { AddressInfo, IAddressService } from './AddressService'
 import type {
   DecodedAddress,

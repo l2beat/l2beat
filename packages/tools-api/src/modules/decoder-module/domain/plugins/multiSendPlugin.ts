@@ -1,5 +1,5 @@
 import { toFunctionSelector } from 'viem'
-import type { Address, Chain } from '../../config/types'
+import type { Address, Chain } from '../../../../config/types'
 import type { DecodedCall, DecodedValue, Value } from '../DecodedResult'
 import type { NestedCall } from './types'
 import { BinaryReader } from './utils'

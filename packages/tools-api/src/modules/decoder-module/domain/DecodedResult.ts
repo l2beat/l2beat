@@ -1,4 +1,4 @@
-import type { Address } from '../config/types'
+import type { Address } from '../../../config/types'
 
 export interface DecodedResult {
   transaction?: {

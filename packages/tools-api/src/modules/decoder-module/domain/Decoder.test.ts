@@ -1,8 +1,8 @@
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { toFunctionSelector } from 'viem'
-import chainList from '../config/chains.json'
-import { type Address, Chain } from '../config/types'
+import chainList from '../../../config/chains.json'
+import { type Address, Chain } from '../../../config/types'
 import type {
   AddressInfo,
   FunctionAbi,

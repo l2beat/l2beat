@@ -1,10 +1,10 @@
 import { toFunctionSelector } from 'viem'
-import type { Address, Chain, DiscoveredConfig } from '../config/types'
-import type { AlchemyClient } from '../services/api/AlchemyClient'
+import type { Address, Chain, DiscoveredConfig } from '../../../config/types'
+import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type {
   ContractInfo,
   EtherscanClient,
-} from '../services/api/EtherscanClient'
+} from '../../../third-party/EtherscanClient'
 
 export interface FunctionAbi {
   selector: `0x${string}`
