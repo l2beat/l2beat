@@ -143,13 +143,24 @@ function Header({
 }: { resolution: CostsResolution; chartRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="font-bold text-xl first-letter:capitalize md:text-2xl">
-        {resolution} onchain costs
+      <h1 className="font-bold text-xl md:text-2xl">
+        {resolutionToLabel(resolution)} onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h1>
       <ChartTimeRange range={chartRange} />
     </header>
   )
+}
+
+function resolutionToLabel(resolution: CostsResolution) {
+  switch (resolution) {
+    case 'hourly':
+      return 'Hourly'
+    case 'sixHourly':
+      return 'Six hourly'
+    case 'daily':
+      return 'Daily'
+  }
 }
 
 function UnitControls({
