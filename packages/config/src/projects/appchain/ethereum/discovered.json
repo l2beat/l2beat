@@ -1,7 +1,7 @@
 {
   "name": "appchain",
   "chain": "ethereum",
-  "blockNumber": 22623572,
+  "blockNumber": 22665848,
   "configHash": "0x56900095c54542b06fcb249b953e01e6cf5a7fcb936e9cc0932501c385b4f3e8",
   "entries": [
     {
@@ -131,7 +131,7 @@
           "0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
         ],
         "allowedOutboxList": ["0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
-        "delayedMessageCount": 4506,
+        "delayedMessageCount": 4562,
         "inboxHistory": [
           "0x010aDE5d8F9DC340531140802438798C189c36E0",
           "0x269F6f6FC8177a5A8c475AE0e2487508634EC8Ed"
@@ -139,8 +139,8 @@
         "outboxHistory": ["0x190C720892d0786BF75B77B4acD21c726ea8FDEd"],
         "rollup": "0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerInbox": "0x8045B2aa6b823CbA8f99ef3D3404F711619d3473",
-        "sequencerMessageCount": 2192,
-        "sequencerReportedSubMessageCount": 415899
+        "sequencerMessageCount": 2219,
+        "sequencerReportedSubMessageCount": 426958
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -244,13 +244,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 554,
+        "firstUnresolvedNode": 557,
         "inbox": "0x010aDE5d8F9DC340531140802438798C189c36E0",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 21145825,
-        "latestConfirmed": 553,
-        "latestNodeCreated": 556,
+        "latestConfirmed": 556,
+        "latestNodeCreated": 559,
         "loserStakeEscrow": "0x4fb280195D13e352CE8a9b9b0B41f3e3756066A4",
         "minimumAssertionPeriod": 75,
         "outbox": "0x190C720892d0786BF75B77B4acD21c726ea8FDEd",
@@ -519,7 +519,8 @@
       "values": {
         "$immutable": true,
         "mrEnclaves": [
-          "0x6c4f2e833145df2e3fa084732442ebcb99ddf331d4abbff35975f5f9c43fa5a9"
+          "0x6c4f2e833145df2e3fa084732442ebcb99ddf331d4abbff35975f5f9c43fa5a9",
+          "0x7479bcebe47fb96bc3246fc30363eb438316736c49225b77667e6bdb961c0177"
         ],
         "mrSigners": [
           "0x5fc862cb2e7e1f449f36a18b18aca08c20feaed0d411247816c281d596420cbb"
@@ -527,6 +528,14 @@
         "owner": "0xDA8E38FEf4d5cF1997061e51945775a393E4965B",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "quoteVerifier": "0x816ADa3B63F3c643fb04152eA32B58Db89aadd89"
+      },
+      "fieldMeta": {
+        "mrEnclaves": {
+          "description": "Identifier of the TEE code used (hash of enclave's code and initial data)."
+        },
+        "mrSigners": {
+          "description": "Hash of the signer's public key (who signed the code running on the TEE)."
+        }
       },
       "implementationNames": {
         "0x64189bd57B1b281C9EC3f5295B75797ddcB1572c": "EspressoTEEVerifier"
@@ -638,7 +647,7 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 2192,
+        "batchCount": 2219,
         "batchPosterManager": "0xC5dD640885cE582464e2fCa7b169581417822e6C",
         "batchPosters": ["0xC5dD640885cE582464e2fCa7b169581417822e6C"],
         "bridge": "0x19df42E085e2c3fC4497172E412057F54D9f013E",
@@ -669,7 +678,7 @@
         "rollup": "0x28293c7855797B0441000EF144119727f3cBCA9B",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 4505,
+        "totalDelayedMessagesRead": 4561,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
