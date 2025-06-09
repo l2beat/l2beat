@@ -8,6 +8,10 @@ import { api } from '~/trpc/server'
 export async function getDaThroughputSection(
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
+  const configuredThroughput = project.daLayer.throughput
+  if (!configuredThroughput || configuredThroughput.length === 0)
+    return undefined
+
   const [throughputChart, throughputData, projectsWithColors] =
     await Promise.all([
       api.da.projectChart({

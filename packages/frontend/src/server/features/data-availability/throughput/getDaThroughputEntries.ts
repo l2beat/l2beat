@@ -45,7 +45,7 @@ interface DaThroughputEntryData {
   /**
    * @unit B/s - bytes per second
    */
-  maxThroughputPerSecond: number | undefined
+  maxThroughputPerSecond: number
   pastDayData:
     | {
         /**

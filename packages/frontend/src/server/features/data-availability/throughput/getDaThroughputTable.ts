@@ -70,23 +70,28 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
             ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
             .at(-1)
 
+          assert(
+            latestThroughput,
+            'Project does not have throughput data configured',
+          )
+
           const largestPoster = largestPosters[daLayer.id]
-          const maxThroughputPerSecond = latestThroughput
-            ? getMaxThroughputPerSecond(daLayer.id, latestThroughput)
-            : undefined
+          const maxThroughputPerSecond = getMaxThroughputPerSecond(
+            daLayer.id,
+            latestThroughput,
+          )
 
           return [
             daLayer.id,
             {
               syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
-              pastDayData:
-                lastRecord && maxThroughputPerSecond
-                  ? getPastDayData(
-                      lastRecord,
-                      largestPoster,
-                      maxThroughputPerSecond,
-                    )
-                  : undefined,
+              pastDayData: lastRecord
+                ? getPastDayData(
+                    lastRecord,
+                    largestPoster,
+                    maxThroughputPerSecond,
+                  )
+                : undefined,
               maxThroughputPerSecond,
             },
           ] as const
