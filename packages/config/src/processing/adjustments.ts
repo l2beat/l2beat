@@ -10,6 +10,7 @@ import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
+import uniqBy from 'lodash/uniqBy'
 
 let once = false
 
@@ -63,8 +64,12 @@ function adjustLegacy(project: ScalingProject | Bridge, chains: ChainConfig[]) {
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {
   if (project.statuses) {
-    project.statuses.unverifiedContracts ||=
-      getProjectUnverifiedContracts(project)
+    project.statuses.unverifiedContracts = uniqBy(
+      project.statuses.unverifiedContracts.concat(
+        getProjectUnverifiedContracts(project),
+      ),
+      (x) => `${x.chain}:${x.address}`,
+    )
   }
   if (project.proofVerification) {
     for (const verifier of project.proofVerification.verifiers) {
