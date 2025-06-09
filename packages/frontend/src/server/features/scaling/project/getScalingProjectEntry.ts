@@ -32,7 +32,6 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/getOth
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import type { UnderReviewStatus } from '~/utils/project/underReview'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
@@ -56,10 +55,10 @@ export interface ProjectScalingEntry {
   archivedAt: UnixTime | undefined
   isUpcoming: boolean
   isAppchain: boolean
-  underReviewStatus: UnderReviewStatus
   header: {
     warning?: string
     redWarning?: string
+    isInitialReview?: boolean
     emergencyWarning?: string
     description?: string
     badges?: BadgeWithParams[]
@@ -173,6 +172,7 @@ export async function getScalingProjectEntry(
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
+    isInitialReview: project.statuses.reviewStatus === 'initialReview',
     category,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
