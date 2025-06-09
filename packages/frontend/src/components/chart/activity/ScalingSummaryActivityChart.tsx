@@ -69,7 +69,7 @@ const chartMeta = {
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'all' },
+    filter: { type: 'withoutOthers' },
     previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
