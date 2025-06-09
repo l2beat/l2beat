@@ -18,7 +18,6 @@ export type RecategorisedActivityChartData = {
     timestamp: number,
     rollupsCount: number,
     validiumsAndOptimiumsCount: number,
-    othersCount: number,
     ethereumCount: number,
   ][]
   syncWarning: string | undefined
@@ -63,28 +62,20 @@ export async function getRecategorisedActivityChart(
         !isProjectOther(p.scalingInfo, previewRecategorisation),
     )
     .map((p) => p.id)
-  const others = projects
-    .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
-    .map((p) => p.id)
 
   const adjustedRange = getFullySyncedActivityRange(range)
-  const [
-    rollupsEntries,
-    validiumsAndOptimiumsEntries,
-    othersEntires,
-    ethereumEntries,
-  ] = await Promise.all([
-    await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      validiumsAndOptimiums,
-      adjustedRange,
-    ),
-    await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM],
-      adjustedRange,
-    ),
-  ])
+  const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
+    await Promise.all([
+      await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
+      await db.activity.getByProjectsAndTimeRange(
+        validiumsAndOptimiums,
+        adjustedRange,
+      ),
+      await db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM],
+        adjustedRange,
+      ),
+    ])
 
   const syncedUntil = adjustedRange[1]
   const syncWarning = getActivitySyncWarning(syncedUntil)
@@ -93,14 +84,12 @@ export async function getRecategorisedActivityChart(
     aggregateActivityRecords(rollupsEntries) ?? {}
   const aggregatedValidiumsAndOptimiumsEntries =
     aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
-  const aggregatedOthersEntries = aggregateActivityRecords(othersEntires) ?? {}
   const aggregatedEthereumEntries =
     aggregateActivityRecords(ethereumEntries, true) ?? {}
 
   if (
     Object.values(aggregatedRollupsEntries).length === 0 &&
     Object.values(aggregatedValidiumsAndOptimiumsEntries).length === 0 &&
-    Object.values(aggregatedOthersEntries).length === 0 &&
     Object.values(aggregatedEthereumEntries).length === 0
   ) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }
@@ -109,7 +98,6 @@ export async function getRecategorisedActivityChart(
   const startTimestamp = Math.min(
     ...Object.keys(aggregatedRollupsEntries).map(Number),
     ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
-    ...Object.keys(aggregatedOthersEntries).map(Number),
     ...Object.keys(aggregatedEthereumEntries).map(Number),
   )
   const timestamps = generateTimestamps(
@@ -117,25 +105,22 @@ export async function getRecategorisedActivityChart(
     'daily',
   )
 
-  const data: [number, number, number, number, number][] = timestamps.map(
+  const data: [number, number, number, number][] = timestamps.map(
     (timestamp) => {
       const rollupsEntry = aggregatedRollupsEntries[timestamp]
       const validiumsAndOptimiumsEntry =
         aggregatedValidiumsAndOptimiumsEntries[timestamp]
-      const othersEntry = aggregatedOthersEntries[timestamp]
       const ethereumEntry = aggregatedEthereumEntries[timestamp]
 
       const rollupsCount = rollupsEntry?.uopsCount ?? 0
       const validiumsAndOptimiumsCount =
         validiumsAndOptimiumsEntry?.uopsCount ?? 0
-      const othersCount = othersEntry?.uopsCount ?? 0
       const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
 
       return [
         +timestamp,
         rollupsCount,
         validiumsAndOptimiumsCount,
-        othersCount,
         ethereumCount,
       ]
     },
@@ -160,13 +145,7 @@ function getMockRecategorisedActivityChart(
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [
-      +timestamp,
-      15000,
-      11000,
-      9000,
-      12000,
-    ]),
+    data: timestamps.map((timestamp) => [+timestamp, 15000, 11000, 12000]),
     syncWarning: getActivitySyncWarning(adjustedRange[1]),
     syncedUntil: adjustedRange[1],
   }
