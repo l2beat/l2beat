@@ -978,6 +978,7 @@
     },
     "bob": {
       "names": {
+        "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0": "Bridged USDC (BOB) Token",
         "0xC96dE26018A54D51c097160568752c4E3BD6C364": "Fire Bitcoin Token",
         "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77": "Solv BTC Token",
         "0xCC0966D8418d412c599A6421b760a847eB169A8c": "SolvBTC Babylon Token",

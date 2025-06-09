@@ -5635,6 +5635,22 @@
   ],
   "bob": [
     {
+      "symbol": "USDC",
+      "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "SolvBTC.BBN",
       "address": "0xCC0966D8418d412c599A6421b760a847eB169A8c",
       "source": "external",

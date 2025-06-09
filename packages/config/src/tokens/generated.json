@@ -13206,6 +13206,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Bridged USDC (BOB)",
+      "coingeckoId": "usd-coin",
+      "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1714403103,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Fire Bitcoin",
       "coingeckoId": "ignition-fbtc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",

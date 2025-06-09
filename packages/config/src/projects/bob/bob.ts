@@ -36,11 +36,6 @@ export const bob: ScalingProject = opStackL2({
       tokens: ['wstETH'],
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb'),
-      tokens: ['USDC'],
-      ...ESCROW.CANONICAL_EXTERNAL,
-    }),
   ],
   genesisTimestamp: UnixTime(1712861989),
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN'],
