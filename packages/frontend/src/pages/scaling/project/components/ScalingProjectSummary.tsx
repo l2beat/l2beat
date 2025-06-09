@@ -94,18 +94,20 @@ export function ProjectScalingSummary({ project }: Props) {
           <ProjectScalingRosette project={project} />
         </div>
 
-        <div className="md:hidden">
-          <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
-          <div className="flex items-center justify-between">
-            <a
-              className="text-link text-xs underline"
-              href={project.discoUiHref}
-            >
-              Explore more in Discovery UI
-            </a>
-            {project.discoUiHref && <DiscoUiLink href={project.discoUiHref} />}
+        {project.discoUiHref && (
+          <div className="md:hidden">
+            <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
+            <div className="flex items-center justify-between">
+              <a
+                className="text-link text-xs underline"
+                href={project.discoUiHref}
+              >
+                Explore more in Discovery UI
+              </a>
+              <DiscoUiLink href={project.discoUiHref} />
+            </div>
           </div>
-        </div>
+        )}
 
         <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-screen md:my-6" />
         <div className="md:hidden">

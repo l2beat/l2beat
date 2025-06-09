@@ -32,8 +32,10 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/getOth
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import type { UnderReviewStatus } from '~/utils/project/underReview'
-import { getUnderReviewStatus } from '~/utils/project/underReview'
+import {
+  type UnderReviewStatus,
+  getUnderReviewStatus,
+} from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
@@ -100,7 +102,7 @@ export interface ProjectScalingEntry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
-  discoUiHref: string
+  discoUiHref: string | undefined
 }
 
 export async function getScalingProjectEntry(
@@ -236,7 +238,10 @@ export async function getScalingProjectEntry(
     stageConfig: isProjectOther(project.scalingInfo)
       ? { stage: 'NotApplicable' as const }
       : project.scalingStage,
-    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref:
+      project.statuses.reviewStatus === 'initialReview'
+        ? undefined
+        : `https://disco.l2beat.com/ui/p/${project.id}`,
   }
 
   const sections: ProjectDetailsSection[] = []
