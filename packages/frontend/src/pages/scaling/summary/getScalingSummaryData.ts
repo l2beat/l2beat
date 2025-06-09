@@ -61,7 +61,7 @@ async function getCachedData() {
       previewRecategorisation: false,
     }),
     helpers.activity.chartStats.prefetch({
-      filter: { type: 'all' },
+      filter: { type: 'withoutOthers' },
       previewRecategorisation: false,
     }),
   ])
