@@ -1,3 +1,42 @@
+Generated with discovered.json: 0x19f08af0b3f95c661dc2e6e9acd45b4b66da32a0
+
+# Diff at Mon, 09 Jun 2025 10:53:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 30124700
+- current block number: 31338532
+
+## Description
+
+FeeDisburser admin moved to EOA.
+
+## Watched changes
+
+```diff
+    contract FeeDisburser (0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA) {
+    +++ description: Contract used to disburse funds from system FeeVault contracts, shares revenue with Optimism and bridges the rest of funds to L1.
+      values.$admin:
+-        "0xd94E416cf2c7167608B2515B7e4102B41efff94f"
++        "0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0xd94E416cf2c7167608B2515B7e4102B41efff94f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../GnosisSafeL2}/GnosisSafeL2.sol                 |    0
+ .../GnosisSafeL2}/GnosisSafeProxy.p.sol            |    0
+ .../GnosisSafeL2.sol => /dev/null                  | 1032 --------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ 4 files changed, 1067 deletions(-)
+```
+
 Generated with discovered.json: 0x19328ddd500cced0eba3e94b8c99a49450604791
 
 # Diff at Fri, 23 May 2025 09:41:14 GMT:
