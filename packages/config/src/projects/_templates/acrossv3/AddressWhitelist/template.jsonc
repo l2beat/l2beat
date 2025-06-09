@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Implements a simple address whitelist.",
+  "ignoreRelatives": [
+    "getWhitelist",
+    "whitelistIndices"
+  ]
+}
