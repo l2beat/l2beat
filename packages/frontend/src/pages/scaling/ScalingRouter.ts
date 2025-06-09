@@ -1,7 +1,6 @@
 import express from 'express'
 import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
-import { ContextMiddleware } from '~/server/middlewares/ContextMiddleware'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -94,7 +93,6 @@ export function createScalingRouter(
     validateRoute({
       params: z.object({ slug: z.string() }),
     }),
-    ContextMiddleware,
     async (req, res) => {
       const data = await cache.get(
         {
@@ -102,13 +100,7 @@ export function createScalingRouter(
           ttl: 5 * 60,
           staleWhileRevalidate: 25 * 60,
         },
-        () =>
-          getScalingProjectData(
-            manifest,
-            req.context.helpers,
-            req.params.slug,
-            req.originalUrl,
-          ),
+        () => getScalingProjectData(manifest, req.params.slug, req.originalUrl),
       )
       if (!data) {
         res.status(404).send('Not found')

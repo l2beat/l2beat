@@ -3,15 +3,15 @@ import { getScalingProjectEntry } from '~/server/features/scaling/project/getSca
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import type { ExpressHelpers } from '~/trpc/server'
+import { getExpressHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingProjectData(
   manifest: Manifest,
-  helpers: ExpressHelpers,
   slug: string,
   url: string,
 ): Promise<RenderData | undefined> {
+  const helpers = getExpressHelpers()
   const project = await ps.getProject({
     slug,
     select: [
