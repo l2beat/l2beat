@@ -34,37 +34,41 @@ export const publicSystemsColumns = [
   columnHelper.group({
     header: 'Throughput',
     columns: [
-      columnHelper.accessor((e) => e.data?.pastDayAvgThroughputPerSecond, {
-        id: 'pastDayAvgThroughputPerSecond',
-        header: 'PAST DAY AVG',
-        cell: (ctx) => (
-          <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
-            <TableValueCell
-              emptyMode="upcoming"
-              value={
-                ctx.row.original.data?.pastDayAvgThroughputPerSecond
-                  ? {
-                      value: formatBpsToMbps(
-                        ctx.row.original.data?.pastDayAvgThroughputPerSecond,
-                      ),
-                    }
-                  : undefined
-              }
-            />
-          </SyncStatusWrapper>
-        ),
-        meta: {
-          tooltip:
-            'The total size of the data posted over the past day, divided by the number of seconds in a day.',
+      columnHelper.accessor(
+        (e) => e.data?.pastDayData?.avgThroughputPerSecond,
+        {
+          id: 'pastDayAvgThroughputPerSecond',
+          header: 'PAST DAY AVG',
+          cell: (ctx) => (
+            <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
+              <TableValueCell
+                emptyMode="upcoming"
+                value={
+                  ctx.row.original.data?.pastDayData?.avgThroughputPerSecond
+                    ? {
+                        value: formatBpsToMbps(
+                          ctx.row.original.data?.pastDayData
+                            ?.avgThroughputPerSecond,
+                        ),
+                      }
+                    : undefined
+                }
+              />
+            </SyncStatusWrapper>
+          ),
+          meta: {
+            tooltip:
+              'The total size of the data posted over the past day, divided by the number of seconds in a day.',
+          },
+          sortingFn: (rowA, rowB) => {
+            return (
+              (rowA.original.data?.pastDayData?.avgThroughputPerSecond ?? 0) -
+              (rowB.original.data?.pastDayData?.avgThroughputPerSecond ?? 0)
+            )
+          },
+          sortUndefined: 'last',
         },
-        sortingFn: (rowA, rowB) => {
-          return (
-            (rowA.original.data?.pastDayAvgThroughputPerSecond ?? 0) -
-            (rowB.original.data?.pastDayAvgThroughputPerSecond ?? 0)
-          )
-        },
-        sortUndefined: 'last',
-      }),
+      ),
       columnHelper.accessor((e) => e.data?.maxThroughputPerSecond, {
         header: 'MAX CAPACITY',
         cell: (ctx) => (
@@ -89,16 +93,16 @@ export const publicSystemsColumns = [
       }),
     ],
   }),
-  columnHelper.accessor((e) => e.data?.pastDayAvgCapacityUtilization, {
+  columnHelper.accessor((e) => e.data?.pastDayData?.avgCapacityUtilization, {
     header: 'past day avg\ncapacity used',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
           emptyMode="upcoming"
           value={
-            ctx.row.original.data?.pastDayAvgCapacityUtilization
+            ctx.row.original.data?.pastDayData?.avgCapacityUtilization
               ? {
-                  value: `${ctx.row.original.data.pastDayAvgCapacityUtilization}%`,
+                  value: `${ctx.row.original.data.pastDayData?.avgCapacityUtilization}%`,
                 }
               : undefined
           }
@@ -119,16 +123,17 @@ export const publicSystemsColumns = [
         <TableValueCell
           emptyMode="upcoming"
           value={
-            ctx.row.original.data?.largestPoster
+            ctx.row.original.data?.pastDayData?.largestPoster
               ? {
-                  value: `${ctx.row.original.data.largestPoster.name} (${ctx.row.original.data.largestPoster.percentage}%)`,
+                  value: `${ctx.row.original.data.pastDayData?.largestPoster.name} (${ctx.row.original.data.pastDayData?.largestPoster.percentage}%)`,
                   secondLine: formatBytes(
-                    ctx.row.original.data.largestPoster.totalPosted,
+                    ctx.row.original.data.pastDayData?.largestPoster
+                      .totalPosted,
                   ),
                 }
               : undefined
           }
-          href={ctx.row.original.data?.largestPoster?.href}
+          href={ctx.row.original.data?.pastDayData?.largestPoster?.href}
         />
       </SyncStatusWrapper>
     ),
@@ -137,16 +142,18 @@ export const publicSystemsColumns = [
         'The project that has posted the largest amount of data over the past day.',
     },
   }),
-  columnHelper.accessor((e) => e.data?.totalPosted, {
+  columnHelper.accessor((e) => e.data?.pastDayData?.totalPosted, {
     header: 'past day\ntotal data posted',
     cell: (ctx) => (
       <SyncStatusWrapper isSynced={ctx.row.original.isSynced}>
         <TableValueCell
           emptyMode="upcoming"
           value={
-            ctx.row.original.data?.totalPosted
+            ctx.row.original.data?.pastDayData?.totalPosted
               ? {
-                  value: formatBytes(ctx.row.original.data.totalPosted),
+                  value: formatBytes(
+                    ctx.row.original.data.pastDayData?.totalPosted,
+                  ),
                 }
               : undefined
           }

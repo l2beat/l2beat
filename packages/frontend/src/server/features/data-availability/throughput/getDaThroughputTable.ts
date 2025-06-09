@@ -76,45 +76,23 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           )
 
           const largestPoster = largestPosters[daLayer.id]
-          const pastDayAvgThroughputPerSecond = lastRecord
-            ? Number(lastRecord.totalSize) / UnixTime.DAY
-            : undefined
           const maxThroughputPerSecond = getMaxThroughputPerSecond(
             daLayer.id,
             latestThroughput,
           )
-          const pastDayAvgCapacityUtilization = pastDayAvgThroughputPerSecond
-            ? round(
-                (pastDayAvgThroughputPerSecond / maxThroughputPerSecond) * 100,
-                2,
-              )
-            : undefined
 
           return [
             daLayer.id,
             {
-              totalSize: lastRecord ? Number(lastRecord.totalSize) : undefined,
               syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
-              pastDayAvgThroughputPerSecond,
-              largestPoster:
-                largestPoster && lastRecord
-                  ? {
-                      name: largestPoster.name,
-                      percentage: round(
-                        (Number(largestPoster.totalSize) /
-                          Number(lastRecord.totalSize)) *
-                          100,
-                        2,
-                      ),
-                      totalPosted: Number(largestPoster.totalSize),
-                      href: `/scaling/projects/${largestPoster.slug}`,
-                    }
-                  : undefined,
-              maxThroughputPerSecond,
-              pastDayAvgCapacityUtilization,
-              totalPosted: lastRecord
-                ? Number(lastRecord.totalSize)
+              pastDayData: lastRecord
+                ? getPastDayData(
+                    lastRecord,
+                    largestPoster,
+                    maxThroughputPerSecond,
+                  )
                 : undefined,
+              maxThroughputPerSecond,
             },
           ] as const
         })
@@ -125,6 +103,45 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   return {
     data: getData(groupedDaLayerValues),
     scalingOnlyData: getData(onlyScalingDaLayerValues),
+  }
+}
+
+function getPastDayData(
+  lastRecord: Omit<DataAvailabilityRecord2, 'configurationId'>,
+  largestPoster:
+    | {
+        readonly timestamp: UnixTime
+        readonly projectId: string
+        readonly daLayer: string
+        readonly totalSize: bigint
+        readonly name: string
+        readonly slug: string
+      }
+    | undefined,
+  maxThroughputPerSecond: number,
+) {
+  const avgThroughputPerSecond = Number(lastRecord.totalSize) / UnixTime.DAY
+  const avgCapacityUtilization = round(
+    (avgThroughputPerSecond / maxThroughputPerSecond) * 100,
+    2,
+  )
+
+  return {
+    totalPosted: Number(lastRecord.totalSize),
+    avgThroughputPerSecond,
+    avgCapacityUtilization,
+    largestPoster: largestPoster
+      ? {
+          name: largestPoster.name,
+          percentage: round(
+            (Number(largestPoster.totalSize) / Number(lastRecord.totalSize)) *
+              100,
+            2,
+          ),
+          totalPosted: Number(largestPoster.totalSize),
+          href: `/scaling/projects/${largestPoster.slug}`,
+        }
+      : undefined,
   }
 }
 
@@ -139,22 +156,23 @@ function getMockDaThroughputTableData(
           return [
             daLayerId,
             {
-              totalSize: 101312,
               syncedUntil:
                 daLayerId === 'avail'
                   ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
-              pastDayAvgThroughputPerSecond: 1.5,
-              maxThroughputPerSecond: 4.3,
-              largestPoster: {
-                name: 'Base',
-                percentage: 12,
-                totalPosted: 123123,
-                href: '/scaling/projects/base',
+              pastDayData: {
+                largestPoster: {
+                  name: 'Base',
+                  percentage: 12,
+                  totalPosted: 123123,
+                  href: '/scaling/projects/base',
+                },
+                avgCapacityUtilization: 24,
+                totalPosted: 10312412,
+                avgThroughputPerSecond: 1.5,
               },
-              pastDayAvgCapacityUtilization: 24,
-              totalPosted: 10312412,
+              maxThroughputPerSecond: 4.3,
             },
           ] as const
         })
@@ -166,22 +184,23 @@ function getMockDaThroughputTableData(
           return [
             daLayerId,
             {
-              totalSize: 601312,
+              pastDayData: {
+                avgCapacityUtilization: 48,
+                totalPosted: 20312412,
+                largestPoster: {
+                  name: 'Base',
+                  percentage: 40,
+                  totalPosted: 123123,
+                  href: '/scaling/projects/base',
+                },
+                avgThroughputPerSecond: 1.0,
+              },
               syncedUntil:
                 daLayerId === 'avail'
                   ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
-              pastDayAvgThroughputPerSecond: 1.0,
               maxThroughputPerSecond: 4.3,
-              largestPoster: {
-                name: 'Base',
-                percentage: 40,
-                totalPosted: 123123,
-                href: '/scaling/projects/base',
-              },
-              pastDayAvgCapacityUtilization: 48,
-              totalPosted: 20312412,
             },
           ] as const
         })

@@ -35,8 +35,8 @@ export async function getDaThroughputEntries(): Promise<DaThroughputEntry[]> {
     .filter(notUndefined)
     .sort(
       (a, b) =>
-        (b.data?.pastDayAvgThroughputPerSecond ?? 0) -
-        (a.data?.pastDayAvgThroughputPerSecond ?? 0),
+        (b.data?.pastDayData?.avgThroughputPerSecond ?? 0) -
+        (a.data?.pastDayData?.avgThroughputPerSecond ?? 0),
     )
   return entries
 }
@@ -45,22 +45,25 @@ interface DaThroughputEntryData {
   /**
    * @unit B/s - bytes per second
    */
-  pastDayAvgThroughputPerSecond: number | undefined
-  /**
-   * @unit B/s - bytes per second
-   */
   maxThroughputPerSecond: number
-  pastDayAvgCapacityUtilization: number | undefined
-  largestPoster:
+  pastDayData:
     | {
-        name: string
-        href: string
-        percentage: number
+        /**
+         * @unit B/s - bytes per second
+         */
+        avgThroughputPerSecond: number
+        avgCapacityUtilization: number
         totalPosted: number
+        largestPoster:
+          | {
+              name: string
+              href: string
+              percentage: number
+              totalPosted: number
+            }
+          | undefined
       }
     | undefined
-
-  totalPosted: number | undefined
 }
 
 export interface DaThroughputEntry extends CommonDaEntry {

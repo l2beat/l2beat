@@ -32,10 +32,12 @@ export async function getDaThroughputSection(
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
-    pastDayAvgCapacityUtilization: projectData.pastDayAvgCapacityUtilization,
-    pastDayAvgThroughputPerSecond: projectData.pastDayAvgThroughputPerSecond,
-    largestPoster: projectData.largestPoster,
-    totalPosted: projectData.totalPosted,
+    pastDayAvgCapacityUtilization:
+      projectData.pastDayData?.avgCapacityUtilization,
+    pastDayAvgThroughputPerSecond:
+      projectData.pastDayData?.avgThroughputPerSecond,
+    largestPoster: projectData.pastDayData?.largestPoster,
+    totalPosted: projectData.pastDayData?.totalPosted,
     syncStatus: {
       warning: notSyncedStatus,
       isSynced: !notSyncedStatus,
