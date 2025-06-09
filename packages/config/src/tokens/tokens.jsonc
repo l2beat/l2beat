@@ -1,6 +1,30 @@
 {
   "ethereum": [
     {
+      "symbol": "WBTC.pdkatana",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728"
+    },
+    {
+      "symbol": "USDT.pdkatana",
+      "coingeckoId": "tether",
+      "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb"
+    },
+    {
+      "symbol": "USDC.pdkatana",
+      "coingeckoId": "usd-coin",
+      "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822"
+    },
+    {
+      "symbol": "WETH.pdkatana",
+      "coingeckoId": "weth",
+      "address": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF"
+    },
+    {
+      "symbol": "TRALA",
+      "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b"
+    },
+    {
       "symbol": "OIK",
       "address": "0x6E7F11641c1EC71591828E531334192d622703F7"
     },
@@ -298,6 +322,7 @@
     },
     {
       "symbol": "sUSDS",
+      "category": "stablecoin",
       "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD"
     },
     {
@@ -1000,11 +1025,11 @@
       "address": "0xc2544A32872A91F4A553b404C6950e89De901fdb"
     },
     {
-      "symbol": "sFRAX",
+      "symbol": "sFRAX.legacy",
       "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32"
     },
     {
-      "symbol": "FRAX",
+      "symbol": "FRAX.legacy",
       "category": "stablecoin",
       "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e"
     },
@@ -1036,7 +1061,7 @@
       "address": "0x8c15Ef5b4B21951d50E53E4fbdA8298FFAD25057"
     },
     {
-      "symbol": "FXS",
+      "symbol": "FRAX",
       "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0"
     },
     {
@@ -3427,6 +3452,21 @@
     }
   ],
   "base": [
+    {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "coingeckoId": "wrapped-oeth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USR",
       "coingeckoId": "resolv-usr",

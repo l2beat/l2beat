@@ -118,3 +118,4 @@ export {
 export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
+export { readJsonc } from './discovery/utils/readJsonc'

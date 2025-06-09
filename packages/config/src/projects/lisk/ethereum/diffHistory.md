@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x998c9180f1fe32ed5bae94f8fe03f73f20955cb4
+
+# Diff at Tue, 03 Jun 2025 15:23:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@207cc2f32f4d79aaacbe9c1afa45e44aaef6bf87 block: 22266078
+- current block number: 22624983
+
+## Description
+
+add EURC external bridge.
+
+## Watched changes
+
+```diff
+    contract L1OpEURCBridgeAdapter (0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677) {
+    +++ description: Escrow for EURC that uses the canonical bridge for messaging but is governed externally.
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "EIP1967 proxy"
+      name:
++        "L1OpEURCBridgeAdapter"
+      template:
++        "circle/L1OpEURCBridgeAdapter"
+      sourceHashes:
++        ["0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6","0x54fe8d50c1e462bc4bc77f3edef769d75b14fe44a09a708ceb8125d9760e71db"]
+      description:
++        "Escrow for EURC that uses the canonical bridge for messaging but is governed externally."
+      sinceTimestamp:
++        1748849495
+      sinceBlock:
++        22615527
+      values:
++        {"$admin":"0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9","$implementation":"0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80","$pastUpgrades":[["2025-06-02T07:31:35.000Z","0x842ad723004e0ab6eec96d63e9480318f20b4262a5727cdf8ab01df70aed9c83",["0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80"]]],"$upgradeCount":1,"BRIDGE_MESSAGE_TYPEHASH":"0x87e4683aad14f1869b43140e06b846bd1b00c2e08e9825f6719d163b4cfef2a6","burnAmount":0,"burnCaller":"0x0000000000000000000000000000000000000000","eip712Domain":{"fields":"0x0f","name":"OpEURCBridgeAdapter","version":"1.0.0","chainId":1,"verifyingContract":"0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677","salt":"0x0000000000000000000000000000000000000000000000000000000000000000","extensions":[]},"EURC":"0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c","LINKED_ADAPTER":"0x4db1c96C1f9c3d5429fDf35ED2e684b309b0c281","MESSENGER":"0x31B72D76FB666844C41EdF08dF0254875Dbb7edB","messengerStatus":0,"owner":"0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9","UPGRADE_INTERFACE_VERSION":"5.0.0"}
+      implementationNames:
++        {"0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677":"ERC1967Proxy","0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80":"L1OpEURCBridgeAdapter"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../.flat/L1OpEURCBridgeAdapter/ERC1967Proxy.p.sol |  523 ++++
+ .../L1OpEURCBridgeAdapter.sol                      | 2836 ++++++++++++++++++++
+ 2 files changed, 3359 insertions(+)
+```
+
 Generated with discovered.json: 0x60dbe9c88cbdaa650b7412ebf1368b65a1ff0274
 
 # Diff at Fri, 30 May 2025 07:07:09 GMT:

@@ -213,7 +213,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+          "from": "ethereum:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
           "role": "admin"
         }
       ]

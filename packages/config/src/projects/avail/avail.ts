@@ -85,7 +85,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       references: [
         {
           title: 'Avail Documentation',
-          url: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+          url: 'https://docs.availproject.org/docs/welcome-to-avail-docs',
         },
         {
           title: 'Avail Light Client - Source Code',

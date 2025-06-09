@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22616262,
+  "blockNumber": 22630425,
   "configHash": "0xc1d6d463dea3b1cff74ea70dd19ffac0f6bdc5ec34bed29469145e8d6e1fc142",
   "entries": [
     {
@@ -360,68 +360,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1186200,
-          "blockId_": 1186200,
+          "batchId_": 1189200,
+          "blockId_": 1189200,
           "ts_": {
-            "parentHash": "0x75b71001ad7451bef2826efbaf46c7527072dbc0bafa53f954c459ef1fb45470",
-            "blockHash": "0x34a7e0d084c8c25189a8ed9883aca3511b7076a0d83e060ee523b5bb5c21fcc4",
-            "stateRoot": "0xd4c9406bb3f7b00477500f3f1e39d73fc4f96aee031b4908420c8a4b6656c1b8",
-            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
+            "parentHash": "0x3c9172c17d6b9bc42ef691be2a9a0fdb3be5a1cdd33dc4173177fd5b76641d12",
+            "blockHash": "0x6411c4b08bf47a43cf73c26feb53f8d187272fdb6e66cd4f6d1f29d28b6b16ae",
+            "stateRoot": "0x46d90ccccd6e882cbf05bee1af9c73a1b84f43fb4a815e2a364cc727bdc5f4ad",
+            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
             "inProvingWindow": true,
-            "createdAt": 1748849315
+            "createdAt": 1749022031
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1186202,
-          "blockHash_": "0xaa98198d6ade1b7c3190c9975dc65bbdc453c3f50da066cc2d6289107bce0129",
+          "blockId_": 1189201,
+          "blockHash_": "0x0382f970042d1cf0ed307a4e4f6f305b8a7c4e531a2bf845a4a8ba5a1b4d3811",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1738713107
+          "verifiedAt_": 1738783907
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1186202,
-          "blockId_": 1186202,
+          "batchId_": 1189201,
+          "blockId_": 1189201,
           "ts_": {
-            "parentHash": "0xef7ac2c679240777933424b1ae01829610cab60ef954ab9a1ac40ae13ade9b4b",
-            "blockHash": "0xaa98198d6ade1b7c3190c9975dc65bbdc453c3f50da066cc2d6289107bce0129",
+            "parentHash": "0x6411c4b08bf47a43cf73c26feb53f8d187272fdb6e66cd4f6d1f29d28b6b16ae",
+            "blockHash": "0x0382f970042d1cf0ed307a4e4f6f305b8a7c4e531a2bf845a4a8ba5a1b4d3811",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1748849315
+            "createdAt": 1749018515
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1186200,
-            "lastSynecdAt": 1748857331
+            "lastSyncedBlockId": 1189200,
+            "lastSynecdAt": 1749029291
           },
           {
-            "numBlocks": 1186408,
-            "lastVerifiedBlockId": 1186202,
+            "numBlocks": 1189490,
+            "lastVerifiedBlockId": 1189201,
             "provingPaused": false,
-            "lastProposedIn": 22616259,
+            "lastProposedIn": 22630419,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1186200,
-          "lastSyncedAt": 1748857331
+          "lastSyncedBatchId": 1189200,
+          "lastSyncedAt": 1749029291
         },
         "getStats2": {
-          "numBatches": 1186408,
-          "lastVerifiedBatchId": 1186202,
+          "numBatches": 1189490,
+          "lastVerifiedBatchId": 1189201,
           "paused": false,
-          "lastProposedIn": 22616259,
+          "lastProposedIn": 22630419,
           "lastUnpausedAt": 1716571955
         },
         "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
         "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 22616259,
+        "lastProposedIn": 22630419,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -462,14 +462,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1186200,
-            "lastSyncedAt": 1748857331
+            "lastSyncedBatchId": 1189200,
+            "lastSyncedAt": 1749029291
           },
           "stats2": {
-            "numBatches": 1186408,
-            "lastVerifiedBatchId": 1186202,
+            "numBatches": 1189490,
+            "lastVerifiedBatchId": 1189201,
             "paused": false,
-            "lastProposedIn": 22616259,
+            "lastProposedIn": 22630419,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -551,7 +551,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "addresslistLength": 9,
+        "addresslistLength": 8,
         "dao": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
         "getEncryptionAgents": [
           "0x93533a3511E9b0d5c17b1CBD0e1737781DEf61a6",
@@ -561,12 +561,11 @@
           "0x824Dce8d292a393DAb5FFdeb788DC1086257f678",
           "0x18B4f2afe456Dc89bddE9710476dCfC62D01d656",
           "0x1d955983044548E03DAA583B36A37cA4bdE6F556",
-          "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55",
-          "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
+          "0xf0A0d6Bd4aA94F53F3FB2c88488202a9E9eD2c55"
         ],
         "settings": {
           "encryptionRegistry": "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1",
-          "minSignerListLength": 9
+          "minSignerListLength": 8
         }
       },
       "implementationNames": {
@@ -683,7 +682,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1748858423,
+        "clock": 1749029807,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -821,7 +820,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 21,
+        "proposalCount": 23,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -912,7 +911,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 94,
+        "nonce": 95,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1117,7 +1116,7 @@
           },
           {
             "name": "0x7370315f72656d6f74655f766572696669657200000000000000000000000000",
-            "address": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
+            "address": "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
           },
           {
             "name": "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000",
@@ -1207,27 +1206,6 @@
           }
         }
       ]
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs.",
-      "sinceTimestamp": 1736742119,
-      "sinceBlock": 21613149,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      },
-      "implementationNames": {
-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371": "SP1Verifier"
-      }
     },
     {
       "name": "ProverSet",
@@ -1729,7 +1707,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 13,
+        "proposalCount": 14,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1743,7 +1721,8 @@
           "594789857995414210150628315872956409027640688649",
           "594868197801926748603689506985812031612995502090",
           "594868769476303175780308156445682560815637463051",
-          "594932801089851422612858457733038049577270247436"
+          "594932801089851422612858457733038049577270247436",
+          "595112788683881116119978678391417950963358498829"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1853,151 +1832,151 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
+          "from": "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "from": "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "from": "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "from": "ethereum:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x91f67118DD47d502B1f0C354D0611997B022f29E",
+          "from": "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "from": "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "from": "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+          "from": "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
+          "from": "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+          "from": "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "role": "admin"
         }
       ],
@@ -2020,7 +1999,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 96,
+        "nonce": 98,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2042,7 +2021,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
+          "from": "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
           "role": "admin"
         }
       ],
@@ -2409,7 +2388,7 @@
       "template": "taiko/SP1VerifierGateway",
       "sourceHashes": [
         "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
-        "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca"
+        "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Entry contract to verify batches using SP1.",
@@ -2417,27 +2396,32 @@
       "sinceBlock": 22484949,
       "values": {
         "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
-        "$implementation": "0x35f26e14D0dAeDd1904843370f761C60B891D466",
+        "$implementation": "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
         "$pastUpgrades": [
           [
             "2025-05-15T00:25:59.000Z",
             "0xc2f94680481556ed7d11db79956690ede3707ca24c6b8cef62a2f360df4c7dda",
             ["0x35f26e14D0dAeDd1904843370f761C60B891D466"]
+          ],
+          [
+            "2025-06-04T00:40:23.000Z",
+            "0xbdc86ada3808a5987cd1f4bbc49ecd2d7e577bf90642956442a3d14cffa827ec",
+            ["0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"]
           ]
         ],
-        "$upgradeCount": 1,
-        "impl": "0x35f26e14D0dAeDd1904843370f761C60B891D466",
+        "$upgradeCount": 2,
+        "impl": "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
         "inNonReentrant": false,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "resolver": "0x0000000000000000000000000000000000000000",
-        "sp1RemoteVerifier": "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371",
+        "sp1RemoteVerifier": "0xFF5Adab685362DC4C33536a65aF5873738D1216B",
         "taikoChainId": 167000
       },
       "implementationNames": {
         "0xbee1040D0Aab17AE19454384904525aE4A3602B9": "ERC1967Proxy",
-        "0x35f26e14D0dAeDd1904843370f761C60B891D466": "SP1Verifier"
+        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7": "TaikoSP1Verifier"
       }
     },
     {
@@ -2577,7 +2561,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37253,
+        "nextMessageId": 37267,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -2624,7 +2608,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 6,
+        "proposalCount": 9,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -2860,6 +2844,27 @@
         "0xd1934807041B168f383870A0d8F565aDe2DF9D7D": "TaikoDAOController"
       },
       "category": { "name": "Governance", "priority": 3 }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xFF5Adab685362DC4C33536a65aF5873738D1216B",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748931023,
+      "sinceBlock": 22622255,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0xFF5Adab685362DC4C33536a65aF5873738D1216B": "SP1Verifier"
+      }
     }
   ],
   "abis": {
@@ -2983,35 +2988,12 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": [
-      "constructor(address _addresslist)",
-      "error AlreadyAppointed()",
-      "error AlreadyListed()",
-      "error CannotAppointContracts()",
-      "error InvalidAddressList()",
-      "error MustBeAppointed()",
-      "error MustBeListed()",
-      "error MustResetAppointedAgent()",
-      "event AgentAppointed(address account, address agent)",
-      "event PublicKeySet(address account, bytes32 publicKey)",
-      "function accountList(uint256) view returns (address)",
-      "function accounts(address) view returns (address appointedAgent, bytes32 publicKey)",
-      "function appointAgent(address _newAgent)",
-      "function appointerOf(address) view returns (address)",
-      "function getAppointedAgent(address _account) view returns (address)",
-      "function getRegisteredAccounts() view returns (address[])",
-      "function removeUnused()",
-      "function setOwnPublicKey(bytes32 _publicKey)",
-      "function setPublicKey(address _accountOwner, bytes32 _publicKey)",
-      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
-    ],
-    "0x35f26e14D0dAeDd1904843370f761C60B891D466": [
+    "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7": [
       "constructor(uint64 _taikoChainId, address _sp1RemoteVerifier)",
       "error ACCESS_DENIED()",
       "error FUNC_NOT_IMPLEMENTED()",
       "error INVALID_PAUSE_STATUS()",
       "error REENTRANT_CALL()",
-      "error RESOLVER_NOT_FOUND()",
       "error SP1_INVALID_AGGREGATION_VKEY()",
       "error SP1_INVALID_PARAMS()",
       "error SP1_INVALID_PROGRAM_VKEY()",
@@ -3047,6 +3029,28 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyProof(tuple(uint64 batchId, bytes32 metaHash, tuple(bytes32 parentHash, bytes32 blockHash, bytes32 stateRoot) transition)[] _ctxs, bytes _proof) view"
+    ],
+    "0x2eFDb93a3B87b930E553d504db67Ee41c69C42d1": [
+      "constructor(address _addresslist)",
+      "error AlreadyAppointed()",
+      "error AlreadyListed()",
+      "error CannotAppointContracts()",
+      "error InvalidAddressList()",
+      "error MustBeAppointed()",
+      "error MustBeListed()",
+      "error MustResetAppointedAgent()",
+      "event AgentAppointed(address account, address agent)",
+      "event PublicKeySet(address account, bytes32 publicKey)",
+      "function accountList(uint256) view returns (address)",
+      "function accounts(address) view returns (address appointedAgent, bytes32 publicKey)",
+      "function appointAgent(address _newAgent)",
+      "function appointerOf(address) view returns (address)",
+      "function getAppointedAgent(address _account) view returns (address)",
+      "function getRegisteredAccounts() view returns (address[])",
+      "function removeUnused()",
+      "function setOwnPublicKey(bytes32 _publicKey)",
+      "function setPublicKey(address _accountOwner, bytes32 _publicKey)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)"
     ],
     "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da": [
       "constructor(address _singleton)"
@@ -3712,15 +3716,6 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyAttestation(bytes data) view returns (bool success)",
       "function verifyParsedQuote(tuple(tuple(bytes2 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData) localEnclaveReport, tuple(bytes ecdsa256BitSignature, bytes ecdsaAttestationKey, tuple(bytes16 cpuSvn, bytes4 miscSelect, bytes28 reserved1, bytes16 attributes, bytes32 mrEnclave, bytes32 reserved2, bytes32 mrSigner, bytes reserved3, uint16 isvProdId, uint16 isvSvn, bytes reserved4, bytes reportData) pckSignedQeReport, bytes qeReportSignature, tuple(uint16 parsedDataSize, bytes data) qeAuthData, tuple(uint16 certType, uint32 certDataSize, bytes[3] decodedCertDataArray) certification) v3AuthData) v3quote) view returns (bool, bytes)"
-    ],
-    "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9": [
       "constructor(address _logic, bytes _data) payable",
@@ -4656,6 +4651,15 @@
       "function unpause()",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xFF5Adab685362DC4C33536a65aF5873738D1216B": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
@@ -4688,5 +4692,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0x5383a46cb266f6dda6cea790712fef4772c4b4429ab92419af4a16678aba5127"
+  "permissionsConfigHash": "0x2d85e31ee1b7352065364e15d024e84bb6641912635492947c30d675f1539c37"
 }

@@ -74,6 +74,7 @@ model DataAvailability2 {
   totalSize       BigInt
 
   @@id([timestamp, daLayer, projectId, configurationId])
+  @@index([projectId, timestamp(sort: Asc)])
 }
 
 model DiscoveryCache {
@@ -200,6 +201,16 @@ model Anomaly {
   projectId String   @db.VarChar(255)
   subtype   String   @db.VarChar(255)
   duration  Int
+
+  @@id([timestamp, projectId, subtype])
+}
+
+model AnomalyStats {
+  timestamp DateTime @db.Timestamp(6)
+  projectId String   @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  mean      Float    @db.Real
+  stdDev    Float    @db.Real
 
   @@id([timestamp, projectId, subtype])
 }

@@ -2,10 +2,10 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingActivityEntries } from '~/server/features/scaling/activity/get-scaling-activity-entries'
+import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingActivityData(
@@ -47,7 +47,7 @@ export async function getScalingActivityData(
 }
 
 async function getCachedData() {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
 
   const [entries] = await Promise.all([
     getScalingActivityEntries(),

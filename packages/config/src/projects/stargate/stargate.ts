@@ -107,7 +107,7 @@ export const stargate: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xfA0F307783AC21C39E939ACFF795e27b650F6e68'),
         sinceTimestamp: UnixTime(1668459527),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         description: 'FRAX Escrow',
       }),
       discovery.getEscrowDetails({

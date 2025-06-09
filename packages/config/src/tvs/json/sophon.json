@@ -22,6 +22,24 @@
     },
     {
       "mode": "auto",
+      "id": "sophon-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x88171a5BbAcd92ca5e25575c5904581C80B025Dd",
+        "chain": "sophon",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
       "id": "sophon-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",

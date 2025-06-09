@@ -85,6 +85,7 @@ import { ink } from '../projects/ink/ink'
 import { intmax } from '../projects/intmax/intmax'
 import { kakarotzkevm } from '../projects/kakarotzkevm/kakarotzkevm'
 import { karak } from '../projects/karak/karak'
+import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
 import { koi } from '../projects/koi/koi'
 import { kontos } from '../projects/kontos/kontos'
@@ -311,6 +312,7 @@ export const layer2s: ScalingProject[] = [
   intmax,
   kakarotzkevm,
   karak,
+  katana,
   kinto,
   koi,
   kontos,

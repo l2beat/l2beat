@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import type { ProxyDetails } from '../types'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -51,12 +51,12 @@ export async function detectGnosisSafe(
   address: EthereumAddress,
 ): Promise<ProxyDetails | undefined> {
   const masterCopy = await getMasterCopy(provider, address)
-  if (!masterCopy) {
+  if (!masterCopy || masterCopy === EthereumAddress.ZERO) {
     return
   }
 
   const modules = await getModules(provider, address)
-  assert(modules, 'Could not find modules for GnosisSafe')
+  assert(modules, 'Could not find modules for GnosisSafe at address ' + address)
 
   const owners = await getOwners(provider, address)
   const ownerCount = owners.length

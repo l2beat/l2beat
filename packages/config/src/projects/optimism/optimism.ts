@@ -54,8 +54,9 @@ export const optimism: ScalingProject = opStackL2({
       address: EthereumAddress('0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65'),
       sinceTimestamp: UnixTime(1625675779),
       ...ESCROW.CANONICAL_EXTERNAL,
-      tokens: ['DAI'],
-      description: 'DAI Vault for custom DAI Gateway managed by MakerDAO.',
+      tokens: ['DAI', 'USDS', 'sUSDS'],
+      description:
+        'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
       // current SNX bridge escrow

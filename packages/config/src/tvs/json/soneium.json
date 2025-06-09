@@ -239,6 +239,25 @@
     },
     {
       "mode": "auto",
+      "id": "soneium-TRALA",
+      "priceId": "trala-token",
+      "symbol": "TRALA",
+      "name": "TRALA TOKEN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38900/large/TRALA.png?1719456891",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b",
+        "chain": "ethereum",
+        "escrowAddress": "0xeb9bf100225c214Efc3E7C651ebbaDcF85177607",
+        "decimals": 18,
+        "sinceTimestamp": 1733134751
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "soneium-uBTC",
       "priceId": "wrapped-bitcoin-universal",
       "symbol": "uBTC",

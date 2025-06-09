@@ -51,7 +51,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+          "from": "ethereum:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
           "role": "admin"
         }
       ],
@@ -248,7 +248,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
+          "from": "ethereum:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
           "role": "admin"
         }
       ],

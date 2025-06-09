@@ -52,22 +52,18 @@ function getAllDiscoveriesExcept(
   configReader: ConfigReader,
   toExclude: ProjectChain,
 ): DiscoveryOutput[] {
-  const allProjects = configReader
-    .readAllChains()
-    .flatMap((chain) =>
-      configReader
-        .readAllProjectsForChain(chain)
-        .map((project) => ({ chain, project })),
-    )
-    .filter(
-      ({ chain, project }) =>
-        chain !== toExclude.chain || project !== toExclude.project,
-    )
+  const allProjects = configReader.readAllDiscoveredProjects()
 
   const discoveries: DiscoveryOutput[] = []
-  for (const { chain, project } of allProjects) {
-    const discovery = configReader.readDiscovery(project, chain)
-    discoveries.push(discovery)
+  for (const { chains, project } of allProjects) {
+    for (const chain of chains) {
+      if (chain === toExclude.chain || project === toExclude.project) {
+        continue
+      }
+
+      const discovery = configReader.readDiscovery(project, chain)
+      discoveries.push(discovery)
+    }
   }
 
   return discoveries

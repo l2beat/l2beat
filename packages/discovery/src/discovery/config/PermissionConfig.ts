@@ -19,6 +19,8 @@ export const RolePermissionEntries = [
   'propose',
   'sequence',
   'validate',
+  'disperse',
+  'relayDA',
   'operateLinea',
   'fastconfirm',
   'validateZkStack',
@@ -32,6 +34,8 @@ export const RolePermissionEntries = [
   'governStarknet',
   'metisGameCreator',
   'stateDeleterMetis',
+  'hotValidatorHyperliquid',
+  'coldValidatorHyperliquid',
 ] as const
 
 export type Permission = z.infer<typeof Permission>

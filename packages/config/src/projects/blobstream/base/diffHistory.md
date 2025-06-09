@@ -1,3 +1,160 @@
+Generated with discovered.json: 0x491f9860543a056438d4ac46996dbc5224abe1fb
+
+# Diff at Fri, 06 Jun 2025 07:24:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1eba1823c240619119cd080ff8cbb757c1c3feda block: 31127629
+- current block number: 31127629
+
+## Description
+
+config: make sp1 gateway template more dynamic.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 31127629 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      description:
+-        "Verifier contract for SP1 proofs."
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.oldVerifier:
+-        {"verifier":"0xc350F063C13a3Ca21331610fe159E697a5c9c2FB","frozen":true}
+      values.oldVerifier2:
+-        {"verifier":"0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc","frozen":true}
+      values.oldVerifier3:
+-        {"prover":"0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3","frozen":true}
+      values.oldVerifier4:
+-        {"verifier":"0x1764C29FBd94865198588f10FC75D4f6636d158d","frozen":true}
+      values.oldVerifier5:
+-        {"prover":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16","frozen":true}
+      values.oldVerifier6:
+-        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+      values.verifier:
+-        {"prover":"0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459","frozen":false}
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers:
++        [{"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}]
++++ description: All verifiers that were ever routed to by this gateway.
+      values.allVerifiers:
++        [{"selector":"0x8c5bc5e4","verifier":"0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"},{"selector":"0x801c66ac","verifier":"0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"},{"selector":"0xfedc1fcc","verifier":"0x36B353776AF6EF3A2bD707049e783F52c4209017"},{"selector":"0xc430ff7f","verifier":"0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"},{"selector":"0xc865c1b6","verifier":"0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"},{"selector":"0x4aca240a","verifier":"0x1764C29FBd94865198588f10FC75D4f6636d158d"},{"selector":"0x09069090","verifier":"0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"},{"selector":"0x54bdcae3","verifier":"0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"},{"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"},{"selector":"0xd4e8ecd2","verifier":"0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"}]
+      fieldMeta.oldVerifier:
+-        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."}
+      fieldMeta.oldVerifier2:
+-        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."}
+      fieldMeta.oldVerifier3:
+-        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."}
+      fieldMeta.oldVerifier4:
+-        {"description":"The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."}
+      fieldMeta.oldVerifier5:
+-        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."}
+      fieldMeta.oldVerifier6:
+-        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen)."}
+      fieldMeta.verifier:
+-        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen)."}
+      fieldMeta.activeVerifiers:
++        {"description":"Verifiers that are routed to by their selector and not frozen."}
+      fieldMeta.allVerifiers:
++        {"description":"All verifiers that were ever routed to by this gateway."}
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
++        "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs (v4.0.0-rc.3).
+```
+
+Generated with discovered.json: 0x573ba4bfb7fa2c2db9f9c8ed9423b8ef1c9053c5
+
+# Diff at Wed, 04 Jun 2025 13:45:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 28782173
+- current block number: 31127629
+
+## Description
+
+programVKey changed. v5 verifier is now used (post plonky3 vulnerability).
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.verifier.prover:
+-        "0x0000000000000000000000000000000000000000"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+    }
+```
+
+```diff
+    contract Blobstream (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) {
+    +++ description: The Blobstream DA bridge. This contract is used to bridge data commitments between Celestia and the destination chain. It specifies relayers that commit block ranges, but due to the lack of emitted events, there may be more relayers than are presented here.
+      values.blobstreamProgramVkey:
+-        "0x00eaf7d396acac046b54bc8d5ba17d3f1c7374d7158ac01c76dfeca6103163eb"
++        "0x00de39c136b88dfeacb832629e21a9667935bc0e74aaa21292e4f237d79d0bef"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+## Source code changes
+
+```diff
+.../projects/blobstream/base/.flat/SP1Verifier.sol | 1396 ++++++++++++++++++++
+ 1 file changed, 1396 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 28782173 (main branch discovery), not current.
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      values.verifier.prover:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0000000000000000000000000000000000000000"
++++ description: The prover contract address for SP1, and whether it is frozen (true if frozen).
+      values.oldVerifier6:
++        {"prover":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63","frozen":false}
+      fieldMeta.oldVerifier6:
++        {"description":"The prover contract address for SP1, and whether it is frozen (true if frozen)."}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
 Generated with discovered.json: 0x56ad0349e63b3c8ca43d6f9b9f8bd019364808fd
 
 # Diff at Wed, 28 May 2025 11:34:26 GMT:

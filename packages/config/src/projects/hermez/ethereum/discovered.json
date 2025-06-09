@@ -15,12 +15,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+          "from": "ethereum:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA68D85dF56E733A06443306A095646317B5Fa633",
+          "from": "ethereum:0xA68D85dF56E733A06443306A095646317B5Fa633",
           "role": "admin"
         }
       ],

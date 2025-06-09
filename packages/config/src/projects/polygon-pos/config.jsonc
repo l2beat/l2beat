@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "polygon-pos",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -39,6 +39,9 @@
         "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": "MaticWETH"
       },
       "overrides": {
+        "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8": {
+          "ignoreInWatchMode": ["totalSupply"]
+        },
         "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": {
           "fields": {
             "PREDICATES": {

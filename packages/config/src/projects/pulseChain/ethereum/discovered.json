@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1715a3E4A142d8b698131108995174F37aEBA10D",
+          "from": "ethereum:0x1715a3E4A142d8b698131108995174F37aEBA10D",
           "role": "admin"
         }
       ]
@@ -138,7 +138,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "from": "ethereum:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
         }
@@ -289,12 +289,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "from": "ethereum:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+          "from": "ethereum:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
           "role": "admin"
         }
       ]

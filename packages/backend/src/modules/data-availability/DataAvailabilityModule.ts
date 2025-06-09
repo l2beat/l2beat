@@ -11,9 +11,7 @@ import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
-import { DaIndexer } from './indexers/DaIndexer'
 import { DaIndexer2 } from './indexers/DaIndexer2'
-import { DaService } from './services/DaService'
 import { DaService2 } from './services/DaService2'
 
 export function initDataAvailabilityModule(
@@ -78,12 +76,11 @@ function createIndexers(
   logger: Logger,
   providers: Providers,
 ) {
-  const daService = new DaService()
   const daService2 = new DaService2()
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: (DaIndexer | DaIndexer2)[] = []
+  const daIndexers: DaIndexer2[] = []
 
   for (const daLayer of config.layers) {
     const targetIndexer = new BlockTargetIndexer(
@@ -94,32 +91,9 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const configurations = config.projects.filter(
-      (c) => c.config.daLayer === daLayer.name,
-    )
-
-    const indexer = new DaIndexer({
-      configurations: configurations.map((c) => ({
-        id: c.configurationId,
-        minHeight: c.config.sinceBlock,
-        maxHeight: c.config.untilBlock ?? null,
-        properties: c.config,
-      })),
-      daProvider: providers.da,
-      daService,
-      logger,
-      daLayer: daLayer.name,
-      batchSize: daLayer.batchSize,
-      parents: [targetIndexer],
-      indexerService,
-      db: database,
-    })
-
     const configurations2 = config2.projects.filter(
       (c) => c.daLayer === daLayer.name,
     )
-
-    daIndexers.push(indexer)
 
     const indexer2 = new DaIndexer2({
       configurations: configurations2.map((c) => ({

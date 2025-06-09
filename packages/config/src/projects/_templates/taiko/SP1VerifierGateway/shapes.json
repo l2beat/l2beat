@@ -10,5 +10,11 @@
     "address": "0x35f26e14D0dAeDd1904843370f761C60B891D466",
     "chain": "ethereum",
     "blockNumber": 22565516
+  },
+  "TaikoSP1Verifier": {
+    "hash": "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0",
+    "address": "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7",
+    "chain": "ethereum",
+    "blockNumber": 22630425
   }
 }

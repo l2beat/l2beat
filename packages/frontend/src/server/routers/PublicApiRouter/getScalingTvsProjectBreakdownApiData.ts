@@ -1,4 +1,4 @@
-import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/get-tvs-breakdown-for-project'
+import { getTvsBreakdownForProject } from '~/server/features/scaling/tvs/breakdown/getTvsBreakdownForProject'
 import { ps } from '~/server/projects'
 
 export async function getScalingTvsProjectBreakdownApiData(slug: string) {

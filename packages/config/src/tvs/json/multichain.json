@@ -969,10 +969,83 @@
     {
       "mode": "auto",
       "id": "multichain-FRAX",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x10c6b61DbF44a083Aec3780aCF769C77BE747E23",
+            "decimals": 18,
+            "sinceTimestamp": 1630665650
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x183D0dC5867c01bFB1dbBc41d6a9d3dE6e044626",
+            "decimals": 18,
+            "sinceTimestamp": 1632319221
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
+            "decimals": 18,
+            "sinceTimestamp": 1615021976
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
+            "decimals": 18,
+            "sinceTimestamp": 1659078034
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x685b63CFE0179b3EFb70A01dCb1D648549AA192d",
+            "decimals": 18,
+            "sinceTimestamp": 1636968291
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
+            "decimals": 18,
+            "sinceTimestamp": 1616747753
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
+            "decimals": 18,
+            "sinceTimestamp": 1613816964
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "multichain-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "amount": {
         "type": "calculation",
         "operator": "sum",
@@ -1072,79 +1145,6 @@
         "escrowAddress": "0x8BB9Cac776555E0Ac707024Ed729E5AACeAfBE72",
         "decimals": 18,
         "sinceTimestamp": 1663224117
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "multichain-FXS",
-      "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
-      "amount": {
-        "type": "calculation",
-        "operator": "sum",
-        "arguments": [
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x10c6b61DbF44a083Aec3780aCF769C77BE747E23",
-            "decimals": 18,
-            "sinceTimestamp": 1630665650
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x183D0dC5867c01bFB1dbBc41d6a9d3dE6e044626",
-            "decimals": 18,
-            "sinceTimestamp": 1632319221
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x533e3c0e6b48010873B947bddC4721b1bDFF9648",
-            "decimals": 18,
-            "sinceTimestamp": 1615021976
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x55F089d5f6aeDfdACBD5E3aCB0e8F31FBAb44088",
-            "decimals": 18,
-            "sinceTimestamp": 1659078034
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x685b63CFE0179b3EFb70A01dCb1D648549AA192d",
-            "decimals": 18,
-            "sinceTimestamp": 1636968291
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0x820A9eb227BF770A9dd28829380d53B76eAf1209",
-            "decimals": 18,
-            "sinceTimestamp": 1616747753
-          },
-          {
-            "type": "balanceOfEscrow",
-            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-            "chain": "ethereum",
-            "escrowAddress": "0xC564EE9f21Ed8A2d8E7e76c085740d5e4c5FaFbE",
-            "decimals": 18,
-            "sinceTimestamp": 1613816964
-          }
-        ]
       },
       "category": "other",
       "source": "canonical",

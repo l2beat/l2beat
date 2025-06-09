@@ -1,5 +1,0 @@
-{
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "displayName": "SP1Verifier",
-  "description": "SP1Verifier is a contract used to verify the validity proof for proposed state roots."
-}

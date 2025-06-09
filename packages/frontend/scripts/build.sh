@@ -7,7 +7,7 @@ export PATH="$(pwd)/../../node_modules/.bin:$PATH"
 rm -rf dist
 
 esbuild \
-  src/ssr/client-entry.tsx \
+  src/ssr/ClientEntry.tsx \
   --bundle \
   --minify \
   --outfile=static/index.js &

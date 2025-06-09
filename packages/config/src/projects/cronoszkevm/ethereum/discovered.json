@@ -76,16 +76,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
-          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+          "via": [
+            { "address": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+          "from": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
           "role": ".acAdmins"
         }
       ],
@@ -131,7 +133,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -168,7 +170,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
@@ -533,12 +535,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -556,7 +558,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -611,7 +613,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "role": ".getTransactionFilterer"
         }
@@ -665,12 +667,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -688,14 +690,16 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
-          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+          "via": [
+            { "address": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+          "from": "ethereum:0xA8998F231a660Eca365B382943c71ad9b7619139",
           "description": "manage the blacklist of addresses in the TransactionFilterer.",
           "role": ".owner"
         }
@@ -703,7 +707,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+          "from": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
           "role": ".acAdmins"
         }
       ],
@@ -755,16 +759,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+          "from": "ethereum:0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
-          "via": [{ "address": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }]
+          "via": [
+            { "address": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
+          "from": "ethereum:0x6a88E8f6B5382d87F39213eB3df43c5FF2498Dd4",
           "role": ".acAdmins"
         }
       ]

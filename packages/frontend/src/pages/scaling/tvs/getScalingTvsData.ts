@@ -2,10 +2,10 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingTvsEntries } from '~/server/features/scaling/tvs/get-scaling-tvs-entries'
+import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingTvsData(
@@ -47,7 +47,7 @@ export async function getScalingTvsData(
 }
 
 async function getCachedData() {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [entries] = await Promise.all([
     getScalingTvsEntries(),
     helpers.tvs.chart.prefetch({

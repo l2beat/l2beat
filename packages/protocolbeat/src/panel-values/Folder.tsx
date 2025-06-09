@@ -10,7 +10,7 @@ export function Folder(props: {
   const [open, setOpen] = useState(!props.collapsed)
 
   return (
-    <div className="border-coffee-600 border-t">
+    <div className="overflow-x-auto border-coffee-600 border-t">
       <button
         onClick={() => setOpen((open) => !open)}
         className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"

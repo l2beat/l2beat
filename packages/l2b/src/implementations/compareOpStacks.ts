@@ -15,7 +15,10 @@ export async function analyseAllOpStackChains(
   paths: DiscoveryPaths,
 ): Promise<void> {
   const configReader = new ConfigReader(paths.discovery)
-  const allL2s = configReader.readAllProjectsForChain('ethereum')
+  const allL2s = configReader
+    .readAllDiscoveredProjects()
+    .filter((p) => p.chains.includes('ethereum'))
+    .map((p) => p.project)
 
   const opStackChains = [] as OpStackProject[]
 

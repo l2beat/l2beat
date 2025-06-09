@@ -1,4 +1,5 @@
 export { createDatabase, type Database } from './database'
+export { compiledToSqlQuery } from './utils/compiledToSqlQuery'
 export { type Transaction } from './kysely'
 
 // Records
@@ -13,6 +14,7 @@ export type { UpdateMessageRecord } from './discovery/update-message/entity'
 export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
 export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entity'
 export type { AnomalyRecord } from './other/anomalies/entity'
+export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
 export type {
   FinalityRecord,
   ProjectFinalityRecord,

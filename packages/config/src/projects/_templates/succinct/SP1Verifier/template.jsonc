@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SP1Verifier",
-  "description": "Verifier contract for SP1 proofs."
+  "description": "Verifier contract for SP1 proofs ({{VERSION}})."
 }
