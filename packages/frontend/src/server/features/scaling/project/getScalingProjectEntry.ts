@@ -17,7 +17,7 @@ import {
   isTvsChartDataEmpty,
 } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -127,6 +127,7 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
   >,
+  helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
   const [
     projectsChangeReport,
@@ -143,19 +144,19 @@ export async function getScalingProjectEntry(
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    api.tvs.chart({
+    helpers.tvs.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
       previewRecategorisation: false,
     }),
-    api.activity.chart({
+    helpers.activity.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
-      ? api.costs.projectChart({
+      ? helpers.costs.projectChart.fetch({
           range: '1y',
           projectId: project.id,
         })
@@ -334,6 +335,7 @@ export async function getScalingProjectEntry(
   }
 
   const livenessSection = await getLivenessSection(
+    helpers,
     project,
     liveness[project.id],
     projectsChangeReport.projects[project.id],
