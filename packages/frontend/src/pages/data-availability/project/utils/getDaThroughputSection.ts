@@ -3,10 +3,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/getDaThroughputTable'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { ps } from '~/server/projects'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 
 export async function getDaThroughputSection(
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
   const [throughputChart, throughputData, projectsWithColors] =

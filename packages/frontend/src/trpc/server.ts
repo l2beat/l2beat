@@ -1,10 +1,9 @@
-import type { DehydratedState } from '@tanstack/react-query'
 import { createServerSideHelpers } from '@trpc/react-query/server'
 import { appRouter } from '~/server/trpc/root'
 import { createQueryClient } from './queryClient'
 
-export type ExpressHelpers = ReturnType<typeof getExpressHelpers>
-export const getExpressHelpers = () =>
+export type SsrHelpers = ReturnType<typeof getSsrHelpers>
+export const getSsrHelpers = () =>
   createServerSideHelpers({
     router: appRouter,
     queryClient: createQueryClient(),
@@ -19,26 +18,3 @@ export const getExpressHelpers = () =>
       deserialize: (data) => data,
     },
   })
-
-export type WithDehydratedState<T> = {
-  data: T
-  queryState: DehydratedState
-}
-
-export const mergeDehydratedStates = (
-  ...states: (DehydratedState | undefined)[]
-) => {
-  return states.reduce(
-    (acc: DehydratedState, state) => {
-      if (state) {
-        acc.mutations.push(...state.mutations)
-        acc.queries.push(...state.queries)
-      }
-      return acc
-    },
-    {
-      mutations: [],
-      queries: [],
-    },
-  )
-}

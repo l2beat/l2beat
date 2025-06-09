@@ -5,7 +5,7 @@ import type { ICache } from '~/server/cache/ICache'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingCostsData(
@@ -47,7 +47,7 @@ export async function getScalingCostsData(
 }
 
 async function getCachedData() {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [entries] = await Promise.all([
     getScalingCostsEntries(helpers),
     helpers.costs.chart.prefetch({

@@ -8,11 +8,11 @@ import type { LivenessSectionProps } from '~/components/projects/sections/Livene
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
   project: Project<never, 'trackedTxsConfig' | 'livenessConfig'>,
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,

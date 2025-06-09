@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -23,7 +23,7 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: ExpressHelpers
+  helpers: SsrHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -235,7 +235,7 @@ type EthereumDetailsParams = {
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
-  helpers: ExpressHelpers
+  helpers: SsrHelpers
 }
 
 export async function getEthereumDaProjectSections({

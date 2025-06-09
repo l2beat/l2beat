@@ -10,7 +10,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -63,7 +63,7 @@ export interface BridgesProjectEntry {
 }
 
 export async function getBridgesProjectEntry(
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
   project: Project<
     | 'statuses'
     | 'tvsInfo'

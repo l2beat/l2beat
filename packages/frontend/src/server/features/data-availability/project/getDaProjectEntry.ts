@@ -12,7 +12,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
@@ -86,7 +86,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export async function getDaProjectEntry(
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones' | 'archivedAt'
@@ -228,7 +228,7 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones'

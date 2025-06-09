@@ -1,7 +1,7 @@
 import type { Project, WarningWithSentiment } from '@l2beat/config'
 import { groupByScalingTabs } from '~/pages/scaling/utils/groupByScalingTabs'
 import { ps } from '~/server/projects'
-import type { ExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import {
   type ProjectChanges,
   getProjectsChangeReport,
@@ -13,7 +13,7 @@ import {
 import type { CostsTableData } from './getCostsTableData'
 import { compareStageAndCost } from './utils/compareStageAndCost'
 
-export async function getScalingCostsEntries(helpers: ExpressHelpers) {
+export async function getScalingCostsEntries(helpers: SsrHelpers) {
   const [projectsChangeReport, projects, costs] = await Promise.all([
     getProjectsChangeReport(),
     ps.getProjects({
