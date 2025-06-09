@@ -12,6 +12,7 @@ import {
   mapLayerRisksToRosetteValues,
 } from '~/pages/data-availability/utils/MapRisksToRosetteValues'
 import { ps } from '~/server/projects'
+import type { ExpressHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
@@ -85,6 +86,7 @@ export interface EthereumDaProjectPageEntry extends CommonDaProjectPageEntry {
 }
 
 export async function getDaProjectEntry(
+  helpers: ExpressHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones' | 'archivedAt'
@@ -136,6 +138,7 @@ export async function getDaProjectEntry(
     projectsChangeReport,
     layerGrissiniValues,
     bridgeGrissiniValues,
+    helpers,
   })
   const latestThroughput = layer.daLayer.throughput
     ?.sort((a, b) => a.sinceTimestamp - b.sinceTimestamp)
@@ -225,6 +228,7 @@ export async function getDaProjectEntry(
 }
 
 export async function getEthereumDaProjectEntry(
+  helpers: ExpressHelpers,
   layer: Project<
     'daLayer' | 'display' | 'statuses',
     'isUpcoming' | 'milestones'
@@ -247,6 +251,7 @@ export async function getEthereumDaProjectEntry(
       isVerified: true,
       layerGrissiniValues,
       bridgeGrissiniValues,
+      helpers,
     }),
   ])
 

@@ -39,13 +39,7 @@ export async function getBridgesProjectData(
   const helpers = getExpressHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getBridgesProjectEntry(project),
-    helpers.tvs.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-      previewRecategorisation: false,
-    }),
+    getBridgesProjectEntry(helpers, project),
   ])
 
   return {

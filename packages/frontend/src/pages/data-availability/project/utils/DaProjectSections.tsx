@@ -2,6 +2,7 @@ import type { Project } from '@l2beat/config'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
+import type { ExpressHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -22,6 +23,7 @@ type RegularDetailsParams = {
   projectsChangeReport: ProjectsChangeReport
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
+  helpers: ExpressHelpers
 }
 
 export async function getRegularDaProjectSections({
@@ -31,10 +33,11 @@ export async function getRegularDaProjectSections({
   projectsChangeReport,
   layerGrissiniValues,
   bridgeGrissiniValues,
+  helpers,
 }: RegularDetailsParams) {
   const [contractUtils, throughputSection] = await Promise.all([
     getContractUtils(),
-    getDaThroughputSection(layer),
+    getDaThroughputSection(helpers, layer),
   ])
 
   const permissionsSection =
@@ -232,6 +235,7 @@ type EthereumDetailsParams = {
   isVerified: boolean
   layerGrissiniValues: RosetteValue[]
   bridgeGrissiniValues: RosetteValue[]
+  helpers: ExpressHelpers
 }
 
 export async function getEthereumDaProjectSections({
@@ -240,6 +244,7 @@ export async function getEthereumDaProjectSections({
   isVerified,
   layerGrissiniValues,
   bridgeGrissiniValues,
+  helpers,
 }: EthereumDetailsParams) {
   const riskSummarySection = getDaProjectRiskSummarySection(
     layer,
@@ -249,7 +254,7 @@ export async function getEthereumDaProjectSections({
 
   const items: ProjectDetailsSection[] = []
 
-  const throughputSection = await getDaThroughputSection(layer)
+  const throughputSection = await getDaThroughputSection(helpers, layer)
 
   if (throughputSection) {
     items.push({

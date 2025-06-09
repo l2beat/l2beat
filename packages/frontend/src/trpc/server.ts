@@ -1,30 +1,7 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { createServerSideHelpers } from '@trpc/react-query/server'
-import { createHydrationHelpers } from '@trpc/react-query/rsc'
-import { type AppRouter, createCaller, appRouter } from '~/server/trpc/root'
+import { appRouter } from '~/server/trpc/root'
 import { createQueryClient } from './queryClient'
-import { createTRPCContext } from '~/server/trpc/trpc'
-
-/**
- * This wraps the `createTRPCContext` helper and provides the required context for the tRPC API when
- * handling a tRPC call from a React Server Component.
- */
-const createContext = () => {
-  const heads = new Headers()
-  heads.set('x-trpc-source', 'rsc')
-
-  return createTRPCContext({
-    headers: heads,
-  })
-}
-
-const getQueryClient = createQueryClient
-const caller = createCaller(createContext)
-
-export const { trpc: api, HydrateClient } = createHydrationHelpers<AppRouter>(
-  caller,
-  getQueryClient,
-)
 
 export type ExpressHelpers = ReturnType<typeof getExpressHelpers>
 export const getExpressHelpers = () =>

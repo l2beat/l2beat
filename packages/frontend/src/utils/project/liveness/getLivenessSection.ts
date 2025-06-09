@@ -40,18 +40,11 @@ export async function getLivenessSection(
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
 
-  const [data] = await Promise.all([
-    helpers.liveness.projectChart.fetch({
-      projectId: project.id,
-      range: '30d',
-      subtype: getDefaultSubtype(configuredSubtypes),
-    }),
-    helpers.liveness.projectChart.prefetch({
-      projectId: project.id,
-      range: '30d',
-      subtype: getDefaultSubtype(configuredSubtypes),
-    }),
-  ])
+  const data = await helpers.liveness.projectChart.fetch({
+    projectId: project.id,
+    range: '30d',
+    subtype: getDefaultSubtype(configuredSubtypes),
+  })
 
   if (data.data.length === 0) return undefined
 

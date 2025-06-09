@@ -10,7 +10,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
-import { api } from '~/trpc/server'
+import type { ExpressHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -63,6 +63,7 @@ export interface BridgesProjectEntry {
 }
 
 export async function getBridgesProjectEntry(
+  helpers: ExpressHelpers,
   project: Project<
     | 'statuses'
     | 'tvsInfo'
@@ -84,7 +85,7 @@ export async function getBridgesProjectEntry(
     await Promise.all([
       getProjectsChangeReport(),
       get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-      api.tvs.chart({
+      helpers.tvs.chart.fetch({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,

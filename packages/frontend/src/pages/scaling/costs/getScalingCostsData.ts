@@ -49,13 +49,12 @@ export async function getScalingCostsData(
 async function getCachedData() {
   const helpers = getExpressHelpers()
   const [entries] = await Promise.all([
-    getScalingCostsEntries(),
+    getScalingCostsEntries(helpers),
     helpers.costs.chart.prefetch({
       range: '30d',
       filter: { type: 'rollups' },
       previewRecategorisation: false,
     }),
-    helpers.costs.table.prefetch({ range: '30d' }),
   ])
 
   return {
