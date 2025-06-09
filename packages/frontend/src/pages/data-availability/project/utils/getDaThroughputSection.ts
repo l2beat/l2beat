@@ -9,6 +9,10 @@ export async function getDaThroughputSection(
   helpers: SsrHelpers,
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
+  const configuredThroughput = project.daLayer.throughput
+  if (!configuredThroughput || configuredThroughput.length === 0)
+    return undefined
+
   const [throughputChart, throughputData, projectsWithColors] =
     await Promise.all([
       helpers.da.projectChart.fetch({
