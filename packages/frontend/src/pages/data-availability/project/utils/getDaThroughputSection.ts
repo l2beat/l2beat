@@ -23,18 +23,21 @@ export async function getDaThroughputSection(
 
   if (!projectData) return undefined
 
-  const notSyncedStatus = getThroughputSyncWarning(
-    UnixTime(projectData.syncedUntil),
-    { shorter: true },
-  )
+  const notSyncedStatus = projectData.syncedUntil
+    ? getThroughputSyncWarning(UnixTime(projectData.syncedUntil), {
+        shorter: true,
+      })
+    : undefined
 
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
-    pastDayAvgCapacityUtilization: projectData.pastDayAvgCapacityUtilization,
-    pastDayAvgThroughputPerSecond: projectData.pastDayAvgThroughputPerSecond,
-    largestPoster: projectData.largestPoster,
-    totalPosted: projectData.totalPosted,
+    pastDayAvgCapacityUtilization:
+      projectData.pastDayData?.avgCapacityUtilization,
+    pastDayAvgThroughputPerSecond:
+      projectData.pastDayData?.avgThroughputPerSecond,
+    largestPoster: projectData.pastDayData?.largestPoster,
+    totalPosted: projectData.pastDayData?.totalPosted,
     syncStatus: {
       warning: notSyncedStatus,
       isSynced: !notSyncedStatus,
