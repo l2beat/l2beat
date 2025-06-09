@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import type { Address, Chain } from '../../config/types'
+import type { Address, Chain } from '../config/types'
 import { JsonRpcClient } from './JsonRpcClient'
 
 export interface BasicTxInfo {

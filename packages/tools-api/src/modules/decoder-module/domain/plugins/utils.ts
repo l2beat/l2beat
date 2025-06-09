@@ -1,4 +1,4 @@
-import type { Address, Chain, TokenConfig } from '../../config/types'
+import type { Address, Chain, TokenConfig } from '../../../../config/types'
 import type { Value } from '../DecodedResult'
 
 export function tokenAmount(

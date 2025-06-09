@@ -1,5 +1,5 @@
 import { toFunctionSelector } from 'viem'
-import type { Chain } from '../../config/types'
+import type { Chain } from '../../../../config/types'
 import type { DecodedCall } from '../DecodedResult'
 import { toResultValue } from '../decode'
 import { type AbiValue, decodeType, sliceBytes } from '../encoding'
