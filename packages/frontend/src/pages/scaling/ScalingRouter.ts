@@ -1,7 +1,6 @@
 import express from 'express'
 import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
-import { ScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -39,7 +38,9 @@ export function createScalingRouter(
     '/scaling/activity',
     validateRoute({
       query: z.object({
-        tab: ScalingTab.default('rollups'),
+        tab: z
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
+          .catch('rollups'),
       }),
     }),
     async (req, res) => {
@@ -55,11 +56,21 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/tvs', async (req, res) => {
-    const data = await getScalingTvsData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/tvs',
+    validateRoute({
+      query: z.object({
+        tab: z
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
+          .catch('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingTvsData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/data-availability', async (req, res) => {
     const data = await getScalingDataAvailabilityData(req, manifest, cache)
@@ -79,11 +90,19 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/costs', async (req, res) => {
-    const data = await getScalingCostsData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/costs',
+    validateRoute({
+      query: z.object({
+        tab: z.enum(['rollups', 'others']).catch('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingCostsData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)

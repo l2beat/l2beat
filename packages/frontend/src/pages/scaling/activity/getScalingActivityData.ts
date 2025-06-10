@@ -3,14 +3,18 @@ import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
 import { getScalingActivityEntries } from '~/server/features/scaling/activity/getScalingActivityEntries'
-import type { ScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingActivityData(
-  req: Request<unknown, unknown, unknown, { tab: ScalingTab }>,
+  req: Request<
+    unknown,
+    unknown,
+    unknown,
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
+  >,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
@@ -47,12 +51,15 @@ export async function getScalingActivityData(
   }
 }
 
-async function getCachedData(cache: ICache, tab: ScalingTab) {
+async function getCachedData(
+  cache: ICache,
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const [entries, queryState] = await Promise.all([
     getScalingActivityEntries(),
     cache.get(
       {
-        key: ['scaling', 'activity', 'query-state', tab],
+        key: ['scaling', 'activity', 'data', 'query-state', tab],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
@@ -66,12 +73,10 @@ async function getCachedData(cache: ICache, tab: ScalingTab) {
   }
 }
 
-async function getQueryState(tab: ScalingTab) {
+async function getQueryState(
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+) {
   const helpers = getSsrHelpers()
-
-  if (tab === 'underReview') {
-    return helpers.dehydrate()
-  }
 
   await Promise.all([
     helpers.activity.chart.prefetch({

@@ -9,7 +9,7 @@ import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingCostsData(
-  req: Request,
+  req: Request<unknown, unknown, unknown, { tab: 'rollups' | 'others' }>,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
@@ -21,7 +21,7 @@ export async function getScalingCostsData(
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      getCachedData,
+      () => getCachedData(cache, req.query.tab),
     ),
   ])
 
@@ -46,19 +46,33 @@ export async function getScalingCostsData(
   }
 }
 
-async function getCachedData() {
+async function getCachedData(cache: ICache, tab: 'rollups' | 'others') {
   const helpers = getSsrHelpers()
-  const [entries] = await Promise.all([
+  const [entries, queryState] = await Promise.all([
     getScalingCostsEntries(helpers),
-    helpers.costs.chart.prefetch({
-      range: '30d',
-      filter: { type: 'rollups' },
-      previewRecategorisation: false,
-    }),
+    cache.get(
+      {
+        key: ['scaling', 'costs', 'data', 'query-state', tab],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      () => getQueryState(tab),
+    ),
   ])
 
   return {
     entries,
-    queryState: helpers.dehydrate(),
+    queryState,
   }
+}
+
+async function getQueryState(tab: 'rollups' | 'others') {
+  const helpers = getSsrHelpers()
+
+  await helpers.costs.chart.prefetch({
+    range: '30d',
+    filter: { type: tab },
+    previewRecategorisation: false,
+  })
+  return helpers.dehydrate()
 }
