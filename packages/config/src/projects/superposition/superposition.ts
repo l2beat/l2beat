@@ -26,7 +26,7 @@ export const superposition: ScalingProject = orbitStackL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://superposition.so/'],
-      apps: ['https://bridge.superposition.so/'],
+      bridges: ['https://bridge.superposition.so/'],
       documentation: ['https://docs.superposition.so/'],
       explorers: ['https://explorer.superposition.so/'],
       socialMedia: [

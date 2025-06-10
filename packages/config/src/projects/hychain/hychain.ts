@@ -23,7 +23,7 @@ export const hychain: ScalingProject = orbitStackL2({
       'HYCHAIN is a gaming-focused Orbit stack Optimium that was created to eliminate onboarding and technical challenges for web3 games aiming for widespread adoption.',
     links: {
       websites: ['https://hychain.com'],
-      apps: ['https://bridge.hychain.com'],
+      bridges: ['https://bridge.hychain.com'],
       documentation: ['https://docs.hychain.com'],
       explorers: ['https://explorer.hychain.com'],
       repositories: ['https://github.com/kintoxyz'],

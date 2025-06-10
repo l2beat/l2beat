@@ -22,7 +22,7 @@ export const edgeless: ScalingProject = orbitStackL2({
       'Edgeless is an Orbit stack general-purpose Optimium without application layer fees. It uses ewETH as the native token, which is a wrapped version of underlying investment strategies.',
     links: {
       websites: ['https://edgeless.network/'],
-      apps: ['https://bridge.edgeless.network/'],
+      bridges: ['https://bridge.edgeless.network/'],
       documentation: ['https://docs.edgeless.network/'],
       explorers: ['https://explorer.edgeless.network/'],
       repositories: ['https://github.com/edgelessNetwork'],

@@ -24,7 +24,7 @@ export const hypr: ScalingProject = opStackL2({
     description: 'Hypr is a blockchain focused on scaling ZK gaming.',
     links: {
       websites: ['https://hypr.network/'],
-      apps: ['https://bridge.hypr.network/'],
+      bridges: ['https://bridge.hypr.network/'],
       documentation: ['https://docs.hypr.network'],
       explorers: ['https://explorer.hypr.network/'],
       socialMedia: [

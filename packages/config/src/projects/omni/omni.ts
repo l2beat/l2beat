@@ -27,7 +27,7 @@ export const omni: Bridge = {
     warning: warningText,
     category: 'Single-chain',
     links: {
-      apps: ['https://bridge.gnosischain.com'],
+      bridges: ['https://bridge.gnosischain.com'],
       websites: ['https://bridge.gnosischain.com/bridge-explorer/bridges'],
       documentation: ['https://docs.gnosischain.com/bridges/'],
       explorers: [

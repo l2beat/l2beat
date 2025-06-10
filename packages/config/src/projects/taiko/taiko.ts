@@ -111,7 +111,7 @@ export const taiko: ScalingProject = {
     category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.taiko.xyz/'],
+      bridges: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
       explorers: ['https://taikoscan.io', 'https://taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],

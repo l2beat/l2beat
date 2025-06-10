@@ -95,7 +95,7 @@ export const linea: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
-      apps: ['https://bridge.linea.build/'],
+      bridges: ['https://bridge.linea.build/'],
       documentation: ['https://docs.linea.build/'],
       explorers: [
         'https://lineascan.build/',

@@ -21,7 +21,7 @@ export const blast: ScalingProject = opStackL2({
       'Blast is an EVM-compatible Optimistic Rollup supporting native yield. It invests funds deposited into the L1 bridge into various DeFi protocols transferring yield back to the L2.',
     links: {
       websites: ['https://blast.io/en'],
-      apps: ['https://blast.io/en/bridge'],
+      bridges: ['https://blast.io/en/bridge'],
       documentation: ['https://docs.blast.io/about-blast'],
       explorers: [
         'https://blastscan.io',

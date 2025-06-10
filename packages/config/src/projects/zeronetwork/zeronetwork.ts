@@ -21,7 +21,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
       'ZERO Network is an L2 by the Zerion wallet team, utilizing the ZK stack and native account abstraction, allowing Zerion wallet users gasless and prioritized transactions.',
     links: {
       websites: ['https://zero.network/'],
-      apps: [
+      bridges: [
         'https://bridge.zero.network/',
         'https://app.zerion.io/bridge?outputChain=zero&inputChain=ethereum',
       ],

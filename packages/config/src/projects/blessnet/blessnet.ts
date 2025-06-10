@@ -24,7 +24,7 @@ export const blessnet: ScalingProject = orbitStackL3({
       'Blessnet is an Orbit stack Optimium aiming to create a more interconnected and efficient Ethereum ecosystem, where users can interact safely across multiple chains while keeping their valuable assets secure on established networks.',
     links: {
       websites: ['https://bless.net/'],
-      apps: [
+      bridges: [
         'https://blessnet.bridge.caldera.xyz/',
         'https://bridge.bless.net/',
       ],

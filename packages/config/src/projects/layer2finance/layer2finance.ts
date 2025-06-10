@@ -23,7 +23,7 @@ export const layer2finance: ScalingProject = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://layer2.finance/'],
-      apps: ['https://app.l2.finance/'],
+      bridges: ['https://app.l2.finance/'],
       documentation: ['https://docs.l2.finance/'],
       repositories: [
         'https://github.com/celer-network/layer2-finance-contracts',

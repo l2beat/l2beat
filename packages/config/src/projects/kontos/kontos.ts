@@ -15,7 +15,7 @@ export const kontos: ScalingProject = underReviewL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://kontos.io/'],
-      apps: ['https://wallet.kontos.io/'],
+      bridges: ['https://wallet.kontos.io/'],
       documentation: ['https://docs.kontos.io/'],
       explorers: ['https://explorer.kontos.io/'],
       repositories: ['https://twitter.com/kontosio'],

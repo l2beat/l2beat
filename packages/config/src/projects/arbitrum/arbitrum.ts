@@ -107,7 +107,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
-      apps: ['https://bridge.arbitrum.io'],
+      bridges: ['https://bridge.arbitrum.io'],
       documentation: [
         'https://docs.arbitrum.io',
         'https://docs.arbitrum.foundation/',

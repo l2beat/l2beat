@@ -30,7 +30,7 @@ export const b3: ScalingProject = opStackL3({
       'B3 is an L3 built on Base to bring gamers and game creators onchain, powered by the OP Stack and Celestia DA.',
     links: {
       websites: ['https://b3.fun/'],
-      apps: ['https://bridge.b3.fun/'],
+      bridges: ['https://bridge.b3.fun/'],
       documentation: ['https://docs.b3.fun/'],
       explorers: ['https://explorer.b3.fun/'],
       repositories: [],

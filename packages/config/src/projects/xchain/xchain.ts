@@ -22,7 +22,7 @@ export const xchain: ScalingProject = orbitStackL2({
       'XCHAIN is an Optimium based on the Arbitrum Orbit stack. It is built to support IDEX - a high-performance perpetual swaps exchange. It allows for gas free and nearly instant settlement of all IDEX transactions.',
     links: {
       websites: ['https://idex.io/'],
-      apps: ['https://exchange.idex.io/'],
+      bridges: ['https://exchange.idex.io/'],
       documentation: ['https://docs.idex.io/'],
       explorers: ['https://xchain-explorer.idex.io/'],
       socialMedia: [

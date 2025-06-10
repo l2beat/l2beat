@@ -17,7 +17,7 @@ export const evedex: ScalingProject = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://evedex.com/'],
-      apps: ['https://demo-exchange.evedex.com/'],
+      bridges: ['https://demo-exchange.evedex.com/'],
       documentation: ['https://evedex.com/en-US/contracts/'],
       repositories: [],
       socialMedia: [

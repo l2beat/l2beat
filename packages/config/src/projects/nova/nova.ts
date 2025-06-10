@@ -123,7 +123,7 @@ export const nova: ScalingProject = orbitStackL2({
         'https://arbitrum.io/',
         'https://arbitrum.foundation/',
       ],
-      apps: [
+      bridges: [
         'https://bridge.arbitrum.io/?destinationChain=arbitrum-nova&sourceChain=ethereum',
       ],
       documentation: [

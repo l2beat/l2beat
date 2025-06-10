@@ -17,7 +17,7 @@ export const gravity: Bridge = {
     links: {
       websites: ['https://gravitybridge.net/'],
       explorers: ['https://mintscan.io/gravity-bridge'],
-      apps: [
+      bridges: [
         'https://spacestation.zone/',
         'https://bridge.blockscape.network/',
       ],

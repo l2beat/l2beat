@@ -63,7 +63,7 @@ export const fraxtal: ScalingProject = opStackL2({
       'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
     links: {
       websites: ['https://frax.com/'],
-      apps: ['https://app.frax.finance/'],
+      bridges: ['https://app.frax.finance/'],
       documentation: ['https://docs.frax.com/'],
       explorers: ['https://fraxscan.com/'],
       repositories: ['https://github.com/FraxFinance'],
