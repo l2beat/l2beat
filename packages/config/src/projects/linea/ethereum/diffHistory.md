@@ -1,16 +1,24 @@
-Generated with discovered.json: 0x8133b24d8bba7ecb1a59111fe5b92ca633980db5
+Generated with discovered.json: 0xefb434e1eed28493b0bb2a984f66c40c55806701
 
-# Diff at Sun, 08 Jun 2025 16:52:12 GMT:
+# Diff at Tue, 10 Jun 2025 07:14:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@305afcf93e56ce863b326c24b83aa74224fd9140 block: 22415188
-- current block number: 22661176
+- comparing to: main@06eb023461c50e23c02be21b7bad307e0e7e3b73 block: 22415188
+- current block number: 22672599
 
 ## Description
 
 the incomplete plonkverifier `0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F` is removed. 
 
 new proposer Multisig for the main timelock added.
+
+06/10: new validator added: 0xED with new keys. (via telegram this is the 100% complete verifier, waiting for the `0x41` vali to be removed)
+
+context from telegram:
+
+> - Alpha verifiers: were removed on Monday
+> - Beta v1.4 verifier (99% prover completeness): were activated a few weeks back and should be removed next week [this week]
+> - Beta v2.0 verifier (100% prover completeness): will be activated on Thursday and removed early next week [this week], once the upgrade is successful on Monday.
 
 ## Watched changes
 
@@ -60,6 +68,10 @@ new proposer Multisig for the main timelock added.
     contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
     +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
 +++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.19:
+-        "0x1111111111111111111111111111111111111111"
++        "0xED39C0C41A7651006953AB58Ecb3039363620995"
++++ description: Mapping of proof type to ZK Plonk Verifier contract
       values.verifiers.18:
 -        "0x1111111111111111111111111111111111111111"
 +        "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7"
@@ -94,13 +106,20 @@ new proposer Multisig for the main timelock added.
     +++ description: None
 ```
 
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995)
+    +++ description: None
+```
+
 ## Source code changes
 
 ```diff
-.../linea/ethereum/.flat/Linea Multisig 2/Safe.sol | 1088 ++++++++++++++++
+.../linea/ethereum/.flat/Linea Multisig 2/Safe.sol | 1088 ++++++++++++++++++++
  .../.flat/Linea Multisig 2/SafeProxy.p.sol         |   37 +
- .../dev/null                                       | 1348 --------------------
- 3 files changed, 1125 insertions(+), 1348 deletions(-)
+ ...0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7.sol} |    0
+ ...0xED39C0C41A7651006953AB58Ecb3039363620995.sol} |  487 +++++----
+ 4 files changed, 1361 insertions(+), 251 deletions(-)
 ```
 
 ## Config/verification related changes

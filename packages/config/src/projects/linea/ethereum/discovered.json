@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22661176,
+  "blockNumber": 22672599,
   "configHash": "0x0ebbf1aca1475ea6bd4b145b119506921aea42263c6a25457d24efd8f8fa32d3",
   "entries": [
     {
@@ -142,11 +142,6 @@
     },
     {
       "address": "0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x1111111111111111111111111111111111111111",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -414,7 +409,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 58,
+        "nonce": 59,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -652,11 +647,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0x57bc4a93be507c4b4602f933462f521bcf7236d4ad9f7ed7e227620e14156717",
-        "currentFinalizedState": "0xbc08d0d2fa95e4d2a885fd6e2ac2c98a9fa0e9d04391a477c577a21718113b96",
+        "currentFinalizedShnarf": "0xf30b8034199eb9d3b4081365c97ac996b322efc41cacc995955bf1bd4e9fd188",
+        "currentFinalizedState": "0x7dfe33f2c4924bbab85f8233dfa63f5dc0538821b8a854dec7e828b1b764d284",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "642889500000000000",
+        "currentPeriodAmountInWei": "104724093605821426455",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -698,7 +693,7 @@
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
-          "0x1111111111111111111111111111111111111111",
+          "0xED39C0C41A7651006953AB58Ecb3039363620995",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
@@ -807,6 +802,21 @@
       },
       "implementationNames": {
         "0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
+      }
+    },
+    {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "0xED39C0C41A7651006953AB58Ecb3039363620995",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1748943779,
+      "sinceBlock": 22623305,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xED39C0C41A7651006953AB58Ecb3039363620995": "PlonkVerifierMainnetFull"
       }
     },
     {
@@ -1365,6 +1375,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xED39C0C41A7651006953AB58Ecb3039363620995": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "0xF24f1DC519d88246809B660eb56D94048575d083": [
       "constructor(address _owner, address _avatar, address _target)",
       "error ArraysDifferentLength()",
@@ -1440,5 +1453,5 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x3c826fc9a234f7fca61e0f87ce24a00a5a3bf2062f6e03980f2880ddb7a02ed1"
+  "permissionsConfigHash": "0xe6caff14b40f3f88897572a8b5d00554c4b74bed10ea5fd273827a0629ff37a4"
 }
