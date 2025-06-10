@@ -5,11 +5,20 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { z } from 'zod'
+
+export const ScalingTab = z.enum([
+  'rollups',
+  'validiumsAndOptimiums',
+  'others',
+  'underReview',
+])
+export type ScalingTab = z.infer<typeof ScalingTab>
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview'
+  tab: ScalingTab
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }

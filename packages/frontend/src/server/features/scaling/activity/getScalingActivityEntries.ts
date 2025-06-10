@@ -6,7 +6,7 @@ import { ps } from '~/server/projects'
 import type { ProjectChanges } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { getProjectIcon } from '../../utils/getProjectIcon'
-import type { CommonScalingEntry } from '../getCommonScalingEntry'
+import type { CommonScalingEntry, ScalingTab } from '../getCommonScalingEntry'
 import { getCommonScalingEntry } from '../getCommonScalingEntry'
 import type { ActivityProjectTableData } from './getActivityTableData'
 import { getActivityTable } from './getActivityTableData'
@@ -93,7 +93,7 @@ function getScalingProjectActivityEntry(
 
 function getEthereumEntry(
   data: ActivityProjectTableData,
-  tab: CommonScalingEntry['tab'],
+  tab: ScalingTab,
 ): ScalingActivityEntry {
   const notSyncedStatus = data
     ? getActivitySyncWarning(data.syncedUntil)

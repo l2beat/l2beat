@@ -1,6 +1,7 @@
 import express from 'express'
 import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
+import { ScalingTab } from '~/server/features/scaling/getCommonScalingEntry'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
@@ -34,11 +35,19 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/activity', async (req, res) => {
-    const data = await getScalingActivityData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/activity',
+    validateRoute({
+      query: z.object({
+        tab: ScalingTab.default('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingActivityData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/risk', async (req, res) => {
     const data = await getScalingRiskData(req, manifest, cache)
