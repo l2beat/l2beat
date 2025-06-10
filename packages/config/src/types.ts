@@ -209,6 +209,7 @@ export type BadgeFilterId =
   | 'raas'
   | 'infrastructure'
   | 'vm'
+  | 'other'
 
 export interface Milestone {
   title: string
