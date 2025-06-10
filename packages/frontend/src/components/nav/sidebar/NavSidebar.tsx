@@ -208,5 +208,5 @@ function NavCollapsibleItem({
 }
 
 function getIsActive(href: string, pathname: string) {
-  return pathname.startsWith(href)
+  return pathname === href || pathname.startsWith(href + '/')
 }
