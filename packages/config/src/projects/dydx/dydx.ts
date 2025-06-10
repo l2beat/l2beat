@@ -101,7 +101,7 @@ export const dydx: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
-      apps: [
+      bridges: [
         'https://trade.dydx.exchange/',
         'https://margin.dydx.exchange/',
         'https://dydx.l2beat.com',

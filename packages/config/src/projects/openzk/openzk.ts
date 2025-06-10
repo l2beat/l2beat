@@ -24,7 +24,7 @@ export const openzk: ScalingProject = underReviewL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://openzk.net/'],
-      apps: [
+      bridges: [
         'https://portal.openzk.net/bridge',
         'https://openzk-mainnet-bridge.vercel.app/bridge',
       ],

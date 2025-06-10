@@ -27,7 +27,7 @@ export const pepeunchained: ScalingProject = opStackL2({
       'Pepe Unchained is an Optimium utilizing the OP Stack. It focuses on memes and provides a home for meme creators, traders, and communities to thrive.',
     links: {
       websites: ['https://pepeunchained.com/'],
-      apps: ['https://pepubridge.com/'],
+      bridges: ['https://pepubridge.com/'],
       documentation: ['https://guide.pepeunchained.com/'],
       explorers: ['https://pepuscan.com'],
       socialMedia: ['https://x.com/pepe_unchained'],

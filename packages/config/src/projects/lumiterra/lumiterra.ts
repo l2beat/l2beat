@@ -18,7 +18,7 @@ export const lumiterra: ScalingProject = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://lumiterra.net/'],
-      apps: ['https://bridge.layerlumi.com/?l2ChainId=94168'],
+      bridges: ['https://bridge.layerlumi.com/?l2ChainId=94168'],
       documentation: [
         'https://docs.lumiterra.net/docs/overview/mainnet-beta/beta-test-arbiturm',
       ],

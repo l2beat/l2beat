@@ -32,7 +32,7 @@ export const near: Bridge = {
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
-      apps: ['https://rainbowbridge.app/'],
+      bridges: ['https://rainbowbridge.app/'],
       repositories: ['https://github.com/aurora-is-near/rainbow-bridge'],
       socialMedia: ['https://twitter.com/auroraisnear'],
     },

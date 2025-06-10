@@ -25,7 +25,7 @@ export const degen: ScalingProject = orbitStackL3({
       'Degen Chain is an ultra-low-cost L3 for the Degen community built with Arbitrum Orbit, Base for settlement, and AnyTrust for data availability. DEGEN is the native gas token.',
     links: {
       websites: ['https://syndicate.io/blog/degen-chain'],
-      apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],
+      bridges: ['https://bridge.degen.tips/', 'https://degen.tips/'],
       documentation: ['https://docs.syndicate.io/get-started/introduction'],
       explorers: ['https://explorer.degen.tips/'],
       socialMedia: [

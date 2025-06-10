@@ -51,7 +51,7 @@ export const zkspace: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
-      apps: ['https://zkbase.app'],
+      bridges: ['https://zkbase.app'],
       documentation: ['https://en.wiki.zks.org/'],
       explorers: ['https://explorer.zkbase.app/'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],

@@ -22,7 +22,7 @@ export const mint: ScalingProject = opStackL2({
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
     links: {
       websites: ['https://mintchain.io/'],
-      apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
+      bridges: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
       documentation: ['https://docs.mintchain.io/'],
       explorers: ['https://explorer.mintchain.io'],
       repositories: ['https://github.com/Mint-Blockchain'],

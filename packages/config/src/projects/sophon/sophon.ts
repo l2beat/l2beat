@@ -36,7 +36,7 @@ export const sophon: ScalingProject = zkStackL2({
       'Sophon is a consumer-centric ecosystem on a ZK Stack Validium L2, designed to bring onchain benefits to everyday lifestyle and entertainment applications.',
     links: {
       websites: ['https://sophon.xyz/'],
-      apps: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
+      bridges: ['https://portal.sophon.xyz/', 'https://farm.sophon.xyz/'],
       documentation: ['https://docs.sophon.xyz/sophon'],
       explorers: ['https://explorer.sophon.xyz/'],
       repositories: ['https://github.com/sophon-org'],

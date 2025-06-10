@@ -27,7 +27,7 @@ export const geist: ScalingProject = orbitStackL3({
     category: 'Optimium',
     links: {
       websites: ['https://playongeist.com/', 'https://dapp.aavegotchi.com/'],
-      apps: [
+      bridges: [
         'https://bridge.arbitrum.io/?destinationChain=geist-mainnet&sourceChain=base',
         'https://dapp.aavegotchi.com/migrate?type=migrateTokens&fromChain=137&toChain=63157',
       ],

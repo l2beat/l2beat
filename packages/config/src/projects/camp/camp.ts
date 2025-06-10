@@ -16,7 +16,7 @@ export const camp: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://campnetwork.xyz/'],
-      apps: ['https://camp-testnet-bridge.vercel.app/'],
+      bridges: ['https://camp-testnet-bridge.vercel.app/'],
       documentation: ['https://campaign-1.gitbook.io/camp-technical-docs'],
       explorers: [
         'https://explorerl2new-camp-network-4xje7wy105.t.conduit.xyz/',

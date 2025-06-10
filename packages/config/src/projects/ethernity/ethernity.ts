@@ -21,7 +21,7 @@ export const ethernity: ScalingProject = opStackL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://epicchain.io/'],
-      apps: [
+      bridges: [
         'https://swap.epicchain.io/',
         'https://bridge.gelato.network/bridge/ethernity-mainnet',
       ],

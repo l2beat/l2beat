@@ -18,7 +18,7 @@ export const fuse: ScalingProject = upcomingL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://fuse.io/'],
-      apps: ['https://fuse.io/network'],
+      bridges: ['https://fuse.io/network'],
       documentation: ['https://docs.fuse.io/fuse-ember/about-fuse-ember-l2/'],
       explorers: ['https://explorer.fuse.io/'],
       repositories: ['https://github.com/fuseio'],

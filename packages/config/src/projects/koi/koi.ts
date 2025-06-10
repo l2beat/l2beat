@@ -16,7 +16,7 @@ export const koi: ScalingProject = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://koi.finance/'],
-      apps: ['https://dapp.koi.finance/'],
+      bridges: ['https://dapp.koi.finance/'],
       documentation: ['https://docs.koi.finance/'],
       repositories: ['https://github.com/koifinance'],
       socialMedia: [

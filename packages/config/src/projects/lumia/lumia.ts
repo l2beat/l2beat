@@ -38,7 +38,7 @@ export const lumia: ScalingProject = polygonCDKStack({
       'Lumia is a Validium built on the PolygonCDK stack focusing on real world assets, restaking and account abstraction.',
     links: {
       websites: ['https://lumia.org/'],
-      apps: ['https://bridge.lumia.org/'],
+      bridges: ['https://bridge.lumia.org/'],
       explorers: ['https://explorer.lumia.org/', 'https://lens.lumia.org/'],
       documentation: ['https://docs.lumia.org/'],
       repositories: [

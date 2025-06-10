@@ -16,7 +16,7 @@ export const vessel: ScalingProject = upcomingL3({
     purposes: ['Exchange'],
     links: {
       websites: ['https://vessel.finance/'],
-      apps: ['https://trade.vessel.finance/'],
+      bridges: ['https://trade.vessel.finance/'],
       documentation: ['https://vesselfinance.gitbook.io/vessel'],
       explorers: [],
       socialMedia: [

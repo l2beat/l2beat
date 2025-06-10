@@ -24,7 +24,7 @@ export const cheese: ScalingProject = underReviewL3({
     purposes: ['Universal'],
     links: {
       websites: ['https://docs.cheesechain.xyz/'],
-      apps: [
+      bridges: [
         'https://cheesechain.bridge.caldera.xyz/',
         'https://bridge.cheesechain.xyz/',
       ],

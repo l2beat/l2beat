@@ -59,7 +59,7 @@ export const fuel: ScalingProject = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://fuel.network/'],
-      apps: [
+      bridges: [
         'https://app.fuel.network/ecosystem',
         'https://app.fuel.network/bridge',
       ],

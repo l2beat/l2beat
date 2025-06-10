@@ -70,7 +70,7 @@ export const myria: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://myria.com/'],
-      apps: ['https://hub.immutable.com/'],
+      bridges: ['https://hub.immutable.com/'],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
       repositories: ['https://github.com/starkware-libs/starkex-contracts'],
       socialMedia: [

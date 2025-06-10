@@ -31,7 +31,7 @@ export const acrossV3: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
-      apps: ['https://app.across.to/bridge'],
+      bridges: ['https://app.across.to/bridge'],
       repositories: ['https://github.com/across-protocol/contracts-v2'],
       documentation: ['https://docs.across.to/'],
       socialMedia: [

@@ -26,7 +26,7 @@ export const lyra: ScalingProject = opStackL2({
       'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     links: {
       websites: ['https://derive.xyz/'],
-      apps: ['https://derive.xyz/options/eth'],
+      bridges: ['https://derive.xyz/options/eth'],
       documentation: ['https://docs.lyra.finance/'],
       explorers: ['https://explorer.derive.xyz/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],

@@ -16,7 +16,7 @@ export const canto: ScalingProject = upcomingL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://canto.io'],
-      apps: ['https://app.canto.io/bridge'],
+      bridges: ['https://app.canto.io/bridge'],
       documentation: ['https://docs.canto.io'],
       explorers: ['https://tuber.build'],
       repositories: ['https://github.com/Canto-Network'],

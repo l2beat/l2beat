@@ -32,7 +32,7 @@ export const gluon: ScalingProject = {
     category: 'Plasma',
     links: {
       websites: ['https://gluon.network/', 'https://leverj.io/'],
-      apps: ['https://live.leverj.io/'],
+      bridges: ['https://live.leverj.io/'],
       documentation: ['https://leverj.github.io/claim-gluon-balances/'],
       explorers: ['https://gluon.leverj.io/'],
       socialMedia: [
