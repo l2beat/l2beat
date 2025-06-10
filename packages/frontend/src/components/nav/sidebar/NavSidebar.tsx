@@ -184,7 +184,7 @@ function NavCollapsibleItem({
               key={item.title}
               isActive={getIsActive(item.href, pathname)}
             >
-              <span>{item.title}</span>
+              <span className="leading-tight">{item.title}</span>
             </SidebarGroupSubButton>
           ))}
           {group.secondaryLinks && group.secondaryLinks.length > 0 && (
