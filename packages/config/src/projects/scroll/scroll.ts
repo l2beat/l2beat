@@ -631,7 +631,7 @@ export const scroll: ScalingProject = {
   milestones: [
     {
       title: 'Emergency upgrade',
-      url: 'https://etherscan.io/tx/0xba98265b96c11b6b22d44f813082daf29a4dd0dd3dc40057ac4f9f6619362d0d',
+      url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
       date: '2025-05-26T00:00:00Z',
       description:
         'The SecurityCouncil emergency upgrades to fix a bug in the plonky3-based proof system.',
