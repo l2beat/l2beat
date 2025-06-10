@@ -8,6 +8,8 @@ interface Props {
   size?: 'lg' | 'md' | 'sm' | 'xs'
   className?: string
   withBackground?: boolean
+  shortSuffix?: boolean
+  timePartClassName?: string
 }
 
 export function Countdown({
@@ -15,6 +17,8 @@ export function Countdown({
   size = 'md',
   className,
   withBackground = false,
+  shortSuffix = true,
+  timePartClassName,
 }: Props) {
   const [secondsLeft, setSecondsLeft] = useState(expiresAt - UnixTime.now())
 
@@ -33,16 +37,32 @@ export function Countdown({
         className,
       )}
     >
-      <MemoizedTimePart suffix="d" size={size}>
+      <MemoizedTimePart
+        suffix={shortSuffix ? 'd' : 'days'}
+        size={size}
+        className={timePartClassName}
+      >
         {days}
       </MemoizedTimePart>
-      <MemoizedTimePart suffix="h" size={size}>
+      <MemoizedTimePart
+        suffix={shortSuffix ? 'h' : 'hrs'}
+        size={size}
+        className={timePartClassName}
+      >
         {hours}
       </MemoizedTimePart>
-      <MemoizedTimePart suffix="m" size={size}>
+      <MemoizedTimePart
+        suffix={shortSuffix ? 'm' : 'min'}
+        size={size}
+        className={timePartClassName}
+      >
         {minutes}
       </MemoizedTimePart>
-      <MemoizedTimePart suffix="s" size={size}>
+      <MemoizedTimePart
+        suffix={shortSuffix ? 's' : 'sec'}
+        size={size}
+        className={timePartClassName}
+      >
         {seconds}
       </MemoizedTimePart>
     </div>
