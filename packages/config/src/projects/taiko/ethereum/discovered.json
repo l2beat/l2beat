@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22630425,
+  "blockNumber": 22666471,
   "configHash": "0xc1d6d463dea3b1cff74ea70dd19ffac0f6bdc5ec34bed29469145e8d6e1fc142",
   "entries": [
     {
@@ -360,68 +360,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1189200,
-          "blockId_": 1189200,
+          "batchId_": 1197740,
+          "blockId_": 1197740,
           "ts_": {
-            "parentHash": "0x3c9172c17d6b9bc42ef691be2a9a0fdb3be5a1cdd33dc4173177fd5b76641d12",
-            "blockHash": "0x6411c4b08bf47a43cf73c26feb53f8d187272fdb6e66cd4f6d1f29d28b6b16ae",
-            "stateRoot": "0x46d90ccccd6e882cbf05bee1af9c73a1b84f43fb4a815e2a364cc727bdc5f4ad",
-            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+            "parentHash": "0x079fabbbaac1a232ea5798551f2bdbd874be9b234eaa7c3aee93cfbcf791deae",
+            "blockHash": "0xe66ffe2420ef5397f77c11362b51f25c6043922ca4bf4087a93695f08c96c029",
+            "stateRoot": "0xb0bc734eac0b4c6d3f7b0aad3b75a905377ae022b876525f4808e0409a1b1d81",
+            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1749022031
+            "createdAt": 1749456671
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1189201,
-          "blockHash_": "0x0382f970042d1cf0ed307a4e4f6f305b8a7c4e531a2bf845a4a8ba5a1b4d3811",
-          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1738783907
+          "blockId_": 1197740,
+          "blockHash_": "0xe66ffe2420ef5397f77c11362b51f25c6043922ca4bf4087a93695f08c96c029",
+          "stateRoot_": "0xb0bc734eac0b4c6d3f7b0aad3b75a905377ae022b876525f4808e0409a1b1d81",
+          "verifiedAt_": 1738979279
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1189201,
-          "blockId_": 1189201,
+          "batchId_": 1197740,
+          "blockId_": 1197740,
           "ts_": {
-            "parentHash": "0x6411c4b08bf47a43cf73c26feb53f8d187272fdb6e66cd4f6d1f29d28b6b16ae",
-            "blockHash": "0x0382f970042d1cf0ed307a4e4f6f305b8a7c4e531a2bf845a4a8ba5a1b4d3811",
-            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "parentHash": "0x079fabbbaac1a232ea5798551f2bdbd874be9b234eaa7c3aee93cfbcf791deae",
+            "blockHash": "0xe66ffe2420ef5397f77c11362b51f25c6043922ca4bf4087a93695f08c96c029",
+            "stateRoot": "0xb0bc734eac0b4c6d3f7b0aad3b75a905377ae022b876525f4808e0409a1b1d81",
             "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1749018515
+            "createdAt": 1749456671
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1189200,
-            "lastSynecdAt": 1749029291
+            "lastSyncedBlockId": 1197740,
+            "lastSynecdAt": 1749464699
           },
           {
-            "numBlocks": 1189490,
-            "lastVerifiedBlockId": 1189201,
+            "numBlocks": 1197910,
+            "lastVerifiedBlockId": 1197740,
             "provingPaused": false,
-            "lastProposedIn": 22630419,
+            "lastProposedIn": 22666471,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1189200,
-          "lastSyncedAt": 1749029291
+          "lastSyncedBatchId": 1197740,
+          "lastSyncedAt": 1749464699
         },
         "getStats2": {
-          "numBatches": 1189490,
-          "lastVerifiedBatchId": 1189201,
+          "numBatches": 1197910,
+          "lastVerifiedBatchId": 1197740,
           "paused": false,
-          "lastProposedIn": 22630419,
+          "lastProposedIn": 22666471,
           "lastUnpausedAt": 1716571955
         },
         "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
         "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 22630419,
+        "lastProposedIn": 22666471,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -462,14 +462,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1189200,
-            "lastSyncedAt": 1749029291
+            "lastSyncedBatchId": 1197740,
+            "lastSyncedAt": 1749464699
           },
           "stats2": {
-            "numBatches": 1189490,
-            "lastVerifiedBatchId": 1189201,
+            "numBatches": 1197910,
+            "lastVerifiedBatchId": 1197740,
             "paused": false,
-            "lastProposedIn": 22630419,
+            "lastProposedIn": 22666471,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -642,7 +642,7 @@
       "sinceTimestamp": 1714033799,
       "sinceBlock": 19731197,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106",
         "$pastUpgrades": [
           [
@@ -682,7 +682,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1749029807,
+        "clock": 1749465479,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -704,7 +704,7 @@
         "impl": "0x5C96Ff5B7F61b9E3436Ef04DA1377C8388dfC106",
         "inNonReentrant": false,
         "name": "Taiko Token",
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "resolver": "0x0000000000000000000000000000000000000000",
@@ -911,7 +911,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 95,
+        "nonce": 97,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1356,6 +1356,52 @@
       }
     },
     {
+      "name": "TaikoDAOController",
+      "address": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+      "type": "Contract",
+      "template": "taiko/TaikoDAOController",
+      "sourceHashes": [
+        "0xc44a84c18fe7660acbe7750e0a14401b3a0a0ad97d8c81305bd879dca88d873b",
+        "0xacca94dada8d52e2f59e26907cb2b2de0a50f5241a1548ba8ceb5e2162f45040"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1748146475,
+      "sinceBlock": 22557392,
+      "values": {
+        "$admin": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "$implementation": "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06",
+        "$pastUpgrades": [
+          [
+            "2025-05-25T04:14:35.000Z",
+            "0x5da0579fa85d4712efb3d66c95ee884d73259ede79760d25f685e4c3c3c4c0c1",
+            ["0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "impl": "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06",
+        "inNonReentrant": false,
+        "lastExecutionId": 0,
+        "owner": "0x9CDf589C941ee81D75F34d3755671d614f7cf261",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "EXPECT_REVERT",
+        "resolver": "0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": "ERC1967Proxy",
+        "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06": "TaikoDAOController"
+      },
+      "category": { "name": "Governance", "priority": 3 }
+    },
+    {
       "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1390,7 +1436,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 10,
+        "nextInstanceId": 11,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -1707,7 +1753,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 14,
+        "proposalCount": 19,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1722,7 +1768,12 @@
           "594868197801926748603689506985812031612995502090",
           "594868769476303175780308156445682560815637463051",
           "594932801089851422612858457733038049577270247436",
-          "595112788683881116119978678391417950963358498829"
+          "595112788683881116119978678391417950963358498829",
+          "595168678020953678736974786657474616653076496398",
+          "595202819231391590334926314529761202858453106703",
+          "595223403592331371744459256866956472219296858128",
+          "595223436259438596154551751121806216745162113041",
+          "595300306046126036153418824792663965561388007442"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1901,11 +1952,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
           "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "role": "admin"
         },
@@ -1999,7 +2045,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 98,
+        "nonce": 101,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2019,6 +2065,11 @@
       "proxyType": "EIP1967 proxy",
       "description": "The main contract of the Aragon-based DAO governance framework.",
       "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+          "role": "admin"
+        },
         {
           "permission": "upgrade",
           "from": "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
@@ -2160,7 +2211,7 @@
         "inNonReentrant": false,
         "INSTANCE_EXPIRY": 31536000,
         "INSTANCE_VALIDITY_DELAY": 0,
-        "nextInstanceId": 10,
+        "nextInstanceId": 11,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -2561,7 +2612,7 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37267,
+        "nextMessageId": 37306,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -2608,7 +2659,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 9,
+        "proposalCount": 10,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -2817,7 +2868,7 @@
         "0x2031bc459fbe34f9e0c0bbb1b59039b00ed92ea44002b5be98688d952fb1e4e9"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum.",
+      "description": "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.",
       "sinceTimestamp": 1746942803,
       "sinceBlock": 22458143,
       "values": {
@@ -3169,6 +3220,46 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifySignalReceived(uint64 _chainId, address _app, bytes32 _signal, bytes _proof) view"
+    ],
+    "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06": [
+      "constructor()",
+      "error ACCESS_DENIED()",
+      "error DryrunSucceeded()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INNER_ERROR(bytes innerError)",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event ActionExecuted(address indexed target, uint256 value, bytes data)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DryrunGasCost(uint256 gasUsed)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function acceptOwnershipOf(address _contractToOwn)",
+      "function dryrun(bytes _actions) payable",
+      "function execute(bytes _actions) returns (bytes[] results_)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _taikoDAO)",
+      "function lastExecutionId() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolver() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x436a1075099A145417EBFc74BBaC9605e3e4f1A7": [
       "constructor(address _singleton)"
@@ -3724,6 +3815,12 @@
       "event Upgraded(address indexed implementation)"
     ],
     "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": [
       "constructor(address _logic, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -4692,5 +4789,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0x2d85e31ee1b7352065364e15d024e84bb6641912635492947c30d675f1539c37"
+  "permissionsConfigHash": "0xa7321b518b77db2fb08be9fa6d68e73fe57ccffb3ebd893acdc04c779c39a2f4"
 }

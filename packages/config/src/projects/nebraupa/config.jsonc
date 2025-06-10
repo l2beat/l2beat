@@ -17,7 +17,8 @@
             "nextSubmissionIdxToVerify",
             "nextProofIdx",
             "getNextSubmissionIdx",
-            "lastVerifiedSubmissionHeight"
+            "lastVerifiedSubmissionHeight",
+            "verifiedSubmissionIdxForAllocatedFee"
           ]
         }
       }

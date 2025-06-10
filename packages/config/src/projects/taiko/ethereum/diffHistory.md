@@ -1,3 +1,188 @@
+Generated with discovered.json: 0xa09e2062598ded8a0f11be8153bf99e8073b6d56
+
+# Diff at Mon, 09 Jun 2025 10:52:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22630425
+- current block number: 22666471
+
+## Description
+
+New daocontroller for the TAIKO token, which is now controlled by the DAO.
+
+## Watched changes
+
+```diff
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        14
++        19
+      values.proposalIds.18:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.17:
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.16:
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.15:
++        "595223436259438596154551751121806216745162113041"
+      values.proposalIds.14:
++        "595223403592331371744459256866956472219296858128"
+      values.proposalIds.13:
+-        "594516471058441525137805458817300690127055486982"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.12:
+-        "594368007222883387369940600290236287695678603267"
++        "594544283016854707280302755040001935835586887687"
+      values.proposalIds.11:
+-        "594789857995414210150628315872956409027640688649"
++        "594516360806954642753743290707182802352260251653"
+      values.proposalIds.10:
+-        "594333890512775894079591912881534348495153004546"
++        "594868197801926748603689506985812031612995502090"
+      values.proposalIds.9:
+-        "594544283016854707280302755040001935835586887687"
++        "594516275055798178677248899489514254466604335108"
+      values.proposalIds.8:
+-        "594516360806954642753743290707182802352260251653"
++        "594544466769332844587073035223531748793578946568"
+      values.proposalIds.7:
+-        "594868197801926748603689506985812031612995502090"
++        "595202819231391590334926314529761202858453106703"
+      values.proposalIds.6:
+-        "594516275055798178677248899489514254466604335108"
++        "595112788683881116119978678391417950963358498829"
+      values.proposalIds.5:
+-        "594544466769332844587073035223531748793578946568"
++        "594932801089851422612858457733038049577270247436"
+      values.proposalIds.4:
+-        "595112788683881116119978678391417950963358498829"
++        "594333808845007833054360677244409987180489867265"
+      values.proposalIds.3:
+-        "594932801089851422612858457733038049577270247436"
++        "594318504305273196926027118847304676812617940992"
+      values.proposalIds.2:
+-        "594333808845007833054360677244409987180489867265"
++        "594868769476303175780308156445682560815637463051"
+      values.proposalIds.1:
+-        "594318504305273196926027118847304676812617940992"
++        "595168678020953678736974786657474616653076496398"
+      values.proposalIds.0:
+-        "594868769476303175780308156445682560815637463051"
++        "595300306046126036153418824792663965561388007442"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.27:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.26.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.25.from:
+-        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.24.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.23.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.22.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.21.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.20.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.19.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.18.from:
+-        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.17.from:
+-        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.16.from:
+-        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.15.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.14.from:
+-        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3","role":"admin"}
+      receivedPermissions.0.from:
+-        "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "ethereum:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        9
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+## Source code changes
+
+```diff
+.../ERC1967Proxy.p.sol                             |    0
+ .../TaikoDAOController.sol                         | 1409 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |  594 +++++++++
+ .../TaikoDAOController.sol                         |    0
+ 4 files changed, 2003 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630425 (main branch discovery), not current.
+
+```diff
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      description:
+-        "Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum."
++        "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
+    }
+```
+
 Generated with discovered.json: 0x9ce400284a479aa2af9b01856e428c1b2a4b6c51
 
 # Diff at Fri, 06 Jun 2025 07:27:54 GMT:

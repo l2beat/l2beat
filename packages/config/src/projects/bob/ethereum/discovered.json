@@ -1,8 +1,8 @@
 {
   "name": "bob",
   "chain": "ethereum",
-  "blockNumber": 22187675,
-  "configHash": "0x44a7207aed5b5f61a0e07b61548da643f0b84c0d7fb4fcd64e8d7f0999d96348",
+  "blockNumber": 22665980,
+  "configHash": "0x89f0e31421638003208cb85363da9b7ab680dde706b1cc0f97983e977459aa03",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -167,41 +167,6 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "L1UsdcBridge",
-      "address": "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb",
-      "type": "Contract",
-      "template": "circle/L1ERC20TokenBridge",
-      "sourceHashes": [
-        "0xbfb58685ff2f2f07eaa01a3c4e3c33c97686bfd3ae7c50c49f9da6ef5098cb31",
-        "0x8182c41b90d2731cf134f6ee88e35b295a33340568b1d9ccd50ce0c8caa11100"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "description": "Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.",
-      "sinceTimestamp": 1714403615,
-      "sinceBlock": 19761785,
-      "values": {
-        "$admin": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
-        "$implementation": "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9",
-        "$pastUpgrades": [],
-        "$upgradeCount": 0,
-        "burner": "0x0000000000000000000000000000000000000000",
-        "l1Usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "l2TokenBridge": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
-        "l2Usdc": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
-        "messenger": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
-        "MESSENGER": "0xE3d981643b806FB8030CDB677D6E60892E547EdA",
-        "OTHER_BRIDGE": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
-        "otherBridge": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
-        "owner": "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194",
-        "paused": false,
-        "version": "2.1.0"
-      },
-      "implementationNames": {
-        "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": "L1ChugSplashProxy",
-        "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9": "L1UsdcBridge"
-      }
-    },
-    {
       "address": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
       "type": "EOA",
       "proxyType": "EOA",
@@ -243,8 +208,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 21000,
-          "prevBlockNum": 22186969
+          "prevBoughtGas": 288648,
+          "prevBlockNum": 22665902
         },
         "paused": false,
         "SYSTEM_CONFIG": "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
@@ -474,10 +439,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 15400800,
-        "latestOutputIndex": 712,
-        "nextBlockNumber": 15422400,
-        "nextOutputIndex": 713,
+        "latestBlockNumber": 18295200,
+        "latestOutputIndex": 846,
+        "nextBlockNumber": 18316800,
+        "nextOutputIndex": 847,
         "PROPOSER": "0x7cB1022D30b9860C36b243E7B181A1d46f618C69",
         "startingBlockNumber": 0,
         "startingTimestamp": 1712861987,
@@ -529,7 +494,7 @@
         ],
         "$upgradeCount": 2,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660067",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660390",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -548,16 +513,6 @@
         "0x237853621998a33Fa5B9B820592F4c6f4c158c12": "L1CrossDomainMessenger"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "0xe497788F8Fcc30B773C9A181a0FFE2e60645cE90",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "AddressManager",
@@ -651,53 +606,7 @@
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
     ],
-    "0x3C3b95e46DD24C5c85A49A4D7029D0ceA0fEe1D9": [
-      "constructor()",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20DepositInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20WithdrawalFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function burnLockedUSDC()",
-      "function burner() view returns (address)",
-      "function depositERC20(address _l1Token, address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function depositERC20To(address _l1Token, address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeERC20Withdrawal(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function initialize(address _messenger, address _otherBridge, address _l1Usdc, address _l2Usdc, address _owner)",
-      "function l1Usdc() view returns (address)",
-      "function l2TokenBridge() view returns (address)",
-      "function l2Usdc() view returns (address)",
-      "function messenger() view returns (address)",
-      "function otherBridge() view returns (address)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function version() view returns (string)",
-      "function whitelistBurner(address _burner)"
-    ],
     "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7": [
-      "constructor(address _owner)",
-      "function getImplementation() returns (address)",
-      "function getOwner() returns (address)",
-      "function setCode(bytes _code)",
-      "function setOwner(address _owner)",
-      "function setStorage(bytes32 _key, bytes32 _value)"
-    ],
-    "0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
       "function getOwner() returns (address)",
@@ -957,7 +866,6 @@
     ]
   },
   "usedTemplates": {
-    "circle/L1ERC20TokenBridge": "0xd665cef7f64cc80dcf323eac81e912797e4727a0075e3cddf8c7929f508b7b6d",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
@@ -968,5 +876,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x13cdb458e425f3a2552df85d646d5733e7b8353e6cd6d48181c773379f633858"
+  "permissionsConfigHash": "0xb9b92c9e400607cdcddb0e4f81870b14b7997129b69aa31c4c6e4a90b993dc8f"
 }

@@ -64,6 +64,21 @@ export const polynomial: ScalingProject = opStackL2({
   ],
   nonTemplateEscrows: [
     {
+      address: EthereumAddress('0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7'),
+      sinceTimestamp: UnixTime(1748903783),
+      source: 'external',
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Socket bridge',
+            slug: 'socket',
+          },
+        ],
+      },
+      tokens: ['cbBTC'],
+      chain: 'ethereum',
+    },
+    {
       address: EthereumAddress('0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc'),
       sinceTimestamp: UnixTime(1721219231),
       source: 'external',

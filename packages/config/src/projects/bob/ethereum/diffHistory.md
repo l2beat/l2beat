@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb1164140366538d6866d602ff8c1b662068cfdd2
+
+# Diff at Mon, 09 Jun 2025 09:45:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22187675
+- current block number: 22665980
+
+## Description
+
+Old USDC bridge paused and upgraded to unverified implementation and 90% of tokens [sent to a Chainlink CCIP lockbox](https://etherscan.io/tx/0xb23323e6a9b3726e8d08b17b32c589f02840c7042d3731334b0e0c3e54107274).
+
+switching USDC counting from l1 escrow to l2 totalsupply.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22187675 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L1UsdcBridge (0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
 Generated with discovered.json: 0x683448c8764e153beceae99be54233ba40c87314
 
 # Diff at Fri, 30 May 2025 06:55:48 GMT:
