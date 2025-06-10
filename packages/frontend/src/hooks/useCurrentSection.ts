@@ -14,7 +14,7 @@ interface Threshold {
 export function useCurrentSection(threshold?: Threshold) {
   const isMobile = useIsMobile()
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
-  console.log(currentSection)
+
   const findCurrentSection = useCallback(() => {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('[data-role="project-section"]'),
