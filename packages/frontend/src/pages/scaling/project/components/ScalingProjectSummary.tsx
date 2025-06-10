@@ -24,7 +24,11 @@ interface Props {
 export function ProjectScalingSummary({ project }: Props) {
   return (
     <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
-      <section id="summary" className="w-full max-md:bg-header-primary">
+      <section
+        id="summary"
+        data-role="project-section"
+        className="w-full max-md:bg-header-primary"
+      >
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
             <ProjectHeader project={project} />
