@@ -504,7 +504,7 @@ export const linea: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          'The Linea prover code is [available on Github](https://github.com/Consensys/linea-monorepo/tree/main/prover). Linea splits proving into: **Corset** (Rust + Lisp DSL) expands EVM execution traces and generates a bespoke constraint system for the zk-EVM. **gnark** (Go) ingests the expanded traces and constraint system, instantiates the circuits and produces the SNARK proof.',
+          'The Linea prover code is [available on Github](https://github.com/Consensys/linea-monorepo/tree/main/prover). Linea splits proving into: **Corset** (Go + Lisp DSL) expands EVM execution traces and generates a bespoke constraint system for the zk-EVM. **gnark** (Go) ingests the expanded traces and constraint system, instantiates the circuits and produces the SNARK proof.',
       },
       {
         title: 'ZK Circuits',
