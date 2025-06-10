@@ -499,7 +499,7 @@ export const linea: ScalingProject = {
   },
   stateValidation: {
     description:
-      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. [1]',
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
     categories: [
       {
         title: 'Prover Architecture',
