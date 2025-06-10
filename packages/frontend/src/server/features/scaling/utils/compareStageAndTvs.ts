@@ -17,9 +17,5 @@ export function compareStageAndTvs(
       return stageDiff
     }
   }
-  const diff = b.tvsOrder - a.tvsOrder
-  if (diff !== 0) {
-    return diff
-  }
   return compareTvs(a, b)
 }

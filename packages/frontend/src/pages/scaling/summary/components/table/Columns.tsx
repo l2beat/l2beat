@@ -87,7 +87,7 @@ export const scalingSummaryColumns = [
   ),
   columnHelper.accessor(
     (e) => {
-      return e.tvs?.breakdown?.total
+      return e.tvs?.breakdown?.total ?? 0
     },
     {
       id: 'total',
@@ -105,7 +105,6 @@ export const scalingSummaryColumns = [
           />
         )
       },
-      sortUndefined: 'last',
       meta: {
         align: 'right',
         tooltip:
