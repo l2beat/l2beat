@@ -77,6 +77,12 @@ export function getCommonScalingEntry({
         id: 'vm' as const,
         value: vm,
       })),
+      ...project.display.badges
+        .filter((badge) => badge.type === 'Other')
+        .map((badge) => ({
+          id: 'other' as const,
+          value: badge.name,
+        })),
     ],
     description: project.display?.description,
     badges: project.display.badges
