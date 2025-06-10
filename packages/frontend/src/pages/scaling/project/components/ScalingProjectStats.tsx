@@ -16,7 +16,6 @@ import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/number-format/formatNumber'
 import { TokenBreakdownStat } from './TokenBreakdownStat'
 
 interface Props {
@@ -45,17 +44,6 @@ export function ProjectScalingStats({ project, className }: Props) {
           >
             {project.header.activity.lastDayUops.toFixed(2)}
           </ValueWithPercentageChange>
-        ) : (
-          <NoDataBadge />
-        )
-      }
-    />,
-    <ProjectStat
-      key="ops-count"
-      title="30D ops count"
-      value={
-        project.header.activity ? (
-          formatNumber(project.header.activity.uopsCount)
         ) : (
           <NoDataBadge />
         )
@@ -97,6 +85,9 @@ export function ProjectScalingStats({ project, className }: Props) {
     />,
     project.header.hostChain ? (
       <ProjectStat title="Host chain" value={project.header.hostChain} />
+    ) : undefined,
+    project.header.chainId ? (
+      <ProjectStat title="Chain ID" value={project.header.chainId} />
     ) : undefined,
   ])
 

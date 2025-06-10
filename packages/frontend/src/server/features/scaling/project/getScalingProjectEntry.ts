@@ -67,6 +67,7 @@ export interface ProjectScalingEntry {
     badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
+    chainId?: number
     category: ProjectScalingCategory
     purposes: string[]
     tvs?: {
@@ -90,7 +91,6 @@ export interface ProjectScalingEntry {
       }
     }
     activity?: {
-      uopsCount: number
       lastDayUops: number
       uopsWeeklyChange: number
     }
@@ -184,6 +184,7 @@ export async function getScalingProjectEntry(
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
         ? project.scalingInfo.hostChain.name
         : undefined,
+    chainId: project.chainConfig?.chainId,
     tvs:
       !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
         ? {
