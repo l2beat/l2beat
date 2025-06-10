@@ -587,6 +587,14 @@ export const linea: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Proof system is complete',
+      url: 'https://x.com/LineaBuild/status/1932172959587913816',
+      date: '2024-06-09T00:00:00Z',
+      description:
+        'The Linea proof system and verifier on ethereum covers 100% of the zkEVM.',
+      type: 'general',
+    },
+    {
       title: 'Linea starts using blobs',
       url: 'https://twitter.com/LineaBuild/status/1772711269159567483',
       date: '2024-03-26T00:00:00Z',

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xefb434e1eed28493b0bb2a984f66c40c55806701
+Generated with discovered.json: 0xe3b7287204b1ba9800f4aff9bddba809792e8140
 
-# Diff at Tue, 10 Jun 2025 07:14:14 GMT:
+# Diff at Tue, 10 Jun 2025 08:47:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@06eb023461c50e23c02be21b7bad307e0e7e3b73 block: 22415188
-- current block number: 22672599
+- current block number: 22673062
 
 ## Description
 
@@ -19,6 +19,8 @@ context from telegram:
 > - Alpha verifiers: were removed on Monday
 > - Beta v1.4 verifier (99% prover completeness): were activated a few weeks back and should be removed next week [this week]
 > - Beta v2.0 verifier (100% prover completeness): will be activated on Thursday and removed early next week [this week], once the upgrade is successful on Monday.
+
+linea confirms their backend is fully upgraded to and using the 0xED verifier and the old 99% verifier will be removed this week.
 
 ## Watched changes
 
