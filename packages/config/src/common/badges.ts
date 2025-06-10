@@ -492,7 +492,7 @@ export const badges = [
     action: {
       type: 'scalingFilter',
       id: 'stack',
-      value: 'Cartesi',
+      value: 'Cartesi Rollups',
     },
   },
   {
