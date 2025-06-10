@@ -13,7 +13,7 @@ export function ZkCatalogPage({ ...props }: Props) {
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>ZK Catalog</MainPageHeader>
-        <div className="flex flex-col items-center gap-2 pt-[20vh] max-md:min-h-[inherit] max-md:bg-yellow-200/10 md:mt-[10%] md:pt-0">
+        <div className="flex flex-col items-center gap-2 pt-[20vh] md:mt-[10%] md:pt-0">
           <PrimaryCard className="bg-yellow-200/25 shadow-sm md:w-3/4 md:border-2 md:border-warning/50 md:bg-yellow-200/10">
             <h2 className="mb-3 flex items-center gap-2 font-semibold text-warning text-xl xs:text-2xl">
               <InfoIcon className="size-5 xs:size-6 fill-current" />
