@@ -24,7 +24,7 @@ import {
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
 import { ecosystems } from './ecosystems'
-import { isVerified } from './isVerified'
+import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
@@ -64,7 +64,7 @@ function layer2Or3ToProject(
       redWarning: p.display.redWarning,
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
-      isUnverified: !isVerified(p, daBridges),
+      unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
       // countdowns
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
@@ -205,7 +205,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       redWarning: undefined,
       emergencyWarning: undefined,
       reviewStatus: p.reviewStatus,
-      isUnverified: !isVerified(p),
+      unverifiedContracts: getProjectUnverifiedContracts(p),
     },
     display: {
       description: p.display.description,

@@ -24,6 +24,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
@@ -183,11 +184,11 @@ export async function getBridgesProjectEntry(
       },
     })
   }
-
-  const riskSummary = getBridgesRiskSummarySection(
-    project,
-    !project.statuses.isUnverified,
+  const isProjectVerified = getIsProjectVerified(
+    project.statuses.unverifiedContracts,
+    changes,
   )
+  const riskSummary = getBridgesRiskSummarySection(project, isProjectVerified)
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -267,7 +268,7 @@ export async function getBridgesProjectEntry(
     {
       id: project.id,
       slug: project.slug,
-      isVerified: !project.statuses.isUnverified,
+      isVerified: isProjectVerified,
       isUnderReview: !!project.statuses.reviewStatus,
       contracts: project.contracts,
     },

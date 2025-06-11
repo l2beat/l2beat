@@ -21,7 +21,7 @@ export const sp1vector: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'Avail ZK light client implementation.',

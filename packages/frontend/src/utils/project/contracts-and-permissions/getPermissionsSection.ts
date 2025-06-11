@@ -139,7 +139,12 @@ function toTechnologyContract(
       name: account.name,
       href: account.url,
       address: account.address.toString(),
-      verificationStatus: toVerificationStatus(account.isVerified ?? false),
+      verificationStatus: toVerificationStatus(
+        account.isVerified ?? false,
+        projectChangeReport?.[permission.chain]?.becameVerified.includes(
+          account.address,
+        ),
+      ),
     }),
   )
 

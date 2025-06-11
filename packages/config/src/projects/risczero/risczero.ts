@@ -21,7 +21,7 @@ export const risczero: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'ZK verifier for RISC-V programs.',
