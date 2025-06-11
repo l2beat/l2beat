@@ -9,6 +9,7 @@ import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
 import { detectBeaconProxy } from './auto/BeaconProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
+import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
@@ -29,7 +30,6 @@ import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 import type { ProxyDetails, ProxyResult } from './types'
-import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 
 type Detector = (
   provider: IProvider,
