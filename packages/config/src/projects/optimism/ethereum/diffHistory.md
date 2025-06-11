@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xfaf887eecbfababe6dc711b593376a93ddfdbb2c
+
+# Diff at Wed, 11 Jun 2025 10:36:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 22567749
+- current block number: 22567749
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      sourceHashes.1:
++        "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E"
+      implementationNames.0xE8E847cf573Fc8ed75621660A36AffD18c543d7E:
++        "WalletSimple"
+    }
+```
+
 Generated with discovered.json: 0xcb5ed4e4c4ca8496b10afa9ffd1eee3c3c99763c
 
 # Diff at Fri, 30 May 2025 07:10:10 GMT:
