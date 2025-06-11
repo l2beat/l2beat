@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x5b2515a91f21f53c5ca6d17678a68648b844aa93
+Generated with discovered.json: 0x5f5aaedab15af3d4f98db6027f29592b09afc7a2
 
-# Diff at Wed, 11 Jun 2025 09:49:39 GMT:
+# Diff at Wed, 11 Jun 2025 10:17:09 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@1e5f82b7e56cabcf167a872860d558a4d17e6da2 block: 20641250
 - current block number: 22680529
 
@@ -82,19 +82,20 @@ initial disco of the new honeypot
 
 ```diff
 +   Status: CREATED
-    contract  (0xDaa497885D83f345CBcbF071d7201230A8CBd68A)
+    contract TopTournament (0xDaa497885D83f345CBcbF071d7201230A8CBd68A)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../honeypot/ethereum/.flat/Application.sol        | 881 +++++++++++++++++++++
- .../honeypot/ethereum/.flat/DaveConsensus.sol      | 866 ++++++++++++++++++++
- .../honeypot/ethereum/.flat/ERC20Portal.sol        | 191 +++++
- .../projects/honeypot/ethereum/.flat/InputBox.sol  | 121 +++
- .../ethereum/.flat/MultiLevelTournamentFactory.sol | 351 ++++++++
- 5 files changed, 2410 insertions(+)
+.../honeypot/ethereum/.flat/Application.sol        |  881 ++++++++++
+ .../honeypot/ethereum/.flat/DaveConsensus.sol      |  866 ++++++++++
+ .../honeypot/ethereum/.flat/ERC20Portal.sol        |  191 +++
+ .../projects/honeypot/ethereum/.flat/InputBox.sol  |  121 ++
+ .../ethereum/.flat/MultiLevelTournamentFactory.sol |  351 ++++
+ .../ethereum/.flat/TopTournament/TopTournament.sol | 1793 ++++++++++++++++++++
+ 6 files changed, 4203 insertions(+)
 ```
 
 ## Config/verification related changes

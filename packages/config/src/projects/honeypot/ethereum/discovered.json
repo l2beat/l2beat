@@ -133,20 +133,73 @@
       }
     },
     {
-      "name": "",
+      "name": "TopTournament",
       "address": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A",
       "type": "Contract",
       "unverified": true,
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
-      "values": { "$immutable": true },
+      "values": {
+        "$implementation": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
+        "arbitrationResult": [
+          false,
+          "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000000000000000000000000000"
+        ],
+        "isClosed": false,
+        "isFinished": false,
+        "timeFinished": [false, 0],
+        "tournamentLevelConstants": {
+          "_maxLevel": 3,
+          "_level": 0,
+          "_log2step": 44,
+          "_height": 48
+        }
+      },
       "implementationNames": {
-        "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": ""
+        "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": "",
+        "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
       }
     }
   ],
   "abis": {
+    "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": [
+      "error ChildTournamentCannotBeEliminated()",
+      "error ChildTournamentMustBeEliminated()",
+      "error ChildTournamentNotFinished()",
+      "error CommitmentMismatch(bytes32 received, bytes32 expected)",
+      "error EliminateByTimeout()",
+      "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
+      "error InvalidContestedFinalState(bytes32 contestedFinalStateOne, bytes32 contestedFinalStateTwo, bytes32 finalState)",
+      "error LengthMismatch(uint64 treeHeight, uint64 siblingsLength)",
+      "error TournamentIsClosed()",
+      "error TournamentIsFinished()",
+      "error WinByTimeout()",
+      "error WrongChildren(uint256 commitment, bytes32 parent, bytes32 left, bytes32 right)",
+      "error WrongTournamentWinner(bytes32 commitmentRoot, bytes32 winner)",
+      "event commitmentJoined(bytes32 root)",
+      "event matchAdvanced(bytes32 indexed, bytes32 parent, bytes32 left)",
+      "event matchCreated(bytes32 indexed one, bytes32 indexed two, bytes32 leftOfTwo)",
+      "event matchDeleted(bytes32)",
+      "event newInnerTournament(bytes32 indexed, address)",
+      "function advanceMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes32 _newLeftNode, bytes32 _newRightNode)",
+      "function arbitrationResult() view returns (bool, bytes32, bytes32)",
+      "function canWinMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId) view returns (bool)",
+      "function eliminateInnerTournament(address _childTournament)",
+      "function eliminateMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId)",
+      "function getCommitment(bytes32 _commitmentRoot) view returns (tuple(uint64 allowance, uint64 startInstant), bytes32)",
+      "function getMatch(bytes32 _matchIdHash) view returns (tuple(bytes32 otherParent, bytes32 leftNode, bytes32 rightNode, uint256 runningLeafPosition, uint64 currentHeight, uint64 log2step, uint64 height))",
+      "function getMatchCycle(bytes32 _matchIdHash) view returns (uint256)",
+      "function isClosed() view returns (bool)",
+      "function isFinished() view returns (bool)",
+      "function joinTournament(bytes32 _finalState, bytes32[] _proof, bytes32 _leftNode, bytes32 _rightNode)",
+      "function sealInnerMatchAndCreateInnerTournament(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftLeaf, bytes32 _rightLeaf, bytes32 _agreeHash, bytes32[] _agreeHashProof)",
+      "function timeFinished() view returns (bool, uint64)",
+      "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
+      "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
+      "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
+    ],
     "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D": [
       "function name() view returns (string)",
       "function approve(address spender, uint256 amount) returns (bool)",
@@ -249,5 +302,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xadd3c88f5c1666075e95ad744d258341ed3eaef9198427a902b35e98a7ca75b6"
+  "permissionsConfigHash": "0xd4b11a37392af010933d95f0030eb52967d4d8894d3b8215a1db4197612405f3"
 }

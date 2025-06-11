@@ -29,6 +29,7 @@ import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 import type { ProxyDetails, ProxyResult } from './types'
+import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 
 type Detector = (
   provider: IProvider,
@@ -48,6 +49,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectZeppelinOSProxy,
   detectEip2535proxy,
   detectBeaconProxy,
+  detectEip1167Proxy,
 ]
 
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
