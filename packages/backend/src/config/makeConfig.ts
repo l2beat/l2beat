@@ -5,7 +5,6 @@ import type { Config } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import { getChainConfig } from './chain/getChainConfig'
 import { getActivityConfig } from './features/activity'
-import { getDaTrackingConfig } from './features/da'
 import { getDaTrackingConfig2 } from './features/da2'
 import { getDaBeatConfig } from './features/dabeat'
 import { getFinalityConfig } from './features/finality'
@@ -150,7 +149,6 @@ export async function makeConfig(
         10000,
       ),
     },
-    da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     da2: flags.isEnabled('da') && (await getDaTrackingConfig2(ps, env)),
     // Must be last
     flags: flags.getResolved(),
