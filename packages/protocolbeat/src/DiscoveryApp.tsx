@@ -1,9 +1,13 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { ProjectPage } from './ProjectPage'
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Navigate to="/ui" replace />,
+  },
   {
     path: '/ui',
     element: <HomePage />,

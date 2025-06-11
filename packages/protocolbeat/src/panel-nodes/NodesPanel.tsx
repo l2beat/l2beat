@@ -35,7 +35,7 @@ export function NodesPanel() {
 
   return (
     <div className="h-full w-full overflow-x-hidden">
-      <NodesApp panelMode />
+      <NodesApp />
     </div>
   )
 }
