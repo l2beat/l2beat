@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { ProjectPage } from './ProjectPage'
+import { NotFoundPage } from './NotFoundPage'
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: '/ui/p/:project',
     element: <ProjectPage />,
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />,
   },
 ])
 
