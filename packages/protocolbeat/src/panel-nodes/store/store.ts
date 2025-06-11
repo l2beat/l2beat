@@ -22,12 +22,14 @@ import {
 import { selectAndFocus } from './actions/selectAndFocus'
 import { setNodes } from './actions/setNodes'
 import { persistNodeLayout } from './utils/storage'
+import { registerViewportContainer } from './actions/registerViewportContainer'
 
 const INITIAL_STATE: State = {
   selected: [],
   hidden: [],
   nodes: [],
   transform: { offsetX: 0, offsetY: 0, scale: 1 },
+  viewportContainer: undefined,
   input: {
     shiftPressed: false,
     spacePressed: false,
@@ -63,7 +65,7 @@ export const useStore = create<State & Actions>()(
       clear: wrapAction(set, clear),
       layout: wrapAction(set, layout),
       selectAndFocus: wrapAction(set, selectAndFocus),
-
+      registerViewportContainer: wrapAction(set, registerViewportContainer),
       setPreferences: wrapAction(set, setPreferences),
 
       onKeyDown: wrapAction(set, onKeyDown),
