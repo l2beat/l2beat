@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import { z } from 'zod'
@@ -43,10 +43,7 @@ const getDaThroughputChartByProjectData = async (
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
   const [throughput, allProjects] = await Promise.all([
-    db.dataAvailability2.getByDaLayersAndTimeRange(
-      [params.daLayer],
-      [from, to],
-    ),
+    db.dataAvailability.getByDaLayersAndTimeRange([params.daLayer], [from, to]),
     ps.getProjects({}),
   ])
   if (throughput.length === 0) {
@@ -66,7 +63,7 @@ const getDaThroughputChartByProjectData = async (
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord2[],
+  records: DataAvailabilityRecord[],
   allProjects: Project[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {

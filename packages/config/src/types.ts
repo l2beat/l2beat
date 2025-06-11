@@ -62,6 +62,11 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
+export interface ProjectUnverifiedContract {
+  chain: string
+  address: EthereumAddress
+}
+
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -138,7 +143,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  isUnverified: boolean
+  unverifiedContracts: ProjectUnverifiedContract[]
   // countdowns
   otherMigration?: {
     expiresAt: number
@@ -872,9 +877,15 @@ export type ProjectFinalityConfig =
 export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
+  | BlockDaTrackingConfig
+  | TimestampDaTrackingConfig
+
+export type BlockDaTrackingConfig =
   | EthereumDaTrackingConfig
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
+
+export type TimestampDaTrackingConfig = EigenDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -900,6 +911,14 @@ export interface AvailDaTrackingConfig {
   appId: string
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface EigenDaTrackingConfig {
+  type: 'eigen-da'
+  daLayer: ProjectId
+  customerId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {

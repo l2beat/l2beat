@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x0be55f4f8c30da2bc3fff50768e814bdb86cc73f
+
+# Diff at Wed, 11 Jun 2025 10:34:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 22567365
+- current block number: 22567365
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567365 (main branch discovery), not current.
+
+```diff
+    contract DomainRoutingIsm (0x4085486acE416fce164f578b6e56eFC96dcf6e2E) {
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+      sourceHashes.1:
++        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67"
+      implementationNames.0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67:
++        "DomainRoutingIsm"
+    }
+```
+
 Generated with discovered.json: 0xe8924b2bf737f3a4421e3ff4dd119c073e393634
 
 # Diff at Mon, 26 May 2025 14:18:18 GMT:

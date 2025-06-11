@@ -35,7 +35,7 @@ export async function getProjectDaThroughputChart(
   const [from, to] = getRangeWithMax(params.range, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
-  const throughput = await db.dataAvailability2.getByProjectIdsAndTimeRange(
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
     [params.projectId],
     [from, to],
   )

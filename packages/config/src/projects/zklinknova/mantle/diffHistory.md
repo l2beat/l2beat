@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xc8f4a269e311ca5e1327403aeac60fd55590e4bc
+
+# Diff at Wed, 11 Jun 2025 10:36:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 80670848
+- current block number: 80670848
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 80670848 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      sourceHashes.0:
+-        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
++        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
+      implementationNames.0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60:
+-        "SafeProxy"
++        "GnosisSafeProxy"
+    }
+```
+
 Generated with discovered.json: 0x1face9b0e1b5c077a88bec89a53cd80caa9b9d2f
 
 # Diff at Mon, 09 Jun 2025 12:27:16 GMT:
