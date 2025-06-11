@@ -65,7 +65,7 @@ export const morph: ScalingProject = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://morphl2.io'],
-      apps: ['https://bridge.morphl2.io/'],
+      bridges: ['https://bridge.morphl2.io/'],
       documentation: ['https://docs.morphl2.io'],
       explorers: ['https://explorer.morphl2.io'],
       repositories: ['https://github.com/morph-l2'],

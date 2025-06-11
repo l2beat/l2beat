@@ -24,7 +24,7 @@ export const alephzero: ScalingProject = orbitStackL2({
       'Aleph Zero is an Optimium on Ethereum, built on the Orbit stack. It aims to offer seamless interoperability with the Aleph Zero Layer 1 and a suite of developer tools for building privacy-enhancing dapps.',
     links: {
       websites: ['https://alephzero.org/'],
-      apps: ['https://bridge.gelato.network/bridge/aleph-zero-evm'],
+      bridges: ['https://bridge.gelato.network/bridge/aleph-zero-evm'],
       documentation: ['https://docs.alephzero.org/'],
       explorers: ['https://evm-explorer.alephzero.org/'],
       repositories: ['https://github.com/Cardinal-Cryptography'],

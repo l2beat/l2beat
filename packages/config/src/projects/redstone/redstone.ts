@@ -44,7 +44,7 @@ export const redstone: ScalingProject = opStackL2({
       "Redstone is a chain built for onchain games and autonomous worlds running MUD. It's an implementation of OP Plasma with DA challenges.",
     links: {
       websites: ['https://redstone.xyz/'],
-      apps: ['https://redstone.xyz/deposit'],
+      bridges: ['https://redstone.xyz/deposit'],
       documentation: ['https://redstone.xyz/docs'],
       explorers: ['https://explorer.redstone.xyz/'],
       repositories: ['https://github.com/latticexyz/redstone'],

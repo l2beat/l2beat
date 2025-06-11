@@ -200,7 +200,7 @@ export const starknet: ScalingProject = {
     category: 'ZK Rollup',
 
     links: {
-      apps: ['https://starkgate.starknet.io/'],
+      bridges: ['https://starkgate.starknet.io/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',

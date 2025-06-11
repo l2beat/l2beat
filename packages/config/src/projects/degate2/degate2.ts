@@ -80,7 +80,7 @@ export const degate2: ScalingProject = {
 
     links: {
       websites: ['https://degate.com/'],
-      apps: ['https://app.degate.com/'],
+      bridges: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [

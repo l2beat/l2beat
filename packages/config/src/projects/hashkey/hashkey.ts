@@ -29,7 +29,7 @@ export const hashkey = opStackL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://hsk.xyz/'],
-      apps: ['https://bridge.hsk.xyz/'],
+      bridges: ['https://bridge.hsk.xyz/'],
       documentation: ['https://docs.hsk.xyz/'],
       explorers: [
         'https://explorer.hsk.xyz/',

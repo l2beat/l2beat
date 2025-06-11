@@ -25,7 +25,7 @@ export const superseed: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://superseed.xyz/'],
-      apps: ['https://bridge.superseed.xyz/'],
+      bridges: ['https://bridge.superseed.xyz/'],
       documentation: ['https://docs.superseed.xyz/'],
       explorers: ['https://explorer.superseed.xyz/'],
       repositories: ['https://github.com/superseed-xyz'],

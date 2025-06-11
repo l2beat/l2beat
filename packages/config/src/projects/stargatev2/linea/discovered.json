@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "linea",
-  "blockNumber": 19494867,
+  "blockNumber": 19822366,
   "configHash": "0xace78a38873177b1fcdccc0aa3bfc9c9828558c86be2b8dd01eb9664529f5307",
   "entries": [
     {
@@ -56,6 +56,7 @@
       "name": "StargatePoolNative",
       "address": "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
       "type": "Contract",
+      "template": "stargate/StargatePoolNative",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
@@ -65,7 +66,8 @@
         "poolBalance",
         "treasuryFee",
         "tvl",
-        "getTransferGasLimit"
+        "getTransferGasLimit",
+        "deficitOffset"
       ],
       "sinceTimestamp": 1716837011,
       "sinceBlock": 4931059,
@@ -87,14 +89,14 @@
         "lpToken": "0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
-        "plannerFee": "607396986621816545",
-        "poolBalance": "12887119113000000000000",
+        "plannerFee": "744435200452200093",
+        "poolBalance": "12890250200000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 34270762,
-        "tvl": "1625476391000000000000"
+        "treasuryFee": 34463176,
+        "tvl": "1535580780000000000000"
       },
       "implementationNames": {
         "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075": "StargatePoolNative"
@@ -286,6 +288,8 @@
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
     ]
   },
-  "usedTemplates": {},
-  "permissionsConfigHash": "0xd38320abb805b84929ad340f84666a03eb03986e23d6460d992347433098b593"
+  "usedTemplates": {
+    "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
+  },
+  "permissionsConfigHash": "0xe196bd73ed03a687a9bc1c7e0216d6d52eecb7c7eecaf7e52492a3abb125d1ed"
 }

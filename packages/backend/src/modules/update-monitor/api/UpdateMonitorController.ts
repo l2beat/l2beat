@@ -23,9 +23,8 @@ export class UpdateMonitorController {
     private readonly projectService: ProjectService,
   ) {
     for (const chain of chains) {
-      this.onDiskConfigs[chain.name] = this.configReader.readAllConfigsForChain(
-        chain.name,
-      )
+      this.onDiskConfigs[chain.name] =
+        this.configReader.readAllDiscoveredConfigsForChain(chain.name)
     }
   }
 

@@ -1426,13 +1426,18 @@
       "name": "Escrow",
       "address": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
       "type": "Contract",
+      "template": "maker/L1Escrow",
       "sourceHashes": [
         "0xe53585e5bbf34c1f82d5c67d405a542efa287b08cbd08e251e47bb60ae452f50"
       ],
       "proxyType": "immutable",
+      "description": "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.",
       "sinceTimestamp": 1728571115,
       "sinceBlock": 20935859,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "wards": ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
+      },
       "implementationNames": {
         "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3": "Escrow"
       }
@@ -3400,6 +3405,7 @@
     "gnosisSafeModules/DeputyGuardianModule": "0x8da514975752668828a2c5aa3ed0719bbaac8af5a7835f307de80580ac13ea27",
     "gnosisSafeModules/LivenessModule": "0xac067257223dd2f2f28705a485f0423251aa6b65656bde88b7c2b121b2221a84",
     "lido/L1ERC20TokenBridge": "0x1dbfb76725d8a5de94df533062c2232ad27f9bd9988b137706333c26e2ffc4d7",
+    "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "opstack/AnchorStateRegistry": "0x0745ad704a222adcc2bfc1e083729a31e749ccc5465e0adb2995f87981c21fba",
     "opstack/DelayedWETH": "0x6204eff8fefa7dd586f22b14f80248f0a502a2faa646eecb1203180349f26d2d",
@@ -3417,5 +3423,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x35c478efe0d097232a4031610953c247a63010523d2a2f662e94dd09df6b360d"
+  "permissionsConfigHash": "0x70f4c73ac8771314ab378c1a1bd3600fc54200c50e4d1813f3a11198a7d753bc"
 }

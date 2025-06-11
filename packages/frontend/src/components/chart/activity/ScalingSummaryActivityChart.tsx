@@ -25,10 +25,6 @@ import {
   PinkFillGradientDef,
   PinkStrokeGradientDef,
 } from '~/components/core/chart/defs/PinkGradientDef'
-import {
-  YellowFillGradientDef,
-  YellowStrokeGradientDef,
-} from '~/components/core/chart/defs/YellowGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { CustomLink } from '~/components/link/CustomLink'
@@ -61,13 +57,6 @@ const chartMeta = {
       shape: 'line',
     },
   },
-  others: {
-    label: 'Others',
-    color: 'hsl(var(--chart-yellow))',
-    indicatorType: {
-      shape: 'line',
-    },
-  },
   ethereum: {
     label: 'Ethereum',
     color: 'hsl(var(--chart-ethereum))',
@@ -80,7 +69,7 @@ const chartMeta = {
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
-    filter: { type: 'all' },
+    filter: { type: 'withoutOthers' },
     previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
@@ -91,12 +80,11 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
 
   const chartData = useMemo(() => {
     return data?.data.map(
-      ([timestamp, rollups, validiumsAndOptimiums, others, ethereum]) => {
+      ([timestamp, rollups, validiumsAndOptimiums, ethereum]) => {
         return {
           timestamp,
           rollups: countPerSecond(rollups),
           validiumsAndOptimiums: countPerSecond(validiumsAndOptimiums),
-          others: countPerSecond(others),
           ethereum: countPerSecond(ethereum),
         }
       },
@@ -113,8 +101,6 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             <PinkStrokeGradientDef id="rollups-stroke" />
             <CyanFillGradientDef id="validiums-and-optimiums-fill" />
             <CyanStrokeGradientDef id="validiums-and-optimiums-stroke" />
-            <YellowFillGradientDef id="others-fill" />
-            <YellowStrokeGradientDef id="others-stroke" />
             <EthereumFillGradientDef id="ethereum-fill" />
             <EthereumStrokeGradientDef id="ethereum-stroke" />
           </defs>
@@ -130,11 +116,6 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
                 dataKey: 'validiumsAndOptimiums',
                 stroke: 'url(#validiums-and-optimiums-stroke)',
                 fill: 'url(#validiums-and-optimiums-fill)',
-              },
-              {
-                dataKey: 'others',
-                stroke: 'url(#others-stroke)',
-                fill: 'url(#others-fill)',
               },
               {
                 dataKey: 'ethereum',

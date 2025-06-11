@@ -16,7 +16,7 @@ export const destra: ScalingProject = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://destra.network/'],
-      apps: ['https://ocai.destranetwork.io/'],
+      bridges: ['https://ocai.destranetwork.io/'],
       documentation: ['https://destra-network.gitbook.io/documentation'],
       repositories: [],
       socialMedia: [

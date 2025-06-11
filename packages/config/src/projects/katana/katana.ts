@@ -20,7 +20,7 @@ export const katana: ScalingProject = {
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://katana.network/'],
-      apps: ['https://app.katana.network/krates?p=deposit'],
+      bridges: ['https://app.katana.network/krates?p=deposit'],
       socialMedia: [
         'https://x.com/katana',
         'https://discord.com/invite/KatanaNetwork',

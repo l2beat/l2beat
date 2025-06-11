@@ -21,7 +21,7 @@ export const cBridge: Bridge = {
     category: 'Hybrid',
     links: {
       websites: ['https://celer.network/'],
-      apps: ['https://cbridge.celer.network/'],
+      bridges: ['https://cbridge.celer.network/'],
       explorers: [
         'https://cbridge-analytics.celer.network/',
         'https://celerscan.com/',

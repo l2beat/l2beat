@@ -26,7 +26,7 @@ export const portal: Bridge = {
         'https://docs.wormhole.com/wormhole',
       ],
       explorers: ['https://wormholescan.io/'],
-      apps: ['https://portalbridge.com'],
+      bridges: ['https://portalbridge.com'],
       repositories: ['https://github.com/wormhole-foundation/wormhole'],
       socialMedia: [
         'https://discord.gg/wormholecrypto',

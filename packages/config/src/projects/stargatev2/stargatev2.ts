@@ -14,7 +14,6 @@ const discovery_optimism = new ProjectDiscovery('stargatev2', 'optimism')
 const discovery_base = new ProjectDiscovery('stargatev2', 'base')
 const discovery_scroll = new ProjectDiscovery('stargatev2', 'scroll')
 const discovery_linea = new ProjectDiscovery('stargatev2', 'linea')
-const discovery_mantle = new ProjectDiscovery('stargatev2', 'mantle')
 
 const discoveredOAppOwners = [
   ...discovery.getPermissionedAccounts('CreditMessaging', 'owner'),
@@ -57,7 +56,7 @@ export const stargatev2: Bridge = {
     slug: 'stargatev2',
     links: {
       websites: ['https://stargate.finance/', 'https://layerzero.network/'],
-      apps: ['https://layerzeroscan.com/'],
+      bridges: ['https://layerzeroscan.com/'],
       repositories: [
         'https://github.com/stargate-protocol/stargate-v2',
         'https://github.com/LayerZero-Labs/LayerZero-v2',
@@ -258,26 +257,6 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
         address: EthereumAddress('0x81F6138153d473E8c5EcebD3DC8Cd4903506B075'),
         tokens: ['ETH'],
         description: 'Stargate liquidity pool for ETH on Linea.',
-      }),
-      discovery_mantle.getEscrowDetails({
-        address: EthereumAddress('0x4c1d3Fc3fC3c177c3b633427c2F769276c547463'),
-        tokens: ['WETH'],
-        description: 'Stargate liquidity pool for ETH on Mantle.',
-      }),
-      discovery_mantle.getEscrowDetails({
-        address: EthereumAddress('0xB715B85682B731dB9D5063187C450095c91C57FC'),
-        tokens: ['USDT'],
-        description: 'Stargate liquidity pool for USDT on Mantle.',
-      }),
-      discovery_mantle.getEscrowDetails({
-        address: EthereumAddress('0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC'),
-        tokens: ['USDC'],
-        description: 'Stargate liquidity pool for USDC on Mantle.',
-      }),
-      discovery_mantle.getEscrowDetails({
-        address: EthereumAddress('0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1'),
-        tokens: ['mETH'],
-        description: 'Stargate liquidity pool for mETH on Mantle.',
       }),
     ],
   },

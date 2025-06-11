@@ -82,18 +82,27 @@ function logProjectsToDiscover(projectsOnChain: Record<string, string[]>) {
 
 function resolveProjectsOnChain(projectQuery: string, chainQuery: string) {
   const result: Record<string, string[]> = {}
+  const entries = configReader.readAllConfiguredProjects()
 
-  const chains: string[] = []
-  if (chainQuery === 'all') {
-    chains.push(...configReader.readAllChains())
-  } else {
-    chains.push(chainQuery)
-  }
+  const predicate: Predicate = EthereumAddress.check(projectQuery)
+    ? addressPredicate
+    : projectPredicate
 
-  for (const chain of chains) {
-    const projects = resolveProjects(projectQuery, chain)
-    if (projects.length > 0) {
-      result[chain] = projects
+  for (const { project, chains } of entries) {
+    const chainsToCheck =
+      chainQuery === 'all'
+        ? chains
+        : chains.filter((chain) => chain === chainQuery)
+
+    const matchingChains = chainsToCheck.filter((chain) =>
+      predicate(projectQuery, project, chain),
+    )
+
+    for (const chain of matchingChains) {
+      if (!result[chain]) {
+        result[chain] = []
+      }
+      result[chain].push(project)
     }
   }
 
@@ -105,15 +114,6 @@ type Predicate = (
   haystackProject: string,
   haystackChain: string,
 ) => boolean
-
-function resolveProjects(projectQuery: string, chain: string): string[] {
-  const allProjects = configReader.readAllProjectsForChain(chain)
-  const predicate: Predicate = EthereumAddress.check(projectQuery)
-    ? addressPredicate
-    : projectPredicate
-
-  return allProjects.filter((p) => predicate(projectQuery, p, chain))
-}
 
 function projectPredicate(
   needleProject: string,

@@ -15,7 +15,7 @@ export const rarimo: ScalingProject = underReviewL2({
     purposes: ['Universal', 'Privacy'],
     links: {
       websites: ['https://rarimo.com/'],
-      apps: ['https://l2bridge.rarimo.com/'],
+      bridges: ['https://l2bridge.rarimo.com/'],
       explorers: ['https://scan.rarimo.com/'],
       socialMedia: [
         'https://t.me/+pWugh5xgDiE3Y2Jk',

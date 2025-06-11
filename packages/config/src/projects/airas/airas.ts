@@ -19,7 +19,7 @@ export const airas: ScalingProject = underReviewL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://airas.com/'],
-      apps: ['https://bridge.airas.com'],
+      bridges: ['https://bridge.airas.com'],
       documentation: ['https://airas.gitbook.io/airas'],
       explorers: ['https://explorer.airas.com'],
       repositories: [],

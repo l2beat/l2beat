@@ -20,7 +20,8 @@ export class UpdateDiffer {
   }
 
   async runForChain(chain: string, timestamp: UnixTime) {
-    const projectConfigs = this.configReader.readAllConfigsForChain(chain)
+    const projectConfigs =
+      this.configReader.readAllDiscoveredConfigsForChain(chain)
 
     for (const projectConfig of projectConfigs) {
       assert(
@@ -152,7 +153,7 @@ export class UpdateDiffer {
       }),
     )
 
-    const verificationChanges: DiscoveryDiff[] = diff.filter((discoveryDiff) =>
+    const becameVerified: DiscoveryDiff[] = diff.filter((discoveryDiff) =>
       discoveryDiff.diff?.some(
         (f) =>
           f.key === 'unverified' &&
@@ -193,10 +194,10 @@ export class UpdateDiffer {
       })
     }
 
-    for (const { address } of verificationChanges) {
+    for (const { address } of becameVerified) {
       updateDiffs.push({
         projectId,
-        type: 'verificationChange',
+        type: 'becameVerified',
         address,
         chain,
         timestamp,

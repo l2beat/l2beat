@@ -54,7 +54,7 @@ export const polygonpos: ScalingProject = {
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
-      apps: ['https://wallet.polygon.technology'],
+      bridges: ['https://wallet.polygon.technology'],
       repositories: ['https://github.com/maticnetwork/'],
       documentation: ['https://docs.polygon.technology/pos/'],
       socialMedia: [

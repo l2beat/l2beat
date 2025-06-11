@@ -22,7 +22,7 @@ export const shape: ScalingProject = opStackL2({
       "Shape is a Rollup on Ethereum based on the OP Stack. It is a chain for creators, innovating by giving creators 80% of the Sequencer fee as 'gasback'.",
     links: {
       websites: ['https://shape.network/'],
-      apps: [
+      bridges: [
         'https://superbridge.app/shape-mainnet',
         'https://shape-mainnet.bridge.alchemy.com/',
       ],

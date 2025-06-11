@@ -16,7 +16,7 @@ export const degenlayer: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://degenlayer.wtf/'],
-      apps: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],
+      bridges: ['https://bridge-test.degenlayer.wtf/bridge/degenlayer'],
       documentation: ['https://docs.degenlayer.wtf'],
       explorers: ['https://scan-test.degenlayer.wtf/'],
       socialMedia: ['https://x.com/degenlayer', 'https://t.me/delayedfrens'],

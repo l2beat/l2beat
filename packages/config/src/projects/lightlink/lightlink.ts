@@ -72,7 +72,7 @@ export const lightlink: ScalingProject = {
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
-      apps: ['https://phoenix.lightlink.io/apps'],
+      bridges: ['https://phoenix.lightlink.io/apps'],
       documentation: ['https://docs.lightlink.io'],
       explorers: ['https://phoenix.lightlink.io'],
       repositories: ['https://github.com/lightlink-network'],

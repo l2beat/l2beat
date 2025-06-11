@@ -23,7 +23,7 @@ export const polynetwork: Bridge = {
     warning: warningText,
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
-      apps: ['https://bridge.poly.network/'],
+      bridges: ['https://bridge.poly.network/'],
       socialMedia: [
         'https://twitter.com/PolyNetwork2',
         'https://polynetwork.medium.com/',

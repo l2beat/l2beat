@@ -25,7 +25,7 @@ export const base: ScalingProject = opStackL2({
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
     links: {
       websites: ['https://base.org/'],
-      apps: ['https://bridge.base.org/'],
+      bridges: ['https://bridge.base.org/'],
       documentation: ['https://docs.base.org/', 'https://stack.optimism.io/'],
       explorers: [
         'https://basescan.org/',
@@ -60,7 +60,7 @@ export const base: ScalingProject = opStackL2({
       tokens: ['USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'Maker-controlled vault for USDS ans sUSDS bridged with canonical messaging.',
+        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
   ],
   activityConfig: {

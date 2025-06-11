@@ -24,7 +24,7 @@ export const r0ar: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://r0ar.io/'],
-      apps: ['https://r0arbridge.io/'],
+      bridges: ['https://r0arbridge.io/'],
       documentation: [],
       explorers: ['https://r0arscan.io/'],
       socialMedia: ['https://x.com/th3r0ar', 'https://t.me/r0ar_community'],

@@ -3,7 +3,11 @@ import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
 import { createHash } from 'crypto'
 import { ProjectId, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-import type { DataAvailabilityTrackingConfig } from '../Config'
+import type {
+  DaIndexedConfig,
+  DataAvailabilityTrackingConfig,
+  LayerDaTrackingConfig,
+} from '../Config'
 
 export async function getDaTrackingConfig(
   ps: ProjectService,
@@ -14,9 +18,9 @@ export async function getDaTrackingConfig(
   const celestiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
   const availEnabled = !!env.optionalString('AVAIL_BLOBS_API_URL')
 
-  const layers = []
+  const layers: LayerDaTrackingConfig[] = []
   // This is needed for MultiIndexer so we treat layer as project
-  const projectsForLayers = []
+  const projectsForLayers: DaIndexedConfig[] = []
 
   if (ethereumEnabled) {
     layers.push({
@@ -29,13 +33,10 @@ export async function getDaTrackingConfig(
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('ethereum'),
-      type: 'ethereum',
-      config: {
-        type: 'baseLayer' as const,
-        daLayer: 'ethereum',
-        projectId: ProjectId('ethereum'),
-        sinceBlock: 19426618, // Start of Blobs on Ethereum
-      },
+      projectId: ProjectId('ethereum'),
+      type: 'baseLayer' as const,
+      daLayer: 'ethereum',
+      sinceBlock: 19426618, // Start of Blobs on Ethereum
     })
   }
 
@@ -53,13 +54,10 @@ export async function getDaTrackingConfig(
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
-      type: 'celestia',
-      config: {
-        type: 'baseLayer' as const,
-        daLayer: 'celestia',
-        projectId: ProjectId('celestia'),
-        sinceBlock: 983042,
-      },
+      projectId: ProjectId('celestia'),
+      type: 'baseLayer' as const,
+      daLayer: 'celestia',
+      sinceBlock: 983042,
     })
   }
 
@@ -74,13 +72,10 @@ export async function getDaTrackingConfig(
     })
     projectsForLayers.push({
       configurationId: createDaLayerConfigId('avail'),
-      type: 'avail',
-      config: {
-        type: 'baseLayer' as const,
-        daLayer: 'avail',
-        projectId: ProjectId('avail'),
-        sinceBlock: 1,
-      },
+      projectId: ProjectId('avail'),
+      type: 'baseLayer' as const,
+      daLayer: 'avail',
+      sinceBlock: 1,
     })
   }
 
@@ -96,7 +91,7 @@ export async function getDaTrackingConfig(
 async function getDaTrackingProjects(
   ps: ProjectService,
   enabledLayers: { name: string; startingBlock: number }[],
-) {
+): Promise<DaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
     whereNot: ['isUpcoming'],
@@ -113,12 +108,10 @@ async function getDaTrackingProjects(
         const sinceBlock = Math.max(layer.startingBlock, config.sinceBlock)
 
         return {
+          ...config,
           configurationId: createDaTrackingId(config),
-          config: {
-            ...config,
-            projectId: project.id,
-            sinceBlock,
-          },
+          projectId: project.id,
+          sinceBlock,
         }
       })
     })
@@ -130,12 +123,17 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
 
   input.push(config.type)
   input.push(config.daLayer)
+  // we're running two versions of DA in parallel to rollout new features
+  input.push('v2')
 
   switch (config.type) {
     case 'ethereum':
       input.push(config.inbox)
       if (config.sequencers) {
         input.push(...config.sequencers.sort((a, b) => a.localeCompare(b)))
+      }
+      if (config.topics) {
+        input.push(...config.topics.sort((a, b) => a.localeCompare(b)))
       }
       break
     case 'celestia':
@@ -153,6 +151,11 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
 }
 
 function createDaLayerConfigId(daLayerName: string): string {
-  const hash = createHash('sha1').update(daLayerName).digest('hex')
+  const input = []
+  input.push(daLayerName)
+  // we're running two versions of DA in parallel to rollout new features
+  input.push('v2')
+
+  const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)
 }

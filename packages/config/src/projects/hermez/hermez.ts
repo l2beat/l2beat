@@ -35,7 +35,7 @@ export const hermez: ScalingProject = {
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://hermez.io/'],
-      apps: ['https://wallet.hermez.io/'],
+      bridges: ['https://wallet.hermez.io/'],
       documentation: [
         'https://docs.hermez.io/',
         'https://hermez.io/polygon-hermez-whitepaper.pdf',
