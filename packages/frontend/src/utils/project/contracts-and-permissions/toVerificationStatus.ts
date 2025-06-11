@@ -2,14 +2,14 @@ export type VerificationStatus =
   | 'verified'
   | 'unverified'
   | 'not-verifiable'
-  | 'verification-change'
+  | 'became-verified'
 
 export function toVerificationStatus(
   verified: boolean | undefined,
-  verificationChange: boolean | undefined,
+  becameVerified: boolean | undefined,
 ): VerificationStatus {
-  if (verificationChange) {
-    return 'verification-change'
+  if (becameVerified) {
+    return 'became-verified'
   }
   if (verified === false) {
     return 'unverified'

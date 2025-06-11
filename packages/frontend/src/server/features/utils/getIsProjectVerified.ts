@@ -2,10 +2,10 @@ import type { ProjectUnverifiedContract } from '@l2beat/config'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 
 export function getIsProjectVerified(
-  unverifiedContracts: ProjectUnverifiedContract[],
+  becameVerifiedContracts: ProjectUnverifiedContract[],
   changes: ProjectChanges | undefined,
 ) {
-  if (unverifiedContracts.length === 0) {
+  if (becameVerifiedContracts.length === 0) {
     return true
   }
 
@@ -13,7 +13,7 @@ export function getIsProjectVerified(
     return false
   }
 
-  return unverifiedContracts.every((c) =>
-    changes.verificationChangedContracts[c.chain]?.includes(c.address),
+  return becameVerifiedContracts.every((c) =>
+    changes.becameVerifiedContracts[c.chain]?.includes(c.address),
   )
 }

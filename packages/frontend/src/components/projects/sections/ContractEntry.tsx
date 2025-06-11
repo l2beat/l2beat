@@ -177,11 +177,11 @@ function getCalloutProps(contract: TechnologyContract) {
     } as const
   }
 
-  const isAnyAddressVerificationChange = contract.addresses.some(
-    (c) => c.verificationStatus === 'verification-change',
+  const isAnyAddressBecameVerified = contract.addresses.some(
+    (c) => c.verificationStatus === 'became-verified',
   )
 
-  if (isAnyAddressVerificationChange) {
+  if (isAnyAddressBecameVerified) {
     return {
       color: 'yellow',
       icon: <UnderReviewIcon className="size-5" />,

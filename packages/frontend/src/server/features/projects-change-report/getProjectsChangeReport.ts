@@ -10,7 +10,7 @@ export type ProjectsChangeReport = Awaited<
 
 export interface ProjectChanges {
   impactfulChange: boolean
-  verificationChangedContracts: Record<string, EthereumAddress[]>
+  becameVerifiedContracts: Record<string, EthereumAddress[]>
 }
 
 type ProjectChangeReport = Record<
@@ -19,7 +19,7 @@ type ProjectChangeReport = Record<
     implementationChange: EthereumAddress[]
     highSeverityFieldChange: EthereumAddress[]
     ultimateUpgraderChange: EthereumAddress[]
-    verificationChange: EthereumAddress[]
+    becameVerified: EthereumAddress[]
   }
 >
 
@@ -54,7 +54,7 @@ async function getProjectsChangeReportWithFns() {
         ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
           EthereumAddress(c.address),
         ),
-        verificationChange: changesByType.verificationChange.map((c) =>
+        becameVerified: changesByType.becameVerified.map((c) =>
           EthereumAddress(c.address),
         ),
       }
@@ -69,8 +69,7 @@ async function getProjectsChangeReportWithFns() {
           this.hasImplementationChanged(projectId) ||
           this.hasHighSeverityFieldChanged(projectId) ||
           this.hasUltimateUpgraderChanged(projectId),
-        verificationChangedContracts:
-          this.getVerificationChangedContracts(projectId),
+        becameVerifiedContracts: this.getBecameVerifiedContracts(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
@@ -94,10 +93,10 @@ async function getProjectsChangeReportWithFns() {
         !!ethereumChanges && ethereumChanges.ultimateUpgraderChange.length > 0
       )
     },
-    getVerificationChangedContracts: function (projectId: string) {
+    getBecameVerifiedContracts: function (projectId: string) {
       return Object.fromEntries(
         Object.entries(this.projects[projectId] ?? {}).map(
-          ([chain, changes]) => [chain, changes.verificationChange],
+          ([chain, changes]) => [chain, changes.becameVerified],
         ),
       )
     },
@@ -125,7 +124,7 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
           implementationChange: [],
           highSeverityFieldChange: [],
           ultimateUpgraderChange: [],
-          verificationChange: [
+          becameVerified: [
             EthereumAddress(
               '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
             ),
@@ -135,7 +134,7 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     },
     getChanges: () => ({
       impactfulChange: false,
-      verificationChangedContracts: {
+      becameVerifiedContracts: {
         base: [
           EthereumAddress(
             '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
@@ -146,6 +145,6 @@ function getProjectsChangeReportMock(): ProjectsChangeReport {
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
     hasUltimateUpgraderChanged: () => false,
-    getVerificationChangedContracts: () => ({}),
+    getBecameVerifiedContracts: () => ({}),
   }
 }
