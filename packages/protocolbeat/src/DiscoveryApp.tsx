@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createBrowserRouter, Navigate } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { HomePage } from './HomePage'
-import { ProjectPage } from './ProjectPage'
 import { NotFoundPage } from './NotFoundPage'
+import { ProjectPage } from './ProjectPage'
 
 const router = createBrowserRouter([
   {
