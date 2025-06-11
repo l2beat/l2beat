@@ -1,4 +1,4 @@
-import type { DataAvailabilityRecord } from '@l2beat/database'
+import type { DataAvailabilityRecord2 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -60,7 +60,7 @@ export async function getProjectDaThroughputChart(
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord[],
+  records: DataAvailabilityRecord2[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
