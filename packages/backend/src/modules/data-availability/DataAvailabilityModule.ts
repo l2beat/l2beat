@@ -1,10 +1,7 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
-import type {
-  DataAvailabilityTrackingConfig,
-  DataAvailabilityTrackingConfig2,
-} from '../../config/Config'
+import type { DataAvailabilityTrackingConfig2 } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
@@ -22,7 +19,7 @@ export function initDataAvailabilityModule(
   database: Database,
   _peripherals: Peripherals,
 ): ApplicationModule | undefined {
-  if (!config.da || !config.da2) {
+  if (!config.da2) {
     logger.info('Data availability module disabled')
     return
   }
@@ -33,7 +30,6 @@ export function initDataAvailabilityModule(
   })
 
   const { targetIndexers, daIndexers } = createIndexers(
-    config.da,
     config.da2,
     clock,
     database,
@@ -69,8 +65,7 @@ export function initDataAvailabilityModule(
 }
 
 function createIndexers(
-  config: DataAvailabilityTrackingConfig,
-  config2: DataAvailabilityTrackingConfig2,
+  config: DataAvailabilityTrackingConfig2,
   clock: Clock,
   database: Database,
   logger: Logger,
@@ -91,7 +86,7 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const configurations2 = config2.projects.filter(
+    const configurations2 = config.projects.filter(
       (c) => c.daLayer === daLayer.name,
     )
 
