@@ -137,14 +137,7 @@ export class Decoder {
 
     const addresses = getAddresses(result)
     await Promise.all(
-      addresses.map(async (x) => {
-        await this.knowSafe(x.value, chain, known)
-        const info = known.addresses.get(x.value)
-        x.name = info?.name
-        if (info?.fromDiscovery) {
-          x.discovered = true
-        }
-      }),
+      addresses.map((x) => this.knowSafe(x.value, chain, known)),
     )
 
     const hashes = result.arguments.map(getBytes32).flat(1)
@@ -175,6 +168,16 @@ export class Decoder {
         chain,
         known,
       )
+    }
+
+    for (const address of addresses) {
+      const info = known.addresses.get(address.value)
+
+      address.name = info?.name
+
+      if (info?.fromDiscovery) {
+        address.discovered = true
+      }
     }
 
     return result
