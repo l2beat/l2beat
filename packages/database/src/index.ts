@@ -25,7 +25,10 @@ export type { LivenessRecord } from './other/liveness/entity'
 export type { VerifierStatusRecord } from './other/verifier-status/entity'
 export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
 export type { IndexerStateRecord } from './uif/indexer-state/entity'
-export type { DataAvailabilityRecord } from './da-beat/data-availability/entity'
+export type {
+  DataAvailabilityRecord,
+  ProjectsSummedDataAvailabilityRecord,
+} from './da-beat/data-availability/entity'
 export type { TokenValueRecord } from './tvs/token-value/entity'
 export type { ProjectValueRecord } from './tvs/project-value/entity'
 export type { UpdateDiffRecord } from './discovery/update-diff/entity'
