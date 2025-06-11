@@ -71,7 +71,7 @@ function createIndexers(
   logger: Logger,
   providers: Providers,
 ) {
-  const daService2 = new DaService()
+  const daService = new DaService()
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
@@ -86,19 +86,19 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const configurations2 = config.projects.filter(
+    const configurations = config.projects.filter(
       (c) => c.daLayer === daLayer.name,
     )
 
-    const indexer2 = new DaIndexer({
-      configurations: configurations2.map((c) => ({
+    const indexer = new DaIndexer({
+      configurations: configurations.map((c) => ({
         id: c.configurationId,
         minHeight: c.sinceBlock,
         maxHeight: c.untilBlock ?? null,
         properties: c,
       })),
       daProvider: providers.da,
-      daService: daService2,
+      daService: daService,
       logger,
       daLayer: daLayer.name,
       batchSize: daLayer.batchSize,
@@ -107,7 +107,7 @@ function createIndexers(
       db: database,
     })
 
-    daIndexers.push(indexer2)
+    daIndexers.push(indexer)
   }
 
   return { targetIndexers, daIndexers }
