@@ -19,10 +19,10 @@ import {
   setPreferences,
   showHidden,
 } from './actions/other'
+import { registerViewportContainer } from './actions/registerViewportContainer'
 import { selectAndFocus } from './actions/selectAndFocus'
 import { setNodes } from './actions/setNodes'
 import { persistNodeLayout } from './utils/storage'
-import { registerViewportContainer } from './actions/registerViewportContainer'
 
 const INITIAL_STATE: State = {
   selected: [],
