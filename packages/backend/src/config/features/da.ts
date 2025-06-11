@@ -9,11 +9,11 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import type {
-  BlockLayerDaTrackingConfig,
-  TimestampLayerDaTrackingConfig,
   BlockDaIndexedConfig,
-  TimestampDaIndexedConfig,
+  BlockLayerDaTrackingConfig,
   DataAvailabilityTrackingConfig,
+  TimestampDaIndexedConfig,
+  TimestampLayerDaTrackingConfig,
 } from '../Config'
 
 export async function getDaTrackingConfig(
