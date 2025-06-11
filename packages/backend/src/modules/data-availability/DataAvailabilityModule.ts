@@ -77,7 +77,7 @@ function createIndexers(
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
 
-  for (const daLayer of config.layers) {
+  for (const daLayer of config.blockLayers) {
     const targetIndexer = new BlockTargetIndexer(
       logger,
       clock,
@@ -86,7 +86,7 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const configurations = config.projects.filter(
+    const configurations = config.blockProjects.filter(
       (c) => c.daLayer === daLayer.name,
     )
 

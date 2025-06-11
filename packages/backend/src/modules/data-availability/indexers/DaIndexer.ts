@@ -2,7 +2,7 @@ import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import type { DaIndexedConfig } from '../../../config/Config'
+import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import type {
@@ -13,14 +13,14 @@ import type {
 import type { DaService } from '../services/DaService'
 
 export interface Dependencies
-  extends Omit<ManagedMultiIndexerOptions<DaIndexedConfig>, 'name'> {
+  extends Omit<ManagedMultiIndexerOptions<BlockDaIndexedConfig>, 'name'> {
   daService: DaService
   daProvider: DaProvider
   daLayer: string
   batchSize: number
 }
 
-export class DaIndexer extends ManagedMultiIndexer<DaIndexedConfig> {
+export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
   constructor(private readonly $: Dependencies) {
     super({
       ...$,
@@ -40,7 +40,7 @@ export class DaIndexer extends ManagedMultiIndexer<DaIndexedConfig> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: Configuration<DaIndexedConfig>[],
+    configurations: Configuration<BlockDaIndexedConfig>[],
   ) {
     const adjustedTo =
       from + this.$.batchSize < to ? from + this.$.batchSize : to

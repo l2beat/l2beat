@@ -2,11 +2,18 @@ import type { Env } from '@l2beat/backend-tools'
 import type { ProjectDaTrackingConfig, ProjectService } from '@l2beat/config'
 
 import { createHash } from 'crypto'
-import { ProjectId, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  UnixTime,
+  assertUnreachable,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import type {
-  DaIndexedConfig,
+  BlockLayerDaTrackingConfig,
+  TimestampLayerDaTrackingConfig,
+  BlockDaIndexedConfig,
+  TimestampDaIndexedConfig,
   DataAvailabilityTrackingConfig,
-  LayerDaTrackingConfig,
 } from '../Config'
 
 export async function getDaTrackingConfig(
@@ -17,13 +24,18 @@ export async function getDaTrackingConfig(
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
   const celestiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')
   const availEnabled = !!env.optionalString('AVAIL_BLOBS_API_URL')
+  const eigenDaEnabled =
+    !!env.optionalString('EIGEN_DA_API_URL') &&
+    !!env.optionalString('EIGEN_DA_PER_PROJECT_API_URL')
 
-  const layers: LayerDaTrackingConfig[] = []
+  const blockLayers: BlockLayerDaTrackingConfig[] = []
+  const timestampLayers: TimestampLayerDaTrackingConfig[] = []
   // This is needed for MultiIndexer so we treat layer as project
-  const projectsForLayers: DaIndexedConfig[] = []
+  const blockProjectsForLayers: BlockDaIndexedConfig[] = []
+  const timestampProjectsForLayers: TimestampDaIndexedConfig[] = []
 
   if (ethereumEnabled) {
-    layers.push({
+    blockLayers.push({
       type: 'ethereum' as const,
       name: 'ethereum',
       url: env.string('ETHEREUM_BLOBSCAN_API_URL'),
@@ -31,7 +43,7 @@ export async function getDaTrackingConfig(
       batchSize: env.integer('ETHEREUM_BLOBS_BATCH_SIZE', 2500),
       startingBlock: 19426618,
     })
-    projectsForLayers.push({
+    blockProjectsForLayers.push({
       configurationId: createDaLayerConfigId('ethereum'),
       projectId: ProjectId('ethereum'),
       type: 'baseLayer' as const,
@@ -41,7 +53,7 @@ export async function getDaTrackingConfig(
   }
 
   if (celestiaEnabled) {
-    layers.push({
+    blockLayers.push({
       type: 'celestia' as const,
       name: 'celestia',
       url: env.string('CELESTIA_BLOBS_API_URL'),
@@ -52,7 +64,7 @@ export async function getDaTrackingConfig(
       batchSize: env.integer('CELESTIA_BLOBS_BATCH_SIZE', 100),
       startingBlock: 983042,
     })
-    projectsForLayers.push({
+    blockProjectsForLayers.push({
       configurationId: createDaLayerConfigId('celestia'),
       projectId: ProjectId('celestia'),
       type: 'baseLayer' as const,
@@ -62,7 +74,7 @@ export async function getDaTrackingConfig(
   }
 
   if (availEnabled) {
-    layers.push({
+    blockLayers.push({
       type: 'avail' as const,
       name: 'avail',
       url: env.string('AVAIL_BLOBS_API_URL'),
@@ -70,7 +82,7 @@ export async function getDaTrackingConfig(
       batchSize: env.integer('AVAIL_BLOBS_BATCH_SIZE', 100),
       startingBlock: 1,
     })
-    projectsForLayers.push({
+    blockProjectsForLayers.push({
       configurationId: createDaLayerConfigId('avail'),
       projectId: ProjectId('avail'),
       type: 'baseLayer' as const,
@@ -79,19 +91,52 @@ export async function getDaTrackingConfig(
     })
   }
 
-  const projects = await getDaTrackingProjects(ps, layers)
-  const projectsWithBaseLayers = [...projectsForLayers, ...projects]
+  if (eigenDaEnabled) {
+    timestampLayers.push({
+      type: 'eigen-da' as const,
+      name: 'eigenda',
+      url: env.string('EIGEN_DA_API_URL'),
+      callsPerMinute: env.integer('EIGEN_DA_API_CALLS_PER_MINUTE', 2000),
+      startingTimestamp: UnixTime.fromDate(
+        new Date('2024-06-24T00:00:00.000Z'),
+      ),
+    })
+    timestampProjectsForLayers.push({
+      configurationId: createDaLayerConfigId('eigenda'),
+      projectId: ProjectId('eigenda'),
+      type: 'baseLayer' as const,
+      daLayer: 'eigenda',
+      sinceTimestamp: UnixTime.fromDate(new Date('2024-06-24T00:00:00.000Z')),
+    })
+  }
+
+  const blockProjects = await getBlockDaTrackingProjects(ps, blockLayers)
+  const blockProjectsWithBaseLayers = [
+    ...blockProjectsForLayers,
+    ...blockProjects,
+  ]
+
+  const timestampProjects = await getTimestampDaTrackingProjects(
+    ps,
+    timestampLayers,
+  )
+  const timestampProjectsWithBaseLayers = [
+    ...timestampProjectsForLayers,
+    ...timestampProjects,
+  ]
 
   return {
-    layers,
-    projects: projectsWithBaseLayers,
+    blockLayers,
+    timestampLayers,
+    blockProjects: blockProjectsWithBaseLayers,
+    timestampProjects: timestampProjectsWithBaseLayers,
   }
 }
 
-async function getDaTrackingProjects(
+async function getBlockDaTrackingProjects(
   ps: ProjectService,
-  enabledLayers: { name: string; startingBlock: number }[],
-): Promise<DaIndexedConfig[]> {
+  enabledLayers: BlockLayerDaTrackingConfig[],
+): Promise<BlockDaIndexedConfig[]> {
   const projects = await ps.getProjects({
     select: ['daTrackingConfig'],
     whereNot: ['isUpcoming'],
@@ -99,21 +144,63 @@ async function getDaTrackingProjects(
 
   return projects
     .flatMap((project) => {
-      return project.daTrackingConfig.map((config) => {
-        const layer = enabledLayers.find((l) => l.name === config.daLayer)
-        if (layer === undefined) {
-          return undefined // Layer disabled, do not create config
-        }
+      return project.daTrackingConfig
+        .filter(
+          (config) =>
+            config.type === 'ethereum' ||
+            config.type === 'celestia' ||
+            config.type === 'avail',
+        )
+        .map((config) => {
+          const layer = enabledLayers.find((l) => l.name === config.daLayer)
+          if (layer === undefined) {
+            return undefined // Layer disabled, do not create config
+          }
 
-        const sinceBlock = Math.max(layer.startingBlock, config.sinceBlock)
+          const sinceBlock = Math.max(layer.startingBlock, config.sinceBlock)
 
-        return {
-          ...config,
-          configurationId: createDaTrackingId(config),
-          projectId: project.id,
-          sinceBlock,
-        }
-      })
+          return {
+            ...config,
+            configurationId: createDaTrackingId(config),
+            projectId: project.id,
+            sinceBlock,
+          }
+        })
+    })
+    .filter(notUndefined)
+}
+
+async function getTimestampDaTrackingProjects(
+  ps: ProjectService,
+  enabledLayers: TimestampLayerDaTrackingConfig[],
+): Promise<TimestampDaIndexedConfig[]> {
+  const projects = await ps.getProjects({
+    select: ['daTrackingConfig'],
+    whereNot: ['isUpcoming'],
+  })
+
+  return projects
+    .flatMap((project) => {
+      return project.daTrackingConfig
+        .filter((config) => config.type === 'eigen-da')
+        .map((config) => {
+          const layer = enabledLayers.find((l) => l.name === config.daLayer)
+          if (layer === undefined) {
+            return undefined // Layer disabled, do not create config
+          }
+
+          const sinceTimestamp = Math.max(
+            layer.startingTimestamp,
+            config.sinceTimestamp,
+          )
+
+          return {
+            ...config,
+            configurationId: createDaTrackingId(config),
+            projectId: project.id,
+            sinceTimestamp,
+          }
+        })
     })
     .filter(notUndefined)
 }
@@ -141,6 +228,9 @@ function createDaTrackingId(config: ProjectDaTrackingConfig): string {
       break
     case 'avail':
       input.push(config.appId)
+      break
+    case 'eigen-da':
+      input.push(config.customerId)
       break
     default:
       assertUnreachable(config)

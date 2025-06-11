@@ -2,7 +2,7 @@ import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import type { DaIndexedConfig } from '../../../config/Config'
+import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { DaService } from './DaService'
 
 describe(DaService.name, () => {
@@ -329,7 +329,7 @@ describe(DaService.name, () => {
   })
 })
 
-const MOCK_ETHEREUM_CONFIGS: DaIndexedConfig[] = [
+const MOCK_ETHEREUM_CONFIGS: BlockDaIndexedConfig[] = [
   {
     configurationId: 'eth-1',
     type: 'baseLayer' as const,
@@ -358,7 +358,7 @@ const MOCK_ETHEREUM_CONFIGS: DaIndexedConfig[] = [
   },
 ]
 
-const MOCK_CELESTIA_CONFIGS: DaIndexedConfig[] = [
+const MOCK_CELESTIA_CONFIGS: BlockDaIndexedConfig[] = [
   {
     configurationId: 'cel-1',
     type: 'baseLayer' as const,
@@ -376,7 +376,7 @@ const MOCK_CELESTIA_CONFIGS: DaIndexedConfig[] = [
   },
 ]
 
-const MOCK_AVAIL_CONFIGS: DaIndexedConfig[] = [
+const MOCK_AVAIL_CONFIGS: BlockDaIndexedConfig[] = [
   {
     configurationId: 'av-1',
     type: 'baseLayer' as const,
