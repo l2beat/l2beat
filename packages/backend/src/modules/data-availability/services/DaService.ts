@@ -11,13 +11,13 @@ import type {
   EthereumBlob,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { DaIndexedConfig } from '../../../config/Config'
+import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
   generateRecords(
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
-    configurations: DaIndexedConfig[],
+    configurations: BlockDaIndexedConfig[],
   ): DataAvailabilityRecord[] {
     const updatedRecords = [...previousRecords]
 
@@ -46,7 +46,7 @@ export class DaService {
 
   private createRecordsFromBlob(
     blob: DaBlob,
-    configurations: DaIndexedConfig[],
+    configurations: BlockDaIndexedConfig[],
   ): DataAvailabilityRecord[] {
     const records: DataAvailabilityRecord[] = []
 

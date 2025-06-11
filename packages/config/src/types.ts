@@ -877,9 +877,15 @@ export type ProjectFinalityConfig =
 export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
+  | BlockDaTrackingConfig
+  | TimestampDaTrackingConfig
+
+export type BlockDaTrackingConfig =
   | EthereumDaTrackingConfig
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
+
+export type TimestampDaTrackingConfig = EigenDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -905,6 +911,14 @@ export interface AvailDaTrackingConfig {
   appId: string
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface EigenDaTrackingConfig {
+  type: 'eigen-da'
+  daLayer: ProjectId
+  customerId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {

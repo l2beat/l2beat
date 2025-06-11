@@ -10,7 +10,7 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type {
-  DaIndexedConfig,
+  BlockDaIndexedConfig,
   DataAvailabilityTrackingConfig,
 } from '../../../config/Config'
 import { mockDatabase } from '../../../test/database'
@@ -160,8 +160,8 @@ describe(DaIndexer.name, () => {
 })
 
 function toIndexerConfigurations(
-  configurations: DaIndexedConfig[],
-): Configuration<DaIndexedConfig>[] {
+  configurations: BlockDaIndexedConfig[],
+): Configuration<BlockDaIndexedConfig>[] {
   return configurations.map((c) => ({
     id: c.configurationId,
     minHeight: c.sinceBlock,
@@ -171,7 +171,7 @@ function toIndexerConfigurations(
 }
 
 function mockIndexer($: {
-  configurations?: DataAvailabilityTrackingConfig['projects']
+  configurations?: DataAvailabilityTrackingConfig['blockProjects']
   batchSize?: number
   indexerService?: IndexerService
   blobs?: DaBlob[]
@@ -214,7 +214,7 @@ function mockIndexer($: {
   return { repository, indexer, daService, daProvider }
 }
 
-function config(project: string, inbox?: string): DaIndexedConfig {
+function config(project: string, inbox?: string): BlockDaIndexedConfig {
   return {
     type: 'ethereum',
     configurationId: createId(project),

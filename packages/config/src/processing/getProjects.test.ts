@@ -482,15 +482,23 @@ describe('getProjects', () => {
       'stack',
     ])
 
-    // All new projects should have non-zero sinceBlock - it will make sync more efficient
-    describe('every project has non-zero sinceBlock', () => {
+    // All new projects should have non-zero sinceBlock/sinceTimestamp - it will make sync more efficient
+    describe('every project has non-zero sinceBlock/sinceTimestamp', () => {
       for (const project of projects) {
         if (project.daTrackingConfig) {
           if (!excluded.has(project.id)) {
             it(project.id, () => {
               assert(project.daTrackingConfig) // type issue
               for (const config of project.daTrackingConfig) {
-                expect(config.sinceBlock).toBeGreaterThan(0)
+                if (
+                  config.type === 'ethereum' ||
+                  config.type === 'avail' ||
+                  config.type === 'celestia'
+                ) {
+                  expect(config.sinceBlock).toBeGreaterThan(0)
+                } else {
+                  expect(config.sinceTimestamp).toBeGreaterThan(0)
+                }
               }
             })
           }
