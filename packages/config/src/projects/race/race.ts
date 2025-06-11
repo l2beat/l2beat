@@ -23,7 +23,7 @@ export const race: ScalingProject = opStackL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://raceecosystem.com/'],
-      apps: [
+      bridges: [
         'https://bridge.race.foundation/',
         'https://raceecosystem.com/onboarding',
       ],

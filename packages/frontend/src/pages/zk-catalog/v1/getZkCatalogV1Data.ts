@@ -3,10 +3,10 @@ import { getVerifiers } from '~/server/features/zk-catalog/getVerifiers'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import type { Manifest } from '../../utils/Manifest'
-import { getZkCatalogEntries } from './utils/getZkCatalogEntries'
+import type { Manifest } from '../../../utils/Manifest'
+import { getZkCatalogEntries } from '../utils/getZkCatalogEntries'
 
-export async function getZkCatalogData(
+export async function getZkCatalogV1Data(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
@@ -33,7 +33,7 @@ export async function getZkCatalogData(
       }),
     },
     ssr: {
-      page: 'ZkCatalogPage',
+      page: 'ZkCatalogPageV1',
       props: {
         ...appLayoutProps,
         entries,

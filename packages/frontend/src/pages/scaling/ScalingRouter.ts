@@ -34,11 +34,21 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/activity', async (req, res) => {
-    const data = await getScalingActivityData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/activity',
+    validateRoute({
+      query: z.object({
+        tab: z
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
+          .catch('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingActivityData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/risk', async (req, res) => {
     const data = await getScalingRiskData(req, manifest, cache)
@@ -46,11 +56,21 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/tvs', async (req, res) => {
-    const data = await getScalingTvsData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/tvs',
+    validateRoute({
+      query: z.object({
+        tab: z
+          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
+          .catch('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingTvsData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/data-availability', async (req, res) => {
     const data = await getScalingDataAvailabilityData(req, manifest, cache)
@@ -70,11 +90,19 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/costs', async (req, res) => {
-    const data = await getScalingCostsData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
+  router.get(
+    '/scaling/costs',
+    validateRoute({
+      query: z.object({
+        tab: z.enum(['rollups', 'others']).catch('rollups'),
+      }),
+    }),
+    async (req, res) => {
+      const data = await getScalingCostsData(req, manifest, cache)
+      const html = render(data, req.originalUrl)
+      res.status(200).send(html)
+    },
+  )
 
   router.get('/scaling/archived', async (req, res) => {
     const data = await getScalingArchivedData(req, manifest, cache)

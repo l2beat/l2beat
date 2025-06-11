@@ -39,7 +39,7 @@ export const shibarium: ScalingProject = {
     purposes: ['Universal'],
     links: {
       websites: ['https://shibarium.shib.io/'],
-      apps: ['https://shibarium.shib.io/bridge'],
+      bridges: ['https://shibarium.shib.io/bridge'],
       documentation: [
         'https://docs.shib.io/docs/shibarium/welcome/welcome-overview',
       ],

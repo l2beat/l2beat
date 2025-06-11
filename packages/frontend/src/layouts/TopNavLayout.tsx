@@ -2,6 +2,7 @@ import { Banner } from '~/components/Banner'
 import { Footer } from '~/components/Footer'
 import { NavLayout } from '~/components/nav/NavLayout'
 import { RecategorisationPreviewBanner } from '~/components/recategorisation-preview/RecategorisationPreviewBanner'
+import { RecategorisationUpcomingBanner } from '~/components/recategorisation-preview/RecategorisationUpcomingBanner'
 
 export function TopNavLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export function TopNavLayout({ children }: { children: React.ReactNode }) {
       topChildren={
         <>
           <Banner />
+          <RecategorisationUpcomingBanner />
           <RecategorisationPreviewBanner />
         </>
       }

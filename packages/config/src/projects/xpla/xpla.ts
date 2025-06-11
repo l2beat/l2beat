@@ -16,7 +16,7 @@ export const xpla: ScalingProject = upcomingL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://xpla.io'],
-      apps: ['https://vault.xpla.io/'],
+      bridges: ['https://vault.xpla.io/'],
       documentation: ['https://docs.xpla.io'],
       explorers: ['https://explorer.xpla.io'],
       repositories: ['https://github.com/xpladev'],

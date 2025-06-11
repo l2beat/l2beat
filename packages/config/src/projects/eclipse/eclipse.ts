@@ -42,7 +42,7 @@ export const eclipse: ScalingProject = {
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
-      apps: ['https://app.eclipse.xyz/'],
+      bridges: ['https://app.eclipse.xyz/'],
       documentation: ['https://docs.eclipse.xyz/'],
       explorers: ['https://eclipsescan.xyz/'],
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],

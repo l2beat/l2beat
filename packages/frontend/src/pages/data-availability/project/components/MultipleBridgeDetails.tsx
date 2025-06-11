@@ -62,7 +62,7 @@ export function MultipleBridgeDetails({ project }: Props) {
                   // Hide 3rd and further bridges on mobile (will be shown in a drawer)
                   index > 2 && 'max-md:hidden',
                   index === 0 && 'md:rounded-t-none',
-                  bridge.statuses?.isUnverified
+                  bridge.verificationWarning
                     ? UNVERIFIED_DA_CLASSNAME
                     : 'bg-surface-secondary md:bg-transparent',
                 )}
@@ -80,7 +80,7 @@ export function MultipleBridgeDetails({ project }: Props) {
 
                 <div className="flex flex-1 items-center gap-1 font-bold text-primary text-sm">
                   {bridge.name}
-                  {bridge.statuses?.isUnverified && (
+                  {bridge.verificationWarning && (
                     <Tooltip>
                       <TooltipTrigger>
                         <UnverifiedIcon className="size-3.5 fill-red-300 md:size-4" />

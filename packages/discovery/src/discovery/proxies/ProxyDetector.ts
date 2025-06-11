@@ -9,6 +9,7 @@ import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
 import { detectBeaconProxy } from './auto/BeaconProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
+import { detectEip1167Proxy } from './auto/Eip1167Proxy'
 import { detectEip1967Proxy } from './auto/Eip1967Proxy'
 import { detectEip2535proxy } from './auto/Eip2535Proxy'
 import { detectGnosisSafe } from './auto/GnosisSafe'
@@ -48,6 +49,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectZeppelinOSProxy,
   detectEip2535proxy,
   detectBeaconProxy,
+  detectEip1167Proxy,
 ]
 
 export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {

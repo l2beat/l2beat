@@ -69,7 +69,7 @@ export const brine: ScalingProject = {
     stack: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
-      apps: ['https://trade.tanx.fi/'],
+      bridges: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
       socialMedia: [
         'https://twitter.com/tanXfinance',

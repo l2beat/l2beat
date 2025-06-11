@@ -25,7 +25,7 @@ export const xrone: ScalingProject = underReviewL3({
     purposes: ['Gaming'],
     links: {
       websites: ['https://saltwatergames.com/'],
-      apps: [],
+      bridges: [],
       documentation: ['https://xr-one.gitbook.io/xr'],
       explorers: [],
       socialMedia: [

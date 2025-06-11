@@ -18,7 +18,7 @@ export const sxt: ScalingProject = zkStackL2({
       "Space and Time (SxT) is a decentralized data warehouse that aims to provide a zk 'Proof of SQL' to bring offchain data to smart contracts onchain. Built on ZK Stack, the SxT chain will serve as a settlement layer and payment hub for data queries.",
     links: {
       websites: ['https://spaceandtime.io'],
-      apps: ['https://app.spaceandtime.ai'],
+      bridges: ['https://app.spaceandtime.ai'],
       documentation: ['https://docs.spaceandtime.io'],
       explorers: ['https://spaceandtime.calderaexplorer.xyz'],
       repositories: ['https://github.com/spaceandtimelabs'],

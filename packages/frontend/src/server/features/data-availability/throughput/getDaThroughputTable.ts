@@ -1,5 +1,5 @@
 import type { DaLayerThroughput } from '@l2beat/config'
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
@@ -25,7 +25,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, daLayers] = await Promise.all([
-    db.dataAvailability2.getByDaLayersAndTimeRange(daLayerIds, [
+    db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
       lastDay - 7 * UnixTime.DAY,
       lastDay,
     ]),
@@ -59,7 +59,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   )
 
   const getData = (
-    values: Record<string, Omit<DataAvailabilityRecord2, 'configurationId'>[]>,
+    values: Record<string, Omit<DataAvailabilityRecord, 'configurationId'>[]>,
   ) => {
     return Object.fromEntries(
       daLayers
@@ -107,7 +107,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
 }
 
 function getPastDayData(
-  lastRecord: Omit<DataAvailabilityRecord2, 'configurationId'>,
+  lastRecord: Omit<DataAvailabilityRecord, 'configurationId'>,
   largestPoster:
     | {
         readonly timestamp: UnixTime
@@ -223,9 +223,9 @@ function sumByTimestamp(
   daLayer: string,
   groupedProjectValues: Record<
     string,
-    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+    Omit<DataAvailabilityRecord, 'configurationId'>[]
   >,
-): Omit<DataAvailabilityRecord2, 'configurationId'>[] {
+): Omit<DataAvailabilityRecord, 'configurationId'>[] {
   const projectValues = groupedProjectValues[daLayer] ?? []
   const timestampedValues = groupBy(projectValues, (v) => v.timestamp)
   const values = Object.entries(timestampedValues).map(
@@ -246,11 +246,11 @@ function sumByTimestamp(
 async function getLargestPosters(
   groupedDaLayerValues: Record<
     string,
-    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+    Omit<DataAvailabilityRecord, 'configurationId'>[]
   >,
   groupedProjectValues: Record<
     string,
-    Omit<DataAvailabilityRecord2, 'configurationId'>[]
+    Omit<DataAvailabilityRecord, 'configurationId'>[]
   >,
 ) {
   const largestPosters = Object.fromEntries(

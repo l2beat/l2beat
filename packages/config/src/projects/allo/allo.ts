@@ -16,7 +16,7 @@ export const allo: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://allo.xyz'],
-      apps: ['https://app.allo.xyz/'],
+      bridges: ['https://app.allo.xyz/'],
       socialMedia: [
         'https://x.com/allo_xyz',
         'https://discord.gg/allo',

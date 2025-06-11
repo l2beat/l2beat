@@ -16,7 +16,7 @@ export const plumenetwork: ScalingProject = upcomingL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://plumenetwork.xyz/'],
-      apps: ['https://miles.plumenetwork.xyz'],
+      bridges: ['https://miles.plumenetwork.xyz'],
       documentation: ['https://docs.plumenetwork.xyz/plume'],
       explorers: ['https://test-explorer.plumenetwork.xyz'],
       repositories: ['https://github.com/plumenetwork'],

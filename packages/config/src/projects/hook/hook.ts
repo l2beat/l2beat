@@ -21,7 +21,7 @@ export const hook: ScalingProject = underReviewL3({
     purposes: ['Universal', 'NFT', 'Exchange'],
     links: {
       websites: ['https://hook.xyz/'],
-      apps: ['https://hook.xyz/trade/'],
+      bridges: ['https://hook.xyz/trade/'],
       documentation: ['https://odysseydocumentation.hook.xyz/'],
       explorers: ['https://hook.calderaexplorer.xyz/'],
       socialMedia: [

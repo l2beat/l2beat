@@ -63,7 +63,7 @@ export const aztec: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://old.zk.money'],
+      bridges: ['https://old.zk.money'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',

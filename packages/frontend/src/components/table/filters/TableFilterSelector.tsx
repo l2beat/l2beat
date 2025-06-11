@@ -157,8 +157,10 @@ function Content({
           <TableFilterValueMenuItems
             filterId={selectedId}
             values={uniq(
-              entries.map(
-                (e) => e.filterable?.find((f) => f.id === selectedId)?.value,
+              entries.flatMap((e) =>
+                e.filterable
+                  ?.filter((f) => f.id === selectedId)
+                  .map((f) => f.value),
               ),
             ).filter(notUndefined)}
           />

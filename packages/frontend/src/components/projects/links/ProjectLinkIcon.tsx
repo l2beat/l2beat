@@ -1,10 +1,10 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { AppIcon } from '~/icons/App'
 import { CodeIcon } from '~/icons/Code'
 import { DocumentIcon } from '~/icons/Document'
 import { GlobeIcon } from '~/icons/Globe'
 import { SearchIcon } from '~/icons/Search'
 import { UserIcon } from '~/icons/User'
+import { BridgesIcon } from '~/icons/pages/Bridges'
 import { RollupCodesIcon } from '~/icons/products/RollupCodes'
 import { cn } from '~/utils/cn'
 import type { LinkName } from './types'
@@ -19,8 +19,8 @@ export function ProjectLinkIcon(props: LinkNameIconProps) {
   switch (props.name) {
     case 'Website':
       return <GlobeIcon className={className} />
-    case 'App':
-      return <AppIcon className={className} />
+    case 'Bridge':
+      return <BridgesIcon className={className} />
     case 'Docs':
       return <DocumentIcon className={className} />
     case 'Explorer':

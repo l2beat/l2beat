@@ -58,15 +58,6 @@ model AggregatedL2Cost {
 }
 
 model DataAvailability {
-  timestamp DateTime @db.Timestamp(6)
-  daLayer   String   @db.VarChar(255)
-  projectId String   @db.VarChar(255)
-  totalSize BigInt
-
-  @@id([timestamp, daLayer, projectId])
-}
-
-model DataAvailability2 {
   timestamp       DateTime @db.Timestamp(6)
   daLayer         String   @db.VarChar(255)
   projectId       String   @db.VarChar(255)

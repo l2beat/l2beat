@@ -47,7 +47,7 @@ export const gmnetwork: ScalingProject = opStackL2({
       'GM Network is an OP stack L2 in alt-DA mode aiming to deepen the integration of smart, connected devices within everyday human activities by blending Artificial Intelligence and the Internet of Things.',
     links: {
       websites: ['https://gmnetwork.ai/'],
-      apps: ['https://bridge.gmnetwork.ai/'],
+      bridges: ['https://bridge.gmnetwork.ai/'],
       documentation: ['https://docs.gmnetwork.ai/docs'],
       explorers: ['https://scan.gmnetwork.ai/'],
       socialMedia: [

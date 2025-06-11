@@ -19,6 +19,7 @@ export const FilterableValueId = z.enum([
   'validatedBy',
   'infrastructure',
   'vm',
+  'other',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -32,6 +33,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   validatedBy: 'Validated by',
   infrastructure: 'Infrastructure',
   vm: 'VM',
+  other: 'Other properties',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -45,6 +47,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   validatedBy: 'validators',
   infrastructure: 'infras',
   vm: 'VMs',
+  other: 'other',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

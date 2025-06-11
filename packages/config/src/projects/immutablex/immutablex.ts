@@ -73,7 +73,7 @@ export const immutablex: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://immutable.com/'],
-      apps: ['https://market.immutable.com/'],
+      bridges: ['https://market.immutable.com/'],
       documentation: [
         'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
       ],

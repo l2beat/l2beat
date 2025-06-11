@@ -28,7 +28,7 @@ export const publicgoodsnetwork: ScalingProject = opStackL2({
       'Public Goods Network is an OP stack chain focused on funding public goods.',
     links: {
       websites: ['https://publicgoods.network/'],
-      apps: ['https://bridge.publicgoods.network/'],
+      bridges: ['https://bridge.publicgoods.network/'],
       documentation: ['https://docs.publicgoods.network/'],
       explorers: [
         'https://explorer.publicgoods.network',

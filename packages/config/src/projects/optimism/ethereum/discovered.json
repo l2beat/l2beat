@@ -446,7 +446,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "14d 17h",
+        "timeSinceLastL2beatInteraction": "26d 21h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1665,21 +1665,23 @@
       "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
       "type": "Contract",
       "sourceHashes": [
+        "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101",
         "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"],
       "sinceTimestamp": 1672938575,
       "sinceBlock": 16341988,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E",
         "getNextSequenceId": 125,
         "initialized": true,
         "safeMode": false
       },
       "implementationNames": {
-        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "WalletSimple"
+        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "WalletSimple",
+        "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E": "WalletSimple"
       }
     },
     {
@@ -3033,6 +3035,24 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E": [
+      "event BatchTransacted(address msgSender, address otherSigner, bytes32 operation)",
+      "event BatchTransfer(address sender, address recipient, uint256 value)",
+      "event Deposited(address from, uint256 value, bytes data)",
+      "event SafeModeActivated(address msgSender)",
+      "event Transacted(address msgSender, address otherSigner, bytes32 operation, address toAddress, uint256 value, bytes data)",
+      "function activateSafeMode()",
+      "function flushForwarderTokens(address forwarderAddress, address tokenContractAddress)",
+      "function getNextSequenceId() view returns (uint256)",
+      "function init(address[] allowedSigners)",
+      "function initialized() view returns (bool)",
+      "function isSigner(address signer) view returns (bool)",
+      "function safeMode() view returns (bool)",
+      "function sendMultiSig(address toAddress, uint256 value, bytes data, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function sendMultiSigBatch(address[] recipients, uint256[] values, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function sendMultiSigToken(address toAddress, uint256 value, address tokenContractAddress, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function signers(address) view returns (bool)"
     ],
     "0xF027F4A985560fb13324e943edf55ad6F1d15Dc1": [
       "constructor(address _oracle)",

@@ -22,7 +22,7 @@ export const mantapacific: ScalingProject = opStackL2({
       'Manta Pacific is an Optimium empowering EVM-native zero-knowledge (ZK) applications and general dapps.',
     links: {
       websites: ['https://pacific.manta.network/'],
-      apps: ['https://pacific-bridge.manta.network/'],
+      bridges: ['https://pacific-bridge.manta.network/'],
       documentation: ['https://docs.manta.network/'],
       explorers: [
         'https://pacific-explorer.manta.network/',

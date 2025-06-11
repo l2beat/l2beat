@@ -20,7 +20,7 @@ export const rari: ScalingProject = orbitStackL3({
       'RARI Chain embeds royalties on the node level to guarantee royalty payments. A secure, low-cost, decentralized Ethereum L3 blockchain powered by Arbitrum.',
     links: {
       websites: ['https://rarichain.org/'],
-      apps: [
+      bridges: [
         'https://bridge.arbitrum.io/?destinationChain=rari-mainnet&sourceChain=arbitrum-one',
       ],
       documentation: ['https://rari.docs.caldera.dev/'],

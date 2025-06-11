@@ -30,7 +30,7 @@ export const lens: ScalingProject = zkStackL2({
     stack: 'ZK Stack',
     links: {
       websites: ['https://lens.xyz'],
-      apps: [
+      bridges: [
         'https://app.across.to/bridge?destinationChainId=232',
         'https://onboarding.lens.xyz/explore',
       ],

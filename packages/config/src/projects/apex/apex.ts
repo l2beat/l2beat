@@ -125,7 +125,7 @@ export const apex: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://apex.exchange/'],
-      apps: ['https://pro.apex.exchange/'],
+      bridges: ['https://pro.apex.exchange/'],
       documentation: ['https://apex-pro.gitbook.io/apex-pro?lang=en-US'],
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: [
