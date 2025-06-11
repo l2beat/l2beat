@@ -1,122 +1,199 @@
 {
   "name": "honeypot",
   "chain": "ethereum",
-  "blockNumber": 20641250,
-  "configHash": "0x66f8681862d0c813dd7dd734cea28cf9e842c03280ce095cb30d1bca9d4326fd",
+  "blockNumber": 22680529,
+  "configHash": "0xee10833df440f30c254f01a230dd61ce0db0203e5b0cb50eae063c0b6ebdf372",
   "entries": [
     {
-      "name": "Honeypot",
-      "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
+      "name": "Cartesi Token",
+      "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
       "type": "Contract",
       "sourceHashes": [
-        "0x4ea587588e6035764e827917418aee9c41a353454a7a13fe807ca56724350d47"
+        "0xef88f413054922227148a14239cae0e1c1f354787c7724e3c1a74c629c526ae0"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1694553335,
-      "sinceBlock": 18122866,
+      "sinceTimestamp": 1587355556,
+      "sinceBlock": 9907101,
       "values": {
         "$immutable": true,
-        "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
-        "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
-        "owner": "0x0000000000000000000000000000000000000000"
+        "decimals": 18,
+        "DECIMALS": 18,
+        "INITIAL_SUPPLY": "1000000000000000000000000000",
+        "name": "Cartesi Token",
+        "NAME": "Cartesi Token",
+        "symbol": "CTSI",
+        "SYMBOL": "CTSI",
+        "totalSupply": "1000000000000000000000000000"
       },
       "implementationNames": {
-        "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": "CartesiDApp"
+        "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D": "CartesiToken"
       }
     },
     {
-      "name": "History",
-      "address": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
+      "name": "Application",
+      "address": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
       "type": "Contract",
       "sourceHashes": [
-        "0x10336484f22cf6f3d30e974fe43a4aa644807bee582c7ee3c03b116024554eaa"
+        "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1694457347,
-      "sinceBlock": 18114934,
+      "sinceTimestamp": 1749510467,
+      "sinceBlock": 22670193,
       "values": {
         "$immutable": true,
-        "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
+        "getDataAvailability": "0xb12c9ede000000000000000000000000c70074bdd26d8cf983ca6a5b89b8db52d5850051",
+        "getDeploymentBlockNumber": 22670193,
+        "getOutputsMerkleRootValidator": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
+        "getTemplateHash": "0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "wasOutputExecuted": [false, false, false, false, false]
+      },
+      "errors": { "wasOutputExecuted": "Processing error occurred." },
+      "implementationNames": {
+        "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
+      }
+    },
+    {
+      "name": "DaveConsensus",
+      "address": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749510479,
+      "sinceBlock": 22670194,
+      "values": {
+        "$immutable": true,
+        "canSettle": {
+          "isFinished": false,
+          "epochNumber": 0,
+          "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        },
+        "getApplicationContract": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+        "getCurrentSealedEpoch": {
+          "epochNumber": 0,
+          "inputIndexLowerBound": 0,
+          "inputIndexUpperBound": 0,
+          "tournament": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A"
+        },
+        "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
+        "getTournamentFactory": "0xA31C2aCfF3464658866960c0fBD3d798310272D7"
       },
       "implementationNames": {
-        "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": "History"
+        "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": "DaveConsensus"
+      }
+    },
+    {
+      "name": "MultiLevelTournamentFactory",
+      "address": "0xA31C2aCfF3464658866960c0fBD3d798310272D7",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb56d0fd498dabd92ee9ab164394860f9bbb68ea74e4c639f8b1c1f6864eef878"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508271,
+      "sinceBlock": 22670010,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xA31C2aCfF3464658866960c0fBD3d798310272D7": "MultiLevelTournamentFactory"
       }
     },
     {
       "name": "InputBox",
-      "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
+      "address": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
       "type": "Contract",
       "sourceHashes": [
-        "0x3bfaa3fe125375dfb9181df0c144cda2b17aa368e57292e88d6258c4aafe51ed"
+        "0xd6dc854c1f4207b23c80cab9cf5de1d72978dd86677fe8c8ace07ee5fdfa33c0"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1690464923,
-      "sinceBlock": 17784733,
-      "values": { "$immutable": true },
+      "sinceTimestamp": 1748610851,
+      "sinceBlock": 22595776,
+      "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
       "implementationNames": {
-        "0x59b22D57D4f067708AB0c00552767405926dc768": "InputBox"
+        "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
       }
-    },
-    {
-      "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "ERC20Portal",
-      "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
+      "address": "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
       "type": "Contract",
       "sourceHashes": [
-        "0x0cb29769a693a89712c9c05a29f52a6e610ed38585db5d66f1fc56118e39493d"
+        "0x4d9461f610606f687a0d0180aa13890df326becb8f2e8ff8acdd713c311ceae9"
       ],
       "proxyType": "immutable",
-      "sinceTimestamp": 1690464947,
-      "sinceBlock": 17784735,
+      "sinceTimestamp": 1748610923,
+      "sinceBlock": 22595782,
       "values": {
         "$immutable": true,
-        "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
+        "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051"
       },
       "implementationNames": {
-        "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": "ERC20Portal"
+        "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": "ERC20Portal"
       }
     },
     {
-      "name": "Authority",
-      "address": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
+      "name": "",
+      "address": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A",
       "type": "Contract",
-      "sourceHashes": [
-        "0xe4cf627ec9b7ed3b6b18711555d50a7002525d34e84a6242a2b1bd41aedb2f11"
-      ],
+      "unverified": true,
       "proxyType": "immutable",
-      "sinceTimestamp": 1694456915,
-      "sinceBlock": 18114898,
-      "values": {
-        "$immutable": true,
-        "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
-        "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-      },
+      "sinceTimestamp": 1749510479,
+      "sinceBlock": 22670194,
+      "values": { "$immutable": true },
       "implementationNames": {
-        "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": "Authority"
+        "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": ""
       }
     }
   ],
   "abis": {
-    "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [
-      "constructor(address _consensus, address _owner, bytes32 _templateHash)",
-      "error EtherTransferFailed()",
-      "error IncorrectEpochHash()",
-      "error IncorrectOutputHashesRootHash()",
-      "error IncorrectOutputsEpochRootHash()",
-      "error InputIndexOutOfClaimBounds()",
-      "error OnlyDApp()",
-      "error VoucherReexecutionNotAllowed()",
-      "event NewConsensus(address newConsensus)",
+    "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D": [
+      "function name() view returns (string)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function totalSupply() view returns (uint256)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function DECIMALS() view returns (uint8)",
+      "function INITIAL_SUPPLY() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address account, uint256 amount) returns (bool)",
+      "function extendMintLockTime(uint256 _extraLockTime)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function symbol() view returns (string)",
+      "function addMinter(address account)",
+      "function renounceMinter()",
+      "function NAME() view returns (string)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function isMinter(address account) view returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function SYMBOL() view returns (string)",
+      "constructor()",
+      "event LocktimeExteded(uint256 extendedBy, uint256 deadline)",
+      "event MinterAdded(address indexed account)",
+      "event MinterRemoved(address indexed account)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)"
+    ],
+    "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": [
+      "constructor(address outputsMerkleRootValidator, address initialOwner, bytes32 templateHash, bytes dataAvailability)",
+      "error InsufficientFunds(uint256 value, uint256 balance)",
+      "error InvalidOutputHashesSiblingsArrayLength()",
+      "error InvalidOutputsMerkleRoot(bytes32 outputsMerkleRoot)",
+      "error OutputNotExecutable(bytes output)",
+      "error OutputNotReexecutable(bytes output)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error ReentrancyGuardReentrantCall()",
+      "event OutputExecuted(uint64 outputIndex, bytes output)",
+      "event OutputsMerkleRootValidatorChanged(address newOutputsMerkleRootValidator)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event VoucherExecuted(uint256 voucherId)",
-      "function executeVoucher(address _destination, bytes _payload, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) returns (bool)",
-      "function getConsensus() view returns (address)",
+      "function executeOutput(bytes output, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof)",
+      "function getDataAvailability() view returns (bytes)",
+      "function getDeploymentBlockNumber() view returns (uint256)",
+      "function getOutputsMerkleRootValidator() view returns (address)",
       "function getTemplateHash() view returns (bytes32)",
-      "function migrateToConsensus(address _newConsensus)",
+      "function migrateToOutputsMerkleRootValidator(address newOutputsMerkleRootValidator)",
       "function onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) returns (bytes4)",
       "function onERC1155Received(address, address, uint256, uint256, bytes) returns (bytes4)",
       "function onERC721Received(address, address, uint256, bytes) returns (bytes4)",
@@ -124,54 +201,53 @@
       "function renounceOwnership()",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferOwnership(address newOwner)",
-      "function validateNotice(bytes _notice, tuple(tuple(uint64 inputIndexWithinEpoch, uint64 outputIndexWithinInput, bytes32 outputHashesRootHash, bytes32 vouchersEpochRootHash, bytes32 noticesEpochRootHash, bytes32 machineStateHash, bytes32[] outputHashInOutputHashesSiblings, bytes32[] outputHashesInEpochSiblings) validity, bytes context) _proof) view returns (bool)",
-      "function wasVoucherExecuted(uint256 _inputIndex, uint256 _outputIndexWithinInput) view returns (bool)",
-      "function withdrawEther(address _receiver, uint256 _value)"
+      "function validateOutput(bytes output, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
+      "function validateOutputHash(bytes32 outputHash, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
+      "function wasOutputExecuted(uint256 outputIndex) view returns (bool)"
     ],
-    "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9": [
-      "constructor(address _owner)",
-      "error InvalidClaimIndex()",
-      "error InvalidInputIndices()",
-      "error UnclaimedInputs()",
-      "event NewClaimToHistory(address indexed dapp, tuple(bytes32 epochHash, uint128 firstIndex, uint128 lastIndex) claim)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
-      "function migrateToConsensus(address _consensus)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function submitClaim(bytes _claimData)",
-      "function transferOwnership(address newOwner)"
+    "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": [
+      "constructor(address inputBox, address appContract, address tournamentFactory, bytes32 initialMachineStateHash)",
+      "error ApplicationMismatch(address expected, address received)",
+      "error IncorrectEpochNumber(uint256 received, uint256 actual)",
+      "error InputHashMismatch(bytes32 fromReceivedInput, bytes32 fromInputBox)",
+      "error InvalidOutputsMerkleRootProof(bytes32 settledState)",
+      "error InvalidOutputsMerkleRootProofSize(uint256 suppliedProofSize)",
+      "error TournamentNotFinishedYet()",
+      "event ConsensusCreation(address inputBox, address appContract, address tournamentFactory)",
+      "event EpochSealed(uint256 epochNumber, uint256 inputIndexLowerBound, uint256 inputIndexUpperBound, bytes32 initialMachineStateHash, bytes32 outputsMerkleRoot, address tournament)",
+      "function canSettle() view returns (bool isFinished, uint256 epochNumber, bytes32 winnerCommitment)",
+      "function getApplicationContract() view returns (address)",
+      "function getCurrentSealedEpoch() view returns (uint256 epochNumber, uint256 inputIndexLowerBound, uint256 inputIndexUpperBound, address tournament)",
+      "function getInputBox() view returns (address)",
+      "function getTournamentFactory() view returns (address)",
+      "function isOutputsMerkleRootValid(address appContract, bytes32 outputsMerkleRoot) view returns (bool)",
+      "function provideMerkleRootOfInput(uint256 inputIndexWithinEpoch, bytes input) view returns (bytes32)",
+      "function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] proof)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
-    "0x59b22D57D4f067708AB0c00552767405926dc768": [
-      "error InputSizeExceedsLimit()",
-      "event InputAdded(address indexed dapp, uint256 indexed inputIndex, address sender, bytes input)",
-      "function addInput(address _dapp, bytes _input) returns (bytes32)",
-      "function getInputHash(address _dapp, uint256 _index) view returns (bytes32)",
-      "function getNumberOfInputs(address _dapp) view returns (uint256)"
+    "0xA31C2aCfF3464658866960c0fBD3d798310272D7": [
+      "constructor(address _topFactory, address _middleFactory, address _bottomFactory, address _tournamentParametersProvider, address _stateTransition)",
+      "event tournamentCreated(address tournament)",
+      "function instantiate(bytes32 _initialHash, address _provider) returns (address)",
+      "function instantiateBottom(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
+      "function instantiateMiddle(bytes32 _initialHash, bytes32 _contestedCommitmentOne, bytes32 _contestedFinalStateOne, bytes32 _contestedCommitmentTwo, bytes32 _contestedFinalStateTwo, uint64 _allowance, uint256 _startCycle, uint64 _level, address _provider) returns (address)",
+      "function instantiateTop(bytes32 _initialHash, address _provider) returns (address)"
     ],
-    "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB": [
-      "constructor(address _inputBox)",
-      "function depositERC20Tokens(address _token, address _dapp, uint256 _amount, bytes _execLayerData)",
+    "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": [
+      "error InputTooLarge(address appContract, uint256 inputLength, uint256 maxInputLength)",
+      "event InputAdded(address indexed appContract, uint256 indexed index, bytes input)",
+      "function addInput(address appContract, bytes payload) returns (bytes32)",
+      "function getDeploymentBlockNumber() view returns (uint256)",
+      "function getInputHash(address appContract, uint256 index) view returns (bytes32)",
+      "function getNumberOfInputs(address appContract) view returns (uint256)"
+    ],
+    "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051": [
+      "constructor(address inputBox)",
+      "error ERC20TransferFailed()",
+      "function depositERC20Tokens(address token, address appContract, uint256 value, bytes execLayerData)",
       "function getInputBox() view returns (address)"
-    ],
-    "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f": [
-      "constructor(address _owner)",
-      "error AuthorityWithdrawalFailed()",
-      "event ApplicationJoined(address application)",
-      "event NewHistory(address history)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function getClaim(address _dapp, bytes _proofContext) view returns (bytes32, uint256, uint256)",
-      "function getHistory() view returns (address)",
-      "function join()",
-      "function migrateHistoryToConsensus(address _consensus)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function setHistory(address _history)",
-      "function submitClaim(bytes _claimData)",
-      "function transferOwnership(address newOwner)",
-      "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x78c4730fce43e3a66b70856d6e30c2598939cdc91456d03f771c59922e0e126c"
+  "permissionsConfigHash": "0xadd3c88f5c1666075e95ad744d258341ed3eaef9198427a902b35e98a7ca75b6"
 }
