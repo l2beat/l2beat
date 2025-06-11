@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { toFunctionSelector } from 'viem'
@@ -10,7 +11,6 @@ import type {
 } from './AddressService'
 import { Decoder } from './Decoder'
 import type { ISignatureService } from './SignatureService'
-import { assert } from '@l2beat/shared-pure'
 
 const ethereum = Chain.parse(chainList[0])
 
