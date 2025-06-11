@@ -51,7 +51,7 @@ export interface Config {
   }
   readonly da: DataAvailabilityTrackingConfig | false
   readonly da2: DataAvailabilityTrackingConfig2 | false
-
+  readonly shared: SharedModuleConfig | false
   readonly flags: ResolvedFeatureFlag[]
 }
 
@@ -277,4 +277,8 @@ export type LayerDaTrackingConfig = {
 export interface DataAvailabilityTrackingConfig2 {
   readonly layers: LayerDaTrackingConfig[]
   readonly projects: DaIndexedConfig[]
+}
+
+export interface SharedModuleConfig {
+  ethereumWsUrl: string
 }
