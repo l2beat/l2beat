@@ -96,12 +96,4 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
-  nonTemplateDaTracking: [
-    {
-      type: 'eigen-da',
-      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
-      daLayer: ProjectId('eigenda'),
-      sinceTimestamp: UnixTime(1688314886),
-    },
-  ],
 })
