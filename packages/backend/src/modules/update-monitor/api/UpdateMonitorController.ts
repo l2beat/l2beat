@@ -32,7 +32,7 @@ export class UpdateMonitorController {
     const projects: Record<string, DashboardProject[]> = {}
     for (const chain of this.chains) {
       projects[chain.name] = await getDashboardProjects(
-        this.onDiskConfigs[chain.name],
+        this.onDiskConfigs[chain.name].filter((config) => !config.archived),
         this.configReader,
         this.db,
         chain.name,
