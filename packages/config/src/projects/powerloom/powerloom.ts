@@ -16,7 +16,7 @@ export const powerloom: ScalingProject = underReviewL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://powerloom.io/'],
-      apps: ['https://bridge-v2.powerloom.network/'],
+      bridges: ['https://bridge-v2.powerloom.network/'],
       documentation: ['https://docs.powerloom.io/'],
       explorers: ['https://explorer.powerloom.network/'],
       repositories: ['https://github.com/powerLoom'],

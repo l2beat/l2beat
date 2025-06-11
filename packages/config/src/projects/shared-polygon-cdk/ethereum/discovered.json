@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22536886,
+  "blockNumber": 22666256,
   "configHash": "0xe2225fc857f4414a47bb9d439b2846403467300cfc3c4653a26457f167929c7f",
   "entries": [
     {
@@ -61,6 +61,11 @@
           "role": ".trustedAggregatorAC"
         }
       ]
+    },
+    {
+      "address": "0x21618593F7147235aC8D511d68A547C935F9d417",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x21887c89368bf918346c62460e0c339113801C28",
@@ -188,16 +193,25 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+          "0xAb3506507449bF1880f3337825efd19ac89E235E",
+          "0x54c401eD03D086fE13221E5422165f3b024265d9",
+          "0x21618593F7147235aC8D511d68A547C935F9d417",
+          "0xED7cC82235A7757702475c8f77c7830c095FB5a2",
+          "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+          "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+          "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+          "0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
           "0x4c1665d6651ecEfa59B9B3041951608468b18891",
           "0xA0B02B28920812324f1cC3255bd8840867d3f227",
           "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
         ],
-        "$threshold": 2,
+        "$threshold": 5,
         "domainSeparator": "0xd8cfae7b548133655e0a54436471b813794d3d208ff7a47b740e06ea90b3d0b8",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 72,
+        "multisigThreshold": "5 of 12 (42%)",
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -239,7 +253,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0xad8f6c5a8d50db615ede82ec0b7e55a8d87075d956d2f584361d6c712a9f47b1",
+        "getRoot": "0x96d91dfd0cd0676bb49a520eaee78e8b005652fcdc4f371c86deee3b584cb57f",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -456,10 +470,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x333ba4fc1db0b70fa0ec38c249070919d8cd3be300388f58ed8cd678e3f7ad25",
+        "getRollupExitRoot": "0x82ff75251a61226352f677564bee18af62130a9ed7d432e2a045539ac5acb752",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1747897487,
+        "lastAggregationTimestamp": 1749462719,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -730,8 +744,8 @@
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
           }
         ],
-        "totalSequencedBatches": 736556,
-        "totalVerifiedBatches": 736055,
+        "totalSequencedBatches": 751432,
+        "totalVerifiedBatches": 750936,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -759,6 +773,16 @@
         "0xA33619940bceb9be7c9679Dd80FA2918C2476382": "PolygonRollupManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
+    },
+    {
+      "address": "0x516eEcfb38aA308c5f1878497108c7d054fd46B7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x54c401eD03D086fE13221E5422165f3b024265d9",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "PolygonGlobalExitRootV2",
@@ -796,8 +820,8 @@
         ],
         "$upgradeCount": 3,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 58534,
-        "getRoot": "0x5699eeef44353c3d10c0aae3ca60fa876097256ba346f4af28f0820311aef79b",
+        "depositCount": 59157,
+        "getRoot": "0x07304e8d94db50d1a52a9d9bc98ed558e4db121195471151ee126e48e90dceec",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -835,6 +859,11 @@
     },
     {
       "address": "0xa43901c63f7702C407378E55E0d0EB4064a2AE31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAb3506507449bF1880f3337825efd19ac89E235E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -901,6 +930,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xCE27d8BCee45dB3E457EcF8629264Ca7893AAaAc",
       "type": "EOA",
       "proxyType": "EOA"
@@ -911,7 +945,22 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xED7cC82235A7757702475c8f77c7830c095FB5a2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1315,6 +1364,11 @@
       "address": "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1681,5 +1735,5 @@
     "polygon-cdk/PolygonSharedBridge": "0x79b4355cba744a06d8705695336f169622edf05c3f32b1ae35da91fa577c536c",
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
   },
-  "permissionsConfigHash": "0x37f507b9ceed54aaea1b1af1cc8f4536d35835656d0518cde724b36317cd8312"
+  "permissionsConfigHash": "0x8e5dca0b2a2d313ad2b6de1ab873b338b8735205dc02af22486c9e1685fd5fbd"
 }

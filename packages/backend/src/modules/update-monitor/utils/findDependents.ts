@@ -7,7 +7,7 @@ export function findDependents(
 ) {
   if (!name.startsWith('shared-')) return []
 
-  const configs = configReader.readAllConfigsForChain(chain)
+  const configs = configReader.readAllDiscoveredConfigsForChain(chain)
   const dependents: string[] = []
   for (const config of configs) {
     if (config.structure.sharedModules.includes(name)) {

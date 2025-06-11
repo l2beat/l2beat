@@ -25,7 +25,7 @@ export const sxnetwork: ScalingProject = orbitStackL2({
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     links: {
       websites: ['https://sx.technology/'],
-      apps: [
+      bridges: [
         'https://sx.bet/wallet/bridge',
         'https://bridge.gelato.network/bridge/sx-rollup',
       ],

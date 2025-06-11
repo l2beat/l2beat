@@ -22,7 +22,7 @@ export const settlus: ScalingProject = opStackL2({
       'Settlus is an OP stack L2 designed to provide transparent settlement system for the creator economy.',
     links: {
       websites: ['https://settlus.org/'],
-      apps: ['https://settlus-mainnet.bridge.alchemy.com/'],
+      bridges: ['https://settlus-mainnet.bridge.alchemy.com/'],
       explorers: ['https://mainnet.settlus.network/'],
       documentation: ['https://docs.settlus.org/'],
       socialMedia: [

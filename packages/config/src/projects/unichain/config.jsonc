@@ -34,7 +34,8 @@
     "ethereum": {
       "initialAddresses": [
         "0xc407398d063f942feBbcC6F80a156b47F3f1BDA6",
-        "0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877"
+        "0x755610f5Be536Ad7afBAa7c10F3E938Ea3aa1877",
+        "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A" // sky escrow
       ],
       "names": {
         "0x6d5B183F538ABB8572F5cD17109c617b994D5833": "UnichainProxyAdminOwner"

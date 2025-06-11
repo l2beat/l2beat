@@ -6,7 +6,7 @@ type UpdateDiffType =
   | 'ultimateUpgraderChange'
   | 'implementationChange'
   | 'highSeverityFieldChange'
-  | 'verificationChange'
+  | 'becameVerified'
 
 export interface UpdateDiffRecord {
   type: UpdateDiffType

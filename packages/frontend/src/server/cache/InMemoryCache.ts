@@ -5,7 +5,7 @@ import type { ICache } from './ICache'
 const PROMISE_TIMEOUT = 30
 
 interface Options {
-  key: string[]
+  key: (string | undefined)[]
   ttl: number
   staleWhileRevalidate?: number
 }
@@ -111,7 +111,7 @@ export class InMemoryCache implements ICache {
     this.cache.set(key, value)
   }
 
-  private getKey(key: string[]) {
-    return key.join('-')
+  private getKey(key: (string | undefined)[]) {
+    return key.filter(Boolean).join('-')
   }
 }

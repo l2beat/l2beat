@@ -1,4 +1,4 @@
-import type { Address, Chain, TokenConfig } from '../../config/types'
+import type { Address, Chain, TokenConfig } from '../../../../config/types'
 import type { DecodedCall, Value } from '../DecodedResult'
 
 export interface NestedCall {

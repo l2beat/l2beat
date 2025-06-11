@@ -81,7 +81,7 @@ export const paradex: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://paradex.trade/'],
-      apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
+      bridges: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: [

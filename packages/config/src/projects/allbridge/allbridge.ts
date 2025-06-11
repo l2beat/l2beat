@@ -21,7 +21,7 @@ export const allbridge: Bridge = {
     category: 'Hybrid',
     links: {
       websites: ['https://allbridge.io/'],
-      apps: ['https://core.allbridge.io/', 'https://app.allbridge.io/'],
+      bridges: ['https://core.allbridge.io/', 'https://app.allbridge.io/'],
       documentation: [
         'https://docs.allbridge.io/',
         'https://docs-core.allbridge.io/',

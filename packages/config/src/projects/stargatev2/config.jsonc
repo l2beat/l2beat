@@ -25,38 +25,6 @@
             }
           }
         },
-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
         "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": {
           "ignoreRelatives": [
             "endpoint",
@@ -96,22 +64,6 @@
               }
             }
           }
-        },
-        "0x3Fc69CC4A842838bCDC9499178740226062b14E4": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
         },
         "0xC2b638Cb5042c1B3c5d5C969361fB50569840583": {
           "ignoreRelatives": [
@@ -153,127 +105,7 @@
             }
           }
         },
-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
         "0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        }
-      }
-    },
-    "mantle": {
-      "initialAddresses": ["0x41B491285A4f888F9f636cEc8a363AB9770a0AEF"],
-      "names": {
-        "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": "TokenMessaging"
-      },
-      "overrides": {
-        "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": {
-          "ignoreRelatives": ["endpoint", "oApp", "owner"],
-          "fields": {
-            "maxAssetId": {
-              "description": "The highest currently registered assetID"
-            },
-            "pools": {
-              "handler": {
-                "type": "array",
-                "method": "stargateImpls",
-                "startIndex": 1,
-                "length": "{{ maxAssetId }}"
-              }
-            }
-          }
-        },
-        "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0xB715B85682B731dB9D5063187C450095c91C57FC": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1": {
           "ignoreRelatives": [
             "endpoint",
             "getAddressConfig",
@@ -352,22 +184,6 @@
               }
             }
           }
-        },
-        "0x27a16dc786820B16E5c9028b75B99F6f604b5d26": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
         },
         "0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7": {
           "ignoreRelatives": [
@@ -492,70 +308,6 @@
               }
             }
           }
-        },
-        "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0x933597a323Eb81cAe705C5bC29985172fd5A3973": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
-        },
-        "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3": {
-          "ignoreRelatives": [
-            "endpoint",
-            "getAddressConfig",
-            "lpToken",
-            "owner",
-            "token"
-          ],
-          "ignoreInWatchMode": [
-            "plannerFee",
-            "poolBalance",
-            "treasuryFee",
-            "tvl",
-            "getTransferGasLimit"
-          ]
         },
         "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": {
           "ignoreRelatives": [

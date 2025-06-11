@@ -1,8 +1,8 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { toFunctionSelector } from 'viem'
-import type { DiscoveredConfig } from '../config/types'
-import type { FourByteClient } from '../services/api/FourByteClient'
-import type { OpenChainClient } from '../services/api/OpenChainClient'
+import type { DiscoveredConfig } from '../../../config/types'
+import type { FourByteClient } from '../../../third-party/FourByteClient'
+import type { OpenChainClient } from '../../../third-party/OpenChainClient'
 
 export interface ISignatureService {
   lookup(selector: `0x${string}`): Promise<string[]>

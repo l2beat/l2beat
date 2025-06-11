@@ -161,8 +161,8 @@ export interface ProjectDisplay {
 export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites?: string[]
-  /** Links to web apps. */
-  apps?: string[]
+  /** Links to bridges. */
+  bridges?: string[]
   documentation?: string[]
   explorers?: string[]
   repositories?: string[]
@@ -214,6 +214,7 @@ export type BadgeFilterId =
   | 'raas'
   | 'infrastructure'
   | 'vm'
+  | 'other'
 
 export interface Milestone {
   title: string

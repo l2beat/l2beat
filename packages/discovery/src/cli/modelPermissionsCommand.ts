@@ -46,7 +46,7 @@ export async function writePermissionsIntoDiscovery(
   configReader: ConfigReader,
 ) {
   const chainConfigs = configReader
-    .readAllChainsForProject(project)
+    .readAllDiscoveredChainsForProject(project)
     .flatMap((chain) => configReader.readConfig(project, chain))
 
   for (const config of chainConfigs) {

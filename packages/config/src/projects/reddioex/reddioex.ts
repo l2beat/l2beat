@@ -76,7 +76,7 @@ export const reddioex: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
-      apps: [
+      bridges: [
         'https://reddio.com/explore',
         'https://dashboard.reddio.com',
         'https://bridge.reddio.com',

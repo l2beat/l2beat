@@ -57,7 +57,7 @@ export const zksync2: ScalingProject = zkStackL2({
       'ZKsync Era is a general-purpose ZK Rollup with full EVM compatibility.',
     links: {
       websites: ['https://zksync.io/', 'https://zksync.dappradar.com/'],
-      apps: ['https://portal.zksync.io/bridge/'],
+      bridges: ['https://portal.zksync.io/bridge/'],
       documentation: ['https://docs.zksync.io/'],
       explorers: [
         'https://explorer.zksync.io/',

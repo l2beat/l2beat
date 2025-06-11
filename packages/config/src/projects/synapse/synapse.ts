@@ -16,7 +16,7 @@ export const synapse: Bridge = {
     slug: 'synapse',
     links: {
       websites: ['https://synapseprotocol.com/landing'],
-      apps: ['https://synapseprotocol.com'],
+      bridges: ['https://synapseprotocol.com'],
       documentation: ['https://docs.synapseprotocol.com/'],
       repositories: ['https://github.com/synapsecns'],
       explorers: ['https://analytics.synapseprotocol.com/'],

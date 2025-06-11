@@ -49,7 +49,7 @@ export const sonicgateway: Bridge = {
       websites: ['https://gateway.soniclabs.com/'],
       documentation: ['https://docs.soniclabs.com/sonic/sonic-gateway'],
       explorers: [],
-      apps: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
+      bridges: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
       repositories: [],
       socialMedia: [
         'https://x.com/SonicLabs',

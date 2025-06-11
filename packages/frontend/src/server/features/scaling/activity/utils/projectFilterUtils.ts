@@ -5,7 +5,13 @@ import { isProjectOther } from '../../utils/isProjectOther'
 
 export const ActivityProjectFilter = z.discriminatedUnion('type', [
   z.object({
-    type: z.enum(['all', 'rollups', 'validiumsAndOptimiums', 'others']),
+    type: z.enum([
+      'all',
+      'rollups',
+      'validiumsAndOptimiums',
+      'others',
+      'withoutOthers',
+    ]),
   }),
   z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
 ])
@@ -61,6 +67,18 @@ export function createActivityProjectsFilter(
         )
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
+    case 'withoutOthers':
+      return (project) =>
+        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !(
+          previewRecategorisation &&
+          project.statuses.reviewStatus === 'initialReview'
+        ) &&
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup' ||
+          project.scalingInfo.type === 'Validium' ||
+          project.scalingInfo.type === 'Optimium' ||
+          project.scalingInfo.type === 'Plasma')
     default:
       assertUnreachable(filter)
   }

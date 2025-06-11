@@ -109,7 +109,7 @@ function groupByType(changes: UpdateDiffRecord[]) {
     implementationChange: [],
     highSeverityFieldChange: [],
     ultimateUpgraderChange: [],
-    verificationChange: [],
+    becameVerified: [],
   }
   for (const change of changes) {
     result[change.type].push(change)

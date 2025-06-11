@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd9b1e37648793ccd3b199e5baacfb416f70e0ff6
+
+# Diff at Fri, 06 Jun 2025 14:48:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53e2933f99050c9e14880373922d3232f9074832 block: 22567739
+- current block number: 22646238
+
+## Description
+
+config: silent makersky escrow template added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567739 (main branch discovery), not current.
+
+```diff
+    contract L1Escrow (0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58","0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
 Generated with discovered.json: 0xbac3b397b471d7b3538bc93bc55160c6b5a6dbf9
 
 # Diff at Tue, 27 May 2025 08:28:05 GMT:

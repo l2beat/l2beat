@@ -4,7 +4,7 @@ import type { ICache } from '~/server/cache/ICache'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 import { SCALING_SUMMARY_TIME_RANGE } from './ScalingSummaryPage'
 
@@ -46,7 +46,7 @@ export async function getScalingSummaryData(
 }
 
 async function getCachedData() {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
 
   const [entries] = await Promise.all([
     getScalingSummaryEntries(),
@@ -61,7 +61,7 @@ async function getCachedData() {
       previewRecategorisation: false,
     }),
     helpers.activity.chartStats.prefetch({
-      filter: { type: 'all' },
+      filter: { type: 'withoutOthers' },
       previewRecategorisation: false,
     }),
   ])

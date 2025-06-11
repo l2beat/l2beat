@@ -1,5 +1,5 @@
-import type { Chain } from '../config/types'
-import type { AlchemyClient } from '../services/api/AlchemyClient'
+import type { Chain } from '../../../config/types'
+import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type { Decoder, Transaction } from './Decoder'
 
 export interface ApiQuery {

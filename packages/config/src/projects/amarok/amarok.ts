@@ -30,7 +30,7 @@ export const amarok: Bridge = {
     messages from other domains. It implements a liquidity network on top of its Hub-and-Spoke architecture.',
     category: 'Liquidity Network',
     links: {
-      apps: ['https://bridge.connext.network/', 'https://connextscan.io/'],
+      bridges: ['https://bridge.connext.network/', 'https://connextscan.io/'],
       websites: ['https://blog.connext.network/'],
       documentation: ['https://docs.connext.network/'],
       repositories: ['https://github.com/connext/monorepo'],

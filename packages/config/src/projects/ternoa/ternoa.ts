@@ -42,7 +42,7 @@ export const ternoa: ScalingProject = polygonCDKStack({
       'Ternoa is a modular Validium leveraging the Polygon CDK stack. It is built by the team behind the Substrate-based Ternoa Layer 1 and focuses on PayFi.',
     links: {
       websites: ['https://ternoa.network/'],
-      apps: ['https://portal.polygon.technology/bridge'],
+      bridges: ['https://portal.polygon.technology/bridge'],
       explorers: ['https://explorer-mainnet.zkevm.ternoa.network/'],
       documentation: ['https://docs.ternoa.network/learn/ternoa-zkevm+'],
       repositories: ['https://github.com/capsule-corp-ternoa'],

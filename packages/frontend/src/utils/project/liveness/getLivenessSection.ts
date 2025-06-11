@@ -8,10 +8,11 @@ import type { LivenessSectionProps } from '~/components/projects/sections/Livene
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { LivenessProject } from '~/server/features/scaling/liveness/types'
 import { getHasTrackedContractChanged } from '~/server/features/scaling/liveness/utils/getHasTrackedContractChanged'
-import { api } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getTrackedTransactions } from '../tracked-txs/getTrackedTransactions'
 
 export async function getLivenessSection(
+  helpers: SsrHelpers,
   project: Project<never, 'trackedTxsConfig' | 'livenessConfig'>,
   liveness: LivenessProject | undefined,
   projectChangeReport: ProjectsChangeReport['projects'][string] | undefined,
@@ -39,18 +40,11 @@ export async function getLivenessSection(
     duplicatedData,
   ]) as TrackedTxsConfigSubtype[]
 
-  const [data] = await Promise.all([
-    api.liveness.projectChart({
-      projectId: project.id,
-      range: '30d',
-      subtype: getDefaultSubtype(configuredSubtypes),
-    }),
-    api.liveness.projectChart.prefetch({
-      projectId: project.id,
-      range: '30d',
-      subtype: getDefaultSubtype(configuredSubtypes),
-    }),
-  ])
+  const data = await helpers.liveness.projectChart.fetch({
+    projectId: project.id,
+    range: '30d',
+    subtype: getDefaultSubtype(configuredSubtypes),
+  })
 
   if (data.data.length === 0) return undefined
 

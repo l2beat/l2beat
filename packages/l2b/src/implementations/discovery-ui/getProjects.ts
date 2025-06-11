@@ -2,15 +2,15 @@ import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
 import type { ApiProjectsResponse } from './types'
 
 export function getProjects(configReader: ConfigReader) {
-  const chains = configReader.readAllChains()
+  const entries = configReader.readAllDiscoveredProjects()
   const projectToDiscovery = new Map<string, DiscoveryOutput[]>()
-  for (const chain of chains) {
-    const projects = configReader.readAllProjectsForChain(chain)
-    for (const project of projects) {
-      const projectChains = projectToDiscovery.get(project) ?? []
-      projectChains.push(configReader.readDiscovery(project, chain))
-      projectToDiscovery.set(project, projectChains)
-    }
+  for (const entry of entries) {
+    projectToDiscovery.set(
+      entry.project,
+      entry.chains.map((chain) =>
+        configReader.readDiscovery(entry.project, chain),
+      ),
+    )
   }
 
   const response: ApiProjectsResponse = [...projectToDiscovery.entries()]

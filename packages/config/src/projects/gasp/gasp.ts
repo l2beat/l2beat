@@ -15,7 +15,7 @@ export const gasp: ScalingProject = underReviewL2({
     category: 'Optimistic Rollup', // no zk found here on first sight, so OP or Other
     links: {
       websites: ['https://gasp.xyz/'],
-      apps: ['https://app.gasp.xyz/'],
+      bridges: ['https://app.gasp.xyz/'],
       documentation: ['https://docs.gasp.xyz/'],
       explorers: [],
       repositories: [],

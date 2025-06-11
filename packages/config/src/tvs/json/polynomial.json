@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "polynomial-cbBTC-2",
+      "priceId": "coinbase-wrapped-btc",
+      "symbol": "cbBTC",
+      "name": "Coinbase Wrapped BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/40143/large/cbbtc.webp?1726136727",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+        "chain": "ethereum",
+        "escrowAddress": "0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7",
+        "decimals": 8,
+        "sinceTimestamp": 1748903783
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polynomial-ETH",
       "priceId": "ethereum",
       "symbol": "ETH",

@@ -130,7 +130,7 @@ export function generateClingoForProject(
   const generatedClingo: string[] = []
 
   const chainConfigs = configReader
-    .readAllChainsForProject(project)
+    .readAllDiscoveredChainsForProject(project)
     .sort((a, b) => a.localeCompare(b))
     .flatMap((chain) => configReader.readConfig(project, chain))
 

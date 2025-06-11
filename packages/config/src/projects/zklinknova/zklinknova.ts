@@ -101,7 +101,7 @@ export const zklinknova: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
-      apps: [
+      bridges: [
         'https://portal.zklink.io',
         'https://zklink.io/merge',
         'https://app.zklink.io',

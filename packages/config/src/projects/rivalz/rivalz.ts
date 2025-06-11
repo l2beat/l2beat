@@ -17,7 +17,7 @@ export const rivalz: ScalingProject = upcomingL3({
     purposes: ['AI'],
     links: {
       websites: ['https://rivalz.ai/'],
-      apps: ['https://rivalz.ai/dashboard'],
+      bridges: ['https://rivalz.ai/dashboard'],
       documentation: ['https://docs.rivalz.ai/'],
       explorers: ['https://explorer.rivalz.ai/'],
       socialMedia: [
