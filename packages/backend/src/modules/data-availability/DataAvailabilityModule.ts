@@ -1,15 +1,15 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
-import type { DataAvailabilityTrackingConfig2 } from '../../config/Config'
+import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
-import { DaIndexer2 } from './indexers/DaIndexer2'
-import { DaService2 } from './services/DaService2'
+import { DaIndexer } from './indexers/DaIndexer'
+import { DaService } from './services/DaService'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -19,7 +19,7 @@ export function initDataAvailabilityModule(
   database: Database,
   _peripherals: Peripherals,
 ): ApplicationModule | undefined {
-  if (!config.da2) {
+  if (!config.da) {
     logger.info('Data availability module disabled')
     return
   }
@@ -30,7 +30,7 @@ export function initDataAvailabilityModule(
   })
 
   const { targetIndexers, daIndexers } = createIndexers(
-    config.da2,
+    config.da,
     clock,
     database,
     logger,
@@ -65,17 +65,17 @@ export function initDataAvailabilityModule(
 }
 
 function createIndexers(
-  config: DataAvailabilityTrackingConfig2,
+  config: DataAvailabilityTrackingConfig,
   clock: Clock,
   database: Database,
   logger: Logger,
   providers: Providers,
 ) {
-  const daService2 = new DaService2()
+  const daService2 = new DaService()
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: DaIndexer2[] = []
+  const daIndexers: DaIndexer[] = []
 
   for (const daLayer of config.layers) {
     const targetIndexer = new BlockTargetIndexer(
@@ -90,7 +90,7 @@ function createIndexers(
       (c) => c.daLayer === daLayer.name,
     )
 
-    const indexer2 = new DaIndexer2({
+    const indexer2 = new DaIndexer({
       configurations: configurations2.map((c) => ({
         id: c.configurationId,
         minHeight: c.sinceBlock,

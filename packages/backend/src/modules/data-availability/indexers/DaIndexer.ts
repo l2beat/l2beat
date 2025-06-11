@@ -10,17 +10,17 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import type { DaService2 } from '../services/DaService2'
+import type { DaService } from '../services/DaService'
 
 export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<DaIndexedConfig>, 'name'> {
-  daService: DaService2
+  daService: DaService
   daProvider: DaProvider
   daLayer: string
   batchSize: number
 }
 
-export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
+export class DaIndexer extends ManagedMultiIndexer<DaIndexedConfig> {
   constructor(private readonly $: Dependencies) {
     super({
       ...$,
@@ -97,7 +97,7 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
     )
 
     return async () => {
-      await this.$.db.dataAvailability2.upsertMany(records)
+      await this.$.db.dataAvailability.upsertMany(records)
       this.logger.info('Saved DA metrics into DB', {
         from,
         to: adjustedTo,
@@ -120,7 +120,7 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
       'hour',
     )
 
-    return await this.$.db.dataAvailability2.getForDaLayerInTimeRange(
+    return await this.$.db.dataAvailability.getForDaLayerInTimeRange(
       this.$.daLayer,
       from,
       to,
@@ -135,7 +135,7 @@ export class DaIndexer2 extends ManagedMultiIndexer<DaIndexedConfig> {
 
     for (const c of configurations) {
       const deletedRecords =
-        await this.$.db.dataAvailability2.deleteByConfigurationId(c.id)
+        await this.$.db.dataAvailability.deleteByConfigurationId(c.id)
 
       this.logger.info('Wiped DA records for configuration', {
         id: c.id,

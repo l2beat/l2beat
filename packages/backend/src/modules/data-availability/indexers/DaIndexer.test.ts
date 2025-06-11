@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
 import { Logger } from '@l2beat/backend-tools'
-import type { DataAvailabilityRecord2, Database } from '@l2beat/database'
+import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import {
   type Configuration,
@@ -11,21 +11,21 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import type {
   DaIndexedConfig,
-  DataAvailabilityTrackingConfig2,
+  DataAvailabilityTrackingConfig,
 } from '../../../config/Config'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import type { DaService2 } from '../services/DaService2'
-import { DaIndexer2 } from './DaIndexer2'
+import type { DaService } from '../services/DaService'
+import { DaIndexer } from './DaIndexer'
 
 // All test cases work on one layer.
 // DaIndexer assumes that all configurations will have the same layer.
 // Rest of the code is generic and works the same regardless of layer type (see DaService)
 const DA_LAYER = 'test-layer'
 
-describe(DaIndexer2.name, () => {
-  describe(DaIndexer2.prototype.multiUpdate.name, () => {
+describe(DaIndexer.name, () => {
+  describe(DaIndexer.prototype.multiUpdate.name, () => {
     it('fetches blobs, generates records, saves metrics to DB', async () => {
       const mockInbox = EthereumAddress.random()
       const configurations = [
@@ -129,7 +129,7 @@ describe(DaIndexer2.name, () => {
     })
   })
 
-  describe(DaIndexer2.prototype.removeData.name, () => {
+  describe(DaIndexer.prototype.removeData.name, () => {
     it('wipes all data saved by configuration', async () => {
       const configurations = [config('project-a'), config('project-b')]
 
@@ -171,20 +171,20 @@ function toIndexerConfigurations(
 }
 
 function mockIndexer($: {
-  configurations?: DataAvailabilityTrackingConfig2['projects']
+  configurations?: DataAvailabilityTrackingConfig['projects']
   batchSize?: number
   indexerService?: IndexerService
   blobs?: DaBlob[]
-  previousRecords?: DataAvailabilityRecord2[]
-  generatedRecords?: DataAvailabilityRecord2[]
+  previousRecords?: DataAvailabilityRecord[]
+  generatedRecords?: DataAvailabilityRecord[]
 }) {
-  const repository = mockObject<Database['dataAvailability2']>({
+  const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigurationId: mockFn().resolvesTo({}),
     upsertMany: mockFn().resolvesTo(undefined),
     getForDaLayerInTimeRange: mockFn().resolvesTo($.previousRecords ?? []),
   })
 
-  const daService = mockObject<DaService2>({
+  const daService = mockObject<DaService>({
     generateRecords: mockFn().returns($.generatedRecords ?? []),
   })
 
@@ -192,7 +192,7 @@ function mockIndexer($: {
     getBlobs: async () => $.blobs ?? [], // Empty response
   })
 
-  const indexer = new DaIndexer2({
+  const indexer = new DaIndexer({
     configurations: ($.configurations ?? [config('project-a')]).map((c) => ({
       id: c.configurationId,
       minHeight: c.sinceBlock,
@@ -207,7 +207,7 @@ function mockIndexer($: {
     parents: [],
     indexerService: $.indexerService ?? mockObject<IndexerService>(),
     db: mockDatabase({
-      dataAvailability2: repository,
+      dataAvailability: repository,
     }),
   })
 
@@ -243,7 +243,7 @@ function record(
   projectId: string,
   timestamp: number,
   size: number,
-): DataAvailabilityRecord2 {
+): DataAvailabilityRecord {
   return {
     configurationId: createId(projectId),
     projectId,

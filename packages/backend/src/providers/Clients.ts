@@ -178,8 +178,8 @@ export function initClients(config: Config, logger: Logger): Clients {
     }
   }
 
-  if (config.da2) {
-    for (const layer of config.da2.layers) {
+  if (config.da) {
+    for (const layer of config.da.layers) {
       switch (layer.type) {
         case 'celestia': {
           celestia = new CelestiaRpcClient({

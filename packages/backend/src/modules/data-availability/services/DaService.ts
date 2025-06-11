@@ -3,7 +3,7 @@ import type {
   CelestiaDaTrackingConfig,
   EthereumDaTrackingConfig,
 } from '@l2beat/config'
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import type {
   AvailBlob,
   CelestiaBlob,
@@ -13,15 +13,15 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import type { DaIndexedConfig } from '../../../config/Config'
 
-export class DaService2 {
+export class DaService {
   generateRecords(
     blobs: DaBlob[],
-    previousRecords: DataAvailabilityRecord2[],
+    previousRecords: DataAvailabilityRecord[],
     configurations: DaIndexedConfig[],
-  ): DataAvailabilityRecord2[] {
+  ): DataAvailabilityRecord[] {
     const updatedRecords = [...previousRecords]
 
-    const addOrMerge = (record: DataAvailabilityRecord2) => {
+    const addOrMerge = (record: DataAvailabilityRecord) => {
       const existing = updatedRecords.find(
         (r) =>
           r.timestamp === record.timestamp &&
@@ -47,8 +47,8 @@ export class DaService2 {
   private createRecordsFromBlob(
     blob: DaBlob,
     configurations: DaIndexedConfig[],
-  ): DataAvailabilityRecord2[] {
-    const records: DataAvailabilityRecord2[] = []
+  ): DataAvailabilityRecord[] {
+    const records: DataAvailabilityRecord[] = []
 
     for (const c of configurations) {
       switch (c.type) {

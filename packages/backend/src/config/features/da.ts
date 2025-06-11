@@ -5,14 +5,14 @@ import { createHash } from 'crypto'
 import { ProjectId, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 import type {
   DaIndexedConfig,
-  DataAvailabilityTrackingConfig2,
+  DataAvailabilityTrackingConfig,
   LayerDaTrackingConfig,
 } from '../Config'
 
-export async function getDaTrackingConfig2(
+export async function getDaTrackingConfig(
   ps: ProjectService,
   env: Env,
-): Promise<DataAvailabilityTrackingConfig2> {
+): Promise<DataAvailabilityTrackingConfig> {
   // TODO: automate it
   const ethereumEnabled = !!env.optionalString('ETHEREUM_BLOBSCAN_API_URL')
   const celestiaEnabled = !!env.optionalString('CELESTIA_BLOBS_API_URL')

@@ -1,14 +1,14 @@
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { AvailBlob, CelestiaBlob, EthereumBlob } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { DaIndexedConfig } from '../../../config/Config'
-import { DaService2 } from './DaService2'
+import { DaService } from './DaService'
 
-describe(DaService2.name, () => {
-  const service = new DaService2()
+describe(DaService.name, () => {
+  const service = new DaService()
 
-  describe(DaService2.prototype.generateRecords.name, () => {
+  describe(DaService.prototype.generateRecords.name, () => {
     it('should match ethereum blobs', async () => {
       const TIME = UnixTime.now()
 
@@ -65,7 +65,7 @@ describe(DaService2.name, () => {
         } as EthereumBlob,
       ]
 
-      const mockRecords: DataAvailabilityRecord2[] = []
+      const mockRecords: DataAvailabilityRecord[] = []
 
       const result = service.generateRecords(
         mockBlobs,
@@ -120,7 +120,7 @@ describe(DaService2.name, () => {
         } as CelestiaBlob,
       ]
 
-      const mockRecords: DataAvailabilityRecord2[] = []
+      const mockRecords: DataAvailabilityRecord[] = []
 
       const result = service.generateRecords(
         mockBlobs,
@@ -168,7 +168,7 @@ describe(DaService2.name, () => {
         } as AvailBlob,
       ]
 
-      const mockRecords: DataAvailabilityRecord2[] = []
+      const mockRecords: DataAvailabilityRecord[] = []
 
       const result = service.generateRecords(
         mockBlobs,
@@ -240,7 +240,7 @@ describe(DaService2.name, () => {
         } as EthereumBlob,
       ]
 
-      const mockRecords: DataAvailabilityRecord2[] = [
+      const mockRecords: DataAvailabilityRecord[] = [
         // ethereum record for previous hour
         {
           configurationId: 'eth-1',
