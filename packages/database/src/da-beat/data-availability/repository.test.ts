@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import type { DataAvailabilityRecord2 } from './entity'
-import { DataAvailabilityRepository2 } from './repository'
+import type { DataAvailabilityRecord } from './entity'
+import { DataAvailabilityRepository } from './repository'
 
-describeDatabase(DataAvailabilityRepository2.name, (db) => {
-  const repository = db.dataAvailability2
+describeDatabase(DataAvailabilityRepository.name, (db) => {
+  const repository = db.dataAvailability
 
   const START = UnixTime.now()
 
@@ -13,7 +13,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(DataAvailabilityRepository2.prototype.upsertMany.name, () => {
+  describe(DataAvailabilityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id-1', START, 100n),
@@ -80,7 +80,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.getForDaLayerInTimeRange
+  describe(DataAvailabilityRepository.prototype.getForDaLayerInTimeRange
     .name, () => {
     it('returns records for a DA layer within time range', async () => {
       await repository.upsertMany([
@@ -180,7 +180,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.getForDaLayerByTimestamp
+  describe(DataAvailabilityRepository.prototype.getForDaLayerByTimestamp
     .name, () => {
     it('returns records for a DA layer at a specific timestamp', async () => {
       await repository.upsertMany([
@@ -239,7 +239,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.getByProjectIdsAndTimeRange
+  describe(DataAvailabilityRepository.prototype.getByProjectIdsAndTimeRange
     .name, () => {
     it('should return records for projects in given time range', async () => {
       await repository.upsertMany([
@@ -324,7 +324,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.getByDaLayersAndTimeRange
+  describe(DataAvailabilityRepository.prototype.getByDaLayersAndTimeRange
     .name, () => {
     it('should return records for projects in given time range', async () => {
       await repository.upsertMany([
@@ -430,7 +430,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype
+  describe(DataAvailabilityRepository.prototype
     .getSummedProjectsByDaLayersAndTimeRange.name, () => {
     it('returns summed PROJECTS (not the daLayer itself)', async () => {
       await repository.upsertMany([
@@ -490,7 +490,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.deleteByConfigurationId
+  describe(DataAvailabilityRepository.prototype.deleteByConfigurationId
     .name, () => {
     it('should delete records within the specified time range', async () => {
       await repository.upsertMany([
@@ -519,7 +519,7 @@ describeDatabase(DataAvailabilityRepository2.name, (db) => {
     })
   })
 
-  describe(DataAvailabilityRepository2.prototype.deleteAll.name, () => {
+  describe(DataAvailabilityRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
@@ -541,7 +541,7 @@ function record(
   configurationId: string,
   timestamp: UnixTime,
   totalSize: bigint,
-): DataAvailabilityRecord2 {
+): DataAvailabilityRecord {
   return {
     timestamp,
     daLayer,

@@ -1,22 +1,22 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
-  type DataAvailabilityRecord2,
-  type ProjectsSummedDataAvailabilityRecord2,
+  type DataAvailabilityRecord,
+  type ProjectsSummedDataAvailabilityRecord,
   toProjectsSummedRecord,
   toRecord,
   toRow,
 } from './entity'
-import { selectDataAvailability2 } from './select'
+import { selectDataAvailability } from './select'
 
-export class DataAvailabilityRepository2 extends BaseRepository {
-  async upsertMany(records: DataAvailabilityRecord2[]): Promise<number> {
+export class DataAvailabilityRepository extends BaseRepository {
+  async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
-        .insertInto('DataAvailability2')
+        .insertInto('DataAvailability')
         .values(batch)
         .onConflict((cb) =>
           cb
@@ -34,10 +34,10 @@ export class DataAvailabilityRepository2 extends BaseRepository {
     daLayer: string,
     from: UnixTime,
     to: UnixTime,
-  ): Promise<DataAvailabilityRecord2[]> {
+  ): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
-      .selectFrom('DataAvailability2')
-      .select(selectDataAvailability2)
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
       .where('daLayer', '=', daLayer)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
@@ -48,10 +48,10 @@ export class DataAvailabilityRepository2 extends BaseRepository {
   async getForDaLayerByTimestamp(
     daLayer: string,
     timestamp: UnixTime,
-  ): Promise<DataAvailabilityRecord2[]> {
+  ): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
-      .selectFrom('DataAvailability2')
-      .select(selectDataAvailability2)
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
       .where('daLayer', '=', daLayer)
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .execute()
@@ -62,11 +62,11 @@ export class DataAvailabilityRepository2 extends BaseRepository {
   async getByProjectIdsAndTimeRange(
     projectIds: string[],
     timeRange: [UnixTime | null, UnixTime],
-  ): Promise<DataAvailabilityRecord2[]> {
+  ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
     let query = this.db
-      .selectFrom('DataAvailability2')
-      .select(selectDataAvailability2)
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
@@ -83,10 +83,10 @@ export class DataAvailabilityRepository2 extends BaseRepository {
   async getSummedProjectsByDaLayersAndTimeRange(
     daLayers: string[],
     timeRange: [UnixTime | null, UnixTime],
-  ): Promise<ProjectsSummedDataAvailabilityRecord2[]> {
+  ): Promise<ProjectsSummedDataAvailabilityRecord[]> {
     const [from, to] = timeRange
     let query = this.db
-      .selectFrom('DataAvailability2')
+      .selectFrom('DataAvailability')
       .select([
         'daLayer',
         'timestamp',
@@ -116,11 +116,11 @@ export class DataAvailabilityRepository2 extends BaseRepository {
   async getByDaLayersAndTimeRange(
     daLayers: string[],
     timeRange: [UnixTime | null, UnixTime],
-  ): Promise<DataAvailabilityRecord2[]> {
+  ): Promise<DataAvailabilityRecord[]> {
     const [from, to] = timeRange
     let query = this.db
-      .selectFrom('DataAvailability2')
-      .select(selectDataAvailability2)
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
       .where('daLayer', 'in', daLayers)
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
@@ -136,17 +136,17 @@ export class DataAvailabilityRepository2 extends BaseRepository {
 
   async deleteByConfigurationId(configurationId: string): Promise<number> {
     const result = await this.db
-      .deleteFrom('DataAvailability2')
+      .deleteFrom('DataAvailability')
       .where('configurationId', '=', configurationId)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   // Test only
-  async getAll(): Promise<DataAvailabilityRecord2[]> {
+  async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
-      .selectFrom('DataAvailability2')
-      .select(selectDataAvailability2)
+      .selectFrom('DataAvailability')
+      .select(selectDataAvailability)
       .execute()
     return rows.map(toRecord)
   }
@@ -154,7 +154,7 @@ export class DataAvailabilityRepository2 extends BaseRepository {
   // Test only
   async deleteAll(): Promise<number> {
     const result = await this.db
-      .deleteFrom('DataAvailability2')
+      .deleteFrom('DataAvailability')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

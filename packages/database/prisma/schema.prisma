@@ -57,7 +57,7 @@ model AggregatedL2Cost {
   @@index([timestamp])
 }
 
-model DataAvailability2 {
+model DataAvailability {
   timestamp       DateTime @db.Timestamp(6)
   daLayer         String   @db.VarChar(255)
   projectId       String   @db.VarChar(255)

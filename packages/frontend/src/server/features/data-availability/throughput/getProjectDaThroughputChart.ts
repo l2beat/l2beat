@@ -1,4 +1,4 @@
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -35,7 +35,7 @@ export async function getProjectDaThroughputChart(
   const [from, to] = getRangeWithMax(params.range, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
-  const throughput = await db.dataAvailability2.getByProjectIdsAndTimeRange(
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
     [params.projectId],
     [from, to],
   )
@@ -60,7 +60,7 @@ export async function getProjectDaThroughputChart(
 }
 
 function groupByTimestampAndProjectId(
-  records: DataAvailabilityRecord2[],
+  records: DataAvailabilityRecord[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity

@@ -49,7 +49,7 @@ export interface Config {
     readonly callsPerMinute: number
     readonly timeout: number
   }
-  readonly da2: DataAvailabilityTrackingConfig2 | false
+  readonly da: DataAvailabilityTrackingConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -243,7 +243,7 @@ export type LayerDaTrackingConfig = {
   startingBlock: number
 }
 
-export interface DataAvailabilityTrackingConfig2 {
+export interface DataAvailabilityTrackingConfig {
   readonly layers: LayerDaTrackingConfig[]
   readonly projects: DaIndexedConfig[]
 }
