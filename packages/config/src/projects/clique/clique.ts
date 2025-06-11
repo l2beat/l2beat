@@ -25,7 +25,7 @@ export const clique: ScalingProject = underReviewL3({
     purposes: ['AI', 'Gaming'],
     links: {
       websites: ['https://clique.stp.network/'],
-      apps: ['https://bridge.myclique.io/', 'https://awns.stp.network/'],
+      bridges: ['https://bridge.myclique.io/', 'https://awns.stp.network/'],
       documentation: ['https://stpdao.gitbook.io/whitepaper'],
       explorers: ['https://explorer.myclique.io/'],
       repositories: ['https://github.com/STPDevteam/'],

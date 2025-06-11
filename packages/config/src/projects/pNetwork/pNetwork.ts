@@ -20,7 +20,7 @@ export const pNetwork: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://p.network/'],
-      apps: ['https://dapp.ptokens.io/'],
+      bridges: ['https://dapp.ptokens.io/'],
       repositories: ['https://github.com/provable-things'],
       documentation: ['https://docs.p.network/en/home'],
       socialMedia: [

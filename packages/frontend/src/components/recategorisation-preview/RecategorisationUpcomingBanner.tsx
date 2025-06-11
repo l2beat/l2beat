@@ -1,23 +1,15 @@
 import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
+
 import { UnixTime } from '@l2beat/shared-pure'
-import { useIsClient } from '~/hooks/useIsClient'
-import { useLocalStorage } from '~/hooks/useLocalStorage'
-import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
-import { CustomLink } from './link/CustomLink'
+import { Countdown } from '../Countdown'
+import { CustomLink } from '../link/CustomLink'
 
-const localStorageTag = 'top-banner'
-const purpose = 'recategorisation-live'
-
-export function Banner({ className }: { className?: string }) {
-  const enabled = UnixTime.now() >= PROJECT_COUNTDOWNS.otherMigration
-  const isClient = useIsClient()
-  const [isHidden, setIsHidden] = useLocalStorage(
-    `${localStorageTag}-${purpose}-is-hidden`,
-    false,
-  )
-
-  if (isHidden || !isClient || !enabled) {
+export function RecategorisationUpcomingBanner({
+  className,
+}: { className?: string }) {
+  const enabled = UnixTime.now() < PROJECT_COUNTDOWNS.otherMigration
+  if (!enabled) {
     return null
   }
 
@@ -28,16 +20,13 @@ export function Banner({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="absolute right-3">
-        <CloseIcon
-          onClick={() => setIsHidden(true)}
-          className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
-        />
-      </div>
-      <div className="text-sm">
-        We recently introduced recategorisation and some projects were moved to
-        Others.
-      </div>
+      <span className="text-sm">Recategorisation happening in</span>
+      <Countdown
+        expiresAt={PROJECT_COUNTDOWNS.otherMigration}
+        shortSuffix={false}
+        size="xs"
+        timePartClassName="bg-white text-black"
+      />
       <BannerActionButton />
     </div>
   )

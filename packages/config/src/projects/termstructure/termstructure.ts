@@ -64,7 +64,7 @@ export const termstructure: ScalingProject = {
     stack: 'ZKsync Lite',
     links: {
       websites: ['https://ts.finance/'],
-      apps: ['https://app.ts.finance/'],
+      bridges: ['https://app.ts.finance/'],
       documentation: ['https://docs.ts.finance/'],
       explorers: ['https://explorer.ts.finance/'],
       repositories: ['https://github.com/term-structure/'],

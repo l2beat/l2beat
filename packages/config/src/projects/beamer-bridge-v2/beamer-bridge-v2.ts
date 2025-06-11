@@ -25,7 +25,7 @@ export const beamerbridgev2: Bridge = {
     warning: warningText,
     links: {
       websites: ['https://beamerbridge.com'],
-      apps: ['https://app.beamerbridge.com'],
+      bridges: ['https://app.beamerbridge.com'],
       repositories: ['https://github.com/beamer-bridge/beamer'],
       socialMedia: [
         'https://twitter.com/BeamerBridge',

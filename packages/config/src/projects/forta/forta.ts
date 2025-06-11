@@ -17,7 +17,7 @@ export const forta: ScalingProject = underReviewL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://forta.org/'],
-      apps: [
+      bridges: [
         'https://app.forta.network/bots',
         'https://firewall.forta.network/',
       ],

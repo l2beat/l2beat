@@ -18,7 +18,7 @@ export const swan: ScalingProject = opStackL2({
       'Swan Chain is an OP Stack L2 providing comprehensive AI infrastructure on the blockchain.',
     links: {
       websites: ['https://swanchain.io/'],
-      apps: ['https://bridge.swanchain.io/'],
+      bridges: ['https://bridge.swanchain.io/'],
       documentation: ['https://docs.swanchain.io/'],
       explorers: [
         'https://mainnet-explorer.swanchain.io/',

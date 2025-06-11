@@ -16,7 +16,7 @@ export const layerai: ScalingProject = upcomingL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://layerai.org/'],
-      apps: ['https://kyotox.com/', 'https://layervpn.com/'],
+      bridges: ['https://kyotox.com/', 'https://layervpn.com/'],
       documentation: ['https://docs.layerai.org/'],
       socialMedia: ['https://t.me/LayerAI_org', 'https://x.com/LayerAIorg'],
     },

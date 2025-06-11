@@ -24,7 +24,7 @@ export const worldchain = opStackL2({
       'World Chain is an OP Stack Rollup built to scale Proof of Personhood, aiming to offer priority blockspace for users with a World ID.',
     links: {
       websites: ['https://worldcoin.org/world-chain'],
-      apps: [
+      bridges: [
         'https://worldchain-mainnet.bridge.alchemy.com/',
         'https://worldcoin.org/download-app',
       ],

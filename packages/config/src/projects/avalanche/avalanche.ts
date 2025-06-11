@@ -17,7 +17,7 @@ export const avalanche: Bridge = {
     links: {
       websites: ['https://avax.network/'],
       explorers: ['https://subnets.avax.network/'],
-      apps: ['https://bridge.avax.network/'],
+      bridges: ['https://bridge.avax.network/'],
       repositories: ['https://github.com/ava-labs'],
       socialMedia: [
         'https://twitter.com/avax',

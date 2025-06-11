@@ -16,7 +16,7 @@ export const lootchain: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://lootchain.com/'],
-      apps: ['https://mainnet.lootchain.com/bridge'],
+      bridges: ['https://mainnet.lootchain.com/bridge'],
       documentation: ['https://loot-chain.gitbook.io/loot-chain-documentation'],
       explorers: ['https://explorer.lootchain.com/'],
       repositories: ['https://github.com/AdventureGoldDao/loot-chain'],

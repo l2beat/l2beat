@@ -28,7 +28,7 @@ export const donatuz: ScalingProject = opStackL3({
       'Donatuz is a Layer-3 that aims at providing social media creators with innovative monetization tools to earn money from their content.',
     links: {
       websites: ['https://donatuz.org/'],
-      apps: ['https://bridge.donatuz.com'],
+      bridges: ['https://bridge.donatuz.com'],
       explorers: ['https://explorer.donatuz.com/'],
       repositories: ['https://github.com/Donatuz-Labs'],
       socialMedia: [

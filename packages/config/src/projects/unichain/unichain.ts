@@ -25,7 +25,7 @@ export const unichain: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
-      apps: ['https://unichain.org/bridge'],
+      bridges: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
       explorers: ['https://uniscan.xyz/'],
       socialMedia: [

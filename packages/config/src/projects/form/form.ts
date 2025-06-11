@@ -31,7 +31,7 @@ export const form: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://form.network'],
-      apps: ['https://bridge.form.network'],
+      bridges: ['https://bridge.form.network'],
       documentation: ['https://docs.form.network'],
       explorers: ['https://explorer.form.network'],
       socialMedia: [

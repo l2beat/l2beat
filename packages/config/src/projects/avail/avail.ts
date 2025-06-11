@@ -26,7 +26,7 @@ export const avail: BaseProject = {
       websites: ['https://www.availproject.org/'],
       documentation: ['https://docs.availproject.org/'],
       repositories: ['https://github.com/availproject/'],
-      apps: ['https://bridge.availproject.org/'],
+      bridges: ['https://bridge.availproject.org/'],
       explorers: [
         'https://explorer.avail.so/#/explorer',
         'https://avail.subscan.io/',
