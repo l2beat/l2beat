@@ -1,0 +1,30 @@
+{
+  "name": "@l2beat/watchtower",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./build/data.json",
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint": "biome check --formatter-enabled=false .",
+    "lint:fix": "biome check --formatter-enabled=false --write .",
+    "start": "node build/index.js",
+    "dev": "node -r esbuild-register --watch src/index.ts",
+    "test": "mocha",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@l2beat/backend-tools": "workspace:*",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@l2beat/typescript-config": "workspace:*"
+  }
+}
