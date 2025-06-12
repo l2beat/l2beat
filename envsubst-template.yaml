@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: registry.digitalocean.com/l2beat/website:pr-${PR_ID}
+          image: ghcr.io/l2beat/l2beat:pr-${PR_ID}
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
