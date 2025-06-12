@@ -76,6 +76,7 @@ import { haust } from '../projects/haust/haust'
 import { hemi } from '../projects/hemi/hemi'
 import { hermez } from '../projects/hermez/hermez'
 import { honeypot } from '../projects/honeypot/honeypot'
+import { honeypotv2 } from '../projects/honeypot-v2/honeypot-v2'
 import { hybrid } from '../projects/hybrid/hybrid'
 import { hychain } from '../projects/hychain/hychain'
 import { hypr } from '../projects/hypr/hypr'
@@ -303,6 +304,7 @@ export const layer2s: ScalingProject[] = [
   hemi,
   hermez,
   honeypot,
+  honeypotv2,
   hybrid,
   hychain,
   hypr,

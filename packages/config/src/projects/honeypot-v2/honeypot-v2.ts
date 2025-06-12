@@ -26,12 +26,6 @@ export const honeypot: ScalingProject = {
   // echo "addedAt: UnixTime($(date +%s)), // $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   addedAt: UnixTime(1749678198), // 2025-06-11T21:43:18Z
 
-  badges: [
-    BADGES.VM.CartesiVM,
-    BADGES.VM.AppChain,
-    BADGES.DA.EthereumCalldata,
-    BADGES.Stack.Cartesi,
-  ],
   colors: {
     primary: '#00F6FF', // Cyan
     secondary: '#000000', // Black
@@ -80,6 +74,57 @@ export const honeypot: ScalingProject = {
     },
   },
 
+  // TODO update
+  config: {
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
+        tokens: '*',
+        description: 'Contract storing bounty funds.',
+      }),
+    ],
+
+    // This field is optional.
+    // What should it be updated to?
+    // consensus settle() perhaps?
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
+          ),
+          selector: '0xddfdfbb0',
+          functionSignature: 'function submitClaim(bytes calldata _claimData)',
+          sinceTimestamp: UnixTime(1694467715),
+        },
+      },
+    ],
+  },
+
+  // TODO new field, verify
+  ecosystemInfo: {
+    id: ProjectId('cartesi'),
+  },
+
+  dataAvailability: {
+    layer: DA_LAYERS.ETH_CALLDATA,
+    bridge: DA_BRIDGES.ENSHRINED,
+    mode: DA_MODES.TRANSACTION_DATA,
+  },
+
+  riskView: {
+    stateValidation: RISK_VIEW.STATE_FP_INT,
+    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
+  },
+
   stage: getStage(
     {
       stage0: {
@@ -115,71 +160,6 @@ export const honeypot: ScalingProject = {
     },
   ),
 
-  // TODO update
-  config: {
-    escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
-        tokens: '*',
-        description: 'Contract storing bounty funds.',
-      }),
-    ],
-    trackedTxs: [
-      {
-        uses: [
-          { type: 'liveness', subtype: 'stateUpdates' },
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
-          ),
-          selector: '0xddfdfbb0',
-          functionSignature: 'function submitClaim(bytes calldata _claimData)',
-          sinceTimestamp: UnixTime(1694467715),
-        },
-      },
-    ],
-  },
-
-  dataAvailability: {
-    layer: DA_LAYERS.ETH_CALLDATA,
-    bridge: DA_BRIDGES.ENSHRINED,
-    mode: DA_MODES.TRANSACTION_DATA,
-  },
-
-  riskView: {
-    stateValidation: RISK_VIEW.STATE_FP_INT,
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
-    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
-  },
-
-  stateValidation: {
-    categories: [
-      {
-        ...STATE_VALIDATION.FRAUD_PROOFS,
-
-        references: [
-          {
-            title: 'Permissionless Refereed Tournaments',
-            url: 'https://arxiv.org/abs/2212.12439',
-          },
-          {
-            title: 'MultiLevelTournamentFactory.sol#L37 - dispute resolution factory',
-            url: 'https://etherscan.io/address/0xA31C2aCfF3464658866960c0fBD3d798310272D7#code#F1#L37',
-          },
-          {
-            title: 'DaveConsensus.sol#L149 - application consensus',
-            url: 'https://etherscan.io/address/0x6CE590b9F0697327f18c601DF6f0baE4a0801B68#code#F1#L149',
-          },
-        ],
-      },
-    ],
-  },
-
   technology: {
     // TODO
     dataAvailability: {
@@ -212,15 +192,39 @@ export const honeypot: ScalingProject = {
     ],
   },
 
-  // TODO everything below here!
   stateDerivation: {
-    nodeSoftware: `The Cartesi node software source code can be found [here](https://github.com/cartesi/rollups/tree/v1.0.2/offchain).`,
-    compressionScheme: 'No compression is used.',
+    nodeSoftware:
+      'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0).',
     genesisState:
-      'The genesis state is derived from the Honeypot Cartesi Machine template, which can be found within the [Honeypot server Docker image](https://hub.docker.com/layers/cartesi/honeypot/main-server-mainnet/images/sha256-9067ebcf3d915e8091aba45bd231a328a7ac260924d85387137ed133f3e240ac) at `/var/opt/cartesi/machine-snapshots/0_0`. Alternatively, it is possible to recreate it by following the build procedure outlined in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot#building-machine-to-deploy).',
-    dataFormat:
-      'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups/blob/v1.0.2/onchain/rollups/contracts/common/InputEncoding.sol#L40). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot#withdrawing-the-pot).',
+      'The genesis state comes from the Honeypot Cartesi Machine template included in the [Honeypot v2 release](https://github.com/cartesi/honeypot/releases/tag/v2.0.0). Alternatively, you can recreate it by following the build steps in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot/tree/v2.0.0?tab=readme-ov-file#building-the-application).',
+    dataFormat: // TODO Review deposits, update withdrawal. 
+      'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.0.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot#withdrawing-the-pot).',
   },
+
+  stateValidation: {
+    categories: [
+      {
+        ...STATE_VALIDATION.FRAUD_PROOFS,
+
+        references: [
+          {
+            title: 'Permissionless Refereed Tournaments',
+            url: 'https://arxiv.org/abs/2212.12439',
+          },
+          {
+            title: 'MultiLevelTournamentFactory.sol#L37 - dispute resolution factory',
+            url: 'https://etherscan.io/address/0xA31C2aCfF3464658866960c0fBD3d798310272D7#code#F1#L37',
+          },
+          {
+            title: 'DaveConsensus.sol#L149 - application consensus',
+            url: 'https://etherscan.io/address/0x6CE590b9F0697327f18c601DF6f0baE4a0801B68#code#F1#L149',
+          },
+        ],
+      },
+    ],
+  },
+
+  // TODO update
   contracts: {
     addresses: {
       [discovery.chain]: [
@@ -247,17 +251,8 @@ export const honeypot: ScalingProject = {
     },
     risks: [],
   },
-  permissions: {
-    [discovery.chain]: {
-      actors: [
-        discovery.getPermissionDetails(
-          'Authority owner',
-          discovery.getPermissionedAccounts('Authority', 'owner'),
-          'The Authority owner can submit claims to the Honeypot DApp.',
-        ),
-      ],
-    },
-  },
+
+  // TODO: Papers? Presentations? Honeypot v1?
   milestones: [
     {
       title: 'Honeypot announcement',
@@ -273,5 +268,12 @@ export const honeypot: ScalingProject = {
       description: 'Honeypot launched on mainnet.',
       type: 'general',
     },
+  ],
+
+  badges: [
+    BADGES.VM.CartesiVM,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Stack.Cartesi,
   ],
 }
