@@ -28,3 +28,6 @@ export const plumenetwork: ScalingProject = upcomingL2({
     },
   },
 })
+
+
+// rpc https://phoenix-rpc.plumenetwork.xyz
