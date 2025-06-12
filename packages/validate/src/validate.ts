@@ -405,7 +405,7 @@ function svpUnion<
     return {
       success: false,
       path: '',
-      message: `None of the variants matched, got ${whatType(value)}.`,
+      message: `None of the union variants matched, got ${whatType(value)}.`,
     }
   }
 }
@@ -420,17 +420,36 @@ function union<
   )
 }
 
-// TODO: exhaustive enum record checking!
 function svpRecord<K extends string | number, V>(
   keyValidator: Validator<K>,
   valueValidator: Validator<V>,
   clone: boolean,
 ) {
+  let enumKeys: (string | number)[] | undefined
+  if (
+    keyValidator instanceof ValidatorImpl &&
+    !(valueValidator instanceof ValidatorImpl && valueValidator.isOptional) &&
+    keyValidator.params[0] === 'enum'
+  ) {
+    enumKeys = keyValidator.params[1] as (string | number)[]
+  }
+
   return function svpRecord(value: unknown): Result<Record<K, V>> {
     if (typeof value !== 'object' || value === null || Array.isArray(object)) {
       return failType('object', value)
     }
     const result = {} as Record<K, V>
+    if (enumKeys) {
+      for (const key of enumKeys) {
+        if (!(key in value)) {
+          return {
+            success: false,
+            path: '',
+            message: `Enum key ${key} not found.`,
+          }
+        }
+      }
+    }
     for (const key in value) {
       const keyRes = clone
         ? keyValidator.safeParse(key)
@@ -477,6 +496,24 @@ function record<K extends string | number, V>(
   )
 }
 
+function svEnum<T extends string | number>(values: T[]) {
+  return function svEnum(value: unknown): Result<T> {
+    if (values.includes(value as T)) {
+      return { success: true, data: value as T }
+    }
+    return {
+      success: false,
+      path: '',
+      message: `None of the enum variants matched, got ${whatType(value)}.`,
+    }
+  }
+}
+
+function _enum<T extends string | number>(values: T[]): Validator<T> {
+  const sv = svEnum(values)
+  return new ValidatorImpl(sv, sv, ['enum', values])
+}
+
 export const v = {
   string,
   number,
@@ -490,8 +527,8 @@ export const v = {
   literal,
   union,
   record,
+  enum: _enum,
   // tuple
-  // enum
 }
 
 // biome-ignore lint/style/noNamespace: Needed to mimick z.infer
