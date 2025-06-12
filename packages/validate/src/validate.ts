@@ -12,8 +12,8 @@ export interface Parser<T> {
     predicate: (value: T) => value is U,
     message?: string,
   ): Parser<U>
+  default<U>(value: U): Parser<Exclude<T, null | undefined> | U>
   check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
-  // default<U>(value: U): Parser<T | U>
 }
 
 export interface OptionalParser<T> extends Parser<T> {
@@ -35,8 +35,8 @@ export interface Validator<T> {
     message?: string,
   ): Validator<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
+  default<U>(value: U): Parser<Exclude<T, null | undefined> | U>
   optional(): OptionalValidator<T>
-  // default<U>(value: U): Validator<T | U>
 }
 
 export interface OptionalValidator<T> extends Validator<T> {
@@ -70,6 +70,10 @@ class ParserImpl<T> implements Parser<T> {
       'check',
       predicate,
     ])
+  }
+
+  default<U>(value: U): Parser<U | Exclude<T, null | undefined>> {
+    return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
   }
 
   optional(): OptionalParser<T> {
@@ -143,6 +147,10 @@ class ValidatorImpl<T> implements Validator<T> {
     )
   }
 
+  default<U>(value: U): Parser<U | Exclude<T, null | undefined>> {
+    return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
+  }
+
   optional(): OptionalValidator<T> {
     const impl = new ValidatorImpl(
       this.safeValidate,
@@ -175,6 +183,21 @@ function check<T>(
       }
     }
     return result
+  }
+}
+
+function spDefault<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
+  return function spDefault(
+    value: unknown,
+  ): Result<Exclude<T, null | undefined> | U> {
+    if (value === null || value === undefined) {
+      return { success: true, data: fallback }
+    }
+    const result = safeParse(value)
+    if (result.success && (result.data === null || result.data === undefined)) {
+      return { success: true, data: fallback }
+    }
+    return result as Result<Exclude<T, null | undefined>>
   }
 }
 
@@ -302,6 +325,7 @@ function svpObject<T extends object>(
     const result = {} as Record<string, unknown>
     for (const key in schema) {
       const validator = schema[key] as ValidatorImpl<unknown>
+      // TODO: default
       if (validator.isOptional && !(key in value)) {
         continue
       }
@@ -450,6 +474,7 @@ function svpRecord<K extends string | number, V>(
   let enumKeys: (string | number)[] | undefined
   if (
     keyValidator instanceof ValidatorImpl &&
+    // TODO: default
     !(valueValidator instanceof ValidatorImpl && valueValidator.isOptional) &&
     keyValidator.params[0] === 'enum'
   ) {
