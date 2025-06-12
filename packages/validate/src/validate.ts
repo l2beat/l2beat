@@ -504,6 +504,7 @@ function svpRecord<K extends string | number, V>(
           if ((valueValidator as ValidatorImpl<V>).params[0] === 'default') {
             result[key as K] = (valueValidator as ValidatorImpl<V>)
               .params[1] as V
+            continue
           }
           return {
             success: false,

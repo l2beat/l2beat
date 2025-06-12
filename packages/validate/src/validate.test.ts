@@ -153,4 +153,43 @@ describe('validate', () => {
       data: { key1: undefined, key3: 'foo' },
     })
   })
+
+  it('default - basic use', () => {
+    const Foo = v.union([v.number(), v.null(), v.undefined()]).default(2)
+    expect(Foo.safeParse(3)).toEqual({ success: true, data: 3 })
+    expect(Foo.safeParse(null)).toEqual({ success: true, data: 2 })
+    expect(Foo.safeParse(undefined)).toEqual({ success: true, data: 2 })
+  })
+
+  it('default - object', () => {
+    const Foo = v.object({
+      a: v.string(),
+      b: v.number().default(2),
+    })
+    expect(Foo.safeParse({ a: 'hi' })).toEqual({
+      success: true,
+      data: { a: 'hi', b: 2 },
+    })
+    expect(Foo.safeParse({ a: 'hi', b: undefined })).toEqual({
+      success: true,
+      data: { a: 'hi', b: 2 },
+    })
+  })
+
+  it('default - record', () => {
+    const Foo = v.record(v.string(), v.number().default(2))
+    expect(
+      Foo.safeParse({
+        a: 1,
+        b: null,
+        c: undefined,
+      }),
+    ).toEqual({ success: true, data: { a: 1, b: 2, c: 2 } })
+
+    const Bar = v.record(v.enum(['a', 'b', 'c']), v.number().default(2))
+    expect(Bar.safeParse({ a: 1 })).toEqual({
+      success: true,
+      data: { a: 1, b: 2, c: 2 },
+    })
+  })
 })
