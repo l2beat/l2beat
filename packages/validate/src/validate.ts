@@ -8,6 +8,7 @@ export interface Parser<T> {
   parse: (value: unknown) => T
   safeParse: (value: unknown) => Result<T>
   optional(): OptionalParser<T>
+  // default<U>(value: U): Parser<T | U>
 }
 
 export interface OptionalParser<T> extends Parser<T> {
@@ -30,6 +31,7 @@ export interface Validator<T> {
   ): Validator<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
   optional(): OptionalValidator<T>
+  // default<U>(value: U): Validator<T | U>
 }
 
 export interface OptionalValidator<T> extends Validator<T> {
@@ -524,6 +526,14 @@ function _enum<T extends string | number>(values: T[]): Validator<T> {
   return new ValidatorImpl(sv, sv, ['enum', values])
 }
 
+function svUnknown(value: unknown): Result<unknown> {
+  return { success: true, data: value }
+}
+
+function unknown(): Validator<unknown> {
+  return new ValidatorImpl(svUnknown, svUnknown, ['unknown', undefined])
+}
+
 export const v = {
   string,
   number,
@@ -539,6 +549,7 @@ export const v = {
   record,
   enum: _enum,
   // tuple
+  unknown,
 }
 
 // biome-ignore lint/style/noNamespace: Needed to mimick z.infer
