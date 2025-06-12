@@ -62,12 +62,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # - name: Notify deployment service
-      #   run: |
-      #     curl -X POST \
-      #       -H "Content-Type: application/json" \
-      #       -H "Authorization: Bearer ${{ secrets.DEPLOYMENT_WEBHOOK_TOKEN }}" \
-      #       -d '{"repository":"${{ github.repository }}","ref":"${{ github.ref }}","sha":"${{ github.sha }}","image":"ghcr.io/${{ github.repository }}/frontend-preview:${{ github.sha }}"}' \
-      #       "${DEPLOYMENT_WEBHOOK_URL}"
-      #   env:
-      #     DEPLOYMENT_WEBHOOK_URL: ${{ vars.DEPLOYMENT_WEBHOOK_URL || 'https://api.l2beat.com/webhooks/deployment' }}
+      - name: Notify deployment service
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer SECRET" \
+            -d '{"prNumber":"${{ github.event.number }}"}' \
+            "${DEPLOYMENT_WEBHOOK_URL}"
+        env:
+          DEPLOYMENT_WEBHOOK_URL: ${{ vars.DEPLOYMENT_WEBHOOK_URL || 'https://preview-controller.eltwobeat.com' }}
