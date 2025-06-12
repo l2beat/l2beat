@@ -6908,7 +6908,7 @@
     {
       "symbol": "pUSD",
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
-      "source": "native", // backed by bridged USDC
+      "source": "native", // mostly backed by externally bridged USDC
       "supply": "totalSupply"
     }
   ]

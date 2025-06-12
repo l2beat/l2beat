@@ -13597,7 +13597,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/55542/large/pUSD-token.png?1746610746",
       "chainId": 98866,
-      "source": "external",
+      "source": "native",
       "supply": "totalSupply",
       "bridgedUsing": {
         "bridges": [
