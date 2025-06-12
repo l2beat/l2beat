@@ -303,6 +303,7 @@ export async function getScalingProjectEntry(
         tokens,
         tvsProjectStats,
         tvsInfo: project.tvsInfo,
+        fullscreenable: true,
       },
     })
   }
@@ -317,6 +318,7 @@ export async function getScalingProjectEntry(
         milestones: sortedMilestones,
         category: project.scalingInfo.type,
         projectName: project.name,
+        fullscreenable: true,
       },
     })
   }
@@ -336,6 +338,7 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         trackedTransactions,
+        fullscreenable: true,
       },
     })
   }
@@ -355,6 +358,7 @@ export async function getScalingProjectEntry(
         projectId: project.id,
         milestones: sortedMilestones,
         ...livenessSection,
+        fullscreenable: true,
       },
     })
   }
