@@ -93,7 +93,7 @@ describe('validate', () => {
     expect(Foo.safeValidate(1)).toEqual({
       success: false,
       path: '',
-      message: 'None of the variants matched, got number.',
+      message: 'None of the union variants matched, got number.',
     })
   })
 
@@ -106,6 +106,38 @@ describe('validate', () => {
     expect(Foo.safeParse(input)).toEqual({
       success: true,
       data: { FOO: 2, BAR: 4, BAZ: 6 },
+    })
+  })
+
+  it('enum', () => {
+    const Foo = v.enum(['foo', 'bar', 'baz'])
+    expect(Foo.safeValidate('foo')).toEqual({ success: true, data: 'foo' })
+    expect(Foo.safeValidate('xxx')).toEqual({
+      success: false,
+      path: '',
+      message: 'None of the enum variants matched, got string.',
+    })
+  })
+
+  it('enum record', () => {
+    const Foo = v.enum(['foo', 'bar'])
+    const FooRecord = v.record(Foo, v.number())
+
+    expect(FooRecord.safeValidate({ foo: 1, bar: 2 })).toEqual({
+      success: true,
+      data: { foo: 1, bar: 2 },
+    })
+    expect(FooRecord.safeValidate({ foo: 1 })).toEqual({
+      success: false,
+      path: '',
+      message: 'Enum key bar not found.',
+    })
+
+    const FooRecordOptional = v.record(Foo, v.number().optional())
+    expect(FooRecordOptional.safeValidate({ foo: 1 })).toEqual({
+      success: true,
+      // TODO: is there a way to type it correctly in FooRecordOptional?
+      data: { foo: 1 } as any,
     })
   })
 })
