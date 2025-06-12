@@ -66,7 +66,7 @@ function RadioGroupIndicator({
         key={indicatorId}
         data-slot="radio-group-indicator-circle"
         layoutId={indicatorId}
-        className="absolute inset-0 h-full w-full rounded-md bg-white group-data-[variant=highlighted]/radio-group:bg-gradient-to-r group-data-[variant=highlighted]/radio-group:from-purple-100 group-data-[variant=highlighted]/radio-group:to-pink-100"
+        className="absolute inset-0 h-full w-full rounded-md primary-card:bg-pure-white group-data-[variant=highlighted]/radio-group:bg-gradient-to-r group-data-[variant=highlighted]/radio-group:from-purple-100 group-data-[variant=highlighted]/radio-group:to-pink-100 dark:primary-card:bg-black"
       />
     </RadioGroupPrimitive.Indicator>
   )
