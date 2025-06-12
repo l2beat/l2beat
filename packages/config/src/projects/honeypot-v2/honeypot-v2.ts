@@ -167,9 +167,8 @@ export const honeypotv2: ScalingProject = {
       // ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA, // TODO canonical (old) or calldata??
       references: [
         {
-          // TODO update
-          title: 'InputBox.sol#30 - Etherscan source code, addInput function',
-          url: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+          title: 'InputBox.sol#18 - Etherscan source code, addInput function',
+          url: 'https://etherscan.io/address/0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051#code#F1#L18',
         },
       ],
     },
