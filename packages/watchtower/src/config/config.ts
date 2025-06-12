@@ -7,5 +7,6 @@ export function getConfig(): Config {
 
   return {
     port: env.integer('PORT', 3000),
+    secret: env.string('BEARER_SECRET'),
   }
 }

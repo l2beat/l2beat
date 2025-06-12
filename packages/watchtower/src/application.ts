@@ -12,7 +12,7 @@ export class Application {
     const logger = Logger.INFO.for(Application.applicationName)
 
     const modules: ApplicationModule[] = [
-      createInfrastructureModule({ logger }),
+      createInfrastructureModule({ logger, config }),
     ]
     const httpServer = createHttpServer(config, modules, logger.for('HTTP'))
 

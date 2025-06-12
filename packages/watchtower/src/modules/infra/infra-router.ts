@@ -1,6 +1,7 @@
 import express from 'express'
 import type { InfrastructureController } from './infra-controller'
 import { z } from 'zod'
+import type { Config } from '../../config/types'
 
 function stringAsInt() {
   return z.preprocess((s) => {
@@ -27,12 +28,20 @@ const schema = z.object({
 
 export function createInfrastructureRouter(
   controller: InfrastructureController,
+  config: Config,
 ): express.Router {
   const r = express.Router()
 
   r.post(
     '/frontend-preview',
     async (req: express.Request, res: express.Response) => {
+      const auth = req.headers.authorization
+
+      if (auth !== `Bearer ${config.secret}`) {
+        res.status(401).json({ error: 'Unauthorized' })
+        return
+      }
+
       const parsed = schema.safeParse(req.body)
 
       if (!parsed.success) {
