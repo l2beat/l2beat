@@ -12,7 +12,7 @@ export class InfrastructureController {
 
   async handleFrontendPreview(prNumber: number) {
     await execShellCommand(
-      `cat envsubst-template.yaml | PR_ID=${prNumber} envsubst | kubectl apply -n preview-prod -f`,
+      `cat envsubst-template.yaml | PR_ID=${prNumber} envsubst | kubectl apply -n preview-prod -f -`,
     )
   }
 }
@@ -20,6 +20,9 @@ export class InfrastructureController {
 async function execShellCommand(command: string) {
   return new Promise((resolve, reject) => {
     exec(command, (error, stdout, stderr) => {
+      console.log('stdout', stdout)
+      console.log('stderr', stderr)
+      console.log('error', error)
       if (error || stderr) {
         reject(error || stderr)
       }

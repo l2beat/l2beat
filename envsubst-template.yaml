@@ -12,12 +12,12 @@ spec:
   selector:
     matchLabels:
       app: frontend
-      pr: ${PR_ID}
+      pr: '${PR_ID}'
   template:
     metadata:
       labels:
         app: frontend
-        pr: ${PR_ID}
+        pr: '${PR_ID}'
     spec:
       containers:
         - name: frontend
@@ -48,7 +48,7 @@ metadata:
 spec:
   selector:
     app: frontend
-    pr: ${PR_ID}
+    pr: '${PR_ID}'
   ports:
     - protocol: TCP
       port: 80
@@ -61,7 +61,7 @@ metadata:
   name: pr-${PR_ID}-fe
   labels:
     app: frontend
-    pr: ${PR_ID}
+    pr: '${PR_ID}'
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-cloudflare
 spec:

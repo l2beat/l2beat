@@ -9,7 +9,7 @@ permissions:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/frontend-preview
+  IMAGE_NAME: ${{ github.repository }}
 
 on:
   pull_request:
