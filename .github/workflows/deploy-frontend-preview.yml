@@ -16,7 +16,7 @@ on:
 
 jobs:
   deploy-frontend-preview:
-    name: Deploy frontend to GitHub Container Registry
+    name: Frontend preview deployment
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
