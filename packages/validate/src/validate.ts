@@ -8,6 +8,11 @@ export interface Parser<T> {
   parse: (value: unknown) => T
   safeParse: (value: unknown) => Result<T>
   optional(): OptionalParser<T>
+  check<U extends T>(
+    predicate: (value: T) => value is U,
+    message?: string,
+  ): Parser<U>
+  check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
   // default<U>(value: U): Parser<T | U>
 }
 
@@ -60,6 +65,13 @@ class ParserImpl<T> implements Parser<T> {
     }
   }
 
+  check(predicate: (value: T) => boolean | string, message?: string) {
+    return new ParserImpl(check(predicate, this.safeParse, message), [
+      'check',
+      predicate,
+    ])
+  }
+
   optional(): OptionalParser<T> {
     const impl = new ParserImpl(this.safeParse, this.params)
     impl.isOptional = true
@@ -107,8 +119,8 @@ class ValidatorImpl<T> implements Validator<T> {
 
   check(predicate: (value: T) => boolean | string, message?: string) {
     return new ValidatorImpl(
-      check(predicate, false, this.safeParse, this.safeValidate, message),
-      check(predicate, true, this.safeParse, this.safeValidate, message),
+      check(predicate, this.safeValidate, message),
+      check(predicate, this.safeParse, message),
       ['check', predicate],
     )
   }
@@ -144,13 +156,11 @@ class ValidatorImpl<T> implements Validator<T> {
 
 function check<T>(
   predicate: (value: T) => string | boolean,
-  clone: boolean,
-  safeParse: Parser<T>['safeParse'],
-  safeValidate: Validator<T>['safeValidate'],
+  parseOrValidate: Parser<T>['safeParse'],
   message: string | undefined,
 ) {
   return function check(value: unknown): Result<T> {
-    const result = clone ? safeParse(value) : safeValidate(value)
+    const result = parseOrValidate(value)
     if (result.success) {
       const checkResult = predicate(result.data)
       if (typeof checkResult === 'string') {
