@@ -333,9 +333,14 @@ function svpObject<T extends object>(
     const result = {} as Record<string, unknown>
     for (const key in schema) {
       const validator = schema[key] as ValidatorImpl<unknown>
-      // TODO: default
-      if (validator.isOptional && !(key in value)) {
-        continue
+      if (!(key in value)) {
+        if (validator.isOptional) {
+          continue
+        }
+        if (validator.params[0] === 'default') {
+          result[key] = validator.params[1]
+          continue
+        }
       }
       const prop = (value as { [record: string]: unknown })[key]
       const res = clone
@@ -482,7 +487,6 @@ function svpRecord<K extends string | number, V>(
   let enumKeys: (string | number)[] | undefined
   if (
     keyValidator instanceof ValidatorImpl &&
-    // TODO: default
     !(valueValidator instanceof ValidatorImpl && valueValidator.isOptional) &&
     keyValidator.params[0] === 'enum'
   ) {
@@ -497,6 +501,10 @@ function svpRecord<K extends string | number, V>(
     if (enumKeys) {
       for (const key of enumKeys) {
         if (!(key in value)) {
+          if ((valueValidator as ValidatorImpl<V>).params[0] === 'default') {
+            result[key as K] = (valueValidator as ValidatorImpl<V>)
+              .params[1] as V
+          }
           return {
             success: false,
             path: '',
