@@ -12,7 +12,7 @@ export interface Parser<T> {
     predicate: (value: T) => value is U,
     message?: string,
   ): Parser<U>
-  default<U>(value: U): Parser<Exclude<T, null | undefined> | U>
+  default<U extends T>(value: U): Parser<Exclude<T, null | undefined> | U>
   check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
 }
 
@@ -35,7 +35,7 @@ export interface Validator<T> {
     message?: string,
   ): Validator<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
-  default<U>(value: U): Parser<Exclude<T, null | undefined> | U>
+  default<U extends T>(value: U): Parser<Exclude<T, null | undefined> | U>
   optional(): OptionalValidator<T>
 }
 
