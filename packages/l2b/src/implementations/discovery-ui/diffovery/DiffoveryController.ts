@@ -55,7 +55,9 @@ export class DiffoveryController {
       return undefined
     }
 
-    const flat = flattenStartingFrom(source.name, input, source.remappings)
+    const flat = flattenStartingFrom(source.name, input, source.remappings, {
+      includeAll: true,
+    })
     this.cache.set(address.toString(), flat)
     return splitFlatSolidity(flat)
   }
