@@ -93,10 +93,10 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
           </AnimatePresence>
           <AnimatePresence>
             {isFullScreen && (
-              <div className="fixed inset-0 z-999 grid place-items-center">
+              <div className="fullscreen fixed inset-0 z-999 grid place-items-center">
                 <PrimaryCard
                   asChild
-                  className="max-h-[70vh] w-3/4 overflow-y-scroll"
+                  className="max-h-[75vh] w-3/4 overflow-y-scroll"
                   ref={ref}
                 >
                   <motion.div layoutId={`project-section-card-${props.id}`}>

@@ -324,6 +324,10 @@ const config: Config = {
       creator.addVariant('primary-card', '.primary-card &')
       creator.addUtilities({ '.primary-card': {} })
     }),
+    plugin((creator) => {
+      creator.addVariant('fullscreen', '.fullscreen &')
+      creator.addUtilities({ '.fullscreen': {} })
+    }),
     tailwindcssAnimate,
     containerQueries,
   ],

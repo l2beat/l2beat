@@ -114,6 +114,7 @@ function ChartContainer<T extends { timestamp: number }>({
         className={cn(
           chartContainerClassNames,
           'h-[188px] min-h-[188px] w-full md:h-[228px] md:min-h-[228px] xl:h-[258px] xl:min-h-[258px]',
+          'fullscreen:h-[40vh] fullscreen:min-h-[40vh]',
           className,
         )}
         {...props}
