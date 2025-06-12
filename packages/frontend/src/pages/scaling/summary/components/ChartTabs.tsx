@@ -1,4 +1,6 @@
 import * as Tabs from '@radix-ui/react-tabs'
+import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useState } from 'react'
 import { ScalingSummaryActivityChart } from '~/components/chart/activity/ScalingSummaryActivityChart'
 import { ScalingSummaryTvsChart } from '~/components/chart/tvs/ScalingSummaryTvsChart'
 import type { ChartUnit } from '~/components/chart/types'
@@ -6,8 +8,6 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { cn } from '~/utils/cn'
 import type { TimeRange } from '~/utils/range/range'
-import { motion, AnimatePresence } from 'motion/react'
-import { useState, useEffect } from 'react'
 
 interface Props {
   unit: ChartUnit

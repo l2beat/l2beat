@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { memo, useState } from 'react'
 import { useInterval } from '~/hooks/useInterval'
 import { cn } from '~/utils/cn'
+import { SlidingNumber } from './SlidingNumber'
 
 interface Props {
   expiresAt: number
@@ -99,7 +100,7 @@ function TimePart({
   return (
     <div
       className={cn(
-        'rounded bg-brand px-3 py-2 text-center font-bold text-primary-invert',
+        'flex items-baseline justify-center rounded bg-brand px-3 py-2 text-center font-bold text-primary-invert',
         size === 'lg' && 'text-[28px]',
         size === 'md' && 'text-2xl leading-none',
         size === 'sm' && 'text-[18px]',
@@ -108,7 +109,7 @@ function TimePart({
       )}
     >
       <span className="tabular-nums" suppressHydrationWarning>
-        {children}
+        <SlidingNumber number={Number(children)} />
       </span>
       <span
         className={cn(
