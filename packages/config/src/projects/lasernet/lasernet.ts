@@ -16,7 +16,7 @@ export const lasernet: ScalingProject = underReviewL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://diadata.org/'],
-      apps: ['https://diadata.org/app/'],
+      bridges: ['https://diadata.org/app/'],
       documentation: ['https://docs.diadata.org/resources/chain-information'],
       explorers: ['https://explorer.diadata.org/'],
       repositories: ['https://github.com/diadata-org/'],

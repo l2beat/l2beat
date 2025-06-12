@@ -1,4 +1,4 @@
-import type { Project, ProjectStatuses } from '@l2beat/config'
+import type { Project } from '@l2beat/config'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import type { RosetteValue } from '~/components/rosette/types'
@@ -15,6 +15,7 @@ import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getDaLayerRisks } from '../utils/getDaLayerRisks'
 import { getDaProjectsTvs, pickTvsForProjects } from '../utils/getDaProjectsTvs'
@@ -47,7 +48,7 @@ export interface DaProjectPageEntry extends CommonDaProjectPageEntry {
   bridges: {
     name: string
     slug: string
-    statuses: ProjectStatuses | undefined
+    verificationWarning?: boolean
     isNoBridge: boolean
     grissiniValues: RosetteValue[]
     tvs: number
@@ -164,7 +165,10 @@ export async function getDaProjectEntry(
     bridges: bridges.map((bridge) => ({
       name: bridge.daBridge.name,
       slug: bridge.slug,
-      statuses: bridge.statuses,
+      verificationWarning: !getIsProjectVerified(
+        bridge.statuses.unverifiedContracts,
+        projectsChangeReport.getChanges(bridge.id),
+      ),
       isNoBridge: !!bridge.daBridge.risks.isNoBridge,
       grissiniValues: mapBridgeRisksToRosetteValues(bridge.daBridge.risks),
       tvs: getSumFor(bridge.daBridge.usedIn.map((usedIn) => usedIn.id)).latest,
@@ -209,7 +213,7 @@ export async function getDaProjectEntry(
     result.bridges.unshift({
       slug: 'no-bridge',
       isNoBridge: true,
-      statuses: undefined,
+      verificationWarning: false,
       grissiniValues: mapBridgeRisksToRosetteValues({ isNoBridge: true }),
       name: 'No DA Bridge',
       tvs: getSumFor(layer.daLayer.usedWithoutBridgeIn.map((x) => x.id)).latest,

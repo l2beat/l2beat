@@ -179,7 +179,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   }
 
   if (config.da) {
-    for (const layer of config.da.layers) {
+    for (const layer of config.da.blockLayers) {
       switch (layer.type) {
         case 'celestia': {
           celestia = new CelestiaRpcClient({

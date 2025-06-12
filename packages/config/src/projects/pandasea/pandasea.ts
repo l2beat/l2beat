@@ -20,7 +20,7 @@ export const pandasea: ScalingProject = underReviewL2({
     links: {
       websites: ['https://pandasea.io/'],
       explorers: ['https://pandaseascan.com/'],
-      apps: ['https://bridge.pandasea.io/'],
+      bridges: ['https://bridge.pandasea.io/'],
     },
   },
   chainConfig: {

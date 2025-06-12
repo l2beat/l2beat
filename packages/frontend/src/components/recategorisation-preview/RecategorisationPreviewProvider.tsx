@@ -1,3 +1,5 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
+import { UnixTime } from '@l2beat/shared-pure'
 import { createContext, useContext } from 'react'
 import { usePathname } from '~/hooks/usePathname'
 import { useQueryParam } from '~/hooks/useQueryParam'
@@ -34,7 +36,10 @@ export function RecategorisationPreviewContextProvider({ children }: Props) {
   return (
     <RecategorisationPreviewContext.Provider
       value={{
-        checked: checked === 'true',
+        checked:
+          PROJECT_COUNTDOWNS.otherMigration > UnixTime.now()
+            ? checked === 'true'
+            : false,
         setChecked: onChange,
         isScalingMainPage,
       }}

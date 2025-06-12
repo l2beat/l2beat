@@ -36,7 +36,7 @@ export const zkswap: ScalingProject = {
 
     links: {
       websites: ['https://zks.org/'],
-      apps: ['https://zks.app'],
+      bridges: ['https://zks.app'],
       documentation: ['https://en.wiki.zks.org/'],
       explorers: ['https://zkswap.info'],
       repositories: ['https://github.com/l2labs/zkswap-contracts'],

@@ -42,7 +42,7 @@ export const hyperliquid: Bridge = {
     links: {
       websites: ['https://hyperfoundation.org/'],
       explorers: ['https://app.hyperliquid.xyz/explorer'],
-      apps: ['https://app.hyperliquid.xyz/trade'],
+      bridges: ['https://app.hyperliquid.xyz/trade'],
       socialMedia: ['https://x.com/HyperliquidX'],
       documentation: ['https://hyperliquid.gitbook.io/hyperliquid-docs'],
     },

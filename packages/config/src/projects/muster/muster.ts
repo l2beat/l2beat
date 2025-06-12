@@ -26,7 +26,7 @@ export const muster: ScalingProject = orbitStackL3({
       'Muster Network is an Arbitrum Orbit L3 gaming chain aiming to transform digital ownership for brands and games while managing blockchain infrastructure and security.',
     links: {
       websites: ['https://cometh.io/'],
-      apps: [
+      bridges: [
         'https://bridge.arbitrum.io/?destinationChain=muster&sourceChain=arbitrum-one',
       ],
       documentation: ['https://docs.cometh.io/marketplace'],

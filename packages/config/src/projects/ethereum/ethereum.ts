@@ -24,7 +24,7 @@ export const ethereum: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     // name: 'Ethereum (EIP-4844)',

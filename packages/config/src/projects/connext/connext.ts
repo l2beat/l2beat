@@ -16,7 +16,7 @@ export const connext: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://bridge.connext.network/', 'https://connext.network/'],
-      apps: ['https://bridge.connext.network/'],
+      bridges: ['https://bridge.connext.network/'],
       explorers: ['https://connextscan.io/'],
       socialMedia: [
         'https://twitter.com/connextnetwork',

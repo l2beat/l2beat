@@ -23,7 +23,10 @@ export const inevm: ScalingProject = orbitStackL3({
       'inEVM is an Orbit stack Optimium built by the Injective team, complementing their Cosmos L1 and Wormhole integration with an EVM-based Layer 3 for Ethereum interoperability.',
     links: {
       websites: ['https://inevm.com/'],
-      apps: ['https://inevm.bridge.caldera.xyz/', 'https://inevmbridge.com/'],
+      bridges: [
+        'https://inevm.bridge.caldera.xyz/',
+        'https://inevmbridge.com/',
+      ],
       documentation: ['https://docs.inevm.com/'],
       explorers: ['https://inevm.calderaexplorer.xyz/'],
       socialMedia: ['https://x.com/injective'],

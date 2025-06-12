@@ -22,7 +22,7 @@ export const snaxchain: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://governance.synthetix.io/'],
-      apps: ['https://superbridge.app/snaxchain-mainnet'],
+      bridges: ['https://superbridge.app/snaxchain-mainnet'],
       repositories: ['https://github.com/Synthetixio/snaxchain-config'],
       documentation: ['https://sips.synthetix.io/sips/sip-384/'],
       socialMedia: ['https://x.com/synthetix_io'],

@@ -41,7 +41,7 @@ export const wirex: ScalingProject = polygonCDKStack({
       'Pay Chain is a Validium built on the Polygon CDK stack. It is used as the infrastructure for the Wirex non-custodial debit cards.',
     links: {
       websites: ['https://wirexpaychain.com/'],
-      apps: ['https://pay-chain-bridge.wirexpaychain.com/'],
+      bridges: ['https://pay-chain-bridge.wirexpaychain.com/'],
       documentation: ['https://docs.wirexpaychain.com/tech/wirex-pay-chain'],
       explorers: ['https://pay-chain-blockscout.wirexpaychain.com/'],
       socialMedia: [

@@ -43,7 +43,7 @@ export const honeypot: ScalingProject = {
 
     links: {
       websites: ['https://cartesi.io/'],
-      apps: ['https://explorer.cartesi.io/stake'],
+      bridges: ['https://explorer.cartesi.io/stake'],
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
       explorers: ['https://cartesiscan.io/', 'https://explorer.cartesi.io/'],
       repositories: ['https://github.com/cartesi/honeypot'],

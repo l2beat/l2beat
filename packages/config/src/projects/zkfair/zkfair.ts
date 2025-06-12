@@ -132,7 +132,7 @@ export const zkfair: ScalingProject = {
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://zkfair.io/'],
-      apps: ['https://wallet.zkfair.io/'],
+      bridges: ['https://wallet.zkfair.io/'],
       documentation: ['https://docs.zkfair.io/'],
       explorers: ['https://scan.zkfair.io/'],
       repositories: ['https://github.com/ZKFair'],

@@ -26,7 +26,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
       'Polygon zkEVM is an EVM-compatible ZK Rollup built by Polygon Labs.',
     links: {
       websites: ['https://polygon.technology/polygon-zkevm'],
-      apps: ['https://portal.polygon.technology/bridge'],
+      bridges: ['https://portal.polygon.technology/bridge'],
       documentation: ['https://docs.polygon.technology/zkEVM/'],
       explorers: ['https://zkevm.polygonscan.com/'],
       repositories: ['https://github.com/0xPolygonHermez'],

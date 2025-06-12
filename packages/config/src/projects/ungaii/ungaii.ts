@@ -17,7 +17,7 @@ export const ungaii: ScalingProject = upcomingL3({
     stack: 'Arbitrum',
     links: {
       websites: ['https://ungaii.io/'],
-      apps: [
+      bridges: [
         'https://ungaii-chain-testnet.hub.caldera.xyz/',
         'https://ungaii-chain-testnet.bridge.caldera.xyz/',
       ],

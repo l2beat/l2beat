@@ -31,7 +31,7 @@ export const aztecconnect: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://zk.money'],
+      bridges: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://aztec-connect-prod-explorer.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-connect'],

@@ -53,7 +53,7 @@ export const automata: ScalingProject = opStackL2({
       'Automata Network is an OP stack based Layer 2 Optimium acting as a modular attestation layer that extends machine-level trust to Ethereum with TEE Coprocessors and an EigenLayer AVS.',
     links: {
       websites: ['https://ata.network/'],
-      apps: ['https://bridge.ata.network/'],
+      bridges: ['https://bridge.ata.network/'],
       documentation: ['https://docs.ata.network/'],
       explorers: ['https://explorer.ata.network'],
       repositories: ['https://github.com/automata-network/automata'],

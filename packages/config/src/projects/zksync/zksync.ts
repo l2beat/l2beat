@@ -74,7 +74,7 @@ export const zksync: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/'],
-      apps: ['https://lite.zksync.io/'],
+      bridges: ['https://lite.zksync.io/'],
       documentation: ['https://docs.lite.zksync.io/dev/'],
       explorers: ['https://zkscan.io/'],
       repositories: ['https://github.com/matter-labs/zksync'],

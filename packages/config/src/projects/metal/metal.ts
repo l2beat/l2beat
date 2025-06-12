@@ -24,7 +24,7 @@ export const metal: ScalingProject = opStackL2({
       'Metal L2 is a general-purpose OP stack rollup by Metallicus focused on banking and compliance.',
     links: {
       websites: ['https://metall2.com/'],
-      apps: [
+      bridges: [
         'https://bridge.metall2.com/',
         'https://dollar.metalx.com/',
         'https://metalpay.com/',

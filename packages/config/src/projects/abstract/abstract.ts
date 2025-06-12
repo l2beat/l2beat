@@ -19,7 +19,7 @@ export const abstract: ScalingProject = zkStackL2({
       'Abstract is a ZK Rollup built on top of Ethereum using the ZK stack, designed to securely power consumer-facing blockchain applications at scale with low fees and fast transaction speeds.',
     links: {
       websites: ['https://abs.xyz/'],
-      apps: [
+      bridges: [
         'https://jumper.exchange/?toChain=2741&toToken=0x0000000000000000000000000000000000000000',
       ],
       documentation: ['https://docs.abs.xyz/'],

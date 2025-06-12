@@ -22,7 +22,7 @@ export const skynet: ScalingProject = underReviewL3({
       explorers: ['https://explorer.skynet.io/'],
       documentation: [],
       repositories: [],
-      apps: [
+      bridges: [
         'https://bridge.skynet.io/?destinationChain=Skynet%20Mainnet&sourceChain=arbitrum-one',
       ],
       socialMedia: [

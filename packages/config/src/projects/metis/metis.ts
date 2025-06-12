@@ -45,7 +45,7 @@ export const metis: ScalingProject = {
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://metis.io'],
-      apps: ['https://bridge.metis.io'],
+      bridges: ['https://bridge.metis.io'],
       documentation: ['https://docs.metis.io'],
       explorers: [
         'https://andromeda-explorer.metis.io',

@@ -5,8 +5,11 @@ import {
   TemplateService,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
+import { assert } from '@l2beat/shared-pure'
 import express from 'express'
 import { z } from 'zod'
+import { DiffoveryController } from './diffovery/DiffoveryController'
+import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
@@ -63,15 +66,20 @@ const matchFlatQuerySchema = z.object({
   }),
 })
 
-export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
+export function runDiscoveryUi({
+  readonly,
+  explorerApiKey,
+}: { readonly: boolean; explorerApiKey: string | undefined }) {
   const app = express()
   const port = process.env.PORT ?? 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
+  assert(explorerApiKey, 'explorerApiKey is required')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
+  const diffoveryController = new DiffoveryController(explorerApiKey)
 
   app.use(express.json())
 
@@ -150,6 +158,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   })
 
   app.use(express.static(STATIC_ROOT))
+
+  attachDiffoveryRouter(app, diffoveryController)
 
   if (!readonly) {
     attachTemplateRouter(app, templateService)
