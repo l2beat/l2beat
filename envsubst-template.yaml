@@ -6,7 +6,7 @@ metadata:
   # namespace: ${NAMESPACE}
   labels:
     app: frontend
-    pr: ${PR_ID}
+    pr: '${PR_ID}'
 spec:
   replicas: 1
   selector:
