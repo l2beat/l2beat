@@ -231,6 +231,49 @@
   .word-break-word {
     word-break: break-word;
   }
+
+  /* View Transitions for theme toggle */
+  /* Ensure smooth theme transitions with elements always visible */
+  ::view-transition-root {
+    background: transparent;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.5s;
+    animation-timing-function: ease-in-out;
+    mix-blend-mode: normal;
+  }
+
+  /* Keep old content visible during transition */
+  ::view-transition-old(root) {
+    animation-name: none;
+    opacity: 1;
+    z-index: 1;
+  }
+
+  /* New content appears with circular animation */
+  ::view-transition-new(root) {
+    animation-name: reveal-from-circle;
+    z-index: 2;
+  }
+
+  @keyframes reveal-from-circle {
+    from {
+      clip-path: circle(0px at var(--circle-x, 50%) var(--circle-y, 50%));
+    }
+    to {
+      clip-path: circle(100vmax at var(--circle-x, 50%) var(--circle-y, 50%));
+    }
+  }
+
+  /* Fallback for browsers without view transitions */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 0.1s;
+    }
+  }
 }
 
 @layer components {
@@ -368,6 +411,6 @@
   }
 
   .paragraph-13 {
-    @apply text-[13px] font-normal leading-[140%];
+    @apply text-[13px] leading-[18px] font-roboto;
   }
 }
