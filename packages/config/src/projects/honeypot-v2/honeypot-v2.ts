@@ -234,7 +234,7 @@ export const honeypotv2: ScalingProject = {
         }),
         discovery.getContractDetails('InputBox', {
           description:
-            'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
+            'Contract that receives arbitrary blobs as input payloads to Cartesi DApps.',
         }),
         discovery.getContractDetails('ERC20Portal', {
           description:
