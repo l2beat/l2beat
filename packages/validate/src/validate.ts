@@ -12,7 +12,9 @@ export interface Parser<T> {
     predicate: (value: T) => value is U,
     message?: string,
   ): Parser<U>
-  default<U extends T>(value: U): Parser<Exclude<T, null | undefined> | U>
+  default(
+    value: Exclude<T, null | undefined>,
+  ): Parser<Exclude<T, null | undefined>>
   check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
 }
 
@@ -35,7 +37,9 @@ export interface Validator<T> {
     message?: string,
   ): Validator<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
-  default<U extends T>(value: U): Parser<Exclude<T, null | undefined> | U>
+  default(
+    value: Exclude<T, null | undefined>,
+  ): Parser<Exclude<T, null | undefined>>
   optional(): OptionalValidator<T>
 }
 
@@ -72,7 +76,9 @@ class ParserImpl<T> implements Parser<T> {
     ])
   }
 
-  default<U>(value: U): Parser<U | Exclude<T, null | undefined>> {
+  default(
+    value: Exclude<T, null | undefined>,
+  ): Parser<Exclude<T, null | undefined>> {
     return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
   }
 
@@ -147,7 +153,9 @@ class ValidatorImpl<T> implements Validator<T> {
     )
   }
 
-  default<U>(value: U): Parser<U | Exclude<T, null | undefined>> {
+  default(
+    value: Exclude<T, null | undefined>,
+  ): Parser<Exclude<T, null | undefined>> {
     return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
   }
 
