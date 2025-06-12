@@ -70,4 +70,4 @@ jobs:
             -d '{"prNumber":"${{ github.event.number }}"}' \
             "${DEPLOYMENT_WEBHOOK_URL}"
         env:
-          DEPLOYMENT_WEBHOOK_URL: ${{ vars.DEPLOYMENT_WEBHOOK_URL || 'https://preview-controller.eltwobeat.com' }}
+          DEPLOYMENT_WEBHOOK_URL: ${{ vars.DEPLOYMENT_WEBHOOK_URL || 'https://preview-controller.eltwobeat.com/api/frontend-preview' }}
