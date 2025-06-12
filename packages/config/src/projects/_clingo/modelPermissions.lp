@@ -40,7 +40,7 @@ transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, Origina
   TotalDelay = PreviousTotalDelay + ViaDelay.
   % OriginalPermission != "act". % we're only interested in the "final" permission, not intermediate "act".
 
-% 2. Narrowing down to isFinal or directNonFinal 
+% 2. Narrowing down to isFinal or directNonFinal
 ultimatePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via, isFinal) :-
   transitivePermission(Receiver, OriginalPermission, Giver, OriginalDelay, OriginalDescription, OriginalRole, OriginalCondition, TotalDelay, Via),
   OriginalPermission != "act",
@@ -63,7 +63,7 @@ receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions) :-
 % The maximum number of upgrade permissions received by any actor (per chain):
 maxReceivedUpgradePermissionsCount(Max, Chain) :-
   address(_, Chain, _),
-  Max = #max{ReceivedUpgradePermissions: receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions), address(Actor, Chain, _)}.  
+  Max = #max{ReceivedUpgradePermissions: receivedUpgradePermissionsCount(Actor, ReceivedUpgradePermissions), address(Actor, Chain, _)}.
 
 % A potential EOA(s) that controls the maximum number of upgrade permissions (per chain):
 eoaWithMajorityUpgradePermissions(Eoa) :-
