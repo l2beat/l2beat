@@ -7,10 +7,11 @@ permissions:
   contents: read
   packages: write
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/frontend-preview
+
 on:
-  push:
-    branches-ignore:
-      - main
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -28,20 +29,23 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ghcr.io/${{ github.repository }}/frontend-preview
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha
-            type=raw,value=latest,enable={{is_default_branch}}
+      - name: Set PR info
+        id: pr
+        run: |
+          echo "number=${{ github.event.number }}" >> $GITHUB_OUTPUT
+          echo "branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
+
+      - name: Generate tags
+        id: tags
+        run: |
+          TAGS="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ steps.pr.outputs.number }}"
+          TAGS="${TAGS},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ steps.pr.outputs.number }}-${{ github.sha }}"
+          TAGS="${TAGS},${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -49,9 +53,10 @@ jobs:
           context: .
           file: Dockerfile.frontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.tags.outputs.tags }}
           build-args: |
+            PR_NUMBER=${{ steps.pr.outputs.number }}
+            BRANCH_NAME=${{ steps.pr.outputs.branch }}
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
