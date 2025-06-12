@@ -19,9 +19,9 @@ import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('honeypot')
 
-export const honeypotv2: ScalingProject = {
+export const cartesiPrtHoneypot: ScalingProject = {
   type: 'layer2',
-  id: ProjectId('honeypot-v2'),
+  id: ProjectId('cartesi-prt-honeypot'),
   capability: 'appchain',
   // echo "addedAt: UnixTime($(date +%s)), // $(date -u +%Y-%m-%dT%H:%M:%SZ)"
   addedAt: UnixTime(1749678198), // 2025-06-11T21:43:18Z
@@ -32,14 +32,14 @@ export const honeypotv2: ScalingProject = {
   },
 
   display: {
-    name: 'Honeypot v2 (Cartesi)',
-    shortName: 'Honeypot v2',
-    slug: 'cartesi-honeypot-v2',
+    name: 'Cartesi PRT Honeypot',
+    shortName: 'Cartesi PRT Honeypot',
+    slug: 'cartesi-prt-honeypot',
     stack: 'Cartesi Rollups',
     category: 'Optimistic Rollup',
 
     description:
-      'Honeypot v2 is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system.',
+      'Cartesi PRT Honeypot is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system.',
     purposes: ['Bug bounty'],
 
     // TODO review all links

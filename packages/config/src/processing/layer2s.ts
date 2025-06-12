@@ -30,6 +30,7 @@ import { brine } from '../projects/brine/brine'
 import { camp } from '../projects/camp/camp'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
+import { cartesiPrtHoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
 import { celo } from '../projects/celo/celo'
 import { corn } from '../projects/corn/corn'
 import { coti } from '../projects/coti/coti'
@@ -75,7 +76,6 @@ import { hashkey } from '../projects/hashkey/hashkey'
 import { haust } from '../projects/haust/haust'
 import { hemi } from '../projects/hemi/hemi'
 import { hermez } from '../projects/hermez/hermez'
-import { honeypotv2 } from '../projects/honeypot-v2/honeypot-v2'
 import { honeypot } from '../projects/honeypot/honeypot'
 import { hybrid } from '../projects/hybrid/hybrid'
 import { hychain } from '../projects/hychain/hychain'
@@ -258,6 +258,7 @@ export const layer2s: ScalingProject[] = [
   bobanetwork,
   camp,
   canvasconnect,
+  cartesiPrtHoneypot,
   capx,
   celo,
   corn,
@@ -304,7 +305,6 @@ export const layer2s: ScalingProject[] = [
   hemi,
   hermez,
   honeypot,
-  honeypotv2,
   hybrid,
   hychain,
   hypr,
