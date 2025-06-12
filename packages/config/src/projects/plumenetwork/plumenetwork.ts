@@ -1,17 +1,19 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { orbitStackL2 } from '../../templates/orbitStack'
 
-export const plumenetwork: ScalingProject = upcomingL2({
-  id: 'plumenetwork',
-  capability: 'universal',
+const discovery = new ProjectDiscovery('plumenetwork', 'ethereum')
+
+export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
+  discovery,
   display: {
     name: 'Plume Network',
     slug: 'plumenetwork',
     description:
       'Plume is a modular L2 blockchain dedicated for all real-world assets (RWAs) that integrates asset tokenization and compliance providers directly into the chain.',
-    purposes: ['RWA'],
+    // purposes: ['RWA'],
     category: 'Optimistic Rollup',
     stack: 'Arbitrum',
     links: {
@@ -27,7 +29,21 @@ export const plumenetwork: ScalingProject = upcomingL2({
       ],
     },
   },
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  chainConfig: {
+    name: 'plumenetwork',
+    chainId: 98866, 
+    explorerUrl: 'https://explorer.plume.org',
+    sinceTimestamp: UnixTime(1719224239), 
+    apis: [
+      {
+        type: 'rpc',
+        url: 'https://rpc.plume.org',
+        callsPerMinute: 1500,
+      },
+    ],
+  },
 })
 
-
-// rpc https://phoenix-rpc.plumenetwork.xyz
