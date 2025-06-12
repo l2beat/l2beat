@@ -77,7 +77,7 @@ export const honeypotv2: ScalingProject = {
   config: {
     escrows: [
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
+        address: EthereumAddress('0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c'),
         tokens: '*',
         description: 'Contract storing bounty funds.',
       }),
