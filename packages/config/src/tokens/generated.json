@@ -4315,6 +4315,20 @@
       "supply": "zero"
     },
     {
+      "name": "Plume",
+      "coingeckoId": "plume",
+      "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1",
+      "symbol": "PLUME",
+      "decimals": 18,
+      "deploymentTimestamp": 1723045703,
+      "coingeckoListingTimestamp": 1737417600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53623/large/plume-token.png?1736896935",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "pNetwork Token",
       "coingeckoId": "pnetwork",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",

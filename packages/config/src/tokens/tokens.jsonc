@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "PLUME",
+      "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1"
+    },
+    {
       "symbol": "WBTC.pdkatana",
       "coingeckoId": "wrapped-bitcoin",
       "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728"
