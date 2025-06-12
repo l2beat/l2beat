@@ -19,7 +19,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     stack: 'Arbitrum',
     links: {
       websites: ['https://plume.org/'],
-      apps: ['https://portal.plume.org'],
+      bridges: ['https://portal.plume.org'],
       documentation: ['https://docs.plume.org/plume'],
       explorers: ['https://explorer.plume.org'],
       repositories: ['https://github.com/plumenetwork'],
