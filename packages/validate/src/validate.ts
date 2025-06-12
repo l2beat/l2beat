@@ -20,10 +20,14 @@ export interface Validator<T> {
   isValid: (value: unknown) => value is T
   parse: (value: unknown) => T
   safeParse: (value: unknown) => Result<T>
-  check: (
+  check<U extends T>(
+    predicate: (value: T) => value is U,
+    message?: string,
+  ): Validator<U>
+  check(
     predicate: (value: T) => boolean | string,
     message?: string,
-  ) => Validator<T>
+  ): Validator<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
   optional(): OptionalValidator<T>
 }
@@ -410,6 +414,12 @@ function svpUnion<
   }
 }
 
+function union<
+  T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
+>(elements: T): Validator<Infer<T[number]>>
+function union<
+  T extends [Parser<unknown>, Parser<unknown>, ...Parser<unknown>[]],
+>(elements: T): Parser<Infer<T[number]>>
 function union<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T): Validator<Infer<T[number]>> {
