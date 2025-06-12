@@ -116,7 +116,7 @@ export function runDiscoveryUi({
     res.redirect('/ui')
   })
 
-  app.get(['/ui', '/ui/*'], (_req, res) => {
+  app.get(['/ui', '/ui/*', '/diff', '/diff/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
   })
 
