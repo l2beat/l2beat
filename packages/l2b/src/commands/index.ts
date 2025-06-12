@@ -1,3 +1,4 @@
+import { TokenScreening } from '../implementations/TokenScreening'
 import { AddShape } from './AddShape'
 import { AdriansCommand } from './AdriansCommand'
 import { CheckRpc } from './CheckRpc'
@@ -78,6 +79,7 @@ export function getSubcommands() {
     StarknetAccessControl,
     StarknetProgramHashes,
     TVL,
+    TokenScreening,
     UI,
     ZkGovProposal,
   ]
