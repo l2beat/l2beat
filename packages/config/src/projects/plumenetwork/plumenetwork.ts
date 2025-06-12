@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
-import { BADGES } from '../../common/badges'
 
 const discovery = new ProjectDiscovery('plumenetwork', 'ethereum')
 
@@ -38,7 +38,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     name: 'plumenetwork',
     chainId: 98866,
     explorerUrl: 'https://explorer.plume.org',
-    sinceTimestamp: UnixTime(1719224239),
+    sinceTimestamp: UnixTime(1740047951),
     apis: [
       {
         type: 'rpc',
