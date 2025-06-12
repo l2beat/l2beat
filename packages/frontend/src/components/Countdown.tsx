@@ -109,7 +109,7 @@ function TimePart({
       )}
     >
       <span className="tabular-nums" suppressHydrationWarning>
-        <SlidingNumber number={Number(children)} />
+        <SlidingNumber number={Number(children)} padStart />
       </span>
       <span
         className={cn(
