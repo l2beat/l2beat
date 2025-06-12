@@ -1,6 +1,6 @@
+import { motion } from 'motion/react'
 import type { SvgIconProps } from './SvgIcon'
 import { SvgIcon } from './SvgIcon'
-import { motion } from 'motion/react'
 
 export function CheckIcon(props: SvgIconProps) {
   return (

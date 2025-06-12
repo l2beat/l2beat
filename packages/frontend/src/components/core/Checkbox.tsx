@@ -53,7 +53,7 @@ const Checkbox = ({
       >
         <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
           <motion.div
-            className="bg-brand rounded"
+            className="rounded bg-brand"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{
