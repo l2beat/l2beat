@@ -2,11 +2,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
+import { BADGES } from '../../common/badges'
 
 const discovery = new ProjectDiscovery('plumenetwork', 'ethereum')
 
 export const plumenetwork: ScalingProject = orbitStackL2({
   addedAt: UnixTime(1719224239), // 2024-06-24T10:17:19Z
+  additionalBadges: [BADGES.RaaS.Conduit],
   discovery,
   display: {
     name: 'Plume Network',
