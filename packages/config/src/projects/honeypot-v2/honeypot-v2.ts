@@ -193,7 +193,7 @@ export const honeypotv2: ScalingProject = {
 
   stateDerivation: {
     nodeSoftware:
-      'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0).',
+      'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node).',
     genesisState:
       'The genesis state comes from the Honeypot Cartesi Machine template included in the [Honeypot v2 release](https://github.com/cartesi/honeypot/releases/tag/v2.0.0). Alternatively, you can recreate it by following the build steps in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot/tree/v2.0.0?tab=readme-ov-file#building-the-application).',
     dataFormat: // TODO Review deposits, update withdrawal.
