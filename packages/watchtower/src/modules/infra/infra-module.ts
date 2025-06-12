@@ -3,6 +3,7 @@ import type { ApplicationModule } from '../../module'
 import { InfrastructureController } from './infra-controller'
 import { createInfrastructureRouter } from './infra-router'
 import type { Config } from '../../config/types'
+import { PreviewManager } from '../preview-manager'
 
 type InfrastructureModuleDependencies = {
   logger: Logger
@@ -13,8 +14,12 @@ export function createInfrastructureModule(
   dependencies: InfrastructureModuleDependencies,
 ): ApplicationModule {
   const logger = dependencies.logger.for('Infrastructure')
-  const controller = new InfrastructureController(dependencies)
-  console.log('Config', dependencies.config)
+  const previewManager = new PreviewManager({ app: 'frontend' })
+
+  const controller = new InfrastructureController({
+    logger,
+    previewManager,
+  })
   const router = createInfrastructureRouter(controller, dependencies.config)
 
   return {

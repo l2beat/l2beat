@@ -1,8 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { exec } from 'child_process'
+import type { PreviewManager } from '../preview-manager'
 
 type InfrastructureControllerDependencies = {
   logger: Logger
+  previewManager: PreviewManager
 }
 
 export class InfrastructureController {
@@ -11,22 +12,6 @@ export class InfrastructureController {
   ) {}
 
   async handleFrontendPreview(prNumber: number) {
-    await execShellCommand(
-      `cat envsubst-template.yaml | PR_ID=${prNumber} envsubst | kubectl apply -n preview-prod -f -`,
-    )
+    await this.dependencies.previewManager.start(prNumber)
   }
-}
-
-async function execShellCommand(command: string) {
-  return new Promise((resolve, reject) => {
-    exec(command, (error, stdout, stderr) => {
-      console.log('stdout', stdout)
-      console.log('stderr', stderr)
-      console.log('error', error)
-      if (error || stderr) {
-        reject(error || stderr)
-      }
-      resolve(stdout)
-    })
-  })
 }

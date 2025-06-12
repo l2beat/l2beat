@@ -68,10 +68,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - pr-${PR_ID}.previews.eltwobeat.com
-      secretName: pr-previews-tls
+        - pr-${PR_ID}-${ENV}.previews.eltwobeat.com
+      secretName: pr-${PR_ID}-tls
   rules:
-    - host: pr-${PR_ID}.previews.eltwobeat.com
+    - host: pr-${PR_ID}-${ENV}.previews.eltwobeat.com
       http:
         paths:
           - path: /
