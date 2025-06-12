@@ -38,8 +38,19 @@ RUN pnpm build
 FROM node:22-slim AS release
 
 RUN useradd -m appuser
+
+# Install kubectl and envsubst
+RUN apt-get update && apt-get install -y curl gettext-base && \
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl && \
+    apt-get remove -y curl && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 COPY --from=builder --chown=appuser:appuser /src .
+COPY --chown=appuser:appuser envsubst-template.yaml .
 
 USER appuser
 
