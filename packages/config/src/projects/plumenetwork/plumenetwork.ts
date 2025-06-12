@@ -36,6 +36,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   chainConfig: {
     name: 'plumenetwork',
+    coingeckoPlatform: 'plume-network',
     gasTokens: ['PLUME'],
     chainId: 98866,
     explorerUrl: 'https://explorer.plume.org',

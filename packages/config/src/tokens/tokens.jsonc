@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "pUSD",
+      "address": "0xdddd73f5df1f0dc31373357beac77545dc5a6f3f"
+    },
+    {
       "symbol": "PLUME",
       "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1"
     },
@@ -6897,6 +6901,14 @@
       "category": "stablecoin",
       "address": "0x79A02482A880bCE3F13e09Da970dC34db4CD24d1",
       "source": "native",
+      "supply": "totalSupply"
+    }
+  ],
+  "plumenetwork": [
+    {
+      "symbol": "pUSD",
+      "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "source": "native", // backed by bridged USDC
       "supply": "totalSupply"
     }
   ]

@@ -4329,6 +4329,20 @@
       "supply": "zero"
     },
     {
+      "name": "Plume USD",
+      "coingeckoId": "plume-usd",
+      "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "symbol": "pUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1733807339,
+      "coingeckoListingTimestamp": 1746662400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55542/large/pUSD-token.png?1746610746",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "pNetwork Token",
       "coingeckoId": "pnetwork",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
@@ -13567,6 +13581,28 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Plume USD",
+      "coingeckoId": "plume-usd",
+      "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "symbol": "pUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1741402843,
+      "coingeckoListingTimestamp": 1746662400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55542/large/pUSD-token.png?1746610746",
+      "chainId": 98866,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
             "slug": "stargatev2"
           }
         ]

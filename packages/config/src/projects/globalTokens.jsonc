@@ -310,6 +310,7 @@
         "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6": "Pirex Ether Token",
         "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430": "PlayDapp Token",
         "0x4C1746A800D224393fE2470C70A35717eD4eA5F1": "Plume Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token",
         "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD": "pNetwork Token",
         "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2": "Polkamon Token",
         "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "Polygon Ecosystem Token",
@@ -1004,6 +1005,11 @@
     "xchain": {
       "names": {
         "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6": "Bridged USDC (Stargate) Token"
+      }
+    },
+    "plumenetwork": {
+      "names": {
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token"
       }
     },
     "real": {
