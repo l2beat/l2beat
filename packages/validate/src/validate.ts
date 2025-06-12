@@ -34,11 +34,15 @@ export interface OptionalValidator<T> extends Validator<T> {
 
 class ParserImpl<T> implements Parser<T> {
   safeParse: (value: unknown) => Result<T>
-  isOptional: boolean
+  isOptional = false
+  params: [string, unknown]
 
-  constructor(safeParse: (value: unknown) => Result<T>, isOptional = false) {
+  constructor(
+    safeParse: (value: unknown) => Result<T>,
+    params: [string, unknown],
+  ) {
     this.safeParse = safeParse
-    this.isOptional = isOptional
+    this.params = params
   }
 
   parse(value: unknown): T {
@@ -51,23 +55,26 @@ class ParserImpl<T> implements Parser<T> {
   }
 
   optional(): OptionalParser<T> {
-    return new ParserImpl(this.safeParse, true) as OptionalParser<T>
+    const impl = new ParserImpl(this.safeParse, this.params)
+    impl.isOptional = true
+    return impl as OptionalParser<T>
   }
 }
 
 class ValidatorImpl<T> implements Validator<T> {
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
-  isOptional: boolean
+  isOptional = false
+  params: [string, unknown]
 
   constructor(
     safeValidate: (value: unknown) => Result<T>,
-    safeParse?: (value: unknown) => Result<T>,
-    isOptional = false,
+    safeParse: (value: unknown) => Result<T>,
+    params: [string, unknown],
   ) {
     this.safeValidate = safeValidate
     this.safeParse = safeParse ?? safeValidate
-    this.isOptional = isOptional
+    this.params = params
   }
 
   validate(value: unknown): T {
@@ -93,46 +100,65 @@ class ValidatorImpl<T> implements Validator<T> {
   }
 
   check(predicate: (value: T) => boolean | string, message?: string) {
-    return new ValidatorImpl((value: unknown): Result<T> => {
-      const result = this.safeParse(value)
-      if (result.success) {
-        const checkResult = predicate(result.data)
-        if (typeof checkResult === 'string') {
-          return { success: false, path: '', message: message ?? checkResult }
-        }
-        if (checkResult === false) {
-          return {
-            success: false,
-            path: '',
-            message: message ?? 'Check failed.',
-          }
-        }
-      }
-      return result
-    })
+    return new ValidatorImpl(
+      check(predicate, false, this.safeParse, this.safeValidate, message),
+      check(predicate, true, this.safeParse, this.safeValidate, message),
+      ['check', predicate],
+    )
   }
 
   transform<U>(transformer: (value: T) => U): Parser<U> {
-    return new ParserImpl((value: unknown): Result<U> => {
-      const result = this.safeParse(value)
-      if (!result.success) {
-        return result
-      }
-      try {
-        return { success: true, data: transformer(result.data) }
-      } catch (e) {
-        const message = e instanceof Error ? e.message : `${e}`
-        return { success: false, path: '', message }
-      }
-    })
+    return new ParserImpl(
+      (value: unknown): Result<U> => {
+        const result = this.safeParse(value)
+        if (!result.success) {
+          return result
+        }
+        try {
+          return { success: true, data: transformer(result.data) }
+        } catch (e) {
+          const message = e instanceof Error ? e.message : `${e}`
+          return { success: false, path: '', message }
+        }
+      },
+      ['transform', transformer],
+    )
   }
 
   optional(): OptionalValidator<T> {
-    return new ValidatorImpl(
+    const impl = new ValidatorImpl(
       this.safeValidate,
       this.safeParse,
-      true,
-    ) as OptionalValidator<T>
+      this.params,
+    )
+    impl.isOptional = true
+    return impl as OptionalValidator<T>
+  }
+}
+
+function check<T>(
+  predicate: (value: T) => string | boolean,
+  clone: boolean,
+  safeParse: Parser<T>['safeParse'],
+  safeValidate: Validator<T>['safeValidate'],
+  message: string | undefined,
+) {
+  return function check(value: unknown): Result<T> {
+    const result = clone ? safeParse(value) : safeValidate(value)
+    if (result.success) {
+      const checkResult = predicate(result.data)
+      if (typeof checkResult === 'string') {
+        return { success: false, path: '', message: message ?? checkResult }
+      }
+      if (checkResult === false) {
+        return {
+          success: false,
+          path: '',
+          message: message ?? 'Check failed.',
+        }
+      }
+    }
+    return result
   }
 }
 
@@ -170,7 +196,7 @@ function svString(value: unknown): Result<string> {
 }
 
 function string(): Validator<string> {
-  return new ValidatorImpl(svString)
+  return new ValidatorImpl(svString, svString, ['string', undefined])
 }
 
 function svNumber(value: unknown): Result<number> {
@@ -180,7 +206,7 @@ function svNumber(value: unknown): Result<number> {
 }
 
 function number(): Validator<number> {
-  return new ValidatorImpl(svNumber)
+  return new ValidatorImpl(svNumber, svNumber, ['number', undefined])
 }
 
 function svBoolean(value: unknown): Result<boolean> {
@@ -190,7 +216,7 @@ function svBoolean(value: unknown): Result<boolean> {
 }
 
 function boolean(): Validator<boolean> {
-  return new ValidatorImpl(svBoolean)
+  return new ValidatorImpl(svBoolean, svBoolean, ['boolean', undefined])
 }
 
 function svBigint(value: unknown): Result<bigint> {
@@ -200,7 +226,7 @@ function svBigint(value: unknown): Result<bigint> {
 }
 
 function bigint(): Validator<bigint> {
-  return new ValidatorImpl(svBigint)
+  return new ValidatorImpl(svBigint, svBigint, ['bigint', undefined])
 }
 
 function svNull(value: unknown): Result<null> {
@@ -210,7 +236,7 @@ function svNull(value: unknown): Result<null> {
 }
 
 function _null(): Validator<null> {
-  return new ValidatorImpl(svNull)
+  return new ValidatorImpl(svNull, svNull, ['null', undefined])
 }
 
 function svUndefined(value: unknown): Result<undefined> {
@@ -220,7 +246,7 @@ function svUndefined(value: unknown): Result<undefined> {
 }
 
 function _undefined(): Validator<undefined> {
-  return new ValidatorImpl(svUndefined)
+  return new ValidatorImpl(svUndefined, svUndefined, ['undefined', undefined])
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
@@ -289,6 +315,7 @@ function object<T extends object>(schema: T): Parser<Object<T>> {
   return new ValidatorImpl(
     svpObject(schema, false, false),
     svpObject(schema, true, false),
+    ['object', schema],
   )
 }
 
@@ -302,6 +329,7 @@ function strictObject<T extends object>(schema: T): Parser<Object<T>> {
   return new ValidatorImpl(
     svpObject(schema, false, true),
     svpObject(schema, true, true),
+    ['strictObject', schema],
   )
 }
 
@@ -332,7 +360,10 @@ function array<T>(element: Validator<T>): Validator<T[]>
 // @ts-ignore We allow this error for simplicity of use
 function array<T>(element: Parser<T>): Parser<T[]>
 function array<T>(element: Validator<T>): Validator<T[]> {
-  return new ValidatorImpl(svpArray(element, false), svpArray(element, true))
+  return new ValidatorImpl(svpArray(element, false), svpArray(element, true), [
+    'array',
+    element,
+  ])
 }
 
 function svpLiteral<T extends string | number | boolean | bigint>(
@@ -353,7 +384,10 @@ function svpLiteral<T extends string | number | boolean | bigint>(
 function literal<T extends string | number | boolean | bigint>(
   value: T,
 ): Validator<T> {
-  return new ValidatorImpl(svpLiteral(value), svpLiteral(value))
+  return new ValidatorImpl(svpLiteral(value), svpLiteral(value), [
+    'literal',
+    value,
+  ])
 }
 
 function svpUnion<
@@ -379,7 +413,11 @@ function svpUnion<
 function union<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T): Validator<Infer<T[number]>> {
-  return new ValidatorImpl(svpUnion(elements, false), svpUnion(elements, true))
+  return new ValidatorImpl(
+    svpUnion(elements, false),
+    svpUnion(elements, true),
+    ['union', elements],
+  )
 }
 
 // TODO: exhaustive enum record checking!
@@ -435,6 +473,7 @@ function record<K extends string | number, V>(
   return new ValidatorImpl(
     svpRecord(key, value, false),
     svpRecord(key, value, true),
+    ['record', [key, value]],
   )
 }
 
