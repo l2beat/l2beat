@@ -1,9 +1,17 @@
 import { create } from 'zustand'
-import type { Editor } from './editor'
+import type { Editor, EditorSupportedLanguage } from './editor'
 
 export interface Range {
   startOffset: number
   length: number
+}
+
+export type EditorFile = {
+  id: string
+  name: string
+  content: string
+  readOnly: boolean
+  language?: EditorSupportedLanguage
 }
 
 interface CodeState {
@@ -13,6 +21,7 @@ interface CodeState {
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
+  removeEditor: (key: string) => void
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
   showRange: (range: Range | undefined) => void
@@ -22,14 +31,18 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   sourceIndex: {},
   range: undefined,
   editors: {},
-
-  setEditor: (key: string, editor: Editor) =>
+  setEditor: (editorId: string, editor: Editor) =>
     set((state) => ({
-      editors: { ...state.editors, [key]: editor },
+      editors: { ...state.editors, [editorId]: editor },
     })),
-  getEditor: (key: string) => {
-    return get().editors[key]
+  getEditor: (editorId: string) => {
+    return get().editors[editorId]
   },
+  removeEditor: (editorId: string) =>
+    set((state) => {
+      const { [editorId]: removed, ...editors } = state.editors
+      return { editors }
+    }),
   setSourceIndex: (address: string, sourceIndex: number) =>
     set((state) => ({
       sourceIndex: { ...state.sourceIndex, [address]: sourceIndex },

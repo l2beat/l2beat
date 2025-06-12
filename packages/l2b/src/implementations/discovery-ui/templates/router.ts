@@ -18,6 +18,11 @@ export const listTemplateFilesSchema = z.object({
   templateId: safeTemplateIdSchema,
 })
 
+const writeTemplateFileSchema = z.object({
+  templateId: safeTemplateIdSchema,
+  content: z.string(),
+})
+
 const createTemplateSchema = z.object({
   chain: z.string(),
   addresses: z.array(
@@ -60,6 +65,19 @@ export function attachTemplateRouter(
     )
 
     res.status(result.success ? 201 : 500).json(result)
+  })
+
+  app.post('/api/template-files', (req, res) => {
+    const data = writeTemplateFileSchema.safeParse(req.body)
+
+    if (!data.success) {
+      res.status(400).json({ errors: data.error.flatten() })
+      return
+    }
+
+    const { templateId, content } = data.data
+    templateService.writeTemplateFile(templateId, content)
+    res.status(200).json({ success: true })
   })
 }
 

@@ -425,6 +425,12 @@ export class TemplateService {
     return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
   }
 
+  writeTemplateFile(templateId: string, template: string) {
+    const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const filePath = join(templatePath, 'template.jsonc')
+    writeFileSync(filePath, template)
+  }
+
   readShapeFile(templateId: string) {
     const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
     const filePath = join(templatePath, 'shapes.json')

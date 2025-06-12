@@ -128,6 +128,20 @@ export async function readTemplateFile(
   return data as ApiTemplateFileResponse
 }
 
+export async function writeTemplateFile(templateId: string, content: string) {
+  const res = await fetch('/api/template-files', {
+    method: 'POST',
+    body: JSON.stringify({ templateId, content }),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+}
+
 export async function createShape(
   chain: string,
   addresses: string[],
