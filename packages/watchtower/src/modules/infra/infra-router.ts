@@ -32,6 +32,10 @@ export function createInfrastructureRouter(
 ): express.Router {
   const r = express.Router()
 
+  r.get('/health', (_req, res) => {
+    res.json({ status: 'OK' })
+  })
+
   r.post(
     '/frontend-preview',
     async (req: express.Request, res: express.Response) => {
