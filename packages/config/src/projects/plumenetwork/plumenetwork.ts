@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL2 } from '../../templates/orbitStack'
@@ -12,15 +12,15 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     name: 'Plume Network',
     slug: 'plumenetwork',
     description:
-      'Plume is a modular L2 blockchain dedicated for all real-world assets (RWAs) that integrates asset tokenization and compliance providers directly into the chain.',
+      'Plume is a modular L2 blockchain for real-world assets (RWAs) that integrates asset tokenization and compliance providers directly into the chain.',
     // purposes: ['RWA'],
     category: 'Optimistic Rollup',
     stack: 'Arbitrum',
     links: {
-      websites: ['https://plumenetwork.xyz/'],
-      apps: ['https://miles.plumenetwork.xyz'],
-      documentation: ['https://docs.plumenetwork.xyz/plume'],
-      explorers: ['https://test-explorer.plumenetwork.xyz'],
+      websites: ['https://plume.org/'],
+      apps: ['https://portal.plume.org'],
+      documentation: ['https://docs.plume.org/plume'],
+      explorers: ['https://explorer.plume.org'],
       repositories: ['https://github.com/plumenetwork'],
       socialMedia: [
         'https://twitter.com/plumenetwork',
@@ -34,9 +34,9 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   sequencerInbox: discovery.getContract('SequencerInbox'),
   chainConfig: {
     name: 'plumenetwork',
-    chainId: 98866, 
+    chainId: 98866,
     explorerUrl: 'https://explorer.plume.org',
-    sinceTimestamp: UnixTime(1719224239), 
+    sinceTimestamp: UnixTime(1719224239),
     apis: [
       {
         type: 'rpc',
@@ -46,4 +46,3 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     ],
   },
 })
-
