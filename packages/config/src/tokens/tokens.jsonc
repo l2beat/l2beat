@@ -6910,6 +6910,20 @@
       "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
       "source": "native", // mostly backed by externally bridged USDC
       "supply": "totalSupply"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     }
   ]
 }

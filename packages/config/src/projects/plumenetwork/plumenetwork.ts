@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -34,6 +34,15 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xE2C902BC61296531e556962ffC81A082b82f5F28'),
+      name: 'ERC20Gateway',
+      description:
+        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
+      tokens: '*',
+    }),
+  ],
   chainConfig: {
     name: 'plumenetwork',
     coingeckoPlatform: 'plume-network',
