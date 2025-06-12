@@ -257,7 +257,7 @@ function svpObject<T extends object>(
         }
       }
     }
-    const objectResult: Record<string, unknown> = {}
+    const result = {} as Record<string, unknown>
     for (const key in schema) {
       const validator = schema[key] as ValidatorImpl<unknown>
       if (validator.isOptional && !(key in value)) {
@@ -272,11 +272,10 @@ function svpObject<T extends object>(
         return res
       }
       if (clone) {
-        // biome-ignore lint/style/noNonNullAssertion: Safe because we check
-        objectResult![key] = res.data
+        result[key] = res.data
       }
     }
-    return { success: true, data: (clone ? objectResult : value) as Object<T> }
+    return { success: true, data: (clone ? result : value) as Object<T> }
   }
 }
 
@@ -306,7 +305,7 @@ function strictObject<T extends object>(schema: T): Parser<Object<T>> {
   )
 }
 
-function svpArray<T>(validator: Validator<T>, clone: boolean) {
+function svpArray<T>(valueValidator: Validator<T>, clone: boolean) {
   return function svpArray(value: unknown): Result<T[]> {
     if (!Array.isArray(value)) {
       return failType('array', value)
@@ -315,8 +314,8 @@ function svpArray<T>(validator: Validator<T>, clone: boolean) {
     for (let i = 0; i < value.length; i++) {
       const item = value[i]
       const res = clone
-        ? validator.safeParse(item)
-        : validator.safeValidate(item)
+        ? valueValidator.safeParse(item)
+        : valueValidator.safeValidate(item)
       if (res.success === false) {
         res.path = `[${i}]${res.path}`
         return res
@@ -336,15 +335,17 @@ function array<T>(element: Validator<T>): Validator<T[]> {
   return new ValidatorImpl(svpArray(element, false), svpArray(element, true))
 }
 
-function svpLiteral<T extends string | number | boolean | bigint>(value: T) {
-  return function svpLiteral(_value: unknown): Result<T> {
-    if (_value === value) {
-      return { success: true, data: value }
+function svpLiteral<T extends string | number | boolean | bigint>(
+  valueValidator: T,
+) {
+  return function svpLiteral(value: unknown): Result<T> {
+    if (value === valueValidator) {
+      return { success: true, data: valueValidator }
     }
     return {
       success: false,
       path: '',
-      message: `Expected exactly ${value}, got ${whatType(_value)}.`,
+      message: `Expected exactly ${valueValidator}, got ${whatType(value)}.`,
     }
   }
 }
@@ -381,6 +382,62 @@ function union<
   return new ValidatorImpl(svpUnion(elements, false), svpUnion(elements, true))
 }
 
+// TODO: exhaustive enum record checking!
+function svpRecord<K extends string | number, V>(
+  keyValidator: Validator<K>,
+  valueValidator: Validator<V>,
+  clone: boolean,
+) {
+  return function svpRecord(value: unknown): Result<Record<K, V>> {
+    if (typeof value !== 'object' || value === null || Array.isArray(object)) {
+      return failType('object', value)
+    }
+    const result = {} as Record<K, V>
+    for (const key in value) {
+      const keyRes = clone
+        ? keyValidator.safeParse(key)
+        : keyValidator.safeValidate(key)
+      if (!keyRes.success) {
+        keyRes.path = `.${key}${keyRes.path}`
+        return keyRes
+      }
+
+      const prop = (value as { [record: string]: unknown })[key]
+      const propRes = clone
+        ? valueValidator.safeParse(prop)
+        : valueValidator.safeValidate(prop)
+      if (!propRes.success) {
+        propRes.path = `.${key}${propRes.path}`
+        return propRes
+      }
+
+      if (clone) {
+        result[keyRes.data] = propRes.data
+      }
+    }
+    return { success: true, data: clone ? result : (value as Record<K, V>) }
+  }
+}
+
+function record<K extends string | number, V>(
+  key: Validator<K>,
+  value: Validator<V>,
+): Validator<Record<K, V>>
+// @ts-ignore We allow this error for simplicity of use
+function record<K extends string | number, V>(
+  key: Parser<K>,
+  value: Parser<V>,
+): Parser<Record<K, V>>
+function record<K extends string | number, V>(
+  key: Validator<K>,
+  value: Validator<V>,
+): Validator<Record<K, V>> {
+  return new ValidatorImpl(
+    svpRecord(key, value, false),
+    svpRecord(key, value, true),
+  )
+}
+
 export const v = {
   string,
   number,
@@ -393,10 +450,9 @@ export const v = {
   array,
   literal,
   union,
+  record,
   // tuple
-  // union
   // enum
-  // record
 }
 
 // biome-ignore lint/style/noNamespace: Needed to mimick z.infer

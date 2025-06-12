@@ -96,4 +96,16 @@ describe('validate', () => {
       message: 'None of the variants matched, got number.',
     })
   })
+
+  it('record', () => {
+    const Foo = v.record(
+      v.string().transform((x) => x.toUpperCase()),
+      v.number().transform((x) => x * 2),
+    )
+    const input = { foo: 1, bar: 2, baz: 3 }
+    expect(Foo.safeParse(input)).toEqual({
+      success: true,
+      data: { FOO: 2, BAR: 4, BAZ: 6 },
+    })
+  })
 })
