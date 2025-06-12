@@ -73,7 +73,9 @@ export function StackedTvsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
           activeDot={false}
         />
         <Area
@@ -82,7 +84,9 @@ export function StackedTvsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
           activeDot={false}
         />
         <Area
@@ -91,7 +95,9 @@ export function StackedTvsChart({
           fillOpacity={1}
           strokeWidth={0}
           stackId="a"
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
         />
         {getCommonChartComponents({
           data,

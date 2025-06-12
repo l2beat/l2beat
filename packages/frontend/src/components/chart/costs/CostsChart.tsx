@@ -106,7 +106,9 @@ export function CostsChart({
           stackId="a"
           dot={false}
           activeDot={false}
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
         />
         <Area
           yAxisId="left"
@@ -117,7 +119,9 @@ export function CostsChart({
           stackId="a"
           dot={false}
           activeDot={false}
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
         />
         <Area
           yAxisId="left"
@@ -128,7 +132,9 @@ export function CostsChart({
           stackId="a"
           dot={false}
           activeDot={false}
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
         />
         <Area
           yAxisId="left"
@@ -138,7 +144,9 @@ export function CostsChart({
           strokeWidth={0}
           stackId="a"
           dot={false}
-          isAnimationActive={false}
+          isAnimationActive={isLoading ? false : true}
+          animationDuration={500}
+          animationEasing="ease-out"
         />
 
         {showDataPosted && (
@@ -148,7 +156,9 @@ export function CostsChart({
             strokeWidth={2}
             stroke={chartMeta.posted.color}
             dot={false}
-            isAnimationActive={false}
+            isAnimationActive={isLoading ? false : true}
+            animationDuration={500}
+            animationEasing="ease-out"
           />
         )}
         {showDataPosted && (
@@ -161,7 +171,9 @@ export function CostsChart({
               chartMeta.notSyncedPosted.indicatorType.strokeDasharray
             }
             dot={false}
-            isAnimationActive={false}
+            isAnimationActive={isLoading ? false : true}
+            animationDuration={500}
+            animationEasing="ease-out"
             legendType="none"
           />
         )}

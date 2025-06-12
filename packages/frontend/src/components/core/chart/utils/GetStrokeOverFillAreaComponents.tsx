@@ -27,7 +27,9 @@ export function getStrokeOverFillAreaComponents({
     fillComponents.push(
       <Area
         key={`fill-${index}`}
-        isAnimationActive={false}
+        isAnimationActive={true}
+        animationDuration={500}
+        animationEasing="ease-out"
         fillOpacity={1}
         {...props}
         tooltipType="none"
@@ -38,7 +40,9 @@ export function getStrokeOverFillAreaComponents({
     strokeComponents.push(
       <Area
         key={`stroke-${index}`}
-        isAnimationActive={false}
+        isAnimationActive={true}
+        animationDuration={500}
+        animationEasing="ease-out"
         strokeWidth={2}
         {...props}
         fill="none"
