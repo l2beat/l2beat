@@ -43,4 +43,4 @@ COPY --from=builder --chown=appuser:appuser /src .
 
 USER appuser
 
-CMD ["node", "packages/watchtower/dist/index.js"]
+CMD ["node", "packages/watchtower/build/index.js"]
