@@ -163,8 +163,16 @@ export function BasicTable<T extends CommonProjectEntry>(
             {rows.ethereumEntry && (
               <BasicTableRow row={rows.ethereumEntry} {...props} />
             )}
-            {rows.rest.map((row) => (
-              <BasicTableRow row={row} key={row.id} {...props} />
+            {rows.rest.map((row, i) => (
+              <BasicTableRow
+                style={{
+                  animationDelay: `${i * 0.008}s`,
+                }}
+                className="fade-in slide-in-from-top-8 animate-in"
+                row={row}
+                key={row.id}
+                {...props}
+              />
             ))}
           </>
         )}
@@ -177,8 +185,13 @@ export function BasicTable<T extends CommonProjectEntry>(
 export function BasicTableRow<T extends CommonProjectEntry>({
   row,
   className,
+  style,
   ...props
-}: BasicTableProps<T> & { row: Row<T>; className?: string }) {
+}: BasicTableProps<T> & {
+  row: Row<T>
+  className?: string
+  style?: React.CSSProperties
+}) {
   const rowType = getRowType(row.original, props.rowColoringMode)
   const { highlightedSlug } = useHighlightedTableRowContext()
 
@@ -193,6 +206,7 @@ export function BasicTableRow<T extends CommonProjectEntry>({
             '!border-none',
           className,
         )}
+        style={style}
       >
         {row.getVisibleCells().map((cell) => {
           const { meta } = cell.column.columnDef
