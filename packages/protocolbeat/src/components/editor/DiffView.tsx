@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 
+import clsx from 'clsx'
 import { useRef } from 'react'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
+import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { DiffEditor } from './diffEditor'
-import { useCodeStore } from './store'
 import { splitCode } from './soliditySplitter'
-import { IconSplit } from '../../icons/IconSplit'
-import clsx from 'clsx'
+import { useCodeStore } from './store'
 
 export interface DiffViewProps {
   leftAddress: string

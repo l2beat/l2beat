@@ -6,9 +6,9 @@ import {
   getChainFullName,
   getExplorerClient,
 } from '@l2beat/discovery'
-import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 import { HttpClient } from '@l2beat/shared'
 import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { type ASTNode, parse } from '@mradomski/fast-solidity-parser'
 
 export class DiffoveryController {
   private cache = new Map<string, string>()

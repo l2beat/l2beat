@@ -5,6 +5,7 @@ import {
   TemplateService,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
+import { assert } from '@l2beat/shared-pure'
 import express from 'express'
 import { z } from 'zod'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -19,7 +20,6 @@ import {
   attachTemplateRouter,
   listTemplateFilesSchema,
 } from './templates/router'
-import { assert } from '@l2beat/shared-pure'
 
 const safeStringSchema = z
   .string()
