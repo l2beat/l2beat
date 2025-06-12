@@ -95,11 +95,11 @@ export const honeypotv2: ScalingProject = {
         query: {
           formula: 'functionCall',
           address: EthereumAddress(
-            '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
+            '0x6CE590b9F0697327f18c601DF6f0baE4a0801B68',
           ),
-          selector: '0xddfdfbb0',
-          functionSignature: 'function submitClaim(bytes calldata _claimData)',
-          sinceTimestamp: UnixTime(1694467715),
+          selector: '0x8bca2e0c',
+          functionSignature: 'function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] calldata proof)',
+          sinceTimestamp: UnixTime(1749510479),
         },
       },
     ],
