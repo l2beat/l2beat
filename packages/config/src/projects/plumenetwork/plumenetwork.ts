@@ -15,7 +15,6 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     slug: 'plumenetwork',
     description:
       'Plume is a modular L2 blockchain for real-world assets (RWAs) that integrates asset tokenization and compliance providers directly into the chain.',
-    // purposes: ['RWA'],
     category: 'Optimistic Rollup',
     stack: 'Arbitrum',
     links: {
@@ -31,6 +30,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
       ],
     },
   },
+  additionalPurposes: ['RWA'],
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
