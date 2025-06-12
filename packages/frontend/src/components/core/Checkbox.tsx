@@ -1,4 +1,5 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
+import { motion } from 'motion/react'
 import type * as React from 'react'
 import { useId } from 'react'
 import { useTracking } from '~/hooks/useTracking'
@@ -50,13 +51,23 @@ const Checkbox = ({
           })
         }}
       >
-        <CheckboxPrimitive.Indicator className="flex items-center justify-center rounded bg-brand text-current">
-          <CheckIcon
-            className={cn(
-              'size-5 stroke-[1.8px]',
-              '!stroke-surface-primary primary-card:!stroke-surface-secondary',
-            )}
-          />
+        <CheckboxPrimitive.Indicator className="flex items-center justify-center text-current">
+          <motion.div
+            className="bg-brand rounded"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 0.3,
+              type: 'spring',
+            }}
+          >
+            <CheckIcon
+              className={cn(
+                'size-5 stroke-[1.8px]',
+                '!stroke-surface-primary primary-card:!stroke-surface-secondary',
+              )}
+            />
+          </motion.div>
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
       <div className="whitespace-pre font-medium text-xs leading-none md:text-sm">
