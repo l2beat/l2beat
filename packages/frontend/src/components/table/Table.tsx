@@ -69,7 +69,7 @@ const TableRow = ({
   return (
     <tr
       className={cn(
-        'group/row border-b border-b-divider transition-colors',
+        'group/row border-b border-b-white/40 transition-colors',
         isSelected && 'animate-row-highlight',
         className,
       )}

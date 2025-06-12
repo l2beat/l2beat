@@ -40,6 +40,7 @@ export function getRowClassNames(rowType: RowType) {
 }
 
 export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
+  return 'bg-transparent'
   switch (rowType) {
     case 'ethereum':
       return 'bg-blue-400 dark:bg-blue-900'

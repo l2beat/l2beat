@@ -154,7 +154,7 @@ export function BasicTable<T extends CommonProjectEntry>(
           })}
         </TableHeaderRow>
         <TableHeaderRow>
-          <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-divider" />
+          <th colSpan={100} className="mx-0.5 h-0.5 rounded-full bg-white/70" />
         </TableHeaderRow>
       </TableHeader>
       <TableBody>

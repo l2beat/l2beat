@@ -224,7 +224,7 @@ function ChartLegendContent({
               type={itemConfig.indicatorType}
               backgroundColor={itemConfig.color}
             />
-            <span className="font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+            <span className="font-medium text-2xs text-white/70 leading-none tracking-[-0.2px]">
               {itemConfig.legendLabel ?? itemConfig.label}
             </span>
           </div>

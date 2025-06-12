@@ -25,8 +25,8 @@ const Checkbox = ({
     <label
       htmlFor={usedId}
       className={cn(
-        'flex h-8 w-max cursor-pointer select-none items-center space-x-2 rounded-lg py-1 pr-3 pl-2',
-        'bg-surface-primary primary-card:bg-surface-secondary',
+        '!rounded-lg flex h-8 w-max cursor-pointer select-none items-center space-x-2 py-1 pr-3 pl-2',
+        'glass-panel glass-content',
         props.disabled && 'cursor-not-allowed opacity-50',
         className,
       )}
@@ -36,7 +36,7 @@ const Checkbox = ({
         id={usedId}
         ref={ref}
         className={cn(
-          'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-black',
+          'peer size-5 shrink-0 rounded bg-pure-white disabled:cursor-not-allowed disabled:opacity-50 ',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-1',
           'data-[state=unchecked]:border-2 data-[state=unchecked]:border-surface-tertiary',
         )}

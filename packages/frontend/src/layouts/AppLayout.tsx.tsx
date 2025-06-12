@@ -33,6 +33,7 @@ export function AppLayout({
           <GlossaryContextProvider terms={terms}>
             <SearchBarContextProvider projects={searchBarProjects}>
               <RecategorisationPreviewContextProvider>
+                <div className="fixed inset-0 z-0 bg-[url('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-aYSgi3EH6LxEPeo171rFu3t02gtVH9.png')] bg-center bg-cover bg-no-repeat" />
                 {children}
               </RecategorisationPreviewContextProvider>
             </SearchBarContextProvider>

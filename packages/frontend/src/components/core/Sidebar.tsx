@@ -120,7 +120,7 @@ function Sidebar({
         )}
         {...props}
       >
-        <div className="flex size-full flex-col gap-6 bg-background">
+        <div className="glass-panel glass-sidebar flex size-full flex-col gap-6">
           {children}
         </div>
       </div>
