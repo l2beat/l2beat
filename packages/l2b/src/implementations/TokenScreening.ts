@@ -155,6 +155,17 @@ interface TokenSupplyBreakdown {
   externalPct: number
 }
 
+// Add a config for known L1-L2 token mappings
+const KNOWN_L1_L2_TOKEN_MAPPINGS: Record<
+  string, // L1 address (lowercase)
+  Record<string, string> // chain name -> L2 address (lowercase)
+> = {
+  // USDS: Ethereum L1 -> Optimism L2
+  '0xdc035d45d973e3ec169d2276ddab16f1e407384f': {
+    optimism: '0x4f13a96ec5c4cf34e442b46bbd98a0791f20edc3',
+  }
+}
+
 export const TokenScreening = command({
   name: 'token-screening',
   description: 'Finds L2 token classification for L1 tokens.',
@@ -286,18 +297,24 @@ export const TokenScreening = command({
           }
         }
         // try to classify non-standard tokens
+        var l2AddressFromExternalSource: string | null = null
         if (!l2Address || supplyInfo.type === 'Non-standard Token') {
           // get L2 token address from coingecko
-          const l2AddressFromCoingecko: string | null =
+          l2AddressFromExternalSource =
             await getL2TokenAddressFromCoingecko(tokenAddress, chain)
-          if (!l2AddressFromCoingecko) {
+          if (!l2AddressFromExternalSource) {
+            const l2AddressFromConfig = KNOWN_L1_L2_TOKEN_MAPPINGS[tokenAddress.toLowerCase()]?.[chain]
+            if (l2AddressFromConfig) {
+                l2AddressFromExternalSource = l2AddressFromConfig
+            } else {
             console.error(
               `No L2 token address found for ${tokenAddress} on ${chain}`,
             )
             continue
+            }
           } else {
             console.log(
-              `${chain.charAt(0).toUpperCase() + chain.slice(1)} (coingecko): ${l2AddressFromCoingecko}`,
+              `${chain.charAt(0).toUpperCase() + chain.slice(1)} (coingecko): ${l2AddressFromExternalSource}`,
             )
           }
           let newSupplyInfo: TokenSupplyInfo | null = null
@@ -305,11 +322,11 @@ export const TokenScreening = command({
           let canonicalPct = 0
           let nonCanonicalPct = 0
           if (
-            l2AddressFromCoingecko?.toLowerCase() !== l2Address?.toLowerCase()
+            l2AddressFromExternalSource?.toLowerCase() !== l2Address?.toLowerCase()
           ) {
             newSupplyInfo = await getTokenSupplyInfo(
               tokenAddress,
-              l2AddressFromCoingecko,
+              l2AddressFromExternalSource,
               chain,
               escrows,
             )
@@ -369,7 +386,7 @@ export const TokenScreening = command({
             nonCanonicalPct = Number(Math.max(0, 100 - canonicalPct).toFixed(2))
           }
           // minter analysis
-          const l2Minters = await getL2Minters(l2AddressFromCoingecko, chain)
+          const l2Minters = await getL2Minters(l2AddressFromExternalSource, chain)
           const mintersType = await checkMintersType(
             paths,
             l2Minters.map((m) => ({
@@ -462,6 +479,7 @@ async function getL2TokenAddress(
   network: string,
   escrows?: { [key: string]: string[] },
 ): Promise<string | null> {
+
   try {
     let canonicalEscrowAddress: string
 
