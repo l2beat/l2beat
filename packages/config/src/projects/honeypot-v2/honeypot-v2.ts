@@ -156,7 +156,7 @@ export const honeypotv2: ScalingProject = {
       },
     },
     {
-      rollupNodeLink: 'https://github.com/cartesi/dave/tree/v1.0.0',
+      rollupNodeLink: 'https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node',
     },
   ),
 
