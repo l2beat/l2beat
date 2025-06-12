@@ -7,8 +7,8 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
+  STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -19,7 +19,7 @@ import type { ScalingProject } from '../../internalTypes'
 
 const discovery = new ProjectDiscovery('honeypot')
 
-export const honeypot: ScalingProject = {
+export const honeypotv2: ScalingProject = {
   type: 'layer2',
   id: ProjectId('honeypot-v2'),
   capability: 'appchain',
@@ -69,8 +69,7 @@ export const honeypot: ScalingProject = {
 
         // OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING := 'Please note, for Optimistic rollups the state is not finalized until the challenge period passes.',
       },
-      explanation: // TODO PRT delay??
-        ''
+      explanation: '', // TODO PRT delay??
     },
   },
 
@@ -150,7 +149,8 @@ export const honeypot: ScalingProject = {
         fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: {
           satisfied: true,
-          message: 'Users can exit at any time and the rollup contract is immutable.',
+          message:
+            'Users can exit at any time and the rollup contract is immutable.',
           mode: 'replace',
         },
       },
@@ -197,7 +197,7 @@ export const honeypot: ScalingProject = {
       'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0).',
     genesisState:
       'The genesis state comes from the Honeypot Cartesi Machine template included in the [Honeypot v2 release](https://github.com/cartesi/honeypot/releases/tag/v2.0.0). Alternatively, you can recreate it by following the build steps in the [Honeypot GitHub Repository](https://github.com/cartesi/honeypot/tree/v2.0.0?tab=readme-ov-file#building-the-application).',
-    dataFormat: // TODO Review deposits, update withdrawal. 
+    dataFormat: // TODO Review deposits, update withdrawal.
       'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.0.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot#withdrawing-the-pot).',
   },
 
@@ -212,7 +212,8 @@ export const honeypot: ScalingProject = {
             url: 'https://arxiv.org/abs/2212.12439',
           },
           {
-            title: 'MultiLevelTournamentFactory.sol#L37 - dispute resolution factory',
+            title:
+              'MultiLevelTournamentFactory.sol#L37 - dispute resolution factory',
             url: 'https://etherscan.io/address/0xA31C2aCfF3464658866960c0fBD3d798310272D7#code#F1#L37',
           },
           {
