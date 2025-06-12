@@ -11,7 +11,11 @@ export class InfrastructureController {
     private readonly dependencies: InfrastructureControllerDependencies,
   ) {}
 
-  async handleFrontendPreview(prNumber: number) {
-    await this.dependencies.previewManager.start(prNumber)
+  async handleFrontendPreview(id: number) {
+    await this.dependencies.previewManager.start(id)
+  }
+
+  statusRaw(id: number) {
+    return this.dependencies.previewManager.findById(id)
   }
 }

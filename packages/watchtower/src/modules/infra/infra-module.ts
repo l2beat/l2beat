@@ -1,9 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
+import type { Config } from '../../config/types'
 import type { ApplicationModule } from '../../module'
+import { PreviewManager } from '../preview-manager'
 import { InfrastructureController } from './infra-controller'
 import { createInfrastructureRouter } from './infra-router'
-import type { Config } from '../../config/types'
-import { PreviewManager } from '../preview-manager'
 
 type InfrastructureModuleDependencies = {
   logger: Logger

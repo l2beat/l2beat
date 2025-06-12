@@ -1,7 +1,7 @@
 import express from 'express'
-import type { InfrastructureController } from './infra-controller'
 import { z } from 'zod'
 import type { Config } from '../../config/types'
+import type { InfrastructureController } from './infra-controller'
 
 function stringAsInt() {
   return z.preprocess((s) => {
@@ -35,6 +35,15 @@ export function createInfrastructureRouter(
   r.get('/health', (_req, res) => {
     res.json({ status: 'OK' })
   })
+
+  r.get(
+    '/frontend-preview/:id/status-raw',
+    async (req: express.Request, res: express.Response) => {
+      const { id } = req.params
+      const status = await controller.statusRaw(Number(id))
+      res.json(status)
+    },
+  )
 
   r.post(
     '/frontend-preview',

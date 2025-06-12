@@ -1,8 +1,17 @@
 import { exec } from 'child_process'
+import type { PodStatusRaw } from './types'
 
 type PreviewManagerDependencies = {
   app: string
 }
+
+type PodStatus = {
+  name: string
+  id: number
+  hash: string
+  namespace: string
+}
+
 export class PreviewManager {
   constructor(private readonly dependencies: PreviewManagerDependencies) {}
 
@@ -15,15 +24,21 @@ export class PreviewManager {
     )
   }
 
-  //   async findById(id: number) {
-  //     const pods = await execShellCommand(
-  //       `kubectl get pods -n preview-prod -l app=${this.dependencies.app},pr=${id}`,
-  //     )
+  async findById(id: number) {
+    const commandProd = `kubectl get pods -n preview-prod -l app=${this.dependencies.app},pr=${id} -o json`
+    const commandStage = `kubectl get pods -n preview-stage -l app=${this.dependencies.app},pr=${id} -o json`
 
-  //     const podStatus = JSON.parse(pods) as PodStatusRaw
+    const podsProd = await execShellCommand(commandProd)
+    const podsStage = await execShellCommand(commandStage)
 
-  //     return podStatus
-  //   }
+    const podStatusProd = JSON.parse(podsProd) as PodStatusRaw
+    const podStatusStage = JSON.parse(podsStage) as PodStatusRaw
+
+    return {
+      prod: rawToPodStatus(podStatusProd),
+      stage: rawToPodStatus(podStatusStage),
+    }
+  }
 }
 
 async function execShellCommand<T extends string = string>(command: string) {
@@ -38,4 +53,19 @@ async function execShellCommand<T extends string = string>(command: string) {
       resolve(stdout as T)
     })
   })
+}
+
+function rawToPodStatus(raw: PodStatusRaw): PodStatus {
+  const firstPod = raw.items[0]
+
+  if (!firstPod) {
+    throw new Error('No pod found')
+  }
+
+  return {
+    id: Number(firstPod.metadata.labels.pr),
+    name: firstPod.metadata.name,
+    hash: firstPod.metadata.labels['pod-template-hash'],
+    namespace: firstPod.metadata.namespace,
+  }
 }
