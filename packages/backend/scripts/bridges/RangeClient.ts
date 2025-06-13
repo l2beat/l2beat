@@ -1,7 +1,10 @@
-
-import { type json, UnixTime } from "@l2beat/shared-pure"
-import { RangeErrorResponse, type RangeStats, RangeStatsResponse } from "./types"
-import { ClientCore, type ClientCoreDependencies } from "@l2beat/shared"
+import { ClientCore, type ClientCoreDependencies } from '@l2beat/shared'
+import { UnixTime, type json } from '@l2beat/shared-pure'
+import {
+  RangeErrorResponse,
+  type RangeStats,
+  RangeStatsResponse,
+} from './types'
 
 interface Dependencies extends ClientCoreDependencies {
   url: string
@@ -22,10 +25,11 @@ export class RangeClient extends ClientCore {
     const beginTimestamp = UnixTime.toDate(begin).toISOString()
     const endTimestamp = UnixTime.toDate(end).toISOString()
 
-    const response = await this.query(
-      '/protocols/stats',
-      { protocol, beginTimestamp, endTimestamp },
-    )
+    const response = await this.query('/protocols/stats', {
+      protocol,
+      beginTimestamp,
+      endTimestamp,
+    })
 
     const statsResponse = RangeStatsResponse.safeParse(response)
 
@@ -42,10 +46,7 @@ export class RangeClient extends ClientCore {
     return statsResponse.data
   }
 
-  async query(
-    endpoint: string,
-    params: Record<string, string>,
-  ) {
+  async query(endpoint: string, params: Record<string, string>) {
     return await this.fetch(this.$.url + endpoint, {
       method: 'POST',
       headers: {

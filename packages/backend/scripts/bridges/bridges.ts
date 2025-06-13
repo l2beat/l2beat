@@ -1,12 +1,12 @@
-import { command, positional, string, run } from "cmd-ts"
-import { RangeClient } from "./RangeClient"
-import { Logger } from "@l2beat/backend-tools"
-import { HttpClient } from "@l2beat/shared"
-import { UnixTime } from "@l2beat/shared-pure"
 import * as readline from 'readline'
-import Table from "cli-table"
-import chalk from "chalk"
-const Chart = require('cli-chart');
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
+import chalk from 'chalk'
+import Table from 'cli-table'
+import { command, positional, run, string } from 'cmd-ts'
+import { RangeClient } from './RangeClient'
+const Chart = require('cli-chart')
 
 const URL = 'https://api.range.org/v1'
 const API_KEY = 'api-key-placeholder' // Replace with your actual API key
@@ -31,9 +31,8 @@ const cmd = command({
   name: 'execute',
   args,
   handler: async (args) => {
-
     readline.cursorTo(process.stdout, 0, 0)
-    readline.clearScreenDown(process.stdout);
+    readline.clearScreenDown(process.stdout)
 
     start = UnixTime.toStartOf(UnixTime.now(), 'day') - 1 * UnixTime.DAY
     end = start + 1 * UnixTime.HOUR
@@ -45,13 +44,13 @@ const cmd = command({
       height: 20,
       lmargin: 15,
       step: 2,
-      ymax: 1000
-    });
+      ymax: 1000,
+    })
 
     table = new Table({
       head: ['Time', 'Transactions', 'Volume', 'Top token'],
-      colWidths: [50, 20, 20, 40]
-    });
+      colWidths: [50, 20, 20, 40],
+    })
 
     protocol = args.protocol
     http = new HttpClient()
@@ -65,8 +64,7 @@ const cmd = command({
       sourceName: 'range',
     })
     await getStats()
-
-  }
+  },
 })
 
 run(cmd, process.argv.slice(2))
@@ -85,33 +83,29 @@ run(cmd, process.argv.slice(2))
 // }
 
 async function getStats() {
-
-  const stats = await rangeClient.getProtocolStats(
-    protocol,
-    start,
-    end,
-  )
+  const stats = await rangeClient.getProtocolStats(protocol, start, end)
 
   readline.cursorTo(process.stdout, 0, 0)
-  readline.clearScreenDown(process.stdout);
+  readline.clearScreenDown(process.stdout)
 
-  process.stdout.write('Protocol: ' + chalk.green(protocol) + '\n\n');
+  process.stdout.write('Protocol: ' + chalk.green(protocol) + '\n\n')
 
-  stats.denomSums.sort((a, b) => b.totalUsd - a.totalUsd);
+  stats.denomSums.sort((a, b) => b.totalUsd - a.totalUsd)
   const topToken = stats.denomSums[0]
 
-  chart.addBar(Math.floor(stats.totalUsd), 'green');
-  chart.draw();
+  chart.addBar(Math.floor(stats.totalUsd), 'green')
+  chart.draw()
 
   table.push([
     UnixTime.toDate(start).toISOString(),
     stats.totalTransactions.toString(),
     `$${Number(stats.totalUsd.toFixed(2)).toLocaleString()}`,
-    `${topToken.denom} ($${Number(topToken.totalUsd.toFixed(2)).toLocaleString()})`]);
-  console.log(table.toString());
+    `${topToken.denom} ($${Number(topToken.totalUsd.toFixed(2)).toLocaleString()})`,
+  ])
+  console.log(table.toString())
 
   start = start + 1 * UnixTime.HOUR
   end = end + 1 * UnixTime.HOUR
 
-  setTimeout(getStats, 1000 * 5);
+  setTimeout(getStats, 1000 * 5)
 }

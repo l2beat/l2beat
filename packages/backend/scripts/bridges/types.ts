@@ -1,21 +1,21 @@
-import { z } from "zod"
+import { z } from 'zod'
 
 export type RangeStats = z.infer<typeof RangeStatsResponse>
 export const RangeStatsResponse = z.object({
   totalTransactions: z.number(),
   totalUsd: z.number(),
-  denomSums: z.array(z.object(
-    {
+  denomSums: z.array(
+    z.object({
       denom: z.string(),
       total: z.number(),
-      totalUsd: z.number()
-    },
-  )),
+      totalUsd: z.number(),
+    }),
+  ),
   timeRange: z.object({
     start: z.string(),
     end: z.string(),
   }),
-  protocol: z.string()
+  protocol: z.string(),
   // networkStats: z.object({
   //     "latestSends": [
   //         {
