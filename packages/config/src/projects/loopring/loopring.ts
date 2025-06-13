@@ -446,7 +446,7 @@ export const loopring: ScalingProject = {
   milestones: [
     {
       title: 'Loopring ZK Rollup is live',
-      url: 'https://www.publish0x.com/loopring/loopring-deployed-protocol-30-on-ethereum-xrrykg',
+      url: 'https://medium.com/loopring-protocol/loopring-protocol-3-0-zksnarks-for-scalability-845b35a8b75b',
       date: '2019-12-04T00:00:00Z',
       description:
         'Loopring Protocol 3.0 is fully operational with support for orderbook trading on WeDex.',
