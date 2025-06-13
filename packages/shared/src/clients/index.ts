@@ -25,3 +25,5 @@ export * from './beaconchain/BeaconChainClient'
 
 export * from './rpc-svm/SvmRpcClient'
 export * from './rpc-svm/types'
+
+export { type ClientCoreDependencies, ClientCore } from './ClientCore'
