@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22615717,
-  "configHash": "0x07362f23e4fdfb3e27f69a86b2d10091486c940acc9f88ac9ffe25b40a73f78f",
+  "blockNumber": 22694404,
+  "configHash": "0x213b03426353faf50a6bbb2d451349bd8afb70304eb4b4edd038190cf644bd3f",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -425,12 +425,12 @@
         "l1CtmDeployer": "0x6078F6B379f103de1Aa912dc46bb8Df0c8809860",
         "MAX_NUMBER_OF_ZK_CHAINS": 100,
         "messageRoot": "0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD",
-        "migrationPaused": false,
+        "migrationPaused": true,
         "migrations": [],
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "settlementLayers": {},
+        "settlementLayers": { "9075": true },
         "sharedBridge": "0x8829AD80E425C646DAB305381ff105169FeEcE56"
       },
       "fieldMeta": {
@@ -602,6 +602,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x41814626a9256173B6E6441d8133F9286F02AA16",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x438Df339934B6Fb9dA8E0DC6f0Ba0bca22B8A7b5",
       "type": "EOA",
       "proxyType": "EOA"
@@ -674,7 +679,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 200,
+        "nonce": 201,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1697,6 +1702,8 @@
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
+          "0x41814626a9256173B6E6441d8133F9286F02AA16",
+          "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
           "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252",
           "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735",
           "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
@@ -1705,8 +1712,8 @@
         "domainSeparator": "0x8a595a96d77e992bb9ff8b20fc59215c86b17154838b5386d6b264728a1f4462",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 12,
+        "multisigThreshold": "1 of 5 (20%)",
+        "nonce": 14,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2190,6 +2197,11 @@
     },
     {
       "address": "0xEE8fAC9051243379dAAA02c24e07D29F22d73b4E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -3119,5 +3131,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xb2cb814d4aafe1969237961dea56a9eb1fc8ed6f4143e3c4a11a5f53c3fdb52c"
+  "permissionsConfigHash": "0x56367b0765cb2ed03a3e4bbac72e42a6ae37a014736d3cf41fa98ff44dbb81e7"
 }

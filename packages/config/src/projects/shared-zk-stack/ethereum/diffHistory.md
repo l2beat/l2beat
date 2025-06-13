@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x0b8e5f52d76cb74ab4b432ca704a8b86f341fb0c
+
+# Diff at Fri, 13 Jun 2025 08:32:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@47036f369616cc0b23ec8b94f0706f5c105ac1f5 block: 22615717
+- current block number: 22694404
+
+## Description
+
+gateway is whitelisted as a settlement layer. we have triggers defined for any chain migration.
+
+also: migration is currently paused for the entire zk stack.
+
+also: sub-ms signer change.
+
+also: add manual chain admin permission because the template one gets blackholed.
+
+## Watched changes
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
++++ description: If false, chains can migrate to whitelisted settlement layers.
++++ severity: HIGH
+      values.migrationPaused:
+-        false
++        true
++++ description: New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin.
++++ severity: HIGH
+      values.settlementLayers.9075:
++        true
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) {
+    +++ description: None
+      values.$members.4:
++        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.$members.3:
++        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
+      values.$members.2:
+-        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
++        "0x41814626a9256173B6E6441d8133F9286F02AA16"
+      values.$members.1:
+-        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
++        "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0"
+      values.multisigThreshold:
+-        "1 of 3 (33%)"
++        "1 of 5 (20%)"
+    }
+```
+
 Generated with discovered.json: 0xf1ecaded2ebfa21b7a954758d8aea74ee75e8ae8
 
 # Diff at Mon, 02 Jun 2025 08:10:28 GMT:
