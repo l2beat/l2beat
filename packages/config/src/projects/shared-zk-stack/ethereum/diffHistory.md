@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6d0d22acaae96c82ce528d548713fe4813088358
+Generated with discovered.json: 0x0b8e5f52d76cb74ab4b432ca704a8b86f341fb0c
 
-# Diff at Fri, 13 Jun 2025 08:20:51 GMT:
+# Diff at Fri, 13 Jun 2025 08:32:15 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@47036f369616cc0b23ec8b94f0706f5c105ac1f5 block: 22615717
@@ -13,6 +13,8 @@ gateway is whitelisted as a settlement layer. we have triggers defined for any c
 also: migration is currently paused for the entire zk stack.
 
 also: sub-ms signer change.
+
+also: add manual chain admin permission because the template one gets blackholed.
 
 ## Watched changes
 
