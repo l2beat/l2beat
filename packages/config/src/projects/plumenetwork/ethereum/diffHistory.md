@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x419e9c1bdbdc3d01d1f35383068eb30fe6265f07
+
+# Diff at Thu, 12 Jun 2025 14:57:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@707672ae07dec8237e8d9167089f62214e63e78c block: 22687092
+- current block number: 22687092
+
+## Description
+
+Added ERC20 gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22687092 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59","role":"admin","via":[{"address":"ethereum:0xb90fe445014e74eA5aA7681291212bfEa37031CC"},{"address":"ethereum:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea","role":"admin","via":[{"address":"ethereum:0xb90fe445014e74eA5aA7681291212bfEa37031CC"},{"address":"ethereum:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+      receivedPermissions.8.from:
+-        "ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59"
++        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
+      receivedPermissions.7.from:
+-        "ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea"
++        "ethereum:0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d"
+      receivedPermissions.6.from:
+-        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
++        "ethereum:0xE2C902BC61296531e556962ffC81A082b82f5F28"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb90fe445014e74eA5aA7681291212bfEa37031CC) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea","role":"admin"}
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59"
++        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea"
++        "ethereum:0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
++        "ethereum:0xE2C902BC61296531e556962ffC81A082b82f5F28"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xE2C902BC61296531e556962ffC81A082b82f5F28)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
 Generated with discovered.json: 0x24ece6c1daee9d67f101f3d207a9de23743165f9
 
 # Diff at Thu, 12 Jun 2025 08:03:20 GMT:
