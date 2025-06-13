@@ -33,9 +33,10 @@
       "type": "Contract",
       "template": "yearn/vaultv3",
       "sourceHashes": [
+        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
         "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "ignoreInWatchMode": [
         "pricePerShare",
         "totalAssets",
@@ -46,7 +47,7 @@
       "sinceTimestamp": 1747148987,
       "sinceBlock": 22475100,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
         "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
         "apiVersion": "3.0.4",
         "asset": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -84,7 +85,8 @@
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb": "Yearn V3 Vault"
+        "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb": "Yearn V3 Vault",
+        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
       }
     },
     {
@@ -108,9 +110,10 @@
       "type": "Contract",
       "template": "yearn/vaultv3",
       "sourceHashes": [
+        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
         "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "ignoreInWatchMode": [
         "pricePerShare",
         "totalAssets",
@@ -121,7 +124,7 @@
       "sinceTimestamp": 1747148987,
       "sinceBlock": 22475100,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
         "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
         "apiVersion": "3.0.4",
         "asset": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -159,7 +162,8 @@
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": "Yearn V3 Vault"
+        "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": "Yearn V3 Vault",
+        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
       }
     },
     {
@@ -186,9 +190,10 @@
       "type": "Contract",
       "template": "yearn/vaultv3",
       "sourceHashes": [
+        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
         "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "ignoreInWatchMode": [
         "pricePerShare",
         "totalAssets",
@@ -199,7 +204,7 @@
       "sinceTimestamp": 1747148987,
       "sinceBlock": 22475100,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
         "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
         "apiVersion": "3.0.4",
         "asset": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
@@ -237,7 +242,8 @@
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728": "Yearn V3 Vault"
+        "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728": "Yearn V3 Vault",
+        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
       }
     },
     {
@@ -284,9 +290,10 @@
       "type": "Contract",
       "template": "yearn/vaultv3",
       "sourceHashes": [
+        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
         "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "ignoreInWatchMode": [
         "pricePerShare",
         "totalAssets",
@@ -297,7 +304,7 @@
       "sinceTimestamp": 1747148987,
       "sinceBlock": 22475100,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
         "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
         "apiVersion": "3.0.4",
         "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -335,7 +342,8 @@
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
-        "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF": "Yearn V3 Vault"
+        "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF": "Yearn V3 Vault",
+        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
       }
     },
     {
@@ -977,6 +985,121 @@
       "function resetAllowance(address delegate, address token)",
       "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
       "function tokens(address, address, uint256) view returns (address)"
+    ],
+    "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": [
+      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
+      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
+      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
+      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
+      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
+      "event RoleSet(address indexed account, uint256 indexed role)",
+      "event UpdateFutureRoleManager(address indexed future_role_manager)",
+      "event UpdateRoleManager(address indexed role_manager)",
+      "event UpdateAccountant(address indexed accountant)",
+      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
+      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
+      "event UpdateDefaultQueue(address[] new_default_queue)",
+      "event UpdateUseDefaultQueue(bool use_default_queue)",
+      "event UpdateAutoAllocate(bool auto_allocate)",
+      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
+      "event UpdateDepositLimit(uint256 deposit_limit)",
+      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
+      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
+      "event DebtPurchased(address indexed strategy, uint256 amount)",
+      "event Shutdown()",
+      "constructor()",
+      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
+      "function setName(string name)",
+      "function setSymbol(string symbol)",
+      "function set_accountant(address new_accountant)",
+      "function set_default_queue(address[] new_default_queue)",
+      "function set_use_default_queue(bool use_default_queue)",
+      "function set_auto_allocate(bool auto_allocate)",
+      "function set_deposit_limit(uint256 deposit_limit)",
+      "function set_deposit_limit(uint256 deposit_limit, bool override)",
+      "function set_deposit_limit_module(address deposit_limit_module)",
+      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
+      "function set_withdraw_limit_module(address withdraw_limit_module)",
+      "function set_minimum_total_idle(uint256 minimum_total_idle)",
+      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
+      "function set_role(address account, uint256 role)",
+      "function add_role(address account, uint256 role)",
+      "function remove_role(address account, uint256 role)",
+      "function transfer_role_manager(address role_manager)",
+      "function accept_role_manager()",
+      "function isShutdown() view returns (bool)",
+      "function unlockedShares() view returns (uint256)",
+      "function pricePerShare() view returns (uint256)",
+      "function get_default_queue() view returns (address[])",
+      "function process_report(address strategy) returns (uint256, uint256)",
+      "function buy_debt(address strategy, uint256 amount)",
+      "function add_strategy(address new_strategy)",
+      "function add_strategy(address new_strategy, bool add_to_queue)",
+      "function revoke_strategy(address strategy)",
+      "function force_revoke_strategy(address strategy)",
+      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
+      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
+      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
+      "function shutdown_vault()",
+      "function deposit(uint256 assets, address receiver) returns (uint256)",
+      "function mint(uint256 shares, address receiver) returns (uint256)",
+      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
+      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
+      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
+      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function transfer(address receiver, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
+      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
+      "function balanceOf(address addr) view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function totalAssets() view returns (uint256)",
+      "function totalIdle() view returns (uint256)",
+      "function totalDebt() view returns (uint256)",
+      "function convertToShares(uint256 assets) view returns (uint256)",
+      "function previewDeposit(uint256 assets) view returns (uint256)",
+      "function previewMint(uint256 shares) view returns (uint256)",
+      "function convertToAssets(uint256 shares) view returns (uint256)",
+      "function maxDeposit(address receiver) view returns (uint256)",
+      "function maxMint(address receiver) view returns (uint256)",
+      "function maxWithdraw(address owner) view returns (uint256)",
+      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
+      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
+      "function maxRedeem(address owner) view returns (uint256)",
+      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
+      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
+      "function previewWithdraw(uint256 assets) view returns (uint256)",
+      "function previewRedeem(uint256 shares) view returns (uint256)",
+      "function FACTORY() view returns (address)",
+      "function apiVersion() pure returns (string)",
+      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
+      "function profitMaxUnlockTime() view returns (uint256)",
+      "function fullProfitUnlockDate() view returns (uint256)",
+      "function profitUnlockingRate() view returns (uint256)",
+      "function lastProfitUpdate() view returns (uint256)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function asset() view returns (address)",
+      "function decimals() view returns (uint8)",
+      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
+      "function default_queue(uint256 arg0) view returns (address)",
+      "function use_default_queue() view returns (bool)",
+      "function auto_allocate() view returns (bool)",
+      "function allowance(address arg0, address arg1) view returns (uint256)",
+      "function minimum_total_idle() view returns (uint256)",
+      "function deposit_limit() view returns (uint256)",
+      "function accountant() view returns (address)",
+      "function deposit_limit_module() view returns (address)",
+      "function withdraw_limit_module() view returns (address)",
+      "function roles(address arg0) view returns (uint256)",
+      "function role_manager() view returns (address)",
+      "function future_role_manager() view returns (address)",
+      "function name() view returns (string)",
+      "function symbol() view returns (string)",
+      "function nonces(address arg0) view returns (uint256)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",

@@ -22,7 +22,7 @@ export const vector: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,

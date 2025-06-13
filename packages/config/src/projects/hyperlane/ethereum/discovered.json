@@ -158,14 +158,15 @@
       "address": "0x4085486acE416fce164f578b6e56eFC96dcf6e2E",
       "type": "Contract",
       "sourceHashes": [
+        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0",
         "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "description": "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.",
       "sinceTimestamp": 1747587071,
       "sinceBlock": 22511174,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67",
         "domains": [
           2741, 888888888, 1000041455, 33139, 466, 42161, 42170, 4278608, 11820,
           10242, 592, 1313161554, 6001, 253368190, 43114, 8333, 8453, 80094,
@@ -192,7 +193,8 @@
         "module": { "severity": "HIGH" }
       },
       "implementationNames": {
-        "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": "DomainRoutingIsm"
+        "0x4085486acE416fce164f578b6e56eFC96dcf6e2E": "DomainRoutingIsm",
+        "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67": "DomainRoutingIsm"
       }
     },
     {
@@ -1382,6 +1384,22 @@
     "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F": [
       "function moduleType() view returns (uint8)",
       "function modulesAndThreshold(bytes) view returns (address[], uint8)",
+      "function verify(bytes _metadata, bytes _message) returns (bool)"
+    ],
+    "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67": [
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function domains() view returns (uint256[])",
+      "function initialize(address _owner, uint32[] _domains, address[] __modules)",
+      "function initialize(address _owner)",
+      "function module(uint32 origin) view returns (address)",
+      "function moduleType() view returns (uint8)",
+      "function owner() view returns (address)",
+      "function remove(uint32 _domain)",
+      "function renounceOwnership()",
+      "function route(bytes _message) view returns (address)",
+      "function set(uint32 _domain, address _module)",
+      "function transferOwnership(address newOwner)",
       "function verify(bytes _metadata, bytes _message) returns (bool)"
     ],
     "0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896": [

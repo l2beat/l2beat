@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x591e3023f8a926397edceba016fa698c87c6bc55
+
+# Diff at Wed, 11 Jun 2025 10:36:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 21387773
+- current block number: 21387773
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21387773 (main branch discovery), not current.
+
+```diff
+    contract Liquidity Pool (0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8) {
+    +++ description: None
+      sourceHashes.1:
++        "0xda336842ad358274289356ce376a6f9e6cd728ad4c4d74609f3a65768c9c95b9"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0x5A5fFf6F753d7C11A56A52FE47a177a87e431655"
+      implementationNames.0x5A5fFf6F753d7C11A56A52FE47a177a87e431655:
++        "SwapFlashLoan"
+    }
+```
+
+```diff
+    contract LPToken (0x1B84765dE8B7566e4cEAF4D0fD3c5aF52D3DdE4F) {
+    +++ description: None
+      sourceHashes.1:
++        "0x8bcd2f8e4f39141963f6232b1fb1679eff06e88b0f5127e427cf7c7992b84d44"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3"
+      implementationNames.0x6C8c6E68604e78B549C96907bfe9EBdaaC04e3B3:
++        "LPToken"
+    }
+```
+
 Generated with discovered.json: 0xf770f24001a37780f118e41818cd93e02cda4f01
 
 # Diff at Fri, 23 May 2025 09:41:06 GMT:
