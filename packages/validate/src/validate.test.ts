@@ -59,6 +59,12 @@ describe('validate', () => {
       path: '.bar',
       message: 'Expected string, got number.',
     })
+
+    const input3 = { bar: undefined, baz: 123 }
+    expect(Foo.safeValidate(input3)).toEqual({
+      success: true,
+      data: input3 as Foo,
+    })
   })
 
   it('array', () => {
@@ -190,6 +196,34 @@ describe('validate', () => {
     expect(Bar.safeParse({ a: 1 })).toEqual({
       success: true,
       data: { a: 1, b: 2, c: 2 },
+    })
+  })
+
+  it('tuple', () => {
+    const A = v.tuple([v.number(), v.string()])
+    expect(A.safeParse([1, 'foo'])).toEqual({
+      success: true,
+      data: [1, 'foo'],
+    })
+
+    const B = v.tuple([
+      v.number(),
+      v.string().optional(),
+      v.string().optional(),
+    ])
+    expect(B.safeParse([1, 'foo'])).toEqual({
+      success: true,
+      data: [1, 'foo'],
+    })
+
+    const C = v.tuple([
+      v.number(),
+      v.string().optional(),
+      v.string().optional(),
+    ])
+    expect(C.safeParse([1, undefined, 'foo'])).toEqual({
+      success: true,
+      data: [1, undefined, 'foo'],
     })
   })
 })

@@ -1,6 +1,6 @@
 export type Result<T> =
   | { success: true; data: T }
-  | { success: false; path: string; message: string, data?: never }
+  | { success: false; path: string; message: string; data?: never }
 
 type Infer<T> = T extends Parser<infer U> ? U : never
 
@@ -586,6 +586,79 @@ function unknown(): Validator<unknown> {
   return new ValidatorImpl(svUnknown, svUnknown, ['unknown', undefined])
 }
 
+type Tuple<T extends unknown[]> = T extends []
+  ? []
+  : T extends [infer X, ...infer XS]
+    ? X extends OptionalParser<infer U>
+      ? [U?, ...Tuple<XS>]
+      : X extends Parser<infer U>
+        ? [U, ...Tuple<XS>]
+        : never
+    : never
+
+function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
+  schema: T,
+  clone: boolean,
+) {
+  let requiredLength = schema.length
+  for (let i = schema.length - 1; i >= 0; i--) {
+    if ((schema[i] as ValidatorImpl<unknown>).isOptional) {
+      requiredLength--
+    } else {
+      break
+    }
+  }
+
+  return function svpTuple(value: unknown): Result<Tuple<T>> {
+    if (!Array.isArray(value)) {
+      return failType('array', value)
+    }
+    if (value.length < requiredLength || value.length > schema.length) {
+      return {
+        success: false,
+        path: '',
+        message: `Invalid array length, got ${value.length}.`,
+      }
+    }
+
+    const arrayResult: unknown[] = []
+    for (let i = 0; i < value.length; i++) {
+      // biome-ignore lint/style/noNonNullAssertion: It's there
+      const validator = schema[i]! as ValidatorImpl<unknown>
+      const item = value[i]
+      let res: Result<unknown>
+      if (item === undefined && validator.isOptional) {
+        res = { success: true, data: undefined }
+      } else {
+        res = clone ? validator.safeParse(item) : validator.safeValidate(item)
+      }
+      if (res.success === false) {
+        res.path = `[${i}]${res.path}`
+        return res
+      }
+      if (clone) {
+        arrayResult.push(res.data)
+      }
+    }
+    return { success: true, data: (clone ? arrayResult : value) as Tuple<T> }
+  }
+}
+
+function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
+  schema: T,
+): Validator<Tuple<T>>
+function tuple<T extends [] | [Parser<unknown>, ...Parser<unknown>[]]>(
+  schema: T,
+): Parser<Tuple<T>>
+function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
+  schema: T,
+): Validator<Tuple<T>> {
+  return new ValidatorImpl(svpTuple(schema, false), svpTuple(schema, true), [
+    'tuple',
+    schema,
+  ])
+}
+
 export const v = {
   string,
   number,
@@ -600,7 +673,7 @@ export const v = {
   union,
   record,
   enum: _enum,
-  // tuple
+  tuple,
   unknown,
 }
 
