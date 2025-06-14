@@ -74,6 +74,7 @@ export type StructureConfig = z.infer<typeof StructureConfig>
 export const StructureConfig = z.object({
   name: z.string().min(1),
   chain: z.string().min(1),
+  archived: z.optional(z.boolean()),
   initialAddresses: z.array(stringAs(EthereumAddress)),
   import: z.optional(z.array(z.string())),
   maxAddresses: z.number().positive().default(100),
