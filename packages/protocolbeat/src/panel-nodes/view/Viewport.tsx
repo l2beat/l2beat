@@ -2,6 +2,7 @@ import clsx from 'clsx'
 import { useEffect, useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
 import { useSearchStore } from '../../search/store'
+import { useStore } from '../store/store'
 import { MouseSelection } from './MouseSelection'
 import { NodesAndConnections } from './NodesAndConnections'
 import { ScalableView } from './ScalableView'
@@ -11,6 +12,9 @@ import { useTouchControls } from './hooks/useTouchControls'
 export function Viewport() {
   const containerRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<HTMLDivElement>(null)
+  const registerViewportContainer = useStore(
+    (state) => state.registerViewportContainer,
+  )
 
   const desktopControls = useDesktopControls({
     containerRef,
@@ -28,6 +32,13 @@ export function Viewport() {
   // Always capture if we're not in panel mode, or if we're in nodes panel
   const shouldCapture =
     (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
+
+  useEffect(() => {
+    registerViewportContainer(containerRef.current)
+    return () => {
+      registerViewportContainer(null)
+    }
+  }, [registerViewportContainer])
 
   useEffect(() => {
     const target = containerRef.current

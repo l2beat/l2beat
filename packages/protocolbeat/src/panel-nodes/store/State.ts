@@ -14,6 +14,7 @@ export interface State {
     readonly offsetY: number
     readonly scale: number
   }
+  readonly viewportContainer?: HTMLElement
   readonly input: {
     readonly shiftPressed: boolean
     readonly spacePressed: boolean
