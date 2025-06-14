@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { toFunctionSelector } from 'viem'
@@ -224,5 +225,72 @@ describe(Decoder.name, () => {
       to: undefined,
       chainId: 1,
     })
+  })
+
+  it('multiple occurrences of same address get consistent names', async () => {
+    const contractAddress: Address =
+      'eth:0x2Ce6311ddAE708829bc0784C967b7d77D19FD779'
+    addressService.setName(contractAddress, 'FiatTokenV2_2')
+
+    const selector = signatureService.add(
+      'function multiTransfer(address[] recipients, address token, address from)',
+    )
+
+    const tokenAddress = '0x2Ce6311ddAE708829bc0784C967b7d77D19FD779' // Same as contractAddress
+    const fromAddress = '0x2Ce6311ddAE708829bc0784C967b7d77D19FD779' // Same as contractAddress
+
+    const data = [
+      selector,
+      '60'.padStart(64, '0'), // offset to recipients array
+      tokenAddress
+        .slice(2)
+        .padStart(64, '0'), // token address
+      fromAddress
+        .slice(2)
+        .padStart(64, '0'), // from address
+      '2'.padStart(64, '0'), // recipients array length
+      tokenAddress
+        .slice(2)
+        .padStart(64, '0'), // recipients[0] - same address again
+      tokenAddress
+        .slice(2)
+        .padStart(64, '0'), // recipients[1] - same address again
+    ].join('') as `0x${string}`
+
+    const result = await decoder.decode({
+      data: data,
+      chain: ethereum,
+    })
+
+    assert(result.data.decoded?.type === 'call')
+
+    const decodedCall = result.data.decoded
+
+    expect(decodedCall.arguments.length).toBeGreaterThanOrEqual(3)
+
+    const recipientsArg = decodedCall.arguments[0] // recipients array
+    const tokenArg = decodedCall.arguments[1] // token address
+    const fromArg = decodedCall.arguments[2] // from address
+
+    assert(recipientsArg?.decoded?.type === 'array')
+    expect(recipientsArg.decoded.values.length).toBeGreaterThanOrEqual(2)
+    const recipient0 = recipientsArg.decoded.values[0]
+    const recipient1 = recipientsArg.decoded.values[1]
+
+    expect(recipient0?.decoded?.type).toEqual('address')
+    expect(recipient1?.decoded?.type).toEqual('address')
+
+    assert(recipient0?.decoded?.type === 'address')
+    assert(recipient1?.decoded?.type === 'address')
+
+    // Check token address
+    expect(tokenArg?.decoded?.type).toEqual('address')
+    assert(tokenArg?.decoded?.type === 'address')
+    expect(tokenArg?.decoded?.name).toEqual('FiatTokenV2_2')
+
+    // Check from address
+    expect(fromArg?.decoded?.type).toEqual('address')
+    assert(fromArg?.decoded?.type === 'address')
+    expect(fromArg.decoded.name).toEqual('FiatTokenV2_2')
   })
 })
