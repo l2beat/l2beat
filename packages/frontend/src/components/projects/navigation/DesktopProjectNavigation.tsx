@@ -117,6 +117,7 @@ export function DesktopProjectNavigation({
 
         <ProjectNavigationList
           sections={sections}
+          isUnderReview={project.isUnderReview}
           style={isSummarySection === false ? style : undefined}
         />
       </div>
@@ -126,8 +127,12 @@ export function DesktopProjectNavigation({
 
 function ProjectNavigationList({
   sections,
+  isUnderReview,
   style,
-}: Pick<ProjectNavigationProps, 'sections'> & { style?: CSSProperties }) {
+}: Pick<ProjectNavigationProps, 'sections'> & {
+  isUnderReview: boolean | undefined
+  style?: CSSProperties
+}) {
   const currentMenuEntry = useRef<HTMLAnchorElement>(null)
   const menuContainer = useRef<HTMLDivElement>(null)
   const currentSection = useCurrentSection()
@@ -150,7 +155,12 @@ function ProjectNavigationList({
 
   return (
     <div
-      className="absolute top-0 flex max-h-[calc(100vh-220px)] w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300"
+      className={cn(
+        'absolute top-0 flex w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300',
+        isUnderReview
+          ? 'max-h-[calc(100vh-300px)]'
+          : 'max-h-[calc(100vh-220px)]',
+      )}
       style={style}
       ref={menuContainer}
     >
