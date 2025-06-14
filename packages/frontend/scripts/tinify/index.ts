@@ -9,9 +9,7 @@ import {
   saveToTinifyMetadata,
 } from './utils/tinifyMetadata'
 
-dotenv.config({
-  path: './.env.local',
-})
+dotenv.config()
 
 const staticDir = path.join(__dirname, '../../static')
 
