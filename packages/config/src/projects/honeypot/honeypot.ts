@@ -97,28 +97,8 @@ export const honeypot: ScalingProject = {
   ),
   config: {
     escrows: [
-      discovery.getEscrowDetails({
-        address: EthereumAddress('0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366'),
-        tokens: '*',
-        description: 'Contract storing bounty funds.',
-      }),
     ],
     trackedTxs: [
-      {
-        uses: [
-          { type: 'liveness', subtype: 'stateUpdates' },
-          { type: 'l2costs', subtype: 'stateUpdates' },
-        ],
-        query: {
-          formula: 'functionCall',
-          address: EthereumAddress(
-            '0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f',
-          ),
-          selector: '0xddfdfbb0',
-          functionSignature: 'function submitClaim(bytes calldata _claimData)',
-          sinceTimestamp: UnixTime(1694467715),
-        },
-      },
     ],
   },
   dataAvailability: {
@@ -150,7 +130,7 @@ export const honeypot: ScalingProject = {
           {
             title:
               'Authority.sol#L148 - Etherscan source code, submitClaim function',
-            url: 'https://etherscan.io/address/0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f#code#F1#L48',
+            url: '',
           },
         ],
       },
@@ -162,7 +142,7 @@ export const honeypot: ScalingProject = {
       references: [
         {
           title: 'InputBox.sol#30 - Etherscan source code, addInput function',
-          url: 'https://etherscan.io/address/0x59b22D57D4f067708AB0c00552767405926dc768#code#F1#L30',
+          url: '',
         },
       ],
     },
@@ -193,25 +173,6 @@ export const honeypot: ScalingProject = {
   contracts: {
     addresses: {
       [discovery.chain]: [
-        discovery.getContractDetails('Honeypot', {
-          description:
-            'CartesiDApp instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
-        }),
-        discovery.getContractDetails('InputBox', {
-          description:
-            'Contract that receives arbitrary blobs as inputs to Cartesi DApps.',
-        }),
-        discovery.getContractDetails('ERC20Portal', {
-          description:
-            'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
-        }),
-        discovery.getContractDetails('Authority', {
-          description:
-            'Simple consensus model controlled by a single address, the owner.',
-        }),
-        discovery.getContractDetails('History', {
-          description: 'Contract that stores claims for Cartesi DApps.',
-        }),
       ],
     },
     risks: [],
@@ -219,11 +180,6 @@ export const honeypot: ScalingProject = {
   permissions: {
     [discovery.chain]: {
       actors: [
-        discovery.getPermissionDetails(
-          'Authority owner',
-          discovery.getPermissionedAccounts('Authority', 'owner'),
-          'The Authority owner can submit claims to the Honeypot DApp.',
-        ),
       ],
     },
   },
