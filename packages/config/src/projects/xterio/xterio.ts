@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
@@ -69,6 +74,9 @@ export const xterio: ScalingProject = opStackL2({
         'https://medium.com/@XterioGames',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   isNodeAvailable: 'UnderReview',
   daProvider: DACHALLENGES_DA_PROVIDER(
