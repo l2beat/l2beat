@@ -43,7 +43,7 @@ export function ScalingUpcomingTables(
     id: '#',
     desc: false,
   }
-  const showOthers = checked || entries.others.length > 0
+  const showOthers = entries.others.length > 0
 
   return (
     <>

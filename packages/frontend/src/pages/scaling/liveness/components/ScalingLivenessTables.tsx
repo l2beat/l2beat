@@ -71,7 +71,7 @@ export function ScalingLivenessTables(props: Props) {
     }
   }, [checked, entries.others, tab])
 
-  const showOthers = checked || entries.others.length > 0
+  const showOthers = entries.others.length > 0
 
   return (
     <>
