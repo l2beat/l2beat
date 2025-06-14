@@ -1353,5 +1353,7 @@
   "static/icons/katana.png": "693eb30cf139115e637ba35b80dc9785",
   "static/meta-images/scaling/projects/katana/opengraph-image.png": "a0e6d13cad4537d4f115f82b8777e203",
   "static/meta-images/governance/publications/governance-review-55.png": "4e45e7cde7532ed9da345b8884b874f6",
-  "static/meta-images/governance/publications/governance-review-54.png": "df583a40383d20c91b4a577741d2df3e"
+  "static/meta-images/governance/publications/governance-review-54.png": "df583a40383d20c91b4a577741d2df3e",
+  "static/icons/cartesi-prt-honeypot.png": "c42b14c8827ce93d7d2bef3074a72770",
+  "static/meta-images/scaling/projects/cartesi-prt-honeypot/opengraph-image.png": "16ba8b04d90b09ad49af5bf99238d8fe"
 }

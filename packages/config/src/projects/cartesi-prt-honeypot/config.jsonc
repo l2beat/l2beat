@@ -1,0 +1,20 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "cartesi-prt-honeypot",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c",
+        "0xc700d6add016eecd59d989c028214eaa0fcc0051"
+      ],
+      "names": {
+        "0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c": "Application",
+        "0x6ce590b9f0697327f18c601df6f0bae4a0801b68": "DaveConsensus",
+        "0xa31c2acff3464658866960c0fbd3d798310272d7": "MultiLevelTournamentFactory",
+        "0xc70074bdd26d8cf983ca6a5b89b8db52d5850051": "InputBox",
+        "0xc700d6add016eecd59d989c028214eaa0fcc0051": "ERC20Portal"
+      }
+    }
+  }
+}
