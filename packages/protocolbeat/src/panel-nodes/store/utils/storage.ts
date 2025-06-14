@@ -24,10 +24,13 @@ const NodeColors = z.record(
   ]),
 )
 
+const NodeHiddenFields = z.record(z.string(), z.array(z.string()))
+
 const StoredNodeLayout = z.object({
   projectId: z.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
+  hiddenFields: NodeHiddenFields.optional(),
 })
 
 export type NodeLocations = z.infer<typeof NodeLocations>
@@ -45,6 +48,11 @@ export function persistNodeLayout(state: State): void {
     projectId: state.projectId,
     locations: Object.fromEntries(state.nodes.map((n) => [n.id, n.box])),
     colors: Object.fromEntries(state.nodes.map((n) => [n.id, n.color])),
+    hiddenFields: Object.fromEntries(
+      state.nodes
+        .filter((n) => n.hiddenFields.length > 0)
+        .map((n) => [n.id, n.hiddenFields]),
+    ),
   }
   localStorage.setItem(
     getLayoutStorageKey(state.projectId),
