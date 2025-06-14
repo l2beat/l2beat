@@ -51,6 +51,7 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
+  readonly shared: SharedModuleConfig | false
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -273,4 +274,8 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+}
+
+export interface SharedModuleConfig {
+  ethereumWsUrl: string
 }
