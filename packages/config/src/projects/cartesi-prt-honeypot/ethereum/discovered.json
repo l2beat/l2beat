@@ -1,17 +1,19 @@
 {
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
-  "blockNumber": 22689550,
+  "blockNumber": 22709685,
   "configHash": "0x8e0211df4d802943779b6f885bffe0d6b3b5b7b00ba75b626ff94dca2a39bab6",
   "entries": [
     {
       "name": "Application",
       "address": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
       "type": "Contract",
+      "template": "cartesi/Application",
       "sourceHashes": [
         "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac"
       ],
       "proxyType": "immutable",
+      "description": "Rollup app instance constract, responsible for holding assets and allowing the DApp to interact with other smart contracts.",
       "sinceTimestamp": 1749510467,
       "sinceBlock": 22670193,
       "values": {
@@ -20,10 +22,8 @@
         "getDeploymentBlockNumber": 22670193,
         "getOutputsMerkleRootValidator": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
         "getTemplateHash": "0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "wasOutputExecuted": [false, false, false, false, false]
+        "owner": "0x0000000000000000000000000000000000000000"
       },
-      "errors": { "wasOutputExecuted": "Processing error occurred." },
       "implementationNames": {
         "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
       }
@@ -32,10 +32,12 @@
       "name": "DaveConsensus",
       "address": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
       "type": "Contract",
+      "template": "cartesi/DaveConsensus",
       "sourceHashes": [
         "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c"
       ],
       "proxyType": "immutable",
+      "description": "Entrypoint for the fault proof state validation system called Dave.",
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
       "values": {
@@ -78,10 +80,14 @@
       "name": "InputBox",
       "address": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
       "type": "Contract",
+      "template": "cartesi/InputBox",
       "sourceHashes": [
         "0xd6dc854c1f4207b23c80cab9cf5de1d72978dd86677fe8c8ace07ee5fdfa33c0"
       ],
       "proxyType": "immutable",
+      "description": "Contract that receives arbitrary blobs as inputs to Cartesi DApps.",
+      "sinceTimestamp": 1748610851,
+      "sinceBlock": 22595776,
       "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
       "implementationNames": {
         "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051": "InputBox"
@@ -91,10 +97,14 @@
       "name": "ERC20Portal",
       "address": "0xc700D6aDd016eECd59d989C028214Eaa0fCC0051",
       "type": "Contract",
+      "template": "cartesi/ERC20Portal",
       "sourceHashes": [
         "0x4d9461f610606f687a0d0180aa13890df326becb8f2e8ff8acdd713c311ceae9"
       ],
       "proxyType": "immutable",
+      "description": "Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.",
+      "sinceTimestamp": 1748610923,
+      "sinceBlock": 22595782,
       "values": {
         "$immutable": true,
         "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051"
@@ -283,6 +293,11 @@
       "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
     ]
   },
-  "usedTemplates": {},
+  "usedTemplates": {
+    "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
+    "cartesi/DaveConsensus": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+  },
   "permissionsConfigHash": "0xc1ef2c6561bc7f0a338851d891e3953a25d7320c68b0d500131b6e87dd904fec"
 }

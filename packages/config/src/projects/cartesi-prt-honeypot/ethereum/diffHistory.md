@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xd75b7ecd5acc197e361d850ac4653ceef96ca9b4
+Generated with discovered.json: 0xb774dec07b00b6a9d1e847b9d5c0b60b1bb9b298
 
-# Diff at Thu, 12 Jun 2025 16:02:43 GMT:
+# Diff at Sun, 15 Jun 2025 11:56:14 GMT:
 
-- author: Gabriel Coutinho de Paula (<gcdepaula@protonmail.com>)
-- current block number: 22689550
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- current block number: 22709685
 
 ## Description
 
@@ -14,13 +14,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Application (0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c)
-    +++ description: None
+    +++ description: Rollup app instance constract, responsible for holding assets and allowing the DApp to interact with other smart contracts.
 ```
 
 ```diff
 +   Status: CREATED
     contract DaveConsensus (0x6CE590b9F0697327f18c601DF6f0baE4a0801B68)
-    +++ description: None
+    +++ description: Entrypoint for the fault proof state validation system called Dave.
 ```
 
 ```diff
@@ -32,13 +32,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract InputBox (0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051)
-    +++ description: None
+    +++ description: Contract that receives arbitrary blobs as inputs to Cartesi DApps.
 ```
 
 ```diff
 +   Status: CREATED
     contract ERC20Portal (0xc700D6aDd016eECd59d989C028214Eaa0fCC0051)
-    +++ description: None
+    +++ description: Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.
 ```
 
 ```diff

@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract that receives arbitrary blobs as inputs to Cartesi DApps."
+}
