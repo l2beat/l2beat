@@ -27,22 +27,20 @@ export const cartesiprthoneypot: ScalingProject = {
   id: ProjectId('cartesi-prt-honeypot'),
   capability: 'appchain',
   addedAt: UnixTime(1749678198), // 2025-06-11T21:43:18Z
-
-  colors: {
-    primary: '#00F6FF', // Cyan
-    secondary: '#000000', // Black
-  },
-
+  badges: [
+    BADGES.VM.CartesiVM,
+    BADGES.VM.AppChain,
+    BADGES.DA.EthereumCalldata,
+    BADGES.Stack.Cartesi,
+  ],
   display: {
     name: 'Cartesi PRT Honeypot',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
     stack: 'Cartesi Rollups',
-
     description:
       'Cartesi PRT Honeypot is an application-specific Stage-2 rollup that stress-tests Cartesi Rollups’ security. Protected solely by Cartesi’s PRT (Permissionless Refereed Tournaments) fraud-proof algorithm, it turns its locked funds into an open bounty for anyone who can break the system.',
     purposes: ['Bug bounty'],
-
     links: {
       websites: ['https://cartesi.io/'],
       documentation: [
@@ -66,7 +64,6 @@ export const cartesiprthoneypot: ScalingProject = {
         'https://medium.com/cartesi',
       ],
     },
-
     liveness: {
       warnings: {
         // Standard optimistic-rollup notice
@@ -77,10 +74,8 @@ export const cartesiprthoneypot: ScalingProject = {
         'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
   },
-
   config: {
     associatedTokens: ['CTSI'],
-
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c'),
@@ -88,7 +83,6 @@ export const cartesiprthoneypot: ScalingProject = {
         description: 'Contract storing bounty funds.',
       }),
     ],
-
     trackedTxs: [
       {
         uses: [
@@ -108,17 +102,11 @@ export const cartesiprthoneypot: ScalingProject = {
       },
     ],
   },
-
-  ecosystemInfo: {
-    id: ProjectId('cartesi'),
-  },
-
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
     bridge: DA_BRIDGES.ENSHRINED,
     mode: DA_MODES.TRANSACTION_DATA,
   },
-
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP_INT,
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
@@ -126,7 +114,6 @@ export const cartesiprthoneypot: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
-
   stage: getStage(
     {
       stage0: {
@@ -138,12 +125,8 @@ export const cartesiprthoneypot: ScalingProject = {
       stage1: {
         principle: true,
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: {
-          satisfied: true,
-          message: 'Fraud-proof system fully permissionless.',
-          mode: 'replace',
-        },
-        usersHave7DaysToExit: null,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
       },
@@ -163,7 +146,6 @@ export const cartesiprthoneypot: ScalingProject = {
         'https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node',
     },
   ),
-
   technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
@@ -174,17 +156,14 @@ export const cartesiprthoneypot: ScalingProject = {
         },
       ],
     },
-
     operator: {
       ...OPERATOR.DECENTRALIZED_OPERATOR,
       references: [],
     },
-
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
       references: [],
     },
-
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('optimistic'),
@@ -192,7 +171,6 @@ export const cartesiprthoneypot: ScalingProject = {
       },
     ],
   },
-
   stateDerivation: {
     nodeSoftware:
       'The source code for the Cartesi node software is available [here](https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node).',
@@ -272,12 +250,5 @@ export const cartesiprthoneypot: ScalingProject = {
       description: 'Cartesi PRT Honeypot deployed to Ethereum mainnet.',
       type: 'general',
     },
-  ],
-
-  badges: [
-    BADGES.VM.CartesiVM,
-    BADGES.VM.AppChain,
-    BADGES.DA.EthereumCalldata,
-    BADGES.Stack.Cartesi,
   ],
 }

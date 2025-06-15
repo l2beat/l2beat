@@ -38,6 +38,7 @@
       ],
       "proxyType": "immutable",
       "description": "Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.",
+      "ignoreInWatchMode": ["canSettle", "getCurrentSealedEpoch"],
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
       "values": {
@@ -297,7 +298,7 @@
   },
   "usedTemplates": {
     "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
-    "cartesi/DaveConsensus": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/DaveConsensus": "0xd22699d689db6d9de5523a67a3805f41943d411b2d8eeab8d15ccee6c855cb79",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/MultiLevelTournamentFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
