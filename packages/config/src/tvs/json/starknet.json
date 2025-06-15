@@ -173,6 +173,24 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "starknet-rUSDC-stark",
+      "priceId": "relend-network-usdc-starknet",
+      "symbol": "rUSDC-stark",
+      "name": "Relend Network USDC - Starknet",
+      "iconUrl": "https://assets.coingecko.com/coins/images/55061/large/rUSDC-_200x200.png?1743524727",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02019e47a0bc54ea6b4853c6123ffc8158ea3ae2af4166928b0de6e89f06de6c",
+        "chain": "starknet",
+        "decimals": 6,
+        "sinceTimestamp": 1739893482
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "starknet-sfrxETH",
       "priceId": "staked-frax-ether",
