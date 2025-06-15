@@ -37,7 +37,7 @@
         "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c"
       ],
       "proxyType": "immutable",
-      "description": "Entrypoint for the fault proof state validation system called Dave.",
+      "description": "Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.",
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
       "values": {
@@ -65,10 +65,12 @@
       "name": "MultiLevelTournamentFactory",
       "address": "0xA31C2aCfF3464658866960c0fBD3d798310272D7",
       "type": "Contract",
+      "template": "cartesi/MultiLevelTournamentFactory",
       "sourceHashes": [
         "0xb56d0fd498dabd92ee9ab164394860f9bbb68ea74e4c639f8b1c1f6864eef878"
       ],
       "proxyType": "immutable",
+      "description": "Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.",
       "sinceTimestamp": 1749508271,
       "sinceBlock": 22670010,
       "values": { "$immutable": true },
@@ -297,7 +299,8 @@
     "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
     "cartesi/DaveConsensus": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/MultiLevelTournamentFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xc1ef2c6561bc7f0a338851d891e3953a25d7320c68b0d500131b6e87dd904fec"
 }

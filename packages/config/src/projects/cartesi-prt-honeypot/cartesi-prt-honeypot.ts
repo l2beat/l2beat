@@ -15,6 +15,10 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import {
+  generateDiscoveryDrivenContracts,
+  generateDiscoveryDrivenPermissions,
+} from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('cartesi-prt-honeypot')
 
@@ -197,7 +201,6 @@ export const cartesiprthoneypot: ScalingProject = {
     dataFormat:
       'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.0.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals).',
   },
-
   stateValidation: {
     categories: [
       {
@@ -221,35 +224,11 @@ export const cartesiprthoneypot: ScalingProject = {
       },
     ],
   },
-
+  permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {
-    addresses: {
-      [discovery.chain]: [
-        discovery.getContractDetails('Application', {
-          description:
-            'Cartesi Application instance for the Honeypot DApp, responsible for holding assets and allowing the DApp to interact with other smart contracts.',
-        }),
-        discovery.getContractDetails('DaveConsensus', {
-          description:
-            'Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.',
-        }),
-        discovery.getContractDetails('MultiLevelTournamentFactory', {
-          description:
-            'Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.',
-        }),
-        discovery.getContractDetails('InputBox', {
-          description:
-            'Contract that receives arbitrary blobs as input payloads to Cartesi DApps.',
-        }),
-        discovery.getContractDetails('ERC20Portal', {
-          description:
-            'Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps.',
-        }),
-      ],
-    },
+    addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
   },
-
   milestones: [
     {
       title: 'Honeypot Authority announcement',
@@ -269,29 +248,28 @@ export const cartesiprthoneypot: ScalingProject = {
       title: 'Permissionless Refereed Tournaments',
       url: 'https://arxiv.org/abs/2212.12439',
       date: '2022-12-23T00:00:00Z',
-      description: 'PRT paper published on arxiv',
+      description: 'PRT paper published on arxiv.',
       type: 'general',
     },
     {
-      title:
-        'The Dave Algorithm — triumphing over Sybils with a laptop and a small collateral',
+      title: 'The Dave Algorithm',
       url: 'https://youtu.be/dI_3neyXVl0',
       date: '2024-11-13T00:00:00Z',
-      description: 'Devcon 2024 presentation introducing the Dave algorithm',
+      description: 'Devcon 2024 presentation introducing the Dave algorithm.',
       type: 'general',
     },
     {
-      title: 'Dave: a decentralized, secure, and lively fraud-proof algorithm',
+      title: 'Dave: decentralized, secure, lively fraud-proofs',
       url: 'https://dl.acm.org/doi/10.1145/3734698',
       date: '2025-05-09T00:00:00Z',
-      description: 'Dave paper published on ACM DLT, a peer-reviewed journal',
+      description: 'Dave paper published on ACM DLT, a peer-reviewed journal.',
       type: 'general',
     },
     {
       title: 'Cartesi PRT Honeypot deployed on Ethereum',
       url: 'https://etherscan.io/address/0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c',
-      date: '2025-06-09T23:08:11Z',
-      description: 'Cartesi PRT Honeypot deployed to Ethereum mainnet',
+      date: '2025-06-09T00:00:00Z',
+      description: 'Cartesi PRT Honeypot deployed to Ethereum mainnet.',
       type: 'general',
     },
   ],

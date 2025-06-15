@@ -1,4 +1,4 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Entrypoint for the fault proof state validation system called Dave."
+  "description": "Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods."
 }

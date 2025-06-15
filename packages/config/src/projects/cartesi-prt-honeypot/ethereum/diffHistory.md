@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xb774dec07b00b6a9d1e847b9d5c0b60b1bb9b298
+Generated with discovered.json: 0x3d49dee0a460da3def7c17cd404ea615a022e0a3
 
-# Diff at Sun, 15 Jun 2025 11:56:14 GMT:
+# Diff at Sun, 15 Jun 2025 12:06:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22709685
@@ -20,13 +20,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract DaveConsensus (0x6CE590b9F0697327f18c601DF6f0baE4a0801B68)
-    +++ description: Entrypoint for the fault proof state validation system called Dave.
+    +++ description: Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.
 ```
 
 ```diff
 +   Status: CREATED
     contract MultiLevelTournamentFactory (0xA31C2aCfF3464658866960c0fBD3d798310272D7)
-    +++ description: None
+    +++ description: Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.
 ```
 
 ```diff
