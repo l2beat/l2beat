@@ -1,8 +1,14 @@
 {
-  "RiscZeroGroth16Verifier.sol": {
+  "RiscZeroGroth16Verifier_v2_0_0": {
     "hash": "0x22a4c48ce03a19c9b31c30608fd0808cfe2c85b5c722e1173aafd22872fd1881",
     "address": "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98",
     "chain": "ethereum",
     "blockNumber": 22468063
+  },
+  "RiscZeroGroth16Verifier_v2_1_0": {
+    "hash": "0xe1597b3a05a2f083910b7e1c6e81e56d4eff97191b25307544c7f2164d824d51",
+    "address": "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a",
+    "chain": "ethereum",
+    "blockNumber": 22694475
   }
 }

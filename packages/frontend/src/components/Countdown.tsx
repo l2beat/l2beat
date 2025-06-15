@@ -84,7 +84,7 @@ export function TextCountdown({ expiresAt }: { expiresAt: number }) {
   )
 }
 
-const MemoizedTimePart = memo(TimePart)
+export const MemoizedTimePart = memo(TimePart)
 function TimePart({
   children,
   suffix,
@@ -124,7 +124,7 @@ function TimePart({
   )
 }
 
-function getTimeParts(timeLeft: number) {
+export function getTimeParts(timeLeft: number) {
   const days = Math.floor(timeLeft / (60 * 60 * 24))
   const hours = Math.floor((timeLeft % (60 * 60 * 24)) / (60 * 60))
   const minutes = Math.floor((timeLeft % (60 * 60)) / 60)
