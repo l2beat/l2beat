@@ -2,6 +2,7 @@ import type { ProjectScalingStack } from '@l2beat/config'
 import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
+import { CartesiIcon } from '~/icons/providers/CartesiIcon'
 import { LoopringIcon } from '~/icons/providers/LoopringIcon'
 import { OptimismIcon } from '~/icons/providers/OptimismIcon'
 import { OVMIcon } from '~/icons/providers/OvmIcon'
@@ -90,7 +91,10 @@ export const providerMap: Record<
     Icon: TaikoIcon,
     text: "This project is based on Taiko's code base.",
   },
-  'Cartesi Rollups': undefined,
+  'Cartesi Rollups': {
+    Icon: CartesiIcon,
+    text: "This project is based on Cartesi's code base.",
+  },
 }
 
 interface TypeTooltipProps {
