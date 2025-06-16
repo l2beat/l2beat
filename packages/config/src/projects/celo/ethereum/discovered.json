@@ -191,6 +191,7 @@
       "sinceTimestamp": 1741879559,
       "sinceBlock": 22038831,
       "values": {
+        "$admin": "0x783A434532Ee94667979213af1711505E8bFE374",
         "$immutable": false,
         "$implementation": "0xDE47b113E4157ed15fA46c5572562aC11146c5eA",
         "$pastUpgrades": [
@@ -477,6 +478,14 @@
           "from": "ethereum:0xa316D42E8Fd98D2Ec364b8bF853d2623E768f95a",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x783A434532Ee94667979213af1711505E8bFE374" }
+          ]
         },
         {
           "permission": "upgrade",
@@ -859,6 +868,11 @@
           "from": "ethereum:0x55093104b76FAA602F9d6c35A5FFF576bE78d753",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1AC1181fc4e4F877963680587AEAa2C90D7EbB95",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -2975,5 +2989,5 @@
     "opstack/SuperchainConfigChild": "0x1eaef43bc63a0a1b0490fa3747862ccb3a14367811b99769051d4c8a0a37b84d",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x7160aedc0dc93853806b472391e4c57ebe17acc4bc7fb11eb37f99e30c018f48"
+  "permissionsConfigHash": "0xddc84bccb52c178a9565bbbd11c8efdf46911ac7ee968200324841990b51b67f"
 }

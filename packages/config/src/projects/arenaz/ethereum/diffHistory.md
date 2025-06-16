@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x446e8ed748fccd368b682b8f44970e6b6e1bf2bf
+Generated with discovered.json: 0x9cc8d07ce51fbfb4370dfda7d3e3199e603f28c6
 
-# Diff at Mon, 16 Jun 2025 09:46:00 GMT:
+# Diff at Mon, 16 Jun 2025 08:41:42 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22494925
 - current block number: 22494925
 
 ## Description
 
-Config: add permissioned opfp role tags.
+Discovery rerun on the same block number with only config-related changes.
 
 ## Config/verification related changes
 
@@ -17,26 +17,71 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22494925 (main branch discovery), not current.
 
 ```diff
-    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
-    +++ description: None
-      receivedPermissions.1:
-+        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger","via":[{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+    contract L1CrossDomainMessenger (0x0BE364912219bC74760f1d1c25F4866b328eBfC6) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
     }
 ```
 
 ```diff
-    EOA  (0x5f16E66D8736B689a430564a31c8d887ca357CD8) {
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
     +++ description: None
-      receivedPermissions:
-+        [{"permission":"propose","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".proposer"}]
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be","role":"admin","via":[{"address":"ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"}]}
+      receivedPermissions.13.from:
+-        "ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be"
++        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+      receivedPermissions.12.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      receivedPermissions.11.from:
+-        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
++        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
+      receivedPermissions.10.from:
+-        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.10.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.9.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      receivedPermissions.9.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.8.from:
+-        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
+      receivedPermissions.7.from:
+-        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
++        "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
     }
 ```
 
 ```diff
-    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    contract ProxyAdmin (0xEEFD1782D70824CBcacf9438afab7f353F1797F0) {
     +++ description: None
-      receivedPermissions.1:
-+        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger"}
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be","role":"admin"}
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be"
++        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
++        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
++        "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
     }
 ```
 

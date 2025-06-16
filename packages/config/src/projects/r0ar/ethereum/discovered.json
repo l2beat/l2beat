@@ -144,6 +144,7 @@
       "sinceTimestamp": 1728285323,
       "sinceBlock": 20912123,
       "values": {
+        "$admin": "0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA",
         "$immutable": false,
         "$implementation": "0x8bA829f040EB57668BDfb010472AEb0a16B2399C",
         "$pastUpgrades": [
@@ -456,6 +457,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x683ca289a8418Cb090E42929A73a263d7b81DfC2",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
@@ -761,6 +767,17 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x465833609d9ff2Cb9A070b0d71b700F318C97293",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA"
+            },
+            { "address": "ethereum:0xf758e2272FCe1330d8a1De38D5128A47B4041752" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x5b0e75a52862881b4077C865B244CC17cD2b531b",
           "role": "admin",
           "via": [
             {
@@ -1861,5 +1878,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xffd10c6a20a65a6ac32dc392165e7fed6001d9d2c2a528203991cb7459ef0e0e"
+  "permissionsConfigHash": "0x85d3d163e4e66e273e6ddba1c9be9775dc4fc1632ce969e4ea9c4dde47111b1a"
 }
