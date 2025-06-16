@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x7744c889c9166227859d3e088f6f3356086706e2
+Generated with discovered.json: 0x816f2e05a6447c2270f700b70ea353b6a50d11af
 
-# Diff at Mon, 16 Jun 2025 08:43:33 GMT:
+# Diff at Mon, 16 Jun 2025 10:14:40 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22593567
 - current block number: 22593567
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: add permissioned opfp role tags.
 
 ## Config/verification related changes
 
@@ -17,22 +17,43 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22593567 (main branch discovery), not current.
 
 ```diff
+    EOA  (0x2307278fC8aB0005974A6DeD2FA6d1187333a223) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9","role":".proposer"}]
+    }
+```
+
+```diff
     contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
     +++ description: None
-      receivedPermissions.9:
+      receivedPermissions.10:
 +        {"permission":"upgrade","from":"ethereum:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A","role":"admin","via":[{"address":"ethereum:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x82Cb528466cF22412d89bdBE9bCF04856790dD0e","role":"admin","via":[{"address":"ethereum:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}]}
       receivedPermissions.8.from:
 -        "ethereum:0x6ab0777fD0e609CE58F939a7F70Fe41F5Aa6300A"
-+        "ethereum:0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
++        "ethereum:0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53"
       receivedPermissions.7.from:
 -        "ethereum:0x82Cb528466cF22412d89bdBE9bCF04856790dD0e"
-+        "ethereum:0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53"
++        "ethereum:0xD4D7A57DCC563756DeD99e224E144A6Bf0327099"
       receivedPermissions.6.from:
 -        "ethereum:0x4E6dE8B4c2D5aD6c603648f78311a21558D37A53"
-+        "ethereum:0xD4D7A57DCC563756DeD99e224E144A6Bf0327099"
++        "ethereum:0xf931a81D18B1766d15695ffc7c1920a62b7e710a"
       receivedPermissions.5.from:
 -        "ethereum:0xD4D7A57DCC563756DeD99e224E144A6Bf0327099"
-+        "ethereum:0xf931a81D18B1766d15695ffc7c1920a62b7e710a"
++        "ethereum:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "challenge"
+      receivedPermissions.4.from:
+-        "ethereum:0xd5ec14a83B7d95BE1E2Ac12523e2dEE12Cbeea6C"
++        "ethereum:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9"
+      receivedPermissions.4.role:
+-        "admin"
++        ".challenger"
+      receivedPermissions.4.via:
+-        [{"address":"ethereum:0xd7405BE7f3e63b094Af6C7C23D5eE33Fd82F872D"}]
     }
 ```
 

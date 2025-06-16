@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb2034b86cd37cb35eb5f8892465bc3076e1b7260
+Generated with discovered.json: 0xe723dc186b24fbf51e259a5d06ec539949ba6662
 
-# Diff at Mon, 16 Jun 2025 08:41:48 GMT:
+# Diff at Mon, 16 Jun 2025 10:14:37 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22437734
 - current block number: 22437734
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: add permissioned opfp role tags.
 
 ## Config/verification related changes
 

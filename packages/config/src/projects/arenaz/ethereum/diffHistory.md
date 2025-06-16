@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x9cc8d07ce51fbfb4370dfda7d3e3199e603f28c6
+Generated with discovered.json: 0x780fe6be625055bc6cdbb8cb90036ebe048fa781
 
-# Diff at Mon, 16 Jun 2025 08:41:42 GMT:
+# Diff at Mon, 16 Jun 2025 10:14:35 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22494925
 - current block number: 22494925
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: add permissioned opfp role tags.
 
 ## Config/verification related changes
 
@@ -21,6 +21,14 @@ discovery. Values are for block 22494925 (main branch discovery), not current.
     +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
       values.$admin:
 +        "0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger","via":[{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
     }
 ```
 
@@ -56,6 +64,22 @@ discovery. Values are for block 22494925 (main branch discovery), not current.
       receivedPermissions.7.from:
 -        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
 +        "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
+    }
+```
+
+```diff
+    EOA  (0x5f16E66D8736B689a430564a31c8d887ca357CD8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger"}
     }
 ```
 
