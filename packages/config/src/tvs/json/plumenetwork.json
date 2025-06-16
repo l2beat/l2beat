@@ -36,7 +36,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "plumenetwork-pUSD-1",
       "priceId": "plume-usd",
       "symbol": "pUSD",
@@ -47,25 +47,6 @@
         "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
         "chain": "plumenetwork",
         "decimals": 6,
-        "sinceTimestamp": 1746662400
-      },
-      "category": "other",
-      "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "custom",
-      "id": "plumenetwork-USDC",
-      "priceId": "usd-coin",
-      "symbol": "USDC",
-      "name": "USD Coin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "chain": "ethereum",
-        "escrowAddress": "0xE2C902BC61296531e556962ffC81A082b82f5F28",
-        "decimals": 6,
         "sinceTimestamp": 1740047951
       },
       "valueForProject": {
@@ -74,10 +55,10 @@
         "arguments": [
           {
             "type": "value",
-            "priceId": "usd-coin",
+            "priceId": "plume-usd",
             "amount": {
               "type": "totalSupply",
-              "address": "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6",
+              "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
               "chain": "plumenetwork",
               "decimals": 6,
               "sinceTimestamp": 1740047951
@@ -89,8 +70,20 @@
             "amount": {
               "type": "balanceOfEscrow",
               "address": "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6",
-              "chain": "plumenetwork",
               "escrowAddress": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+              "chain": "plumenetwork",
+              "decimals": 6,
+              "sinceTimestamp": 1740047951
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "stargate-bridged-usdc-plume",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+              "escrowAddress": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+              "chain": "plumenetwork",
               "decimals": 6,
               "sinceTimestamp": 1740047951
             }
@@ -98,11 +91,29 @@
         ]
       },
       "category": "stablecoin",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "plumenetwork-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x54FD4da2Fa19Cf0f63d8f93A6EA5BEd3F9C042C6",
+        "chain": "ethereum",
+        "decimals": 6,
+        "sinceTimestamp": 1740047951
+      },
+      "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
     },
     {
-      "mode": "custom",
+      "mode": "auto",
       "id": "plumenetwork-USDC.e",
       "priceId": "stargate-bridged-usdc-plume",
       "symbol": "USDC.e",
@@ -114,35 +125,6 @@
         "chain": "plumenetwork",
         "decimals": 6,
         "sinceTimestamp": 1749427200
-      },
-      "valueForProject": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "value",
-            "priceId": "stargate-bridged-usdc-plume",
-            "amount": {
-              "type": "totalSupply",
-              "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
-              "chain": "plumenetwork",
-              "decimals": 6,
-              "sinceTimestamp": 1749427200
-            }
-          },
-          {
-            "type": "value",
-            "priceId": "stargate-bridged-usdc-plume",
-            "amount": {
-              "type": "balanceOfEscrow",
-              "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
-              "chain": "plumenetwork",
-              "escrowAddress": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
-              "decimals": 6,
-              "sinceTimestamp": 1749427200
-            }
-          }
-        ]
       },
       "category": "other",
       "source": "external",
