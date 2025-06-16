@@ -47,7 +47,7 @@
         "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
         "chain": "plumenetwork",
         "decimals": 6,
-        "sinceTimestamp": 1740047951
+        "sinceTimestamp": 1746835200
       },
       "valueForProject": {
         "type": "calculation",
@@ -61,7 +61,7 @@
               "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
               "chain": "plumenetwork",
               "decimals": 6,
-              "sinceTimestamp": 1740047951
+              "sinceTimestamp": 1746835200
             }
           },
           {
@@ -73,7 +73,7 @@
               "escrowAddress": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
               "chain": "plumenetwork",
               "decimals": 6,
-              "sinceTimestamp": 1740047951
+              "sinceTimestamp": 1746835200
             }
           },
           {
@@ -85,7 +85,7 @@
               "escrowAddress": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
               "chain": "plumenetwork",
               "decimals": 6,
-              "sinceTimestamp": 1740047951
+              "sinceTimestamp": 1746835200
             }
           }
         ]
