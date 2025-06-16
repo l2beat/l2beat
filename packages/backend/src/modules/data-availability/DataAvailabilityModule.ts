@@ -10,6 +10,11 @@ import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
 import { DaService } from './services/DaService'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
+import { assert } from '@l2beat/shared-pure'
+import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
+import partition from 'lodash/partition'
+import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -29,37 +34,46 @@ export function initDataAvailabilityModule(
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers } = createIndexers(
-    config.da,
-    clock,
-    database,
-    logger,
-    providers,
-  )
+  const { targetIndexers, daIndexers, eigenIndexers, hourlyIndexer } =
+    createIndexers(config.da, clock, database, logger, providers)
 
   return {
     start: async () => {
-      logger.info('Starting target indexers')
-      await Promise.all(
-        targetIndexers.map(async (indexer) => {
-          logger.info(
-            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
-          )
-          await indexer.start()
-        }),
-      )
-      logger.info('Target indexers started')
+      // logger.info('Starting target indexers')
+      // await Promise.all(
+      //   targetIndexers.map(async (indexer) => {
+      //     logger.info(
+      //       `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+      //     )
+      //     await indexer.start()
+      //   }),
+      // )
+      // logger.info('Target indexers started')
 
-      logger.info('Starting DA indexers')
-      await Promise.all(
-        daIndexers.map(async (indexer) => {
-          logger.info(
-            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
-          )
-          await indexer.start()
-        }),
-      )
-      logger.info('DA indexers started')
+      // logger.info('Starting DA indexers')
+      // await Promise.all(
+      //   daIndexers.map(async (indexer) => {
+      //     logger.info(
+      //       `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+      //     )
+      //     await indexer.start()
+      //   }),
+      // )
+      // logger.info('DA indexers started')
+
+      if (eigenIndexers.length > 0) {
+        logger.info('Starting EigenDA indexer')
+        await hourlyIndexer.start()
+        await Promise.all(
+          eigenIndexers.map(async (indexer) => {
+            logger.info(
+              `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+            )
+            await indexer.start()
+          }),
+        )
+        logger.info('EigenDA indexer started')
+      }
     },
   }
 }
@@ -76,6 +90,8 @@ function createIndexers(
 
   const targetIndexers: BlockTargetIndexer[] = []
   const daIndexers: DaIndexer[] = []
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const eigenIndexers: (EigenDaLayerIndexer | EigenDaProjectsIndexer)[] = []
 
   for (const daLayer of config.blockLayers) {
     const targetIndexer = new BlockTargetIndexer(
@@ -110,5 +126,54 @@ function createIndexers(
     daIndexers.push(indexer)
   }
 
-  return { targetIndexers, daIndexers }
+  for (const daLayer of config.timestampLayers) {
+    if (daLayer.type !== 'eigen-da') {
+      continue
+    }
+
+    const configurations = config.timestampProjects.filter(
+      (c) => c.daLayer === daLayer.name,
+    )
+    const [daLayerConfigurations, projectConfigurations] = partition(
+      configurations,
+      (c) => c.projectId === 'eigenda',
+    )
+
+    const eigenClient = providers.clients.eigen
+    assert(eigenClient, 'Eigen client is required')
+
+    const layerIndexer = new EigenDaLayerIndexer({
+      configurations: daLayerConfigurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.sinceTimestamp,
+        maxHeight: c.untilTimestamp ?? null,
+        properties: c,
+      })),
+      eigenClient,
+      logger,
+      daLayer: daLayer.name,
+      parents: [hourlyIndexer],
+      indexerService,
+      db: database,
+    })
+    eigenIndexers.push(layerIndexer)
+
+    const projectsIndexer = new EigenDaProjectsIndexer({
+      configurations: projectConfigurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.sinceTimestamp,
+        maxHeight: c.untilTimestamp ?? null,
+        properties: c,
+      })),
+      eigenClient,
+      logger,
+      daLayer: daLayer.name,
+      parents: [hourlyIndexer],
+      indexerService,
+      db: database,
+    })
+    // eigenIndexers.push(projectsIndexer)
+  }
+
+  return { targetIndexers, daIndexers, eigenIndexers, hourlyIndexer }
 }
