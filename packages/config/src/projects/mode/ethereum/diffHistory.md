@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x3b4d9f47b174568c28c365aafc06b814544c6033
+Generated with discovered.json: 0x05af4c15cd9f218f75a53a46602360fb4241a97d
 
-# Diff at Mon, 16 Jun 2025 07:41:09 GMT:
+# Diff at Mon, 16 Jun 2025 09:30:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22615671
@@ -67,8 +67,24 @@ Upgrade to permissioned fault proofs (opfp) and optimism governance.
     +++ description: None
       receivedPermissions.2:
 -        {"permission":"guard","from":"ethereum:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07","role":".GUARDIAN","via":[{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"},{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
-      receivedPermissions.1:
--        {"permission":"guard","from":"ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"},{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+      receivedPermissions.1.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.1.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "ethereum:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a"
+      receivedPermissions.1.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.1.via.3:
+-        {"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}
+      receivedPermissions.1.via.2:
+-        {"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}
+      receivedPermissions.1.via.1.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1.via.1.condition:
++        "though restricted to the global pause function"
       receivedPermissions.0.from:
 -        "ethereum:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07"
 +        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
@@ -180,8 +196,14 @@ Upgrade to permissioned fault proofs (opfp) and optimism governance.
 ```diff
     EOA  (0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB) {
     +++ description: None
-      receivedPermissions:
--        [{"permission":"propose","from":"ethereum:0x4317ba146D4933D889518a3e5E11Fe7a53199b04","role":".proposer"},{"permission":"propose","from":"ethereum:0x4317ba146D4933D889518a3e5E11Fe7a53199b04","role":".PROPOSER"}]
+      receivedPermissions.1:
+-        {"permission":"propose","from":"ethereum:0x4317ba146D4933D889518a3e5E11Fe7a53199b04","role":".proposer"}
+      receivedPermissions.0.from:
+-        "ethereum:0x4317ba146D4933D889518a3e5E11Fe7a53199b04"
++        "ethereum:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a"
+      receivedPermissions.0.role:
+-        ".PROPOSER"
++        ".proposer"
     }
 ```
 
@@ -334,8 +356,17 @@ Upgrade to permissioned fault proofs (opfp) and optimism governance.
     +++ description: None
       receivedPermissions.2:
 -        {"permission":"guard","from":"ethereum:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07","role":".GUARDIAN","via":[{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
-      receivedPermissions.1:
--        {"permission":"guard","from":"ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+      receivedPermissions.1.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.1.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "ethereum:0x75fa114D4286c7d1114CE773EfF0f1bDe0aF966a"
+      receivedPermissions.1.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.1.via:
+-        [{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]
       receivedPermissions.0.from:
 -        "ethereum:0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07"
 +        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"

@@ -2,7 +2,7 @@
   "name": "metal",
   "chain": "ethereum",
   "blockNumber": 22715859,
-  "configHash": "0xbac1a6fee31ddf093cce6b8a3a58cc2f9b82489b1c9574354f8d12f72e2c509a",
+  "configHash": "0xdcc10b7faec79588f4493b9371a171275e718f26b6529d9dab73d01a0226fb4e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -429,6 +429,20 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D",
+          "role": ".challenger",
+          "via": [
+            {
+              "address": "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+            },
+            {
+              "address": "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
         {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -1168,7 +1182,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1746482435,
       "sinceBlock": 22420374,
       "values": {
@@ -1394,6 +1408,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D",
+          "role": ".challenger"
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -1600,7 +1619,14 @@
     {
       "address": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "address": "0xc83f7D9F2D4A76E81145849381ABA02602373723",
@@ -2488,5 +2514,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xc083c9da1b12c72fc6f75e7d0adca957e33a71d4e8b00ad3fcef3192f099e975"
+  "permissionsConfigHash": "0xc55756cfaf9cbae8d9f8defe67040c68549690082e8265ac60377474a6a007c6"
 }
