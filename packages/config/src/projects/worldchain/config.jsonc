@@ -11,7 +11,9 @@
       "names": { "0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller" },
       "overrides": {
         "0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
-          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+        },
+        "0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9": {
           "fields": {
             "proposer": { "permissions": [{ "type": "propose" }] },
             "challenger": { "permissions": [{ "type": "challenge" }] }

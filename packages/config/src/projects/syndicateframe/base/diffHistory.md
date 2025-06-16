@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x3cbb0e478e275a49f8be08d8199de198045256ef
+
+# Diff at Mon, 16 Jun 2025 08:41:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 30222952
+- current block number: 30222952
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30222952 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x0ED44be59Ea62a9960CB97f8aC54088304D05791) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
+    }
+```
+
+```diff
+    contract Caldera Multisig 2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d) {
+    +++ description: None
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5","role":"admin","via":[{"address":"base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"}]}
+      receivedPermissions.4.from:
+-        "base:0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5"
++        "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
+      receivedPermissions.3.from:
+-        "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
++        "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5","role":"admin"}
+      directlyReceivedPermissions.4.from:
+-        "base:0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5"
++        "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
+      directlyReceivedPermissions.3.from:
+-        "base:0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
++        "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791"
+    }
+```
+
 Generated with discovered.json: 0xe45039ff17aa9a5497cc9dc790363d60baff3cca
 
 # Diff at Fri, 30 May 2025 07:20:35 GMT:

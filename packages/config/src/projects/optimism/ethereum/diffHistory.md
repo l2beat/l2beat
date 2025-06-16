@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x0240be7f72c15ae985704cced254eb38ecb060da
+
+# Diff at Mon, 16 Jun 2025 08:43:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22567749
+- current block number: 22567749
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC","role":"admin"}
+      directlyReceivedPermissions.10.from:
+-        "ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC","role":"admin","via":[{"address":"ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.12.from:
+-        "ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+    }
+```
+
 Generated with discovered.json: 0xfaf887eecbfababe6dc711b593376a93ddfdbb2c
 
 # Diff at Wed, 11 Jun 2025 10:36:33 GMT:
