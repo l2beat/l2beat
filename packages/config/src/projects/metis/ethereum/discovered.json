@@ -28,6 +28,7 @@
       "sinceTimestamp": 1637076488,
       "sinceBlock": 13627370,
       "values": {
+        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$immutable": false,
         "$implementation": "0x8bF439ef7167023F009E24b21719Ca5f768Ecb36",
         "$pastUpgrades": [
@@ -411,6 +412,11 @@
           "from": "ethereum:0x918778e825747a892b17C66fe7D24C618262867d",
           "description": "Can delete batches from the StateCommitmentChain.",
           "role": ".1088_MVM_FraudVerifier"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -2099,5 +2105,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xd6880460948b5609e59b43805915443ee7676e63241f752ce49c802bbb425344"
+  "permissionsConfigHash": "0xb0889ffc37602a0d622bfd73d2e656edb8b893107ebbd7f95b1f059771a15126"
 }

@@ -24,6 +24,7 @@
       "sinceTimestamp": 1707369335,
       "sinceBlock": 10289994,
       "values": {
+        "$admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
         "$immutable": false,
         "$implementation": "0x06DDDA853506cECa671a06136f955f7f042FD667",
         "$pastUpgrades": [
@@ -200,6 +201,14 @@
           "from": "base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
           "description": "set and change address mappings.",
           "role": ".owner",
+          "via": [
+            { "address": "base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
+          "role": "admin",
           "via": [
             { "address": "base:0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E" }
           ]
@@ -415,6 +424,11 @@
           "from": "base:0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -755,5 +769,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x921cf94bd72b885a1c4da3fe25ade736179167ac97d13653e776bc4658d20e70"
+  "permissionsConfigHash": "0x3d3d4c714c8507629682c4efb168565562d9b46ff64d258f991f0d8083760d71"
 }
