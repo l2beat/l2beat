@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa0203ca0206a9586a17b91ec2e47a115663aee13
+Generated with discovered.json: 0x72037986d3bc2ac12233b49e570da466f1e2622c
 
-# Diff at Mon, 16 Jun 2025 14:18:13 GMT:
+# Diff at Mon, 16 Jun 2025 15:53:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22717520
@@ -80,7 +80,7 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract CanonicalTournamentParametersProvider (0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c)
-    +++ description: Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3) and the size of computation segments at each stage of a dispute.
+    +++ description: Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.
 ```
 
 ```diff

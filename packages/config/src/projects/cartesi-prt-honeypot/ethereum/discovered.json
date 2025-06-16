@@ -251,10 +251,24 @@
         "0x7ed0779ae4b12f1654a45c0513dde6eea5def66d068f43599eccfb05b69c71b5"
       ],
       "proxyType": "immutable",
-      "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3) and the size of computation segments at each stage of a dispute.",
+      "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.",
       "sinceTimestamp": 1749508259,
       "sinceBlock": 22670009,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "topTournamentParameters": {
+          "levels": 3,
+          "log2step": 44,
+          "height": 48,
+          "matchEffort": 2300,
+          "maxAllowance": 50700
+        }
+      },
+      "fieldMeta": {
+        "topTournamentParameters": {
+          "description": "levels: number of levels for the tournament, maxAllowance: minimum challenge period in L1 blocks, log2step: sparsity of the machine hash (every 2^x cycles), height: height of the machine hash merkle tree, matchEffort: time bonus in L1 blocks granted to participants when they enter a match."
+        }
+      },
       "implementationNames": {
         "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": "CanonicalTournamentParametersProvider"
       }
@@ -561,7 +575,7 @@
     "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
     "cartesi/BottomTournament_clone": "0x579b475804c11d95a09655ad2b7f9a176d93ea4aae5cc7b7072c629053dc4761",
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
-    "cartesi/CanonicalTournamentParametersProvider": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/CanonicalTournamentParametersProvider": "0x0ea363f4bff46d9004072b4e6ea522d96aab67dec819032573e7441fbbc4e168",
     "cartesi/CartesiStateTransition": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/DaveConsensus": "0xd22699d689db6d9de5523a67a3805f41943d411b2d8eeab8d15ccee6c855cb79",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
