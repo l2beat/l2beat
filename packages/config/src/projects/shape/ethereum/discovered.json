@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 22437744,
-  "configHash": "0x49769fad69633dc5cb157efd5c70f32c6dc2c0e2e42610666b02ed9f519be9f9",
+  "configHash": "0xae00b78f36d42d603b15f55308aad5eddf18f33d50accb484fa31d4f705fb0ac",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -103,7 +103,14 @@
     {
       "address": "0x0D8a607F3d2de86adD04Df00f06794cB339A40de",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -1078,6 +1085,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
+          "role": ".challenger"
+        },
         {
           "permission": "interact",
           "from": "ethereum:0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
@@ -2438,5 +2450,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x5c4a061ca6dd47ac022e7b3c5e2d2999ac2905ceb8ac79b30ec7bfca6ec826c7"
+  "permissionsConfigHash": "0xd67fa7700b4bfe5615e0a61bde8a3c7c2b029d1eb319f4dfdba6b4fccb524fe4"
 }

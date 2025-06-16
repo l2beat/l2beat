@@ -2,7 +2,7 @@
   "name": "hashkey",
   "chain": "ethereum",
   "blockNumber": 22243976,
-  "configHash": "0x1f037b1d6dd17fc2a87a910452d5ae5ae433ac7ed00e877ba08e14172b84c114",
+  "configHash": "0xc17add5c1ed6aabdc6f620623a32a1ecd4ba8311db5e49ce0a0c059523b99d5a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -945,7 +945,14 @@
     {
       "address": "0xC55763132E9b76766D62e59728b3933F54C998C5",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "Hashkey Multisig 2",
@@ -1159,7 +1166,14 @@
     {
       "address": "0xFCF35CeE40325db21c3dc5b45849251E78Be47eb",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x78075eA46A562c3201E61664645c0f0537a8DDd5",
+          "role": ".challenger"
+        }
+      ]
     },
     {
       "name": "SuperchainConfig",
@@ -1991,5 +2005,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xba399c492afaaee534e76ef9e7899dccd981b68bea7f92f60a9737c0178fdf94"
+  "permissionsConfigHash": "0x4feb62ce96ff8ed8a84d674a5b93b5e865d7dbcdd8d7d7a0fca777dfa2d5b825"
 }

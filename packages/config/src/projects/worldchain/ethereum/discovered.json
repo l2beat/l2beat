@@ -2,7 +2,7 @@
   "name": "worldchain",
   "chain": "ethereum",
   "blockNumber": 22593567,
-  "configHash": "0x70876b7893838fa4c263c70bbff280938bfbabfa688199315bda9f1406dfa4df",
+  "configHash": "0xf9130a490f0490da070f47e6cf5cae3f62983dcc766f4b650efb5852647c075b",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -295,7 +295,14 @@
     {
       "address": "0x2307278fC8aB0005974A6DeD2FA6d1187333a223",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "LivenessGuard",
@@ -1138,6 +1145,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x55E6125F946F3cB24FC3E07dd7242f96Ce512BD9",
+          "role": ".challenger"
+        },
         {
           "permission": "interact",
           "from": "ethereum:0x5891090d5085679714cb0e62f74950a3c19146a8",
@@ -2562,5 +2574,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xd6e556c9ccccd7404c1e2271132b828b4460e2ba18fb4f8b43170f38a16a5909"
+  "permissionsConfigHash": "0x6fce3377e960a434ca3714adf2d7b824487c39518578560c93985e111b39f4e8"
 }

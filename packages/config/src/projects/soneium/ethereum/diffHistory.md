@@ -1,20 +1,36 @@
-Generated with discovered.json: 0x7909485df3c3dea0fe60f9f5f035ec14bc5c8baa
+Generated with discovered.json: 0x818c34b1a6b99a4502594c39c846abef5ee08aea
 
-# Diff at Mon, 16 Jun 2025 08:43:13 GMT:
+# Diff at Mon, 16 Jun 2025 10:14:39 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22437746
 - current block number: 22437746
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: add permissioned opfp role tags.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22437746 (main branch discovery), not current.
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17","role":".challenger","via":[{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+    }
+```
+
+```diff
+    EOA  (0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17","role":".proposer"}]
+    }
+```
 
 ```diff
     contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
@@ -80,6 +96,25 @@ discovery. Values are for block 22437746 (main branch discovery), not current.
       directlyReceivedPermissions.2.from:
 -        "ethereum:0x512A3d2c7a43BD9261d2B8E8C9c70D4bd4D503C0"
 +        "ethereum:0x9CF951E3F74B644e621b36Ca9cea147a78D4c39f"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"guard","from":"ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C","role":".guardian","via":[{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]}
+      receivedPermissions.0.permission:
+-        "guard"
++        "challenge"
+      receivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17"
+      receivedPermissions.0.role:
+-        ".guardian"
++        ".challenger"
+      receivedPermissions.0.via:
+-        [{"address":"ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"},{"address":"ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B","condition":"if not revoked by the Security Council"}]
     }
 ```
 

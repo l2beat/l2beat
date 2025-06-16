@@ -1,20 +1,36 @@
-Generated with discovered.json: 0xe70d4abc67505d60c43142d9a18bcde99ab1a0c4
+Generated with discovered.json: 0xead74e38fb5bd7842d8719a2e13c46fa265ea075
 
-# Diff at Mon, 16 Jun 2025 08:43:42 GMT:
+# Diff at Mon, 16 Jun 2025 10:14:40 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22437752
 - current block number: 22437752
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config: add permissioned opfp role tags.
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22437752 (main branch discovery), not current.
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7","role":".challenger","via":[{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+    }
+```
+
+```diff
+    EOA  (0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7","role":".proposer"}]
+    }
+```
 
 ```diff
     contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
@@ -42,6 +58,14 @@ discovery. Values are for block 22437752 (main branch discovery), not current.
       receivedPermissions.7.from:
 -        "ethereum:0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf"
 +        "ethereum:0xdC40a14d9abd6F410226f1E6de71aE03441ca506"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7","role":".challenger"}
     }
 ```
 
