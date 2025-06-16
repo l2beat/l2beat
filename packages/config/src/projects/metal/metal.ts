@@ -13,7 +13,7 @@ export const metal: ScalingProject = opStackL2({
   discovery,
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   ecosystemInfo: {
     id: ProjectId('superchain'),
   },
