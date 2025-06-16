@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 22715859,
+  "blockNumber": 22716371,
   "configHash": "0xdcc10b7faec79588f4493b9371a171275e718f26b6529d9dab73d01a0226fb4e",
   "entries": [
     {
@@ -498,7 +498,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730",
+          "from": "ethereum:0x0aE6D23501C8078E077133bb30449107eEe7afaD",
           "role": "admin"
         },
         {
@@ -891,7 +891,7 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730",
+          "from": "ethereum:0x0aE6D23501C8078E077133bb30449107eEe7afaD",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99" }
@@ -1210,7 +1210,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 11,
+        "gameCount": 12,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x044CEC24Be9DFDd9c65DAC10059a13Fe0f617a5D",
@@ -1220,7 +1220,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 11,
+        "permissionedGamesTotal": 12,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -2528,5 +2528,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xf8220fdf3dc80f005226c1936e98349fb64ff3e37d57e374b6b8eb7dec56c67c"
+  "permissionsConfigHash": "0x9e29408550f85fca65efd7f22250283035fc83ca7feff77da7b5bad20584aa27"
 }
