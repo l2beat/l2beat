@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x5921167fa1d36ec8f898fc9376ee3dcbef231eb9
+
+# Diff at Mon, 16 Jun 2025 08:42:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22610669
+- current block number: 22610669
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22610669 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x081D1101855bD523bA69A9794e0217F0DB6323ff) {
+    +++ description: The L1 Cross Domain Messenger (L1xDM) contract sends messages from L1 to Metis, and relays messages from Metis onto L1. In the event that a message sent from L1 to Metis is rejected for exceeding the Metis epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.8.from:
+-        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.7.from:
+-        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      receivedPermissions.7.via:
+-        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+    }
+```
+
 Generated with discovered.json: 0xb13163a69b9e656ea98b6cb2ca6ad0c0e5a9cac0
 
 # Diff at Sun, 01 Jun 2025 16:06:11 GMT:

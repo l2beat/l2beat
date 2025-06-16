@@ -86,6 +86,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "base:0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "base:0x80292D35789462aeD1D694899f1FaAE184Fe3E5b",
           "role": "admin",
           "via": [
@@ -275,6 +283,7 @@
       "sinceTimestamp": 1716592061,
       "sinceBlock": 14901357,
       "values": {
+        "$admin": "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49",
         "$immutable": false,
         "$implementation": "0x71fA82Ea96672797954C28032b337aA40AAFC99f",
         "$pastUpgrades": [
@@ -339,6 +348,11 @@
         {
           "permission": "upgrade",
           "from": "base:0x3c69dcFF018766c72449cd460Cc7AF8863056a43",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36",
           "role": "admin"
         },
         {
@@ -1097,5 +1111,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x58d14ecd3639dd86ccd1060e26a98d1b018c2076e50b6c3735bb27aba387ced3"
+  "permissionsConfigHash": "0xca3c142251a31787e665f85afcf38488c7f15fac068782ee6d85887583ee0e8a"
 }

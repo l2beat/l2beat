@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x2220c087f6cf830a51eccfe79f7ed9b15b9213a5
+
+# Diff at Mon, 16 Jun 2025 08:41:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22267281
+- current block number: 22267281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22267281 (main branch discovery), not current.
+
+```diff
+    contract Boba Multisig (0x56121a8612474C3eB65D69a3b871f284705b9bC4) {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"ethereum:0x996ffD627901f10C80A7d4B72A12316D2e77c076","role":"admin","via":[{"address":"ethereum:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]}
+      receivedPermissions.13.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.13.role:
+-        "admin"
++        ".guardian"
+      receivedPermissions.13.via:
+-        [{"address":"ethereum:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.12.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.12.from:
+-        "ethereum:0x996ffD627901f10C80A7d4B72A12316D2e77c076"
++        "ethereum:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      receivedPermissions.12.role:
+-        ".guardian"
++        "admin"
+      receivedPermissions.12.via:
++        [{"address":"ethereum:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.11.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.11.from:
+-        "ethereum:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
++        "ethereum:0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
+      receivedPermissions.11.role:
+-        "admin"
++        ".GUARDIAN"
+      receivedPermissions.11.via:
+-        [{"address":"ethereum:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.10.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.10.from:
+-        "ethereum:0x7B02D13904D8e6E0f0Efaf756aB14Cb0FF21eE7e"
++        "ethereum:0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      receivedPermissions.10.role:
+-        ".GUARDIAN"
++        "admin"
+      receivedPermissions.10.via:
++        [{"address":"ethereum:0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"}]
+      receivedPermissions.9.from:
+-        "ethereum:0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
++        "ethereum:0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x6D4528d192dB72E282265D6092F4B872f9Dff69e) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6e598cec2701FfAA3c06175dc3Af0317a749a0Dc) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x996ffD627901f10C80A7d4B72A12316D2e77c076","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x996ffD627901f10C80A7d4B72A12316D2e77c076"
++        "ethereum:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"
++        "ethereum:0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xA6Ad22bb0E73DEF40a24E510cFbc93807d8bf87e"
++        "ethereum:0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
+    }
+```
+
 Generated with discovered.json: 0x01984f9c1456c2f32ceef7324b58a44002503c8c
 
 # Diff at Fri, 30 May 2025 06:56:03 GMT:

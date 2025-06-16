@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xcfdbad1c26209aea00288f8c56595bf3a3872421
+
+# Diff at Mon, 16 Jun 2025 08:41:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22615662
+- current block number: 22615662
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615662 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x012c341506ee1939e56084F43Ae5dbCe224Ce2af) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x75a223Fb459461B9Fa61dd25109EA05522b4b492"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"ethereum:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af","role":"admin","via":[{"address":"ethereum:0x75a223Fb459461B9Fa61dd25109EA05522b4b492"}]}
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x75a223Fb459461B9Fa61dd25109EA05522b4b492) {
+    +++ description: None
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"ethereum:0x012c341506ee1939e56084F43Ae5dbCe224Ce2af","role":"admin"}
+    }
+```
+
 Generated with discovered.json: 0x1bff0a00266aa4990ee9d6bed9531f5a3b30d17c
 
 # Diff at Mon, 02 Jun 2025 07:59:19 GMT:
