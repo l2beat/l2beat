@@ -7828,6 +7828,20 @@
       }
     },
     {
+      "name": "Blockchain Capital Token",
+      "coingeckoId": "blockchain-capital",
+      "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
+      "symbol": "BCAP",
+      "decimals": 2,
+      "deploymentTimestamp": 1736864101,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56040/large/bcap_logo_200.png?1748088291",
+      "chainId": 324,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Bridged USDC (zkSync)",
       "coingeckoId": "zksync-bridged-usdc-zksync",
       "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
@@ -8041,6 +8055,20 @@
       "chainId": 324,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000031",
+      "coingeckoId": "tradable-na-rent-financing-platform-sstn",
+      "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+      "symbol": "PC0000031",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618722,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
+      "chainId": 324,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Staked Frax Ether",
@@ -13581,6 +13609,28 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "stargate-bridged-usdc-plume",
+      "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1743091242,
+      "coingeckoListingTimestamp": 1749427200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66243/large/USDC_Token.png?1748919033",
+      "chainId": 98866,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
             "slug": "stargatev2"
           }
         ]

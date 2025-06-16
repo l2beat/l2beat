@@ -36,6 +36,15 @@ export const plumenetwork: ScalingProject = orbitStackL2({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplateEscrows: [
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xE2C902BC61296531e556962ffC81A082b82f5F28'),
+      name: 'ERC20Gateway',
+      description:
+        'Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.',
+      tokens: '*',
+    }),
+  ],
   associatedTokens: ['PLUME'],
   isNodeAvailable: true,
   activityConfig: {
