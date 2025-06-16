@@ -7,12 +7,11 @@ import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockIndexer } from './indexers/BlockIndexer'
 import { RealTimeLivenessProcessor } from './processors/RealTimeLivenessProcessor'
-
 export function createSharedModule(
   config: Config,
   logger: Logger,
   providers: Providers,
-  database: Database,
+  db: Database,
 ): ApplicationModule | undefined {
   if (!config.shared) {
     logger.info('Shared module disabled')
@@ -21,7 +20,7 @@ export function createSharedModule(
 
   logger = logger.tag({ feature: 'shared', module: 'shared' })
 
-  const indexerService = new IndexerService(database)
+  const indexerService = new IndexerService(db)
 
   const eventIndexer = new EventIndexer(
     config.shared.ethereumWsUrl,
@@ -29,7 +28,7 @@ export function createSharedModule(
     logger,
   )
 
-  const processor = new RealTimeLivenessProcessor(config, logger)
+  const processor = new RealTimeLivenessProcessor(config, logger, db)
 
   const blockIndexer = new BlockIndexer({
     logger,
@@ -37,7 +36,7 @@ export function createSharedModule(
     parents: [eventIndexer],
     processors: [processor],
     source: 'ethereum',
-    mode: 'LATEST_ONLY',
+    mode: 'CONTINUOUS',
     blockProvider: providers.block.getBlockProvider('ethereum'),
     indexerService,
   })

@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { LivenessRecord } from '@l2beat/database'
+import type {
+  AnomalyStatsRecord,
+  Database,
+  LivenessRecord,
+} from '@l2beat/database'
 import type {
   TrackedTxFunctionCallConfig,
   TrackedTxLivenessConfig,
@@ -7,7 +11,7 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, type Block } from '@l2beat/shared-pure'
+import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
 import type { Config } from '../../../config'
 import type { TrackedTxsConfig } from '../../../config/Config'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
@@ -29,7 +33,11 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     params: TrackedTxSharedBridgeConfig
   })[] = []
 
-  constructor(config: Config, logger: Logger) {
+  constructor(
+    config: Config,
+    logger: Logger,
+    private readonly db: Database,
+  ) {
     this.logger = logger.for(this)
 
     assert(config.trackedTxsConfig, 'TrackedTxsConfig is required')
@@ -38,6 +46,65 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   }
 
   async processBlock(block: Block): Promise<void> {
+    try {
+      const records = await this.createRecords(block)
+
+      this.logger.info(
+        `Processing block ${block.number} with ${records.length} liveness records`,
+      )
+
+      await this.db.realTimeLiveness.insertMany(records)
+
+      const latestStats = await this.db.anomalyStats.getLatestStats()
+      const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
+
+      await this.checkForAnomalies(latestRecords, latestStats)
+    } catch (error) {
+      this.logger.error(
+        `Failed to process block ${block.number}: ${error instanceof Error ? error.message : String(error)}`,
+      )
+    }
+  }
+
+  private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
+    const livenesConfigurations = trackedTxsConfig.projects
+      .flatMap((project) => project.configurations)
+      .filter((config) => config.type === 'liveness')
+
+    this.transfers = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxTransferConfig
+      } => c.params.formula === 'transfer',
+    )
+
+    this.functionCalls = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxFunctionCallConfig
+      } => c.params.formula === 'functionCall',
+    )
+
+    this.sharpSubmissions = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxSharpSubmissionConfig
+      } => c.params.formula === 'sharpSubmission',
+    )
+
+    this.sharedBridges = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxSharedBridgeConfig
+      } => c.params.formula === 'sharedBridge',
+    )
+  }
+
+  private createRecords(block: Block): LivenessRecord[] {
     const records: LivenessRecord[] = []
 
     for (const tx of block.transactions) {
@@ -89,50 +156,54 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         blockNumber: block.number,
         txHash: tx.hash as string,
         configurationId: config.id,
-        projectId: config.projectId,
-        subtype: config.subtype,
-        formula: config.params.formula,
       }))
 
       records.push(...results)
     }
+
+    return records
   }
 
-  private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
-    const livenesConfigurations = trackedTxsConfig.projects
-      .flatMap((project) => project.configurations)
-      .filter((config) => config.type === 'liveness')
+  private checkForAnomalies(
+    latestRecords: LivenessRecord[],
+    latestStats: AnomalyStatsRecord[],
+  ) {
+    const configs: TrackedTxLivenessConfig[] = [
+      ...this.transfers,
+      ...this.functionCalls,
+      ...this.sharpSubmissions,
+      ...this.sharedBridges,
+    ]
 
-    this.transfers = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxTransferConfig
-      } => c.params.formula === 'transfer',
-    )
+    for (const config of configs) {
+      const latestRecord = latestRecords.find(
+        (r) => r.configurationId === config.id,
+      )
 
-    this.functionCalls = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxFunctionCallConfig
-      } => c.params.formula === 'functionCall',
-    )
+      const latestStat = latestStats.find(
+        (s) => s.projectId === config.projectId && s.subtype === config.subtype,
+      )
 
-    this.sharpSubmissions = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxSharpSubmissionConfig
-      } => c.params.formula === 'sharpSubmission',
-    )
+      if (!latestRecord || !latestStat) {
+        continue
+      }
 
-    this.sharedBridges = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxSharedBridgeConfig
-      } => c.params.formula === 'sharedBridge',
-    )
+      const interval = UnixTime.now() - latestRecord.timestamp
+      const z = (interval - latestStat.mean) / latestStat.stdDev
+
+      if (z >= 15 && interval > latestStat.mean) {
+        this.logger.info(
+          `Anomaly detected for configuration ${config.id} with z-score ${z}`,
+          {
+            projectId: config.projectId,
+            subtype: config.subtype,
+            timestamp: latestRecord.timestamp,
+            duration: interval,
+            mean: latestStat.mean,
+            stdDev: latestStat.stdDev,
+          },
+        )
+      }
+    }
   }
 }
