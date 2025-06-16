@@ -1,6 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -65,7 +65,8 @@ export const metal: ScalingProject = opStackL2({
 
   // Set explicitly since finality calculation returns weird results
   finality: undefined,
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  stateDerivation: DERIVATION.OPSTACK('METAL'),
   milestones: [
     {
       title: 'Mainnet Launch',
