@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x1e26d969c98e90a253c9f52d455b35b8173e4be1
+Generated with discovered.json: 0x0a6bf416afcc6c7bbf089fca19dc6f281caecd5e
 
-# Diff at Mon, 16 Jun 2025 11:46:10 GMT:
+# Diff at Mon, 16 Jun 2025 13:39:22 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 22716869
@@ -14,13 +14,13 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract TopTournament (0x09114973AE4bf3Af3896E4e541082C73f224F8Aa)
-    +++ description: None
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.
 ```
 
 ```diff
 +   Status: CREATED
     contract BottomTournament (0x18256941eC7B661F9F46C228b74e775b581e63f8)
-    +++ description: None
+    +++ description: Referees the dispute over a single contested Cartesi machine step as the final stage of arbitration in a dispute. It calls the CartesiStateTransition contract to get a definitive on-chain ruling and identify the winner.
 ```
 
 ```diff
@@ -32,7 +32,7 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract Application (0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c)
-    +++ description: Rollup app instance constract, responsible for holding assets and allowing the DApp to interact with other smart contracts.
+    +++ description: Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions.
 ```
 
 ```diff
@@ -44,7 +44,7 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract DaveConsensus (0x6CE590b9F0697327f18c601DF6f0baE4a0801B68)
-    +++ description: Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.
+    +++ description: Contract managing PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.
 ```
 
 ```diff
@@ -56,19 +56,19 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract CartesiStateTransition (0x772732EFbDE6559B2960327276ed33d707fF057f)
-    +++ description: None
+    +++ description: Onchain verifier that can execute a single, disputed instruction of the Cartesi machine. It is the ultimate arbiter that BottomTournament calls to determine which party's claimed state transition is correct.
 ```
 
 ```diff
 +   Status: CREATED
     contract MultiLevelTournamentFactory (0xA31C2aCfF3464658866960c0fBD3d798310272D7)
-    +++ description: Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.
+    +++ description: Responsible for creating and orchestrating the multi-stage dispute process. It instantiates the correct tournament contract (Top, Middle, or Bottom) depending on the current stage of the dispute game.
 ```
 
 ```diff
 +   Status: CREATED
     contract InputBox (0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051)
-    +++ description: Contract that receives arbitrary blobs as inputs to Cartesi DApps.
+    +++ description: Serves as both the canonical log for arbitrary dApp inputs and a portal for depositing assets (one possible type of input). It ensures data availability and that all off-chain participants process the same inputs in the same order.
 ```
 
 ```diff
@@ -80,17 +80,17 @@ Initial cartesi fault proofs disco.
 ```diff
 +   Status: CREATED
     contract CanonicalTournamentParametersProvider (0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c)
-    +++ description: None
+    +++ description: Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3) and the size of computation segments at each stage of a dispute.
 ```
 
 ```diff
 +   Status: CREATED
     contract TopTournament (0xDaa497885D83f345CBcbF071d7201230A8CBd68A)
-    +++ description: None
+    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.
 ```
 
 ```diff
 +   Status: CREATED
     contract MiddleTournament (0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE)
-    +++ description: None
+    +++ description: Handles the intermediate stages of a dispute following the TopTournament targeting a more granular bisection game.
 ```

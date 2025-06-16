@@ -2,7 +2,7 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "blockNumber": 22716869,
-  "configHash": "0xe279c42053f9d1bc0bd7df5967af63787e06f803cf5efe5be4eca5ba5348c879",
+  "configHash": "0x70a8a0f6da8b25955332131b123393280b334fb275b5cdb42149c1ede909259e",
   "entries": [
     {
       "address": "0x00000000000000000000000060a034606657601f",
@@ -18,6 +18,7 @@
         "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e"
       ],
       "proxyType": "immutable",
+      "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.",
       "sinceTimestamp": 1749508187,
       "sinceBlock": 22670003,
       "values": { "$immutable": true },
@@ -34,6 +35,7 @@
         "0x6b6cbba3169b7d3ac68d947550768c2706ae97d1c4c8bb97d6d0cf6951349236"
       ],
       "proxyType": "immutable",
+      "description": "Referees the dispute over a single contested Cartesi machine step as the final stage of arbitration in a dispute. It calls the CartesiStateTransition contract to get a definitive on-chain ruling and identify the winner.",
       "sinceTimestamp": 1749508139,
       "sinceBlock": 22669999,
       "values": { "$immutable": true },
@@ -65,7 +67,8 @@
       },
       "implementationNames": {
         "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": "MiddleTournamentFactory"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Application",
@@ -76,7 +79,7 @@
         "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac"
       ],
       "proxyType": "immutable",
-      "description": "Rollup app instance constract, responsible for holding assets and allowing the DApp to interact with other smart contracts.",
+      "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions.",
       "sinceTimestamp": 1749510467,
       "sinceBlock": 22670193,
       "values": {
@@ -111,7 +114,8 @@
       },
       "implementationNames": {
         "0x4C7ab101e9B114A253475485b301E0D0c9e20647": "BottomTournamentFactory"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x60A034606657601f61051438819003918201601f",
@@ -127,7 +131,7 @@
         "0xb13283139a2042d5619daf0269b24aaddc9650e7851dcce40e24ebf4bf13632c"
       ],
       "proxyType": "immutable",
-      "description": "Contract that manages PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods.",
+      "description": "Contract managing PRT fraud-proof tournaments, managing application epochs and input validation, as well as settlement and challenge periods. Dispute tournaments are started here and the final, verified computation result (as an `outputsMerkleRoot`) is recorded when they are resolved.",
       "ignoreInWatchMode": ["canSettle", "getCurrentSealedEpoch"],
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
@@ -171,16 +175,19 @@
       },
       "implementationNames": {
         "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": "TopTournamentFactory"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "CartesiStateTransition",
       "address": "0x772732EFbDE6559B2960327276ed33d707fF057f",
       "type": "Contract",
+      "template": "cartesi/CartesiStateTransition",
       "sourceHashes": [
         "0xc742ba941fb8f350e4f2f41efd06418dfd193404fc7c5022815b47b9f775e558"
       ],
       "proxyType": "immutable",
+      "description": "Onchain verifier that can execute a single, disputed instruction of the Cartesi machine. It is the ultimate arbiter that BottomTournament calls to determine which party's claimed state transition is correct.",
       "sinceTimestamp": 1749508211,
       "sinceBlock": 22670005,
       "values": { "$immutable": true },
@@ -197,7 +204,7 @@
         "0xb56d0fd498dabd92ee9ab164394860f9bbb68ea74e4c639f8b1c1f6864eef878"
       ],
       "proxyType": "immutable",
-      "description": "Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.",
+      "description": "Responsible for creating and orchestrating the multi-stage dispute process. It instantiates the correct tournament contract (Top, Middle, or Bottom) depending on the current stage of the dispute game.",
       "sinceTimestamp": 1749508271,
       "sinceBlock": 22670010,
       "values": {
@@ -223,7 +230,7 @@
         "0xd6dc854c1f4207b23c80cab9cf5de1d72978dd86677fe8c8ace07ee5fdfa33c0"
       ],
       "proxyType": "immutable",
-      "description": "Contract that receives arbitrary blobs as inputs to Cartesi DApps.",
+      "description": "Serves as both the canonical log for arbitrary dApp inputs and a portal for depositing assets (one possible type of input). It ensures data availability and that all off-chain participants process the same inputs in the same order.",
       "sinceTimestamp": 1748610851,
       "sinceBlock": 22595776,
       "values": { "$immutable": true, "getDeploymentBlockNumber": 22595776 },
@@ -255,10 +262,12 @@
       "name": "CanonicalTournamentParametersProvider",
       "address": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
       "type": "Contract",
+      "template": "cartesi/CanonicalTournamentParametersProvider",
       "sourceHashes": [
         "0x7ed0779ae4b12f1654a45c0513dde6eea5def66d068f43599eccfb05b69c71b5"
       ],
       "proxyType": "immutable",
+      "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3) and the size of computation segments at each stage of a dispute.",
       "sinceTimestamp": 1749508259,
       "sinceBlock": 22670009,
       "values": { "$immutable": true },
@@ -276,6 +285,7 @@
         "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e"
       ],
       "proxyType": "EIP1167 proxy",
+      "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.",
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
       "values": {
@@ -295,6 +305,7 @@
         "0xae62ff1fdcc1be0d64d4c17798c0bf6c133a9bdee804f44c19bf2cf045464843"
       ],
       "proxyType": "immutable",
+      "description": "Handles the intermediate stages of a dispute following the TopTournament targeting a more granular bisection game.",
       "sinceTimestamp": 1749508163,
       "sinceBlock": 22670001,
       "values": { "$immutable": true },
@@ -556,6 +567,8 @@
     "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
     "cartesi/BottomTournament": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "cartesi/CanonicalTournamentParametersProvider": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "cartesi/CartesiStateTransition": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/DaveConsensus": "0xd22699d689db6d9de5523a67a3805f41943d411b2d8eeab8d15ccee6c855cb79",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
