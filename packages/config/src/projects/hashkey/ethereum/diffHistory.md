@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x25d1580c32504b1bd887b8f9e121bffc5e8584b7
+
+# Diff at Mon, 16 Jun 2025 09:46:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22243976
+- current block number: 22243976
+
+## Description
+
+Config: add permissioned opfp role tags.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22243976 (main branch discovery), not current.
+
+```diff
+    EOA  (0xC55763132E9b76766D62e59728b3933F54C998C5) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x78075eA46A562c3201E61664645c0f0537a8DDd5","role":".proposer"}]
+    }
+```
+
+```diff
+    EOA  (0xFCF35CeE40325db21c3dc5b45849251E78Be47eb) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"ethereum:0x78075eA46A562c3201E61664645c0f0537a8DDd5","role":".challenger"}]
+    }
+```
+
 Generated with discovered.json: 0x018cc95ecfc26c1589f24bd8cab845cf00c14f07
 
 # Diff at Fri, 30 May 2025 06:59:37 GMT:

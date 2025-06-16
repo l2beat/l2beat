@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x446e8ed748fccd368b682b8f44970e6b6e1bf2bf
+
+# Diff at Mon, 16 Jun 2025 09:46:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22494925
+- current block number: 22494925
+
+## Description
+
+Config: add permissioned opfp role tags.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22494925 (main branch discovery), not current.
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger","via":[{"address":"ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"},{"address":"ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C","condition":"though restricted to the global pause function"}]}
+    }
+```
+
+```diff
+    EOA  (0x5f16E66D8736B689a430564a31c8d887ca357CD8) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".proposer"}]
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.1:
++        {"permission":"challenge","from":"ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5","role":".challenger"}
+    }
+```
+
 Generated with discovered.json: 0x980914e1b2ae059da1f99b523a516d6592679901
 
 # Diff at Fri, 30 May 2025 06:54:51 GMT:

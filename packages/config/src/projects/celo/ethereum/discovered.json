@@ -2,7 +2,7 @@
   "name": "celo",
   "chain": "ethereum",
   "blockNumber": 22437734,
-  "configHash": "0x520727e2f853f0462cd8925796ba61c99c3c4fba9fbadb6b913c83b07e9745af",
+  "configHash": "0x53571fd8b3ae378d451f37c0a8c6d6f16c7cc08a2edf353448fa92c914aa3342",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

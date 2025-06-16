@@ -2,7 +2,7 @@
   "name": "soneium",
   "chain": "ethereum",
   "blockNumber": 22437746,
-  "configHash": "0x67846fad3a087361ae96212134c9f849b1703226a4c887a45ed67cd4f03634d8",
+  "configHash": "0xb32b12cf5f00261986a14ed519785dbea1056e9ae973d32ea0aedcb4dbcc5aa3",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -331,6 +331,20 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17",
+          "role": ".challenger",
+          "via": [
+            {
+              "address": "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+            },
+            {
+              "address": "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -463,7 +477,14 @@
     {
       "address": "0x400c164C4a8cA84385B70EEd6eB03ea847c8E1b8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "address": "0x420537Ec5e82CDE86f04F3d61F3aD56F7c7dD32B",
@@ -1324,6 +1345,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x3D56d47b9E7E34A46612BadC70377F74051E6b17",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -2822,5 +2848,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x22797e2c05a3089766fae66282b27bc631b07649bb452741613dffec9a980d1e"
+  "permissionsConfigHash": "0xb095c37b6321dca7695c0505f8541f9ec0159df7ca1029f53cdf555c7c2e7f49"
 }
