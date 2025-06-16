@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3) and the size of computation segments at each stage of a dispute."
+}

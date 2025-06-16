@@ -1,5 +1,5 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Rollup app instance constract, responsible for holding assets and allowing the DApp to interact with other smart contracts.",
+  "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the {{getOutputsMerkleRootValidator}} contract to validate outputs before releasing assets or triggering on-chain actions.",
   "ignoreMethods": ["wasOutputExecuted"]
 }

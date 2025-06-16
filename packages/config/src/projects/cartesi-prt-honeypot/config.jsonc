@@ -12,6 +12,7 @@
       ],
       "overrides": {
         "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": {
+          "category": "spam",
           "fields": {
             "constrImplementation": {
               // contructorargs handler fails
@@ -23,6 +24,7 @@
           }
         },
         "0x4C7ab101e9B114A253475485b301E0D0c9e20647": {
+          "category": "spam",
           "fields": {
             "constrImplementation": {
               // contructorargs handler fails
@@ -32,6 +34,9 @@
               }
             }
           }
+        },
+        "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": {
+          "category": "spam"
         }
       }
     }
