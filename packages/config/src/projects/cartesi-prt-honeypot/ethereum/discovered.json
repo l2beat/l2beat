@@ -2,13 +2,8 @@
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
   "blockNumber": 22717520,
-  "configHash": "0x70a8a0f6da8b25955332131b123393280b334fb275b5cdb42149c1ede909259e",
+  "configHash": "0xec400fa358c365e2452bc52b1d96248518f9e804f08de17cb4813ae71fce89e5",
   "entries": [
-    {
-      "address": "0x00000000000000000000000060a034606657601f",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
     {
       "name": "TopTournament",
       "address": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
@@ -56,9 +51,8 @@
       "sinceBlock": 22670007,
       "values": {
         "$immutable": true,
-        "constrImplementation": "0xe49e4cb0ab5c0e5792e762807329b420cc4ff1ae",
         "constructorArgs": {
-          "impl": "0x60A034606657601f61051438819003918201601f"
+          "impl": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE"
         }
       },
       "implementationNames": {
@@ -103,20 +97,14 @@
       "sinceBlock": 22670004,
       "values": {
         "$immutable": true,
-        "constrImplementation": "0x18256941ec7b661f9f46c228b74e775b581e63f8",
         "constructorArgs": {
-          "impl": "0x00000000000000000000000060a034606657601f"
+          "impl": "0x18256941eC7B661F9F46C228b74e775b581e63f8"
         }
       },
       "implementationNames": {
         "0x4C7ab101e9B114A253475485b301E0D0c9e20647": "BottomTournamentFactory"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "0x60A034606657601f61051438819003918201601f",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "DaveConsensus",
@@ -585,5 +573,5 @@
     "cartesi/TopTournament_clone": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
   },
-  "permissionsConfigHash": "0x5c8a83a9a26151dcc9dd77c1a6da07a07948aa793ea696d1a77c4f31d328e643"
+  "permissionsConfigHash": "0x6a2710680e8ca4bffbc92746228e070e52520170ae45c523c7d37ed137765070"
 }
