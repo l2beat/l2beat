@@ -6,14 +6,33 @@
     "ethereum": {
       "initialAddresses": [
         "0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c",
-        "0xc700d6add016eecd59d989c028214eaa0fcc0051"
+        "0xc700d6add016eecd59d989c028214eaa0fcc0051",
+        "0xe49e4cb0ab5c0e5792e762807329b420cc4ff1ae",
+        "0x18256941ec7b661f9f46c228b74e775b581e63f8"
       ],
-      "names": {
-        "0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c": "Application",
-        "0x6ce590b9f0697327f18c601df6f0bae4a0801b68": "DaveConsensus",
-        "0xa31c2acff3464658866960c0fbd3d798310272d7": "MultiLevelTournamentFactory",
-        "0xc70074bdd26d8cf983ca6a5b89b8db52d5850051": "InputBox",
-        "0xc700d6add016eecd59d989c028214eaa0fcc0051": "ERC20Portal"
+      "overrides": {
+        "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": {
+          "fields": {
+            "constrImplementation": {
+              // contructorargs handler fails
+              "handler": {
+                "type": "hardcoded",
+                "value": "0xe49e4cb0ab5c0e5792e762807329b420cc4ff1ae"
+              }
+            }
+          }
+        },
+        "0x4C7ab101e9B114A253475485b301E0D0c9e20647": {
+          "fields": {
+            "constrImplementation": {
+              // contructorargs handler fails
+              "handler": {
+                "type": "hardcoded",
+                "value": "0x18256941ec7b661f9f46c228b74e775b581e63f8"
+              }
+            }
+          }
+        }
       }
     }
   }

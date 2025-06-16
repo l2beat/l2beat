@@ -1,9 +1,72 @@
 {
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
-  "blockNumber": 22709685,
-  "configHash": "0x8e0211df4d802943779b6f885bffe0d6b3b5b7b00ba75b626ff94dca2a39bab6",
+  "blockNumber": 22716869,
+  "configHash": "0xe279c42053f9d1bc0bd7df5967af63787e06f803cf5efe5be4eca5ba5348c879",
   "entries": [
+    {
+      "address": "0x00000000000000000000000060a034606657601f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "TopTournament",
+      "address": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
+      "type": "Contract",
+      "template": "cartesi/TopTournament",
+      "sourceHashes": [
+        "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508187,
+      "sinceBlock": 22670003,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
+      }
+    },
+    {
+      "name": "BottomTournament",
+      "address": "0x18256941eC7B661F9F46C228b74e775b581e63f8",
+      "type": "Contract",
+      "template": "cartesi/BottomTournament",
+      "sourceHashes": [
+        "0x6b6cbba3169b7d3ac68d947550768c2706ae97d1c4c8bb97d6d0cf6951349236"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508139,
+      "sinceBlock": 22669999,
+      "values": { "$immutable": true },
+      "errors": {
+        "canBeEliminated": "Processing error occurred.",
+        "innerTournamentWinner": "Processing error occurred."
+      },
+      "implementationNames": {
+        "0x18256941eC7B661F9F46C228b74e775b581e63f8": "BottomTournament"
+      }
+    },
+    {
+      "name": "MiddleTournamentFactory",
+      "address": "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
+      "type": "Contract",
+      "template": "cartesi/MiddleTournamentFactory",
+      "sourceHashes": [
+        "0x92ef63615b5b5a7d557d4c53c42a5ffac816aca8411b41bf16297f1fd763cee5"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508235,
+      "sinceBlock": 22670007,
+      "values": {
+        "$immutable": true,
+        "constrImplementation": "0xe49e4cb0ab5c0e5792e762807329b420cc4ff1ae",
+        "constructorArgs": {
+          "impl": "0x60A034606657601f61051438819003918201601f"
+        }
+      },
+      "implementationNames": {
+        "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": "MiddleTournamentFactory"
+      }
+    },
     {
       "name": "Application",
       "address": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
@@ -27,6 +90,33 @@
       "implementationNames": {
         "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
       }
+    },
+    {
+      "name": "BottomTournamentFactory",
+      "address": "0x4C7ab101e9B114A253475485b301E0D0c9e20647",
+      "type": "Contract",
+      "template": "cartesi/BottomTournamentFactory",
+      "sourceHashes": [
+        "0xf08e842ede6e859b7253cbd468c2e8909b5743fed73e190dc467607e94c07f94"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508199,
+      "sinceBlock": 22670004,
+      "values": {
+        "$immutable": true,
+        "constrImplementation": "0x18256941ec7b661f9f46c228b74e775b581e63f8",
+        "constructorArgs": {
+          "impl": "0x00000000000000000000000060a034606657601f"
+        }
+      },
+      "implementationNames": {
+        "0x4C7ab101e9B114A253475485b301E0D0c9e20647": "BottomTournamentFactory"
+      }
+    },
+    {
+      "address": "0x60A034606657601f61051438819003918201601f",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "DaveConsensus",
@@ -63,6 +153,42 @@
       }
     },
     {
+      "name": "TopTournamentFactory",
+      "address": "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
+      "type": "Contract",
+      "template": "cartesi/TopTournamentFactory",
+      "sourceHashes": [
+        "0xe052c2a0aba497d7180bf0cc26ad2be121158040020ffaaa3c9266cb3986351b"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508247,
+      "sinceBlock": 22670008,
+      "values": {
+        "$immutable": true,
+        "constructorArgs": {
+          "impl": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa"
+        }
+      },
+      "implementationNames": {
+        "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": "TopTournamentFactory"
+      }
+    },
+    {
+      "name": "CartesiStateTransition",
+      "address": "0x772732EFbDE6559B2960327276ed33d707fF057f",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xc742ba941fb8f350e4f2f41efd06418dfd193404fc7c5022815b47b9f775e558"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508211,
+      "sinceBlock": 22670005,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0x772732EFbDE6559B2960327276ed33d707fF057f": "CartesiStateTransition"
+      }
+    },
+    {
       "name": "MultiLevelTournamentFactory",
       "address": "0xA31C2aCfF3464658866960c0fBD3d798310272D7",
       "type": "Contract",
@@ -74,7 +200,16 @@
       "description": "Contract that instantiates a PRT fraud-proof tournament, triggered every epoch.",
       "sinceTimestamp": 1749508271,
       "sinceBlock": 22670010,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "constructorArgs": {
+          "_topFactory": "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c",
+          "_middleFactory": "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4",
+          "_bottomFactory": "0x4C7ab101e9B114A253475485b301E0D0c9e20647",
+          "_tournamentParametersProvider": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
+          "_stateTransition": "0x772732EFbDE6559B2960327276ed33d707fF057f"
+        }
+      },
       "implementationNames": {
         "0xA31C2aCfF3464658866960c0fBD3d798310272D7": "MultiLevelTournamentFactory"
       }
@@ -117,9 +252,25 @@
       }
     },
     {
+      "name": "CanonicalTournamentParametersProvider",
+      "address": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x7ed0779ae4b12f1654a45c0513dde6eea5def66d068f43599eccfb05b69c71b5"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508259,
+      "sinceBlock": 22670009,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": "CanonicalTournamentParametersProvider"
+      }
+    },
+    {
       "name": "TopTournament",
       "address": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A",
       "type": "Contract",
+      "template": "cartesi/TopTournament",
       "sourceHashes": [
         "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e",
         "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e"
@@ -128,25 +279,31 @@
       "sinceTimestamp": 1749510479,
       "sinceBlock": 22670194,
       "values": {
-        "$implementation": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
-        "arbitrationResult": [
-          false,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "isClosed": false,
-        "isFinished": false,
-        "timeFinished": [false, 0],
-        "tournamentLevelConstants": {
-          "_maxLevel": 3,
-          "_level": 0,
-          "_log2step": 44,
-          "_height": 48
-        }
+        "$implementation": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa"
       },
       "implementationNames": {
         "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": "TopTournament",
         "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
+      }
+    },
+    {
+      "name": "MiddleTournament",
+      "address": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
+      "type": "Contract",
+      "template": "cartesi/MiddleTournament",
+      "sourceHashes": [
+        "0xae62ff1fdcc1be0d64d4c17798c0bf6c133a9bdee804f44c19bf2cf045464843"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1749508163,
+      "sinceBlock": 22670001,
+      "values": { "$immutable": true },
+      "errors": {
+        "canBeEliminated": "Processing error occurred.",
+        "innerTournamentWinner": "Processing error occurred."
+      },
+      "implementationNames": {
+        "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": "MiddleTournament"
       }
     }
   ],
@@ -187,6 +344,46 @@
       "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
       "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
     ],
+    "0x18256941eC7B661F9F46C228b74e775b581e63f8": [
+      "error CommitmentMismatch(bytes32 received, bytes32 expected)",
+      "error EliminateByTimeout()",
+      "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
+      "error InvalidContestedFinalState(bytes32 contestedFinalStateOne, bytes32 contestedFinalStateTwo, bytes32 finalState)",
+      "error LengthMismatch(uint64 treeHeight, uint64 siblingsLength)",
+      "error TournamentIsClosed()",
+      "error TournamentIsFinished()",
+      "error WinByTimeout()",
+      "error WrongChildren(uint256 commitment, bytes32 parent, bytes32 left, bytes32 right)",
+      "error WrongFinalState(uint256 commitment, bytes32 computed, bytes32 claimed)",
+      "error WrongNodesForStep()",
+      "event commitmentJoined(bytes32 root)",
+      "event matchAdvanced(bytes32 indexed, bytes32 parent, bytes32 left)",
+      "event matchCreated(bytes32 indexed one, bytes32 indexed two, bytes32 leftOfTwo)",
+      "event matchDeleted(bytes32)",
+      "function advanceMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes32 _newLeftNode, bytes32 _newRightNode)",
+      "function canBeEliminated() view returns (bool)",
+      "function canWinMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId) view returns (bool)",
+      "function eliminateMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId)",
+      "function getCommitment(bytes32 _commitmentRoot) view returns (tuple(uint64 allowance, uint64 startInstant), bytes32)",
+      "function getMatch(bytes32 _matchIdHash) view returns (tuple(bytes32 otherParent, bytes32 leftNode, bytes32 rightNode, uint256 runningLeafPosition, uint64 currentHeight, uint64 log2step, uint64 height))",
+      "function getMatchCycle(bytes32 _matchIdHash) view returns (uint256)",
+      "function innerTournamentWinner() view returns (bool, bytes32, bytes32, tuple(uint64 allowance, uint64 startInstant))",
+      "function isClosed() view returns (bool)",
+      "function isFinished() view returns (bool)",
+      "function joinTournament(bytes32 _finalState, bytes32[] _proof, bytes32 _leftNode, bytes32 _rightNode)",
+      "function sealLeafMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftLeaf, bytes32 _rightLeaf, bytes32 _agreeHash, bytes32[] _agreeHashProof)",
+      "function timeFinished() view returns (bool, uint64)",
+      "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
+      "function winLeafMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes proofs)",
+      "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
+    ],
+    "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": [
+      "constructor(address impl)",
+      "error CloneArgumentsTooLong()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "function instantiate(bytes32 initialHash, bytes32 contestedCommitmentOne, bytes32 contestedFinalStateOne, bytes32 contestedCommitmentTwo, bytes32 contestedFinalStateTwo, uint64 allowance, uint256 startCycle, uint64 level, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address tournamentFactory) returns (address)"
+    ],
     "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": [
       "constructor(address outputsMerkleRootValidator, address initialOwner, bytes32 templateHash, bytes dataAvailability)",
       "error InsufficientFunds(uint256 value, uint256 balance)",
@@ -217,6 +414,13 @@
       "function validateOutputHash(bytes32 outputHash, tuple(uint64 outputIndex, bytes32[] outputHashesSiblings) proof) view",
       "function wasOutputExecuted(uint256 outputIndex) view returns (bool)"
     ],
+    "0x4C7ab101e9B114A253475485b301E0D0c9e20647": [
+      "constructor(address impl)",
+      "error CloneArgumentsTooLong()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "function instantiate(bytes32 initialHash, bytes32 contestedCommitmentOne, bytes32 contestedFinalStateOne, bytes32 contestedCommitmentTwo, bytes32 contestedFinalStateTwo, uint64 allowance, uint256 startCycle, uint64 level, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address stateTransition) returns (address)"
+    ],
     "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": [
       "constructor(address inputBox, address appContract, address tournamentFactory, bytes32 initialMachineStateHash)",
       "error ApplicationMismatch(address expected, address received)",
@@ -236,6 +440,17 @@
       "function provideMerkleRootOfInput(uint256 inputIndexWithinEpoch, bytes input) view returns (bytes32)",
       "function settle(uint256 epochNumber, bytes32 outputsMerkleRoot, bytes32[] proof)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x71C6A5fF7f4f31451CcB5bE312Fa1C5F2a060d5c": [
+      "constructor(address impl)",
+      "error CloneArgumentsTooLong()",
+      "error FailedDeployment()",
+      "error InsufficientBalance(uint256 balance, uint256 needed)",
+      "function instantiate(bytes32 initialHash, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address tournamentFactory) returns (address)"
+    ],
+    "0x772732EFbDE6559B2960327276ed33d707fF057f": [
+      "constructor(address _riscVStateTransition, address _cmioStateTransition)",
+      "function transitionState(bytes32 machineState, uint256 counter, bytes proofs, address provider) view returns (bytes32)"
     ],
     "0xA31C2aCfF3464658866960c0fBD3d798310272D7": [
       "constructor(address _topFactory, address _middleFactory, address _bottomFactory, address _tournamentParametersProvider, address _stateTransition)",
@@ -258,6 +473,10 @@
       "error ERC20TransferFailed()",
       "function depositERC20Tokens(address token, address appContract, uint256 value, bytes execLayerData)",
       "function getInputBox() view returns (address)"
+    ],
+    "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c": [
+      "constructor(uint64 matchEffort, uint64 maxAllowance)",
+      "function tournamentParameters(uint64 level) view returns (tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance))"
     ],
     "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": [
       "error ChildTournamentCannotBeEliminated()",
@@ -294,14 +513,57 @@
       "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
       "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
       "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
+    ],
+    "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": [
+      "error ChildTournamentCannotBeEliminated()",
+      "error ChildTournamentMustBeEliminated()",
+      "error ChildTournamentNotFinished()",
+      "error CommitmentMismatch(bytes32 received, bytes32 expected)",
+      "error EliminateByTimeout()",
+      "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
+      "error InvalidContestedFinalState(bytes32 contestedFinalStateOne, bytes32 contestedFinalStateTwo, bytes32 finalState)",
+      "error LengthMismatch(uint64 treeHeight, uint64 siblingsLength)",
+      "error TournamentIsClosed()",
+      "error TournamentIsFinished()",
+      "error WinByTimeout()",
+      "error WrongChildren(uint256 commitment, bytes32 parent, bytes32 left, bytes32 right)",
+      "error WrongTournamentWinner(bytes32 commitmentRoot, bytes32 winner)",
+      "event commitmentJoined(bytes32 root)",
+      "event matchAdvanced(bytes32 indexed, bytes32 parent, bytes32 left)",
+      "event matchCreated(bytes32 indexed one, bytes32 indexed two, bytes32 leftOfTwo)",
+      "event matchDeleted(bytes32)",
+      "event newInnerTournament(bytes32 indexed, address)",
+      "function advanceMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes32 _newLeftNode, bytes32 _newRightNode)",
+      "function canBeEliminated() view returns (bool)",
+      "function canWinMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId) view returns (bool)",
+      "function eliminateInnerTournament(address _childTournament)",
+      "function eliminateMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId)",
+      "function getCommitment(bytes32 _commitmentRoot) view returns (tuple(uint64 allowance, uint64 startInstant), bytes32)",
+      "function getMatch(bytes32 _matchIdHash) view returns (tuple(bytes32 otherParent, bytes32 leftNode, bytes32 rightNode, uint256 runningLeafPosition, uint64 currentHeight, uint64 log2step, uint64 height))",
+      "function getMatchCycle(bytes32 _matchIdHash) view returns (uint256)",
+      "function innerTournamentWinner() view returns (bool, bytes32, bytes32, tuple(uint64 allowance, uint64 startInstant))",
+      "function isClosed() view returns (bool)",
+      "function isFinished() view returns (bool)",
+      "function joinTournament(bytes32 _finalState, bytes32[] _proof, bytes32 _leftNode, bytes32 _rightNode)",
+      "function sealInnerMatchAndCreateInnerTournament(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftLeaf, bytes32 _rightLeaf, bytes32 _agreeHash, bytes32[] _agreeHashProof)",
+      "function timeFinished() view returns (bool, uint64)",
+      "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
+      "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
+      "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
     ]
   },
   "usedTemplates": {
     "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
+    "cartesi/BottomTournament": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
+    "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/DaveConsensus": "0xd22699d689db6d9de5523a67a3805f41943d411b2d8eeab8d15ccee6c855cb79",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "cartesi/MultiLevelTournamentFactory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "cartesi/MiddleTournament": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
+    "cartesi/MiddleTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "cartesi/TopTournament": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
+    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
   },
-  "permissionsConfigHash": "0xc1ef2c6561bc7f0a338851d891e3953a25d7320c68b0d500131b6e87dd904fec"
+  "permissionsConfigHash": "0x5c8a83a9a26151dcc9dd77c1a6da07a07948aa793ea696d1a77c4f31d328e643"
 }
