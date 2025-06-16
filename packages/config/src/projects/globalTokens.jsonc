@@ -1011,6 +1011,7 @@
     },
     "plumenetwork": {
       "names": {
+        "0x78adD880A697070c1e765Ac44D65323a0DcCE913": "Bridged USDC (Stargate) Token",
         "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token"
       }
     },
