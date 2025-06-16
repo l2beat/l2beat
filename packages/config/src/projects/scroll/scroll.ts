@@ -135,7 +135,7 @@ export const scroll: ScalingProject = {
     {
       rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
       securityCouncilReference:
-        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council/',
+        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
     },
   ),
   chainConfig: {
