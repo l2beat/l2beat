@@ -209,6 +209,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xa641e14B685b5E652865e14A4fBc07e51371D124",
           "role": "admin"
         },
@@ -396,6 +401,17 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"
+            },
+            { "address": "ethereum:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xa641e14B685b5E652865e14A4fBc07e51371D124",
           "role": "admin",
           "via": [
@@ -559,6 +575,7 @@
       "sinceTimestamp": 1719398591,
       "sinceBlock": 20175339,
       "values": {
+        "$admin": "0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF",
         "$immutable": false,
         "$implementation": "0x48455CB9bB2407C3e8De538B884bBec5aCbaa137",
         "$pastUpgrades": [
@@ -765,6 +782,17 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"
+            },
+            { "address": "ethereum:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380",
           "role": "admin",
           "via": [
             {
@@ -1224,5 +1252,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x240480d1a74c01676d0d0c18a05c444f006b2ef67a41795015004c28a7b655b9"
+  "permissionsConfigHash": "0xfcbc9504af39eeed5ff36ea53c9bc85e1a627fe5da54b43717772ff03124ae5f"
 }

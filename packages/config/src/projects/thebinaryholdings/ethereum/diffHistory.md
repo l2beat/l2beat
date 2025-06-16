@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x2134d5c5fa7467a9c7a25a2b63e0537bdeb61506
+
+# Diff at Mon, 16 Jun 2025 08:43:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 21429035
+- current block number: 21429035
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21429035 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12"
++        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
++        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
++        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
++        "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380"
+    }
+```
+
+```diff
+    EOA  (0x666372fEfB85dA96a1a56667638321605afe95bC) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12","role":"admin","via":[{"address":"ethereum:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"},{"address":"ethereum:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3"}]}
+      receivedPermissions.8.from:
+-        "ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12"
++        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
+      receivedPermissions.7.from:
+-        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
++        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      receivedPermissions.6.from:
+-        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
+      receivedPermissions.5.from:
+-        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
++        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
+      receivedPermissions.4.from:
+-        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
++        "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x807d21e416434ae92c8E5bcA4d506781aFbBa380) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"
+    }
+```
+
+```diff
+    EOA  (0xE559cf25AE191566d4A2E1cd5A533475179672A0) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12","role":"admin","via":[{"address":"ethereum:0x38593Cce8FaB9887Ef9760f5F6aB3d6C595143cF"},{"address":"ethereum:0x48EC051349dDc7E8baBafCBfe27696ECF2A8a8B3"}]}
+      receivedPermissions.7.from:
+-        "ethereum:0x34bb53D7C525114A27F0FE2aF91bdDAd186abb12"
++        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
+      receivedPermissions.6.from:
+-        "ethereum:0x1b396e4dC6ECB0be33CF01C5a34E1a3a7D03c378"
++        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
+      receivedPermissions.5.from:
+-        "ethereum:0x7aC7e5989EaC278B7BbfeF560871a2026baD472c"
++        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
+      receivedPermissions.4.from:
+-        "ethereum:0x012f4baa6e0F5Ac4dFDF47BDdd9CF68a2B17821e"
++        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
+      receivedPermissions.3.from:
+-        "ethereum:0x5ff88fcF8e9947f45F4cAf8FFd5231B5DdF05e0A"
++        "ethereum:0x807d21e416434ae92c8E5bcA4d506781aFbBa380"
+    }
+```
+
 Generated with discovered.json: 0x1dce9cc6a4cf1d1b73d37f6f256d3f40511db02d
 
 # Diff at Fri, 30 May 2025 07:17:45 GMT:

@@ -2,7 +2,7 @@
   "name": "shape",
   "chain": "ethereum",
   "blockNumber": 22437744,
-  "configHash": "0x49769fad69633dc5cb157efd5c70f32c6dc2c0e2e42610666b02ed9f519be9f9",
+  "configHash": "0xae00b78f36d42d603b15f55308aad5eddf18f33d50accb484fa31d4f705fb0ac",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -103,7 +103,14 @@
     {
       "address": "0x0D8a607F3d2de86adD04Df00f06794cB339A40de",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -120,6 +127,11 @@
           "from": "ethereum:0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x2b18602877181C3cB72C687E2A771E123A3788E3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -264,6 +276,7 @@
       "sinceTimestamp": 1721746187,
       "sinceBlock": 20369936,
       "values": {
+        "$admin": "0x11B190Ae661c6d6884dFEE48E215691E0DdB842e",
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "$pastUpgrades": [
@@ -1073,10 +1086,23 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x8090Ac33F4C9A1A220492487390dbe0c3b56a37A",
+          "role": ".challenger"
+        },
+        {
           "permission": "interact",
           "from": "ethereum:0xcee78437aE9e15cee9c78E63757E0153c0FD7479",
           "description": "set and change address mappings.",
           "role": ".owner",
+          "via": [
+            { "address": "ethereum:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x2b18602877181C3cB72C687E2A771E123A3788E3",
+          "role": "admin",
           "via": [
             { "address": "ethereum:0x11B190Ae661c6d6884dFEE48E215691E0DdB842e" }
           ]
@@ -2424,5 +2450,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xda870bd1f7ac62756270f1ac658e08c5a6f8be5e9509bf91acb74d0f0ac7b245"
+  "permissionsConfigHash": "0xd67fa7700b4bfe5615e0a61bde8a3c7c2b029d1eb319f4dfdba6b4fccb524fe4"
 }

@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 22437752,
-  "configHash": "0x7dbc9b240f7abe37f4f04e1641ae45eae043f8e6ade9285f63e6c5243ba04795",
+  "configHash": "0xdf8378175da4dcc50c6b901de063db05458b16fc48a01122a3161a89d10c46a4",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -257,6 +257,20 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7",
+          "role": ".challenger",
+          "via": [
+            {
+              "address": "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+            },
+            {
+              "address": "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -371,7 +385,14 @@
     {
       "address": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E",
@@ -527,6 +548,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
           "role": "admin",
           "via": [
             { "address": "ethereum:0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49" }
@@ -956,6 +985,11 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x7541f1C32A501E13F722fBb7C57195aD4C8415E7",
+          "role": ".challenger"
+        },
         {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -1483,6 +1517,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xee6F71542e32930B44D6C208a15DE67E56F86087",
           "role": "admin"
         }
@@ -1519,6 +1558,7 @@
       "sinceTimestamp": 1686694019,
       "sinceBlock": 17473937,
       "values": {
+        "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "$pastUpgrades": [
@@ -2482,5 +2522,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x7c29e63de379498b7cddb944df74efbed1537eee2fca995c33a44c54aaecc48c"
+  "permissionsConfigHash": "0x8b5d089b26cad43454a3e6b445535365e2250056da2c9f1b70fb62e7b3e200a4"
 }
