@@ -20,8 +20,8 @@ function Loader() {
       <g>
         <path
           className="animate-breath"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
           d="M73 3C77 16 84 23 97 27C84 31 77 38 73 51C69 38 62 31 49 27C62 23 69 16 73 3Z"
           fill="#F0D8BD"
         />
