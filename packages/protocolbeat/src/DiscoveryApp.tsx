@@ -1,8 +1,8 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Navigate } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { ProjectPage } from './ProjectPage'
 import type { AppModule } from './routing/utils'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 

@@ -1,7 +1,7 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import type { AppModule } from '../routing/utils'
 import { AddressSelectionPage } from './AddressSelectionPage'
 import { DiffPage } from './DiffPage'
-import type { AppModule } from '../routing/utils'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
