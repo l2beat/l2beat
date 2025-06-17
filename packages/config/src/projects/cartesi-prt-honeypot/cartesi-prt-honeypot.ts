@@ -35,6 +35,7 @@ export const cartesiprthoneypot: ScalingProject = {
   ],
   display: {
     name: 'Cartesi PRT Honeypot',
+    warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
     stack: 'Cartesi Rollups',
@@ -180,6 +181,7 @@ export const cartesiprthoneypot: ScalingProject = {
       'The reference implementation for ERC20 deposits can be found [here](https://github.com/cartesi/rollups-contracts/blob/v2.0.0/src/common/InputEncoding.sol#L38). To learn about the withdrawal request format, please refer to the documentation [here](https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals).',
   },
   stateValidation: {
+    isUnderReview: true,
     categories: [
       {
         ...STATE_VALIDATION.FRAUD_PROOFS,
