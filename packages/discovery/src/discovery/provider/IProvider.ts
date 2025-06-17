@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type {
   BlobClient,
   BlobsInBlock,
@@ -39,7 +40,7 @@ export interface IProvider {
   /** Needs to return values that survive JSON serialization! */
   raw<T>(
     cacheKey: string,
-    fn: (providers: RawProviders) => Promise<T>,
+    fn: (providers: RawProviders, logger: Logger) => Promise<T>,
   ): Promise<T>
 
   call(address: EthereumAddress, data: Bytes): Promise<Bytes>

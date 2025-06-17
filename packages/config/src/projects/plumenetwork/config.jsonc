@@ -2,5 +2,15 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "plumenetwork",
   "import": ["../globalConfig.jsonc"],
-  "chains": {}
+  "chains": {
+    "ethereum": {
+      "initialAddresses": [
+        "0x35381f63091926750F43b2A7401B083263aDEF83", // bridge
+        "0xE2C902BC61296531e556962ffC81A082b82f5F28" // ERC20Gateway
+      ],
+      "names": {
+        "0x35381f63091926750F43b2A7401B083263aDEF83": "Bridge"
+      }
+    }
+  }
 }

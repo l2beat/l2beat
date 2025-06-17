@@ -1,3 +1,171 @@
+Generated with discovered.json: 0xbdc90e6d9c07377b6e510bfc21a5ed4f0d87fdf1
+
+# Diff at Fri, 13 Jun 2025 08:40:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@47036f369616cc0b23ec8b94f0706f5c105ac1f5 block: 22666471
+- current block number: 22694475
+
+## Description
+
+Risc0 verifier update (gateway and groth16 verifier changes are minimal).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.13.name:
+-        "0x72697363305f67726f746831365f766572696669657200000000000000000000"
++        "bond_token"
+      values.namedAddresses.13.address:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.12.name:
+-        "bond_token"
++        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
+      values.namedAddresses.12.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.11.name:
+-        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
++        "taiko_token"
+      values.namedAddresses.11.address:
+-        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.10.name:
+-        "taiko_token"
++        "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000"
+      values.namedAddresses.10.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.namedAddresses.9.name:
+-        "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000"
++        "0x72697363305f726574685f766572696669657200000000000000000000000000"
+      values.namedAddresses.9.address:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      values.namedAddresses.8.name:
+-        "0x72697363305f726574685f766572696669657200000000000000000000000000"
++        "bridge"
+      values.namedAddresses.8.address:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.namedAddresses.7.name:
+-        "bridge"
++        "0x72697363305f67726f746831365f766572696669657200000000000000000000"
+      values.namedAddresses.7.address:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      sourceHashes.1:
+-        "0xd24723da846efa982924d892e9d3e52d38b6d85eab9d8e2f0a298ff07d18d994"
++        "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6"
+      values.$implementation:
+-        "0x801878e56A8DA58d6a837006345CDD11a9E6a852"
++        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.$pastUpgrades.1:
++        ["2025-05-15T00:25:59.000Z","0x2c106efd4e844195ff8597792c0e87d8319c23b5f4b6f675f878d75181c27baa",["0x801878e56A8DA58d6a837006345CDD11a9E6a852"]]
+      values.$pastUpgrades.0.2:
+-        ["0x801878e56A8DA58d6a837006345CDD11a9E6a852"]
++        "2025-06-12T03:50:35.000Z"
+      values.$pastUpgrades.0.1:
+-        "0x2c106efd4e844195ff8597792c0e87d8319c23b5f4b6f675f878d75181c27baa"
++        "0x2b9250ebdcf10b1a1ec658e5cc9e7fd9aa19dd32573e6ab5bc036499682dea3a"
+      values.$pastUpgrades.0.0:
+-        "2025-05-15T00:25:59.000Z"
++        ["0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "0x801878e56A8DA58d6a837006345CDD11a9E6a852"
++        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.riscoGroth16Verifier:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
++        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+      implementationNames.0x801878e56A8DA58d6a837006345CDD11a9E6a852:
+-        "Risc0Verifier"
+      implementationNames.0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
++        "TaikoRisc0Verifier"
+    }
+```
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.13:
++        "0xb09f9005e4612526e378466b5c16ab6028478e81c085812d6ed37166c4cda10e"
+      values.mrEnclaves.12:
++        "0x6e43c1d575b5b785d0f6259dfac44998c6f0c164864f9f98270fb740c14eb943"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.26:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.25.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.24.from:
+-        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.23.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.22.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+## Source code changes
+
+```diff
+.../Risc0VerifierGateway/TaikoRisc0Verifier.sol}   | 80 ++--------------------
+ .../RiscZeroGroth16Verifier.sol                    |  4 +-
+ 2 files changed, 8 insertions(+), 76 deletions(-)
+```
+
 Generated with discovered.json: 0xa09e2062598ded8a0f11be8153bf99e8073b6d56
 
 # Diff at Mon, 09 Jun 2025 10:52:23 GMT:

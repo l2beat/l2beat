@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { CONTRACTS, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -35,6 +40,9 @@ export const celo: ScalingProject = opStackL2({
         'https://blog.celo.org/',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['CELO'],

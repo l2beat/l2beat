@@ -2,7 +2,7 @@
   "name": "swell",
   "chain": "ethereum",
   "blockNumber": 22495698,
-  "configHash": "0xf1bc22577e08e14e58118bee0948025589c19d958047fcaf0f60392f156981fb",
+  "configHash": "0xd44ff96b881da4f0bbac8d23edbdd91d835e18116a8258461ffb00d6c13ffdf8",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -449,6 +449,20 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6",
+          "role": ".challenger",
+          "via": [
+            {
+              "address": "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+            },
+            {
+              "address": "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -577,6 +591,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759",
           "role": "admin"
         },
         {
@@ -750,6 +769,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6" }
@@ -1151,6 +1178,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6",
+          "role": ".challenger"
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -1243,7 +1275,14 @@
     {
       "address": "0xA2Acb8142b64fabda103DA19b0075aBB56d29FbD",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x1380Cc0E11Bfe6b5b399D97995a6B3D158Ed61a6",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "AddressManager",
@@ -1585,6 +1624,7 @@
       "sinceTimestamp": 1732696703,
       "sinceBlock": 21277945,
       "values": {
+        "$admin": "0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6",
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "$pastUpgrades": [
@@ -2723,5 +2763,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xb1bca14021659c13b06baf087fddd69b206afb9262e249595b8c92a67e49ec73"
+  "permissionsConfigHash": "0xc22a6aab12289d5b2d1d7c5fe83e1081cbb6f3144178593b635df09662cc41cf"
 }

@@ -309,6 +309,8 @@
         "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d": "Pinakion Token",
         "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6": "Pirex Ether Token",
         "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430": "PlayDapp Token",
+        "0x4C1746A800D224393fE2470C70A35717eD4eA5F1": "Plume Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token",
         "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD": "pNetwork Token",
         "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2": "Polkamon Token",
         "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "Polygon Ecosystem Token",
@@ -566,6 +568,7 @@
     },
     "zksync2": {
       "names": {
+        "0x57fD71a86522Dc06D6255537521886057c1772A3": "Blockchain Capital Token",
         "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4": "Bridged USDC (zkSync) Token",
         "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656": "Dai Stablecoin Token",
         "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9": "Fidelity ILF USD Fund Class G Acc Token",
@@ -577,6 +580,7 @@
         "0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2": "Holdstation Token",
         "0x6bE2425C381eb034045b527780D2Bf4E21AB7236": "KelpDao Restaked ETH Token",
         "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31": "Mountain Protocol USD Token",
+        "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164": "Private Credit Direct Deal0000031 Token",
         "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32": "Staked Frax Ether Token",
         "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C": "Tether USD Token",
         "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4": "USDC Token",
@@ -1003,6 +1007,12 @@
     "xchain": {
       "names": {
         "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6": "Bridged USDC (Stargate) Token"
+      }
+    },
+    "plumenetwork": {
+      "names": {
+        "0x78adD880A697070c1e765Ac44D65323a0DcCE913": "Bridged USDC (Stargate) Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token"
       }
     },
     "real": {

@@ -12,7 +12,7 @@ export const mode: ScalingProject = opStackL2({
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Mode Network',
     shortName: 'Mode',
@@ -77,7 +77,7 @@ export const mode: ScalingProject = opStackL2({
     minTimestamp: UnixTime(1710386375),
     genesisTimestamp: UnixTime(1700167583),
     lag: 0,
-    stateUpdate: 'analyze',
+    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'mode',

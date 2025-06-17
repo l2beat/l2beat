@@ -51,6 +51,7 @@
       "sinceTimestamp": 1716139103,
       "sinceBlock": 19905422,
       "values": {
+        "$admin": "0x566c7DB023111D897F16b602B2B57f0F12f7bF44",
         "$immutable": false,
         "$implementation": "0x71fA82Ea96672797954C28032b337aA40AAFC99f",
         "$pastUpgrades": [
@@ -121,6 +122,14 @@
           "from": "ethereum:0xf565303B5326C8653E78e5f73a2984f6F778C9E8",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x22B0cd077c937b9912772B38519b6d2d91541c1A",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x566c7DB023111D897F16b602B2B57f0F12f7bF44" }
+          ]
         },
         {
           "permission": "upgrade",
@@ -398,6 +407,11 @@
           "from": "ethereum:0xA80349b0D79bf3154ae54066410d20eb7B8697Ac",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x22B0cd077c937b9912772B38519b6d2d91541c1A",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1069,5 +1083,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x621f55fd8b6b52e1c4a45395c21601eaf547cf0946b1ba5f9c330ac6316d8831"
+  "permissionsConfigHash": "0x1f074f0bd84ad48165dc46c80ec8b02402dbc9c00f62e98c76cfccd10f508a3a"
 }

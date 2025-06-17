@@ -1,0 +1,176 @@
+Generated with discovered.json: 0x419e9c1bdbdc3d01d1f35383068eb30fe6265f07
+
+# Diff at Thu, 12 Jun 2025 14:57:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@707672ae07dec8237e8d9167089f62214e63e78c block: 22687092
+- current block number: 22687092
+
+## Description
+
+Added ERC20 gateway.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22687092 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59","role":"admin","via":[{"address":"ethereum:0xb90fe445014e74eA5aA7681291212bfEa37031CC"},{"address":"ethereum:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea","role":"admin","via":[{"address":"ethereum:0xb90fe445014e74eA5aA7681291212bfEa37031CC"},{"address":"ethereum:0xd688dabDBb14D673898689135a23a174560c8C04"}]}
+      receivedPermissions.8.from:
+-        "ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59"
++        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
+      receivedPermissions.7.from:
+-        "ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea"
++        "ethereum:0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d"
+      receivedPermissions.6.from:
+-        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
++        "ethereum:0xE2C902BC61296531e556962ffC81A082b82f5F28"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb90fe445014e74eA5aA7681291212bfEa37031CC) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea","role":"admin"}
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x85eC1b9138a8b9659A51e2b51bb0861901040b59"
++        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xf576102530749344D2f4C04D15C2B8609c7897ea"
++        "ethereum:0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x35381f63091926750F43b2A7401B083263aDEF83"
++        "ethereum:0xE2C902BC61296531e556962ffC81A082b82f5F28"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0x17551CBD1ed02768b00D5Bd198c2D86a4c7ee43d)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xE2C902BC61296531e556962ffC81A082b82f5F28)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+Generated with discovered.json: 0x24ece6c1daee9d67f101f3d207a9de23743165f9
+
+# Diff at Thu, 12 Jun 2025 08:03:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- current block number: 22687092
+
+## Description
+
+Initial discovery.
+
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x0537c93dA3b1f8A525204165d1d93De0534c262f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0x35381f63091926750F43b2A7401B083263aDEF83)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x35c60Cc77b0A8bf6F938B11bd3E9D319a876c2aC)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x6982e35C878cD2b5aF8Dcf06f33c4EfB01D6f482)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0x7e4627bC114Fcd12ba912103279FD2858E644E71)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x84eA2523b271029FFAeB58fc6E6F1435a280db44)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x856EA788977Bc771E8Ca87471baeC507A0f54771)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe) as source of truth for the DA referenced by the fault proof.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x85eC1b9138a8b9659A51e2b51bb0861901040b59)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x8c66A25752e70D6BD6b4090D2E31ca37cf77caE6)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x943fc691242291B74B105e8D19bd9E5DC2fcBa1D)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x9c40D14A2FC3f0A2f5fe804436f8e312224472C5)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xb90fe445014e74eA5aA7681291212bfEa37031CC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xcaBf38d8eADdE0BC6C91655242AFB4Da92a63FCe)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0xd688dabDBb14D673898689135a23a174560c8C04)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0xf576102530749344D2f4C04D15C2B8609c7897ea)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```

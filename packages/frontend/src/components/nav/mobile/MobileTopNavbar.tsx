@@ -1,3 +1,5 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
+import { UnixTime } from '@l2beat/shared-pure'
 import { cn } from '~/utils/cn'
 import { Logo } from '../../Logo'
 import { useRecategorisationPreviewContext } from '../../recategorisation-preview/RecategorisationPreviewProvider'
@@ -17,6 +19,8 @@ export function MobileTopNavbar({
   className,
 }: { groups: NavGroup[]; logoLink: string; className?: string }) {
   const { isScalingMainPage } = useRecategorisationPreviewContext()
+  const showSwitch =
+    isScalingMainPage && PROJECT_COUNTDOWNS.otherMigration > UnixTime.now()
   return (
     <div className={cn('z-10 lg:hidden', className)}>
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
@@ -31,7 +35,7 @@ export function MobileTopNavbar({
         </div>
         {/* Right side */}
         <div className="flex flex-row items-center gap-4">
-          {isScalingMainPage && (
+          {showSwitch && (
             <RecategorisationPreviewSwitch className="max-md:hidden lg:hidden" />
           )}
           <SmallSearchBarButton />
@@ -39,7 +43,7 @@ export function MobileTopNavbar({
         </div>
       </div>
       <MobileNavTabs groups={groups} />
-      {isScalingMainPage && (
+      {showSwitch && (
         <div className="flex h-10 items-center border-divider border-b bg-header-primary px-4 py-1 md:hidden">
           <RecategorisationPreviewSwitch className="w-full justify-between font-medium" />
         </div>
