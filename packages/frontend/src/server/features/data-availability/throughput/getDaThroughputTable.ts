@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { ENABLED_DA_LAYERS } from './utils/consts'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export async function getDaThroughputTable(
@@ -25,7 +26,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, daLayers] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
+    db.dataAvailability.getByDaLayersAndTimeRange(ENABLED_DA_LAYERS, [
       lastDay - 7 * UnixTime.DAY,
       lastDay,
     ]),
