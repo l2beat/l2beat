@@ -1,6 +1,5 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ChevronIcon } from '~/icons/Chevron'
 import type { Partners } from '../getDonateData'
 
 interface Props {
@@ -99,9 +98,18 @@ export function InnovatorTierCard({
         alt={partner.project.name}
         className="h-8 w-fit"
       />
-      <div className="absolute right-6 flex size-8 items-center justify-center rounded-full bg-pure-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-        <ChevronIcon className="-rotate-90 h-4 w-4 text-black" />
-      </div>
+      <svg
+        width="32"
+        height="32"
+        viewBox="0 0 32 32"
+        fill="none"
+        className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      >
+        <path
+          d="M16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16C0 7.16344 7.16344 0 16 0ZM14.248 8.48438C13.7795 8.01635 13.0203 8.01628 12.5518 8.48438C12.0831 8.95298 12.0831 9.71294 12.5518 10.1816L18.3691 16L12.5518 21.8184C12.0831 22.287 12.0831 23.047 12.5518 23.5156C13.0203 23.9837 13.7795 23.9837 14.248 23.5156L20.8213 16.9424C21.3414 16.4218 21.3414 15.5782 20.8213 15.0576L14.248 8.48438Z"
+          fill="white"
+        />
+      </svg>
     </a>
   )
 }
