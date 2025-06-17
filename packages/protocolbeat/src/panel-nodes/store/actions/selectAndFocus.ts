@@ -1,10 +1,6 @@
 import type { State } from '../State'
 
-export function selectAndFocus(
-  state: State,
-  selected: string,
-  container?: HTMLElement,
-): Partial<State> {
+export function selectAndFocus(state: State, selected: string): Partial<State> {
   const node = state.nodes.find((x) => x.id === selected)
 
   if (!node) {
@@ -22,7 +18,7 @@ export function selectAndFocus(
   let offsetX = state.transform.offsetX
   let offsetY = state.transform.offsetY
 
-  const viewport = container || state.viewportContainer
+  const viewport = state.viewportContainer
 
   if (viewport) {
     const rect = viewport.getBoundingClientRect()
