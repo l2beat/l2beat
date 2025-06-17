@@ -1,9 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type {
-  AnomalyStatsRecord,
-  Database,
-  LivenessRecord,
-} from '@l2beat/database'
+import type { Database } from '@l2beat/database'
+import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
 import type {
   TrackedTxFunctionCallConfig,
   TrackedTxLivenessConfig,
@@ -46,66 +43,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   }
 
   async processBlock(block: Block): Promise<void> {
-    try {
-      const records = await this.createRecords(block)
-
-      this.logger.info(
-        `Processing block ${block.number} with ${records.length} liveness records`,
-      )
-
-      await this.db.realTimeLiveness.insertMany(records)
-
-      const latestStats = await this.db.anomalyStats.getLatestStats()
-      const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
-
-      await this.checkForAnomalies(latestRecords, latestStats)
-    } catch (error) {
-      this.logger.error(
-        `Failed to process block ${block.number}: ${error instanceof Error ? error.message : String(error)}`,
-      )
-    }
+    await this.matchLivenessTransactions(block)
+    await this.checkForAnomalies()
   }
 
-  private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
-    const livenesConfigurations = trackedTxsConfig.projects
-      .flatMap((project) => project.configurations)
-      .filter((config) => config.type === 'liveness')
-
-    this.transfers = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxTransferConfig
-      } => c.params.formula === 'transfer',
-    )
-
-    this.functionCalls = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxFunctionCallConfig
-      } => c.params.formula === 'functionCall',
-    )
-
-    this.sharpSubmissions = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxSharpSubmissionConfig
-      } => c.params.formula === 'sharpSubmission',
-    )
-
-    this.sharedBridges = livenesConfigurations.filter(
-      (
-        c,
-      ): c is TrackedTxLivenessConfig & {
-        params: TrackedTxSharedBridgeConfig
-      } => c.params.formula === 'sharedBridge',
-    )
-  }
-
-  private createRecords(block: Block): LivenessRecord[] {
-    const records: LivenessRecord[] = []
+  async matchLivenessTransactions(block: Block) {
+    const records: RealTimeLivenessRecord[] = []
 
     for (const tx of block.transactions) {
       if (!tx.data || !tx.to || !tx.hash) continue
@@ -161,13 +104,17 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       records.push(...results)
     }
 
-    return records
+    this.logger.info(
+      `Created ${records.length} liveness records for block ${block.number}`,
+    )
+
+    await this.db.realTimeLiveness.insertMany(records)
   }
 
-  private checkForAnomalies(
-    latestRecords: LivenessRecord[],
-    latestStats: AnomalyStatsRecord[],
-  ) {
+  async checkForAnomalies() {
+    const latestStats = await this.db.anomalyStats.getLatestStats()
+    const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
+
     const configs: TrackedTxLivenessConfig[] = [
       ...this.transfers,
       ...this.functionCalls,
@@ -205,5 +152,43 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         )
       }
     }
+  }
+
+  private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
+    const livenesConfigurations = trackedTxsConfig.projects
+      .flatMap((project) => project.configurations)
+      .filter((config) => config.type === 'liveness')
+
+    this.transfers = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxTransferConfig
+      } => c.params.formula === 'transfer',
+    )
+
+    this.functionCalls = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxFunctionCallConfig
+      } => c.params.formula === 'functionCall',
+    )
+
+    this.sharpSubmissions = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxSharpSubmissionConfig
+      } => c.params.formula === 'sharpSubmission',
+    )
+
+    this.sharedBridges = livenesConfigurations.filter(
+      (
+        c,
+      ): c is TrackedTxLivenessConfig & {
+        params: TrackedTxSharedBridgeConfig
+      } => c.params.formula === 'sharedBridge',
+    )
   }
 }
