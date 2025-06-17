@@ -98,6 +98,22 @@ export const cartesiprthoneypot: ScalingProject = {
     trackedTxs: [
       {
         uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051',
+          ),
+          selector: '0x1789cd63',
+          functionSignature:
+            'function addInput(address appContract, bytes payload) returns (bytes32)',
+          sinceTimestamp: UnixTime(1749510479),
+        },
+      },
+      {
+        uses: [
           { type: 'liveness', subtype: 'stateUpdates' },
           { type: 'l2costs', subtype: 'stateUpdates' },
         ],
