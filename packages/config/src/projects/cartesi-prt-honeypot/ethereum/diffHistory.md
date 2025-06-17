@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x85c67b7f147a4cbb00b6c7503855171a948be1a5
+Generated with discovered.json: 0xdb7b65667f80e7bb2b884fdde74478cda930ee9b
 
-# Diff at Tue, 17 Jun 2025 09:51:18 GMT:
+# Diff at Tue, 17 Jun 2025 15:28:30 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22717520
 
 ## Description
@@ -81,12 +81,6 @@ Initial cartesi fault proofs disco.
 +   Status: CREATED
     contract CanonicalTournamentParametersProvider (0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c)
     +++ description: Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.
-```
-
-```diff
-+   Status: CREATED
-    contract TopTournament (0xDaa497885D83f345CBcbF071d7201230A8CBd68A)
-    +++ description: Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.
 ```
 
 ```diff

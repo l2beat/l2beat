@@ -275,41 +275,6 @@
       }
     },
     {
-      "name": "TopTournament",
-      "address": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A",
-      "type": "Contract",
-      "template": "cartesi/TopTournament",
-      "sourceHashes": [
-        "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e",
-        "0x976361e02c2df05a95903383085693af7d145dba8f85e21971dcc485ca89d55e"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "description": "Represents the entry point and highest level of a dispute in PRT. Disagreeing validators join this tournament to resolve conflicts over the entire computation trace through a bisection game.",
-      "sinceTimestamp": 1749510479,
-      "sinceBlock": 22670194,
-      "values": {
-        "$implementation": "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa",
-        "arbitrationResult": [
-          false,
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000000000000000000000000000"
-        ],
-        "isClosed": false,
-        "isFinished": false,
-        "timeFinished": [false, 0],
-        "tournamentLevelConstants": {
-          "_maxLevel": 3,
-          "_level": 0,
-          "_log2step": 44,
-          "_height": 48
-        }
-      },
-      "implementationNames": {
-        "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": "TopTournament",
-        "0x09114973AE4bf3Af3896E4e541082C73f224F8Aa": "TopTournament"
-      }
-    },
-    {
       "name": "MiddleTournament",
       "address": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
       "type": "Contract",
@@ -498,42 +463,6 @@
       "constructor(uint64 matchEffort, uint64 maxAllowance)",
       "function tournamentParameters(uint64 level) view returns (tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance))"
     ],
-    "0xDaa497885D83f345CBcbF071d7201230A8CBd68A": [
-      "error ChildTournamentCannotBeEliminated()",
-      "error ChildTournamentMustBeEliminated()",
-      "error ChildTournamentNotFinished()",
-      "error CommitmentMismatch(bytes32 received, bytes32 expected)",
-      "error EliminateByTimeout()",
-      "error IncorrectAgreeState(bytes32 initialState, bytes32 agreeState)",
-      "error InvalidContestedFinalState(bytes32 contestedFinalStateOne, bytes32 contestedFinalStateTwo, bytes32 finalState)",
-      "error LengthMismatch(uint64 treeHeight, uint64 siblingsLength)",
-      "error TournamentIsClosed()",
-      "error TournamentIsFinished()",
-      "error WinByTimeout()",
-      "error WrongChildren(uint256 commitment, bytes32 parent, bytes32 left, bytes32 right)",
-      "error WrongTournamentWinner(bytes32 commitmentRoot, bytes32 winner)",
-      "event commitmentJoined(bytes32 root)",
-      "event matchAdvanced(bytes32 indexed, bytes32 parent, bytes32 left)",
-      "event matchCreated(bytes32 indexed one, bytes32 indexed two, bytes32 leftOfTwo)",
-      "event matchDeleted(bytes32)",
-      "event newInnerTournament(bytes32 indexed, address)",
-      "function advanceMatch(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode, bytes32 _newLeftNode, bytes32 _newRightNode)",
-      "function arbitrationResult() view returns (bool, bytes32, bytes32)",
-      "function canWinMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId) view returns (bool)",
-      "function eliminateInnerTournament(address _childTournament)",
-      "function eliminateMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId)",
-      "function getCommitment(bytes32 _commitmentRoot) view returns (tuple(uint64 allowance, uint64 startInstant), bytes32)",
-      "function getMatch(bytes32 _matchIdHash) view returns (tuple(bytes32 otherParent, bytes32 leftNode, bytes32 rightNode, uint256 runningLeafPosition, uint64 currentHeight, uint64 log2step, uint64 height))",
-      "function getMatchCycle(bytes32 _matchIdHash) view returns (uint256)",
-      "function isClosed() view returns (bool)",
-      "function isFinished() view returns (bool)",
-      "function joinTournament(bytes32 _finalState, bytes32[] _proof, bytes32 _leftNode, bytes32 _rightNode)",
-      "function sealInnerMatchAndCreateInnerTournament(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftLeaf, bytes32 _rightLeaf, bytes32 _agreeHash, bytes32[] _agreeHashProof)",
-      "function timeFinished() view returns (bool, uint64)",
-      "function tournamentLevelConstants() view returns (uint64 _maxLevel, uint64 _level, uint64 _log2step, uint64 _height)",
-      "function winInnerTournament(address _childTournament, bytes32 _leftNode, bytes32 _rightNode)",
-      "function winMatchByTimeout(tuple(bytes32 commitmentOne, bytes32 commitmentTwo) _matchId, bytes32 _leftNode, bytes32 _rightNode)"
-    ],
     "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": [
       "error ChildTournamentCannotBeEliminated()",
       "error ChildTournamentMustBeEliminated()",
@@ -578,15 +507,14 @@
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/CanonicalTournamentParametersProvider": "0x8364633bedcaf40a3dffcf8d3f6a21ef89b781e066a844406cde84f2538e8ca3",
     "cartesi/CartesiStateTransition": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "cartesi/DaveConsensus": "0xd22699d689db6d9de5523a67a3805f41943d411b2d8eeab8d15ccee6c855cb79",
+    "cartesi/DaveConsensus": "0xada999c77c97d3602c1a6045a54d53e8a0393b1726ad34bda9ba2b71d6662384",
     "cartesi/ERC20Portal": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/InputBox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/MiddleTournament_clone": "0x579b475804c11d95a09655ad2b7f9a176d93ea4aae5cc7b7072c629053dc4761",
     "cartesi/MiddleTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
-    "cartesi/TopTournament": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "cartesi/TopTournament_clone": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
   },
-  "permissionsConfigHash": "0x6a2710680e8ca4bffbc92746228e070e52520170ae45c523c7d37ed137765070"
+  "permissionsConfigHash": "0xed95ebf0d7288afa39e7f368256ea2e4fc5a36b1954caee271f0bf13b06854b0"
 }
