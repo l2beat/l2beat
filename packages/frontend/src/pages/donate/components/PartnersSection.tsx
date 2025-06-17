@@ -1,5 +1,6 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { ChevronIcon } from '~/icons/Chevron'
 import type { Partners } from '../getDonateData'
 
 interface Props {
@@ -86,17 +87,21 @@ export function InnovatorTierCard({
   partner,
 }: { partner: Partners['innovator'][number] }) {
   return (
-    <div
+    <a
+      href={`/innovators/${partner.slug}`}
       style={{
         backgroundImage: `url(${partner.backgroundImage.src})`,
       }}
-      className="flex h-14 items-center rounded border border-divider bg-center bg-cover px-6"
+      className="group relative flex h-14 items-center rounded border border-divider bg-center bg-cover px-6"
     >
       <img
         src={partner.logo.src}
         alt={partner.project.name}
-        className="h-8 w-max"
+        className="h-8 w-fit"
       />
-    </div>
+      <div className="absolute right-6 flex size-8 items-center justify-center rounded-full bg-pure-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <ChevronIcon className="-rotate-90 h-4 w-4 text-black" />
+      </div>
+    </a>
   )
 }
