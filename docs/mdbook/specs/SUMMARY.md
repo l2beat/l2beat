@@ -16,6 +16,11 @@
     - [Proof system](./code_walkthroughs/scroll/proof_system.md)
     - [Admin operations](./code_walkthroughs/scroll/admin_ops.md)
 
+- [DA Layers](./code_walkthroughs/dalayers/README.md)
+    - [Celestia](./code_walkthroughs/dalayers/celestia/README.md)
+        - [How Celestia Works](./code_walkthroughs/dalayers/celestia/how_celestia_works.md)
+
+
 
 # L2BEAT specs
 
