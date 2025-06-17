@@ -5,6 +5,7 @@
 - [How Celestia Works](#how-celestia-works)
   - [Blob Submission](#blob-submission)
   - [Encoding and Batching](#encoding-and-batching)
+      - [Block Data Structure](#block-data-structure)
   - [Blob Propagation](#blob-propagation)
   - [Blob Finality](#blob-finality)
 
@@ -40,6 +41,16 @@ The block producer is responsible for packaging blobs into a block. This is a mu
 5.  **Block Creation**: The final block is assembled. It contains:
     *   A `Block Header`, which includes the `availableDataRoot` as a commitment to the data.
     *   The `availableData` field, which contains the original, non-erasure-coded transaction and blob data.
+
+#### Block Data Structure
+
+A Celestia block's structure is specifically designed for data availability. The main components are:
+
+*   **`Header`**: This contains standard block metadata like `height` and `timestamp`, but critically includes the `availableDataRoot`. This root is the single commitment that light clients use to verify data availability through Data Availability Sampling.
+*   **`AvailableDataHeader`**: This contains the lists of `rowRoots` and `colRoots` from the extended data square. The `availableDataRoot` is the Merkle root of these two lists combined.
+*   **`AvailableData`**: This field holds the actual data submitted by users. It is separated into `transactions` (standard Cosmos SDK transactions), `payForBlobData` (the transactions that pay for blobs), and `blobData` (the raw blob content). Validators and full nodes use this original data to reconstruct the extended square and verify it against the `availableDataRoot`.
+*   **`LastCommit`**: This contains the validator signatures from the previous block, securing the chain's history, as is typical in Tendermint-based consensus.
+
 
 The core logic for this process in `celestia-app` can be found in the [`PrepareProposal` function](https://github.com/celestiaorg/celestia-app/blob/b768c4417b17e887a0104bd869dbb5579e9de9ec/app/prepare_proposal.go#L74).
 
