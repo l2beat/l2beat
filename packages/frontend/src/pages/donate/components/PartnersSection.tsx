@@ -8,13 +8,21 @@ interface Props {
 
 export function PartnersSection({ partners }: Props) {
   return (
-    <PrimaryCard className="border-divider border-t md:mt-6 md:border-t-0">
-      <h2 className="mb-8 font-bold text-xl">Partners</h2>
+    <PrimaryCard className="space-y-8 border-divider border-t md:mt-6 md:border-t-0">
+      <h2 className="font-bold text-xl">Partners</h2>
       <div>
         <h3 className="font-medium text-secondary text-xs">ECOSYSTEMS TIER</h3>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {partners.ecosystem.map((partner) => (
             <EcosystemTierCard key={partner.slug} partner={partner} />
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 className="font-medium text-secondary text-xs">INNOVATORS TIER</h3>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {partners.innovator.map((partner) => (
+            <InnovatorTierCard key={partner.slug} partner={partner} />
           ))}
         </div>
       </div>
@@ -50,6 +58,25 @@ export function EcosystemTierCard({
           alt={partner.project.name}
         />
       </div>
+    </div>
+  )
+}
+
+export function InnovatorTierCard({
+  partner,
+}: { partner: Partners['innovator'][number] }) {
+  return (
+    <div
+      style={{
+        backgroundImage: `url(${partner.backgroundImage.src})`,
+      }}
+      className="flex h-14 items-center rounded border border-divider bg-center bg-cover px-6"
+    >
+      <img
+        src={partner.logo.src}
+        alt={partner.project.name}
+        className="h-8 w-max"
+      />
     </div>
   )
 }

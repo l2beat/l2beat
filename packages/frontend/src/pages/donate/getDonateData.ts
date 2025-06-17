@@ -69,6 +69,10 @@ async function getPartners() {
       return {
         ...e.data,
         project,
+        logo: manifest.getImage(`/partners/${e.data.slug}/logo.png`),
+        backgroundImage: manifest.getImage(
+          `/partners/${e.data.slug}/background.png`,
+        ),
       }
     })
 
