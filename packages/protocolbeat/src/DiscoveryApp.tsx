@@ -1,34 +1,30 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { HomePage } from './HomePage'
-import { NotFoundPage } from './NotFoundPage'
 import { ProjectPage } from './ProjectPage'
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Navigate to="/ui" replace />,
-  },
-  {
-    path: '/ui',
-    element: <HomePage />,
-  },
-  {
-    path: '/ui/p/:project',
-    element: <ProjectPage />,
-  },
-  {
-    path: '*',
-    element: <NotFoundPage />,
-  },
-])
+import type { AppModule } from './routing/utils'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
 
-export function DiscoveryApp() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  )
+export const DiscoveryAppModule: AppModule = {
+  name: 'discovery',
+  routes: [
+    {
+      path: '/',
+      element: <Navigate to="/ui" replace />,
+    },
+    {
+      path: '/ui',
+      element: <HomePage />,
+    },
+    {
+      path: '/ui/p/:project',
+      element: <ProjectPage />,
+    },
+  ],
+  root: (children) => {
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    )
+  },
 }
