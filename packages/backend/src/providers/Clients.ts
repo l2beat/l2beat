@@ -222,7 +222,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             http,
             logger,
             callsPerMinute: layer.callsPerMinute,
-            retryStrategy: 'UNRELIABLE',
+            retryStrategy: 'RELIABLE',
           })
           break
         }

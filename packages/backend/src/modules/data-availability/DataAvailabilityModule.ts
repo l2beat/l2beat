@@ -172,7 +172,7 @@ function createIndexers(
       indexerService,
       db: database,
     })
-    // eigenIndexers.push(projectsIndexer)
+    eigenIndexers.push(projectsIndexer)
   }
 
   return { targetIndexers, daIndexers, eigenIndexers, hourlyIndexer }

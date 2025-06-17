@@ -105,8 +105,8 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     const records: DataAvailabilityRecord[] = []
     for (const d of data) {
       if (
-        d.datetime >= startOfLastDay ||
-        d.datetime < startOfLastDay + UnixTime.DAY
+        d.datetime < startOfLastDay ||
+        d.datetime >= startOfLastDay + UnixTime.DAY
       ) {
         continue
       }

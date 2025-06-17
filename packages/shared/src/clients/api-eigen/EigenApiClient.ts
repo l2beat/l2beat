@@ -1,4 +1,4 @@
-import { assert, type json } from '@l2beat/shared-pure'
+import { assert, UnixTime, type json } from '@l2beat/shared-pure'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import { GetByProjectDataSuccessSchema, GetMetricsSuccessSchema } from './types'
 
@@ -33,7 +33,7 @@ export class EigenApiClient extends ClientCore {
 
     assert(
       !rawText.includes('The specified key does not exist'),
-      'No data found',
+      `No EigenDA data for projects for ${UnixTime.toDate(until).toISOString()}`,
     )
 
     const lines = rawText.trim().split('\n')
