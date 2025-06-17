@@ -12,6 +12,9 @@ import { isReadOnly } from '../config'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
 import { RediscoverPrompt } from './RediscoverPrompt'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
+import { ActionNeededState } from '../components/ActionNeededState'
 
 export function CodePanel() {
   const { project } = useParams()
@@ -51,15 +54,15 @@ export function CodePanel() {
   const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selected === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   let showRediscoverInfo = false

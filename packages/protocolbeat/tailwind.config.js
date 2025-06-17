@@ -22,12 +22,18 @@ module.exports = {
     extend: {
       animation: {
         disco: 'disco 3s linear infinite',
+        'opacity-pulse':
+          'opacity-pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
         disco: {
           '0%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
           '100%': { backgroundPosition: '0% 50%' },
+        },
+        'opacity-pulse': {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.8' },
         },
       },
     },

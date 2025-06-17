@@ -11,6 +11,9 @@ import { AddressDisplay } from './AddressDisplay'
 import { FieldDisplay } from './Field'
 import { Folder } from './Folder'
 import { TemplateDialog } from './template-dialog/TemplateDialog'
+import { LoadingState } from '../components/LoadingState'
+import { ErrorState } from '../components/ErrorState'
+import { ActionNeededState } from '../components/ActionNeededState'
 
 export function ValuesPanel() {
   const { project } = useParams()
@@ -24,17 +27,17 @@ export function ValuesPanel() {
   const selectedAddress = usePanelStore((state) => state.selected)
 
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">
-      {!selected && <div>Select a contract</div>}
+      {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
         <Display
           selected={selected}

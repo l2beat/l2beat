@@ -12,6 +12,8 @@ import { NodesApp } from './NodesApp'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { LoadingState } from '../components/LoadingState'
+import { ErrorState } from '../components/ErrorState'
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -27,10 +29,10 @@ export function NodesPanel() {
   useLoadNodes(response.data, project)
 
   if (response.isLoading) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   return (

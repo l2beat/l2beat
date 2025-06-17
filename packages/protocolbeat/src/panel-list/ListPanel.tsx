@@ -11,6 +11,8 @@ import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconFolder } from '../icons/IconFolder'
 import { IconFolderOpened } from '../icons/IconFolderOpened'
 import { usePanelStore } from '../store/store'
+import { LoadingState } from '../components/LoadingState'
+import { ErrorState } from '../components/ErrorState'
 
 export function ListPanel() {
   const { project } = useParams()
@@ -22,10 +24,10 @@ export function ListPanel() {
     queryFn: () => getProject(project),
   })
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
   return (
     <div className="h-full w-full overflow-x-hidden">

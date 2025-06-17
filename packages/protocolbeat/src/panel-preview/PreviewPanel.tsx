@@ -12,6 +12,7 @@ import type {
 import { Checkbox } from '../components/Checkbox'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
+import { LoadingState } from '../components/LoadingState'
 
 export function PreviewPanel() {
   const { project } = useParams()
@@ -28,7 +29,7 @@ export function PreviewPanel() {
   })
   const response = previewResponse.data
   if (response === undefined) {
-    return <div className="p-2">Loading...</div>
+    return <LoadingState />
   }
 
   return (

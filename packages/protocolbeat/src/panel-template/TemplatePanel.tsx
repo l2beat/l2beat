@@ -8,6 +8,9 @@ import { CodeView } from '../components/editor/CodeView'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
+import { ActionNeededState } from '../components/ActionNeededState'
 
 export function TemplatePanel() {
   const { project } = useParams()
@@ -38,15 +41,15 @@ export function TemplatePanel() {
   }, [template])
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selectedAddress === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   return (
