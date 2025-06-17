@@ -28,7 +28,11 @@ export class EigenDaLayerIndexer extends ManagedMultiIndexer<TimestampDaIndexedC
     })
 
     assert(
-      $.configurations.every((c) => c.properties.daLayer === $.daLayer),
+      $.configurations.every(
+        (c) =>
+          c.properties.daLayer === $.daLayer &&
+          c.properties.projectId === $.daLayer,
+      ),
       `DaLayer mismatch detected in configurations`,
     )
   }
