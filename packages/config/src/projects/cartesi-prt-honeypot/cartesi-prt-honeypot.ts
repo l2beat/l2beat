@@ -45,6 +45,7 @@ export const cartesiprthoneypot: ScalingProject = {
   ],
   display: {
     name: 'Cartesi PRT Honeypot',
+    shortName: 'Honeypot PRT',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
@@ -161,7 +162,7 @@ export const cartesiprthoneypot: ScalingProject = {
       additionalConsiderations: {
         short:
           'The Cartesi PRT Honeypot is a simple appchain for the purpose of incentivizing the testing of their proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
-        long: 'Users can deposit any ERC20 tokens to the Appchain. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments [as described here](https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals). These two actions comprise all valid actions supported by the appchain.',
+        long: 'Users can deposit any ERC20 tokens to the Appchain. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. These two actions comprise all valid actions supported by the appchain.',
       },
     },
   ),
@@ -186,7 +187,12 @@ export const cartesiprthoneypot: ScalingProject = {
     exitMechanisms: [
       {
         ...EXITS.REGULAR_MESSAGING('optimistic'),
-        references: [],
+        references: [
+          {
+            title: 'Requesting withdrawals, Honeypot Wiki',
+            url: 'https://github.com/cartesi/honeypot/wiki/Requesting-withdrawals',
+          },
+        ],
       },
     ],
   },
