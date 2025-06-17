@@ -8,9 +8,9 @@ import {
 import { Indexer } from '@l2beat/uif'
 
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import type { ManagedMultiIndexerOptions } from '../../../../tools/uif/multi/types'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { ManagedMultiIndexer } from '../../../../tools/uif/multi/ManagedMultiIndexer'
+import type { ManagedMultiIndexerOptions } from '../../../../tools/uif/multi/types'
 
 export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TimestampDaIndexedConfig>, 'name'> {
@@ -41,7 +41,7 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
     configurations: Configuration<TimestampDaIndexedConfig>[],
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
-    const adjustedTo = adjustedFrom + UnixTime.HOUR
+    const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, _to)
 
     // If not 02:00:00, we skip update
     if (
