@@ -3,9 +3,9 @@ import { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from './api/api'
 import type { ApiProjectEntry } from './api/types'
+import { ErrorState } from './components/ErrorState'
 import { IconStarEmpty } from './icons/IconStarEmpty'
 import { IconStarFull } from './icons/IconStarFull'
-import { ErrorState } from './components/ErrorState'
 
 export function HomePage() {
   const [search, setSearch] = useState('')

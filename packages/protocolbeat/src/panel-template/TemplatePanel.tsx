@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject, readTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { CodeView } from '../components/editor/CodeView'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
-import { ErrorState } from '../components/ErrorState'
-import { LoadingState } from '../components/LoadingState'
-import { ActionNeededState } from '../components/ActionNeededState'
 
 export function TemplatePanel() {
   const { project } = useParams()

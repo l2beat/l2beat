@@ -6,15 +6,15 @@ import { getCode, getProject } from '../api/api'
 import type { ApiCodeResponse } from '../api/types'
 import { findSelected } from '../common/findSelected'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { CodeView } from '../components/editor/CodeView'
 import { useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
 import { IconCodeFile } from '../icons/IconCodeFile'
 import { usePanelStore } from '../store/store'
 import { RediscoverPrompt } from './RediscoverPrompt'
-import { ErrorState } from '../components/ErrorState'
-import { LoadingState } from '../components/LoadingState'
-import { ActionNeededState } from '../components/ActionNeededState'
 
 export function CodePanel() {
   const { project } = useParams()

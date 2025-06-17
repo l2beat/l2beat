@@ -7,13 +7,13 @@ import type {
   ApiProjectResponse,
   FieldValue,
 } from '../api/types'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
-import { LoadingState } from '../components/LoadingState'
-import { ErrorState } from '../components/ErrorState'
 
 export function NodesPanel() {
   const { project } = useParams()

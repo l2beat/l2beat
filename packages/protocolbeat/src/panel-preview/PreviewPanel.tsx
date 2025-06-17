@@ -10,9 +10,9 @@ import type {
   UpgradeabilityActor,
 } from '../api/types'
 import { Checkbox } from '../components/Checkbox'
+import { LoadingState } from '../components/LoadingState'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
-import { LoadingState } from '../components/LoadingState'
 
 export function PreviewPanel() {
   const { project } = useParams()
