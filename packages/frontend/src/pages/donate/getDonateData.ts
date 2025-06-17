@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { getCollection } from '~/content/getCollection'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -8,6 +9,7 @@ export async function getDonateData(
   url: string,
 ): Promise<RenderData> {
   const appLayoutProps = await getAppLayoutProps()
+  const partners = getCollection('partners')
 
   return {
     head: {
@@ -24,6 +26,7 @@ export async function getDonateData(
       page: 'DonatePage',
       props: {
         ...appLayoutProps,
+        partners,
         gitcoinOption: false,
         qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
       },
