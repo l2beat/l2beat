@@ -57,18 +57,10 @@ export class ConfigReader {
       )
     }
 
-    // Extract project-level properties (excluding 'chains', 'import', etc.)
-    const {
-      chains,
-      import: imports,
-      name: configName,
-      ...projectLevelProps
-    } = rawConfig
-
     const chainRawConfig = {
       chain,
       name,
-      ...projectLevelProps, // Include project-level properties like 'archived'
+      archived: !!rawConfig.archived,
       ...merge(
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         (rawConfig.chains as any)['all'],
