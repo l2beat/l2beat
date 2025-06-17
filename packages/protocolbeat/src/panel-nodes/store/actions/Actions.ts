@@ -25,7 +25,8 @@ export interface Actions {
   hideUnknowns: () => void
   showHidden: () => void
   clear: () => void
-  selectAndFocus: (selected: readonly string[]) => void
+  selectAndFocus: (selected: string) => void
+  registerViewportContainer: (container: HTMLElement | null) => void
 
   setPreferences: (preferences: Partial<State['userPreferences']>) => void
 }

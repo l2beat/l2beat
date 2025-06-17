@@ -385,7 +385,7 @@ export const scroll: ScalingProject = {
       references: [
         {
           title:
-            'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+            'ScrollChain.sol - Etherscan source code commitBatches() function',
           url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
@@ -438,11 +438,11 @@ export const scroll: ScalingProject = {
     nodeSoftware:
       'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
     compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+      'Data batches are compressed using the [zstd](https://github.com/facebook/zstd) algorithm.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV7Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/da-codec/blob/main/encoding/codecv7_types.go#L20).',
   },
   stateValidation: {
     description:
@@ -456,7 +456,7 @@ export const scroll: ScalingProject = {
       {
         title: 'ZK Circuits',
         description:
-          'Scroll circuits are [openvm](https://book.openvm.dev/) based Guest Programs based on the Halo2 proof system. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
+          'Scroll circuits are [OpenVM](https://book.openvm.dev/)-based Guest Programs that use the OpenVM prover. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
       },
       {
         title: 'Verification Keys Generation',
@@ -469,7 +469,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-            url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+            url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
           },
         ],
       },

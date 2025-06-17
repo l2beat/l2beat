@@ -1,0 +1,6 @@
+{
+  "spec": "src/**/*.test.ts",
+  "require": "esbuild-register",
+  "watchExtensions": "ts",
+  "extension": "ts"
+}

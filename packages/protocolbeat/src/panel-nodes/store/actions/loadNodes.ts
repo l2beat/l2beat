@@ -35,7 +35,13 @@ export function loadNodes(
       BOTTOM_PADDING
     const savedColor = saved?.colors?.[node.id]
     const color = typeof savedColor === 'number' ? savedColor : node.color
-    return { ...node, color, box: { x, y, width, height: height } }
+    const hiddenFields = saved?.hiddenFields?.[node.id] ?? []
+    return {
+      ...node,
+      color,
+      hiddenFields,
+      box: { x, y, width, height: height },
+    }
   })
 
   const allNodes = existing.concat(added)

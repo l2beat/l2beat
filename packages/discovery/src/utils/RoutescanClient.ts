@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { Retries, type UnixTime } from '@l2beat/shared-pure'
 import { EtherscanClient } from './EtherscanClient'
@@ -23,12 +23,12 @@ export class RoutescanClient
 {
   constructor(
     httpClient: HttpClient,
+    logger: Logger,
     url: string,
     minTimestamp: UnixTime,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
-    logger = Logger.SILENT,
   ) {
-    super(httpClient, url, '', minTimestamp, unsupportedMethods, {}, logger)
+    super(httpClient, logger, url, '', minTimestamp, unsupportedMethods, {})
   }
 
   /**
@@ -36,11 +36,12 @@ export class RoutescanClient
    */
   static override createForDiscovery(
     httpClient: HttpClient,
+    logger: Logger,
     url: string,
     _apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
   ): RoutescanClient {
-    return new RoutescanClient(httpClient, url, 0, unsupportedMethods)
+    return new RoutescanClient(httpClient, logger, url, 0, unsupportedMethods)
   }
 
   public override async callWithRetries(
