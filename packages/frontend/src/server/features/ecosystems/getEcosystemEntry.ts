@@ -38,6 +38,9 @@ import { getProjectsByRaas } from './getProjectsByRaas'
 import { type TvsByStage, getTvsByStage } from './getTvsByStage'
 import type { TvsByTokenType } from './getTvsByTokenType'
 import { getTvsByTokenType } from './getTvsByTokenType'
+
+const EXCLUDED_FILTERS = ['stack', 'infrastructure', 'vm']
+
 export interface EcosystemEntry {
   slug: string
   name: string
@@ -161,15 +164,21 @@ export async function getEcosystemEntry(
     ),
     projects: ecosystemProjects
       .filter((p) => !p.archivedAt)
-      .map((project) => ({
-        ...getScalingSummaryEntry(
+      .map((project) => {
+        const entry = getScalingSummaryEntry(
           project,
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
-        ),
-        ecosystemInfo: project.ecosystemInfo,
-      }))
+        )
+        return {
+          ...entry,
+          ecosystemInfo: project.ecosystemInfo,
+          filterable: entry.filterable?.filter(
+            (f) => !EXCLUDED_FILTERS.includes(f.id),
+          ),
+        }
+      })
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
     images: {
