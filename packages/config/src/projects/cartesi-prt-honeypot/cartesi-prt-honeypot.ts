@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import {
   DA_BRIDGES,
@@ -21,6 +26,11 @@ import {
 } from '../../templates/generateDiscoveryDrivenSections'
 
 const discovery = new ProjectDiscovery('cartesi-prt-honeypot')
+const minChallengePeriodBlocks = discovery.getContractValue<number>(
+  'CanonicalTournamentParametersProvider',
+  'minChallengePeriodBlocks',
+)
+const minChallengePeriodSeconds = minChallengePeriodBlocks * 12
 
 export const cartesiprthoneypot: ScalingProject = {
   type: 'layer2',
@@ -109,7 +119,10 @@ export const cartesiprthoneypot: ScalingProject = {
     mode: DA_MODES.TRANSACTION_DATA,
   },
   riskView: {
-    stateValidation: RISK_VIEW.STATE_FP_INT,
+    stateValidation: {
+      ...RISK_VIEW.STATE_FP_INT,
+      secondLine: formatSeconds(minChallengePeriodSeconds),
+    },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,

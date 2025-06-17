@@ -9,6 +9,10 @@
         "method": "tournamentParameters",
         "args": [0]
       }
+    },
+    "minChallengePeriodBlocks": {
+      "copy": "topTournamentParameters",
+      "edit": ["get", "maxAllowance"]
     }
   }
 }
