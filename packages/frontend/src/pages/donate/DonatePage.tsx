@@ -2,13 +2,14 @@ import compact from 'lodash/compact'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { CustomLink } from '~/components/link/CustomLink'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { CollectionEntry } from '~/content/getCollection'
 import { CustomLinkIcon } from '~/icons/Outlink'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { FundingSourcesSection } from './components/FundingSourcesSection'
+import { PartnersSection } from './components/PartnersSection'
 import { QrCodeSection } from './components/QrCodeSection'
+import type { Partners } from './getDonateData'
 
 export const DONATE_ADDRESS = '0x41626BA92c0C2a1aD38fC83920300434082B1870'
 const GITCOIN_ROUND_URL =
@@ -16,7 +17,7 @@ const GITCOIN_ROUND_URL =
 export const LAST_UPDATED = 'March 2025'
 
 interface Props extends AppLayoutProps {
-  partners: CollectionEntry<'partners'>[]
+  partners: Partners
   gitcoinOption: boolean
   qrCodeUrl: string
 }
@@ -50,6 +51,7 @@ export function DonatePage(props: Props) {
       <SideNavLayout>
         <MainPageHeader>Donate</MainPageHeader>
         <Header networks={networks} qrCodeUrl={props.qrCodeUrl} />
+        <PartnersSection partners={props.partners} />
         <FundingSourcesSection />
       </SideNavLayout>
     </AppLayout>
