@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import type { Logger } from '@l2beat/backend-tools'
 import { CelestiaApiClient, type HttpClient, RpcClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
@@ -31,6 +31,7 @@ export class AllProviders {
     chainConfigs: DiscoveryChainConfig[],
     http: HttpClient,
     private discoveryCache: DiscoveryCache,
+    private logger: Logger,
   ) {
     for (const config of chainConfigs) {
       const baseProvider = new providers.StaticJsonRpcProvider(
@@ -45,7 +46,7 @@ export class AllProviders {
               config.chainId,
             )
 
-      const etherscanClient = getExplorerClient(http, config.explorer)
+      const etherscanClient = getExplorerClient(http, config.explorer, logger)
       let blobClient: BlobClient | undefined
       let celestiaApiClient: CelestiaApiClient | undefined
 
@@ -54,14 +55,14 @@ export class AllProviders {
         retryStrategy: 'SCRIPT',
         callsPerMinute: 60,
         sourceName: 'ethereum',
-        logger: Logger.SILENT,
+        logger,
         http,
       })
 
       if (config.beaconApiUrl) {
         blobClient = new BlobClient({
           beaconApiUrl: config.beaconApiUrl,
-          logger: Logger.SILENT,
+          logger,
           rpcClient: ethereumRpc,
           retryStrategy: 'SCRIPT',
           sourceName: 'beaconAPI',
@@ -74,7 +75,7 @@ export class AllProviders {
         celestiaApiClient = new CelestiaApiClient({
           url: config.celestiaApiUrl,
           http,
-          logger: Logger.SILENT,
+          logger,
           sourceName: 'celestia-api',
           callsPerMinute: 300,
           retryStrategy: 'SCRIPT',
@@ -118,6 +119,7 @@ export class AllProviders {
         config.providers.etherscanClient,
         config.providers.celestiaApiClient,
         config.providers.blobClient,
+        this.logger,
       )
     this.lowLevelProviders.set(chain, lowLevelProvider)
 
@@ -138,6 +140,7 @@ export class AllProviders {
         reorgAwareCache,
         lowLevelProvider,
         multicallClient,
+        this.logger,
       )
     this.batchingAndCachingProviders.set(chain, batchingAndCachingProvider)
 

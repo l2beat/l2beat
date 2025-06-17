@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
@@ -37,7 +38,7 @@ export class HighLevelProvider implements IProvider {
 
   raw<T>(
     cacheKey: string,
-    fn: (providers: RawProviders) => Promise<T>,
+    fn: (providers: RawProviders, logger: Logger) => Promise<T>,
   ): Promise<T> {
     return this.provider.raw(cacheKey, fn)
   }
