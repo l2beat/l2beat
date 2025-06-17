@@ -78,7 +78,6 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     liveness: {
       warnings: {
-        // Standard optimistic-rollup notice
         stateUpdates:
           'The current PRT implementation is vulnerable to Sybil attacks that may impact liveness. Safety and decentralization are unaffected.',
       },
@@ -158,7 +157,7 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     {
       rollupNodeLink:
-        'https://github.com/cartesi/dave/tree/v1.0.0/cartesi-rollups/node',
+        'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
       additionalConsiderations: {
         short:
           'The Cartesi PRT Honeypot is a simple appchain for the purpose of incentivizing the testing of their proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
