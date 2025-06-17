@@ -1,20 +1,20 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import type { Config } from '../../config'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DaIndexer } from './indexers/DaIndexer'
-import { DaService } from './services/DaService'
-import { HourlyIndexer } from '../../tools/HourlyIndexer'
-import { assert } from '@l2beat/shared-pure'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
-import partition from 'lodash/partition'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
+import { DaService } from './services/DaService'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -39,27 +39,27 @@ export function initDataAvailabilityModule(
 
   return {
     start: async () => {
-      // logger.info('Starting target indexers')
-      // await Promise.all(
-      //   targetIndexers.map(async (indexer) => {
-      //     logger.info(
-      //       `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
-      //     )
-      //     await indexer.start()
-      //   }),
-      // )
-      // logger.info('Target indexers started')
+      logger.info('Starting target indexers')
+      await Promise.all(
+        targetIndexers.map(async (indexer) => {
+          logger.info(
+            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+          )
+          await indexer.start()
+        }),
+      )
+      logger.info('Target indexers started')
 
-      // logger.info('Starting DA indexers')
-      // await Promise.all(
-      //   daIndexers.map(async (indexer) => {
-      //     logger.info(
-      //       `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
-      //     )
-      //     await indexer.start()
-      //   }),
-      // )
-      // logger.info('DA indexers started')
+      logger.info('Starting DA indexers')
+      await Promise.all(
+        daIndexers.map(async (indexer) => {
+          logger.info(
+            `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+          )
+          await indexer.start()
+        }),
+      )
+      logger.info('DA indexers started')
 
       if (eigenIndexers.length > 0) {
         logger.info('Starting EigenDA indexer')

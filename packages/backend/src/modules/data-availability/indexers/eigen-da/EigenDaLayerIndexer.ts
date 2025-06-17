@@ -1,3 +1,4 @@
+import type { DataAvailabilityRecord } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
@@ -8,7 +9,6 @@ import type {
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../../tools/uif/multi/types'
-import type { DataAvailabilityRecord } from '@l2beat/database'
 
 export interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TimestampDaIndexedConfig>, 'name'> {
