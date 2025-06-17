@@ -33,6 +33,18 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
+  async getOngoingAnomalies(): Promise<RealTimeAnomalyRecord[]> {
+    const rows = await this.db
+      .selectFrom('RealTimeAnomaly')
+      .select(selectRealtimeAnomaly)
+      .where((eb) =>
+        eb.or([eb('status', '=', 'ongoing'), eb('status', '=', 'approved')]),
+      )
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getAll(): Promise<RealTimeAnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')

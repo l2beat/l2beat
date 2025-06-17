@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import type { Database, RealTimeAnomalyRecord } from '@l2beat/database'
 import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
 import type {
   TrackedTxFunctionCallConfig,
@@ -114,6 +114,8 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
   async checkForAnomalies() {
     const latestStats = await this.db.anomalyStats.getLatestStats()
     const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
+    const ongoingAnomalies =
+      await this.db.realTimeAnomalies.getOngoingAnomalies()
 
     const configs: TrackedTxLivenessConfig[] = [
       ...this.transfers,
@@ -121,6 +123,8 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       ...this.sharpSubmissions,
       ...this.sharedBridges,
     ]
+
+    const records: RealTimeAnomalyRecord[] = []
 
     for (const config of configs) {
       const latestRecord = latestRecords.find(
@@ -131,27 +135,77 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         (s) => s.projectId === config.projectId && s.subtype === config.subtype,
       )
 
+      const ongoingAnomaly = ongoingAnomalies.find(
+        (a) => a.projectId === config.projectId && a.subtype === config.subtype,
+      )
+
       if (!latestRecord || !latestStat) {
         continue
       }
 
       const interval = UnixTime.now() - latestRecord.timestamp
       const z = (interval - latestStat.mean) / latestStat.stdDev
+      const isAnomaly = z >= 15 && interval > latestStat.mean
 
-      if (z >= 15 && interval > latestStat.mean) {
+      if (isAnomaly) {
+        if (ongoingAnomaly) {
+          this.logger.info(
+            `Ongoing anomaly detected for configuration ${config.id}`,
+            {
+              projectId: config.projectId,
+              subtype: config.subtype,
+              duration: interval,
+            },
+          )
+          continue
+        }
+
         this.logger.info(
-          `Anomaly detected for configuration ${config.id} with z-score ${z}`,
+          `New anomaly detected for configuration ${config.id}`,
           {
             projectId: config.projectId,
             subtype: config.subtype,
-            timestamp: latestRecord.timestamp,
             duration: interval,
-            mean: latestStat.mean,
-            stdDev: latestStat.stdDev,
           },
         )
+
+        const newAnomaly: RealTimeAnomalyRecord = {
+          start: latestRecord.timestamp,
+          projectId: config.projectId,
+          subtype: config.subtype,
+          status: 'ongoing',
+        }
+
+        records.push(newAnomaly)
+      } else {
+        if (!ongoingAnomaly) {
+          continue
+        }
+
+        this.logger.info(
+          `Configuration ${config.id} has recovered from anomaly`,
+          {
+            projectId: config.projectId,
+            subtype: config.subtype,
+          },
+        )
+
+        const recoveredAnomaly: RealTimeAnomalyRecord = {
+          ...ongoingAnomaly,
+          status: 'recovered',
+          end: latestRecord.timestamp,
+        }
+
+        records.push(recoveredAnomaly)
       }
     }
+
+    if (records.length === 0) {
+      this.logger.info('No anomalies detected')
+      return
+    }
+
+    await this.db.realTimeAnomalies.upsertMany(records)
   }
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {

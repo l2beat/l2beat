@@ -22,13 +22,13 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'batchSubmissions',
-      status: 'ongoing',
+      status: 'approved',
     },
     {
       start: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
-      status: 'ongoing',
+      status: 'recovered',
     },
   ]
 
@@ -67,14 +67,14 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           start: START - 2 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'batchSubmissions',
-          status: 'ongoing',
+          status: 'approved',
           end: undefined,
         },
         {
           start: START - 3 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
-          status: 'ongoing',
+          status: 'recovered',
           end: undefined,
         },
         { ...newRows[1]!, end: undefined },
@@ -92,6 +92,20 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
 
       expect(results).toEqualUnsorted(
         DATA.map((e) => ({
+          ...e,
+          end: undefined,
+        })),
+      )
+    })
+  })
+
+  describe(RealTimeAnomaliesRepository.prototype.getOngoingAnomalies
+    .name, () => {
+    it('should return all ongoing anomalies', async () => {
+      const results = await repository.getOngoingAnomalies()
+
+      expect(results).toEqualUnsorted(
+        DATA.filter((e) => e.status !== 'recovered').map((e) => ({
           ...e,
           end: undefined,
         })),
