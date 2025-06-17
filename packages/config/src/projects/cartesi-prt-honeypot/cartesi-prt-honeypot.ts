@@ -176,8 +176,8 @@ export const cartesiprthoneypot: ScalingProject = {
         'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
       additionalConsiderations: {
         short:
-          'The Cartesi PRT Honeypot is a simple appchain for the purpose of incentivizing the testing of their proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
-        long: 'Users can deposit any ERC20 tokens to the Appchain. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. These two actions comprise all valid actions supported by the appchain.',
+          'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
+        long: "Users can deposit (donate) CTSI tokens to the Honeypot. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
       },
     },
   ),
@@ -193,7 +193,12 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     operator: {
       ...OPERATOR.DECENTRALIZED_OPERATOR,
-      references: [],
+      references: [
+        {
+          title: 'Honeypot Docs - Running a validator node',
+          url: 'https://github.com/cartesi/honeypot/wiki/Running-a-validator-node',
+        },
+      ],
     },
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
