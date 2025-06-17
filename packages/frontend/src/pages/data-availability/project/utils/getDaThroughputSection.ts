@@ -2,7 +2,7 @@ import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/getDaThroughputTable'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
-import { ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
 import type { SsrHelpers } from '~/trpc/server'
 
@@ -14,7 +14,7 @@ export async function getDaThroughputSection(
   if (
     !configuredThroughput ||
     configuredThroughput.length === 0 ||
-    !ENABLED_DA_LAYERS.includes(project.id)
+    !THROUGHPUT_ENABLED_DA_LAYERS.includes(project.id)
   )
     return undefined
 
