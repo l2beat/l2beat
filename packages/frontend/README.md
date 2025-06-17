@@ -29,7 +29,7 @@ pnpm build:dependencies
 If you are running `pnpm dev:mock` you do not need any environment variables.
 
 If you are running `pnpm dev` or `pnpm build` you need to set the following environment variables:
-- create file `.env.local` in frontend root folder
+- create file `.env` in frontend root folder
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
 *if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
