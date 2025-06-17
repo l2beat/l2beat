@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -30,6 +30,9 @@ export const bobanetwork: ScalingProject = opStackL2({
         'https://discord.com/invite/Hvu3zpFwWd',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   activityConfig: {
     type: 'block',

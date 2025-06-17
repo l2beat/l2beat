@@ -1,4 +1,4 @@
-import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import { type Logger, RateLimiter } from '@l2beat/backend-tools'
 import {
   assert,
   EthereumAddress,
@@ -42,12 +42,12 @@ export class EtherscanClient implements IEtherscanClient {
 
   constructor(
     protected readonly httpClient: HttpClient,
+    protected readonly logger: Logger,
     protected readonly url: string,
     protected readonly apiKey: string,
     protected readonly minTimestamp: UnixTime,
     protected readonly unsupportedMethods: EtherscanUnsupportedMethods = {},
     protected readonly defaultParams: Record<string, string> = {},
-    protected readonly logger = Logger.SILENT,
   ) {
     this.callWithRetries = this.rateLimiter.wrap(
       this.callWithRetries.bind(this),
@@ -59,6 +59,7 @@ export class EtherscanClient implements IEtherscanClient {
    */
   static createForDiscovery(
     httpClient: HttpClient,
+    logger: Logger,
     url: string,
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
@@ -66,6 +67,7 @@ export class EtherscanClient implements IEtherscanClient {
   ): EtherscanClient {
     return new EtherscanClient(
       httpClient,
+      logger,
       url,
       apiKey,
       0,
@@ -149,7 +151,7 @@ export class EtherscanClient implements IEtherscanClient {
         files = Object.fromEntries(decodedSource.sources)
         remappings = decodedSource.remappings
       } catch (e) {
-        console.error(e)
+        this.logger.error(e)
       }
     }
 

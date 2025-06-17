@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BlockscoutClient } from './BlockscoutClient'
@@ -84,11 +85,13 @@ export interface IEtherscanClient {
 export function getExplorerClient(
   httpClient: HttpClient,
   config: ExplorerConfig,
+  logger: Logger = Logger.SILENT,
 ): IEtherscanClient {
   switch (config.type) {
     case 'etherscan-v1': {
       return EtherscanClient.createForDiscovery(
         httpClient,
+        logger,
         config.url,
         config.apiKey,
         config.unsupported,
@@ -97,6 +100,7 @@ export function getExplorerClient(
     case 'etherscan': {
       return EtherscanClient.createForDiscovery(
         httpClient,
+        logger,
         config.url,
         config.apiKey,
         config.unsupported,
@@ -106,6 +110,7 @@ export function getExplorerClient(
     case 'routescan': {
       return RoutescanClient.createForDiscovery(
         httpClient,
+        logger,
         config.url,
         '',
         config.unsupported,

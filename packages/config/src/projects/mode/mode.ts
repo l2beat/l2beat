@@ -77,7 +77,7 @@ export const mode: ScalingProject = opStackL2({
     minTimestamp: UnixTime(1710386375),
     genesisTimestamp: UnixTime(1700167583),
     lag: 0,
-    stateUpdate: 'analyze',
+    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'mode',

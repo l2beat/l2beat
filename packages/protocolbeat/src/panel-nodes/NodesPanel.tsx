@@ -35,7 +35,7 @@ export function NodesPanel() {
 
   return (
     <div className="h-full w-full overflow-x-hidden">
-      <NodesApp panelMode />
+      <NodesApp />
     </div>
   )
 }
@@ -121,7 +121,7 @@ function useSynchronizeSelection() {
       selectGlobal(selectedNodes[0])
     } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
       rememberSelection([selectedGlobal])
-      selectNodes([selectedGlobal])
+      selectNodes(selectedGlobal)
     }
   }, [
     lastSelection,
