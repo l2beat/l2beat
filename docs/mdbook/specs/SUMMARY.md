@@ -18,7 +18,9 @@
 
 - [DA Layers](./code_walkthroughs/dalayers/README.md)
     - [Celestia](./code_walkthroughs/dalayers/celestia/README.md)
-        - [How Celestia Works](./code_walkthroughs/dalayers/celestia/how_celestia_works.md)
+        - [Blob Lifecycle](./code_walkthroughs/dalayers/celestia/blob_lifecycle.md)
+    - [EigenDA](./code_walkthroughs/dalayers/eigenda/README.md)
+        - [Blob Lifecycle](./code_walkthroughs/dalayers/eigenda/blob_lifecycle.md)
 
 
 

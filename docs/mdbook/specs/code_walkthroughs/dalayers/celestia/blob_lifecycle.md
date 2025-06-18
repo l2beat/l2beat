@@ -2,18 +2,20 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**
 
-- [How Celestia Works](#how-celestia-works)
+- [Blob Lifecycle](#blob-lifecycle)
   - [Blob Submission](#blob-submission)
   - [Encoding and Batching](#encoding-and-batching)
       - [Block Data Structure](#block-data-structure)
   - [Blob Propagation](#blob-propagation)
   - [Blob Finality](#blob-finality)
+    - [1. Finality on Celestia](#1-finality-on-celestia)
+    - [2. Finality on the Settlement Layer (Blobstream)](#2-finality-on-the-settlement-layer-blobstream)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-# How Celestia Works
+# Blob Lifecycle
 
-This document provides a high-level overview of how Celestia handles blob submission, from the moment a user submits a blob to the moment it's finalized on the network. For a deeper dive into the technical details, you can refer to the [official Celestia App specifications](https://celestiaorg.github.io/celestia-app/).
+This document provides a high-level overview of how Celestia handles blob submission, from the moment a user submits a blob to the moment it's finalized on Ethereum. For a deeper dive into the technical details, you can refer to the [official Celestia App specifications](https://celestiaorg.github.io/celestia-app/).
 
 <figure>
  <img src="../../../static/assets/celestia_blob_lifecycle.svg" alt="Celestia blob lifecycle"> 
