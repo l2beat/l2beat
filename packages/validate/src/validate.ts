@@ -1,6 +1,6 @@
 export type Result<T> =
   | { success: true; data: T }
-  | { success: false; path: string; message: string }
+  | { success: false; path: string; message: string, data?: never }
 
 type Infer<T> = T extends Parser<infer U> ? U : never
 
