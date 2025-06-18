@@ -181,8 +181,8 @@ export async function getEcosystemEntry(
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
     images: {
-      buildOn: getStaticAsset(`/ecosystems/${slug}/build-on.png`),
-      topDelegates: getStaticAsset(`/ecosystems/governance-delegates.png`),
+      buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
+      topDelegates: getStaticAsset(`/partners/governance-delegates.png`),
     },
   }
 }
@@ -217,7 +217,7 @@ function getGovernanceLinks(
     .at(-1)
   assert(lastPublication, 'No last publication')
 
-  const bankImage = getImageParams('/ecosystems/governance-bank.png')
+  const bankImage = getImageParams('/partners/governance-bank.png')
   assert(bankImage, 'Bank image not found')
 
   return {

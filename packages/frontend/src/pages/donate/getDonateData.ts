@@ -54,7 +54,7 @@ async function getPartners() {
         project,
         ecosystemLogo: getEcosystemLogo(e.data.slug),
         mainPartnerLogo: manifest.getImage(
-          `/ecosystems/${e.data.slug}/main-partner.png`,
+          `/partners/${e.data.slug}/main-partner.png`,
         ),
       }
     })
