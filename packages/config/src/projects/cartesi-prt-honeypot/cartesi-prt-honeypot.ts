@@ -12,10 +12,12 @@ import {
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
+  SOA,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
+import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
@@ -42,10 +44,11 @@ export const cartesiprthoneypot: ScalingProject = {
     BADGES.DA.EthereumCalldata,
     BADGES.Stack.Cartesi,
   ],
-  reviewStatus: 'inReview',
   display: {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
+    headerWarning:
+      'Bug Bounty Appchain: Any user deposit is a donation to the Honeypot. The risk- and stages framework only applies from the perspective of the single address which is permissioned to withdraw.',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
@@ -84,6 +87,17 @@ export const cartesiprthoneypot: ScalingProject = {
       explanation:
         'The current PRT implementation uses three tournament levels, which creates liveness risks in the event of Sybil attacks. Furthermore, it lacks the planned economic layer (bonds and rewards). As a result: (1) honest defenders must cover their own gas costs without compensation, and (2) a well-funded adversary can cheaply create Sybil challengers to keep the dispute tree alive, delaying finality. Safety and decentralization are unaffected, but withdrawals can be significantly delayed until every branch is resolved.',
     },
+  },
+  scopeOfAssessment: {
+    inScope: [
+      'Ability to deposit and withdraw CTSI by the permissioned address',
+      SOA.l1Contracts,
+      'Published Cartesi Machine source code',
+      SOA.derivationSpec,
+    ],
+    notInScope: [
+      'Cartesi Machine source code to onchain template hash mapping',
+    ],
   },
   config: {
     associatedTokens: ['CTSI'],
@@ -140,48 +154,53 @@ export const cartesiprthoneypot: ScalingProject = {
       secondLine: formatSeconds(minChallengePeriodSeconds),
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
-    exitWindow: RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+      warning: {
+        value: 'Only the single hardcoded address can withdraw.',
+        sentiment: 'bad',
+      },
+    },
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
-  stage: { stage: 'UnderReview' },
-  // getStage(
-  //   {
-  //     stage0: {
-  //       callsItselfRollup: true,
-  //       stateRootsPostedToL1: true,
-  //       dataAvailabilityOnL1: true,
-  //       rollupNodeSourceAvailable: true,
-  //     },
-  //     stage1: {
-  //       principle: false,
-  //       stateVerificationOnL1: true,
-  //       fraudProofSystemAtLeast5Outsiders: true,
-  //       usersHave7DaysToExit: true,
-  //       usersCanExitWithoutCooperation: true,
-  //       securityCouncilProperlySetUp: null,
-  //     },
-  //     stage2: {
-  //       proofSystemOverriddenOnlyInCaseOfABug: null,
-  //       fraudProofSystemIsPermissionless: true,
-  //       delayWith30DExitWindow: {
-  //         satisfied: true,
-  //         message:
-  //           'Users can exit at any time and the rollup contract is immutable.',
-  //         mode: 'replace',
-  //       },
-  //     },
-  //   },
-  //   {
-  //     rollupNodeLink:
-  //       'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
-  //     additionalConsiderations: {
-  //       short:
-  //         'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
-  //       long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
-  //     },
-  //   },
-  // ),
+  stage: getStage(
+    {
+      stage0: {
+        callsItselfRollup: true,
+        stateRootsPostedToL1: true,
+        dataAvailabilityOnL1: true,
+        rollupNodeSourceAvailable: true,
+      },
+      stage1: {
+        principle: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
+        usersHave7DaysToExit: true,
+        usersCanExitWithoutCooperation: true,
+        securityCouncilProperlySetUp: null,
+      },
+      stage2: {
+        proofSystemOverriddenOnlyInCaseOfABug: null,
+        fraudProofSystemIsPermissionless: true,
+        delayWith30DExitWindow: {
+          satisfied: true,
+          message:
+            'The single user can exit at any time and the rollup contract is immutable.',
+          mode: 'replace',
+        },
+      },
+    },
+    {
+      rollupNodeLink:
+        'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
+      additionalConsiderations: {
+        short:
+          'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine / dApp) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits of CTSI by anyone and withdrawals by a single user.',
+        long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. The appchain has the very specific purpose of a bug bounty on the proof system, defining the Cartesi Multisig as its only 'user' for the risk assessment. The risk and stages framework thus only applies from the perspective of this single address.",
+      },
+    },
+  ),
   technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
@@ -208,8 +227,7 @@ export const cartesiprthoneypot: ScalingProject = {
     exitMechanisms: [
       {
         name: 'No user withdrawals',
-        description:
-          'No address apart from the Cartesi Multisig can trigger a withdrawal and deposits are considered donations to the Honeypot. If a withdrawal is requested by them, all funds in the escrow are withdrawn to it.',
+        description: `No address apart from the Cartesi Multisig can trigger a withdrawal and deposits are considered donations to the Honeypot. If a withdrawal is requested by them, all funds in the escrow are withdrawable to the permissioned address as soon as the next settlement on L1 occurs (min. every ${formatSeconds(minChallengePeriodSeconds)}).`,
         risks: [],
         references: [
           {
@@ -233,7 +251,6 @@ export const cartesiprthoneypot: ScalingProject = {
     categories: [
       {
         ...STATE_VALIDATION.FRAUD_PROOFS,
-
         references: [
           {
             title: 'Permissionless Refereed Tournaments',
