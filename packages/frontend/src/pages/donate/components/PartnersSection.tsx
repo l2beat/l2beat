@@ -65,7 +65,7 @@ export function EcosystemTierCard({
               className="mb-6 h-[50px] w-max"
             />
             <HorizontalSeparator className="border-pure-white/40" />
-            <div className="mt-4 text-center">
+            <div className="mt-4 h-16 text-center">
               <p className="mb-2 text-2xs text-pure-white/70">PARTNER:</p>
               <img
                 src={partner.mainPartnerLogo.src}
