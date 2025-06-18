@@ -4,6 +4,9 @@ import { getProject } from '../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { findSelected } from '../common/findSelected'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { isReadOnly } from '../config'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
@@ -24,17 +27,17 @@ export function ValuesPanel() {
   const selectedAddress = usePanelStore((state) => state.selected)
 
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">
-      {!selected && <div>Select a contract</div>}
+      {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
         <Display
           selected={selected}
