@@ -1,21 +1,16 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { SignatureClient } from './SignatureClient'
 
-const SignatureResponse = z.object({
-  items: z.array(
-    z.object({
-      id: z.number(),
-      text: z.string(),
-    }),
-  ),
+const SignatureResponse = v.object({
+  items: v.array(v.object({ id: v.number(), text: v.string() })),
 })
 
-const SourcesResponse = z.object({
-  items: z.array(
-    z.object({
-      id: z.number(),
-      name: z.string(),
-      html_url: z.string(),
+const SourcesResponse = v.object({
+  items: v.array(
+    v.object({
+      id: v.number(),
+      name: v.string(),
+      html_url: v.string(),
     }),
   ),
 })
