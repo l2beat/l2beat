@@ -1,12 +1,12 @@
 import { Bytes, HEX_REGEX } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { v } from '@l2beat/validate'
 
-export const BytesFromString = z
+export const BytesFromString = v
   .string()
-  .regex(HEX_REGEX)
+  .check((x) => HEX_REGEX.test(x))
   .transform((x) => Bytes.fromHex(x).toString())
 
-export const NumberFromString = z
+export const NumberFromString = v
   .string()
-  .regex(/^([1-9]\d*|0)$/)
+  .check((x) => /^([1-9]\d*|0)$/.test(x))
   .transform((x) => BigInt(x))

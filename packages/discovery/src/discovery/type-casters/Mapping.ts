@@ -1,11 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
-const Validator = z.record(
-  z.string(),
-  z.union([z.string(), z.number(), z.boolean()]),
+const Validator = v.record(
+  v.string(),
+  v.union([v.string(), v.number(), v.boolean()]),
 )
 
 export const Mapping: BaseTypeCaster = {

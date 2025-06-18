@@ -1,17 +1,17 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { ethers, utils } from 'ethers'
-import * as z from 'zod'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
-export type ArbitrumScheduledTransactionsHandlerDefinition = z.infer<
+export type ArbitrumScheduledTransactionsHandlerDefinition = v.infer<
   typeof ArbitrumScheduledTransactionsHandlerDefinition
 >
-export const ArbitrumScheduledTransactionsHandlerDefinition = z.strictObject({
-  type: z.literal('arbitrumScheduledTransactions'),
+export const ArbitrumScheduledTransactionsHandlerDefinition = v.strictObject({
+  type: v.literal('arbitrumScheduledTransactions'),
 })
 
 const executeFn = 'execute(address upgrade, bytes upgradeCallData) payable'

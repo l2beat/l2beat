@@ -1,16 +1,16 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type OrbitPostsBlobsDefinition = z.infer<
+export type OrbitPostsBlobsDefinition = v.infer<
   typeof OrbitPostsBlobsDefinition
 >
-export const OrbitPostsBlobsDefinition = z.strictObject({
-  type: z.literal('orbitPostsBlobs'),
+export const OrbitPostsBlobsDefinition = v.strictObject({
+  type: v.literal('orbitPostsBlobs'),
 })
 
 const DATA_LOCATION_IN_BLOBS = 3

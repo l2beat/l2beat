@@ -1,20 +1,20 @@
 import { Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 
-export type StarkWareNamedStorageHandlerDefinition = z.infer<
+export type StarkWareNamedStorageHandlerDefinition = v.infer<
   typeof StarkWareNamedStorageHandlerDefinition
 >
-export const StarkWareNamedStorageHandlerDefinition = z.strictObject({
-  type: z.literal('starkWareNamedStorage'),
-  tag: z.string(),
-  returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
-  ignoreRelative: z.optional(z.boolean()),
+export const StarkWareNamedStorageHandlerDefinition = v.strictObject({
+  type: v.literal('starkWareNamedStorage'),
+  tag: v.string(),
+  returnType: v.enum(['address', 'bytes', 'number']).optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 export class StarkWareNamedStorageHandler implements Handler {

@@ -4,18 +4,18 @@ import {
   type EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ArbitrumSequencerVersionDefinition = z.infer<
+export type ArbitrumSequencerVersionDefinition = v.infer<
   typeof ArbitrumSequencerVersionDefinition
 >
-export const ArbitrumSequencerVersionDefinition = z.strictObject({
-  type: z.literal('arbitrumSequencerVersion'),
+export const ArbitrumSequencerVersionDefinition = v.strictObject({
+  type: v.literal('arbitrumSequencerVersion'),
 })
 
 const DATA_LOCATION_IN_TX = 0

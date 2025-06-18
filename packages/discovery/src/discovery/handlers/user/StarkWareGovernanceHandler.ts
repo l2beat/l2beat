@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -10,12 +10,12 @@ import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { toContractValue } from '../utils/toContractValue'
 import { toEventFragment } from '../utils/toEventFragment'
 
-export type StarkWareGovernanceHandlerDefinition = z.infer<
+export type StarkWareGovernanceHandlerDefinition = v.infer<
   typeof StarkWareGovernanceHandlerDefinition
 >
-export const StarkWareGovernanceHandlerDefinition = z.strictObject({
-  type: z.literal('starkWareGovernance'),
-  filterBy: z.string(),
+export const StarkWareGovernanceHandlerDefinition = v.strictObject({
+  type: v.literal('starkWareGovernance'),
+  filterBy: v.string(),
 })
 
 const EVENT_FRAGMENT = toEventFragment(

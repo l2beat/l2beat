@@ -1,12 +1,12 @@
 import { assert } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { BigNumber } from 'bignumber.js'
-import { z } from 'zod'
 import { toContractValue } from '../handlers/utils/toContractValue'
 import type { ContractValue } from '../output/types'
 import type { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 
-const Validator = z.object({
-  decimals: z.number(),
+const Validator = v.object({
+  decimals: v.number(),
 })
 
 export const Undecimal: BaseTypeCaster = {

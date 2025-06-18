@@ -1,17 +1,17 @@
 import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { ethers } from 'ethers'
-import { z } from 'zod'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ConstructorArgsDefinition = z.infer<
+export type ConstructorArgsDefinition = v.infer<
   typeof ConstructorArgsDefinition
 >
-export const ConstructorArgsDefinition = z.strictObject({
-  type: z.literal('constructorArgs'),
-  nameArgs: z.boolean().optional(),
+export const ConstructorArgsDefinition = v.strictObject({
+  type: v.literal('constructorArgs'),
+  nameArgs: v.boolean().optional(),
 })
 
 export class ConstructorArgsHandler implements Handler {

@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join, resolve } from 'path'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 const CONFIG_FILENAME = '.discovery.json'
 
@@ -35,9 +35,9 @@ function discoverRoot(): string {
   throw new Error(`Cannot locate the ${CONFIG_FILENAME} file`)
 }
 
-const ConfigInput = z.object({
-  discovery: z.string().optional(),
-  cache: z.string().optional(),
+const ConfigInput = v.object({
+  discovery: v.string().optional(),
+  cache: v.string().optional(),
 })
 
 const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root'> = {
@@ -47,7 +47,7 @@ const DEFAULT_CONFIG: Omit<DiscoveryPaths, 'root'> = {
 
 function readConfig(root: string): DiscoveryPaths {
   const source = readFileSync(join(root, CONFIG_FILENAME), 'utf-8')
-  const parsed = ConfigInput.parse(JSON.parse(source))
+  const parsed = ConfigInput.validate(JSON.parse(source))
   return {
     root: resolve(root),
     discovery: resolve(root, parsed.discovery ?? DEFAULT_CONFIG.discovery),
