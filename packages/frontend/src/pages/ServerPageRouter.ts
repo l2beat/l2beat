@@ -33,7 +33,7 @@ export function createServerPageRouter(
     const now = UnixTime.now()
     const is5MinutesBeforeMigration =
       now < PROJECT_COUNTDOWNS.otherMigration &&
-      now - PROJECT_COUNTDOWNS.otherMigration < 5 * 60
+      PROJECT_COUNTDOWNS.otherMigration - now < 5 * 60
 
     if (env.DEPLOYMENT_ENV === 'production' && !is5MinutesBeforeMigration) {
       headers.set('Cache-Control', 'public, max-age=300')
