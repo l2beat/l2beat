@@ -37,11 +37,11 @@ export class EigenDaProjectsIndexer extends ManagedMultiIndexer<TimestampDaIndex
 
   override async multiUpdate(
     from: number,
-    _to: number,
+    to: number,
     configurations: Configuration<TimestampDaIndexedConfig>[],
   ) {
     const adjustedFrom = UnixTime.toStartOf(from, 'hour')
-    const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, _to)
+    const adjustedTo = Math.min(adjustedFrom + UnixTime.HOUR, to)
 
     // If not 02:00:00, we skip update
     if (
