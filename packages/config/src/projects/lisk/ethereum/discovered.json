@@ -2,7 +2,7 @@
   "name": "lisk",
   "chain": "ethereum",
   "blockNumber": 22624983,
-  "configHash": "0xd7aa1737c512eab56dec56e564a210d6a074b40f2273d2c1127075f5b95dabe2",
+  "configHash": "0xc2556ae981c01bebaab247f111e8f33bd2133e620b0f1cf03c80131075e3f146",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

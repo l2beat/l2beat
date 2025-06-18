@@ -1,14 +1,14 @@
 Generated with discovered.json: 0x5bcc12c46dd8564f1146e2ae1789c936a36a9d31
 
-# Diff at Wed, 18 Jun 2025 11:53:29 GMT:
+# Diff at Wed, 18 Jun 2025 12:24:54 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593199
 - current block number: 22731194
 
 ## Description
 
-upgrade to v27 complete.
+config: wasmmoduleroot map updated.
 
 ## Watched changes
 

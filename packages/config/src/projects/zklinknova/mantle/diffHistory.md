@@ -1,20 +1,16 @@
 Generated with discovered.json: 0x5a1c34dc0a92da64a80b88ef1c668a3db5963d34
 
-# Diff at Wed, 18 Jun 2025 12:04:29 GMT:
+# Diff at Wed, 18 Jun 2025 12:24:56 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 80670848
 - current block number: 81058973
 
 ## Description
 
-config related.
+config: wasmmoduleroot map updated.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 80670848 (main branch discovery), not current.
+## Watched changes
 
 ```diff
     contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {

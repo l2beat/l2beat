@@ -1,14 +1,14 @@
 Generated with discovered.json: 0xacafbb1171690feb55b9c16a1432574a84440809
 
-# Diff at Wed, 18 Jun 2025 11:32:26 GMT:
+# Diff at Wed, 18 Jun 2025 12:24:52 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593196
 - current block number: 22731088
 
 ## Description
 
-two valis removed.
+config: wasmmoduleroot map updated.
 
 ## Watched changes
 

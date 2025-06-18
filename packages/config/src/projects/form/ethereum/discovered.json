@@ -2,7 +2,7 @@
   "name": "form",
   "chain": "ethereum",
   "blockNumber": 21916627,
-  "configHash": "0x2b7f01b4210feb512e880d0f20cc7744e5742b4885558ef010a69b1a1ded1b45",
+  "configHash": "0xc67993f25c2aaaccb03872806aa86e02702e1de464d5b644fe223bf20bd0c713",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

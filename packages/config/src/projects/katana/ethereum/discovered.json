@@ -2,7 +2,7 @@
   "name": "katana",
   "chain": "ethereum",
   "blockNumber": 22637654,
-  "configHash": "0x231e335d0ce900b99fee9ec5e4121e3eda4337bc2901db33524c4788e144a2d2",
+  "configHash": "0x823c54bf1d51b5627b1a1a1b8aa2e04b6019250a7540198c1f3d862cfa23950a",
   "entries": [
     {
       "address": "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12",
