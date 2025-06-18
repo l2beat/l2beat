@@ -24,7 +24,7 @@ export class EigenApiClient extends ClientCore {
 
   async getByProjectData(until: number) {
     const date = new Date(until * 1000).toISOString().split('T')[0]
-    const response = await fetch(
+    const response = await this.$.http.fetchRaw(
       `${this.$.perProjectUrl}/stats/${date}.json`,
       {},
     )

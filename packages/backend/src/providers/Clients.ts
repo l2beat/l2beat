@@ -226,6 +226,8 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           break
         }
+        default:
+          assertUnreachable(layer.type)
       }
     }
   }
