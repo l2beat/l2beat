@@ -9,7 +9,7 @@ import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import type { ProjectTokens } from '../tvs/tokens/getTokensForProject'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 
-export interface ScalingProjectTvsBreakdownData {
+export interface ScalingProjectTvsBreakdown {
   project: Project<
     'tvsConfig' | 'tvsInfo',
     'chainConfig' | 'milestones' | 'contracts'
@@ -21,9 +21,9 @@ export interface ScalingProjectTvsBreakdownData {
   projectTokens: ProjectTokens | undefined
 }
 
-export async function getScalingProjectTvsBreakdownData(
+export async function getScalingProjectTvsBreakdown(
   slug: string,
-): Promise<ScalingProjectTvsBreakdownData | undefined> {
+): Promise<ScalingProjectTvsBreakdown | undefined> {
   const project = await ps.getProject({
     slug,
     select: ['tvsConfig', 'tvsInfo'],

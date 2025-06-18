@@ -49,6 +49,7 @@ export function getTvsBreakdown(
       amount: tokenValue.amount,
       isGasToken: gasTokens?.includes(token.symbol.toUpperCase()),
       syncStatus: getSyncStatus(tokenValue.timestamp, targetTimestamp),
+      bridgedUsing: token.bridgedUsing,
     }
 
     switch (token.source) {
