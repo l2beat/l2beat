@@ -65,6 +65,13 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
+  get blockNumber(): number {
+    return this.discoveries.reduce(
+      (min, d) => Math.min(min, d.blockNumber),
+      Infinity,
+    )
+  }
+
   getName(address: EthereumAddress): string {
     return (
       this.getEntryByAddress(address)?.name ??

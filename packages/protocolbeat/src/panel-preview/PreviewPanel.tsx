@@ -10,6 +10,7 @@ import type {
   UpgradeabilityActor,
 } from '../api/types'
 import { Checkbox } from '../components/Checkbox'
+import { LoadingState } from '../components/LoadingState'
 import { AddressDisplay } from '../panel-values/AddressDisplay'
 import { usePanelStore } from '../store/store'
 
@@ -28,7 +29,7 @@ export function PreviewPanel() {
   })
   const response = previewResponse.data
   if (response === undefined) {
-    return <div className="p-2">Loading...</div>
+    return <LoadingState />
   }
 
   return (

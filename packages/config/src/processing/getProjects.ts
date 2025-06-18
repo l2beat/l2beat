@@ -82,7 +82,7 @@ function layer2Or3ToProject(
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -224,7 +224,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvsInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
@@ -309,7 +309,7 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-export function getDiscoveryInfo(
+export function adjustDiscoveryInfo(
   project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
@@ -321,6 +321,7 @@ export function getDiscoveryInfo(
     contractsDiscoDriven,
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
+    blockNumberPerChain: project.discoveryInfo.blockNumberPerChain,
   }
 }
 

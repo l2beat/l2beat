@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('katana')
 
@@ -69,4 +70,5 @@ export const katana: ScalingProject = {
     },
   },
   stage: { stage: 'UnderReview' },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

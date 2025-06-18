@@ -24,6 +24,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('apex')
@@ -227,4 +228,5 @@ export const apex: ScalingProject = {
       membersCount: dacConfig.membersCount,
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

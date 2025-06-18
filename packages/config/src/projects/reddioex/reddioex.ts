@@ -27,6 +27,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -189,4 +190,5 @@ export const reddioex: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

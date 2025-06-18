@@ -6,7 +6,7 @@ import type { Bridge, ScalingProject } from '../internalTypes'
 import { mergeBadges } from '../templates/utils'
 import type { BaseProject, ChainConfig } from '../types'
 import { bridges } from './bridges'
-import { getDiscoveryInfo } from './getProjects'
+import { adjustDiscoveryInfo } from './getProjects'
 import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
@@ -59,7 +59,7 @@ function adjustLegacy(project: ScalingProject | Bridge, chains: ChainConfig[]) {
   adjustContracts(project, chains)
   adjustEscrows(project)
 
-  project.discoveryInfo = getDiscoveryInfo(project)
+  project.discoveryInfo = adjustDiscoveryInfo(project)
 }
 
 function adjustRefactored(project: BaseProject, chains: ChainConfig[]) {

@@ -2,6 +2,7 @@ import { ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import { UPCOMING_RISK_VIEW } from '../common'
 import type { ProjectScalingDisplay, ScalingProject } from '../internalTypes'
 import type { Badge, ChainConfig, ProjectScalingCapability } from '../types'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 
 export interface UpcomingConfigL2 {
   id: string
@@ -38,6 +39,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): ScalingProject {
     chainConfig: templateVars.chainConfig,
     riskView: UPCOMING_RISK_VIEW,
     badges: templateVars.badges,
+    discoveryInfo: getDiscoveryInfo([]),
   }
 }
 
@@ -59,5 +61,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): ScalingProject {
     riskView: UPCOMING_RISK_VIEW,
     stackedRiskView: UPCOMING_RISK_VIEW,
     badges: templateVars.badges,
+    discoveryInfo: getDiscoveryInfo([]),
   }
 }

@@ -56,6 +56,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -579,6 +580,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 

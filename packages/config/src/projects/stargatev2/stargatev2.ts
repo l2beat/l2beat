@@ -7,6 +7,7 @@ import {
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')
@@ -353,4 +354,12 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([
+    discovery,
+    discovery_arbitrum,
+    discovery_optimism,
+    discovery_base,
+    discovery_scroll,
+    discovery_linea,
+  ]),
 }
