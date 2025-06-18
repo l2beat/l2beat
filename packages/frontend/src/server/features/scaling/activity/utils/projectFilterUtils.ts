@@ -1,11 +1,13 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { isProjectOther } from '../../utils/isProjectOther'
 
-export const ActivityProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum([
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const ActivityProjectFilter = v.union([
+  v.object({
+    type: v.enum([
       'all',
       'rollups',
       'validiumsAndOptimiums',
@@ -13,18 +15,18 @@ export const ActivityProjectFilter = z.discriminatedUnion('type', [
       'withoutOthers',
     ]),
   }),
-  z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
+  v.object({ type: v.literal('projects'), projectIds: v.array(v.string()) }),
 ])
-export type ActivityProjectFilter = z.infer<typeof ActivityProjectFilter>
+export type ActivityProjectFilter = v.infer<typeof ActivityProjectFilter>
 
-export const ActivityProjectFilterType = z.enum([
+export const ActivityProjectFilterType = v.enum([
   'all',
   'rollups',
   'validiumsAndOptimiums',
   'others',
   'projects',
 ])
-export type ActivityProjectFilterType = z.infer<
+export type ActivityProjectFilterType = v.infer<
   typeof ActivityProjectFilterType
 >
 

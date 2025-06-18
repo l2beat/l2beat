@@ -1,19 +1,19 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/isProjectOther'
 
-export const CostsProjectsFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum(['all', 'rollups', 'others']),
-  }),
-  z.object({
-    type: z.literal('projects'),
-    projectIds: z.array(z.string()),
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const CostsProjectsFilter = v.union([
+  v.object({ type: v.enum(['all', 'rollups', 'others']) }),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
   }),
 ])
-export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
+export type CostsProjectsFilter = v.infer<typeof CostsProjectsFilter>
 
 export async function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
