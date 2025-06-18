@@ -140,4 +140,17 @@ describe('validate', () => {
       data: { foo: 1 } as any,
     })
   })
+
+  it('object with enum values and optional', () => {
+    const Foo = v.object({
+      key1: v.enum(['foo', 'bar']).optional(),
+      key2: v.enum(['foo', 'bar']).optional(),
+      key3: v.enum(['foo', 'bar']).optional(),
+    })
+
+    expect(Foo.safeValidate({ key1: undefined, key3: 'foo' })).toEqual({
+      success: true,
+      data: { key1: undefined, key3: 'foo' },
+    })
+  })
 })

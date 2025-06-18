@@ -333,7 +333,8 @@ function svpObject<T extends object>(
     const result = {} as Record<string, unknown>
     for (const key in schema) {
       const validator = schema[key] as ValidatorImpl<unknown>
-      if (!(key in value)) {
+      const prop = (value as { [record: string]: unknown })[key]
+      if (prop === undefined) {
         if (validator.isOptional) {
           continue
         }
@@ -342,7 +343,6 @@ function svpObject<T extends object>(
           continue
         }
       }
-      const prop = (value as { [record: string]: unknown })[key]
       const res = clone
         ? validator.safeParse(prop)
         : validator.safeValidate(prop)
