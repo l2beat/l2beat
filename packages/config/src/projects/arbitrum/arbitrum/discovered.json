@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 340727816,
-  "configHash": "0x39e8c501137a1e7e7af05c6bfe8dd023b23e7c75e66dd75f3e9af1bfa9d5cb83",
+  "blockNumber": 348602301,
+  "configHash": "0x9b8772ad1fa05f2f6fa339ec76b9aa9034beb8c1a2c210f27976eef1ba09bb9f",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -63,7 +63,7 @@
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-        "exitNum": 33482,
+        "exitNum": 34263,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
@@ -1270,7 +1270,7 @@
         ],
         "$upgradeCount": 1,
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
-        "exitNum": 2071,
+        "exitNum": 2134,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
       },
       "implementationNames": {
