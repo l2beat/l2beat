@@ -559,7 +559,7 @@ function record<K extends string | number, V>(
   )
 }
 
-function svEnum<T extends string | number>(values: T[]) {
+function svEnum<T extends string | number>(values: readonly T[]) {
   return function svEnum(value: unknown): Result<T> {
     if (values.includes(value as T)) {
       return { success: true, data: value as T }
@@ -572,7 +572,7 @@ function svEnum<T extends string | number>(values: T[]) {
   }
 }
 
-function _enum<T extends string | number>(values: T[]): Validator<T> {
+function _enum<T extends string | number>(values: readonly T[]): Validator<T> {
   const sv = svEnum(values)
   return new ValidatorImpl(sv, sv, ['enum', values])
 }
