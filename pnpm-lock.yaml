@@ -689,6 +689,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@mradomski/fast-solidity-parser':
         specifier: 0.1.1
         version: 0.1.1
