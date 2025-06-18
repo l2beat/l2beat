@@ -55,6 +55,7 @@ export class BlockIndexer extends ManagedChildIndexer {
           const duration = Date.now() - start
           this.logger.info(
             `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,
+            { processor: processor.constructor.name, duration },
           )
         } catch (error) {
           this.logger.error(

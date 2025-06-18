@@ -7,12 +7,9 @@ describe(EventIndexer.prototype.start.name, () => {
   it('should tick with latest block number from event', async () => {
     const mockWebSocket = new MockWebSocket()
 
-    const indexer = new EventIndexer(
-      'url',
-      'source',
-      Logger.SILENT,
-      mockWebSocket.mockObject,
-    )
+    const indexer = new EventIndexer('url', 'source', Logger.SILENT, () => {
+      return mockWebSocket.mockObject
+    })
     await indexer.start()
 
     let blockNumber = 123456
