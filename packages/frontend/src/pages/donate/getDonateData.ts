@@ -39,7 +39,6 @@ export async function getDonateData(
 export type Partners = Awaited<ReturnType<typeof getPartners>>
 
 async function getPartners() {
-  const projects = await ps.getProjects({})
   const ecosystems = await ps.getProjects({
     select: ['ecosystemConfig', 'colors'],
   })
@@ -61,32 +60,35 @@ async function getPartners() {
     })
 
   const innovatorPartners = partners
-    .filter((e) => e.data.tier === 'innovator')
     .map((e) => {
-      const project = projects.find((p) => p.slug === e.data.slug)
-      assert(project, `Project not found for partner ${e.data.slug}`)
+      if (e.data.tier !== 'innovator') {
+        return
+      }
 
       return {
         ...e.data,
-        project,
+        link: e.data.link ?? `/scaling/projects/${e.data.slug}`,
         logo: manifest.getImage(`/partners/${e.data.slug}/logo.png`),
         backgroundImage: manifest.getImage(
           `/partners/${e.data.slug}/background.png`,
         ),
       }
     })
+    .filter((e) => e !== undefined)
 
   const supporterPartners = partners
-    .filter((e) => e.data.tier === 'supporter')
     .map((e) => {
-      const project = projects.find((p) => p.slug === e.data.slug)
-      assert(project, `Project not found for partner ${e.data.slug}`)
+      if (e.data.tier !== 'supporter') {
+        return
+      }
 
       return {
         ...e.data,
-        project,
+        logo: manifest.getImage(`/icons/${e.data.slug}.png`),
+        link: e.data.link ?? `/scaling/projects/${e.data.slug}`,
       }
     })
+    .filter((e) => e !== undefined)
 
   return {
     ecosystem: ecosystemPartners,

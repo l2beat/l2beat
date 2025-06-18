@@ -26,6 +26,12 @@ export function PartnersSection({ partners }: Props) {
           ))}
         </div>
       </div>
+      <div>
+        <h3 className="mb-3 font-medium text-secondary text-xs">
+          SUPPORTERS TIER
+        </h3>
+        <SupporterTierTable partners={partners.supporter} />
+      </div>
     </PrimaryCard>
   )
 }
@@ -87,17 +93,13 @@ export function InnovatorTierCard({
 }: { partner: Partners['innovator'][number] }) {
   return (
     <a
-      href={`/innovators/${partner.slug}`}
+      href={partner.link}
       style={{
         backgroundImage: `url(${partner.backgroundImage.src})`,
       }}
       className="group relative flex h-14 items-center rounded border border-divider bg-center bg-cover px-6"
     >
-      <img
-        src={partner.logo.src}
-        alt={partner.project.name}
-        className="h-8 w-fit"
-      />
+      <img src={partner.logo.src} alt={partner.slug} className="h-8 w-fit" />
       <svg
         width="32"
         height="32"
@@ -111,5 +113,24 @@ export function InnovatorTierCard({
         />
       </svg>
     </a>
+  )
+}
+
+export function SupporterTierTable({
+  partners,
+}: { partners: Partners['supporter'] }) {
+  return (
+    <div className="flex flex-wrap justify-center gap-2">
+      {partners.map((partner) => (
+        <a
+          key={partner.slug}
+          href={partner.link}
+          className="flex items-center gap-1 rounded border border-divider bg-surface-secondary px-3 py-0.5"
+        >
+          <img src={partner.logo.src} alt={partner.name} className="size-5" />
+          <p>{partner.name}</p>
+        </a>
+      ))}
+    </div>
   )
 }
