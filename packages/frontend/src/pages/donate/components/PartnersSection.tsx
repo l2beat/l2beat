@@ -12,7 +12,7 @@ export function PartnersSection({ partners }: Props) {
       <h2 className="font-bold text-xl">Partners</h2>
       <div>
         <h3 className="font-medium text-secondary text-xs">ECOSYSTEMS TIER</h3>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 [@media(min-width:1440px)]:grid-cols-4">
           {partners.ecosystem.map((partner) => (
             <EcosystemTierCard key={partner.slug} partner={partner} />
           ))}
@@ -59,13 +59,15 @@ export function EcosystemTierCard({
 
           {/* Content */}
           <div className="relative z-10 flex h-full flex-col items-center justify-center p-6 text-white">
-            <img
-              src={partner.ecosystemLogo.dark}
-              alt={partner.project.name}
-              className="mb-6 h-[50px] w-max"
-            />
-            <HorizontalSeparator className="border-pure-white/40" />
-            <div className="mt-4 h-16 text-center">
+            <div className="h-[50px]">
+              <img
+                src={partner.ecosystemLogo.dark}
+                alt={partner.project.name}
+                className="h-full object-contain"
+              />
+            </div>
+            <HorizontalSeparator className="mt-6 mb-4 border-pure-white/40" />
+            <div className="h-16 text-center">
               <p className="mb-2 text-2xs text-pure-white/70">PARTNER:</p>
               <img
                 src={partner.mainPartnerLogo.src}
