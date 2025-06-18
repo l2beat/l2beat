@@ -71,10 +71,23 @@ Once a block is proposed, it is propagated across the network. Different types o
 
 ## Blob Finality
 
-Blob finality is achieved through the consensus mechanism.
+For a blob to be useful to a rollup, its availability must be verifiable on the rollup's settlement layer (e.g., Ethereum). This creates a two-stage finality process: finality on Celestia itself, and finality on the settlement layer via the Blobstream bridge.
+
+### 1. Finality on Celestia
+
+This is the first stage, where a block containing blob data is irreversibly committed to the Celestia chain through Celestia's Tendermint-based consensus mechanism.
 
 1.  **Attestation**: After a validator successfully verifies a block's data availability, it signs the block with its signature, creating an attestation.
+2.  **Consensus**: These signatures are broadcast to the rest of the network. When validators representing at least 2/3 of the total voting power have signed the block, it is considered final *on Celestia*. This process is very fast, taking only a few seconds (current block time ~6 seconds), at which point the data is permanently archived on the Celestia blockchain.
 
-2.  **Consensus**: These signatures are broadcast to the rest of the network. When validators representing at least 2/3 of the total voting power have signed the block, it is considered final.
+### 2. Finality on the Settlement Layer (Blobstream)
 
-Once a block is finalized, the blobs within it are permanently and verifiably stored on the Celestia blockchain.
+For a rollup on Ethereum to use the blob data, it needs proof on Ethereum that the data was published to Celestia. This is the role of the [Blobstream bridge](https://l2beat.com/data-availability/projects/celestia/blobstream). The original version of Blobstream relied on Celestia validators re-signing data roots for the L1. The new generation of the bridge, such as [`sp1-blobstream`](https://github.com/succinctlabs/sp1-blobstream), uses ZK proofs to create a more efficient and trust-minimized on-chain light client. You can read more in the [SP1 Blobstream documentation](https://succinctlabs.github.io/sp1-blobstream/).
+
+The process for the ZK-powered Blobstream is as follows:
+
+1.  **ZK Proof Generation**: An off-chain operator runs the `sp1-blobstream` program in a ZK virtual machine (the SP1 zkVM). This program acts as a Celestia light client: it processes a range of Celestia block headers, verifies the Tendermint consensus signatures for each block transition, and computes the Merkle root of the `dataRoot`s for that range. The entire execution generates a succinct ZK-proof.
+2.  **Relaying to L1**: The operator relays this ZK-proof to the `SP1Blobstream` smart contract deployed on the settlement layer.
+3.  **L1 Verification**: The `SP1Blobstream` contract uses a canonical `SP1Verifier` contract to verify the ZK-proof. This is computationally cheap on-chain. Once the proof is verified, the `SP1Blobstream` contract stores the commitment to the range of `dataRoot`s.
+
+A rollup's L1 contract can now verify its state transitions by proving against the data roots stored in the `Blobstream` contract. From the rollup's perspective, its transaction data is only truly final and actionable once it has been processed and verified by the Blobstream bridge on its settlement chain.
