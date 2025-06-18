@@ -17,7 +17,7 @@ const GITCOIN_ROUND_URL =
 export const LAST_UPDATED = 'March 2025'
 
 interface Props extends AppLayoutProps {
-  partners: Partners
+  partners: Partners | undefined
   gitcoinOption: boolean
   qrCodeUrl: string
 }
@@ -51,7 +51,7 @@ export function DonatePage(props: Props) {
       <SideNavLayout>
         <MainPageHeader>Donate</MainPageHeader>
         <Header networks={networks} qrCodeUrl={props.qrCodeUrl} />
-        <PartnersSection partners={props.partners} />
+        {props.partners && <PartnersSection partners={props.partners} />}
         <FundingSourcesSection />
       </SideNavLayout>
     </AppLayout>

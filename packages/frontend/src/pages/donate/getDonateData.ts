@@ -1,6 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { getEcosystemLogo } from '~/server/features/ecosystems/getEcosystemLogo'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
@@ -11,7 +12,10 @@ export async function getDonateData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const appLayoutProps = await getAppLayoutProps()
+  const [appLayoutProps, partners] = await Promise.all([
+    getAppLayoutProps(),
+    getPartners(),
+  ])
 
   return {
     head: {
@@ -28,7 +32,7 @@ export async function getDonateData(
       page: 'DonatePage',
       props: {
         ...appLayoutProps,
-        partners: await getPartners(),
+        partners: env.NEXT_PUBLIC_PARTNERS ? partners : undefined,
         gitcoinOption: false,
         qrCodeUrl: manifest.getUrl('/images/qr-codes/donate.png'),
       },
