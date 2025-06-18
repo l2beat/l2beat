@@ -6,12 +6,11 @@
     "ethereum": {
       "initialAddresses": [
         "0x4c1e74ef88a75c24e49eddd9f70d82a94d19251c",
-        "0xc700d6add016eecd59d989c028214eaa0fcc0051",
-        "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5" // hardcoded withdrawal address
+        "0xc700d6add016eecd59d989c028214eaa0fcc0051"
       ],
       "overrides": {
         "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": {
-          "displayName": "Withdrawal target Multisig"
+          "displayName": "Cartesi Multisig"
         },
         "0x2B3272E7Bcf06d36b9A902dfc0dD0d9384F2A4c4": {
           "category": "spam"

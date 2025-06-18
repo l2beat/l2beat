@@ -9,7 +9,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -178,7 +177,7 @@ export const cartesiprthoneypot: ScalingProject = {
   //     additionalConsiderations: {
   //       short:
   //         'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
-  //       long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Withdrawal Multisig to its own address. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
+  //       long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
   //     },
   //   },
   // ),
@@ -207,7 +206,10 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_MESSAGING('optimistic'),
+        name: 'No user withdrawals',
+        description:
+          'No address apart from the Cartesi Multisig can trigger a withdrawal and deposits are considered donations to the Honeypot. If a withdrawal is requested by them, all funds in the escrow are withdrawn to it.',
+        risks: [],
         references: [
           {
             title: 'Requesting withdrawals, Honeypot Wiki',

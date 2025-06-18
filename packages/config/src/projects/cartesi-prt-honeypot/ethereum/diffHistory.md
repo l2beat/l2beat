@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xdfb0cba8bf48c9a310197d5ff1ca4ab0215fb281
+
+# Diff at Wed, 18 Jun 2025 07:22:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d9956601c9039d7a0c20705676b0997fa01d0250 block: 22717520
+- current block number: 22729814
+
+## Description
+
+add cartesi multisig withdrawer permission.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22717520 (main branch discovery), not current.
+
+```diff
+    contract Application (0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c) {
+    +++ description: Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions.
+      values.withdrawer:
++        "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Cartesi Multisig (0x60247492F1538Ed4520e61aE41ca2A8447592Ff5)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xdb7b65667f80e7bb2b884fdde74478cda930ee9b
 
 # Diff at Tue, 17 Jun 2025 15:28:30 GMT:

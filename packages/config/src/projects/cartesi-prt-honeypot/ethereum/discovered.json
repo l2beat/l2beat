@@ -1,8 +1,8 @@
 {
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
-  "blockNumber": 22717520,
-  "configHash": "0xec400fa358c365e2452bc52b1d96248518f9e804f08de17cb4813ae71fce89e5",
+  "blockNumber": 22729814,
+  "configHash": "0x5d7aee8781cdef63df913b005ec2b64afb6c168f1a4bcf16898322de5243303c",
   "entries": [
     {
       "name": "TopTournament",
@@ -78,7 +78,8 @@
         "getDeploymentBlockNumber": 22670193,
         "getOutputsMerkleRootValidator": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
         "getTemplateHash": "0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14",
-        "owner": "0x0000000000000000000000000000000000000000"
+        "owner": "0x0000000000000000000000000000000000000000",
+        "withdrawer": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
       },
       "implementationNames": {
         "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c": "Application"
@@ -107,6 +108,56 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "address": "0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Cartesi Multisig",
+      "address": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
+        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+          "description": "withdraw the entire balance in the escrow.",
+          "role": ".withdrawer"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1634112168,
+      "sinceBlock": 13408863,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$members": [
+          "0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
+          "0x53cfaE10bb087bd67288eCA9e7d58E216aEbD961",
+          "0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
+          "0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
+          "0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
+          "0xC826D6061b5C62237932c834B60a5eFf04D80F30"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x5da08fdea0dbcc8c2e5ff2167841877be4e4105aceec36114c391bed58448056",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 322,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": "Proxy",
+        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+      }
+    },
+    {
       "name": "DaveConsensus",
       "address": "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68",
       "type": "Contract",
@@ -123,15 +174,15 @@
         "$immutable": true,
         "canSettle": {
           "isFinished": false,
-          "epochNumber": 0,
+          "epochNumber": 1,
           "winnerCommitment": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getApplicationContract": "0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
         "getCurrentSealedEpoch": {
-          "epochNumber": 0,
+          "epochNumber": 1,
           "inputIndexLowerBound": 0,
-          "inputIndexUpperBound": 0,
-          "tournament": "0xDaa497885D83f345CBcbF071d7201230A8CBd68A"
+          "inputIndexUpperBound": 3,
+          "tournament": "0x907d1A3092F63400FDA8E0bd33Fe774FE6a62399"
         },
         "getInputBox": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
         "getTournamentFactory": "0xA31C2aCfF3464658866960c0fBD3d798310272D7"
@@ -206,6 +257,11 @@
       }
     },
     {
+      "address": "0xA7Dd0A6AF60ae9Accc7533d016dc7B68Db3324b1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "InputBox",
       "address": "0xc70074BDD26d8cF983Ca6A5b89b8db52D5850051",
       "type": "Contract",
@@ -243,6 +299,11 @@
       }
     },
     {
+      "address": "0xC826D6061b5C62237932c834B60a5eFf04D80F30",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CanonicalTournamentParametersProvider",
       "address": "0xcC0a49320891Bf35bca834aF1045ab89Ecd44c0c",
       "type": "Contract",
@@ -275,6 +336,16 @@
       }
     },
     {
+      "address": "0xccD54bae0DfadA083F590f9aA16285f3eE4b5325",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD91C0C2fC065a2e094129066D2683ef16E6F6032",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "MiddleTournament",
       "address": "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE",
       "type": "Contract",
@@ -290,6 +361,11 @@
       "implementationNames": {
         "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": "MiddleTournament"
       }
+    },
+    {
+      "address": "0xF4554F08Ed918893996DC36428Cb9DCbF2De990E",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -406,6 +482,9 @@
       "error InsufficientBalance(uint256 balance, uint256 needed)",
       "function instantiate(bytes32 initialHash, bytes32 contestedCommitmentOne, bytes32 contestedFinalStateOne, bytes32 contestedCommitmentTwo, bytes32 contestedFinalStateTwo, uint64 allowance, uint256 startCycle, uint64 level, tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance) tournamentParameters, address provider, address stateTransition) returns (address)"
     ],
+    "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5": [
+      "constructor(address _masterCopy)"
+    ],
     "0x6CE590b9F0697327f18c601DF6f0baE4a0801B68": [
       "constructor(address inputBox, address appContract, address tournamentFactory, bytes32 initialMachineStateHash)",
       "error ApplicationMismatch(address expected, address received)",
@@ -463,6 +542,55 @@
       "constructor(uint64 matchEffort, uint64 maxAllowance)",
       "function tournamentParameters(uint64 level) view returns (tuple(uint64 levels, uint64 log2step, uint64 height, uint64 matchEffort, uint64 maxAllowance))"
     ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "0xe49E4CB0Ab5c0E5792E762807329B420Cc4FF1AE": [
       "error ChildTournamentCannotBeEliminated()",
       "error ChildTournamentMustBeEliminated()",
@@ -502,7 +630,7 @@
     ]
   },
   "usedTemplates": {
-    "cartesi/Application": "0xbf5d4d1b74c0c54fa73da94d57151838eb2cd61c2b943d9ee18ad9cbacfa429e",
+    "cartesi/Application": "0x25cf6358cdb4ce6f1ad6666a17c67fa6597c997ad826e59ea5d26b4e22371d98",
     "cartesi/BottomTournament_clone": "0x579b475804c11d95a09655ad2b7f9a176d93ea4aae5cc7b7072c629053dc4761",
     "cartesi/BottomTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/CanonicalTournamentParametersProvider": "0x8364633bedcaf40a3dffcf8d3f6a21ef89b781e066a844406cde84f2538e8ca3",
@@ -514,7 +642,8 @@
     "cartesi/MiddleTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/MultiLevelTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "cartesi/TopTournament_clone": "0xb3113cf8b0ceb9ccca162d233905f35087fec6eebea36f8be30ba2539120ad3c",
-    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072"
+    "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xed95ebf0d7288afa39e7f368256ea2e4fc5a36b1954caee271f0bf13b06854b0"
+  "permissionsConfigHash": "0x2e7db4a1312020b21d53f2184bd50181fcf9a719a49005d50f6d7316553ef660"
 }
