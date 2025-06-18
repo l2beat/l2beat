@@ -8,6 +8,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
@@ -292,4 +293,5 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

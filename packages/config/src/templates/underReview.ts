@@ -10,6 +10,7 @@ import type {
   ProjectScalingCapability,
 } from '../types'
 import { getActivityConfig } from './activity'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 
 interface UnderReviewConfigCommon {
   id: string
@@ -70,6 +71,7 @@ export function underReviewL2(
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
+    discoveryInfo: getDiscoveryInfo([]),
   }
 }
 
@@ -113,5 +115,6 @@ export function underReviewL3(
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
+    discoveryInfo: getDiscoveryInfo([]),
   }
 }

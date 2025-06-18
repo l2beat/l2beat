@@ -1,8 +1,8 @@
 {
   "name": "lens",
   "chain": "ethereum",
-  "blockNumber": 22593196,
-  "configHash": "0x83223b63c4ba22dc09056a7f36a8c7c4e17afbca0114facca1acf469f5dd6e3a",
+  "blockNumber": 22731088,
+  "configHash": "0x6e43d44db694be4f8c82e94da598fdd5a889fd6b9f3a024579e90f1d8b1302f3",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -137,7 +137,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -297,8 +297,6 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374",
-          "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9",
           "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
           "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
         ]
@@ -339,11 +337,6 @@
         {
           "permission": "validateZkStack",
           "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -387,11 +380,6 @@
         {
           "permission": "validateZkStack",
           "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -597,7 +585,7 @@
           "0x907b30407249949521Bf0c89A43558dae200146A",
           "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 1353,
+        "getFirstUnprocessedPriorityTx": 1704,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -605,21 +593,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4,
-        "getPriorityTreeRoot": "0xd78d3acc58fd12fcfa08b54e3832dc2be017bf28598d7c54f4aacfe5c0ffa6d1",
+        "getPriorityQueueSize": 3,
+        "getPriorityTreeRoot": "0xe335a5fec3b9dc4b0b933ab20ce45927cd9a6d97d36fa56b244253b9ec9efc38",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 6452,
-        "getTotalBatchesExecuted": 6450,
-        "getTotalBatchesVerified": 6451,
-        "getTotalBlocksCommitted": 6452,
-        "getTotalBlocksExecuted": 6450,
-        "getTotalBlocksVerified": 6451,
-        "getTotalPriorityTxs": 1357,
+        "getTotalBatchesCommitted": 6736,
+        "getTotalBatchesExecuted": 6733,
+        "getTotalBatchesVerified": 6734,
+        "getTotalBlocksCommitted": 6736,
+        "getTotalBlocksExecuted": 6733,
+        "getTotalBlocksVerified": 6734,
+        "getTotalPriorityTxs": 1707,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -1257,5 +1245,5 @@
     "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x2d48ba90c9577d500d7dd1885aa2ad564ac527c17cffe7d96096b6e7236f7c6b"
+  "permissionsConfigHash": "0x9db38dccc657e33afd8ec4b9d37699339dff1e750a6bc99f47a703d8247f013a"
 }

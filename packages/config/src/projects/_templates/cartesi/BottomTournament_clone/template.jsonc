@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Referees the dispute over a single contested Cartesi machine step as the final stage of arbitration in a dispute. It calls the CartesiStateTransition contract to get a definitive on-chain ruling and identify the winner.",
+  "ignoreMethods": [
+    "arbitrationResult",
+    "isClosed",
+    "isFinished",
+    "timeFinished",
+    "tournamentLevelConstants",
+    "canBeEliminated",
+    "innerTournamentWinner"
+  ]
+}

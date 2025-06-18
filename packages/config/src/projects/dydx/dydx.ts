@@ -21,6 +21,7 @@ import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 
 const discovery = new ProjectDiscovery('dydx')
@@ -515,4 +516,5 @@ export const dydx: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

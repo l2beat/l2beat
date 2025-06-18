@@ -10,6 +10,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('shibarium')
 
@@ -141,4 +142,5 @@ export const shibarium: ScalingProject = {
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { ProjectPermissionedAccount } from '../../types'
 
 const discovery = new ProjectDiscovery('linea')
@@ -86,7 +87,6 @@ export const linea: ScalingProject = {
   display: {
     name: 'Linea',
     slug: 'linea',
-    warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
@@ -620,4 +620,5 @@ export const linea: ScalingProject = {
     },
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('everclearbridge')
 
@@ -100,4 +101,5 @@ export const everclearbridge: Bridge = {
       'Zircuit',
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

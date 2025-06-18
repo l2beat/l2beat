@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getProject, readTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { CodeView } from '../components/editor/CodeView'
 import type { EditorSupportedLanguage } from '../components/editor/editor'
 import { IconCodeFile } from '../icons/IconCodeFile'
@@ -38,15 +41,15 @@ export function TemplatePanel() {
   }, [template])
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selectedAddress === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   return (

@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9a2440616c0b425220ba85fc9629d3b03f3a6cd7
+
+# Diff at Wed, 18 Jun 2025 12:03:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 15984224
+- current block number: 16562505
+
+## Description
+
+Signer change in team MS.
+
+## Watched changes
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "0xFCf6364F5157901f533DD3615A5d8c375F13c072"
++        "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
 Generated with discovered.json: 0x2587b57b5429717f2c763848ed3afacacbf988c4
 
 # Diff at Fri, 23 May 2025 09:41:19 GMT:

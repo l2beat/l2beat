@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ethereum",
   "blockNumber": 22437737,
-  "configHash": "0x28b7f8a8a853c8eb06dcbdb8d965f91b40b48d2e0259795a8be77203cac18488",
+  "configHash": "0x5243e3d8d16541ba48e6ee583d1b0b4be7db47150f2e1b27ed7f0d328be7951e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

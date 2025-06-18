@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -224,4 +225,5 @@ export const immutablex: ScalingProject = {
         ),
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

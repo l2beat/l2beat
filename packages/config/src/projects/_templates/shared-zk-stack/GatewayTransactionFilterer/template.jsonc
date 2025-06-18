@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A contract implementing the ITransactionFilterer interface, filtering with a configurable whitelist of sender addresses and a blacklist of target contract addresses. Chain migration transactions are generally whitelisted. The filter lists are managed by the owner ({{owner}}).",
+  "ignoreRelatives": ["blacklistedContracts", "whitelistedSenders"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage filter lists."
+        }
+      ]
+    },
+    "blacklistedContracts": {
+      "description": "Addresses that are blacklisted as target contracts for requestL2Transaction() calls.",
+      "handler": {
+        "type": "event",
+        "select": "l2Contract",
+        "add": {
+          "event": "Blocklisted"
+        },
+        "remove": {
+          "event": "RemovedFromBlocklist"
+        }
+      }
+    },
+    "whitelistedSenders": {
+      "description": "Addresses that are whitelisted as senders for requestL2Transaction() calls.",
+      "handler": {
+        "type": "event",
+        "select": "sender",
+        "add": {
+          "event": "WhitelistGranted"
+        },
+        "remove": {
+          "event": "WhitelistRevoked"
+        }
+      }
+    }
+  }
+}

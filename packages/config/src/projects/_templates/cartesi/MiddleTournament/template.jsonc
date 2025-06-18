@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Handles the intermediate stages of a dispute following the TopTournament targeting a more granular bisection game."
+}
