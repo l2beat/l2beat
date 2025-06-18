@@ -1,11 +1,11 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const LogoGeneratorProject = z.object({
-  name: z.string(),
-  type: z.enum(['bridge', 'layer2', 'layer3']),
-  slug: z.string(),
-  isUpcoming: z.boolean().optional(),
-  isArchived: z.boolean().optional(),
+export const LogoGeneratorProject = v.object({
+  name: v.string(),
+  type: v.enum(['bridge', 'layer2', 'layer3']),
+  slug: v.string(),
+  isUpcoming: v.boolean().optional(),
+  isArchived: v.boolean().optional(),
 })
 
-export type LogoGeneratorProject = z.infer<typeof LogoGeneratorProject>
+export type LogoGeneratorProject = v.infer<typeof LogoGeneratorProject>

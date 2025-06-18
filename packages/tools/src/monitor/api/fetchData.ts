@@ -12,7 +12,7 @@ export async function fetchData(): Promise<UpdateMessagesResponse> {
   const safeParse = UpdateMessagesResponse.safeParse(result)
 
   if (!safeParse.success) {
-    console.error(safeParse.error)
+    console.error(safeParse.message)
     throw new Error('Failed to parse data')
   }
 
