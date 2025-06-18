@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 import { getFlatSource } from '../api/api'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { DiffView } from '../components/editor/DiffView'
 
 export function DiffPage() {
@@ -20,11 +22,11 @@ export function DiffPage() {
   })
 
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   const [leftCode, rightCode] = response.data

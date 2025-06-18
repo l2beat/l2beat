@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xb379b39a31df47264ec84c5407bcab9f94fa8c98
+
+# Diff at Wed, 18 Jun 2025 11:39:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22694475
+- current block number: 22731123
+
+## Description
+
+New test proposal (no actions, will be vetoed).
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        19
++        20
+      values.proposalIds.19:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.18:
+-        "594516471058441525137805458817300690127055486982"
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.17:
+-        "594368007222883387369940600290236287695678603267"
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.16:
+-        "594789857995414210150628315872956409027640688649"
++        "595223436259438596154551751121806216745162113041"
+      values.proposalIds.15:
+-        "595223436259438596154551751121806216745162113041"
++        "595223403592331371744459256866956472219296858128"
+      values.proposalIds.14:
+-        "595223403592331371744459256866956472219296858128"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.13:
+-        "594333890512775894079591912881534348495153004546"
++        "595517191137765700860044776076277647522733752339"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        10
++        11
+    }
+```
+
 Generated with discovered.json: 0xbdc90e6d9c07377b6e510bfc21a5ed4f0d87fdf1
 
 # Diff at Fri, 13 Jun 2025 08:40:49 GMT:
