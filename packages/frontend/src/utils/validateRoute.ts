@@ -1,11 +1,14 @@
 import { assert } from '@l2beat/shared-pure'
+import type { Parser, Validator, v as z } from '@l2beat/validate'
 import type { RequestHandler } from 'express'
-import type { AnyZodObject, z } from 'zod'
 
 export function validateRoute<
-  TParams extends AnyZodObject,
-  TQuery extends AnyZodObject,
-  TBody extends AnyZodObject,
+  TP,
+  TParams extends Validator<TP> | Parser<TP>,
+  TQ,
+  TQuery extends Validator<TQ> | Parser<TQ>,
+  TB,
+  TBody extends Validator<TB> | Parser<TB>,
 >(schema: {
   params?: TParams
   query?: TQuery
@@ -18,7 +21,7 @@ export function validateRoute<
       const keySchema = schema[key]!
       const result = keySchema.safeParse(req[key])
       if (!result.success) {
-        res.status(400).json({ error: result.error })
+        res.status(400).json({ error: result.message })
         return
       }
     }

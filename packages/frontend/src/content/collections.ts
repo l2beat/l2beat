@@ -14,4 +14,4 @@ export const collections = {
   glossary: glossaryCollection,
   'zk-catalog-descriptions': zkCatalogDescriptionsCollection,
   pages: pagesCollection,
-}
+} as const

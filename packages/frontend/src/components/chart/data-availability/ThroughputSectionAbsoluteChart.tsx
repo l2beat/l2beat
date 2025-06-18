@@ -6,7 +6,10 @@ import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import type { ProjectDaThroughputDataPoint } from '~/server/features/data-availability/throughput/getProjectDaThroughputChart'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
+import {
+  type DaThroughputTimeRange,
+  DaThroughputTimeRangeValues,
+} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import type { ProjectChartDataWithConfiguredThroughput } from './ProjectDaAbsoluteThroughputChart'
 import { ProjectDaAbsoluteThroughputChart } from './ProjectDaAbsoluteThroughputChart'
@@ -62,7 +65,7 @@ export function ThroughputSectionAbsoluteChart({
             name="Range"
             value={range}
             setValue={setRange}
-            options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+            options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
               value: v,
               label: v.toUpperCase(),
             }))}

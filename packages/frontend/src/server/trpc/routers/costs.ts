@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import {
   CostsChartParams,
   getCostsChart,
@@ -19,10 +19,6 @@ export const costsRouter = router({
     .input(ProjectCostsChartParams)
     .query(async ({ input }) => getProjectCostsChart(input)),
   table: procedure
-    .input(
-      z.object({
-        range: CostsTimeRange,
-      }),
-    )
+    .input(v.object({ range: CostsTimeRange }))
     .query(async ({ input }) => getCostsTable(input.range)),
 })

@@ -1,19 +1,19 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { ps } from '~/server/projects'
 import { isProjectOther } from '../../utils/isProjectOther'
 
-export const CostsProjectsFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum(['all', 'rollups', 'others']),
+export const CostsProjectsFilter = v.union([
+  v.object({
+    type: v.enum(['all', 'rollups', 'others'] as const),
   }),
-  z.object({
-    type: z.literal('projects'),
-    projectIds: z.array(z.string()),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
   }),
 ])
-export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
+export type CostsProjectsFilter = v.infer<typeof CostsProjectsFilter>
 
 export async function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },

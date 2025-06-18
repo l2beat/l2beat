@@ -1,34 +1,34 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { isProjectOther } from '../../utils/isProjectOther'
 
-export const TvsProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum([
+export const TvsProjectFilter = v.union([
+  v.object({
+    type: v.enum([
       'layer2',
       'rollups',
       'validiumsAndOptimiums',
       'others',
       'bridge',
-    ]),
+    ] as const),
   }),
-  z.object({
-    type: z.literal('projects'),
-    projectIds: z.array(z.string()),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
   }),
 ])
-export type TvsProjectFilter = z.infer<typeof TvsProjectFilter>
+export type TvsProjectFilter = v.infer<typeof TvsProjectFilter>
 
-export const TvsProjectFilterType = z.enum([
+export const TvsProjectFilterType = v.enum([
   'layer2',
   'rollups',
   'validiumsAndOptimiums',
   'others',
   'bridge',
   'projects',
-])
-export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
+] as const)
+export type TvsProjectFilterType = v.infer<typeof TvsProjectFilterType>
 
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
