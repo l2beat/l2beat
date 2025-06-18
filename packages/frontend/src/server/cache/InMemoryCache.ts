@@ -1,3 +1,4 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import type { ICache } from './ICache'
@@ -34,8 +35,17 @@ export class InMemoryCache implements ICache {
     const result = this.cache.get(key)
     const now = UnixTime.now()
 
+    const isStalePostMigration =
+      now > PROJECT_COUNTDOWNS.otherMigration &&
+      !!result &&
+      result.timestamp < PROJECT_COUNTDOWNS.otherMigration
+
     // If we have a result and it's not expired, return it immediately
-    if (result && result.timestamp + options.ttl > now) {
+    if (
+      result &&
+      result.timestamp + options.ttl > now &&
+      !isStalePostMigration
+    ) {
       return result.result as T
     }
 
@@ -43,7 +53,8 @@ export class InMemoryCache implements ICache {
     if (
       result &&
       options.staleWhileRevalidate &&
-      result.timestamp + options.ttl + options.staleWhileRevalidate > now
+      result.timestamp + options.ttl + options.staleWhileRevalidate > now &&
+      !isStalePostMigration
     ) {
       void this.revalidateInBackground(key, fallback)
       return result.result as T
