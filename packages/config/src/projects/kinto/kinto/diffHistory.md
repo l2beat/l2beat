@@ -8,7 +8,7 @@ Generated with discovered.json: 0x87162635161c8e2715f4691f8600aa3de1c604d0
 
 ## Description
 
-config: wasmmoduleroot map updated.
+dev helper role granted, no risk changes.
 
 ## Watched changes
 

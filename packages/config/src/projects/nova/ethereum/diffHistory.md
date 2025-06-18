@@ -8,7 +8,9 @@ Generated with discovered.json: 0x25c057ba3813a8d5843c3c6934f95ba59f485a39
 
 ## Description
 
-config: wasmmoduleroot map updated.
+[ArbOS v40](https://www.tally.xyz/gov/arbitrum/proposal/13108804573775967668959825241666341617107666532012387058509418598838035461528?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9) upgrade without any L1 contract changes.
+
+TLDR: 7702 support and precompile for BLS12-381 curve operations.
 
 ## Watched changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0xacafbb1171690feb55b9c16a1432574a84440809
 
 ## Description
 
-config: wasmmoduleroot map updated.
+2 valis removed.
 
 ## Watched changes
 
