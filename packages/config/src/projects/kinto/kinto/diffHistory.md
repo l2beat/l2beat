@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x87162635161c8e2715f4691f8600aa3de1c604d0
+
+# Diff at Wed, 18 Jun 2025 12:00:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 879756
+- current block number: 884077
+
+## Description
+
+dev helper role granted, no risk changes.
+
+## Watched changes
+
+```diff
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739) {
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+      values.accessControl.roles.DEV_HELPER_ROLE:
++        {"members":[{"member":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","since":1749945326,"executionDelay":0}]}
++++ description: List of roles granted to accounts.
++++ severity: HIGH
+      values.RolesGranted.12665434841745889720:
++        [{"account":"0x2e2B1c42E38f5af81771e65D87729E57ABD1337a","delay":0,"since":1749945326,"newMember":true}]
+    }
+```
+
 Generated with discovered.json: 0xdcda609e079286daaa7207e5afbf95c1184cefc3
 
 # Diff at Mon, 09 Jun 2025 10:57:39 GMT:
