@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x3af2da1734b02af6c3cc5d679aaeea221a4be061
+Generated with discovered.json: 0xde17cc07cc9b72d0da01196f068c630f0df9444e
+
+# Diff at Wed, 18 Jun 2025 14:39:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22729814
+- current block number: 22732019
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22729814 (main branch discovery), not current.
+
+```diff
+    contract Application (0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c) {
+    +++ description: Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14`.
+      description:
+-        "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions."
++        "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14`."
+    }
+```
+
+Generated with discovered.json: 0xdfb0cba8bf48c9a310197d5ff1ca4ab0215fb281
 
 # Diff at Wed, 18 Jun 2025 07:22:47 GMT:
 
