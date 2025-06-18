@@ -888,6 +888,9 @@ importers:
       '@l2beat/tools-api':
         specifier: workspace:*
         version: link:../tools-api
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@tanstack/react-query':
         specifier: ^5.59.16
         version: 5.59.16(react@19.0.0)
