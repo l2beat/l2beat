@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { TECHNOLOGY, UNDER_REVIEW_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('layer2finance')
 
@@ -73,4 +74,5 @@ export const layer2finance: ScalingProject = {
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

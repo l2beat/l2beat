@@ -13,6 +13,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('sonicgateway')
 
@@ -186,4 +187,5 @@ State updates are expected regularly (currently every ${heartBeatInterval} Sonic
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

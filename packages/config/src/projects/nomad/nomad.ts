@@ -8,6 +8,7 @@ import {
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('nomad')
 const challengeWindowSeconds = discovery.getContractValue<number>(
@@ -176,4 +177,5 @@ export const nomad: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -18,6 +18,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { zkswap } from '../zkswap/zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
@@ -240,4 +241,5 @@ export const zkspace: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

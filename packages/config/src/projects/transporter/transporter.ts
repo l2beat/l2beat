@@ -7,6 +7,7 @@ import {
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('transporter')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -194,4 +195,5 @@ export const transporter: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

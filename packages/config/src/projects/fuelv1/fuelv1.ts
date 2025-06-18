@@ -16,6 +16,7 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
@@ -195,4 +196,5 @@ export const fuelv1: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

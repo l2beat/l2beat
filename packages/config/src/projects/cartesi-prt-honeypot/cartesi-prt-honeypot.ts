@@ -22,6 +22,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('cartesi-prt-honeypot')
 const minChallengePeriodBlocks = discovery.getContractValue<number>(
@@ -300,4 +301,5 @@ export const cartesiprthoneypot: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

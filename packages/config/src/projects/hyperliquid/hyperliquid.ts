@@ -6,6 +6,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('hyperliquid', 'arbitrum')
 
@@ -128,4 +129,5 @@ export const hyperliquid: Bridge = {
     risks: [],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

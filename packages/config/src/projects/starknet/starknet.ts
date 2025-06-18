@@ -30,6 +30,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -1064,4 +1065,5 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }
