@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 30861907,
-  "configHash": "0xc97e62c0d87ced669d1c94155a299ea7d2989bf241209c54b65c6188e8dda4e1",
+  "blockNumber": 31732779,
+  "configHash": "0x6ae3d022c06e6cce2770417803b92a0ddd99862e02e15337b85c6e3a9783c058",
   "entries": [
     {
       "address": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -13,6 +13,86 @@
       "address": "0x099f352107a4F61B28687B0CFDb613cF24593466",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "OptimismMintableERC20",
+      "address": "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+      "type": "Contract",
+      "template": "tokens/OptimismMintableERC20_OFT",
+      "sourceHashes": [
+        "0x0b53ee9ef899a9ef323631cd4a9ae52862eee1828e3130db25281621aa51c902"
+      ],
+      "proxyType": "immutable",
+      "description": "Non-standard OP stack's canonically bridged L2 token implementation that has been modified to also be a OFT.",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1710423365,
+      "sinceBlock": 11817009,
+      "values": {
+        "$immutable": true,
+        "approvalRequired": false,
+        "bridge": "0x4200000000000000000000000000000000000010",
+        "BRIDGE": "0x4200000000000000000000000000000000000010",
+        "composeMsgSender": "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+        "decimalConversionRate": 1000000000000,
+        "decimals": 18,
+        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "l1Token": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
+        "l2Bridge": "0x4200000000000000000000000000000000000010",
+        "msgInspector": "0x0000000000000000000000000000000000000000",
+        "name": "Virtual Protocol",
+        "oApp": "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
+        "owner": "0x0000000000000000000000000000000000000000",
+        "peers": {},
+        "preCrime": "0x0000000000000000000000000000000000000000",
+        "REMOTE_TOKEN": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
+        "remoteToken": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
+        "SEND": 1,
+        "SEND_AND_CALL": 2,
+        "sharedDecimals": 6,
+        "symbol": "VIRTUAL",
+        "token": "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b",
+        "totalSupply": "495748980115403627629294978",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b": "OptimismMintableERC20"
+      }
+    },
+    {
+      "address": "0x0e4B97563723eF7f0a7FDe4c7bD3B17a5bF63fBf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ReadLib1002",
+      "address": "0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xf7800be6fd99520201da1404c35bac8a1ed826bbc2134f0a77547e0d7a74c9c1"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1730484379,
+      "sinceBlock": 21847516,
+      "values": {
+        "$immutable": true,
+        "getTreasuryAndNativeFeeCap": [
+          "0x0000000000000000000000000000000000000000",
+          450000000000000
+        ],
+        "messageLibType": 2,
+        "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0",
+        "version": { "major": 10, "minor": 0, "endpointVersion": 2 }
+      },
+      "implementationNames": {
+        "0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff": "ReadLib1002"
+      }
     },
     {
       "address": "0x1347D2C792fC0962022B36e6D6d7dc521676c187",
@@ -58,7 +138,6 @@
       "address": "0x19b4B317E6Ea4643f1507c372630483092D0AbFf",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -68,7 +147,108 @@
       ]
     },
     {
+      "name": "EndpointV2",
+      "address": "0x1a44076050125825900e736c501f859c50fE728c",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x399160e7d36a21fca31097d7875daed8f421f788b77f2a71974d51938c3ea520"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1706303225,
+      "sinceBlock": 9756939,
+      "values": {
+        "$immutable": true,
+        "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+        "eid": 30184,
+        "EMPTY_PAYLOAD_HASH": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getRegisteredLibraries": [
+          "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+          "0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2",
+          "0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf",
+          "0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff"
+        ],
+        "getSendContext": [0, "0x0000000000000000000000000000000000000000"],
+        "isSendingMessage": false,
+        "lzToken": "0x0000000000000000000000000000000000000000",
+        "nativeToken": "0x0000000000000000000000000000000000000000",
+        "NIL_PAYLOAD_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0"
+      },
+      "implementationNames": {
+        "0x1a44076050125825900e736c501f859c50fE728c": "EndpointV2"
+      }
+    },
+    {
+      "name": "KelpDao Restaked ETH Token",
+      "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+      "type": "Contract",
+      "template": "tokens/OFT",
+      "sourceHashes": [
+        "0x5b88f16117923c7f4563b4e10d6055894e730f41f9293ed95177d66b5aaa436c"
+      ],
+      "proxyType": "immutable",
+      "description": "Standard OFT token",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1711342433,
+      "sinceBlock": 12276543,
+      "values": {
+        "$immutable": true,
+        "approvalRequired": false,
+        "decimalConversionRate": 1000000000000,
+        "decimals": 18,
+        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "msgInspector": "0x0000000000000000000000000000000000000000",
+        "name": "KelpDao Restaked ETH",
+        "oApp": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
+        "owner": "0x7Da95539762Dd11005889F6B72a6674A4888B56d",
+        "peers": {
+          "30101": "0x00000000000000000000000085d456b2dff1fd8245387c0bfb64dfb700e98ef3",
+          "30110": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30111": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30183": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30214": "0x00000000000000000000000065421ba909200b81640d98b979d07487c9781b66",
+          "30217": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30243": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30260": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30303": "0x0000000000000000000000004186bfc76e2e237523cbc30fd220fe055156b41f",
+          "30329": "0x000000000000000000000000c3eacf0612346366db554c991d7858716db09f58",
+          "30332": "0x0000000000000000000000009ecaf80c1303cca8791afbc0ad405c8a35e8d9f1",
+          "30335": "0x000000000000000000000000c3eacf0612346366db554c991d7858716db09f58"
+        },
+        "preCrime": "0x0000000000000000000000000000000000000000",
+        "SEND": 1,
+        "SEND_AND_CALL": 2,
+        "sharedDecimals": 6,
+        "symbol": "rsETH",
+        "token": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
+        "totalSupply": "2234100743000000000000"
+      },
+      "implementationNames": {
+        "0x1Bc71130A0e39942a7658878169764Bbd8A45993": "RSETH_OFT"
+      }
+    },
+    {
+      "name": "",
+      "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1706303225,
+      "sinceBlock": 9756939,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862": ""
+      }
+    },
+    {
       "address": "0x1cF9a51D9bFee6C582653A3dcA3c4Db34faA31a7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1f7A03b70C5448DFd0a2C5a7865169253c2C769b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -112,6 +292,42 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GnosisSafeL2",
+      "address": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1689358473,
+      "sinceBlock": 1284563,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+          "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+          "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+          "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
+          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x90151deb6daf65b18aa073f3f4301087abf267c17f648e53af9ee20fb8a71069",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 204,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
+    },
+    {
       "name": "TokenMessengerV2",
       "address": "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d",
       "type": "Contract",
@@ -153,7 +369,51 @@
       }
     },
     {
+      "name": "UpgradeableOptimismMintableERC20",
+      "address": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
+        "0x94248e74664f8475ee2ce5d1ea8f4c2f378f266ab7a4d8bcbdc6e1246ac8047f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1689990499,
+      "sinceBlock": 1600576,
+      "values": {
+        "$admin": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
+        "$implementation": "0x07a71B9B835c9ebA242836704d17DA0953324E1F",
+        "$pastUpgrades": [
+          [
+            "2023-07-22T01:48:19.000Z",
+            "0x22b81f1b54cb81a24c59722198b88071d5901e0a0a96d1b0e42b0e6e4de6e304",
+            ["0x07a71B9B835c9ebA242836704d17DA0953324E1F"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "bridge": "0x4200000000000000000000000000000000000010",
+        "BRIDGE": "0x4200000000000000000000000000000000000010",
+        "decimals": 18,
+        "l1Token": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "l2Bridge": "0x4200000000000000000000000000000000000010",
+        "name": "Coinbase Wrapped Staked ETH",
+        "REMOTE_TOKEN": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "remoteToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+        "symbol": "cbETH",
+        "totalSupply": "24528227199815611145824",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22": "Proxy",
+        "0x07a71B9B835c9ebA242836704d17DA0953324E1F": "UpgradeableOptimismMintableERC20"
+      }
+    },
+    {
       "address": "0x2f86c55c0557788c8b1AbC2685f14ED6be68F3A5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -196,12 +456,136 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "L2CrossDomainMessenger",
+      "address": "0x4200000000000000000000000000000000000007",
+      "type": "Contract",
+      "template": "opstack/Layer2/L2CrossDomainMessenger",
+      "sourceHashes": [
+        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
+        "0x54d303632c7acb15a0f8c319289166a6c178e02f2c930685ab3cdcbe5b19ca29"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.",
+      "ignoreInWatchMode": ["messageNonce"],
+      "sinceTimestamp": 1686789349,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "0x4200000000000000000000000000000000000018",
+        "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "MESSAGE_VERSION": 1,
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660737",
+        "MIN_GAS_CALLDATA_OVERHEAD": 16,
+        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
+        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
+        "OTHER_MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "RELAY_CALL_OVERHEAD": 40000,
+        "RELAY_CONSTANT_OVERHEAD": 200000,
+        "RELAY_GAS_CHECK_BUFFER": 5000,
+        "RELAY_RESERVED_GAS": 40000,
+        "version": "1.4.0"
+      },
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000007": "Proxy",
+        "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
+      }
+    },
+    {
+      "name": "L2StandardBridge",
+      "address": "0x4200000000000000000000000000000000000010",
+      "type": "Contract",
+      "template": "opstack/Layer2/L2StandardBridge",
+      "sourceHashes": [
+        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
+        "0xb1264cdbc9eb25c5d5f9542dc05d942009b4443379d97b246c66b11e2319215f"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
+      "sinceTimestamp": 1686789349,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "0x4200000000000000000000000000000000000018",
+        "$implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "l1TokenBridge": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "messenger": "0x4200000000000000000000000000000000000007",
+        "MESSENGER": "0x4200000000000000000000000000000000000007",
+        "OTHER_BRIDGE": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "version": "1.1.0"
+      },
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000010": "Proxy",
+        "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
+      }
+    },
+    {
+      "name": "ProxyAdmin",
+      "address": "0x4200000000000000000000000000000000000018",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x0a47b6d41e108156a5ce873322c843aad6040edbe7cf3d7e3473abb4d01e7e44",
+        "0x96d2f0fa1bd83ebd61ba6a2351c64c7fda7aa580b11ea67bb6bf4338e5c28512"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000007",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000010",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000018",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1686789349,
+      "sinceBlock": 0,
+      "values": {
+        "$admin": "0x4200000000000000000000000000000000000018",
+        "$implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "addressManager": "0x0000000000000000000000000000000000000000",
+        "isUpgrading": false,
+        "owner": "0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d"
+      },
+      "implementationNames": {
+        "0x4200000000000000000000000000000000000018": "Proxy",
+        "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
+      }
+    },
+    {
       "address": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0x44c035FC20bC8cF5A43c4f3637AF390d5A6F3AdA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x44ff8620b8cA30902395A7bD3F2407e1A091BF73",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -242,7 +626,6 @@
       "address": "0x4fc7850364958d97B4d3f5A08f79db2493f8cA44",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -311,7 +694,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 187,
+        "nonce": 221,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -320,12 +703,22 @@
       }
     },
     {
+      "address": "0x51C59785639CCa31c09D0833749e76A5D945C9F3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x52Ed4cBff8DcE6A19748043F3240ec03c834bCeF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0x530d3F8C38C262a619C2686A7f1481815a5e6f92",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -355,7 +748,22 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x725b06F73ff761eF5390e39315e2BfbF60d33F96",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x746d6a9f789999799AE7f5d62Aa70422F86826b6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -363,6 +771,53 @@
       "address": "0x75edf81947e2b1616c2Affdf0524d0b657c34DEf",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0x7Da95539762Dd11005889F6B72a6674A4888B56d",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1709898441,
+      "sinceBlock": 11554547,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "0xFCc1C98F887C93C38Deb5e38A6Fb820AD3fB9DFD",
+          "0x51C59785639CCa31c09D0833749e76A5D945C9F3",
+          "0x746d6a9f789999799AE7f5d62Aa70422F86826b6",
+          "0x7AAd74b7f0d60D5867B59dbD377a71783425af47",
+          "0x1f7A03b70C5448DFd0a2C5a7865169253c2C769b",
+          "0x0e4B97563723eF7f0a7FDe4c7bD3B17a5bF63fBf"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0x7e20d0ac5f3979b54748c577d1295a87d85208927d52e29b1085e69595636e55",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 47,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0x7Da95539762Dd11005889F6B72a6674A4888B56d": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
+      }
     },
     {
       "name": "MessageTransmitterV2",
@@ -469,7 +924,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3710293676111619,
+        "totalSupply": 3697500570400743,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -484,6 +939,11 @@
       }
     },
     {
+      "address": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x880AD1D79c50f9FA0050CDdAd139E52e06B9C725",
       "type": "EOA",
       "proxyType": "EOA"
@@ -492,7 +952,6 @@
       "address": "0x88acF681fb9a1DFcE5ac83391991895C54CF24cc",
       "type": "EOA",
       "proxyType": "EOA",
-      "controlsMajorityOfUpgradePermissions": true,
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -505,6 +964,45 @@
       "address": "0x8C598734ea0e10Da19e654251Fd4A6C14AB4F556",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x8cC51c3008b3f03Fe483B28B8Db90e19cF076a6d",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "controlsMajorityOfUpgradePermissions": true,
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000007",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000010",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0x4200000000000000000000000000000000000018",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "base:0x4200000000000000000000000000000000000018",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "address": "0x9066d3cF60D9f7B705026417E8E533b424Bc3d48",
@@ -583,7 +1081,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 45,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -593,6 +1091,11 @@
     },
     {
       "address": "0x9c563B7B08C5506C4aae279E1f66658D5f9fD7B8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -644,7 +1147,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 569705,
+        "nextAvailableNonce": 593154,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -663,14 +1166,91 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xb0Ea8E1bE37F346C7EA7ec708834D0db18A17361",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "name": "SendUln302",
+      "address": "0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x159d8f84a5100285a7401e1ccb3d40a64fe944d9beb951c81749de40279a5876"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1706303279,
+      "sinceBlock": 9756966,
+      "values": {
+        "$immutable": true,
+        "messageLibType": 0,
+        "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0",
+        "treasury": "0xCcD558d6839e128320bBC932CBBa2c890a5518E8",
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
+      },
+      "implementationNames": {
+        "0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2": "SendUln302"
+      }
+    },
+    {
       "address": "0xb5bff84d169a72e76e94eC950da51Bac90b60284",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "ReceiveUln302",
+      "address": "0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3904c78c7b0abf91f9544ebb9f08f2d2bc83028df65c912a7f7a6ca1ca109dde"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1706303285,
+      "sinceBlock": 9756969,
+      "values": {
+        "$immutable": true,
+        "messageLibType": 1,
+        "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0",
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
+      },
+      "implementationNames": {
+        "0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf": "ReceiveUln302"
+      }
+    },
+    {
+      "name": "Treasury",
+      "address": "0xCcD558d6839e128320bBC932CBBa2c890a5518E8",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x79f573a9d94def8dc0b4319d44595f806685b0ca5875891eff1ed40a9ff6b6e0"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1706303271,
+      "sinceBlock": 9756962,
+      "values": {
+        "$immutable": true,
+        "lzTokenEnabled": false,
+        "lzTokenFee": 0,
+        "nativeBP": 0,
+        "owner": "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0"
+      },
+      "implementationNames": {
+        "0xCcD558d6839e128320bBC932CBBa2c890a5518E8": "Treasury"
+      }
     },
     {
       "address": "0xce96ae6De784181d8Eb2639F1E347fD40b4fD403",
@@ -738,11 +1318,55 @@
         "MINTER_ROLE": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
         "name": "Wrapped OETH",
         "symbol": "wOETH",
-        "totalSupply": "14459876057944130917402"
+        "totalSupply": "16603226183137837026435"
       },
       "implementationNames": {
         "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "BridgedBaseWOETHProxy",
         "0xF66886e242e20cAb2496AF1d411eBcFb73440270": "BridgedWOETH"
+      }
+    },
+    {
+      "name": "GnosisSafeL2",
+      "address": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
+        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "base:0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1688064179,
+      "sinceBlock": 637416,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$members": [
+          "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
+          "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
+          "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
+          "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
+          "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
+          "0x6CD3850756b7894774Ab715D136F9dD02837De50"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xd16e718462d25bb73b8c6aba4611b4bc91c8e12dbf5180f9cd42af8080cffae9",
+        "getChainId": 8453,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 10,
+        "VERSION": "1.3.0"
+      },
+      "implementationNames": {
+        "0xd94E416cf2c7167608B2515B7e4102B41efff94f": "GnosisSafeProxy",
+        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
       }
     },
     {
@@ -859,6 +1483,16 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xFCc1C98F887C93C38Deb5e38A6Fb820AD3fB9DFD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "TokenMinterV2",
       "address": "0xfd78EE919681417d192449715b2594ab58f5D002",
       "type": "Contract",
@@ -891,6 +1525,181 @@
     }
   ],
   "abis": {
+    "0x07a71B9B835c9ebA242836704d17DA0953324E1F": [
+      "constructor(address _bridge, address _remoteToken, uint8 _decimals)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed account, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event Mint(address indexed account, uint256 amount)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_TOKEN() view returns (address)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address _from, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function initialize(string _name, string _symbol)",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function remoteToken() view returns (address)",
+      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function version() view returns (string)"
+    ],
+    "0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b": [
+      "constructor(address _bridge, address _remoteToken, string _name, string _symbol, address _lzEndpoint)",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error InvalidLocalDecimals()",
+      "error InvalidOptions(bytes options)",
+      "error LzTokenUnavailable()",
+      "error NoPeer(uint32 eid)",
+      "error NotEnoughNative(uint256 msgValue)",
+      "error OnlyEndpoint(address addr)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error OnlySelf()",
+      "error SimulationResult(bytes result)",
+      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event Burn(address indexed account, uint256 amount)",
+      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "event Mint(address indexed account, uint256 amount)",
+      "event MsgInspectorSet(address inspector)",
+      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
+      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event PreCrimeSet(address preCrimeAddress)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function BRIDGE() view returns (address)",
+      "function REMOTE_TOKEN() view returns (address)",
+      "function SEND() view returns (uint16)",
+      "function SEND_AND_CALL() view returns (uint16)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approvalRequired() pure returns (bool)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function bridge() view returns (address)",
+      "function burn(address _from, uint256 _amount)",
+      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
+      "function composeMsgSender() view returns (address sender)",
+      "function decimalConversionRate() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function endpoint() view returns (address)",
+      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
+      "function l1Token() view returns (address)",
+      "function l2Bridge() view returns (address)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
+      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function mint(address _to, uint256 _amount)",
+      "function msgInspector() view returns (address)",
+      "function name() view returns (string)",
+      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
+      "function oApp() view returns (address)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function preCrime() view returns (address)",
+      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
+      "function remoteToken() view returns (address)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function setDelegate(address _delegate)",
+      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "function setMsgInspector(address _msgInspector)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setPreCrime(address _preCrime)",
+      "function sharedDecimals() pure returns (uint8)",
+      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
+      "function symbol() view returns (string)",
+      "function token() view returns (address)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)"
+    ],
+    "0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff": [
+      "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
+      "error DVN_InvalidDVNIdx()",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error LZ_MessageLib_OnlyEndpoint()",
+      "error LZ_RL_AtLeastOneDVN()",
+      "error LZ_RL_CannotWithdrawAltToken()",
+      "error LZ_RL_InvalidAmount(uint256 requested, uint256 available)",
+      "error LZ_RL_InvalidCmdHash()",
+      "error LZ_RL_InvalidConfigType(uint32 configType)",
+      "error LZ_RL_InvalidEid()",
+      "error LZ_RL_InvalidExecutor()",
+      "error LZ_RL_InvalidOptionalDVNCount()",
+      "error LZ_RL_InvalidOptionalDVNThreshold()",
+      "error LZ_RL_InvalidPacketHeader()",
+      "error LZ_RL_InvalidPacketVersion()",
+      "error LZ_RL_InvalidReceiver()",
+      "error LZ_RL_InvalidRequiredDVNCount()",
+      "error LZ_RL_NotTreasury()",
+      "error LZ_RL_Unsorted()",
+      "error LZ_RL_UnsupportedEid(uint32 eid)",
+      "error LZ_RL_Verifying()",
+      "error LZ_ULN_InvalidLegacyType1Option()",
+      "error LZ_ULN_InvalidLegacyType2Option()",
+      "error LZ_ULN_InvalidWorkerId(uint8 workerId)",
+      "error LZ_ULN_InvalidWorkerOptions(uint256 cursor)",
+      "error LZ_ULN_UnsupportedOptionType(uint16 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event DVNFeePaid(address[] requiredDVNs, address[] optionalDVNs, uint256[] fees)",
+      "event DefaultReadLibConfigsSet(tuple(uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] params)",
+      "event ExecutorFeePaid(address executor, uint256 fee)",
+      "event LzTokenFeeWithdrawn(address lzToken, address receiver, uint256 amount)",
+      "event NativeFeeWithdrawn(address worker, address receiver, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PayloadVerified(address dvn, bytes header, bytes32 cmdHash, bytes32 payloadHash)",
+      "event ReadLibConfigSet(address oapp, uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)",
+      "event TreasuryNativeFeeCapSet(uint256 newTreasuryNativeFeeCap)",
+      "event TreasurySet(address treasury)",
+      "function cmdHashLookup(address oapp, uint32 eid, uint64 nonce) view returns (bytes32 cmdHash)",
+      "function commitVerification(bytes _packetHeader, bytes32 _cmdHash, bytes32 _payloadHash)",
+      "function fees(address worker) view returns (uint256 fee)",
+      "function getAppReadLibConfig(address _oapp, uint32 _remoteEid) view returns (tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs))",
+      "function getConfig(uint32 _eid, address _oapp, uint32 _configType) view returns (bytes)",
+      "function getReadLibConfig(address _oapp, uint32 _remoteEid) view returns (tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) rtnConfig)",
+      "function getTreasuryAndNativeFeeCap() view returns (address, uint256)",
+      "function hashLookup(bytes32 headerHash, bytes32 cmdHash, address dvn) view returns (bytes32 payloadHash)",
+      "function isSupportedEid(uint32 _eid) view returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function owner() view returns (address)",
+      "function quote(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee))",
+      "function renounceOwnership()",
+      "function send(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) returns (tuple(uint256 nativeFee, uint256 lzTokenFee), bytes)",
+      "function setConfig(address _oapp, tuple(uint32 eid, uint32 configType, bytes config)[] _params)",
+      "function setDefaultReadLibConfigs(tuple(uint32 eid, tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] _params)",
+      "function setTreasury(address _treasury)",
+      "function setTreasuryNativeFeeCap(uint256 _newTreasuryNativeFeeCap)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function verifiable(tuple(address executor, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) _config, bytes32 _headerHash, bytes32 _cmdHash, bytes32 _payloadHash) view returns (bool)",
+      "function verify(bytes _packetHeader, bytes32 _cmdHash, bytes32 _payloadHash)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)",
+      "function withdrawFee(address _to, uint256 _amount)",
+      "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
+    ],
     "0x1682Ae6375C4E4A97e4B583BC394c861A46D8962": [
       "constructor(address _messageTransmitter, uint32 _messageBodyVersion)",
       "event DepositForBurn(uint64 indexed nonce, address indexed burnToken, uint256 amount, address indexed depositor, bytes32 mintRecipient, uint32 destinationDomain, bytes32 destinationTokenMessenger, bytes32 destinationCaller)",
@@ -922,6 +1731,189 @@
       "function transferOwnership(address newOwner)",
       "function updateRescuer(address newRescuer)"
     ],
+    "0x1a44076050125825900e736c501f859c50fE728c": [
+      "constructor(uint32 _eid, address _owner)",
+      "error LZ_AlreadyRegistered()",
+      "error LZ_ComposeExists()",
+      "error LZ_ComposeNotFound(bytes32 expected, bytes32 actual)",
+      "error LZ_DefaultReceiveLibUnavailable()",
+      "error LZ_DefaultSendLibUnavailable()",
+      "error LZ_InsufficientFee(uint256 requiredNative, uint256 suppliedNative, uint256 requiredLzToken, uint256 suppliedLzToken)",
+      "error LZ_InvalidExpiry()",
+      "error LZ_InvalidNonce(uint64 nonce)",
+      "error LZ_InvalidPayloadHash()",
+      "error LZ_InvalidReceiveLibrary()",
+      "error LZ_LzTokenUnavailable()",
+      "error LZ_OnlyNonDefaultLib()",
+      "error LZ_OnlyReceiveLib()",
+      "error LZ_OnlyRegisteredLib()",
+      "error LZ_OnlyRegisteredOrDefaultLib()",
+      "error LZ_OnlySendLib()",
+      "error LZ_PathNotInitializable()",
+      "error LZ_PathNotVerifiable()",
+      "error LZ_PayloadHashNotFound(bytes32 expected, bytes32 actual)",
+      "error LZ_SameValue()",
+      "error LZ_SendReentrancy()",
+      "error LZ_Unauthorized()",
+      "error LZ_UnsupportedEid()",
+      "error LZ_UnsupportedInterface()",
+      "error LZ_ZeroLzTokenFee()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event ComposeDelivered(address from, address to, bytes32 guid, uint16 index)",
+      "event ComposeSent(address from, address to, bytes32 guid, uint16 index, bytes message)",
+      "event DefaultReceiveLibrarySet(uint32 eid, address newLib)",
+      "event DefaultReceiveLibraryTimeoutSet(uint32 eid, address oldLib, uint256 expiry)",
+      "event DefaultSendLibrarySet(uint32 eid, address newLib)",
+      "event DelegateSet(address sender, address delegate)",
+      "event InboundNonceSkipped(uint32 srcEid, bytes32 sender, address receiver, uint64 nonce)",
+      "event LibraryRegistered(address newLib)",
+      "event LzComposeAlert(address indexed from, address indexed to, address indexed executor, bytes32 guid, uint16 index, uint256 gas, uint256 value, bytes message, bytes extraData, bytes reason)",
+      "event LzReceiveAlert(address indexed receiver, address indexed executor, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, bytes32 guid, uint256 gas, uint256 value, bytes message, bytes extraData, bytes reason)",
+      "event LzTokenSet(address token)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PacketBurnt(uint32 srcEid, bytes32 sender, address receiver, uint64 nonce, bytes32 payloadHash)",
+      "event PacketDelivered(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)",
+      "event PacketNilified(uint32 srcEid, bytes32 sender, address receiver, uint64 nonce, bytes32 payloadHash)",
+      "event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)",
+      "event PacketVerified(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver, bytes32 payloadHash)",
+      "event ReceiveLibrarySet(address receiver, uint32 eid, address newLib)",
+      "event ReceiveLibraryTimeoutSet(address receiver, uint32 eid, address oldLib, uint256 timeout)",
+      "event SendLibrarySet(address sender, uint32 eid, address newLib)",
+      "function EMPTY_PAYLOAD_HASH() view returns (bytes32)",
+      "function NIL_PAYLOAD_HASH() view returns (bytes32)",
+      "function blockedLibrary() view returns (address)",
+      "function burn(address _oapp, uint32 _srcEid, bytes32 _sender, uint64 _nonce, bytes32 _payloadHash)",
+      "function clear(address _oapp, tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message)",
+      "function composeQueue(address from, address to, bytes32 guid, uint16 index) view returns (bytes32 messageHash)",
+      "function defaultReceiveLibrary(uint32 srcEid) view returns (address lib)",
+      "function defaultReceiveLibraryTimeout(uint32 srcEid) view returns (address lib, uint256 expiry)",
+      "function defaultSendLibrary(uint32 dstEid) view returns (address lib)",
+      "function delegates(address oapp) view returns (address delegate)",
+      "function eid() view returns (uint32)",
+      "function getConfig(address _oapp, address _lib, uint32 _eid, uint32 _configType) view returns (bytes config)",
+      "function getReceiveLibrary(address _receiver, uint32 _srcEid) view returns (address lib, bool isDefault)",
+      "function getRegisteredLibraries() view returns (address[])",
+      "function getSendContext() view returns (uint32, address)",
+      "function getSendLibrary(address _sender, uint32 _dstEid) view returns (address lib)",
+      "function inboundNonce(address _receiver, uint32 _srcEid, bytes32 _sender) view returns (uint64)",
+      "function inboundPayloadHash(address receiver, uint32 srcEid, bytes32 sender, uint64 inboundNonce) view returns (bytes32 payloadHash)",
+      "function initializable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
+      "function isDefaultSendLibrary(address _sender, uint32 _dstEid) view returns (bool)",
+      "function isRegisteredLibrary(address lib) view returns (bool)",
+      "function isSendingMessage() view returns (bool)",
+      "function isSupportedEid(uint32 _eid) view returns (bool)",
+      "function isValidReceiveLibrary(address _receiver, uint32 _srcEid, address _actualReceiveLib) view returns (bool)",
+      "function lazyInboundNonce(address receiver, uint32 srcEid, bytes32 sender) view returns (uint64 nonce)",
+      "function lzCompose(address _from, address _to, bytes32 _guid, uint16 _index, bytes _message, bytes _extraData) payable",
+      "function lzComposeAlert(address _from, address _to, bytes32 _guid, uint16 _index, uint256 _gas, uint256 _value, bytes _message, bytes _extraData, bytes _reason)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _guid, bytes _message, bytes _extraData) payable",
+      "function lzReceiveAlert(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _guid, uint256 _gas, uint256 _value, bytes _message, bytes _extraData, bytes _reason)",
+      "function lzToken() view returns (address)",
+      "function nativeToken() view returns (address)",
+      "function nextGuid(address _sender, uint32 _dstEid, bytes32 _receiver) view returns (bytes32)",
+      "function nilify(address _oapp, uint32 _srcEid, bytes32 _sender, uint64 _nonce, bytes32 _payloadHash)",
+      "function outboundNonce(address sender, uint32 dstEid, bytes32 receiver) view returns (uint64 nonce)",
+      "function owner() view returns (address)",
+      "function quote(tuple(uint32 dstEid, bytes32 receiver, bytes message, bytes options, bool payInLzToken) _params, address _sender) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee))",
+      "function receiveLibraryTimeout(address receiver, uint32 srcEid) view returns (address lib, uint256 expiry)",
+      "function recoverToken(address _token, address _to, uint256 _amount)",
+      "function registerLibrary(address _lib)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 receiver, bytes message, bytes options, bool payInLzToken) _params, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee))",
+      "function sendCompose(address _to, bytes32 _guid, uint16 _index, bytes _message)",
+      "function setConfig(address _oapp, address _lib, tuple(uint32 eid, uint32 configType, bytes config)[] _params)",
+      "function setDefaultReceiveLibrary(uint32 _eid, address _newLib, uint256 _gracePeriod)",
+      "function setDefaultReceiveLibraryTimeout(uint32 _eid, address _lib, uint256 _expiry)",
+      "function setDefaultSendLibrary(uint32 _eid, address _newLib)",
+      "function setDelegate(address _delegate)",
+      "function setLzToken(address _lzToken)",
+      "function setReceiveLibrary(address _oapp, uint32 _eid, address _newLib, uint256 _gracePeriod)",
+      "function setReceiveLibraryTimeout(address _oapp, uint32 _eid, address _lib, uint256 _expiry)",
+      "function setSendLibrary(address _oapp, uint32 _eid, address _newLib)",
+      "function skip(address _oapp, uint32 _srcEid, bytes32 _sender, uint64 _nonce)",
+      "function transferOwnership(address newOwner)",
+      "function verifiable(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver) view returns (bool)",
+      "function verify(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, address _receiver, bytes32 _payloadHash)"
+    ],
+    "0x1Bc71130A0e39942a7658878169764Bbd8A45993": [
+      "constructor(string _name, string _symbol, address _lzEndpoint, address _delegate)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error FailedInnerCall()",
+      "error InvalidDelegate()",
+      "error InvalidEndpointCall()",
+      "error InvalidLocalDecimals()",
+      "error InvalidOptions(bytes options)",
+      "error LzTokenUnavailable()",
+      "error NoPeer(uint32 eid)",
+      "error NotEnoughNative(uint256 msgValue)",
+      "error OnlyEndpoint(address addr)",
+      "error OnlyPeer(uint32 eid, bytes32 sender)",
+      "error OnlySelf()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error SimulationResult(bytes result)",
+      "error SlippageExceeded(uint256 amountLD, uint256 minAmountLD)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EnforcedOptionSet(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "event MsgInspectorSet(address inspector)",
+      "event OFTReceived(bytes32 indexed guid, uint32 srcEid, address indexed toAddress, uint256 amountReceivedLD)",
+      "event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PeerSet(uint32 eid, bytes32 peer)",
+      "event PreCrimeSet(address preCrimeAddress)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function SEND() view returns (uint16)",
+      "function SEND_AND_CALL() view returns (uint16)",
+      "function allowInitializePath(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin) view returns (bool)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approvalRequired() pure returns (bool)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function combineOptions(uint32 _eid, uint16 _msgType, bytes _extraOptions) view returns (bytes)",
+      "function decimalConversionRate() view returns (uint256)",
+      "function decimals() view returns (uint8)",
+      "function endpoint() view returns (address)",
+      "function enforcedOptions(uint32 eid, uint16 msgType) view returns (bytes enforcedOption)",
+      "function isComposeMsgSender(tuple(uint32 srcEid, bytes32 sender, uint64 nonce), bytes, address _sender) view returns (bool)",
+      "function isPeer(uint32 _eid, bytes32 _peer) view returns (bool)",
+      "function lzReceive(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function lzReceiveAndRevert(tuple(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) origin, uint32 dstEid, address receiver, bytes32 guid, uint256 value, address executor, bytes message, bytes extraData)[] _packets) payable",
+      "function lzReceiveSimulate(tuple(uint32 srcEid, bytes32 sender, uint64 nonce) _origin, bytes32 _guid, bytes _message, address _executor, bytes _extraData) payable",
+      "function msgInspector() view returns (address)",
+      "function name() view returns (string)",
+      "function nextNonce(uint32, bytes32) view returns (uint64 nonce)",
+      "function oApp() view returns (address)",
+      "function oAppVersion() pure returns (uint64 senderVersion, uint64 receiverVersion)",
+      "function oftVersion() pure returns (bytes4 interfaceId, uint64 version)",
+      "function owner() view returns (address)",
+      "function peers(uint32 eid) view returns (bytes32 peer)",
+      "function preCrime() view returns (address)",
+      "function quoteOFT(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam) view returns (tuple(uint256 minAmountLD, uint256 maxAmountLD) oftLimit, tuple(int256 feeAmountLD, string description)[] oftFeeDetails, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function quoteSend(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee) msgFee)",
+      "function renounceOwnership()",
+      "function send(tuple(uint32 dstEid, bytes32 to, uint256 amountLD, uint256 minAmountLD, bytes extraOptions, bytes composeMsg, bytes oftCmd) _sendParam, tuple(uint256 nativeFee, uint256 lzTokenFee) _fee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) msgReceipt, tuple(uint256 amountSentLD, uint256 amountReceivedLD) oftReceipt)",
+      "function setDelegate(address _delegate)",
+      "function setEnforcedOptions(tuple(uint32 eid, uint16 msgType, bytes options)[] _enforcedOptions)",
+      "function setMsgInspector(address _msgInspector)",
+      "function setPeer(uint32 _eid, bytes32 _peer)",
+      "function setPreCrime(address _preCrime)",
+      "function sharedDecimals() pure returns (uint8)",
+      "function symbol() view returns (string)",
+      "function token() view returns (address)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1": [
       "constructor(address _minterManager)",
       "event ControllerConfigured(address indexed _controller, address indexed _worker)",
@@ -943,6 +1935,9 @@
       "function removeMinter() returns (bool)",
       "function setMinterManager(address _newMinterManager)",
       "function transferOwnership(address newOwner)"
+    ],
+    "0x28937ca4873f7289Ebea0708c4E42b24835eCfF0": [
+      "constructor(address _singleton)"
     ],
     "0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1002,6 +1997,16 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
     "0x2Ce6311ddAE708829bc0784C967b7d77D19FD779": [
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -1077,6 +2082,36 @@
       "function updateRescuer(address newRescuer)",
       "function version() pure returns (string)"
     ],
+    "0x4200000000000000000000000000000000000007": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000010": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
+    "0x4200000000000000000000000000000000000018": [
+      "constructor(address _admin)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address)",
+      "function changeAdmin(address _admin)",
+      "function implementation() returns (address)",
+      "function upgradeTo(address _implementation)",
+      "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
+    ],
     "0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971": [
       "constructor(address _singleton)"
     ],
@@ -1124,6 +2159,9 @@
       "function unDenylist(address account)",
       "function updateDenylister(address newDenylister)",
       "function updateRescuer(address newRescuer)"
+    ],
+    "0x7Da95539762Dd11005889F6B72a6674A4888B56d": [
+      "constructor(address _singleton)"
     ],
     "0x7Db629f6Acc20Be49a0A7565c21CC178E9Ac21e3": [
       "constructor(uint32 _localDomain, uint32 _version)",
@@ -1243,6 +2281,197 @@
       "function usedNonces(bytes32) view returns (uint256)",
       "function version() view returns (uint32)"
     ],
+    "0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2": [
+      "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
+      "error DVN_InvalidDVNIdx()",
+      "error DVN_InvalidDVNOptions(uint256 cursor)",
+      "error LZ_MessageLib_CannotWithdrawAltToken()",
+      "error LZ_MessageLib_InvalidAmount(uint256 requested, uint256 available)",
+      "error LZ_MessageLib_InvalidExecutor()",
+      "error LZ_MessageLib_InvalidMessageSize(uint256 actual, uint256 max)",
+      "error LZ_MessageLib_NotTreasury()",
+      "error LZ_MessageLib_OnlyEndpoint()",
+      "error LZ_MessageLib_TransferFailed()",
+      "error LZ_MessageLib_ZeroMessageSize()",
+      "error LZ_ULN_AtLeastOneDVN()",
+      "error LZ_ULN_InvalidConfigType(uint32 configType)",
+      "error LZ_ULN_InvalidConfirmations()",
+      "error LZ_ULN_InvalidLegacyType1Option()",
+      "error LZ_ULN_InvalidLegacyType2Option()",
+      "error LZ_ULN_InvalidOptionalDVNCount()",
+      "error LZ_ULN_InvalidOptionalDVNThreshold()",
+      "error LZ_ULN_InvalidRequiredDVNCount()",
+      "error LZ_ULN_InvalidWorkerId(uint8 workerId)",
+      "error LZ_ULN_InvalidWorkerOptions(uint256 cursor)",
+      "error LZ_ULN_Unsorted()",
+      "error LZ_ULN_UnsupportedEid(uint32 eid)",
+      "error LZ_ULN_UnsupportedOptionType(uint16 optionType)",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event DVNFeePaid(address[] requiredDVNs, address[] optionalDVNs, uint256[] fees)",
+      "event DefaultExecutorConfigsSet(tuple(uint32 eid, tuple(uint32 maxMessageSize, address executor) config)[] params)",
+      "event DefaultUlnConfigsSet(tuple(uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] params)",
+      "event ExecutorConfigSet(address oapp, uint32 eid, tuple(uint32 maxMessageSize, address executor) config)",
+      "event ExecutorFeePaid(address executor, uint256 fee)",
+      "event LzTokenFeeWithdrawn(address lzToken, address receiver, uint256 amount)",
+      "event NativeFeeWithdrawn(address worker, address receiver, uint256 amount)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event TreasuryNativeFeeCapSet(uint256 newTreasuryNativeFeeCap)",
+      "event TreasurySet(address treasury)",
+      "event UlnConfigSet(address oapp, uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)",
+      "function executorConfigs(address oapp, uint32 eid) view returns (uint32 maxMessageSize, address executor)",
+      "function fees(address worker) view returns (uint256)",
+      "function getAppUlnConfig(address _oapp, uint32 _remoteEid) view returns (tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs))",
+      "function getConfig(uint32 _eid, address _oapp, uint32 _configType) view returns (bytes)",
+      "function getExecutorConfig(address _oapp, uint32 _remoteEid) view returns (tuple(uint32 maxMessageSize, address executor) rtnConfig)",
+      "function getUlnConfig(address _oapp, uint32 _remoteEid) view returns (tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) rtnConfig)",
+      "function isSupportedEid(uint32 _eid) view returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function owner() view returns (address)",
+      "function quote(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) view returns (tuple(uint256 nativeFee, uint256 lzTokenFee))",
+      "function renounceOwnership()",
+      "function send(tuple(uint64 nonce, uint32 srcEid, address sender, uint32 dstEid, bytes32 receiver, bytes32 guid, bytes message) _packet, bytes _options, bool _payInLzToken) returns (tuple(uint256 nativeFee, uint256 lzTokenFee), bytes)",
+      "function setConfig(address _oapp, tuple(uint32 eid, uint32 configType, bytes config)[] _params)",
+      "function setDefaultExecutorConfigs(tuple(uint32 eid, tuple(uint32 maxMessageSize, address executor) config)[] _params)",
+      "function setDefaultUlnConfigs(tuple(uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] _params)",
+      "function setTreasury(address _treasury)",
+      "function setTreasuryNativeFeeCap(uint256 _newTreasuryNativeFeeCap)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function treasury() view returns (address)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)",
+      "function withdrawFee(address _to, uint256 _amount)",
+      "function withdrawLzTokenFee(address _lzToken, address _to, uint256 _amount)"
+    ],
+    "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
+      "constructor(address _l1CrossDomainMessenger)",
+      "event FailedRelayedMessage(bytes32 indexed msgHash)",
+      "event Initialized(uint8 version)",
+      "event RelayedMessage(bytes32 indexed msgHash)",
+      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
+      "event SentMessageExtension1(address indexed sender, uint256 value)",
+      "function MESSAGE_VERSION() view returns (uint16)",
+      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
+      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
+      "function OTHER_MESSENGER() view returns (address)",
+      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
+      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
+      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
+      "function RELAY_RESERVED_GAS() view returns (uint64)",
+      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
+      "function failedMessages(bytes32) view returns (bool)",
+      "function initialize()",
+      "function l1CrossDomainMessenger() view returns (address)",
+      "function messageNonce() view returns (uint256)",
+      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _value, uint256 _minGasLimit, bytes _message) payable",
+      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
+      "function successfulMessages(bytes32) view returns (bool)",
+      "function version() view returns (string)",
+      "function xDomainMessageSender() view returns (address)"
+    ],
+    "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
+      "constructor(address _otherBridge)",
+      "event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
+      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
+      "event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
+      "function MESSENGER() view returns (address)",
+      "function OTHER_BRIDGE() view returns (address)",
+      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
+      "function bridgeETH(uint32 _minGasLimit, bytes _extraData) payable",
+      "function bridgeETHTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
+      "function deposits(address, address) view returns (uint256)",
+      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
+      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function finalizeDeposit(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData) payable",
+      "function l1TokenBridge() view returns (address)",
+      "function messenger() view returns (address)",
+      "function version() view returns (string)",
+      "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
+      "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
+    ],
+    "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": [
+      "constructor(address _owner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function addressManager() view returns (address)",
+      "function changeProxyAdmin(address _proxy, address _newAdmin)",
+      "function getProxyAdmin(address _proxy) view returns (address)",
+      "function getProxyImplementation(address _proxy) view returns (address)",
+      "function implementationName(address) view returns (string)",
+      "function isUpgrading() view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxyType(address) view returns (uint8)",
+      "function renounceOwnership()",
+      "function setAddress(string _name, address _address)",
+      "function setAddressManager(address _address)",
+      "function setImplementationName(address _address, string _name)",
+      "function setProxyType(address _address, uint8 _type)",
+      "function setUpgrading(bool _upgrading)",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address _proxy, address _implementation)",
+      "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf": [
+      "constructor(address _endpoint)",
+      "error LZ_MessageLib_OnlyEndpoint()",
+      "error LZ_ULN_AtLeastOneDVN()",
+      "error LZ_ULN_InvalidConfigType(uint32 configType)",
+      "error LZ_ULN_InvalidConfirmations()",
+      "error LZ_ULN_InvalidEid()",
+      "error LZ_ULN_InvalidOptionalDVNCount()",
+      "error LZ_ULN_InvalidOptionalDVNThreshold()",
+      "error LZ_ULN_InvalidPacketHeader()",
+      "error LZ_ULN_InvalidPacketVersion()",
+      "error LZ_ULN_InvalidRequiredDVNCount()",
+      "error LZ_ULN_Unsorted()",
+      "error LZ_ULN_UnsupportedEid(uint32 eid)",
+      "error LZ_ULN_Verifying()",
+      "event DefaultUlnConfigsSet(tuple(uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] params)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PayloadVerified(address dvn, bytes header, uint256 confirmations, bytes32 proofHash)",
+      "event UlnConfigSet(address oapp, uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)",
+      "function assertHeader(bytes _packetHeader, uint32 _localEid) pure",
+      "function commitVerification(bytes _packetHeader, bytes32 _payloadHash)",
+      "function getAppUlnConfig(address _oapp, uint32 _remoteEid) view returns (tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs))",
+      "function getConfig(uint32 _eid, address _oapp, uint32 _configType) view returns (bytes)",
+      "function getUlnConfig(address _oapp, uint32 _remoteEid) view returns (tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) rtnConfig)",
+      "function hashLookup(bytes32 headerHash, bytes32 payloadHash, address dvn) view returns (bool submitted, uint64 confirmations)",
+      "function isSupportedEid(uint32 _eid) view returns (bool)",
+      "function messageLibType() pure returns (uint8)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setConfig(address _oapp, tuple(uint32 eid, uint32 configType, bytes config)[] _params)",
+      "function setDefaultUlnConfigs(tuple(uint32 eid, tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) config)[] _params)",
+      "function supportsInterface(bytes4 _interfaceId) view returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function verifiable(tuple(uint64 confirmations, uint8 requiredDVNCount, uint8 optionalDVNCount, uint8 optionalDVNThreshold, address[] requiredDVNs, address[] optionalDVNs) _config, bytes32 _headerHash, bytes32 _payloadHash) view returns (bool)",
+      "function verify(bytes _packetHeader, bytes32 _payloadHash, uint64 _confirmations)",
+      "function version() pure returns (uint64 major, uint8 minor, uint8 endpointVersion)"
+    ],
+    "0xCcD558d6839e128320bBC932CBBa2c890a5518E8": [
+      "error LZ_Treasury_LzTokenNotEnabled()",
+      "error Transfer_NativeFailed(address _to, uint256 _value)",
+      "error Transfer_ToAddressIsZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function getFee(address, uint32, uint256 _totalFee, bool _payInLzToken) view returns (uint256)",
+      "function lzTokenEnabled() view returns (bool)",
+      "function lzTokenFee() view returns (uint256)",
+      "function nativeBP() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function payFee(address, uint32, uint256 _totalFee, bool _payInLzToken) payable returns (uint256)",
+      "function renounceOwnership()",
+      "function setLzTokenEnabled(bool _lzTokenEnabled)",
+      "function setLzTokenFee(uint256 _lzTokenFee)",
+      "function setNativeFeeBP(uint256 _nativeBP)",
+      "function transferOwnership(address newOwner)",
+      "function withdrawLzToken(address _messageLib, address _lzToken, address _to, uint256 _amount)",
+      "function withdrawNativeFee(address _messageLib, address _to, uint256 _amount)",
+      "function withdrawToken(address _token, address _to, uint256 _amount)"
+    ],
     "0xD8724322f44E5c58D7A815F542036fb17DbbF839": [
       "event GovernorshipTransferred(address indexed previousGovernor, address indexed newGovernor)",
       "event PendingGovernorshipTransfer(address indexed previousGovernor, address indexed newGovernor)",
@@ -1256,6 +2485,9 @@
       "function transferGovernance(address _newGovernor)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xd94E416cf2c7167608B2515B7e4102B41efff94f": [
+      "constructor(address _singleton)"
     ],
     "0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6": [
       "constructor(address _tokenController)",
@@ -1465,14 +2697,19 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/Timelock": "0xadf6c9c4d77d92049a7365bc568182b2182a16c5c6e5e0e7ab6c15c6a1c76e3c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "opstack/Layer2/L2CrossDomainMessenger": "0xb7ee74a7975557a4cb112aeefa14add6fc9aef2aa7cbced5db8d919cdc196dcc",
+    "opstack/Layer2/L2StandardBridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/MasterMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/MessageTransmitter": "0xa08ec2ee361f024f79836400aba320fcc928f9e5c224c65eb670f8ec23548cd6",
     "tokens/circle/TokenMessenger": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/TokenMinter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
+    "tokens/OFT": "0xfa92d3ddc6763a0fa757552871abf2d9094c328a518bd2bb4a4b3bd3c81a2d0e",
+    "tokens/OptimismMintableERC20_OFT": "0xfa92d3ddc6763a0fa757552871abf2d9094c328a518bd2bb4a4b3bd3c81a2d0e",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0xa2a61858226733ec5a01c8f71ddcb222a96a4f254efae742e47ad058cc9e7d05"
+  "permissionsConfigHash": "0x90fb2d50aafc42a14c737497a3136b9b56faf38cb7c1e2716ef67e07074d175a"
 }

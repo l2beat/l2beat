@@ -1,3 +1,146 @@
+Generated with discovered.json: 0x8310cdab639ef2c22d128dcf9f38dca4392a0edb
+
+# Diff at Wed, 18 Jun 2025 15:44:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 30861907
+- current block number: 31732779
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract UpgradeableOptimismMintableERC20 (0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22) {
+    +++ description: None
+      values.totalSupply:
+-        "25334378178473256556976"
++        "24528227199815611145824"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30861907 (main branch discovery), not current.
+
+```diff
+    EOA  (0x19b4B317E6Ea4643f1507c372630483092D0AbFf) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x4fc7850364958d97B4d3f5A08f79db2493f8cA44) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+    EOA  (0x88acF681fb9a1DFcE5ac83391991895C54CF24cc) {
+    +++ description: None
+      controlsMajorityOfUpgradePermissions:
+-        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20 (0x0b3e328455c4059EEb9e3f84b5543F74E24e7E1b)
+    +++ description: Non-standard OP stack's canonically bridged L2 token implementation that has been modified to also be a OFT.
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x1273141a3f7923AA2d9edDfA402440cE075ed8Ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KelpDao Restaked ETH Token (0x1Bc71130A0e39942a7658878169764Bbd8A45993)
+    +++ description: Standard OFT token
+```
+
+```diff
++   Status: CREATED
+    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x28937ca4873f7289Ebea0708c4E42b24835eCfF0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableOptimismMintableERC20 (0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
+    +++ description: The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
+    +++ description: The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4200000000000000000000000000000000000018)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x7Da95539762Dd11005889F6B72a6674A4888B56d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xB5320B0B3a13cC860893E2Bd79FCd7e13484Dda2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc70AB6f32772f59fBfc23889Caf4Ba3376C84bAf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0xCcD558d6839e128320bBC932CBBa2c890a5518E8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xd94E416cf2c7167608B2515B7e4102B41efff94f)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5588836725e8d23a42efff282dbf199aa1d83a50
 
 # Diff at Thu, 05 Jun 2025 08:23:04 GMT:

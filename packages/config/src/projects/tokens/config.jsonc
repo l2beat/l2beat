@@ -1,12 +1,17 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "tokens",
-  "import": ["../globalConfig.jsonc"],
+  "import": [
+    "../globalConfig.jsonc"
+  ],
   "chains": {
     "base": {
       "initialAddresses": [
         "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
-        "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913"
+        "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+        "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b", // Virtual Token
+        "0x1Bc71130A0e39942a7658878169764Bbd8A45993", // rsETH
+        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22" // cbETH
       ],
       "overrides": {
         "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94": {
