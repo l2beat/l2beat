@@ -1,4 +1,4 @@
-import type { Project } from '@l2beat/config'
+import { PROJECT_COUNTDOWNS, type Project } from '@l2beat/config'
 import type { FilterableEntry } from '~/components/table/filters/filterableValue'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
@@ -6,6 +6,7 @@ import type { ProjectChanges } from '../projects-change-report/getProjectsChange
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -104,7 +105,9 @@ export function getScalingTab(
 
   return project.statuses.reviewStatus === 'initialReview'
     ? 'underReview'
-    : project.scalingInfo.isOther
+    : project.scalingInfo.isOther ||
+        (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
+          !!project.scalingInfo.reasonsForBeingOther)
       ? 'others'
       : isRollup
         ? 'rollups'
