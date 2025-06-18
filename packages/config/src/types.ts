@@ -1218,6 +1218,17 @@ export const TvsTokenSchema = z.object({
   category: z.enum(['ether', 'stablecoin', 'other']),
   source: z.enum(['canonical', 'external', 'native']),
   isAssociated: z.boolean(),
+  bridgedUsing: z.optional(
+    z.object({
+      bridges: z.array(
+        z.object({
+          name: z.string(),
+          slug: z.string().optional(),
+        }),
+      ),
+      warning: z.string().optional(),
+    }),
+  ),
 })
 
 export const ProjectTvsConfigSchema = z.object({

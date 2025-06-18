@@ -108,7 +108,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "FBTC FireBridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -364,7 +371,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

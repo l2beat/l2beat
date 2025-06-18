@@ -127,7 +127,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -145,7 +153,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -201,7 +216,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -219,7 +242,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -317,7 +348,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "custom",
@@ -474,7 +513,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -511,7 +558,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
