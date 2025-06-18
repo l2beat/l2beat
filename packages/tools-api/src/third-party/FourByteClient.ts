@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export class FourByteClient {
   async lookup(selector: `0x${string}`): Promise<string[]> {
@@ -23,11 +23,6 @@ export class FourByteClient {
   }
 }
 
-const Schema = z.object({
-  results: z.array(
-    z.object({
-      id: z.number(),
-      text_signature: z.string(),
-    }),
-  ),
+const Schema = v.object({
+  results: v.array(v.object({ id: v.number(), text_signature: v.string() })),
 })

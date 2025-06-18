@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export class OpenChainClient {
   async lookup(selector: `0x${string}`): Promise<string[]> {
@@ -35,26 +35,22 @@ export class OpenChainClient {
   }
 }
 
-const ErrorSchema = z.object({
-  ok: z.literal(false),
-  error: z.string(),
+const ErrorSchema = v.object({
+  ok: v.literal(false),
+  error: v.string(),
 })
 
-const SuccessSchema = z.object({
-  ok: z.literal(true),
-  result: z.object({
-    function: z.record(
-      z.union([
-        z.array(
-          z.object({
-            name: z.string(),
-            filtered: z.boolean(),
-          }),
-        ),
-        z.null(),
+const SuccessSchema = v.object({
+  ok: v.literal(true),
+  result: v.object({
+    function: v.record(
+      v.string(),
+      v.union([
+        v.array(v.object({ name: v.string(), filtered: v.boolean() })),
+        v.null(),
       ]),
     ),
   }),
 })
 
-const Schema = z.union([ErrorSchema, SuccessSchema])
+const Schema = v.union([ErrorSchema, SuccessSchema])

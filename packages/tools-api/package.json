@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/validate": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/discovery": "workspace:*",
