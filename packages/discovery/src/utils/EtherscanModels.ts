@@ -1,25 +1,20 @@
-import {
-  EthereumAddress,
-  Hash256,
-  type json,
-  stringAs,
-} from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { EthereumAddress, Hash256, type json } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
-export type EtherscanSuccessResponse = z.infer<typeof EtherscanSuccessResponse>
-const EtherscanSuccessResponse = z.object({
-  message: z.literal('OK'),
-  result: z.unknown(),
+export type EtherscanSuccessResponse = v.infer<typeof EtherscanSuccessResponse>
+const EtherscanSuccessResponse = v.object({
+  message: v.literal('OK'),
+  result: v.unknown(),
 })
 
-export type EtherscanErrorResponse = z.infer<typeof EtherscanErrorResponse>
-const EtherscanErrorResponse = z.object({
-  message: z.literal('NOTOK'),
-  result: z.string(),
+export type EtherscanErrorResponse = v.infer<typeof EtherscanErrorResponse>
+const EtherscanErrorResponse = v.object({
+  message: v.literal('NOTOK'),
+  result: v.string(),
 })
 
-export type EtherscanResponse = z.infer<typeof EtherscanResponse>
-const EtherscanResponse = z.union([
+export type EtherscanResponse = v.infer<typeof EtherscanResponse>
+const EtherscanResponse = v.union([
   EtherscanSuccessResponse,
   EtherscanErrorResponse,
 ])
@@ -42,74 +37,78 @@ export function tryParseEtherscanResponse(
   }
 }
 
-export type ContractSource = z.infer<typeof ContractSource>
-export const ContractSource = z.object({
-  SourceCode: z.string(),
-  ABI: z.string(),
-  ContractName: z.string(),
-  CompilerVersion: z.string(),
-  OptimizationUsed: z.string(),
-  Runs: z.string(),
-  ConstructorArguments: z.string(),
-  EVMVersion: z.string(),
-  Library: z.string(),
-  LicenseType: z.string(),
-  Proxy: z.string(),
-  Implementation: z.string(),
-  SwarmSource: z.string(),
+export type ContractSource = v.infer<typeof ContractSource>
+export const ContractSource = v.object({
+  SourceCode: v.string(),
+  ABI: v.string(),
+  ContractName: v.string(),
+  CompilerVersion: v.string(),
+  OptimizationUsed: v.string(),
+  Runs: v.string(),
+  ConstructorArguments: v.string(),
+  EVMVersion: v.string(),
+  Library: v.string(),
+  LicenseType: v.string(),
+  Proxy: v.string(),
+  Implementation: v.string(),
+  SwarmSource: v.string(),
 })
 
-export const ContractSourceResult = z.array(ContractSource).length(1)
+export const ContractSourceResult = v
+  .array(ContractSource)
+  .check((a) => a.length === 1)
 
-export type ContractCreatorAndCreationTxHash = z.infer<
+export type ContractCreatorAndCreationTxHash = v.infer<
   typeof ContractCreatorAndCreationTxHash
 >
-export const ContractCreatorAndCreationTxHash = z.object({
-  contractAddress: stringAs(EthereumAddress),
-  contractCreator: z.union([
-    stringAs(EthereumAddress),
-    z.literal('GENESIS').transform(() => EthereumAddress.ZERO),
-    z.literal('genesis').transform(() => EthereumAddress.ZERO),
+export const ContractCreatorAndCreationTxHash = v.object({
+  contractAddress: v.string().transform((v) => EthereumAddress(v)),
+  contractCreator: v.union([
+    v.string().transform((v) => EthereumAddress(v)),
+    v.literal('GENESIS').transform(() => EthereumAddress.ZERO),
+    v.literal('genesis').transform(() => EthereumAddress.ZERO),
   ]),
-  txHash: z.union([
-    stringAs(Hash256),
-    z
+  txHash: v.union([
+    v.string().transform((v) => Hash256(v)),
+    v
       .string()
-      .startsWith('GENESIS_')
+      .check((v) => v.startsWith('GENESIS_'))
       .transform(() => Hash256.ZERO),
-    z
+    v
       .string()
-      .startsWith('genesis_')
+      .check((v) => v.startsWith('genesis_'))
       .transform(() => Hash256.ZERO),
   ]),
 })
 
-export const ContractCreatorAndCreationTxHashResult = z
+export const ContractCreatorAndCreationTxHashResult = v
   .array(ContractCreatorAndCreationTxHash)
-  .length(1)
+  .check((a) => a.length === 1)
 
-export const TransactionListEntry = z.object({
-  blockNumber: z.string(),
-  timeStamp: z.string(),
-  hash: z.string(),
-  nonce: z.string(),
-  blockHash: z.string(),
-  transactionIndex: z.string(),
-  from: z.string(),
-  to: z.string(),
-  value: z.string(),
-  gas: z.string(),
-  gasPrice: z.string(),
-  isError: z.string(),
-  txreceipt_status: z.string(),
-  input: z.string(),
-  contractAddress: z.string(),
-  cumulativeGasUsed: z.string(),
-  gasUsed: z.string(),
-  confirmations: z.string(),
-  methodId: z.string(),
-  functionName: z.string(),
+export const TransactionListEntry = v.object({
+  blockNumber: v.string(),
+  timeStamp: v.string(),
+  hash: v.string(),
+  nonce: v.string(),
+  blockHash: v.string(),
+  transactionIndex: v.string(),
+  from: v.string(),
+  to: v.string(),
+  value: v.string(),
+  gas: v.string(),
+  gasPrice: v.string(),
+  isError: v.string(),
+  txreceipt_status: v.string(),
+  input: v.string(),
+  contractAddress: v.string(),
+  cumulativeGasUsed: v.string(),
+  gasUsed: v.string(),
+  confirmations: v.string(),
+  methodId: v.string(),
+  functionName: v.string(),
 })
 
-export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-export const TransactionListResult = z.array(TransactionListEntry)
+export const OneTransactionListResult = v
+  .array(TransactionListEntry)
+  .check((a) => a.length === 1)
+export const TransactionListResult = v.array(TransactionListEntry)

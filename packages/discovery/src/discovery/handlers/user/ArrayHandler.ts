@@ -1,6 +1,6 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 import type { ContractValue } from '../../output/types'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -16,15 +16,23 @@ import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
 
-export type ArrayHandlerDefinition = z.infer<typeof ArrayHandlerDefinition>
-export const ArrayHandlerDefinition = z.strictObject({
-  type: z.literal('array'),
-  indices: z.optional(z.union([z.array(z.number()), z.string()])),
-  method: z.optional(z.string()),
-  length: z.optional(z.union([z.number().int().nonnegative(), Reference])),
-  maxLength: z.optional(z.number().int().nonnegative()),
-  startIndex: z.optional(z.number().int().nonnegative()),
-  ignoreRelative: z.optional(z.boolean()),
+export type ArrayHandlerDefinition = v.infer<typeof ArrayHandlerDefinition>
+export const ArrayHandlerDefinition = v.strictObject({
+  type: v.literal('array'),
+  indices: v.union([v.array(v.number()), v.string()]).optional(),
+  method: v.string().optional(),
+  length: v
+    .union([v.number().check((v) => Number.isInteger(v) && v >= 0), Reference])
+    .optional(),
+  maxLength: v
+    .number()
+    .check((v) => Number.isInteger(v) && v >= 0)
+    .optional(),
+  startIndex: v
+    .number()
+    .check((v) => Number.isInteger(v) && v >= 0)
+    .optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 const DEFAULT_MAX_LENGTH = 100

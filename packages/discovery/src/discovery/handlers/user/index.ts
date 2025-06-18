@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { v } from '@l2beat/validate'
 
 import type { Handler } from '../Handler'
 import {
@@ -91,10 +91,9 @@ import {
   ZKsyncEraValidatorsHandlerDefinition,
 } from './ZKsyncEraValidatorsHandler'
 
-export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
-export const UserHandlerDefinition = z.union([
+export type UserHandlerDefinition = v.infer<typeof UserHandlerDefinition>
+export const UserHandlerDefinition = v.union([
   StorageHandlerDefinition,
-  DynamicArrayHandlerDefinition,
   DynamicArrayHandlerDefinition,
   ArrayHandlerDefinition,
   CallHandlerDefinition,
