@@ -961,6 +961,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@types/cors':
         specifier: ^2.8.17
         version: 2.8.17
