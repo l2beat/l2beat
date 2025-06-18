@@ -1,13 +1,16 @@
-import { EthereumAddress, Hash256, stringAs } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
-export type ShapeSchema = z.infer<typeof ShapeSchema>
-export const ShapeSchema = z.record(
-  z.string(),
-  z.object({
-    hash: stringAs(Hash256),
-    address: stringAs(EthereumAddress).or(z.array(stringAs(EthereumAddress))),
-    chain: z.string(),
-    blockNumber: z.number(),
+export type ShapeSchema = v.infer<typeof ShapeSchema>
+export const ShapeSchema = v.record(
+  v.string(),
+  v.object({
+    hash: v.string().transform((v) => Hash256(v)),
+    address: v.union([
+      v.string().transform((a) => EthereumAddress(a)),
+      v.array(v.string().transform((a) => EthereumAddress(a))),
+    ]),
+    chain: v.string(),
+    blockNumber: v.number(),
   }),
 )

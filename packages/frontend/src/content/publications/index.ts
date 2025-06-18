@@ -1,14 +1,14 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
 export const publicationsCollection = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    shortTitle: z.string().optional(),
-    description: z.string().optional(),
-    publishedOn: z.coerce.date(),
-    authorId: z.string(),
+  schema: v.object({
+    title: v.string(),
+    shortTitle: v.string().optional(),
+    description: v.string().optional(),
+    publishedOn: v.unknown().transform((v) => new Date(v as string)),
+    authorId: v.string(),
   }),
 })

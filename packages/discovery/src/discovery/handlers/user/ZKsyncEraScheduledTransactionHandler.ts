@@ -1,6 +1,6 @@
 import { EthereumAddress, type Hash256 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 
 import uniqBy from 'lodash/uniqBy'
 import type { ContractValue } from '../../output/types'
@@ -10,11 +10,11 @@ import { get$Implementations } from '../../utils/extractors'
 import type { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
-export type ZKsyncEraScheduledTransactionsHandlerDefinition = z.infer<
+export type ZKsyncEraScheduledTransactionsHandlerDefinition = v.infer<
   typeof ZKsyncEraScheduledTransactionsHandlerDefinition
 >
-export const ZKsyncEraScheduledTransactionsHandlerDefinition = z.strictObject({
-  type: z.literal('zksynceraScheduledTransactions'),
+export const ZKsyncEraScheduledTransactionsHandlerDefinition = v.strictObject({
+  type: v.literal('zksynceraScheduledTransactions'),
 })
 
 const abi = new utils.Interface([

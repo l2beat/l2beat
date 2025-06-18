@@ -1,5 +1,5 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { IProvider } from '../../../provider/IProvider'
 import type { Handler, HandlerResult } from '../../Handler'
 import {
@@ -12,12 +12,12 @@ import { checkForBlobs } from './blobs-check'
 import { checkForCelestia } from './celestia-verification'
 import { checkForEigenDA } from './eigen-verification'
 
-export type OpStackDAHandlerDefinition = z.infer<
+export type OpStackDAHandlerDefinition = v.infer<
   typeof OpStackDAHandlerDefinition
 >
-export const OpStackDAHandlerDefinition = z.strictObject({
-  type: z.literal('opStackDA'),
-  sequencerAddress: z.string(),
+export const OpStackDAHandlerDefinition = v.strictObject({
+  type: v.literal('opStackDA'),
+  sequencerAddress: v.string(),
 })
 
 /**

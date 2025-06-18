@@ -1,20 +1,23 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ScrollAccessControlHandlerDefinition = z.infer<
+export type ScrollAccessControlHandlerDefinition = v.infer<
   typeof ScrollAccessControlHandlerDefinition
 >
-export const ScrollAccessControlHandlerDefinition = z.strictObject({
-  type: z.literal('scrollAccessControl'),
-  roleNames: z.optional(
-    z.record(z.string().regex(/^0x[a-f\d]{64}$/i), z.string()),
-  ),
-  ignoreRelative: z.optional(z.boolean()),
+export const ScrollAccessControlHandlerDefinition = v.strictObject({
+  type: v.literal('scrollAccessControl'),
+  roleNames: v
+    .record(
+      v.string().check((v) => /^0x[a-f\d]{64}$/i.test(v)),
+      v.string(),
+    )
+    .optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 const abi = new utils.Interface([

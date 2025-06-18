@@ -10,8 +10,8 @@ import type { ContractSource, IEtherscanClient } from './IEtherscanClient'
 
 import type { HttpClient } from '@l2beat/shared'
 
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import { z } from 'zod'
 
 const URL = 'https://sourcify.dev/server'
 
@@ -187,45 +187,46 @@ function decodeSourcifySource(
   )
 }
 
-const SourcifyAbiSchema = z.array(z.unknown())
-type SourcifyAbi = z.infer<typeof SourcifyAbiSchema>
+const SourcifyAbiSchema = v.array(v.unknown())
+type SourcifyAbi = v.infer<typeof SourcifyAbiSchema>
 
-const SourcifySourcesSchema = z.record(
-  z.string(),
-  z.object({
-    content: z.string(),
+const SourcifySourcesSchema = v.record(
+  v.string(),
+  v.object({
+    content: v.string(),
   }),
 )
-type SourcifySources = z.infer<typeof SourcifySourcesSchema>
+type SourcifySources = v.infer<typeof SourcifySourcesSchema>
 
-const SourcifySourceSchema = z.object({
+const SourcifySourceSchema = v.object({
   abi: SourcifyAbiSchema,
-  compilation: z.object({
-    language: z.string(),
-    compiler: z.string(),
-    compilerVersion: z.string(),
-    compilerSettings: z.object({
-      remappings: z.array(z.string()),
+  compilation: v.object({
+    language: v.string(),
+    compiler: v.string(),
+    compilerVersion: v.string(),
+    compilerSettings: v.object({
+      remappings: v.array(v.string()),
     }),
-    name: z.string(),
+    name: v.string(),
   }),
-  creationBytecode: z.object({
-    transformationValues: z
-      .object({
-        constructorArguments: z.string().optional(),
-      })
-      .nullable(),
+  creationBytecode: v.object({
+    transformationValues: v.union([
+      v.object({
+        constructorArguments: v.string().optional(),
+      }),
+      v.null(),
+    ]),
   }),
-  sources: z.record(
+  sources: v.record(
     // name
-    z.string(),
-    z.object({
+    v.string(),
+    v.object({
       // source code
-      content: z.string(),
+      content: v.string(),
     }),
   ),
-  deployment: z.object({
-    transactionHash: z.string().nullable(),
+  deployment: v.object({
+    transactionHash: v.union([v.string(), v.null()]),
   }),
 })
 

@@ -1,6 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { encodePacked, keccak256 } from 'viem'
 import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import chainList from './chains.json'
 import { getDiscoveredConfig } from './discovery'
 import preImages from './preImages.json'
@@ -9,7 +10,7 @@ import { Chain, type Config } from './types'
 import wellKnownAbi from './wellknownabi.json'
 
 export function getConfig(): Config {
-  const chains = z.array(Chain).parse(chainList)
+  const chains = v.array(Chain).parse(chainList)
   const tokens = z
     .record(z.string(), z.tuple([z.string(), z.number()]))
     .parse(tokenList)

@@ -1,26 +1,10 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { FetchProjects, FetchResult } from './FetchInterface'
 
-export const ResponsesRollupWithStatsSchema = z.array(
-  z.object({
-    blobs_count: z.number().nullable().optional(),
-    bridge: z.string().nullable().optional(),
-    description: z.string().nullable().optional(),
-    explorer: z.string().nullable().optional(),
-    fee: z.string().nullable().optional(),
-    first_message_time: z.coerce.date().nullable().optional(),
-    github: z.string().nullable().optional(),
-    id: z.number().nullable().optional(),
-    l2_beat: z.string().nullable().optional(),
-    last_message_time: z.coerce.date().nullable().optional(),
-    links: z.array(z.string()).nullable().optional(),
-    logo: z.string().nullable().optional(),
-    name: z.string().nullable().optional(),
-    size: z.number().nullable().optional(),
-    slug: z.string().nullable().optional(),
-    stack: z.string().nullable().optional(),
-    twitter: z.string().nullable().optional(),
-    website: z.string().nullable().optional(),
+export const ResponsesRollupWithStatsSchema = v.array(
+  v.object({
+    name: v.union([v.string(), v.null()]).optional(),
+    slug: v.union([v.string(), v.null()]).optional(),
   }),
 )
 

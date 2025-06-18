@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -28,7 +28,7 @@ export function createGovernanceRouter(
   router.get(
     '/governance/publications/:id',
     validateRoute({
-      params: z.object({ id: z.string() }),
+      params: v.object({ id: v.string() }),
     }),
     async (req, res) => {
       const data = await getGovernancePublicationData(

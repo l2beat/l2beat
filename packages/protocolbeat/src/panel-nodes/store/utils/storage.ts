@@ -1,40 +1,40 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import type { State } from '../State'
 
-const NodeLocations = z.record(
-  z.string(),
-  z.object({
-    x: z.number(),
-    y: z.number(),
-    width: z.number().optional(),
-    height: z.number().optional(),
+const NodeLocations = v.record(
+  v.string(),
+  v.object({
+    x: v.number(),
+    y: v.number(),
+    width: v.number().optional(),
+    height: v.number().optional(),
   }),
 )
 
-const NodeColors = z.record(
-  z.string(),
-  z.union([
-    z.object({
-      l: z.number(),
-      c: z.number(),
-      h: z.number(),
+const NodeColors = v.record(
+  v.string(),
+  v.union([
+    v.object({
+      l: v.number(),
+      c: v.number(),
+      h: v.number(),
     }),
-    z.number(),
+    v.number(),
   ]),
 )
 
-const NodeHiddenFields = z.record(z.string(), z.array(z.string()))
+const NodeHiddenFields = v.record(v.string(), v.array(v.string()))
 
-const StoredNodeLayout = z.object({
-  projectId: z.string(),
+const StoredNodeLayout = v.object({
+  projectId: v.string(),
   locations: NodeLocations,
   colors: NodeColors.optional(),
   hiddenFields: NodeHiddenFields.optional(),
 })
 
-export type NodeLocations = z.infer<typeof NodeLocations>
-export type StoredNodeLayout = z.infer<typeof StoredNodeLayout>
+export type NodeLocations = v.infer<typeof NodeLocations>
+export type StoredNodeLayout = v.infer<typeof StoredNodeLayout>
 
 function getLayoutStorageKey(projectId: string): string {
   return `layout/${projectId}`

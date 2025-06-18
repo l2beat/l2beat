@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import type { providers } from 'ethers'
-import { z } from 'zod'
 
 export async function getGenesisTimestamp(
   provider: providers.JsonRpcProvider,
@@ -34,7 +34,7 @@ export async function getBlockTime(
 export async function decodeChainId(chainId: number): Promise<string> {
   const response = await fetch('https://chainid.network/chains.json')
   const content = await response.json()
-  const chains = ChainIDResponse.parse(content)
+  const chains = ChainIDResponse.validate(content)
 
   const entry = chains.find((c) => c.chainId === chainId)
   if (entry !== undefined) {
@@ -44,9 +44,9 @@ export async function decodeChainId(chainId: number): Promise<string> {
   }
 }
 
-const ChainIDResponse = z.array(
-  z.object({
-    name: z.string(),
-    chainId: z.number(),
+const ChainIDResponse = v.array(
+  v.object({
+    name: v.string(),
+    chainId: v.number(),
   }),
 )

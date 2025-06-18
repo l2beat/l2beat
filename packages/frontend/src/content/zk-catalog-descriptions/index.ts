@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
 export const zkCatalogDescriptionsCollection = defineCollection({
   type: 'content',
-  schema: z.object({}).strict(),
+  schema: v.strictObject({}),
 })

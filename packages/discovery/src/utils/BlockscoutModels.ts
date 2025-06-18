@@ -3,26 +3,25 @@ import {
   Hash256,
   UnixTime,
   type json,
-  stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type BlockscoutSuccessResponse = z.infer<
+export type BlockscoutSuccessResponse = v.infer<
   typeof BlockscoutSuccessResponse
 >
-const BlockscoutSuccessResponse = z.object({
-  message: z.literal('OK'),
-  result: z.unknown(),
+const BlockscoutSuccessResponse = v.object({
+  message: v.literal('OK'),
+  result: v.unknown(),
 })
 
-export type BlockscoutErrorResponse = z.infer<typeof BlockscoutErrorResponse>
-const BlockscoutErrorResponse = z.object({
-  message: z.literal('NOTOK'),
-  result: z.string(),
+export type BlockscoutErrorResponse = v.infer<typeof BlockscoutErrorResponse>
+const BlockscoutErrorResponse = v.object({
+  message: v.literal('NOTOK'),
+  result: v.string(),
 })
 
-export type BlockscoutResponse = z.infer<typeof BlockscoutResponse>
-const BlockscoutResponse = z.union([
+export type BlockscoutResponse = v.infer<typeof BlockscoutResponse>
+const BlockscoutResponse = v.union([
   BlockscoutSuccessResponse,
   BlockscoutErrorResponse,
 ])
@@ -35,144 +34,148 @@ export function parseBlockscoutResponse(response: json): BlockscoutResponse {
   }
 }
 
-export const BlockscoutGetBlockNoByTime = z.object({
-  blockNumber: z.coerce.number(),
+export const BlockscoutGetBlockNoByTime = v.object({
+  blockNumber: v.unknown().transform((v) => Number(v)),
 })
 
-export type BlockscoutNextPageParams = z.infer<typeof BlockscoutNextPageParams>
+export type BlockscoutNextPageParams = v.infer<typeof BlockscoutNextPageParams>
 
-export const BlockscoutNextPageParams = z.object({
-  block_number: z.number(),
-  index: z.number(),
-  items_count: z.number(),
-  transaction_index: z.number(),
+export const BlockscoutNextPageParams = v.object({
+  block_number: v.number(),
+  index: v.number(),
+  items_count: v.number(),
+  transaction_index: v.number(),
 })
 
-export type BlockscoutAddressParam = z.infer<typeof BlockscoutAddressParam>
+export type BlockscoutAddressParam = v.infer<typeof BlockscoutAddressParam>
 
-export const BlockscoutAddressParam = z.object({
-  ens_domain_name: z.string().nullable(),
-  hash: z.string(),
-  implementation_name: z.string().nullable(),
-  is_contract: z.boolean(),
-  is_verified: z.boolean(),
-  metadata: z.unknown().nullable(),
-  name: z.string().nullable(),
-  private_tags: z.array(z.unknown()),
-  public_tags: z.array(z.unknown()),
-  watchlist_names: z.array(z.unknown()),
+export const BlockscoutAddressParam = v.object({
+  ens_domain_name: v.union([v.string(), v.null()]),
+  hash: v.string(),
+  implementation_name: v.union([v.string(), v.null()]),
+  is_contract: v.boolean(),
+  is_verified: v.boolean(),
+  metadata: v.union([v.unknown(), v.null()]),
+  name: v.union([v.string(), v.null()]),
+  private_tags: v.array(v.unknown()),
+  public_tags: v.array(v.unknown()),
+  watchlist_names: v.array(v.unknown()),
 })
 
-export type BlockscoutInternalTransaction = z.infer<
+export type BlockscoutInternalTransaction = v.infer<
   typeof BlockscoutInternalTransaction
 >
 
-export const BlockscoutInternalTransaction = z.object({
-  block: z.number(),
-  block_index: z.number(),
-  created_contract: z.unknown().nullable(),
-  error: z.unknown().nullable(),
+export const BlockscoutInternalTransaction = v.object({
+  block: v.number(),
+  block_index: v.number(),
+  created_contract: v.union([v.unknown(), v.null()]),
+  error: v.union([v.unknown(), v.null()]),
   from: BlockscoutAddressParam,
-  gas_limit: z.string(),
-  index: z.number(),
-  success: z.boolean(),
-  timestamp: stringAs((s) => UnixTime.fromDate(new Date(s))),
-  to: z.nullable(BlockscoutAddressParam),
-  transaction_hash: z.string(),
-  type: z.string(),
-  value: z.string(),
+  gas_limit: v.string(),
+  index: v.number(),
+  success: v.boolean(),
+  timestamp: v.string().transform((t) => UnixTime.fromDate(new Date(t))),
+  to: v.union([BlockscoutAddressParam, v.null()]),
+  transaction_hash: v.string(),
+  type: v.string(),
+  value: v.string(),
 })
 
-export type BlockscoutGetInternalTransactionsResponse = z.infer<
+export type BlockscoutGetInternalTransactionsResponse = v.infer<
   typeof BlockscoutGetInternalTransactionsResponse
 >
 
-export const BlockscoutGetInternalTransactionsResponse = z.object({
-  items: z.array(BlockscoutInternalTransaction),
-  next_page_params: z.nullable(BlockscoutNextPageParams),
+export const BlockscoutGetInternalTransactionsResponse = v.object({
+  items: v.array(BlockscoutInternalTransaction),
+  next_page_params: v.union([BlockscoutNextPageParams, v.null()]),
 })
 
-export type ContractSource = z.infer<typeof ContractSource>
-export const ContractSource = z.object({
-  SourceCode: z.string(),
-  ABI: z.string(),
-  AdditionalSources: z.array(
-    z.object({
-      Filename: z.string(),
-      SourceCode: z.string(),
+export type ContractSource = v.infer<typeof ContractSource>
+export const ContractSource = v.object({
+  SourceCode: v.string(),
+  ABI: v.string(),
+  AdditionalSources: v.array(
+    v.object({
+      Filename: v.string(),
+      SourceCode: v.string(),
     }),
   ),
-  ContractName: z.string(),
-  FileName: z.string(),
-  CompilerVersion: z.string(),
-  OptimizationUsed: z.string(),
-  OptimizationRuns: z.number(),
-  EVMVersion: z.string(),
-  CompilerSettings: z.object({
-    libraries: z.record(z.string()),
-    optimizer: z.object({
-      enabled: z.boolean(),
-      runs: z.number(),
+  ContractName: v.string(),
+  FileName: v.string(),
+  CompilerVersion: v.string(),
+  OptimizationUsed: v.string(),
+  OptimizationRuns: v.number(),
+  EVMVersion: v.string(),
+  CompilerSettings: v.object({
+    libraries: v.record(v.string(), v.string()),
+    optimizer: v.object({
+      enabled: v.boolean(),
+      runs: v.number(),
     }),
-    remappings: z.optional(z.array(z.string())),
+    remappings: v.array(v.string()).optional(),
   }),
 })
 
-export type UnverifiedContractSource = z.infer<typeof UnverifiedContractSource>
-export const UnverifiedContractSource = z.object({
-  Address: z.string(),
+export type UnverifiedContractSource = v.infer<typeof UnverifiedContractSource>
+export const UnverifiedContractSource = v.object({
+  Address: v.string(),
 })
-export const UnverifiedContractSourceResult = z.array(UnverifiedContractSource)
+export const UnverifiedContractSourceResult = v.array(UnverifiedContractSource)
 
-export const ContractSourceResult = z.array(ContractSource).length(1)
+export const ContractSourceResult = v
+  .array(ContractSource)
+  .check((a) => a.length === 1)
 
-export type ContractCreatorAndCreationTxHash = z.infer<
+export type ContractCreatorAndCreationTxHash = v.infer<
   typeof ContractCreatorAndCreationTxHash
 >
-export const ContractCreatorAndCreationTxHash = z.object({
-  contractAddress: stringAs(EthereumAddress),
-  contractCreator: z.union([
-    stringAs(EthereumAddress),
-    z.literal('GENESIS').transform(() => EthereumAddress.ZERO),
-    z.literal('genesis').transform(() => EthereumAddress.ZERO),
+export const ContractCreatorAndCreationTxHash = v.object({
+  contractAddress: v.string().transform((v) => EthereumAddress(v)),
+  contractCreator: v.union([
+    v.string().transform((v) => EthereumAddress(v)),
+    v.literal('GENESIS').transform(() => EthereumAddress.ZERO),
+    v.literal('genesis').transform(() => EthereumAddress.ZERO),
   ]),
-  txHash: z.union([
-    stringAs(Hash256),
-    z
+  txHash: v.union([
+    v.string().transform((v) => Hash256(v)),
+    v
       .string()
-      .startsWith('GENESIS_')
+      .check((v) => v.startsWith('GENESIS_'))
       .transform(() => Hash256.ZERO),
-    z
+    v
       .string()
-      .startsWith('genesis_')
+      .check((v) => v.startsWith('genesis_'))
       .transform(() => Hash256.ZERO),
   ]),
 })
 
-export const ContractCreatorAndCreationTxHashResult = z
+export const ContractCreatorAndCreationTxHashResult = v
   .array(ContractCreatorAndCreationTxHash)
-  .length(1)
+  .check((a) => a.length === 1)
 
-export const TransactionListEntry = z.object({
-  blockNumber: z.string(),
-  timeStamp: z.string(),
-  hash: z.string(),
-  nonce: z.string(),
-  blockHash: z.string(),
-  transactionIndex: z.string(),
-  from: z.string(),
-  to: z.string(),
-  value: z.string(),
-  gas: z.string(),
-  gasPrice: z.string(),
-  isError: z.string(),
-  txreceipt_status: z.string(),
-  input: z.string(),
-  contractAddress: z.string(),
-  cumulativeGasUsed: z.string(),
-  gasUsed: z.string(),
-  confirmations: z.string(),
+export const TransactionListEntry = v.object({
+  blockNumber: v.string(),
+  timeStamp: v.string(),
+  hash: v.string(),
+  nonce: v.string(),
+  blockHash: v.string(),
+  transactionIndex: v.string(),
+  from: v.string(),
+  to: v.string(),
+  value: v.string(),
+  gas: v.string(),
+  gasPrice: v.string(),
+  isError: v.string(),
+  txreceipt_status: v.string(),
+  input: v.string(),
+  contractAddress: v.string(),
+  cumulativeGasUsed: v.string(),
+  gasUsed: v.string(),
+  confirmations: v.string(),
 })
 
-export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-export const TransactionListResult = z.array(TransactionListEntry)
+export const OneTransactionListResult = v
+  .array(TransactionListEntry)
+  .check((a) => a.length === 1)
+export const TransactionListResult = v.array(TransactionListEntry)

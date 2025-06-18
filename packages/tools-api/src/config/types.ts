@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export type Address = `${string}:0x${string}`
 
@@ -13,19 +13,19 @@ export interface Config {
   hashes: Record<`0x${string}`, string>
 }
 
-export type Chain = z.infer<typeof Chain>
-export const Chain = z.object({
-  name: z.string(),
-  discoveryName: z.string().optional(),
-  shortName: z.string(),
-  chainId: z.number(),
-  etherscanApi: z.boolean(),
-  explorerUrl: z.string(),
-  alchemyId: z.string(),
-  nativeCurrency: z.object({
-    name: z.string(),
-    symbol: z.string(),
-    decimals: z.number(),
+export type Chain = v.infer<typeof Chain>
+export const Chain = v.object({
+  name: v.string(),
+  discoveryName: v.string().optional(),
+  shortName: v.string(),
+  chainId: v.number(),
+  etherscanApi: v.boolean(),
+  explorerUrl: v.string(),
+  alchemyId: v.string(),
+  nativeCurrency: v.object({
+    name: v.string(),
+    symbol: v.string(),
+    decimals: v.number(),
   }),
 })
 

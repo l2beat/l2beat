@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import { ActivityProjectFilterType } from '~/server/features/scaling/activity/utils/projectFilterUtils'
 import { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
@@ -18,10 +18,10 @@ export function createPublicApiRouter() {
   router.get(
     '/api/scaling/activity',
     validateRoute({
-      query: z.object({
+      query: v.object({
         range: ActivityTimeRange.optional(),
         type: ActivityProjectFilterType.optional(),
-        projectIds: z.string().optional(),
+        projectIds: v.string().optional(),
       }),
     }),
     async (req, res) => {
@@ -46,8 +46,8 @@ export function createPublicApiRouter() {
   router.get(
     '/api/scaling/activity/:slug',
     validateRoute({
-      params: z.object({ slug: z.string() }),
-      query: z.object({ range: ActivityTimeRange.optional() }),
+      params: v.object({ slug: v.string() }),
+      query: v.object({ range: ActivityTimeRange.optional() }),
     }),
     async (req, res) => {
       const { slug } = req.params
@@ -64,11 +64,11 @@ export function createPublicApiRouter() {
   router.get(
     '/api/scaling/tvs',
     validateRoute({
-      query: z.object({
+      query: v.object({
         range: TvsChartRange.optional(),
         type: TvsProjectFilterType.optional(),
-        projectIds: z.string().optional(),
-        excludeAssociatedTokens: z.string().optional(),
+        projectIds: v.string().optional(),
+        excludeAssociatedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
@@ -87,10 +87,10 @@ export function createPublicApiRouter() {
   router.get(
     '/api/scaling/tvs/:slug',
     validateRoute({
-      params: z.object({ slug: z.string() }),
-      query: z.object({
+      params: v.object({ slug: v.string() }),
+      query: v.object({
         range: TvsChartRange.optional(),
-        excludeAssociatedTokens: z.string().optional(),
+        excludeAssociatedTokens: v.string().optional(),
       }),
     }),
     async (req, res) => {
@@ -109,7 +109,7 @@ export function createPublicApiRouter() {
   router.get(
     '/api/scaling/tvs/:slug/breakdown',
     validateRoute({
-      params: z.object({ slug: z.string() }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await getScalingTvsProjectBreakdownApiData(req.params.slug)

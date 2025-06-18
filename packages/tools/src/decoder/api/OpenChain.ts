@@ -1,17 +1,14 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-const Response = z.object({
-  ok: z.boolean(),
-  result: z.object({
-    function: z.record(
-      z
-        .array(
-          z.object({
-            name: z.string(),
-            filtered: z.boolean(),
-          }),
-        )
-        .nullable(),
+const Response = v.object({
+  ok: v.boolean(),
+  result: v.object({
+    function: v.record(
+      v.string(),
+      v.union([
+        v.array(v.object({ name: v.string(), filtered: v.boolean() })),
+        v.null(),
+      ]),
     ),
   }),
 })

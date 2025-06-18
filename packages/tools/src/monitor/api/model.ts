@@ -1,12 +1,12 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-const UpdateMessage = z.object({
-  projectId: z.string(),
-  chain: z.string(),
-  blockNumber: z.number(),
-  timestamp: z.number(),
-  message: z.string(),
+const UpdateMessage = v.object({
+  projectId: v.string(),
+  chain: v.string(),
+  blockNumber: v.number(),
+  timestamp: v.number(),
+  message: v.string(),
 })
 
-export const UpdateMessagesResponse = z.array(UpdateMessage)
-export type UpdateMessagesResponse = z.infer<typeof UpdateMessagesResponse>
+export const UpdateMessagesResponse = v.array(UpdateMessage)
+export type UpdateMessagesResponse = v.infer<typeof UpdateMessagesResponse>

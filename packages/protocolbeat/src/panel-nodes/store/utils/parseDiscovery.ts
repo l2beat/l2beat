@@ -1,30 +1,24 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type DiscoveryContract = z.infer<typeof DiscoveryContract>
-export const DiscoveryContract = z
-  .object({
-    type: z.literal('Contract'),
-    name: z.string(),
-    address: z.string(),
-    proxyType: z.optional(z.string()),
-    values: z.optional(z.record(z.unknown())),
-  })
-  .passthrough()
+export type DiscoveryContract = v.infer<typeof DiscoveryContract>
+export const DiscoveryContract = v.object({
+  type: v.literal('Contract'),
+  name: v.string(),
+  address: v.string(),
+  proxyType: v.string().optional(),
+  values: v.record(v.string(), v.unknown()).optional(),
+})
 
-export type DiscoveryEoa = z.infer<typeof DiscoveryEoa>
-export const DiscoveryEoa = z
-  .object({
-    type: z.literal('EOA'),
-    address: z.string(),
-    roles: z.optional(z.array(z.string())),
-  })
-  .passthrough()
+export type DiscoveryEoa = v.infer<typeof DiscoveryEoa>
+export const DiscoveryEoa = v.object({
+  type: v.literal('EOA'),
+  address: v.string(),
+  roles: v.array(v.string()).optional(),
+})
 
-export type DiscoveryOutput = z.infer<typeof DiscoveryOutput>
-export const DiscoveryOutput = z
-  .object({
-    name: z.string(),
-    chain: z.string(),
-    entries: z.array(z.union([DiscoveryContract, DiscoveryEoa])),
-  })
-  .passthrough()
+export type DiscoveryOutput = v.infer<typeof DiscoveryOutput>
+export const DiscoveryOutput = v.object({
+  name: v.string(),
+  chain: v.string(),
+  entries: v.array(v.union([DiscoveryContract, DiscoveryEoa])),
+})

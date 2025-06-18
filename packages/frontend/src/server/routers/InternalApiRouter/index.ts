@@ -1,6 +1,6 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getHotPages } from './getHotPages'
@@ -42,12 +42,8 @@ export function createInternalApiRouter() {
   router.get(
     '/api/liveness-txs/:projectId',
     validateRoute({
-      params: z.object({
-        projectId: z.string(),
-      }),
-      query: z.object({
-        subtype: TrackedTxsConfigSubtype.optional(),
-      }),
+      params: v.object({ projectId: v.string() }),
+      query: v.object({ subtype: TrackedTxsConfigSubtype.optional() }),
     }),
     async (req, res) => {
       const livenessTxs = await getLivenessTxs(

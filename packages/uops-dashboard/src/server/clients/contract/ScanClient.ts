@@ -1,13 +1,9 @@
-import { z } from 'zod'
+import { v as v } from '@l2beat/validate'
 import type { ContractClient } from './ContractClient'
 
-const Response = z.object({
-  message: z.string(),
-  result: z.array(
-    z.object({
-      ContractName: z.string(),
-    }),
-  ),
+const Response = v.object({
+  message: v.string(),
+  result: v.array(v.object({ ContractName: v.string() })),
 })
 
 export class ScanClient implements ContractClient {

@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
+import type { v } from '@l2beat/validate'
 import matter from 'gray-matter'
-import type { z } from 'zod'
 
 import { startsWithLetterOrNumber } from '~/utils/startsWithLetterOrNumber'
 import { collections } from './collections'
@@ -19,11 +19,11 @@ type ContentCollectionKey = {
 
 interface DataCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<Collection[T]['schema']>
+  data: v.infer<Collection[T]['schema']>
 }
 interface ContentCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<Collection[T]['schema']>
+  data: v.infer<Collection[T]['schema']>
   content: string
   excerpt: string
   readTimeInMinutes: number
@@ -105,10 +105,13 @@ function getContentCollection<T extends ContentCollectionKey>(
   return parsedFiles
 }
 
+// TODO(radomski): I don't know how to type this correctly so that using
+// DataCollectionEntry<T> as return type works. Something somewhere does not
+// propagate and all of this just breaks
 function getDataCollectionEntry<T extends DataCollectionKey>(
   key: T,
   id: string,
-): DataCollectionEntry<T> {
+): DataCollectionEntry<DataCollectionKey> {
   const contentEntry = collections[key]
   const base = path.join(process.cwd(), DIR_PATH, key)
   const filePath = path.join(base, `${id}.${contentEntry.extension}`)
@@ -126,10 +129,11 @@ function getDataCollectionEntry<T extends DataCollectionKey>(
   }
 }
 
+// TODO(radomski): Same here with ContentCollectionEntry<ContentCollectionKey>
 function getContentCollectionEntry<T extends ContentCollectionKey>(
   key: T,
   id: string,
-): ContentCollectionEntry<T> {
+): ContentCollectionEntry<ContentCollectionKey> {
   const contentEntry = collections[key]
   const base = path.join(process.cwd(), DIR_PATH, key)
   const filePath = path.join(base, `${id}.${contentEntry.extension}`)
