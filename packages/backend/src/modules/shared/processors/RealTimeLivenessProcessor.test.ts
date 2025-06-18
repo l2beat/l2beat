@@ -132,7 +132,7 @@ describe(RealTimeLivenessProcessor.name, () => {
   })
 
   describe(RealTimeLivenessProcessor.prototype.checkForAnomalies.name, () => {
-    it('should detect anomalies and new records', async () => {
+    it('should detect new anomaly', async () => {
       const projectId = ProjectId('project-id')
       const configurationId = 'tracked-tx-1'
       const subtype = 'stateUpdates'
@@ -166,9 +166,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeAnomaliesRepository = mockObject<
         Database['realTimeAnomalies']
       >({
-        getOngoingAnomalies: mockFn().resolvesTo([
-          {},
-        ] as RealTimeAnomalyRecord[]),
+        getOngoingAnomalies: mockFn().resolvesTo([]),
         upsertMany: mockFn().resolvesTo(undefined),
       })
 
@@ -210,6 +208,175 @@ describe(RealTimeLivenessProcessor.name, () => {
           projectId: projectId,
           subtype: subtype,
           status: 'ongoing',
+        },
+      ])
+    })
+
+    it('should detect ongoing anomaly', async () => {
+      const projectId = ProjectId('project-id')
+      const configurationId = 'tracked-tx-1'
+      const subtype = 'stateUpdates'
+      const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
+
+      const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
+        getLatestStats: mockFn().resolvesTo([
+          {
+            timestamp: UnixTime.now(),
+            projectId,
+            subtype,
+            mean: 10,
+            stdDev: 20,
+          },
+        ] as AnomalyStatsRecord[]),
+      })
+
+      const realTimeLivenessRepository = mockObject<
+        Database['realTimeLiveness']
+      >({
+        getLatestRecords: mockFn().resolvesTo([
+          {
+            configurationId,
+            txHash: '0x123',
+            blockNumber: 123,
+            timestamp: lastTxTimestamp,
+          },
+        ] as RealTimeLivenessRecord[]),
+      })
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getOngoingAnomalies: mockFn().resolvesTo([
+          {
+            start: lastTxTimestamp,
+            projectId: projectId,
+            subtype: subtype,
+            status: 'ongoing',
+          },
+        ] as RealTimeAnomalyRecord[]),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const configurations: TrackedTxConfigEntry[] = [
+        {
+          type: 'liveness' as const,
+          id: configurationId,
+          projectId,
+          subtype: 'stateUpdates' as const,
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer' as const,
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+          },
+        },
+      ]
+
+      const config = createMockConfig(projectId, configurations)
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          anomalyStats: anomalyStatsRepository,
+          realTimeLiveness: realTimeLivenessRepository,
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+      )
+
+      await processor.checkForAnomalies()
+
+      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
+      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
+      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
+
+      expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
+    })
+
+    it('should recover from anomaly', async () => {
+      const projectId = ProjectId('project-id')
+      const configurationId = 'tracked-tx-1'
+      const subtype = 'stateUpdates'
+      const startTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
+      const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.MINUTE
+
+      const anomalyStatsRepository = mockObject<Database['anomalyStats']>({
+        getLatestStats: mockFn().resolvesTo([
+          {
+            timestamp: UnixTime.now(),
+            projectId,
+            subtype,
+            mean: 10,
+            stdDev: 20,
+          },
+        ] as AnomalyStatsRecord[]),
+      })
+
+      const realTimeLivenessRepository = mockObject<
+        Database['realTimeLiveness']
+      >({
+        getLatestRecords: mockFn().resolvesTo([
+          {
+            configurationId,
+            txHash: '0x123',
+            blockNumber: 123,
+            timestamp: lastTxTimestamp,
+          },
+        ] as RealTimeLivenessRecord[]),
+      })
+
+      const realTimeAnomaliesRepository = mockObject<
+        Database['realTimeAnomalies']
+      >({
+        getOngoingAnomalies: mockFn().resolvesTo([
+          {
+            start: startTimestamp,
+            projectId: projectId,
+            subtype: subtype,
+            status: 'ongoing',
+          },
+        ] as RealTimeAnomalyRecord[]),
+        upsertMany: mockFn().resolvesTo(undefined),
+      })
+
+      const configurations: TrackedTxConfigEntry[] = [
+        {
+          type: 'liveness' as const,
+          id: configurationId,
+          projectId,
+          subtype: 'stateUpdates' as const,
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer' as const,
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+          },
+        },
+      ]
+
+      const config = createMockConfig(projectId, configurations)
+      const processor = new RealTimeLivenessProcessor(
+        config,
+        Logger.SILENT,
+        mockDatabase({
+          anomalyStats: anomalyStatsRepository,
+          realTimeLiveness: realTimeLivenessRepository,
+          realTimeAnomalies: realTimeAnomaliesRepository,
+        }),
+      )
+
+      await processor.checkForAnomalies()
+
+      expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
+      expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
+      expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
+
+      expect(realTimeAnomaliesRepository.upsertMany).toHaveBeenCalledWith([
+        {
+          start: startTimestamp,
+          projectId: projectId,
+          subtype: subtype,
+          status: 'recovered',
+          end: lastTxTimestamp,
         },
       ])
     })
