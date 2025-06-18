@@ -51,14 +51,13 @@ describe(EigenApiClient.name, () => {
 {"datetime":"2022-01-01T13:00:00","customer_id":"project2","total_size_mb":200.75}
 {"datetime":"2022-01-01T14:00:00","customer_id":"project1","total_size_mb":150.25}`
 
-      // Mock the global fetch function
-      const originalFetch = global.fetch
-      const mockFetch = mockFn().resolvesTo({
-        text: async () => mockJsonLines,
+      const http = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo({
+          text: async () => mockJsonLines,
+        }),
       })
-      global.fetch = mockFetch
 
-      const client = mockClient({})
+      const client = mockClient({ http })
       const until = 1640995200 // 2022-01-01 00:00:00 UTC
 
       const result = await client.getByProjectData(until)
@@ -72,13 +71,10 @@ describe(EigenApiClient.name, () => {
       expect(result[1].customer_id).toEqual('project2')
       expect(result[2].customer_id).toEqual('project1')
 
-      expect(mockFetch).toHaveBeenOnlyCalledWith(
+      expect(http.fetchRaw).toHaveBeenOnlyCalledWith(
         'https://project.test.com/stats/2022-01-01.json',
         {},
       )
-
-      // Restore original fetch
-      global.fetch = originalFetch
     })
 
     it('should throw error when response contains "The specified key does not exist"', async () => {
@@ -88,19 +84,18 @@ describe(EigenApiClient.name, () => {
   <Message>The specified key does not exist.</Message>
 </Error>`
 
-      const originalFetch = global.fetch
-      global.fetch = mockFn().resolvesTo({
-        text: async () => mockErrorResponse,
+      const http = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo({
+          text: async () => mockErrorResponse,
+        }),
       })
 
-      const client = mockClient({})
+      const client = mockClient({ http })
       const until = 1640995200
 
       await expect(client.getByProjectData(until)).toBeRejectedWith(
         'Assertion Error: No EigenDA data for projects for 2022-01-01T00:00:00.000Z',
       )
-
-      global.fetch = originalFetch
     })
 
     it('should handle malformed JSON lines', async () => {
@@ -108,18 +103,17 @@ describe(EigenApiClient.name, () => {
 {"date":"2022-01-01","customer_id":"project2"}
 {"datetime":"2022-01-01T14:00:00","customer_id":"project2","total_size_mb":150.25}`
 
-      const originalFetch = global.fetch
-      global.fetch = mockFn().resolvesTo({
-        text: async () => mockMalformedJson,
+      const http = mockObject<HttpClient>({
+        fetchRaw: mockFn().resolvesTo({
+          text: async () => mockMalformedJson,
+        }),
       })
 
-      const client = mockClient({})
+      const client = mockClient({ http })
       const until = 1640995200
 
       // Should fail when trying to parse the malformed line
       await expect(client.getByProjectData(until)).toBeRejected()
-
-      global.fetch = originalFetch
     })
   })
 })
