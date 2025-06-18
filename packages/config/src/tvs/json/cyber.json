@@ -37,7 +37,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": true
+      "isAssociated": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

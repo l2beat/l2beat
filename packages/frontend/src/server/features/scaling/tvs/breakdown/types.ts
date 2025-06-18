@@ -20,6 +20,13 @@ export type BaseAssetBreakdownData = {
   address?: AddressData
   formula: Formula
   syncStatus?: string
+  bridgedUsing?: {
+    bridges: {
+      name: string
+      slug?: string
+    }[]
+    warning?: string
+  }
 }
 
 export type CanonicalAssetBreakdownData = BaseAssetBreakdownData & {

@@ -9,7 +9,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { TopNavLayout } from '~/layouts/TopNavLayout'
-import type { ScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/getScalingProjectTvsBreakdownData'
+import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
 import { RequestTokenBox } from './components/RequestTokenBox'
 import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
 import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
@@ -18,7 +18,7 @@ import { ExternallyBridgedTable } from './components/tables/ExternallyBridgesTab
 import { NativelyMintedTable } from './components/tables/NativelyMintedTable'
 
 interface Props extends AppLayoutProps {
-  tvsBreakdownData: ScalingProjectTvsBreakdownData
+  tvsBreakdownData: ScalingProjectTvsBreakdown
   queryState: DehydratedState
 }
 
