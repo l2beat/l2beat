@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xacafbb1171690feb55b9c16a1432574a84440809
+
+# Diff at Wed, 18 Jun 2025 11:32:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593196
+- current block number: 22731088
+
+## Description
+
+two valis removed.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.3:
+-        "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+      values.validatorsVTL.2:
+-        "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
+      values.validatorsVTL.1:
+-        "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9"
++        "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+      values.validatorsVTL.0:
+-        "0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374"
++        "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
+    }
+```
+
+```diff
+    EOA  (0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"validateZkStack","from":"ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5","role":".validatorsVTL"}
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+```diff
+    EOA  (0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"validateZkStack","from":"ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5","role":".validatorsVTL"}
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
 Generated with discovered.json: 0xdc3687fdb8096bfa96124652ef206d1ae3292e3c
 
 # Diff at Tue, 27 May 2025 08:30:34 GMT:
