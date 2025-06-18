@@ -48,7 +48,7 @@ export const cartesiprthoneypot: ScalingProject = {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
     headerWarning:
-      'Bug Bounty Appchain: Any user deposit is a donation to the Honeypot. The risk- and stages framework only applies from the perspective of the single address which is permissioned to withdraw.',
+      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The risk- and stages framework is applied from the perspective of the **single** address which is permissioned to withdraw.',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
