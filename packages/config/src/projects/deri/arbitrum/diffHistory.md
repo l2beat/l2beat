@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xd8bc6a6d0695701554b3663ad768c907769bf162
+
+# Diff at Thu, 19 Jun 2025 11:37:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 339286979
+- current block number: 348970853
+
+## Description
+
+late upgrade to standard orbit contracts.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0xeE5a0A8e5d08474F21933d17f4EE076B3eAdBaAB"
++        "0xE742BbD0dD0A9E2cc6dB4C8d363DF06801A85887"
+      values.$pastUpgrades.2:
++        ["2023-11-19T04:23:39.000Z","0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095",["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]]
+      values.$pastUpgrades.1.2:
+-        "2023-11-19T04:23:39.000Z"
++        "2025-05-22T01:59:12.000Z"
+      values.$pastUpgrades.1.1:
+-        ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"]
++        "0x64f376646580d25cc092327877e062bbd953ecbfa7600864478b6aec7ffb97ff"
+      values.$pastUpgrades.1.0:
+-        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
++        ["0xeE5a0A8e5d08474F21933d17f4EE076B3eAdBaAB"]
+      values.$pastUpgrades.0.2:
+-        "2025-05-22T01:59:12.000Z"
++        ["0xE742BbD0dD0A9E2cc6dB4C8d363DF06801A85887"]
+      values.$pastUpgrades.0.1:
+-        "0x64f376646580d25cc092327877e062bbd953ecbfa7600864478b6aec7ffb97ff"
++        "2025-06-19T02:15:30.000Z"
+      values.$pastUpgrades.0.0:
+-        ["0xeE5a0A8e5d08474F21933d17f4EE076B3eAdBaAB"]
++        "0x6f84858d5890cc27277102d07d76b6db8b418675c23feccb0582ae91a7cfc598"
+      values.$upgradeCount:
+-        2
++        3
+      implementationNames.0xeE5a0A8e5d08474F21933d17f4EE076B3eAdBaAB:
+-        "SequencerInbox"
+      implementationNames.0xE742BbD0dD0A9E2cc6dB4C8d363DF06801A85887:
++        "SequencerInbox"
+    }
+```
+
+```diff
+    contract Inbox (0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x99872d99b7163c705118e0a168f99728c3c7089581779077707271cdaad30be3"
++        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
+      sourceHashes.0:
+-        "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67"
++        "0x84cd273689e720a0b7c657b57d9fb127684f3abb87fc4b337a2f0decd9464120"
+      values.$implementation:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "0xBaf02424c26b01214aBdeB7F5660C77D8F26C18d"
+      values.$pastUpgrades.1:
++        ["2023-11-19T04:23:39.000Z","0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095",["0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"]]
+      values.$pastUpgrades.0.2:
+-        "2023-11-19T04:23:39.000Z"
++        "2025-06-19T02:15:30.000Z"
+      values.$pastUpgrades.0.1:
+-        "0xc8d7afcb2f7f7dc0883a938db4352813e17b7629850cdc54d8cc2eba7e10b095"
++        "0x6f84858d5890cc27277102d07d76b6db8b418675c23feccb0582ae91a7cfc598"
+      values.$pastUpgrades.0.0.0:
+-        "0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA"
++        "0xBaf02424c26b01214aBdeB7F5660C77D8F26C18d"
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.0x8f6406781cC955398C45a48DcEfeEBDb2c8e2CaA:
+-        "Inbox"
+      implementationNames.0xBaf02424c26b01214aBdeB7F5660C77D8F26C18d:
++        "Inbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@339286979 => .flat}/Inbox/Inbox.sol     | 52 +++++++++++++++++-----
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++---
+ 2 files changed, 59 insertions(+), 17 deletions(-)
+```
+
 Generated with discovered.json: 0x07cb0feb45148ba77735c65f562953bdf8428e75
 
 # Diff at Wed, 18 Jun 2025 12:22:00 GMT:
