@@ -92,10 +92,11 @@ export const cartesiprthoneypot: ScalingProject = {
     inScope: [
       'Ability to deposit and withdraw CTSI by the permissioned address',
       SOA.l1Contracts,
-      'Published Cartesi Machine source code',
       SOA.derivationSpec,
+      'Permissioned Withdrawal logic in the offchain application',
     ],
     notInScope: [
+      'Published offchain Cartesi Machine source code',
       'Cartesi Machine source code to onchain template hash mapping',
     ],
   },
