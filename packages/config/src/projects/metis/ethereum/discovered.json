@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22739377,
+  "blockNumber": 22739723,
   "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
   "entries": [
     {
@@ -120,10 +120,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000685426d300013b5126",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000685426d300013b5126",
-        "length": 29645,
-        "lengthByChainId": 29645,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006854376b00013b5414",
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006854376b00013b5414",
+        "length": 29648,
+        "lengthByChainId": 29648,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -253,6 +253,7 @@
         "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes.",
       "sinceTimestamp": 1747127087,
       "sinceBlock": 22473297,
       "values": {
@@ -870,12 +871,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1750345427,
-        "getLastSequencerTimestampByChainId": 1750345427,
-        "getTotalBatches": 29645,
-        "getTotalBatchesByChainId": 29645,
-        "getTotalElements": 20664614,
-        "getTotalElementsByChainId": 20664614,
+        "getLastSequencerTimestamp": 1750349675,
+        "getLastSequencerTimestampByChainId": 1750349675,
+        "getTotalBatches": 29648,
+        "getTotalBatchesByChainId": 29648,
+        "getTotalElements": 20665364,
+        "getTotalElementsByChainId": 20665364,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
