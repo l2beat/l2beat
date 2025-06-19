@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -182,7 +182,7 @@ export const metis: ScalingProject = {
       },
       {
         title: 'Challenges',
-        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. Should a game not be created by the \`GameCreator\` within the dispute timeout period of ${formatChallengePeriod(
+        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. Should a game not be created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
           DISPUTE_TIMEOUT_PERIOD,
         )}, sequencer deposits in the \`FaultProofLockingPool\` can be slashed and transfered to the dispute creator. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
         risks: [
