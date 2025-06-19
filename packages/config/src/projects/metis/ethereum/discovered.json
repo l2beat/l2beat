@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22738346,
+  "blockNumber": 22738909,
   "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
   "entries": [
     {
@@ -120,10 +120,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x0000000000000000000000000000000000006853d8c700013b4a5e",
-        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006853d8c700013b4a5e",
-        "length": 29641,
-        "lengthByChainId": 29641,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000685407bf00013b4f75",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000685407bf00013b4f75",
+        "length": 29643,
+        "lengthByChainId": 29643,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -241,6 +241,48 @@
       },
       "implementationNames": {
         "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": "MetisConfig"
+      }
+    },
+    {
+      "name": "LockingPool",
+      "address": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1747127087,
+      "sinceBlock": 22473297,
+      "values": {
+        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4",
+        "$pastUpgrades": [
+          [
+            "2025-05-13T09:04:47.000Z",
+            "0x5955dbbc10911769fdc4826d6eac373f3a88f9ea22fa07fc91dedbddd50df93c",
+            ["0x6d554097D5784a7184650B95ba7EA359d162Dbb7"]
+          ],
+          [
+            "2025-06-19T02:52:59.000Z",
+            "0x6e859980e53cbf8c232b3c491787274de2ec78c2af68069d0d910cd452fd99a5",
+            ["0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"]
+          ]
+        ],
+        "$upgradeCount": 2,
+        "addressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
+        "config": "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff",
+        "depositedSequencers": [],
+        "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
+        "lockPeriod": 604800,
+        "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "slashRatio": 1000,
+        "token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+        "totalLocked": 0
+      },
+      "implementationNames": {
+        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": "TransparentUpgradeableProxy",
+        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": "LockingPool"
       }
     },
     {
@@ -404,6 +446,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
           "role": "admin"
         },
         {
@@ -743,6 +790,7 @@
         "CanonicalTransactionChain": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
         "ChainStorageContainer_CTC_queue": "0xA91Ea6F5d1EDA8e6686639d6C88b309cF35D2E57",
         "DisputeGameFactory": "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+        "FaultProofLockingPool": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
         "L2CrossDomainMessenger": "0x4200000000000000000000000000000000000007",
         "METIS_MANAGER": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "MVM_DiscountOracle": "0x7f6B0b7589febc40419a8646EFf9801b87397063",
@@ -821,12 +869,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1750325447,
-        "getLastSequencerTimestampByChainId": 1750325447,
-        "getTotalBatches": 29641,
-        "getTotalBatchesByChainId": 29641,
-        "getTotalElements": 20662878,
-        "getTotalElementsByChainId": 20662878,
+        "getLastSequencerTimestamp": 1750337471,
+        "getLastSequencerTimestampByChainId": 1750337471,
+        "getTotalBatches": 29643,
+        "getTotalBatchesByChainId": 29643,
+        "getTotalElements": 20664181,
+        "getTotalElementsByChainId": 20664181,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -1270,6 +1318,12 @@
       "function paused() view returns (bool paused_)",
       "function unpause()",
       "function version() view returns (string)"
+    ],
+    "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ],
     "0x38473Feb3A6366757A249dB2cA4fBB2C663416B7": [
       "constructor(address _libAddressManager, string _owner)",
@@ -1927,6 +1981,41 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4": [
+      "constructor()",
+      "error InvalidGameStatus()",
+      "error UnregisteredGame()",
+      "event Deposit(address indexed user, uint256 amount)",
+      "event Initialized(uint8 version)",
+      "event LockPeriodUpdated(uint256 oldPeriod, uint256 newPeriod)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SlashRatioUpdated(uint256 oldRatio, uint256 newRatio)",
+      "event Slashed(address indexed recipient, uint256 amount)",
+      "event Unlock(address indexed user, uint256 amount)",
+      "event Withdraw(address indexed user, uint256 amount)",
+      "function DISPUTE_GAME_FACTORY_NAME() view returns (string)",
+      "function addressManager() view returns (address)",
+      "function balanceOf(address) view returns (uint256)",
+      "function config() view returns (address)",
+      "function deposit(uint256 _amount)",
+      "function depositedSequencers(uint256) view returns (address)",
+      "function getWithdrawalRequest(address _user) view returns (uint256 amount, uint256 timestamp)",
+      "function initialize(address _owner, address _token, uint256 _lockPeriod, uint256 _slashRatio, address _addressManager, address _config)",
+      "function lockPeriod() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setLockPeriod(uint256 _newPeriod)",
+      "function setSlashRatio(uint256 _newRatio)",
+      "function slash(address _recipient)",
+      "function slashRatio() view returns (uint256)",
+      "function timeoutSlash(address _recipient)",
+      "function token() view returns (address)",
+      "function totalLocked() view returns (uint256)",
+      "function transferOwnership(address newOwner)",
+      "function unlock(uint256 _amount)",
+      "function withdraw(uint256 _amount)",
+      "function withdrawals(address) view returns (uint256 amount, uint256 timestamp)"
+    ],
     "0xe6E2DFf51b039C8EFf0b21880E2Fb008AF10B365": [
       "constructor(address _libAddressManager, uint256 _fraudProofWindow, uint256 _sequencerPublishWindow)",
       "error ClaimAlreadyResolved()",
@@ -2040,7 +2129,7 @@
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
     "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
-    "metis/Lib_AddressManager": "0x8a7b8bafae04f9be8a5026a865b494737de12d4c845b772f1845b4905013f86f",
+    "metis/Lib_AddressManager": "0x01f7ef04287d1fb6b86c021ffbb6b6d5801c139b142af166db48c058f4471e70",
     "metis/LockingInfo": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/LockingPool": "0x62830e033d07ce22b140604342c80f9ee45e8e75f07f0be34e09bd2ff01454c0",
     "metis/MetisConfig": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -2053,5 +2142,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xd586acac13c459531de1434ad09634ac431d05de295211bd534e126f33560769"
+  "permissionsConfigHash": "0xcb8c0e99106603f5f4dd0206ca79e10fdcf1b6fe80a2c18e9403148f22021ae4"
 }

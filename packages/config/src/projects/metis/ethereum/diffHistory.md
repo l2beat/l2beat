@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc383216396d5f7437f6f7d1ecb4cacaaa9b84b43
+Generated with discovered.json: 0x3dc9ada15cc903a98858dbeb087f8bfc10fa46e2
 
-# Diff at Thu, 19 Jun 2025 11:52:46 GMT:
+# Diff at Thu, 19 Jun 2025 13:45:54 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22610669
-- current block number: 22738346
+- current block number: 22738909
 
 ## Description
 
@@ -45,32 +45,60 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract LockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x2daed4f8b60d2e56f9557c3fb4a471cdc6259d6be64746b08106a3fedf37f18a"
++        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0x6d554097D5784a7184650B95ba7EA359d162Dbb7"
++        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
+      values.$pastUpgrades.1:
++        ["2025-06-19T02:52:59.000Z","0x6e859980e53cbf8c232b3c491787274de2ec78c2af68069d0d910cd452fd99a5",["0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.0x6d554097D5784a7184650B95ba7EA359d162Dbb7:
+-        "LockingPool"
+      implementationNames.0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
++        "LockingPool"
+    }
+```
+
+```diff
     contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
     +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
-      receivedPermissions.11:
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
-      receivedPermissions.10:
+      receivedPermissions.11:
 +        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
       receivedPermissions.9.from:
 -        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
-+        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      receivedPermissions.9.via:
+-        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
       receivedPermissions.8.from:
 -        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
-+        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
       receivedPermissions.8.via:
 -        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
       receivedPermissions.7.from:
 -        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
-+        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
       receivedPermissions.6.from:
 -        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
-+        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
       receivedPermissions.5.from:
 -        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
-+        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
       receivedPermissions.4.from:
 -        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
-+        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
       receivedPermissions.3.from:
 -        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
 +        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
@@ -93,9 +121,52 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 .../DisputeGameFactory/DisputeGameFactory.sol      |  57 +++++++-
+ .../LockingPool.sol                                |  76 +++++++++--
  .../dev/null                                       | 147 ---------------------
  .../ProxyAdmin.sol}                                |   0
- 3 files changed, 56 insertions(+), 148 deletions(-)
+ 4 files changed, 119 insertions(+), 161 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22610669 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
+    EOA  (0x5345fCDCF5449a40df030798C195603d27691502) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin","via":[{"address":"ethereum:0x280f9c9DF12431Aed70731D5CD3d192456606a21"}]}
+      receivedPermissions.1.from:
+-        "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.FaultProofLockingPool:
++        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x03c87f9692339be57e9e0d17b4d449d3642ecc25
