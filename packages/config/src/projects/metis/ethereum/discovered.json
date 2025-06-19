@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22610669,
+  "blockNumber": 22738346,
   "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
   "entries": [
     {
@@ -91,8 +91,8 @@
         "owner": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "proxiableUUID": "EXPECT_REVERT",
         "rewardPayer": "0x62478E4eeb4070fE399866aB05e821AB97200947",
-        "totalLocked": "422809625916317936452410",
-        "totalRewardsLiquidated": "43141403568895808876180"
+        "totalLocked": "422496902555109291843794",
+        "totalRewardsLiquidated": "44789372913356478876180"
       },
       "implementationNames": {
         "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48": "TransparentUpgradeableProxy",
@@ -120,10 +120,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000683c68eb0001395c68",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000683c68eb0001395c68",
-        "length": 29086,
-        "lengthByChainId": 29086,
+        "getGlobalMetadata": "0x0000000000000000000000000000000000006853d8c700013b4a5e",
+        "getGlobalMetadataByChainId": "0x0000000000000000000000000000000000006853d8c700013b4a5e",
+        "length": 29641,
+        "lengthByChainId": 29641,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -155,23 +155,28 @@
       "template": "metis/DisputeGameFactory_Metis",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
-        "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
+        "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.",
       "sinceTimestamp": 1747126931,
       "sinceBlock": 22473285,
       "values": {
-        "$admin": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
-        "$implementation": "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3",
+        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
+        "$implementation": "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45",
         "$pastUpgrades": [
           [
             "2025-05-13T09:02:11.000Z",
             "0xbf5ee49e50e078552444649c10f208c22d68ec3854b6922449f8115d9c934733",
             ["0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"]
+          ],
+          [
+            "2025-06-19T02:52:35.000Z",
+            "0xfca0728fa948cf329424111232b2c80521c66bf13f49e9fff118a8de282f1cd5",
+            ["0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"]
           ]
         ],
-        "$upgradeCount": 1,
+        "$upgradeCount": 2,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -183,6 +188,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "DISPUTE_TIMEOUT_PERIOD": 172800,
         "GAME_CREATOR_ROLE": "0x9b2f12f1d3f61516c0ebe58c227a91273c07455ba15edc01d82cb364c3d54d02",
         "gameAtIndex": [],
         "gameCount": 0,
@@ -200,7 +206,7 @@
       },
       "implementationNames": {
         "0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3": "TransparentUpgradeableProxy",
-        "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3": "DisputeGameFactory"
+        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": "DisputeGameFactory"
       }
     },
     {
@@ -212,37 +218,6 @@
       "address": "0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ProxyAdmin",
-      "address": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
-      "type": "Contract",
-      "template": "global/ProxyAdmin",
-      "sourceHashes": [
-        "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
-          "role": "admin"
-        }
-      ],
-      "sinceTimestamp": 1747125995,
-      "sinceBlock": 22473207,
-      "values": {
-        "$immutable": true,
-        "owner": "0x5345fCDCF5449a40df030798C195603d27691502"
-      },
-      "implementationNames": {
-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21": "ProxyAdmin"
-      }
     },
     {
       "name": "MetisConfig",
@@ -428,6 +403,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
           "role": "admin"
         },
@@ -457,6 +437,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
           "role": "admin"
         }
       ],
@@ -502,36 +487,6 @@
       }
     },
     {
-      "address": "0x5345fCDCF5449a40df030798C195603d27691502",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3",
-          "role": "admin",
-          "via": [
-            { "address": "ethereum:0x280f9c9DF12431Aed70731D5CD3d192456606a21" }
-          ]
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738",
-          "role": "admin",
-          "via": [
-            { "address": "ethereum:0x280f9c9DF12431Aed70731D5CD3d192456606a21" }
-          ]
-        }
-      ],
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "ethereum:0x280f9c9DF12431Aed70731D5CD3d192456606a21",
-          "role": ".owner"
-        }
-      ]
-    },
-    {
       "name": "CanonicalTransactionChain",
       "address": "0x56a76bcC92361f6DF8D75476feD8843EdC70e1C9",
       "type": "Contract",
@@ -561,8 +516,8 @@
         "getLastBlockNumber": 19431495,
         "getLastTimestamp": 1710398153,
         "getNextQueueIndex": 36284,
-        "getNumPendingQueueElements": 4015,
-        "getQueueLength": 40299,
+        "getNumPendingQueueElements": 4067,
+        "getQueueLength": 40351,
         "getTotalBatches": 42647,
         "getTotalElements": 15214530,
         "l2GasDiscountDivisor": 32,
@@ -866,12 +821,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1748789483,
-        "getLastSequencerTimestampByChainId": 1748789483,
-        "getTotalBatches": 29086,
-        "getTotalBatchesByChainId": 29086,
-        "getTotalElements": 20536424,
-        "getTotalElementsByChainId": 20536424,
+        "getLastSequencerTimestamp": 1750325447,
+        "getLastSequencerTimestampByChainId": 1750325447,
+        "getTotalBatches": 29641,
+        "getTotalBatchesByChainId": 29641,
+        "getTotalElements": 20662878,
+        "getTotalElementsByChainId": 20662878,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -1002,7 +957,7 @@
         ],
         "$upgradeCount": 2,
         "BLOCK_REWARD": "19413226030000000",
-        "currentBatch": 124,
+        "currentBatch": 130,
         "escrow": "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
         "exitDelayPeriod": 1814400,
         "mpcAddress": "0xD294A6f4287edbFeBF9d57B79ce657BD33bB8b3b",
@@ -1188,7 +1143,7 @@
       "sinceTimestamp": 1747127051,
       "sinceBlock": 22473294,
       "values": {
-        "$admin": "0x280f9c9DF12431Aed70731D5CD3d192456606a21",
+        "$admin": "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21",
         "$implementation": "0xa2033fbb6213B2233a6998391ccc8E070BcC1B51",
         "$pastUpgrades": [
           [
@@ -1300,17 +1255,6 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0x280f9c9DF12431Aed70731D5CD3d192456606a21": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function changeProxyAdmin(address proxy, address newAdmin)",
-      "function getProxyAdmin(address proxy) view returns (address)",
-      "function getProxyImplementation(address proxy) view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)",
-      "function upgrade(address proxy, address implementation)",
-      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
     "0x2aA4E192994757c5fAB87Ba13812B89564EA57Ff": [
       "constructor()",
@@ -1821,44 +1765,6 @@
       "function step(bytes _stateData, bytes _proof, bytes32 _localContext) returns (bytes32)",
       "function version() view returns (string)"
     ],
-    "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3": [
-      "constructor(address _metis)",
-      "error AlreadyDisputed(bytes32 uuid)",
-      "error GameAlreadyExists(bytes32 uuid)",
-      "error NoDisputeGameRequests()",
-      "error NoImplementation(uint32 gameType)",
-      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
-      "event DisputeGameRequested(address indexed requestor, uint32 indexed gameType, uint256 bond, bytes extraData)",
-      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
-      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
-      "event Initialized(uint8 version)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function GAME_CREATOR_ROLE() view returns (bytes32)",
-      "function METIS() view returns (address)",
-      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) returns (address proxy_)",
-      "function dispute(uint32 _gameType, bytes _extraData)",
-      "function disputeGameCreationRequests(bytes32) view returns (uint32 gameType, address sender, uint256 bond, bytes32 l1Head)",
-      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
-      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
-      "function gameCount() view returns (uint256 gameCount_)",
-      "function gameImpls(uint32) view returns (address)",
-      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
-      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initBonds(uint32) view returns (uint256)",
-      "function initialize(address _owner)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function setImplementation(uint32 _gameType, address _impl)",
-      "function setInitBond(uint32 _gameType, uint256 _initBond)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function version() view returns (string)"
-    ],
     "0xC878771A4ff7466B7be8b59FB8766719AEa8d562": [
       "constructor()",
       "event AppendBatchElement(uint256 _chainId, uint256 _batchIndex, uint40 _shouldStartAtElement, uint24 _totalElementsToAppend, uint256 _txBatchSize, uint256 _txBatchTime, bytes32 _root)",
@@ -2064,6 +1970,48 @@
       "function setOwner(address _owner)",
       "function setStorage(bytes32 _key, bytes32 _value)"
     ],
+    "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45": [
+      "constructor(address _metis, address _addressManager)",
+      "error AlreadyDisputed(bytes32 uuid)",
+      "error GameAlreadyExists(bytes32 uuid)",
+      "error NoDisputeGameRequests()",
+      "error NoImplementation(uint32 gameType)",
+      "event DisputeGameCreated(address indexed disputeProxy, uint32 indexed gameType, bytes32 indexed rootClaim)",
+      "event DisputeGameRequested(address indexed requestor, uint32 indexed gameType, uint256 bond, bytes extraData)",
+      "event DisputeRequestTimeout(bytes32 indexed requestUuid, address indexed sender, uint256 bond)",
+      "event ImplementationSet(address indexed impl, uint32 indexed gameType)",
+      "event InitBondUpdated(uint32 indexed gameType, uint256 indexed newBond)",
+      "event Initialized(uint8 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function DISPUTE_TIMEOUT_PERIOD() view returns (uint256)",
+      "function GAME_CREATOR_ROLE() view returns (bytes32)",
+      "function METIS() view returns (address)",
+      "function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) returns (address proxy_)",
+      "function dispute(uint32 _gameType, bytes _extraData)",
+      "function disputeGameCreationRequests(bytes32) view returns (uint32 gameType, address sender, uint256 bond, bytes32 l1Head)",
+      "function disputeRequestTimestamps(bytes32) view returns (uint256)",
+      "function disputeTimeout(bytes32 _uuid)",
+      "function findLatestGames(uint32 _gameType, uint256 _start, uint256 _n) view returns (tuple(uint256 index, bytes32 metadata, uint64 timestamp, bytes32 rootClaim, bytes extraData)[] games_)",
+      "function gameAtIndex(uint256 _index) view returns (uint32 gameType_, uint64 timestamp_, address proxy_)",
+      "function gameCount() view returns (uint256 gameCount_)",
+      "function gameImpls(uint32) view returns (address)",
+      "function games(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) view returns (address proxy_, uint64 timestamp_)",
+      "function getGameUUID(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) pure returns (bytes32 uuid_)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initBonds(uint32) view returns (uint256)",
+      "function initialize(address _owner)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setImplementation(uint32 _gameType, address _impl)",
+      "function setInitBond(uint32 _gameType, uint256 _initBond)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function version() view returns (string)"
+    ],
     "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0": [
       "constructor(address _owner)",
       "function getImplementation() returns (address)",
@@ -2105,5 +2053,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xb0889ffc37602a0d622bfd73d2e656edb8b893107ebbd7f95b1f059771a15126"
+  "permissionsConfigHash": "0xd586acac13c459531de1434ad09634ac431d05de295211bd534e126f33560769"
 }

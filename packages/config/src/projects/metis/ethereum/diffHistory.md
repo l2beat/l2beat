@@ -1,3 +1,103 @@
+Generated with discovered.json: 0xc383216396d5f7437f6f7d1ecb4cacaaa9b84b43
+
+# Diff at Thu, 19 Jun 2025 11:52:46 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22610669
+- current block number: 22738346
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      sourceHashes.1:
+-        "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
++        "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119"
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"
++        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
+      values.$pastUpgrades.1:
++        ["2025-06-19T02:52:35.000Z","0xfca0728fa948cf329424111232b2c80521c66bf13f49e9fff118a8de282f1cd5",["0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.DISPUTE_TIMEOUT_PERIOD:
++        172800
+      implementationNames.0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3:
+-        "DisputeGameFactory"
+      implementationNames.0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21)
+    +++ description: None
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+      receivedPermissions.9.from:
+-        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.8.from:
+-        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      receivedPermissions.8.via:
+-        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.7.from:
+-        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.6.from:
+-        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.5.from:
+-        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.4.from:
+-        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.3.from:
+-        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.from:
+-        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      |  57 +++++++-
+ .../dev/null                                       | 147 ---------------------
+ .../ProxyAdmin.sol}                                |   0
+ 3 files changed, 56 insertions(+), 148 deletions(-)
+```
+
 Generated with discovered.json: 0x03c87f9692339be57e9e0d17b4d449d3642ecc25
 
 # Diff at Mon, 16 Jun 2025 08:42:19 GMT:
