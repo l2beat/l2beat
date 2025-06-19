@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x3dc9ada15cc903a98858dbeb087f8bfc10fa46e2
+Generated with discovered.json: 0xee7eb6837b05077738339b0aa1789665d0faff4e
 
-# Diff at Thu, 19 Jun 2025 13:45:54 GMT:
+# Diff at Thu, 19 Jun 2025 15:19:39 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22610669
-- current block number: 22738909
+- current block number: 22739377
 
 ## Description
 
@@ -65,6 +65,8 @@ Provide description of changes. This section will be preserved.
 -        "LockingPool"
       implementationNames.0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
 +        "LockingPool"
+      template:
++        "metis/FaultProofLockingPool"
     }
 ```
 

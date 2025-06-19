@@ -1,7 +1,7 @@
 {
   "name": "metis",
   "chain": "ethereum",
-  "blockNumber": 22738909,
+  "blockNumber": 22739377,
   "configHash": "0xb8f310867d3e761937e859916b8bb06026326ff4d3b8089b9915247a9ac934d5",
   "entries": [
     {
@@ -120,10 +120,10 @@
       "values": {
         "$immutable": true,
         "DEFAULT_CHAINID": 1088,
-        "getGlobalMetadata": "0x000000000000000000000000000000000000685407bf00013b4f75",
-        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000685407bf00013b4f75",
-        "length": 29643,
-        "lengthByChainId": 29643,
+        "getGlobalMetadata": "0x000000000000000000000000000000000000685426d300013b5126",
+        "getGlobalMetadataByChainId": "0x000000000000000000000000000000000000685426d300013b5126",
+        "length": 29645,
+        "lengthByChainId": 29645,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "owner": "StateCommitmentChain"
       },
@@ -247,6 +247,7 @@
       "name": "LockingPool",
       "address": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
       "type": "Contract",
+      "template": "metis/FaultProofLockingPool",
       "sourceHashes": [
         "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
         "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
@@ -869,12 +870,12 @@
         "DISPUTE_GAME_FACTORY_NAME": "DisputeGameFactory",
         "findEarliestDisputableBatch": [],
         "FRAUD_PROOF_WINDOW": 604800,
-        "getLastSequencerTimestamp": 1750337471,
-        "getLastSequencerTimestampByChainId": 1750337471,
-        "getTotalBatches": 29643,
-        "getTotalBatchesByChainId": 29643,
-        "getTotalElements": 20664181,
-        "getTotalElementsByChainId": 20664181,
+        "getLastSequencerTimestamp": 1750345427,
+        "getLastSequencerTimestampByChainId": 1750345427,
+        "getTotalBatches": 29645,
+        "getTotalBatchesByChainId": 29645,
+        "getTotalElements": 20664614,
+        "getTotalElementsByChainId": 20664614,
         "libAddressManager": "0x918778e825747a892b17C66fe7D24C618262867d",
         "SEQUENCER_PUBLISH_WINDOW": 12592000
       },
@@ -2127,6 +2128,7 @@
     "metis/DelayedWMetis": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30",
     "metis/DisputeGameFactory_Metis": "0xcdbcc4615d43ff98023bd06e2e0baa3e022d7540474389a1aab75f0f5d409716",
     "metis/FaultDisputeGame": "0xe7cb199f3d900ff5908cd04e3c606d092392d7a08ab2b909cb532099674f15f3",
+    "metis/FaultProofLockingPool": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "metis/L1CrossDomainMessenger": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "metis/L1StandardBridge": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/Lib_AddressManager": "0x01f7ef04287d1fb6b86c021ffbb6b6d5801c139b142af166db48c058f4471e70",
