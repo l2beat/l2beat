@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main contract handling deposits, withdrawals and state updates.",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "oracles": {
+      "handler": {
+        "type": "event",
+        "select": "oracleAddress",
+        "add": {
+          "event": "UpdateOracleRegistration",
+          "where": [
+            "=",
+            "#enabled",
+            true
+          ]
+        },
+        "remove": {
+          "event": "UpdateOracleRegistration",
+          "where": [
+            "!=",
+            "#enabled",
+            true
+          ]
+        }
+      }
+    }
+  }
+}

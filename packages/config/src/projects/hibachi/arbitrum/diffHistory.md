@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc86ef1a58922f1b49bc3d5f7660f70cfe63e4564
+Generated with discovered.json: 0x5bf26576f3ba09f1e0ff3edb3f9bb67407b39ef1
 
-# Diff at Wed, 18 Jun 2025 21:50:25 GMT:
+# Diff at Thu, 19 Jun 2025 08:57:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 348773441
@@ -20,7 +20,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract Hibachi (0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400)
-    +++ description: None
+    +++ description: Main contract handling deposits, withdrawals and state updates.
 ```
 
 ```diff

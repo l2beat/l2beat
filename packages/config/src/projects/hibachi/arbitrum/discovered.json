@@ -44,11 +44,13 @@
       "name": "Hibachi",
       "address": "0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400",
       "type": "Contract",
+      "template": "hibachi",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
         "0xcf9fc16700d140e29a359a4c254a4a619c0093716fce601e5146e0a735e71f73"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Main contract handling deposits, withdrawals and state updates.",
       "sinceTimestamp": 1727696741,
       "sinceBlock": 258910373,
       "values": {
@@ -67,6 +69,28 @@
           ]
         ],
         "$upgradeCount": 2,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x420eee5B429664F08f001786541acbE0F59feF5c"]
+          },
+          "PROVER_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x40e94Ed956F3077F4EA64935C1D52ae30951157C"]
+          },
+          "X_CHAIN_ADMIN_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x420eee5B429664F08f001786541acbE0F59feF5c"]
+          },
+          "KILLSWITCH_ROLE": {
+            "adminRole": "ADMIN_ROLE",
+            "members": ["0x420eee5B429664F08f001786541acbE0F59feF5c"]
+          },
+          "ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x420eee5B429664F08f001786541acbE0F59feF5c"]
+          }
+        },
         "accountsRoot": "0x1f387729e447ecd54a4df00a3a2c434db21653b4d40bbdc7c83e807481c6e0cb",
         "activeHibachiChainIds": [1],
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
@@ -89,6 +113,7 @@
           [0, "0x0000000000000000000000000000000000000000", 0]
         ],
         "oracleQuorum": 1,
+        "oracles": ["0x735d77411693F244d35192d95D8804B6b371a553"],
         "ordersRoot": "0xf72923290afdf31f33addd71375b828731540248cce7e994f1a918cff8cb0419",
         "PROVER_ROLE": "0x60044782a422109ac08a415e44260ad5d3bad63d96ebe1fac0363399642ee3f2",
         "risc0Verifier": "0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
@@ -249,6 +274,11 @@
       "implementationNames": {
         "0x397A5f7f3dBd538f23DE225B51f532c34448dA9B": "SP1VerifierGateway"
       }
+    },
+    {
+      "address": "0x40e94Ed956F3077F4EA64935C1D52ae30951157C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x4192D72c281dB0eF10464dD274EE583C33256ac5",
@@ -453,6 +483,11 @@
     },
     {
       "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x735d77411693F244d35192d95D8804B6b371a553",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1926,7 +1961,8 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "hibachi": "0x8d097f639a8e1e1b69b6130d62a0461daa9717d235e7387a8536ad0008d383ac",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0xfc46b698fad4a3dd33123175c0ba8213e0adc6f182d94700dec9aa7e3a33a3c3"
+  "permissionsConfigHash": "0xd1cd4ec24b429da759b229eadfef9946ba1d7457a1b266ff2dba96570c38140a"
 }
