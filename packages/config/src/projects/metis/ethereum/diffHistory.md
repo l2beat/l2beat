@@ -8,7 +8,8 @@ Generated with discovered.json: 0xee7eb6837b05077738339b0aa1789665d0faff4e
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The game creator role is still permissioned. The DisputeGameFactory is updated to contain a disputeTimeout function. The function allows to transfer a bond from the new FaultProofLockingPool contract (through timeoutSlashs()) to the dispute creator (which created the dispute with dispute() on the DisputeGameFactory), should a game not be created within the DISPUTE_TIMEOUT_PERIOD (2 days from the dispute creation). Sequencers are supposed to deposit METIS tokens to this pool so that it can be slashed in case of successful dispute.
+In practice should a malicious state root be proposed and unchallenged by the Metis multisig, the user disputing gets partly compensated with a bond from the pool (currently an unknown amount as it depends on deposits), while the potential loss amounts to the full value in the bridge (~130m).
 
 ## Watched changes
 
