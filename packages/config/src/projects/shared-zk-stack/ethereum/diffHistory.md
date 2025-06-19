@@ -1,3 +1,106 @@
+Generated with discovered.json: 0xacf0fe97bd31ff4bd21dff7855ff18ab0b74c7cf
+
+# Diff at Thu, 19 Jun 2025 11:10:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22694404
+- current block number: 22738072
+
+## Description
+
+ServerNotifier deployed (simple notifier/emit contract).
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"interact","from":"ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","description":"revert batches for any connected chain (ZK cluster Admin role).","role":".admin"}
+      directlyReceivedPermissions.1.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "ethereum:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B"
+      directlyReceivedPermissions.1.description:
+-        "revert batches for any connected chain (ZK cluster Admin role)."
+      directlyReceivedPermissions.1.role:
+-        ".admin"
++        ".owner"
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0xfca808A744735D9919EEBe4660B8Fd897456Ce31","role":"admin","via":[{"address":"ethereum:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B"},{"address":"ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063"}]}
+    }
+```
+
+```diff
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8) {
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+      values.nonce:
+-        0
++        1
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,27,0.
+      values.serverNotifierAddress:
+-        "0x0000000000000000000000000000000000000000"
++        "0xfca808A744735D9919EEBe4660B8Fd897456Ce31"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e) {
+    +++ description: None
+      values.$members.4:
+-        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.$members.3:
+-        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
++        "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
+      values.$members.2:
+-        "0x41814626a9256173B6E6441d8133F9286F02AA16"
++        "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735"
+      values.$members.1:
+-        "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0"
++        "0x41814626a9256173B6E6441d8133F9286F02AA16"
+      values.$members.0:
+-        "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252"
++        "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0"
+      values.multisigThreshold:
+-        "1 of 5 (20%)"
++        "1 of 4 (25%)"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ServerNotifier (0xfca808A744735D9919EEBe4660B8Fd897456Ce31)
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
+## Source code changes
+
+```diff
+...-0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B.sol | 151 +++++
+ .../.flat/ServerNotifier/ServerNotifier.sol        | 602 +++++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              | 729 +++++++++++++++++++++
+ 3 files changed, 1482 insertions(+)
+```
+
 Generated with discovered.json: 0x580368f29129a9f62fd2de055e18d599722c27e0
 
 # Diff at Fri, 13 Jun 2025 08:32:15 GMT:

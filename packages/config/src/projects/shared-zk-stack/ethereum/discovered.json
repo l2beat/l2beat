@@ -1,7 +1,7 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 22694404,
+  "blockNumber": 22738072,
   "configHash": "0x2aa245050c08179449e7e1009a2bf35fba4b805e90423ee734dddd8f81d6ec79",
   "entries": [
     {
@@ -179,6 +179,32 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ProxyAdmin",
+      "address": "0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B",
+      "type": "Contract",
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+      ],
+      "proxyType": "immutable",
+      "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
+          "role": "admin"
+        }
+      ],
+      "sinceTimestamp": 1747199351,
+      "sinceBlock": 22479245,
+      "values": {
+        "$immutable": true,
+        "owner": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+      },
+      "implementationNames": {
+        "0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
+      }
+    },
+    {
       "address": "0x2A71F929fC583Db245B1563996de76Ab9d9A3DAf",
       "type": "EOA",
       "proxyType": "EOA"
@@ -224,6 +250,11 @@
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "ethereum:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B",
+          "role": ".owner"
+        },
         {
           "permission": "interact",
           "from": "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -649,6 +680,17 @@
           "via": [
             { "address": "ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063" }
           ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B"
+            },
+            { "address": "ethereum:0x2cf3bD6a9056b39999F3883955E183F655345063" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -679,7 +721,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 8 (63%)",
-        "nonce": 201,
+        "nonce": 202,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -886,7 +928,7 @@
           "extensions": []
         },
         "EXTEND_LEGAL_VETO_THRESHOLD": 2,
-        "nonce": 0,
+        "nonce": 1,
         "PROPOSE_L2_GOVERNOR_PROPOSAL_THRESHOLD": 5,
         "PROTOCOL_UPGRADE_HANDLER": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "ZKSYNC_ERA": "0x32400084C286CF3E17e7B677ea9583e60a000324"
@@ -1423,11 +1465,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xb799FF3DeF706045B5061B22d748E8F52737415d",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1675,7 +1712,7 @@
         "owner": "0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "protocolVersion": 115964116992,
-        "serverNotifierAddress": "0x0000000000000000000000000000000000000000",
+        "serverNotifierAddress": "0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
         "storedBatchZero": "0xe3199bb31e1acf8a1667692d8536edcce799c58cfebe85e3e0adeb0ae788b291",
         "validatorTimelock": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
       },
@@ -1704,7 +1741,6 @@
         "$members": [
           "0x41814626a9256173B6E6441d8133F9286F02AA16",
           "0xf10697cd80FFc0A70bc8E9ab03D6D6596cc143E0",
-          "0xB5676D771b538D8E184EaCB1Cc7a963a4bF99252",
           "0x310E84b3063bBC5C86ED4Bf4D25E2fc3DF1B9735",
           "0x0298512Bf8e7AC383c0A353354E3Ff66216654Ac"
         ],
@@ -1712,8 +1748,8 @@
         "domainSeparator": "0x8a595a96d77e992bb9ff8b20fc59215c86b17154838b5386d6b264728a1f4462",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "1 of 5 (20%)",
-        "nonce": 14,
+        "multisigThreshold": "1 of 4 (25%)",
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2252,6 +2288,39 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
+      "name": "ServerNotifier",
+      "address": "0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
+      "type": "Contract",
+      "template": "shared-zk-stack/ServerNotifier",
+      "sourceHashes": [
+        "0x993403059c5620e6c91110514f9f4a2f2331c55dab587699c67c19edddab92ad",
+        "0xaa0cbb8dc783cc875167e361de770c7453390b2d56efade2162e85c063f9b386"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.",
+      "sinceTimestamp": 1747199375,
+      "sinceBlock": 22479247,
+      "values": {
+        "$admin": "0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B",
+        "$implementation": "0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A",
+        "$pastUpgrades": [
+          [
+            "2025-05-14T05:09:35.000Z",
+            "0xbeb7447fc88b154a4730b01cb1a75b7093095056e88818c3659253111d06e66f",
+            ["0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "chainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+        "owner": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "implementationNames": {
+        "0xfca808A744735D9919EEBe4660B8Fd897456Ce31": "TransparentUpgradeableProxy",
+        "0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A": "ServerNotifier"
+      }
+    },
+    {
       "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2382,6 +2451,17 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384": [
       "constructor(address _singleton)"
     ],
@@ -2489,6 +2569,27 @@
     ],
     "0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f": [
       "constructor(address _singleton)"
+    ],
+    "0x555D040F4A089D1dF14B372a87C5aF8FA37BDB7A": [
+      "constructor()",
+      "error SlotOccupied()",
+      "error Unauthorized(address caller)",
+      "error ZeroAddress()",
+      "event Initialized(uint8 version)",
+      "event MigrateFromGateway(uint256 indexed chainId)",
+      "event MigrateToGateway(uint256 indexed chainId)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function acceptOwnership()",
+      "function chainTypeManager() view returns (address)",
+      "function initialize(address _initialOwner)",
+      "function migrateFromGateway(uint256 _chainId)",
+      "function migrateToGateway(uint256 _chainId)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership()",
+      "function setChainTypeManager(address _chainTypeManager)",
+      "function transferOwnership(address newOwner)"
     ],
     "0x55c671BcE13120387Ded710A1d1b80C0e3d8E857": [
       "constructor(address _singleton)"
@@ -3110,6 +3211,12 @@
     ],
     "0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231": [
       "constructor(address _singleton)"
+    ],
+    "0xfca808A744735D9919EEBe4660B8Fd897456Ce31": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
     ]
   },
   "usedTemplates": {
@@ -3119,6 +3226,7 @@
     "shared-zk-stack/EmergencyUpgradeBoard": "0xacd4df56d946492afa03616aa316816a98708b5748146311403dee1b08202d21",
     "shared-zk-stack/Guardians": "0x930c8157109c56bfeaf429f0178d7025d6b21175c4f0c9d57ad594991cc7076d",
     "shared-zk-stack/SecurityCouncil": "0x0b8804832bc8dce16a070579f3ae7bd8a88ec36c613ed48e2ffc2d8fae340180",
+    "shared-zk-stack/ServerNotifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/v26/BridgeHub": "0xf014e4d30ee25cd14594d8255fb3576318fbe9b5eba6bbbec917528cdd8c07fc",
     "shared-zk-stack/v26/ChainTypeManager": "0xbe2d88a172590cb3a629ad843086d648ed322c86eb23d4da6a7f43dfe04b8f0c",
     "shared-zk-stack/v26/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
@@ -3131,5 +3239,5 @@
     "shared-zk-stack/v26/RollupDAManager": "0x22b0bd78735c1c2fcbfd46f139a45581a44353b1025dfe3a7fe0ef88699bfde2",
     "shared-zk-stack/v26/RollupL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x56367b0765cb2ed03a3e4bbac72e42a6ae37a014736d3cf41fa98ff44dbb81e7"
+  "permissionsConfigHash": "0x88a0e2afc56459aca265a061d2872c99ffee124bd94a4489d3de3321c2460407"
 }
