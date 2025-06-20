@@ -92,7 +92,7 @@ function decodeBatch(
               ? {
                   type: 'address',
                   value: `${chain.shortName}:${token}`,
-                  explorerLink: `${chain.explorerUrl}/adddress/${token}`,
+                  explorerLink: `${chain.explorerUrl}/address/${token}`,
                 }
               : {
                   type: 'string',
@@ -106,7 +106,7 @@ function decodeBatch(
             decoded: {
               type: 'address',
               value: `${chain.shortName}:${address}`,
-              explorerLink: `${chain.explorerUrl}/adddress/${address}`,
+              explorerLink: `${chain.explorerUrl}/address/${address}`,
             },
           },
           amountValue,
