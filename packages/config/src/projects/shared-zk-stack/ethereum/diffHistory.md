@@ -14,6 +14,8 @@ TLDR: adds precompiles for elliptic curve operations (ECAdd, ECMul, ECPairing) a
 
 all shared contract upgraded implementations are code-identical with their predecessors (except genesisUpdate, which contains l2 logic).
 
+migrations unpaused!
+
 ## Watched changes
 
 ```diff
