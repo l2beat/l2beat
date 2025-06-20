@@ -32,7 +32,7 @@ export const grvt: ScalingProject = zkStackL2({
       'Gravity (GRVT) is a hybrid crypto derivatives exchange, providing a centralized exchange-like experience while being based on the ZK stack Validium codebase with confidential data availability and transaction filtering enabled.',
     links: {
       websites: ['https://grvt.io'],
-      apps: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
+      bridges: ['https://grvt.io/exchange/perpetual/BTC-USDT'],
       documentation: ['https://help.grvt.io/en'], // https://docs.grvt.io/ is private
       socialMedia: [
         'https://x.com/grvt_io',

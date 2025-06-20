@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 22615670,
-  "configHash": "0xada7ea67284a6b1742499377bf1dfecdf6238702174bc0f33fd5bf215724ccab",
+  "configHash": "0xa41cf58fafd66a4404c852bfd9671cd19d4bcf5ef1bd42660409880cc0d666b2",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -125,6 +125,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xC975862927797812371A9Fb631f83F8f5e2240D5",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
           "role": "admin",
           "via": [
             { "address": "ethereum:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF" }
@@ -359,6 +367,11 @@
           "permission": "upgrade",
           "from": "ethereum:0xC975862927797812371A9Fb631f83F8f5e2240D5",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1715609063,
@@ -489,6 +502,7 @@
       "sinceTimestamp": 1715609063,
       "sinceBlock": 19861572,
       "values": {
+        "$admin": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
         "$immutable": false,
         "$implementation": "0x958487e21ba9E073836d598E31f749726f23413f",
         "$pastUpgrades": [
@@ -794,5 +808,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xb03cb80e2cf003805e0c7d3570ea8cbbc6d35bdab991150d09d7f6f4cf933671"
+  "permissionsConfigHash": "0x01186a72c3eb8ceefca0a7a8be816bdaba306549fa95220fdc6a3031d1fc09d3"
 }

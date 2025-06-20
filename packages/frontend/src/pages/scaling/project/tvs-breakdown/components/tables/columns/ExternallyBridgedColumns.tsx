@@ -2,6 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { ChevronIcon } from '~/icons/Chevron'
 import { cn } from '~/utils/cn'
 import type { ExternallyBridgedTokenEntry } from '../ExternallyBridgesTable'
+import { BridgedUsingCell } from '../cells/BridgedUsingCell'
 import { TokenAddressCell } from '../cells/TokenAddressCell'
 import { TokenAmountCell } from '../cells/TokenAmountCell'
 import { TokenNameCell } from '../cells/TokenNameCell'
@@ -27,6 +28,15 @@ export const externallyBridgedColumns = [
 
       return <TokenAddressCell address={address.address} url={address.url} />
     },
+  }),
+  columnHelper.display({
+    id: 'bridge',
+    header: 'Bridged Using',
+    meta: {
+      headClassName: 'md:pl-6',
+      cellClassName: 'md:pl-6',
+    },
+    cell: (ctx) => <BridgedUsingCell {...ctx.row.original} />,
   }),
   columnHelper.display({
     id: 'value',

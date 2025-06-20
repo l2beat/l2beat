@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": [
+    "endpoint",
+    "getAddressConfig",
+    "lpToken",
+    "owner",
+    "token"
+  ],
+  "ignoreInWatchMode": [
+    "plannerFee",
+    "poolBalance",
+    "treasuryFee",
+    "tvl",
+    "getTransferGasLimit",
+    "deficitOffset"
+  ]
+}

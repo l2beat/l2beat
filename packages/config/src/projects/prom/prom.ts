@@ -16,7 +16,7 @@ export const prom: ScalingProject = underReviewL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://prom.io/'],
-      apps: ['https://prom.io/bridge'],
+      bridges: ['https://prom.io/bridge'],
       documentation: ['https://prom.gitbook.io/'],
       explorers: ['https://promscan.io/'],
       repositories: [],

@@ -7,6 +7,7 @@ import {
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fraxferry')
 
@@ -26,7 +27,7 @@ export const fraxferry: Bridge = {
     slug: 'fraxferry',
     links: {
       websites: ['https://frax.com/'],
-      apps: ['https://mainnet.frax.com/tools/bridge/'],
+      bridges: ['https://mainnet.frax.com/tools/bridge/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
       socialMedia: ['https://twitter.com/fraxfinance'],
     },
@@ -1220,4 +1221,5 @@ export const fraxferry: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

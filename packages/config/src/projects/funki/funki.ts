@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -58,7 +63,7 @@ export const funki: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://funkichain.com'],
-      apps: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],
+      bridges: ['https://funkichain.com/bridge', 'https://swap.funkichain.com'],
       documentation: ['https://docs.funkichain.com/'],
       explorers: ['https://funkiscan.io/'],
       repositories: ['https://github.com/funkichain'],
@@ -69,6 +74,9 @@ export const funki: ScalingProject = opStackL2({
         'https://t.me/funkichain',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

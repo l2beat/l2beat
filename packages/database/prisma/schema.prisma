@@ -58,15 +58,6 @@ model AggregatedL2Cost {
 }
 
 model DataAvailability {
-  timestamp DateTime @db.Timestamp(6)
-  daLayer   String   @db.VarChar(255)
-  projectId String   @db.VarChar(255)
-  totalSize BigInt
-
-  @@id([timestamp, daLayer, projectId])
-}
-
-model DataAvailability2 {
   timestamp       DateTime @db.Timestamp(6)
   daLayer         String   @db.VarChar(255)
   projectId       String   @db.VarChar(255)
@@ -287,11 +278,13 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  projectId String   @db.VarChar(255)
-  chain     String   @db.VarChar(255)
-  address   String   @db.VarChar(255)
-  type      String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
+  projectId           String   @db.VarChar(255)
+  chain               String   @db.VarChar(255)
+  address             String   @db.VarChar(255)
+  type                String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  diffBaseBlockNumber Int      @default(2147483647)
+  diffHeadBlockNumber Int      @default(2147483647)
 
   @@unique([projectId, address, type, chain])
 }

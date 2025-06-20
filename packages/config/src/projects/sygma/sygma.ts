@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('sygma')
 
@@ -34,7 +35,7 @@ export const sygma: Bridge = {
         'https://twitter.com/buildwithsygma',
         `https://t.me/buildwithsygma`,
       ],
-      apps: [
+      bridges: [
         `https://subbridge.io`,
         'https://docs.buildwithsygma.com/resources/environments/testnet/#testnet-faucet',
         'https://sygma-react-widget.pages.dev/',
@@ -165,4 +166,5 @@ export const sygma: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

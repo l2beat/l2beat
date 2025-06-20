@@ -24,6 +24,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('apex')
@@ -125,7 +126,7 @@ export const apex: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://apex.exchange/'],
-      apps: ['https://pro.apex.exchange/'],
+      bridges: ['https://pro.apex.exchange/'],
       documentation: ['https://apex-pro.gitbook.io/apex-pro?lang=en-US'],
       repositories: ['https://github.com/ApeX-Protocol/core'],
       socialMedia: [
@@ -227,4 +228,5 @@ export const apex: ScalingProject = {
       membersCount: dacConfig.membersCount,
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

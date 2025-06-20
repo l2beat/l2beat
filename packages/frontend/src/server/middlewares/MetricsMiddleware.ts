@@ -15,13 +15,13 @@ export function MetricsMiddleware(logger: Logger) {
     res.once('finish', () => {
       const end = process.hrtime.bigint()
       const durationMs = Number(end - start) / 1_000_000
-
+      const contentLength = res.getHeader('Content-Length')
       appLogger.info(`Request processed`, {
         method: req.method,
         url: req.originalUrl,
         status: res.statusCode,
         duration: Math.round(durationMs),
-        size: res.getHeader('Content-Length'),
+        size: contentLength ? Number(contentLength) : undefined,
         referer: req.headers.referer ?? 'unknown',
         userAgent: req.headers['user-agent'] ?? 'unknown',
       })

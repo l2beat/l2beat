@@ -29,7 +29,7 @@ export const treasure: ScalingProject = zkStackL2({
       'Treasure is a gaming-specific L2 built on ZKsync, the Elastic Network. Treasure offers an end-to-end tech stack for developers and consumer apps to build the next generation of gaming.',
     links: {
       websites: ['https://treasure.lol/'],
-      apps: ['https://app.treasure.lol'],
+      bridges: ['https://app.treasure.lol'],
       documentation: ['https://docs.treasure.lol'],
       explorers: ['https://treasurescan.io'],
       repositories: ['https://github.com/TreasureProject'],

@@ -10,6 +10,7 @@ import { STATE_VALIDATION } from '../../common/stateValidation'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('termstructure')
 
@@ -64,7 +65,7 @@ export const termstructure: ScalingProject = {
     stack: 'ZKsync Lite',
     links: {
       websites: ['https://ts.finance/'],
-      apps: ['https://app.ts.finance/'],
+      bridges: ['https://app.ts.finance/'],
       documentation: ['https://docs.ts.finance/'],
       explorers: ['https://explorer.ts.finance/'],
       repositories: ['https://github.com/term-structure/'],
@@ -354,4 +355,5 @@ export const termstructure: ScalingProject = {
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

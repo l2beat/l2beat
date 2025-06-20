@@ -16,10 +16,12 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fuelv1')
 
 export const fuelv1: ScalingProject = {
+  archivedAt: UnixTime(1750414256), // Friday, June 20, 2025 10:10:52 AM
   type: 'layer2',
   id: ProjectId('fuelv1'),
   capability: 'appchain',
@@ -195,4 +197,5 @@ export const fuelv1: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,3 +1,243 @@
+Generated with discovered.json: 0x6697f49c3260f746390d8e822bbf4c03fdcb0d14
+
+# Diff at Wed, 18 Jun 2025 11:30:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22567365
+- current block number: 22730993
+
+## Description
+
+New defaultISM and DomainRouting contracts without source changes (only state, new chains).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (0x4085486acE416fce164f578b6e56eFC96dcf6e2E)
+    +++ description: None
+```
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09","role":"admin","via":[{"address":"ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
+      receivedPermissions.5.from:
+-        "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.4.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      receivedPermissions.3.from:
+-        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.2.from:
+-        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.1.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.1.from:
+-        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "ethereum:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
+      receivedPermissions.1.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.1.via:
+-        [{"address":"ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]
+      receivedPermissions.1.description:
++        "manage the domain -> ISM contract mapping."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm (0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239) {
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
++++ description: The default ISM contract that is used for all destination contracts that do not override it.
+      values.defaultIsm:
+-        "0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F"
++        "0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xE08367b408C4E17aA517593ffff9fe291b396a69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+## Source code changes
+
+```diff
+.../StaticAggregationIsm_default.sol}              |    0
+ .../.flat/StaticAggregationIsm_eclipse.sol         |  229 ++++
+ .../ethereum/.flat/StaticMerkleRootMultisigIsm.sol | 1378 ++++++++++++++++++++
+ 3 files changed, 1607 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567365 (main branch discovery), not current.
+
+```diff
+    contract DomainRoutingIsm (0x4085486acE416fce164f578b6e56eFC96dcf6e2E) {
+    +++ description: None
+      description:
+-        "ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse."
+      values.module:
+-        "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c"
+      fieldMeta:
+-        {"owner":{"severity":"HIGH"},"module":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09","role":"admin","via":[{"address":"ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]}
+      receivedPermissions.5.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      receivedPermissions.4.from:
+-        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.3.from:
+-        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      receivedPermissions.2.from:
+-        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.1.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.1.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.1.description:
+-        "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
+      receivedPermissions.1.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.1.via:
++        [{"address":"ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"}]
+      receivedPermissions.0.from:
+-        "ethereum:0x4085486acE416fce164f578b6e56eFC96dcf6e2E"
++        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.0.description:
+-        "manage the domain -> ISM contract mapping."
++        "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them."
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+```
+
+```diff
+    contract StaticAggregationIsm (0xB9E1E26Cb8bBc1830Ef49b2f6A60a47e44b06E4F) {
+    +++ description: This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.
+      name:
+-        "StaticAggregationIsm_default"
++        "StaticAggregationIsm"
+      values.modules:
+-        ["0x4085486acE416fce164f578b6e56eFC96dcf6e2E","0xE08367b408C4E17aA517593ffff9fe291b396a69"]
+      values.threshold:
+-        2
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
+    contract  (0xE08367b408C4E17aA517593ffff9fe291b396a69) {
+    +++ description: None
+      name:
+-        "UnknownIsm"
++        ""
+    }
+```
+
+Generated with discovered.json: 0x0be55f4f8c30da2bc3fff50768e814bdb86cc73f
+
+# Diff at Wed, 11 Jun 2025 10:34:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 22567365
+- current block number: 22567365
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567365 (main branch discovery), not current.
+
+```diff
+    contract DomainRoutingIsm (0x4085486acE416fce164f578b6e56eFC96dcf6e2E) {
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+      sourceHashes.1:
++        "0x124560aaa9d0270a185fdedc92cf52b43177f3c5c5550ca5f57d4db83988bcf0"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67"
+      implementationNames.0xBbaDB49B1fD1A0574C8D2B0589Cd9b8A79452e67:
++        "DomainRoutingIsm"
+    }
+```
+
 Generated with discovered.json: 0xe8924b2bf737f3a4421e3ff4dd119c073e393634
 
 # Diff at Mon, 26 May 2025 14:18:18 GMT:

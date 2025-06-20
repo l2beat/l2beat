@@ -24,7 +24,7 @@ export const sanko: ScalingProject = orbitStackL3({
       'Sanko is an NFT and gaming-focused Orbit stack L3 on Arbitrum with AnyTrust DA and DMT as its native token, created by Sanko GameCorp.',
     links: {
       websites: ['https://sanko.xyz/'],
-      apps: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],
+      bridges: ['https://sanko.xyz/bridge', 'https://swap.sanko.xyz'],
       documentation: ['https://sanko-1.gitbook.io/sanko-mainnet-docs/'],
       explorers: [
         'https://sanko-mainnet.calderaexplorer.xyz/',

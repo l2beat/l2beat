@@ -2,7 +2,7 @@
   "name": "polynomial",
   "chain": "ethereum",
   "blockNumber": 22615678,
-  "configHash": "0x3e16dfff955182715f999463be712b26ae67bd7575ba67ab7c75c4a6bdaf6009",
+  "configHash": "0x7b75ea217c8bf93dfacb2364e297f825f67dac3076a64d5a408851c045577d30",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -98,6 +98,7 @@
       "sinceTimestamp": 1718038307,
       "sinceBlock": 20062740,
       "values": {
+        "$admin": "0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f",
         "$immutable": false,
         "$implementation": "0xEC097D3f3319F2A23aa82ee2e28d30FdCBe0d753",
         "$pastUpgrades": [
@@ -192,6 +193,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x36725a5e0040deB7C697d46C0e24390702b202e0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x3Be64BF2b9C2dE637067C7AAb6baE5EDf9fEBA55",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
@@ -268,6 +274,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x034cbb620d1e0e4C2E29845229bEAc57083b04eC",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x36725a5e0040deB7C697d46C0e24390702b202e0",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x3c68b1d45f4faa4F028c3DC8910fA3247c7f0a1f" }
@@ -933,5 +947,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x762dff279f1a79dcbef67d0c28404b7d0581fbf4df5f0295dd47743dfd94db56"
+  "permissionsConfigHash": "0x3a765a0987dfb6dd87f81f8cb50c9427ad6b2addba98072ab72bef891b4f695c"
 }

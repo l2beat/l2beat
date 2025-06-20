@@ -17,7 +17,7 @@ export const slingshot: ScalingProject = upcomingL3({
     purposes: ['AI', 'Gaming'],
     links: {
       websites: ['https://slingshotdao.com/'],
-      apps: ['https://app.slingshotdao.com/'],
+      bridges: ['https://app.slingshotdao.com/'],
       documentation: ['https://docs.slingshotdao.com/'],
       explorers: ['https://explorer-slingshot-uivc8ajsjn.t.conduit.xyz/'],
       socialMedia: [

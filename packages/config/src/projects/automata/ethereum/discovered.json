@@ -2,7 +2,7 @@
   "name": "automata",
   "chain": "ethereum",
   "blockNumber": 22208279,
-  "configHash": "0xcca8112040601f14b278988deb9807e43fb4d4eee994bc9e97cafce42d4be66d",
+  "configHash": "0x4835f67953b40bb2d30622cb638342a8411cfc87f32afe9a790fbab523004b9a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -86,6 +86,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x72934D7AEDC1A2d889ca89Aaf064CD9455E64d00",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x7617f4a55d62b9EE49578D9C90593e58E607415F" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x825C858149F1E775a0f4Aeb172037B970bE7B736",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x7617f4a55d62b9EE49578D9C90593e58E607415F" }
@@ -425,6 +433,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x825C858149F1E775a0f4Aeb172037B970bE7B736",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xa74b7baF04867E62B7824268e96144E503A23666",
           "role": "admin"
         },
@@ -477,6 +490,7 @@
       "sinceTimestamp": 1721184935,
       "sinceBlock": 20323394,
       "values": {
+        "$admin": "0x7617f4a55d62b9EE49578D9C90593e58E607415F",
         "$immutable": false,
         "$implementation": "0xe691A05BE8323Ce70A30A7ef733962A0d3b238E2",
         "$pastUpgrades": [
@@ -1319,5 +1333,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xe1910f865a4334119d2aa8f0f4aae4f3401ee90d13712eda249868b804b9e388"
+  "permissionsConfigHash": "0xf219d8a662437c229259c8e799030dabfa93eea300109820d38873a72674eaa5"
 }

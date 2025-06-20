@@ -11,13 +11,13 @@ import type {
   EthereumBlob,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import type { DaTrackingConfig } from '../../../config/Config'
+import type { BlockDaIndexedConfig } from '../../../config/Config'
 
 export class DaService {
   generateRecords(
     blobs: DaBlob[],
     previousRecords: DataAvailabilityRecord[],
-    configurations: DaTrackingConfig[],
+    configurations: BlockDaIndexedConfig[],
   ): DataAvailabilityRecord[] {
     const updatedRecords = [...previousRecords]
 
@@ -26,7 +26,8 @@ export class DaService {
         (r) =>
           r.timestamp === record.timestamp &&
           r.daLayer === record.daLayer &&
-          r.projectId === record.projectId,
+          r.projectId === record.projectId &&
+          r.configurationId === record.configurationId,
       )
       if (existing) {
         existing.totalSize += record.totalSize
@@ -45,7 +46,7 @@ export class DaService {
 
   private createRecordsFromBlob(
     blob: DaBlob,
-    configurations: DaTrackingConfig[],
+    configurations: BlockDaIndexedConfig[],
   ): DataAvailabilityRecord[] {
     const records: DataAvailabilityRecord[] = []
 
@@ -54,9 +55,10 @@ export class DaService {
         case 'baseLayer': {
           if (blob.daLayer === c.daLayer) {
             records.push({
-              projectId: c.projectId,
+              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
               daLayer: blob.daLayer,
-              timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+              projectId: c.projectId,
+              configurationId: c.configurationId,
               totalSize: blob.size,
             })
           }
@@ -66,9 +68,10 @@ export class DaService {
           if (blob.type === 'ethereum') {
             if (matchEthereumProject(blob, c)) {
               records.push({
-                projectId: c.projectId,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                projectId: c.projectId,
+                configurationId: c.configurationId,
                 totalSize: blob.size,
               })
             }
@@ -79,9 +82,10 @@ export class DaService {
           if (blob.type === 'celestia') {
             if (matchCelestiaProject(blob, c)) {
               records.push({
-                projectId: c.projectId,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                projectId: c.projectId,
+                configurationId: c.configurationId,
                 totalSize: blob.size,
               })
             }
@@ -92,9 +96,10 @@ export class DaService {
           if (blob.type === 'avail') {
             if (matchAvailProject(blob, c)) {
               records.push({
-                projectId: c.projectId,
+                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'hour'),
                 daLayer: blob.daLayer,
-                timestamp: UnixTime.toStartOf(blob.blockTimestamp, 'day'),
+                projectId: c.projectId,
+                configurationId: c.configurationId,
                 totalSize: blob.size,
               })
             }
@@ -112,6 +117,16 @@ function matchEthereumProject(
   blob: EthereumBlob,
   config: EthereumDaTrackingConfig,
 ) {
+  if (config.topics) {
+    const hasTopicMatch = config.topics.some((topic) =>
+      blob.topics.includes(topic.toLowerCase()),
+    )
+
+    if (hasTopicMatch) {
+      return true
+    }
+  }
+
   const hasInboxMatch = config.inbox.toLowerCase() === blob.inbox.toLowerCase()
 
   if (!config.sequencers || config.sequencers.length === 0) {

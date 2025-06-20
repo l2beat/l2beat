@@ -1,3 +1,5 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import express from 'express'
 import { env } from '~/env'
 import { InMemoryCache } from '../server/cache/InMemoryCache'
@@ -28,7 +30,12 @@ export function createServerPageRouter(
     const headers = new Headers({
       'Content-Type': 'text/html; charset=utf-8',
     })
-    if (env.DEPLOYMENT_ENV === 'production') {
+    const now = UnixTime.now()
+    const is5MinutesBeforeMigration =
+      now < PROJECT_COUNTDOWNS.otherMigration &&
+      PROJECT_COUNTDOWNS.otherMigration - now < 5 * 60
+
+    if (env.DEPLOYMENT_ENV === 'production' && !is5MinutesBeforeMigration) {
       headers.set('Cache-Control', 'public, max-age=300')
     }
 

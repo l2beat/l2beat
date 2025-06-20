@@ -2,7 +2,7 @@
   "name": "shared-eigenlayer",
   "chain": "ethereum",
   "blockNumber": 22567898,
-  "configHash": "0xa989dad357e5ae977e5cac180fb0f776cbc1396bbb1216cd46c117fd4e24c8aa",
+  "configHash": "0xb305ac9d08f2633bedb3c79e21fcc73c00b5859ab50cff8d3795bdb3f45d1b62",
   "entries": [
     {
       "address": "0x00000000000000000000000000000000000E16E4",

@@ -58,6 +58,7 @@ export class AgglayerDataFetcher {
     '15': 'pentagon.games/pen-chain ',
     '16': 'pentagon games testnet?',
     '17': 'Okto (wallet?)',
+    '20': 'Katana',
   }
 
   // Rollup type ID descriptions
@@ -68,6 +69,8 @@ export class AgglayerDataFetcher {
     '8': 'okx validium',
     '9': 'pessimistic test',
     '10': 'pessimistic 2',
+    '11': 'pessimistic 3',
+    '12': 'aggchainFEP',
   }
 
   private rollupManagerAbi = [

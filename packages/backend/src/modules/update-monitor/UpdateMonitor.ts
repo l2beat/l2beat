@@ -99,11 +99,15 @@ export class UpdateMonitor {
     const result: Record<string, DailyReminderChainEntry[]> = {}
 
     for (const runner of this.discoveryRunners) {
-      const projectConfigs = this.configReader.readAllConfigsForChain(
+      const projectConfigs = this.configReader.readAllDiscoveredConfigsForChain(
         runner.chain,
       )
 
       for (const projectConfig of projectConfigs) {
+        if (projectConfig.archived) {
+          continue
+        }
+
         const discovery = this.discoveryOutputCache.get(
           projectConfig.name,
           runner.chain,
@@ -144,7 +148,7 @@ export class UpdateMonitor {
     // TODO: get block number based on clock time
     const blockNumber = await runner.getBlockNumber()
 
-    const projectConfigs = this.configReader.readAllConfigsForChain(
+    const projectConfigs = this.configReader.readAllDiscoveredConfigsForChain(
       runner.chain,
     )
 
@@ -162,6 +166,16 @@ export class UpdateMonitor {
         projectConfig.chain === runner.chain,
         `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
       )
+
+      // Skip archived configurations as an additional safety measure
+      if (projectConfig.archived) {
+        this.logger.info('Skipping archived project', {
+          chain: runner.chain,
+          project: projectConfig.name,
+        })
+        continue
+      }
+
       this.logger.info('Project update started', {
         chain: runner.chain,
         project: projectConfig.name,

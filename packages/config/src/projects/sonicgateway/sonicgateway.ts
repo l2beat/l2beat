@@ -13,6 +13,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('sonicgateway')
 
@@ -49,7 +50,7 @@ export const sonicgateway: Bridge = {
       websites: ['https://gateway.soniclabs.com/'],
       documentation: ['https://docs.soniclabs.com/sonic/sonic-gateway'],
       explorers: [],
-      apps: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
+      bridges: ['https://gateway.soniclabs.com/ethereum/sonic/s'],
       repositories: [],
       socialMedia: [
         'https://x.com/SonicLabs',
@@ -186,4 +187,5 @@ State updates are expected regularly (currently every ${heartBeatInterval} Sonic
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

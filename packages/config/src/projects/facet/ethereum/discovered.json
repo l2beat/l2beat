@@ -2,7 +2,7 @@
   "name": "facet",
   "chain": "ethereum",
   "blockNumber": 22367347,
-  "configHash": "0x7a59cb9ea76763f078b7bde7396d9bc92d322c6af83cfb01bdd9b0642847a4ce",
+  "configHash": "0xbb7f40761a981db6063bcfd4843add560fb282e262efda302152259951f77b99",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -254,6 +254,7 @@
       "sinceTimestamp": 1733855531,
       "sinceBlock": 21373914,
       "values": {
+        "$admin": "0xe2A3bda6CD571943DD4224d0B8872e221EB5997C",
         "$immutable": false,
         "$implementation": "0xa711dC056C2Db08ee2Ba89be3ED504f48Bf4dbfA",
         "$pastUpgrades": [
@@ -345,6 +346,14 @@
           "from": "ethereum:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
+          "via": [
+            { "address": "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xa1233c2DB638D41893a101B0e9dd44cb681270E8",
+          "role": "admin",
           "via": [
             { "address": "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C" }
           ]
@@ -629,6 +638,11 @@
           "from": "ethereum:0x8F75466D69a52EF53C7363F38834bEfC027A2909",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xa1233c2DB638D41893a101B0e9dd44cb681270E8",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -1121,5 +1135,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig_facet": "0x721992f38caef4e0321cea669e040f798ff17f94e596c853b4dea0ec6468c81f"
   },
-  "permissionsConfigHash": "0x858bf60c443348e01ee13e1998a9159ebc2213ec86d8c9a972974ffa868e45c8"
+  "permissionsConfigHash": "0xe289c4908ccd30dcf86fc8ee44420b57f1985110d964f108e84d2805f97113b1"
 }

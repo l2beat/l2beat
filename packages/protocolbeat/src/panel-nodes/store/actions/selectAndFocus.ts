@@ -1,35 +1,40 @@
 import type { State } from '../State'
 
-export function selectAndFocus(
-  state: State,
-  selected: readonly string[],
-): Partial<State> {
-  if (
-    state.selected.length === selected.length &&
-    state.selected.every((x, i) => x === selected[i])
-  ) {
+export function selectAndFocus(state: State, selected: string): Partial<State> {
+  const node = state.nodes.find((x) => x.id === selected)
+
+  if (!node) {
     return state
   }
 
-  if (selected.length === 0) {
-    return { selected }
-  }
+  const minX = node.box.x
+  const minY = node.box.y
+  const maxX = node.box.x + node.box.width
+  const maxY = node.box.y + node.box.height
 
-  let minX = Infinity
-  let minY = Infinity
-  const nodes = state.nodes.filter((x) => selected.includes(x.id))
-  for (const node of nodes) {
-    minX = Math.min(node.box.x, minX)
-    minY = Math.min(node.box.y, minY)
+  const nodesCenterX = (minX + maxX) / 2
+  const nodesCenterY = (minY + maxY) / 2
+
+  let offsetX = state.transform.offsetX
+  let offsetY = state.transform.offsetY
+
+  const viewport = state.viewportContainer
+
+  if (viewport) {
+    const rect = viewport.getBoundingClientRect()
+    const viewportCenterX = rect.width / 2
+    const viewportCenterY = rect.height / 2
+
+    offsetX = viewportCenterX - nodesCenterX * state.transform.scale
+    offsetY = viewportCenterY - nodesCenterY * state.transform.scale
   }
 
   return {
     transform: {
-      // TODO: In the future this should center. Maybe even animate
       ...state.transform,
-      offsetX: 100 - minX * state.transform.scale,
-      offsetY: 100 - minY * state.transform.scale,
+      offsetX,
+      offsetY,
     },
-    selected,
+    selected: [selected],
   }
 }

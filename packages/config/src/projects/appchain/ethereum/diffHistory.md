@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xaee4bf132045c9c55658511cf483a8464e088fa2
+
+# Diff at Wed, 18 Jun 2025 12:22:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22665848
+- current block number: 22665848
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22665848 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x28293c7855797B0441000EF144119727f3cBCA9B) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x735cbcc29e932a0a4fade8af5a5e90c2b0eafa78
+
+# Diff at Mon, 09 Jun 2025 08:58:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22623572
+- current block number: 22665848
+
+## Description
+
+New MrEnclave (code /init data on the TEE changed).
+
+## Watched changes
+
+```diff
+    contract EspressoTEEVerifier (0x64189bd57B1b281C9EC3f5295B75797ddcB1572c) {
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
++++ description: Identifier of the TEE code used (hash of enclave's code and initial data).
+      values.mrEnclaves.1:
++        "0x7479bcebe47fb96bc3246fc30363eb438316736c49225b77667e6bdb961c0177"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22623572 (main branch discovery), not current.
+
+```diff
+    contract EspressoTEEVerifier (0x64189bd57B1b281C9EC3f5295B75797ddcB1572c) {
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
+      fieldMeta:
++        {"mrEnclaves":{"description":"Identifier of the TEE code used (hash of enclave's code and initial data)."},"mrSigners":{"description":"Hash of the signer's public key (who signed the code running on the TEE)."}}
+    }
+```
+
 Generated with discovered.json: 0x472d524045dc782d30bd1e31419a1954850c0c72
 
 # Diff at Tue, 03 Jun 2025 11:45:52 GMT:

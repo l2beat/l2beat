@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('pNetwork')
 
@@ -20,7 +21,7 @@ export const pNetwork: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://p.network/'],
-      apps: ['https://dapp.ptokens.io/'],
+      bridges: ['https://dapp.ptokens.io/'],
       repositories: ['https://github.com/provable-things'],
       documentation: ['https://docs.p.network/en/home'],
       socialMedia: [
@@ -209,4 +210,5 @@ export const pNetwork: Bridge = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

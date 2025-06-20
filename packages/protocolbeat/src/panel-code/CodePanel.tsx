@@ -6,6 +6,9 @@ import { getCode, getProject } from '../api/api'
 import type { ApiCodeResponse } from '../api/types'
 import { findSelected } from '../common/findSelected'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { CodeView } from '../components/editor/CodeView'
 import { useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
@@ -51,15 +54,15 @@ export function CodePanel() {
   const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selected === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   let showRediscoverInfo = false

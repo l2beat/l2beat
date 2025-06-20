@@ -4,7 +4,9 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getUnderReviewStatus } from '~/utils/project/underReview'
 import type { ProjectChanges } from '../projects-change-report/getProjectsChangeReport'
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
+import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { isProjectOther } from './utils/isProjectOther'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -36,7 +38,10 @@ export function getCommonScalingEntry({
     statuses: {
       yellowWarning: project.statuses.yellowWarning,
       redWarning: project.statuses.redWarning,
-      verificationWarning: project.statuses.isUnverified,
+      verificationWarning: !getIsProjectVerified(
+        project.statuses.unverifiedContracts,
+        changes,
+      ),
       underReview: getUnderReviewStatus({
         isUnderReview: !!project.statuses.reviewStatus,
         impactfulChange: !!changes?.impactfulChange,
@@ -77,6 +82,12 @@ export function getCommonScalingEntry({
         id: 'vm' as const,
         value: vm,
       })),
+      ...project.display.badges
+        .filter((badge) => badge.type === 'Other')
+        .map((badge) => ({
+          id: 'other' as const,
+          value: badge.name,
+        })),
     ],
     description: project.display?.description,
     badges: project.display.badges
@@ -94,7 +105,7 @@ export function getScalingTab(
 
   return project.statuses.reviewStatus === 'initialReview'
     ? 'underReview'
-    : project.scalingInfo.isOther
+    : isProjectOther(project.scalingInfo)
       ? 'others'
       : isRollup
         ? 'rollups'

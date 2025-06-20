@@ -4,6 +4,7 @@ import { CONTRACTS } from '../../common'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('orbit')
 
@@ -28,7 +29,7 @@ export const orbit: Bridge = {
         'https://bridge.orbitchain.io/',
         'https://orbitchain.io/about',
       ],
-      apps: ['https://bridge.orbitchain.io/'],
+      bridges: ['https://bridge.orbitchain.io/'],
       socialMedia: [
         'https://twitter.com/Orbit_Chain',
         'https://t.me/OrbitChainGlobal',
@@ -202,4 +203,5 @@ export const orbit: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

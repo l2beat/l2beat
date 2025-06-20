@@ -2,7 +2,7 @@
   "name": "arenaz",
   "chain": "ethereum",
   "blockNumber": 22494925,
-  "configHash": "0xee7753327465821f4a2469e4fd95d3e53121acd34efaddc45f805903a67ab414",
+  "configHash": "0xae662ba3fa292625e54bb01962295260636dc0a2d99c932d952d6b6083b811da",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -115,6 +115,7 @@
       "sinceTimestamp": 1731366083,
       "sinceBlock": 21167590,
       "values": {
+        "$admin": "0xEEFD1782D70824CBcacf9438afab7f353F1797F0",
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "$pastUpgrades": [
@@ -387,6 +388,20 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5",
+          "role": ".challenger",
+          "via": [
+            {
+              "address": "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+            },
+            {
+              "address": "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C",
+              "condition": "though restricted to the global pause function"
+            }
+          ]
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -624,6 +639,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A",
           "role": "admin",
           "via": [
@@ -786,7 +809,14 @@
     {
       "address": "0x5f16E66D8736B689a430564a31c8d887ca357CD8",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "MIPS",
@@ -1243,6 +1273,11 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
+          "permission": "challenge",
+          "from": "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5",
+          "role": ".challenger"
+        },
+        {
           "permission": "guard",
           "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
@@ -1673,6 +1708,11 @@
           "from": "ethereum:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -2636,5 +2676,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x944e48559c46806598d5e36d6218f15c564f67a8a8fdd7d76e6cf7916886a54e"
+  "permissionsConfigHash": "0xa471c88c442add166678b236fd5f4376d1cf6eb861eaea006365c73019437a42"
 }

@@ -20,7 +20,7 @@ export const hemi: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://hemi.xyz'],
-      apps: ['https://app.hemi.xyz'],
+      bridges: ['https://app.hemi.xyz'],
       documentation: ['https://docs.hemi.xyz'],
       explorers: [
         'https://explorer.hemi.xyz'

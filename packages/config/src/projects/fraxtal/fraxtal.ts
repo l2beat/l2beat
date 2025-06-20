@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -50,6 +50,9 @@ export const fraxtal: ScalingProject = opStackL2({
     bridge: DA_BRIDGES.NONE,
     badge: BADGES.DA.CustomDA,
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   associatedTokens: ['FRAX', 'FPIS'],
   discovery,
   reasonsForBeingOther: [
@@ -63,7 +66,7 @@ export const fraxtal: ScalingProject = opStackL2({
       'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
     links: {
       websites: ['https://frax.com/'],
-      apps: ['https://app.frax.finance/'],
+      bridges: ['https://app.frax.finance/'],
       documentation: ['https://docs.frax.com/'],
       explorers: ['https://fraxscan.com/'],
       repositories: ['https://github.com/FraxFinance'],

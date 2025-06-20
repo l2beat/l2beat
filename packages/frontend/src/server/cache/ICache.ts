@@ -1,7 +1,7 @@
 export interface ICache {
   get: <T>(
     options: {
-      key: string[]
+      key: (string | undefined)[]
       ttl: number
       staleWhileRevalidate?: number
     },

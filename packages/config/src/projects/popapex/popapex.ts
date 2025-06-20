@@ -28,7 +28,7 @@ export const popapex: ScalingProject = orbitStackL3({
       'Proof of Play Apex is a gaming-focused L3 settling on Arbitrum using the Orbit Stack and AnyTrust DA.',
     links: {
       websites: ['https://proofofplay.com/'],
-      apps: [
+      bridges: [
         'https://bridge.arbitrum.io/?destinationChain=pop-apex&sourceChain=arbitrum-one',
         'https://piratenation.game/',
       ],

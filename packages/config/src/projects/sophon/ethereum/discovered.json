@@ -2,7 +2,7 @@
   "name": "sophon",
   "chain": "ethereum",
   "blockNumber": 22593196,
-  "configHash": "0xdc6bd0435dbe6314f57267e0a03b8a518dfa3d20633891a422f8c00a8c978be6",
+  "configHash": "0x715f906c2e30a157acfba4c31764e3812572d16dabb45eeaf1e77f230ad810c6",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -1304,7 +1304,7 @@
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
-    "shared-zk-stack/v26/AvailL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-zk-stack/v26/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },

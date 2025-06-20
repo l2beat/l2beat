@@ -1,11 +1,13 @@
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { type InstalledClock, install } from '@sinonjs/fake-timers'
 import { EtherscanClient } from './EtherscanClient'
 
 describe(EtherscanClient.name, () => {
+  const logger = Logger.SILENT
   let time: InstalledClock
 
   beforeEach(() => {
@@ -37,7 +39,13 @@ describe(EtherscanClient.name, () => {
     const httpClient = mockObject<HttpClient>({
       fetch: mockFn().resolvesToOnce(response),
     })
-    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -60,7 +68,13 @@ describe(EtherscanClient.name, () => {
       fetch: mockFn().resolvesToOnce(response),
     })
 
-    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -85,7 +99,13 @@ describe(EtherscanClient.name, () => {
       fetch: mockFn().resolvesToOnce('randomrandom').resolvesToOnce(response),
     })
 
-    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -111,7 +131,13 @@ describe(EtherscanClient.name, () => {
       fetch: mockFn().resolvesToOnce(nokResponse).resolvesToOnce(response),
     })
 
-    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -141,7 +167,13 @@ describe(EtherscanClient.name, () => {
         .resolvesToOnce(response),
     })
 
-    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
+    const client = new EtherscanClient(
+      httpClient,
+      logger,
+      URL,
+      API_KEY,
+      MIN_TIMESTAMP,
+    )
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()

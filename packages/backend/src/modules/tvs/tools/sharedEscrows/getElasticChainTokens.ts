@@ -158,6 +158,7 @@ export async function getElasticChainTokens(
         sinceTimestamp,
         ...(untilTimestamp ? { untilTimestamp } : {}),
       },
+      bridgedUsing: token.bridgedUsing,
     }
   })
 

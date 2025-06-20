@@ -17,7 +17,7 @@ import {
   isTvsChartDataEmpty,
 } from '~/server/features/utils/isChartDataEmpty'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -32,9 +32,12 @@ import { getOtherConsiderationsSection } from '~/utils/project/technology/getOth
 import { getSequencingSection } from '~/utils/project/technology/getSequencingSection'
 import { getWithdrawalsSection } from '~/utils/project/technology/getWithdrawalsSection'
 import { getTrackedTransactions } from '~/utils/project/tracked-txs/getTrackedTransactions'
-import type { UnderReviewStatus } from '~/utils/project/underReview'
-import { getUnderReviewStatus } from '~/utils/project/underReview'
+import {
+  type UnderReviewStatus,
+  getUnderReviewStatus,
+} from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 import { getActivityProjectStats } from '../activity/getActivityProjectStats'
 import { getLiveness } from '../liveness/getLiveness'
@@ -65,6 +68,7 @@ export interface ProjectScalingEntry {
     badges?: BadgeWithParams[]
     links: ProjectLink[]
     hostChain?: string
+    chainId?: number
     category: ProjectScalingCategory
     purposes: string[]
     tvs?: {
@@ -88,7 +92,6 @@ export interface ProjectScalingEntry {
       }
     }
     activity?: {
-      uopsCount: number
       lastDayUops: number
       uopsWeeklyChange: number
     }
@@ -100,7 +103,7 @@ export interface ProjectScalingEntry {
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
-  discoUiHref: string
+  discoUiHref: string | undefined
 }
 
 export async function getScalingProjectEntry(
@@ -125,6 +128,7 @@ export async function getScalingProjectEntry(
     | 'trackedTxsConfig'
     | 'livenessConfig'
   >,
+  helpers: SsrHelpers,
 ): Promise<ProjectScalingEntry> {
   const [
     projectsChangeReport,
@@ -141,19 +145,19 @@ export async function getScalingProjectEntry(
     getProjectsChangeReport(),
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-    api.tvs.chart({
+    helpers.tvs.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
       previewRecategorisation: false,
     }),
-    api.activity.chart({
+    helpers.activity.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
-      ? api.costs.projectChart({
+      ? helpers.costs.projectChart.fetch({
           range: '1y',
           projectId: project.id,
         })
@@ -181,6 +185,7 @@ export async function getScalingProjectEntry(
       project.scalingInfo.hostChain.id !== ProjectId.ETHEREUM
         ? project.scalingInfo.hostChain.name
         : undefined,
+    chainId: project.chainConfig?.chainId,
     tvs:
       !env.EXCLUDED_TVS_PROJECTS?.includes(project.id) && tvsProjectStats
         ? {
@@ -236,7 +241,10 @@ export async function getScalingProjectEntry(
     stageConfig: isProjectOther(project.scalingInfo)
       ? { stage: 'NotApplicable' as const }
       : project.scalingStage,
-    discoUiHref: `https://disco.l2beat.com/ui/p/${project.id}`,
+    discoUiHref:
+      project.statuses.reviewStatus === 'initialReview'
+        ? undefined
+        : `https://disco.l2beat.com/ui/p/${project.id}`,
   }
 
   const sections: ProjectDetailsSection[] = []
@@ -254,7 +262,11 @@ export async function getScalingProjectEntry(
           optional: ['contracts'],
         })
       : undefined
-  const isHostChainVerified = !hostChain?.statuses.isUnverified
+
+  const isHostChainVerified = getIsProjectVerified(
+    hostChain?.statuses.unverifiedContracts ?? [],
+    projectsChangeReport.getChanges(hostChain?.id ?? ''),
+  )
   const hostChainWarning = hostChain
     ? {
         hostChainName: hostChain.name,
@@ -329,6 +341,7 @@ export async function getScalingProjectEntry(
   }
 
   const livenessSection = await getLivenessSection(
+    helpers,
     project,
     liveness[project.id],
     projectsChangeReport.projects[project.id],
@@ -373,10 +386,11 @@ export async function getScalingProjectEntry(
     })
   }
 
-  const riskSummary = getScalingRiskSummarySection(
-    project,
-    !project.statuses.isUnverified,
+  const isProjectVerified = getIsProjectVerified(
+    project.statuses.unverifiedContracts ?? [],
+    changes,
   )
+  const riskSummary = getScalingRiskSummarySection(project, isProjectVerified)
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -415,7 +429,7 @@ export async function getScalingProjectEntry(
         combined: common.rosette.stacked,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !project.statuses.isUnverified,
+        isVerified: isHostChainVerified,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -428,7 +442,7 @@ export async function getScalingProjectEntry(
         rosetteValues: common.rosette.self,
         warning: project.scalingTechnology.warning,
         redWarning: project.statuses.redWarning,
-        isVerified: !project.statuses.isUnverified,
+        isVerified: isProjectVerified,
         isUnderReview: !!project.statuses.reviewStatus,
       },
     })
@@ -597,7 +611,7 @@ export async function getScalingProjectEntry(
   const contractsSection = getContractsSection(
     {
       id: project.id,
-      isVerified: !project.statuses.isUnverified,
+      isVerified: isProjectVerified,
       slug: project.slug,
       contracts: project.contracts,
       isUnderReview: !!project.statuses.reviewStatus,

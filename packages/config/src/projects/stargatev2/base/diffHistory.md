@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xbe02206245d850b7555d8f78cd33474efac4a6f1
+
+# Diff at Mon, 09 Jun 2025 10:36:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 30899167
+- current block number: 31337375
+
+## Description
+
+config: add stargate pool shapes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30899167 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolUSDC (0x27a16dc786820B16E5c9028b75B99F6f604b5d26) {
+    +++ description: None
+      template:
++        "stargate/StargatePoolUSDC"
+    }
+```
+
+```diff
+    contract StargatePoolNative (0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7) {
+    +++ description: None
+      template:
++        "stargate/StargatePoolNative"
+    }
+```
+
 Generated with discovered.json: 0x75085d144ac06f3e84ed7d43448fe85ede0e1e7b
 
 # Diff at Mon, 26 May 2025 15:50:35 GMT:

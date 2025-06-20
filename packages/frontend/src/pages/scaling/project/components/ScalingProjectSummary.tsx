@@ -24,7 +24,11 @@ interface Props {
 export function ProjectScalingSummary({ project }: Props) {
   return (
     <FullPageHeader className="pt-8 pb-0 md:pt-12 md:pb-8">
-      <section id="summary" className="w-full max-md:bg-header-primary">
+      <section
+        id="summary"
+        data-role="project-section"
+        className="w-full max-md:bg-header-primary"
+      >
         <div className="flex justify-between gap-4">
           <div className="w-full space-y-4 md:space-y-6">
             <ProjectHeader project={project} />
@@ -94,18 +98,20 @@ export function ProjectScalingSummary({ project }: Props) {
           <ProjectScalingRosette project={project} />
         </div>
 
-        <div className="md:hidden">
-          <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
-          <div className="flex items-center justify-between">
-            <a
-              className="text-link text-xs underline"
-              href={project.discoUiHref}
-            >
-              Explore more in Discovery UI
-            </a>
-            {project.discoUiHref && <DiscoUiLink href={project.discoUiHref} />}
+        {project.discoUiHref && (
+          <div className="md:hidden">
+            <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
+            <div className="flex items-center justify-between">
+              <a
+                className="text-link text-xs underline"
+                href={project.discoUiHref}
+              >
+                Explore more in Discovery UI
+              </a>
+              <DiscoUiLink href={project.discoUiHref} />
+            </div>
           </div>
-        </div>
+        )}
 
         <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-screen md:my-6" />
         <div className="md:hidden">

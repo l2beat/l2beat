@@ -1,3 +1,5 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { CloseIcon } from '~/icons/Close'
@@ -5,11 +7,10 @@ import { cn } from '~/utils/cn'
 import { CustomLink } from './link/CustomLink'
 
 const localStorageTag = 'top-banner'
-const purpose = 'native-rollups-article'
-
-const enabled = true
+const purpose = 'recategorisation-live'
 
 export function Banner({ className }: { className?: string }) {
+  const enabled = UnixTime.now() >= PROJECT_COUNTDOWNS.otherMigration
   const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
     `${localStorageTag}-${purpose}-is-hidden`,
@@ -33,8 +34,9 @@ export function Banner({ className }: { className?: string }) {
           className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
         />
       </div>
-      <div className="text-sm">
-        Our latest article on native rollups is live!
+      <div className="text-balance text-center text-sm max-md:px-6">
+        We recently introduced recategorisation and some projects were moved to
+        Others.
       </div>
       <BannerActionButton />
     </div>
@@ -44,13 +46,13 @@ export function Banner({ className }: { className?: string }) {
 function BannerActionButton() {
   return (
     <CustomLink
-      href="https://medium.com/l2beat/native-rollups-where-they-are-and-where-they-are-going-cb21eb103d46"
+      href="https://medium.com/l2beat/framework-update-l2-projects-recategorization-5d43b0d1fe50"
       variant="plain"
       underline={false}
       className="text-white dark:text-white"
     >
       <div className="flex items-center justify-center gap-1 rounded-lg border border-[#9360BC] bg-[#53227A] px-5 py-1 transition-colors duration-200 hover:bg-[#53227A]/80">
-        <span className="font-medium text-xs">Read article</span>
+        <span className="font-medium text-xs">Learn more</span>
       </div>
     </CustomLink>
   )

@@ -2,7 +2,7 @@
   "name": "rss3",
   "chain": "ethereum",
   "blockNumber": 21041870,
-  "configHash": "0x4af00cf74ec6061eb452e2d74b4521fe3e95f04648076ba2afdace39dc180463",
+  "configHash": "0x33663f7774ca8098ea70b33cf2c895d42d033b9533dd342c33f2b20b4ba02191",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -78,6 +78,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x80e73D6BfC73c567032304C3891a06c2d9954d09",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C",
           "role": "admin"
         },
         {
@@ -387,6 +392,7 @@
       "sinceTimestamp": 1709859947,
       "sinceBlock": 19387057,
       "values": {
+        "$admin": "0x1075B29e5F7a911128C77F3989702E150C988904",
         "$immutable": false,
         "$implementation": "0x4795EaC1a2581F2Db6419203D063711C5a90aD50",
         "$pastUpgrades": [
@@ -477,6 +483,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x80e73D6BfC73c567032304C3891a06c2d9954d09",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x1075B29e5F7a911128C77F3989702E150C988904" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x1075B29e5F7a911128C77F3989702E150C988904" }
@@ -1131,5 +1145,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x14fe7d0075dd197522125a36ff12bef7f26a77c6e453b9c9ec95196a5f2864a2"
+  "permissionsConfigHash": "0xe62bfa7322e9228954efcd2d7e4e08c778fe12ed316951911f7403e4349e4b35"
 }

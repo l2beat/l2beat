@@ -8,8 +8,8 @@ export interface FieldDisplayProps {
 export function FieldDisplay({ field }: FieldDisplayProps) {
   const tags = getFieldTags(field)
   return (
-    <li className="mb-1 text-sm last:mb-0">
-      <div className="flex gap-2 px-5 py-1 font-bold text-xs">
+    <li className="mb-1 truncate text-sm last:mb-0">
+      <div className="flex flex-wrap gap-2 px-5 py-1 font-bold text-xs">
         {field.name}
         {tags.map((x, i) => (
           <span

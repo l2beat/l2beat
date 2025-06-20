@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22631701,
-  "configHash": "0x672ea305755cfffc78681d6dbf150c6015b96ef290dcd7cb2bbd204de5497b82",
+  "configHash": "0xacb7d400175d8989772a671e211e622ed844fe7b0f927057858fe86c44dc02c1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -52,7 +52,7 @@
         "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
       ],
       "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs.",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
       "values": {
@@ -168,6 +168,7 @@
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
       "values": {
+        "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$immutable": false,
         "$implementation": "0xF4e69D58027De611d9F142e6b0Db6b11569F50E7",
         "$pastUpgrades": [
@@ -224,6 +225,11 @@
           "from": "ethereum:0x51D5C516c818dcf63E67B28cB2516166D8578c06",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -390,61 +396,66 @@
       "sinceBlock": 20233410,
       "values": {
         "$immutable": true,
-        "oldVerifier": {
-          "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB",
-          "frozen": true
-        },
-        "oldVerifier2": {
-          "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc",
-          "frozen": true
-        },
-        "oldVerifier3": {
-          "prover": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3",
-          "frozen": true
-        },
-        "oldVerifier4": {
-          "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d",
-          "frozen": true
-        },
-        "oldVerifier5": {
-          "prover": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16",
-          "frozen": true
-        },
-        "oldVerifier6": {
-          "prover": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-          "frozen": false
-        },
-        "opSuccinctVerifier": {
-          "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-          "frozen": false
-        },
-        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-        "verifier": {
-          "prover": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-          "frozen": false
-        }
+        "activeVerifiers": [
+          {
+            "selector": "0x1b34fe11",
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+          },
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0x801c66ac",
+            "verifier": "0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
+          },
+          {
+            "selector": "0x8c5bc5e4",
+            "verifier": "0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
+          },
+          {
+            "selector": "0xfedc1fcc",
+            "verifier": "0x36B353776AF6EF3A2bD707049e783F52c4209017"
+          },
+          {
+            "selector": "0xc430ff7f",
+            "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
+          },
+          {
+            "selector": "0xc865c1b6",
+            "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
+          },
+          {
+            "selector": "0x4aca240a",
+            "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d"
+          },
+          {
+            "selector": "0x09069090",
+            "verifier": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"
+          },
+          {
+            "selector": "0x54bdcae3",
+            "verifier": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
+          },
+          {
+            "selector": "0x1b34fe11",
+            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+          },
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          }
+        ],
+        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
       },
       "fieldMeta": {
-        "oldVerifier": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This verifier route was frozen on 2024-09-04."
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
         },
-        "oldVerifier2": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-09-21."
-        },
-        "oldVerifier3": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-01."
-        },
-        "oldVerifier4": {
-          "description": "The verifier contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2024-11-08."
-        },
-        "oldVerifier5": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen). This prover route was frozen on 2025-01-15."
-        },
-        "oldVerifier6": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
-        },
-        "verifier": {
-          "description": "The prover contract address for SP1, and whether it is frozen (true if frozen)."
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
         }
       },
       "implementationNames": {
@@ -520,6 +531,14 @@
           "from": "ethereum:0xeBf5859b7646ca9cf8A981613569bF28394F2571",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }
+          ]
         },
         {
           "permission": "upgrade",
@@ -1344,7 +1363,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "holds the power to affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
+          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
       ],
@@ -1397,6 +1416,27 @@
         "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v4.0.0-rc.3).",
+      "sinceTimestamp": 1735949699,
+      "sinceBlock": 21547470,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
+        "VERSION": "v4.0.0-rc.3"
+      },
+      "implementationNames": {
+        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
+      }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2177,6 +2217,15 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
+    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0xeBf5859b7646ca9cf8A981613569bF28394F2571": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2257,7 +2306,7 @@
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "succinct/OPSuccinct/OPSuccinctL2OutputOracle": "0x23a763ed39c139851f257aef8c5edb090d6cbf04040b6f63dace0d3e157a3ab0",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0x3f3a2098d4a63ac44ccbe2091c28eab33ddf6eadd3cc1a0833fa278532df267f"
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x8301c582ac7a7dd0d78aee6da4d1473f27adeab477821027eaf226fed8828aca"
+  "permissionsConfigHash": "0xb684ba7ffcd1509bbb3e5eeeb71c6e0cf3605e8db79ecdf7067c0f21a659121d"
 }

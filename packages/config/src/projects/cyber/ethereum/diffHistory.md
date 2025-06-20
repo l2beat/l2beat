@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x8194054d8a1b82449d62eb3b648df6b075043e2f
+
+# Diff at Mon, 16 Jun 2025 08:41:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22208300
+- current block number: 22208300
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22208300 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03) {
+    +++ description: None
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4","role":"admin"}
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4"
++        "ethereum:0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9"
+    }
+```
+
+```diff
+    contract Cyber Multisig 1 (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4","role":"admin","via":[{"address":"ethereum:0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"}]}
+      receivedPermissions.8.from:
+-        "ethereum:0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4"
++        "ethereum:0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9"
+    }
+```
+
 Generated with discovered.json: 0xa1f761a4c19c619cf79e38a0b5ed2dbe743a3163
 
 # Diff at Fri, 30 May 2025 06:57:19 GMT:

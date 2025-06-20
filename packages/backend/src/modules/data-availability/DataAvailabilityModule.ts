@@ -1,18 +1,20 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
+import { assert } from '@l2beat/shared-pure'
+import partition from 'lodash/partition'
 import type { Config } from '../../config'
-import type {
-  DataAvailabilityTrackingConfig,
-  DataAvailabilityTrackingConfig2,
-} from '../../config/Config'
+import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
+import { HourlyIndexer } from '../../tools/HourlyIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
-import { DaIndexer2 } from './indexers/DaIndexer2'
-import { DaService2 } from './services/DaService2'
+import { DaIndexer } from './indexers/DaIndexer'
+import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
+import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
+import { DaService } from './services/DaService'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -22,7 +24,7 @@ export function initDataAvailabilityModule(
   database: Database,
   _peripherals: Peripherals,
 ): ApplicationModule | undefined {
-  if (!config.da || !config.da2) {
+  if (!config.da) {
     logger.info('Data availability module disabled')
     return
   }
@@ -32,14 +34,8 @@ export function initDataAvailabilityModule(
     module: 'data-availability',
   })
 
-  const { targetIndexers, daIndexers } = createIndexers(
-    config.da,
-    config.da2,
-    clock,
-    database,
-    logger,
-    providers,
-  )
+  const { targetIndexers, daIndexers, eigenIndexers, hourlyIndexer } =
+    createIndexers(config.da, clock, database, logger, providers)
 
   return {
     start: async () => {
@@ -64,25 +60,40 @@ export function initDataAvailabilityModule(
         }),
       )
       logger.info('DA indexers started')
+
+      if (eigenIndexers.length > 0) {
+        logger.info('Starting EigenDA indexer')
+        await hourlyIndexer.start()
+        await Promise.all(
+          eigenIndexers.map(async (indexer) => {
+            logger.info(
+              `Starting ${indexer.constructor.name} for ${indexer.daLayer}`,
+            )
+            await indexer.start()
+          }),
+        )
+        logger.info('EigenDA indexer started')
+      }
     },
   }
 }
 
 function createIndexers(
   config: DataAvailabilityTrackingConfig,
-  config2: DataAvailabilityTrackingConfig2,
   clock: Clock,
   database: Database,
   logger: Logger,
   providers: Providers,
 ) {
-  const daService2 = new DaService2()
+  const daService = new DaService()
   const indexerService = new IndexerService(database)
 
   const targetIndexers: BlockTargetIndexer[] = []
-  const daIndexers: DaIndexer2[] = []
+  const daIndexers: DaIndexer[] = []
+  const hourlyIndexer = new HourlyIndexer(logger, clock)
+  const eigenIndexers: (EigenDaLayerIndexer | EigenDaProjectsIndexer)[] = []
 
-  for (const daLayer of config.layers) {
+  for (const daLayer of config.blockLayers) {
     const targetIndexer = new BlockTargetIndexer(
       logger,
       clock,
@@ -91,19 +102,19 @@ function createIndexers(
     )
     targetIndexers.push(targetIndexer)
 
-    const configurations2 = config2.projects.filter(
+    const configurations = config.blockProjects.filter(
       (c) => c.daLayer === daLayer.name,
     )
 
-    const indexer2 = new DaIndexer2({
-      configurations: configurations2.map((c) => ({
+    const indexer = new DaIndexer({
+      configurations: configurations.map((c) => ({
         id: c.configurationId,
         minHeight: c.sinceBlock,
         maxHeight: c.untilBlock ?? null,
         properties: c,
       })),
       daProvider: providers.da,
-      daService: daService2,
+      daService: daService,
       logger,
       daLayer: daLayer.name,
       batchSize: daLayer.batchSize,
@@ -112,8 +123,57 @@ function createIndexers(
       db: database,
     })
 
-    daIndexers.push(indexer2)
+    daIndexers.push(indexer)
   }
 
-  return { targetIndexers, daIndexers }
+  for (const daLayer of config.timestampLayers) {
+    if (daLayer.type !== 'eigen-da') {
+      continue
+    }
+
+    const configurations = config.timestampProjects.filter(
+      (c) => c.daLayer === daLayer.name,
+    )
+    const [daLayerConfigurations, projectConfigurations] = partition(
+      configurations,
+      (c) => c.projectId === 'eigenda',
+    )
+
+    const eigenClient = providers.clients.eigen
+    assert(eigenClient, 'Eigen client is required')
+
+    const layerIndexer = new EigenDaLayerIndexer({
+      configurations: daLayerConfigurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.sinceTimestamp,
+        maxHeight: c.untilTimestamp ?? null,
+        properties: c,
+      })),
+      eigenClient,
+      logger,
+      daLayer: daLayer.name,
+      parents: [hourlyIndexer],
+      indexerService,
+      db: database,
+    })
+    eigenIndexers.push(layerIndexer)
+
+    const projectsIndexer = new EigenDaProjectsIndexer({
+      configurations: projectConfigurations.map((c) => ({
+        id: c.configurationId,
+        minHeight: c.sinceTimestamp,
+        maxHeight: c.untilTimestamp ?? null,
+        properties: c,
+      })),
+      eigenClient,
+      logger,
+      daLayer: daLayer.name,
+      parents: [hourlyIndexer],
+      indexerService,
+      db: database,
+    })
+    eigenIndexers.push(projectsIndexer)
+  }
+
+  return { targetIndexers, daIndexers, eigenIndexers, hourlyIndexer }
 }

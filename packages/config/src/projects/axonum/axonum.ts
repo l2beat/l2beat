@@ -16,7 +16,7 @@ export const axonum: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://axonum.io'],
-      apps: ['https://app.axonum.io/bridge/deposit'],
+      bridges: ['https://app.axonum.io/bridge/deposit'],
       documentation: ['https://docs.axonum.io'],
       explorers: ['https://sepolia-explorer.axonum.io'],
       repositories: ['https://github.com/axonum'],

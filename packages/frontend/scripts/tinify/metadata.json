@@ -303,7 +303,7 @@
   "static/icons/soneium.png": "ef52cc16a36fa1aa76f93dc1ee80bb6d",
   "static/icons/sonicgateway.png": "3617cb690a24cf203542d09303f640af",
   "static/icons/soon.png": "1fc7c35d9449834291146b499a531fef",
-  "static/icons/sophon.png": "d8a767952b2dbf0dd170506fb71fe4e7",
+  "static/icons/sophon.png": "38c65d778a582ffb8e3689cc205d1f8c",
   "static/icons/sorare.png": "472f08f02b758228710b3391a462afa3",
   "static/icons/soulwallet.png": "ac482998cb88565088c64e379d2bce0e",
   "static/icons/sovrun.png": "7e8d40c4dce9cedf50e48853eaaf7793",
@@ -1351,5 +1351,11 @@
   "static/meta-images/bridges/projects/hyperliquid/opengraph-image.png": "a3cbe1ba08a11a937de5aaee9ecf0c2a",
   "static/ens-avatar.png": "33e2f7c80f1d33bc327620a4f2964161",
   "static/icons/katana.png": "693eb30cf139115e637ba35b80dc9785",
-  "static/meta-images/scaling/projects/katana/opengraph-image.png": "a0e6d13cad4537d4f115f82b8777e203"
+  "static/meta-images/scaling/projects/katana/opengraph-image.png": "a0e6d13cad4537d4f115f82b8777e203",
+  "static/meta-images/governance/publications/governance-review-55.png": "4e45e7cde7532ed9da345b8884b874f6",
+  "static/meta-images/governance/publications/governance-review-54.png": "df583a40383d20c91b4a577741d2df3e",
+  "static/icons/cartesi-prt-honeypot.png": "1386222d674f3b86767f3380650e602c",
+  "static/meta-images/scaling/projects/cartesi-prt-honeypot/opengraph-image.png": "16ba8b04d90b09ad49af5bf99238d8fe",
+  "static/images/architecture/cartesi-prt-honeypot.png": "0d772868797c2813ceb7bfab94ca00d6",
+  "static/meta-images/governance/publications/governance-review-56.png": "892c0818b45735e83ee6607c917576ef"
 }

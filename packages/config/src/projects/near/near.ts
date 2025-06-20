@@ -4,6 +4,7 @@ import { utils } from 'ethers'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('near')
 
@@ -32,7 +33,7 @@ export const near: Bridge = {
     links: {
       websites: ['https://near.org/'],
       explorers: ['https://explorer.near.org/', 'https://aurorascan.dev/'],
-      apps: ['https://rainbowbridge.app/'],
+      bridges: ['https://rainbowbridge.app/'],
       repositories: ['https://github.com/aurora-is-near/rainbow-bridge'],
       socialMedia: ['https://twitter.com/auroraisnear'],
     },
@@ -159,4 +160,5 @@ export const near: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

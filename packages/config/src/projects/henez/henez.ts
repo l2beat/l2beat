@@ -25,7 +25,7 @@ export const henez: ScalingProject = underReviewL3({
     purposes: ['Universal'],
     links: {
       websites: ['https://henez.fi/'],
-      apps: ['https://henez.bridge.caldera.xyz/'],
+      bridges: ['https://henez.bridge.caldera.xyz/'],
       documentation: ['https://docs.henez.fi/'],
       explorers: ['https://henez.calderaexplorer.xyz/'],
       socialMedia: [

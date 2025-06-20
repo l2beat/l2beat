@@ -10,6 +10,7 @@ import { HighlightableLink } from '~/components/link/highlightable/Highlightable
 import { Markdown } from '~/components/markdown/Markdown'
 import { BulletIcon } from '~/icons/Bullet'
 import { ShieldIcon } from '~/icons/Shield'
+import { UnderReviewIcon } from '~/icons/UnderReview'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { cn } from '~/utils/cn'
 import type { VerificationStatus } from '~/utils/project/contracts-and-permissions/toVerificationStatus'
@@ -173,6 +174,17 @@ function getCalloutProps(contract: TechnologyContract) {
     return {
       color: 'red',
       icon: <UnverifiedIcon className="size-5 fill-red-300" />,
+    } as const
+  }
+
+  const anyBecameVerified = contract.addresses.some(
+    (c) => c.verificationStatus === 'became-verified',
+  )
+
+  if (anyBecameVerified) {
+    return {
+      color: 'yellow',
+      icon: <UnderReviewIcon className="size-5" />,
     } as const
   }
 

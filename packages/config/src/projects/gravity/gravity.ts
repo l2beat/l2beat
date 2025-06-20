@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('gravity')
 
@@ -17,7 +18,7 @@ export const gravity: Bridge = {
     links: {
       websites: ['https://gravitybridge.net/'],
       explorers: ['https://mintscan.io/gravity-bridge'],
-      apps: [
+      bridges: [
         'https://spacestation.zone/',
         'https://bridge.blockscape.network/',
       ],
@@ -120,4 +121,5 @@ export const gravity: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

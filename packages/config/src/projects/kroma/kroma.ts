@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('kroma')
 
@@ -71,7 +72,7 @@ export const kroma: ScalingProject = {
     stack: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
-      apps: ['https://kroma.network/bridge/'],
+      bridges: ['https://kroma.network/bridge/'],
       documentation: [
         'https://docs.kroma.network/',
         'https://specs.kroma.network/',
@@ -431,4 +432,5 @@ export const kroma: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -6,6 +6,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('vector')
@@ -22,7 +23,7 @@ export const vector: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `Vector is a data availability bridge using Zero-Knowledge proofs to verify Avail data availability attestations on Ethereum.`,
@@ -108,4 +109,5 @@ By default, Vector on Ethereum is updated by the Succinct operator at a cadence 
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

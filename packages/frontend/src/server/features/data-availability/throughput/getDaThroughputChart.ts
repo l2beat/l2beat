@@ -1,5 +1,7 @@
-import type { DataAvailabilityRecord2 } from '@l2beat/database'
-import type { ProjectsSummedDataAvailabilityRecord } from '@l2beat/database/dist/da-beat/data-availability/entity'
+import type {
+  DataAvailabilityRecord,
+  ProjectsSummedDataAvailabilityRecord,
+} from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { env } from '~/env'
@@ -7,6 +9,7 @@ import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 export type DaThroughputDataPoint = [
   timestamp: number,
@@ -33,16 +36,15 @@ export async function getDaThroughputChart({
   const [from, to] = getRangeWithMax(range, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
-  const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly
-    ? await db.dataAvailability2.getSummedProjectsByDaLayersAndTimeRange(
-        daLayerIds,
+    ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
+        THROUGHPUT_ENABLED_DA_LAYERS,
         [from, to],
       )
-    : await db.dataAvailability2.getByProjectIdsAndTimeRange(daLayerIds, [
-        from,
-        to,
-      ])
+    : await db.dataAvailability.getByProjectIdsAndTimeRange(
+        THROUGHPUT_ENABLED_DA_LAYERS,
+        [from, to],
+      )
 
   if (throughput.length === 0) {
     return []
@@ -68,7 +70,7 @@ export async function getDaThroughputChart({
 }
 
 export function groupByTimestampAndDaLayerId(
-  records: (DataAvailabilityRecord2 | ProjectsSummedDataAvailabilityRecord)[],
+  records: (DataAvailabilityRecord | ProjectsSummedDataAvailabilityRecord)[],
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity

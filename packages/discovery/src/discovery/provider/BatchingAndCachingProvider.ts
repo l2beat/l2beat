@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import type { Logger } from '@l2beat/backend-tools'
 import type { BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
@@ -61,18 +62,19 @@ export class BatchingAndCachingProvider {
     private cache: ReorgAwareCache,
     private provider: LowLevelProvider,
     private multicallClient: MulticallClient,
+    private logger: Logger,
   ) {}
 
   async raw<T>(
     cacheKey: string,
-    fn: (providers: RawProviders) => Promise<T>,
+    fn: (providers: RawProviders, logger: Logger) => Promise<T>,
   ): Promise<T> {
     const entry = await this.cache.entry(cacheKey, [], undefined)
     const cached = entry.read()
     if (cached !== undefined) {
       return parseCacheEntry(cached)
     }
-    const result = await fn(this.provider.getRawProviders())
+    const result = await fn(this.provider.getRawProviders(), this.logger)
     if (result !== undefined) {
       entry.write(JSON.stringify(result))
     }

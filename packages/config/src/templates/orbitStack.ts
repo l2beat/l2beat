@@ -64,6 +64,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 type DAProvider = ProjectScalingDa & {
@@ -689,6 +690,7 @@ function orbitStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 

@@ -24,7 +24,7 @@ export const arenaz = opStackL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://arena-z.gg/'],
-      apps: [
+      bridges: [
         'https://bridge.arena-z.gg/bridge/arena-z',
         'https://leagueofkingdoms.com/',
       ],
