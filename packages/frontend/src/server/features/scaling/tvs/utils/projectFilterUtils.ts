@@ -49,17 +49,17 @@ export function createTvsProjectsFilter(
     case 'rollups':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !isProjectOther(project.scalingInfo) &&
         !(
           previewRecategorisation &&
           project.statuses.reviewStatus === 'initialReview'
-        ) && // If previewRecategorisation is true, we exclude projects that are under initial review
+        ) &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !isProjectOther(project.scalingInfo) &&
         !(
           previewRecategorisation &&
           project.statuses.reviewStatus === 'initialReview'
@@ -70,7 +70,7 @@ export function createTvsProjectsFilter(
     case 'others':
       return (project) =>
         !!project.scalingInfo &&
-        isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        isProjectOther(project.scalingInfo) &&
         !(
           previewRecategorisation &&
           project.statuses.reviewStatus === 'initialReview'

@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo, useState } from 'react'
 import { TvsChartUnitControls } from '~/components/chart/tvs/TvsChartUnitControls'
 import { Checkbox } from '~/components/core/Checkbox'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
@@ -24,7 +23,6 @@ interface Props {
 }
 
 export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
-  const { checked } = useRecategorisationPreviewContext()
   const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
     useScalingAssociatedTokensContext()
 
@@ -49,7 +47,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     range: timeRange,
     excludeAssociatedTokens,
     filter,
-    previewRecategorisation: checked,
+    previewRecategorisation: false,
   })
 
   const chartData = useMemo(

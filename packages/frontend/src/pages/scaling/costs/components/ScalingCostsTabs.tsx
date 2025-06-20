@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { OthersInfo, RollupsInfo } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
 import { ScalingCostsChart } from '~/components/chart/costs/ScalingCostsChart'
@@ -10,15 +10,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScalingCostsEntries'
-import { compareCosts } from '~/server/features/scaling/costs/utils/compareStageAndCost'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingCostsTable } from './table/ScalingCostsTable'
 
 type Props = TabbedScalingEntries<ScalingCostsEntry> & {
@@ -28,7 +24,6 @@ type Props = TabbedScalingEntries<ScalingCostsEntry> & {
 export function ScalingCostsTabs(props: Props) {
   const filterEntries = useFilterEntries()
   const [tab, setTab] = useState('rollups')
-  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(filterEntries),
@@ -36,27 +31,7 @@ export function ScalingCostsTabs(props: Props) {
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareCosts)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
-  )
+  const entries = filteredEntries
 
   const initialSort = {
     id: 'total-cost',
@@ -64,10 +39,10 @@ export function ScalingCostsTabs(props: Props) {
   }
 
   useEffect(() => {
-    if (!checked && tab === 'others' && entries.others.length === 0) {
+    if (tab === 'others' && entries.others.length === 0) {
       setTab('rollups')
     }
-  }, [checked, entries.others, tab])
+  }, [entries.others, tab])
 
   const showOthers = entries.others.length > 0
   return (
@@ -113,10 +88,6 @@ export function ScalingCostsTabs(props: Props) {
               />
               <HorizontalSeparator className="my-5" />
               <ScalingCostsTable entries={entries.others} />
-              <OtherMigrationTabNotice
-                projectsToBeMigrated={projectToBeMigratedToOthers}
-                className="mt-2"
-              />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

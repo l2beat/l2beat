@@ -10,20 +10,17 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingUpcomingTable } from './table/ScalingUpcomingTable'
 
 export function ScalingUpcomingTables(
   props: TabbedScalingEntries<ScalingUpcomingEntry>,
 ) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(filterEntries),
@@ -32,12 +29,7 @@ export function ScalingUpcomingTables(
     underReview: props.underReview.filter(filterEntries),
   }
 
-  const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.initialOrder - a.initialOrder,
-      )
-    : filteredEntries
+  const entries = filteredEntries
 
   const initialSort = {
     id: '#',

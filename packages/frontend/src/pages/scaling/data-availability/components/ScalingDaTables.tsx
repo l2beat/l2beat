@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -11,22 +10,17 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compareStageAndTvs'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingDaTable } from './table/ScalingDaTable'
 
 type Props = TabbedScalingEntries<ScalingDaEntry>
 
 export function ScalingDaTables(props: Props) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(filterEntries),
@@ -35,23 +29,7 @@ export function ScalingDaTables(props: Props) {
     underReview: props.underReview.filter(filterEntries),
   }
 
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
-  )
+  const entries = filteredEntries
 
   const initialSort = {
     id: '#',
@@ -95,10 +73,6 @@ export function ScalingDaTables(props: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <ScalingDaTable entries={entries.others} />
-            <OtherMigrationTabNotice
-              projectsToBeMigrated={projectToBeMigratedToOthers}
-              className="mt-2"
-            />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -41,39 +41,30 @@ export function createActivityProjectsFilter(
         )
     case 'rollups':
       return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) && // If previewRecategorisation is true, we exclude projects that are under initial review
-        (project.scalingInfo.type === 'Optimistic Rollup' ||
-          project.scalingInfo.type === 'ZK Rollup')
-    case 'validiumsAndOptimiums':
-      return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
+        !isProjectOther(project.scalingInfo) &&
         !(
           previewRecategorisation &&
           project.statuses.reviewStatus === 'initialReview'
         ) &&
+        (project.scalingInfo.type === 'Optimistic Rollup' ||
+          project.scalingInfo.type === 'ZK Rollup')
+    case 'validiumsAndOptimiums':
+      return (project) =>
+        !isProjectOther(project.scalingInfo) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        isProjectOther(project.scalingInfo) &&
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'withoutOthers':
       return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !isProjectOther(project.scalingInfo) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup' ||
           project.scalingInfo.type === 'Validium' ||

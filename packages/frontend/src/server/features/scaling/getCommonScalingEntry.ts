@@ -48,9 +48,6 @@ export function getCommonScalingEntry({
       }),
       syncWarning,
       emergencyWarning: project.statuses.emergencyWarning,
-      countdowns: {
-        otherMigration: project.statuses.otherMigration,
-      },
     },
     tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),

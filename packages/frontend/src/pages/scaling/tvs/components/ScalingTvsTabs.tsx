@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -15,15 +14,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compareStageAndTvs'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingTvsTable } from './table/ScalingTvsTable'
 
 type Props = TabbedScalingEntries<ScalingTvsEntry> & {
@@ -32,7 +27,6 @@ type Props = TabbedScalingEntries<ScalingTvsEntry> & {
 
 export function ScalingTvsTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
   const filteredEntries = {
     rollups: props.rollups.filter(filterEntries),
@@ -41,23 +35,7 @@ export function ScalingTvsTabs(props: Props) {
     underReview: props.underReview.filter(filterEntries),
   }
 
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
-  )
+  const entries = filteredEntries
 
   const initialSort = {
     id: 'total',
@@ -127,10 +105,6 @@ export function ScalingTvsTabs(props: Props) {
             />
             <HorizontalSeparator className="my-5" />
             <ScalingTvsTable entries={entries.others} />
-            <OtherMigrationTabNotice
-              projectsToBeMigrated={projectToBeMigratedToOthers}
-              className="mt-2"
-            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

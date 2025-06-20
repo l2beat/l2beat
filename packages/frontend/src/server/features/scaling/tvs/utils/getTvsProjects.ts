@@ -36,7 +36,7 @@ function getCategory(
     return undefined
   }
 
-  if (isProjectOther(p.scalingInfo, previewRecategorisation)) {
+  if (isProjectOther(p.scalingInfo)) {
     return 'others'
   }
 
