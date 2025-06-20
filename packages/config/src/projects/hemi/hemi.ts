@@ -1,8 +1,8 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 
 const chainId = 43111
 const discovery = new ProjectDiscovery('hemi')
@@ -25,9 +25,7 @@ export const hemi: ScalingProject = opStackL2({
       websites: ['https://hemi.xyz'],
       bridges: ['https://app.hemi.xyz'],
       documentation: ['https://docs.hemi.xyz'],
-      explorers: [
-        'https://explorer.hemi.xyz'
-      ],
+      explorers: ['https://explorer.hemi.xyz'],
       repositories: ['https://github.com/hemilabs'],
       socialMedia: [
         'https://twitter.com/hemi_xyz',
