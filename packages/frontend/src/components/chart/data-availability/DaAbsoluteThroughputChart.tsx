@@ -12,6 +12,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { EigenFillGradientDef } from '~/components/core/chart/defs/EigenGradientDef'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import {
   EthereumFillGradientDef,
@@ -46,12 +47,13 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
   }, [data])
   const { denominator, unit } = getDaDataParams(max)
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, ethereum, celestia, avail]) => {
+    return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
       return {
         timestamp,
         ethereum: ethereum / denominator,
         celestia: celestia / denominator,
         avail: avail / denominator,
+        eigenda: eigenda / denominator,
       }
     })
   }, [data, denominator])
@@ -65,6 +67,7 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
           <PinkFillGradientDef id="pink-fill" />
           <PinkStrokeGradientDef id="pink-stroke" />
           <EmeraldFillGradientDef id="emerald-fill" />
+          <EigenFillGradientDef id="eigenda-fill" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
@@ -83,6 +86,11 @@ export function DaAbsoluteThroughputChart({ data, isLoading }: Props) {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
               fill: 'url(#emerald-fill)',
+            },
+            {
+              dataKey: 'eigenda',
+              stroke: chartMeta.eigenda.color,
+              fill: 'url(#eigenda-fill)',
             },
           ],
         })}

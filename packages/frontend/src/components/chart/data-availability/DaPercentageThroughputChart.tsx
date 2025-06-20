@@ -25,14 +25,15 @@ interface Props {
 export function DaPercentageThroughputChart({ data, isLoading }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, ethereum, celestia, avail]) => {
-      const total = ethereum + celestia + avail
+    return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
+      const total = ethereum + celestia + avail + eigenda
       if (total === 0) {
         return {
           timestamp: timestamp,
           ethereum: 0,
           celestia: 0,
           avail: 0,
+          eigenda: 0,
         }
       }
       return {
@@ -40,6 +41,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
         ethereum: round((ethereum / total) * 100, 2),
         celestia: round((celestia / total) * 100, 2),
         avail: round((avail / total) * 100, 2),
+        eigenda: round((eigenda / total) * 100, 2),
       }
     })
   }, [data])
@@ -69,6 +71,12 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
           dataKey="avail"
           stackId="a"
           fill={chartMeta.avail.color}
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="eigenda"
+          stackId="a"
+          fill={chartMeta.eigenda.color}
           isAnimationActive={false}
         />
         {getCommonChartComponents({

@@ -16,6 +16,7 @@ export type DaThroughputDataPoint = [
   ethereum: number,
   celestia: number,
   avail: number,
+  eigenda: number,
 ]
 
 export const DaThroughputChartParams = z.object({
@@ -65,6 +66,7 @@ export async function getDaThroughputChart({
       timestampValues?.ethereum ?? 0,
       timestampValues?.celestia ?? 0,
       timestampValues?.avail ?? 0,
+      timestampValues?.eigenda ?? 0,
     ]
   })
 }
@@ -119,12 +121,14 @@ function getMockDaThroughputChartData({
     const ethereum = Math.random() * 900_000_000 + 90_000_000
     const celestia = ethereum * Math.max(21 * Math.random(), 1)
     const avail = ethereum * 1.5 * Math.random()
+    const eigenda = ethereum * 3 * Math.random()
 
     return [
       timestamp,
       Math.round(ethereum),
       Math.round(celestia),
       Math.round(avail),
+      Math.round(eigenda),
     ]
   })
 }

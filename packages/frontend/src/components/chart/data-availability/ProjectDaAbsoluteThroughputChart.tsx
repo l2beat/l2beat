@@ -15,6 +15,7 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
+import { EigenFillGradientDef } from '~/components/core/chart/defs/EigenGradientDef'
 import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
 import {
   EthereumFillGradientDef,
@@ -100,6 +101,9 @@ export function ProjectDaAbsoluteThroughputChart({
             </>
           )}
           {projectId === 'avail' && <EmeraldFillGradientDef id="avail-fill" />}
+          {projectId === 'eigenda' && (
+            <EigenFillGradientDef id="eigenda-fill" />
+          )}
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
@@ -107,7 +111,7 @@ export function ProjectDaAbsoluteThroughputChart({
           fill={`url(#${projectId}-fill)`}
           fillOpacity={1}
           stroke={
-            projectId === 'avail'
+            projectId === 'avail' || projectId === 'eigenda'
               ? projectChartMeta.project?.color
               : `url(#${projectId}-stroke)`
           }
@@ -247,6 +251,19 @@ function getProjectChartMeta(projectId: ProjectId) {
         projectMax: {
           label: 'Max capacity',
           color: 'hsl(var(--chart-emerald))',
+          indicatorType: { shape: 'line', strokeDasharray: '3 3' },
+        },
+      } satisfies ChartMeta
+    case 'eigenda':
+      return {
+        project: {
+          label: 'Actual data size',
+          color: 'hsl(var(--chart-eigenda))',
+          indicatorType: { shape: 'line' },
+        },
+        projectMax: {
+          label: 'Max capacity',
+          color: 'hsl(var(--chart-eigenda))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
