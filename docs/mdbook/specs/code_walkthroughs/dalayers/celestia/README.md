@@ -16,7 +16,7 @@ Celestia is a public network designed to provide data availability at scale. It 
 
 ## Overview
 
-Celestia focus solely on data availability, and its primary function is to make blob data available to anyone who needs it. This is achieved through a combination of data availability sampling (DAS) and a Tendermint-based proof-of-stake consensus mechanism.
+Celestia primarily focuses on data availability, and its primary function is to make blob data available to anyone who needs it. This is achieved through a combination of data availability sampling (DAS) and a Tendermint-based proof-of-stake consensus mechanism.
 
 ## Core Concepts
 
@@ -38,6 +38,6 @@ The process of getting data onto Celestia and ensuring its availability involves
 1.  **Submission:** A user submits a `PayForBlob` transaction to the network.
 2.  **Encoding:** The block producer arranges the data into shares, applies 2D Reed-Solomon erasure coding, and generates a data availability root (`availableDataRoot`).
 3.  **Propagation:** The proposed block is propagated through the network. Validators download all data to verify the block, while light nodes perform DAS on the block header.
-4.  **Finality:** The block is finalized on Celestia via Tendermint consensus. For L2 on other chains like Ethereum, finality is achieved when a proof of data availability is verified on the settlement layer via the Blobstream bridge.
+4.  **Finality:** The block is finalized on Celestia via Tendermint consensus. For L2s on other chains like Ethereum, finality is achieved when a proof of data availability is verified on the settlement layer via the Blobstream bridge.
 
 
