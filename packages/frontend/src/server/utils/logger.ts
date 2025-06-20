@@ -9,7 +9,6 @@ import {
 import { env } from '~/env'
 import type { ElasticSearchTransportOptions } from '~/utils/elastic-search/ElasticSearchTransport'
 
-
 export function createLogger(): Logger {
   const isLocal = env.NODE_ENV !== 'production'
 
