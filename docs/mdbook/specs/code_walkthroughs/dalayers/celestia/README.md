@@ -5,6 +5,7 @@
 - [Celestia](#celestia)
   - [Overview](#overview)
   - [Core Concepts](#core-concepts)
+  - [Network Architecture](#network-architecture)
   - [Blob Lifecycle](#blob-lifecycle)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
