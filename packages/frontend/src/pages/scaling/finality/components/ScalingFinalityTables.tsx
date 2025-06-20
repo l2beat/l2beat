@@ -20,14 +20,12 @@ export function ScalingFinalityTables(props: Props) {
   const filterEntries = useFilterEntries()
   const [tab, setTab] = useState('rollups')
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
-
-  const entries = filteredEntries
 
   const initialSort = {
     id: '#',

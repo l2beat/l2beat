@@ -29,14 +29,12 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 export function ScalingActivityTabs(props: Props) {
   const filterEntries = useFilterEntries()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
-
-  const entries = filteredEntries
 
   const initialSort = {
     id: 'data_pastDayCount',
