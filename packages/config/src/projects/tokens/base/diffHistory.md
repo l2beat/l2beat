@@ -1,25 +1,14 @@
-Generated with discovered.json: 0x8310cdab639ef2c22d128dcf9f38dca4392a0edb
+Generated with discovered.json: 0x46ef74d8134ad2c146586eca60de34f1be3af15a
 
-# Diff at Wed, 18 Jun 2025 15:44:36 GMT:
+# Diff at Fri, 20 Jun 2025 15:49:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 30861907
-- current block number: 31732779
+- comparing to: main@791101a45e6e26ce02c6a0e44313ad533c40546c block: 30861907
+- current block number: 31822604
 
 ## Description
 
 Adding some more tokens for fun.
-
-## Watched changes
-
-```diff
-    contract UpgradeableOptimismMintableERC20 (0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22) {
-    +++ description: None
-      values.totalSupply:
--        "25334378178473256556976"
-+        "24528227199815611145824"
-    }
-```
 
 ## Config/verification related changes
 
@@ -90,7 +79,7 @@ discovery. Values are for block 30861907 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract UpgradeableOptimismMintableERC20 (0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22)
-    +++ description: None
+    +++ description: Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.
 ```
 
 ```diff
@@ -141,7 +130,7 @@ discovery. Values are for block 30861907 (main branch discovery), not current.
     +++ description: None
 ```
 
-Generated with discovered.json: 0x5588836725e8d23a42efff282dbf199aa1d83a50
+Generated with discovered.json: 0x9c61b14205890b1479f43116cfd1a6d183d8d9fb
 
 # Diff at Thu, 05 Jun 2025 08:23:04 GMT:
 

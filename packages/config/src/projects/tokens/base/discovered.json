@@ -1,7 +1,7 @@
 {
   "name": "tokens",
   "chain": "base",
-  "blockNumber": 31732779,
+  "blockNumber": 31822604,
   "configHash": "0x6ae3d022c06e6cce2770417803b92a0ddd99862e02e15337b85c6e3a9783c058",
   "entries": [
     {
@@ -223,7 +223,7 @@
         "sharedDecimals": 6,
         "symbol": "rsETH",
         "token": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-        "totalSupply": "2234100743000000000000"
+        "totalSupply": "2028192378000000000000"
       },
       "implementationNames": {
         "0x1Bc71130A0e39942a7658878169764Bbd8A45993": "RSETH_OFT"
@@ -372,11 +372,14 @@
       "name": "UpgradeableOptimismMintableERC20",
       "address": "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
       "type": "Contract",
+      "template": "tokens/UpgradeableOptimismMintableERC20",
       "sourceHashes": [
         "0x2cdcfef705094aaac53d507bad64d27b48ea5a9c11a7fadffacc192aab7a823f",
         "0x94248e74664f8475ee2ce5d1ea8f4c2f378f266ab7a4d8bcbdc6e1246ac8047f"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Standard OP stack's canonically bridged L2 token implementation with upgrade capabilities.",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1689990499,
       "sinceBlock": 1600576,
       "values": {
@@ -399,7 +402,7 @@
         "REMOTE_TOKEN": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
         "remoteToken": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704",
         "symbol": "cbETH",
-        "totalSupply": "24528227199815611145824",
+        "totalSupply": "24487721404384124690932",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -486,7 +489,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660737",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660807",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -694,7 +697,7 @@
         "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 8 (25%)",
-        "nonce": 221,
+        "nonce": 222,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -924,7 +927,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 3697500570400743,
+        "totalSupply": 3681286662757866,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -1147,7 +1150,7 @@
         "getNumEnabledAttesters": 2,
         "localDomain": 6,
         "maxMessageBodySize": 8192,
-        "nextAvailableNonce": 593154,
+        "nextAvailableNonce": 595647,
         "owner": "0x4273C43e14888ae07FB3a850c1C7c596C607d50d",
         "paused": false,
         "pauser": "0x0860399cF761dCcfB9897C8F91CAdc32a9B3E70d",
@@ -2709,7 +2712,8 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/OFT": "0xfa92d3ddc6763a0fa757552871abf2d9094c328a518bd2bb4a4b3bd3c81a2d0e",
     "tokens/OptimismMintableERC20_OFT": "0xfa92d3ddc6763a0fa757552871abf2d9094c328a518bd2bb4a4b3bd3c81a2d0e",
-    "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
+    "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f",
+    "tokens/UpgradeableOptimismMintableERC20": "0x9cb0edfecd174d91d81f651ad52d7c288ec44b877a0e2f8ad0ff293a553bfe30"
   },
   "permissionsConfigHash": "0x90fb2d50aafc42a14c737497a3136b9b56faf38cb7c1e2716ef67e07074d175a"
 }
