@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 
 const chainId = 43111
 const discovery = new ProjectDiscovery('hemi')
@@ -11,11 +12,13 @@ export const hemi: ScalingProject = opStackL2({
   addedAt: UnixTime(1727449740), // 2024-09-27T17:09:00Z,
   discovery,
   genesisTimestamp,
+  additionalPurposes: ['Bitcoin DApps'],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Hemi',
     slug: 'hemi',
     description:
-      'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain. Hemi uses Hemi Virtual Machine (hVM), an EVM upgraded to have awareness of the Bitcoin state.',
+      'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain. In addition to the EVM, Hemi uses Hemi Virtual Machine (hVM), an EVM upgraded to have awareness of the Bitcoin state.',
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {

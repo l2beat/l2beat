@@ -7,7 +7,7 @@ Generated with discovered.json: 0x19c77f19ac44816dab32be8792c834066d7b7a40
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+First discovery, all templatized.
 
 ## Initial discovery
 
