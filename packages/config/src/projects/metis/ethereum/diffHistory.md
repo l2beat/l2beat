@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xa3420fab92e89d011ceae775be489c8bd5f3fe00
+Generated with discovered.json: 0x1e232db2a1106231a47c3641020ffaf90c56ce7c
 
-# Diff at Thu, 19 Jun 2025 16:29:30 GMT:
+# Diff at Fri, 20 Jun 2025 09:04:23 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22610669
@@ -46,8 +46,11 @@ In practice should a malicious state root be proposed and unchallenged by the Me
 ```
 
 ```diff
-    contract LockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
-    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes.
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      name:
+-        "LockingPool"
++        "FaultProofLockingPool"
       sourceHashes.1:
 -        "0x2daed4f8b60d2e56f9557c3fb4a471cdc6259d6be64746b08106a3fedf37f18a"
 +        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
@@ -69,7 +72,7 @@ In practice should a malicious state root be proposed and unchallenged by the Me
       template:
 +        "metis/FaultProofLockingPool"
       description:
-+        "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes."
++        "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS."
     }
 ```
 
@@ -126,10 +129,13 @@ In practice should a malicious state root be proposed and unchallenged by the Me
 
 ```diff
 .../DisputeGameFactory/DisputeGameFactory.sol      |  57 +++++++-
- .../LockingPool.sol                                |  76 +++++++++--
+ .../FaultProofLockingPool}/LockingPool.sol         |  76 +++++++++--
+ .../TransparentUpgradeableProxy.p.sol              |   0
+ .../LockingPool}/LockingPool.sol                   |   0
+ .../LockingPool}/TransparentUpgradeableProxy.p.sol |   0
  .../dev/null                                       | 147 ---------------------
  .../ProxyAdmin.sol}                                |   0
- 4 files changed, 119 insertions(+), 161 deletions(-)
+ 7 files changed, 119 insertions(+), 161 deletions(-)
 ```
 
 ## Config/verification related changes

@@ -244,7 +244,7 @@
       }
     },
     {
-      "name": "LockingPool",
+      "name": "FaultProofLockingPool",
       "address": "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb",
       "type": "Contract",
       "template": "metis/FaultProofLockingPool",
@@ -253,7 +253,7 @@
         "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes.",
+      "description": "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.",
       "sinceTimestamp": 1747127087,
       "sinceBlock": 22473297,
       "values": {
@@ -2145,5 +2145,5 @@
     "metis/MVM_Verifier": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec"
   },
-  "permissionsConfigHash": "0xcb8c0e99106603f5f4dd0206ca79e10fdcf1b6fe80a2c18e9403148f22021ae4"
+  "permissionsConfigHash": "0xd1af6c94a2a36f1bf1050a56babaa859bd98432a91b241b76262b81aa3893ad8"
 }
