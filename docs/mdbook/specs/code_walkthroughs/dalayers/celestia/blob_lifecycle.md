@@ -60,7 +60,7 @@ The core logic for this process in `celestia-app` can be found in the [`PrepareP
 
 Once a block is proposed, it is propagated across the network. Different types of nodes interact with the block differently to verify data availability.
 
-*   **Validators (Consensus Nodes)**: These nodes ensure the validity of the proposed block. They download the *entire* blob data from the `availableData` field, re-compute the extended data square, and verify that the resulting `availableDataRoot` matches the one in the block header. This comprehensive check is performed in the [`ProcessProposal` function](https://github.com/celestiaorg/celestia-app/blob/b768c4417b17e887a0104bd869dbb5579e9de9ec/app/process_proposal.go#L160).
+*   **Validators (Consensus Nodes)**: These nodes ensure the validity of the proposed block. They download the *entire* blob data from the `availableData` field, re-compute the extended data square, and verify that the resulting `availableDataRoot` matches the one in the block header. This check is performed in the [`ProcessProposal` function](https://github.com/celestiaorg/celestia-app/blob/b768c4417b17e887a0104bd869dbb5579e9de9ec/app/process_proposal.go#L160).
 
 *   **Full Nodes (DA)**: These are nodes running the [`celestia-node`](https://github.com/celestiaorg/celestia-node) software. After a block is finalized by the consensus validators, full nodes receive it. They also re-process the block's `availableData`, recreate the extended data square, and verify that its root matches the `availableDataRoot` in the header. This verification is a critical step before they make the individual shares of the extended square available on the P2P network for light nodes to sample. This verification logic can be seen in the [`header` package](https://github.com/celestiaorg/celestia-node/blob/2114324e0801c61f631000a2982dda6441260a13/header/header.go#L140).
 
@@ -73,7 +73,7 @@ Once a block is proposed, it is propagated across the network. Different types o
 
 ## Blob Finality
 
-For a blob to be useful to a rollup, its availability must be verifiable on the rollup's settlement layer (e.g., Ethereum). This creates a two-stage finality process: finality on Celestia itself, and finality on the settlement layer via the Blobstream bridge.
+For a blob to be useful to a L2, its availability must be verifiable on the L2's settlement layer (e.g., Ethereum). This creates a two-stage finality process: finality on Celestia itself, and finality on the settlement layer via the Blobstream bridge.
 
 ### 1. Finality on Celestia
 
@@ -84,7 +84,7 @@ This is the first stage, where a block containing blob data is irreversibly comm
 
 ### 2. Finality on the Settlement Layer (Blobstream)
 
-For a rollup on Ethereum to use the blob data, it needs proof on Ethereum that the data was published to Celestia. This is the role of the [Blobstream bridge](https://l2beat.com/data-availability/projects/celestia/blobstream). The original version of Blobstream relied on Celestia validators re-signing data roots for the L1. The new generation of the bridge, such as [`sp1-blobstream`](https://github.com/succinctlabs/sp1-blobstream), uses ZK proofs to create a more efficient and trust-minimized on-chain light client. You can read more in the [SP1 Blobstream documentation](https://succinctlabs.github.io/sp1-blobstream/).
+For a L2 on Ethereum to use the blob data, it needs proof on Ethereum that the data was published to Celestia. This is the role of the [Blobstream bridge](https://l2beat.com/data-availability/projects/celestia/blobstream). The original version of Blobstream relied on Celestia validators re-signing data roots for the L1. The new generation of the bridge, such as [`sp1-blobstream`](https://github.com/succinctlabs/sp1-blobstream), uses ZK proofs to create a more efficient and trust-minimized on-chain light client. You can read more in the [SP1 Blobstream documentation](https://succinctlabs.github.io/sp1-blobstream/).
 
 The process for the ZK-powered Blobstream is as follows:
 
@@ -92,4 +92,4 @@ The process for the ZK-powered Blobstream is as follows:
 2.  **Relaying to L1**: The operator relays this ZK-proof to the `SP1Blobstream` smart contract deployed on the settlement layer.
 3.  **L1 Verification**: The `SP1Blobstream` contract uses a canonical `SP1Verifier` contract to verify the ZK-proof. This is computationally cheap on-chain. Once the proof is verified, the `SP1Blobstream` contract stores the commitment to the range of `dataRoot`s.
 
-A rollup's L1 contract can now verify its state transitions by proving against the data roots stored in the `Blobstream` contract. From the rollup's perspective, its transaction data is only truly final and actionable once it has been processed and verified by the Blobstream bridge on its settlement chain.
+A L2's L1 contract can now verify its state transitions by proving against the data roots stored in the `Blobstream` contract. From the rollup's perspective, its transaction data is only truly final and actionable once it has been processed and verified by the Blobstream bridge on its settlement chain.

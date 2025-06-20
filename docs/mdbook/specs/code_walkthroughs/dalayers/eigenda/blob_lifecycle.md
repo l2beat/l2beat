@@ -26,13 +26,13 @@ This document provides a high-level overview of how EigenDA handles blob submiss
 
 ## Blob Submission
 
-The lifecycle of a blob in EigenDA begins when a client, typically a rollup sequencer, submits data to the EigenDA **Disperser** service. The Disperser exposes a gRPC interface for blob submission. To simplify this process, rollups often use a client library or the provided REST proxy, which handles the raw gRPC calls, payment, and status polling.
+The lifecycle of a blob in EigenDA begins when a client, typically an L2 sequencer, submits data to the EigenDA **Disperser** service. The Disperser exposes a gRPC interface for blob submission. To simplify this process, rollups often use a client library or the provided REST proxy, which handles the raw gRPC calls, payment, and status polling.
 
-When the Disperser receives a submission, it registers a new blob entry and assigns it a pending status while it prepares the blob for encoding and distribution across the network.
+When the Disperser receives a submission, it registers a new blob entry and assigns it a pending status while it prepares the blob for encoding and distribution across the node operators network.
 
 ## Encoding and Batching
 
-Once a blob is accepted, the Disperser processes it to ensure data availability and verifiability. This involves several steps:
+Once a blob is accepted, the Disperser processes it to ensure data availability. This involves several steps:
 
 1.  **Erasure Coding**: The Disperser uses Reed-Solomon encoding to split the blob into multiple smaller pieces called "chunks". This process adds redundancy, ensuring that the original blob can be reconstructed from a sufficiently large subset of these chunks.
 
@@ -43,7 +43,7 @@ Once a blob is accepted, the Disperser processes it to ensure data availability 
 
 3.  **Batching**: For efficiency, the Disperser can bundle multiple blobs into a single batch. It then creates a `BatchHeader` for this collection, which contains:
     *   A `batch_root`: A 32-byte Merkle root or hash that commits to all blobs within the batch.
-    *   A `reference_block_number`: An Ethereum L1 block number that anchors the batch's attestation to the settlement layer.
+    *   A `reference_block_number`: An Ethereum L1 block number that anchors the batch's attestation to the settlement layer. The Disperser will encode and disperse the blobs based on the onchain info (e.g. operator stakes) at this block number.
 
 ### Data Structures
 
@@ -67,7 +67,7 @@ With the data prepared, the Disperser distributes the chunks to the EigenDA oper
 
 *   **Storage and Attestation**: After successful verification, the validator stores the chunk locally. It then signs an attestation confirming that it holds its portion of the data and sends this signature back to the Disperser.
 
-The Disperser gathers these individual attestations. Once a sufficient number of signatures have been collected to meet EigenDA's liveness threshold, the blob is considered available.
+The Disperser gathers these individual attestations. Once a sufficient number of signatures have been collected to meet EigenDA's liveness and safety threshold, the blob is considered available and ready to be published to Ethereum.
 
 ## Blob Finality
 
@@ -89,6 +89,6 @@ For a rollup on Ethereum to use the blob data, it needs proof on Ethereum that t
 
 1.  **Relaying to L1**: A client, such as the rollup itself, can post the `BatchHeader` and the aggregated signature to the EigenDA smart contracts on Ethereum.
 
-2.  **L1 Verification**: The EigenDA contracts, which are part of the broader EigenLayer protocol, verify the submitted proof. They check the aggregated signature against the registered set of operators and their corresponding stake, confirming that a sufficient portion of the quorum has indeed attested to the data.
+2.  **L1 Verification**: The EigenDA contracts, which are part of the broader EigenLayer protocol, verify the submitted proof. They check the aggregated signature against the registered set of operators and their corresponding stake, confirming that the amount of stake declared in the tx input has indeed attested to the data. Currently, no minimum stake threshold is enforced, meaning that a batch can be confirmed on Ethereum with lower than the minimum safety threhold of 55%. It is responsibility of the L2 to check that their blob's batch meets their desired safety threshold.
 
-Once the certificate is verified on-chain, the blob's data is considered final and can be used by the rollup's L1 contracts for state updates or other operations. 
+Once the certificate is verified on-chain, the blob's data is considered final and can be used by the L2's L1 contracts for state updates or other operations. 
