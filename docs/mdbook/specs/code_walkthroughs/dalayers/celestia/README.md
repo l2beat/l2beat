@@ -23,6 +23,13 @@ Celestia focus solely on data availability, and its primary function is to make 
 - **Erasure Coding:** Block data is erasure coded, adding redundancy that allows for the reconstruction of the full block data even if a significant portion is missing. This is fundamental to making DAS effective.
 - **PayForBlob Transactions:** Users submit data to Celestia via a special transaction type called `PayForBlob`, which separates the data payload from the transaction metadata.
 
+## Network Architecture
+
+<figure>
+ <img src="../../../static/assets/celestia_architecture.png" alt="Celestia architecture"> 
+    <figcaption>Celestia architecture overview.</figcaption>
+</figure>
+
 ## Blob Lifecycle
 
 The process of getting data onto Celestia and ensuring its availability involves several key stages. For a detailed explanation of this process, see [Blob Lifecycle](./blob_lifecycle.md).

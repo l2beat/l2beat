@@ -25,6 +25,13 @@ EigenDA's architecture is centered around a **Disperser** and a network of **Eig
 - **Erasure Coding:** Blobs are erasure coded into chunks, providing redundancy and ensuring the original data can be reconstructed even if some chunks are unavailable.
 - **Data Availability Certificate:** An aggregated signature from operators (e.g., a BLS signature) that serves as a cryptographic proof of data availability. This certificate can be verified by smart contracts on Ethereum.
 
+## Network Architecture
+
+<figure>
+ <img src="../../../static/assets/disperser_architecture.png" alt="Disperser architecture"> 
+    <figcaption>Disperser architecture overview (EigenDA V1).</figcaption>
+</figure>
+
 ## Blob Lifecycle
 
 The process of publishing data to EigenDA and achieving finality involves several key steps. For a detailed explanation of this process, see [Blob Lifecycle](./blob_lifecycle.md).
