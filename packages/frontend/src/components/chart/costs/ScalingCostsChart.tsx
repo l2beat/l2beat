@@ -55,7 +55,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter,
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(() => {

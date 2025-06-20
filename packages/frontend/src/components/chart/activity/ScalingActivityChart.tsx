@@ -62,12 +62,10 @@ export function ScalingActivityChart({
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: chartFilter,
-    previewRecategorisation: false,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
     range: timeRange,
     filter: chartFilter,
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(

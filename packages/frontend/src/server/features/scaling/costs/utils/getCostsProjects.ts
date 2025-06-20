@@ -17,7 +17,6 @@ export type CostsProjectsFilter = z.infer<typeof CostsProjectsFilter>
 
 export async function getCostsProjects(
   filter: CostsProjectsFilter = { type: 'all' },
-  previewRecategorisation = false,
 ): Promise<Project<'trackedTxsConfig', 'archivedAt'>[]> {
   const projects = await ps.getProjects({
     select: ['trackedTxsConfig', 'scalingInfo', 'statuses'],
@@ -25,7 +24,7 @@ export async function getCostsProjects(
     whereNot: ['isUpcoming'],
   })
 
-  const condition = filterToCondition(filter, previewRecategorisation)
+  const condition = filterToCondition(filter)
   return projects.filter(
     (p) =>
       condition(p) &&
@@ -36,7 +35,6 @@ export async function getCostsProjects(
 
 function filterToCondition(
   filter: CostsProjectsFilter,
-  previewRecategorisation: boolean,
 ): (p: Project<'scalingInfo' | 'statuses'>) => boolean {
   switch (filter.type) {
     case 'all':
@@ -46,15 +44,11 @@ function filterToCondition(
         (p.scalingInfo.type === 'Optimistic Rollup' ||
           p.scalingInfo.type === 'ZK Rollup') &&
         !isProjectOther(p.scalingInfo) &&
-        !(
-          previewRecategorisation && p.statuses.reviewStatus === 'initialReview'
-        )
+        !(p.statuses.reviewStatus === 'initialReview')
     case 'others':
       return (p) =>
         isProjectOther(p.scalingInfo) &&
-        !(
-          previewRecategorisation && p.statuses.reviewStatus === 'initialReview'
-        )
+        !(p.statuses.reviewStatus === 'initialReview')
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
     default:

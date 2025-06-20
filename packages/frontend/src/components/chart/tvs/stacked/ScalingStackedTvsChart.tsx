@@ -47,7 +47,6 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
     range: timeRange,
     excludeAssociatedTokens,
     filter,
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(

@@ -67,7 +67,6 @@ export function ScalingSummaryTvsChart({
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(() => {

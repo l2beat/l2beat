@@ -68,12 +68,10 @@ const chartMeta = {
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'withoutOthers' },
-    previewRecategorisation: false,
   })
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(() => {

@@ -30,22 +30,14 @@ export type ActivityProjectFilterType = z.infer<
 
 export function createActivityProjectsFilter(
   filter: ActivityProjectFilter,
-  previewRecategorisation: boolean,
 ): (project: Project<'scalingInfo' | 'statuses'>) => boolean {
   switch (filter.type) {
     case 'all':
-      return (project) =>
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+      return (project) => !(project.statuses.reviewStatus === 'initialReview')
     case 'rollups':
       return (project) =>
         !isProjectOther(project.scalingInfo) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':

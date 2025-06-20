@@ -32,16 +32,12 @@ export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
 
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
-  previewRecategorisation?: boolean,
 ): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
   switch (filter.type) {
     case 'layer2':
       return (project) =>
         !!project.scalingInfo &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'bridge':
       return (project) => !!project.isBridge
     case 'projects':
@@ -50,20 +46,14 @@ export function createTvsProjectsFilter(
       return (project) =>
         !!project.scalingInfo &&
         !isProjectOther(project.scalingInfo) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
         !isProjectOther(project.scalingInfo) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
@@ -71,10 +61,7 @@ export function createTvsProjectsFilter(
       return (project) =>
         !!project.scalingInfo &&
         isProjectOther(project.scalingInfo) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)
   }
