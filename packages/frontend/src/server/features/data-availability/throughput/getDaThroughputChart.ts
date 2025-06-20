@@ -9,6 +9,7 @@ import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 export type DaThroughputDataPoint = [
   timestamp: number,
@@ -35,16 +36,15 @@ export async function getDaThroughputChart({
   const [from, to] = getRangeWithMax(range, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
-  const daLayerIds = ['ethereum', 'celestia', 'avail']
   const throughput = includeScalingOnly
     ? await db.dataAvailability.getSummedProjectsByDaLayersAndTimeRange(
-        daLayerIds,
+        THROUGHPUT_ENABLED_DA_LAYERS,
         [from, to],
       )
-    : await db.dataAvailability.getByProjectIdsAndTimeRange(daLayerIds, [
-        from,
-        to,
-      ])
+    : await db.dataAvailability.getByProjectIdsAndTimeRange(
+        THROUGHPUT_ENABLED_DA_LAYERS,
+        [from, to],
+      )
 
   if (throughput.length === 0) {
     return []

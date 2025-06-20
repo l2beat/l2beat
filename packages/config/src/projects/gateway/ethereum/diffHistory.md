@@ -1,3 +1,55 @@
+Generated with discovered.json: 0x375546bdc127d4e1f68be9040e673df8fdf0c43c
+
+# Diff at Thu, 19 Jun 2025 11:07:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22730620
+- current block number: 22738078
+
+## Description
+
+ProxyAdmin verified.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22730620 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x6B0d492D08d436d3BBC7Cc873C03002686Aef734) {
+    +++ description: None
+      name:
+-        ""
++        "ProxyAdmin"
+      unverified:
+-        true
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"ethereum:0x5540DE94485dB078025318428F813C5d88215823","role":"admin"}]
+      values.owner:
++        "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      implementationNames.0x6B0d492D08d436d3BBC7Cc873C03002686Aef734:
+-        ""
++        "ProxyAdmin"
+      template:
++        "global/ProxyAdmin"
+      sourceHashes:
++        ["0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"]
+      directlyReceivedPermissions:
++        [{"permission":"upgrade","from":"ethereum:0x5540DE94485dB078025318428F813C5d88215823","role":"admin"}]
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0x5540DE94485dB078025318428F813C5d88215823","role":"admin","via":[{"address":"ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734","role":".owner"}]
+    }
+```
+
 Generated with discovered.json: 0x16a40b9ae239421428e117587de1a7f7c23fece6
 
 # Diff at Wed, 18 Jun 2025 10:18:53 GMT:
