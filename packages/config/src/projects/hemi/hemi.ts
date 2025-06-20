@@ -15,7 +15,7 @@ export const hemi: ScalingProject = opStackL2({
     name: 'Hemi',
     slug: 'hemi',
     description:
-      'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain.',
+      'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain. Hemi uses Hemi Virtual Machine (hVM), an EVM upgraded to have awareness of the Bitcoin state.',
     category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
@@ -23,8 +23,7 @@ export const hemi: ScalingProject = opStackL2({
       apps: ['https://app.hemi.xyz'],
       documentation: ['https://docs.hemi.xyz'],
       explorers: [
-        'https://explorer.hemi.xyz',
-        'https://testnet.explorer.hemi.xyz/',
+        'https://explorer.hemi.xyz'
       ],
       repositories: ['https://github.com/hemilabs'],
       socialMedia: [

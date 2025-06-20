@@ -1,7 +1,7 @@
 {
   "name": "hemi",
   "chain": "ethereum",
-  "blockNumber": 22668628,
+  "blockNumber": 22746105,
   "configHash": "0xd6df59737b8d24c80f17c6c0d2399edcab165cb4f7fb551ef7e745b3dcf163ff",
   "entries": [
     {
@@ -127,8 +127,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491822,
-          "prevBlockNum": 22667886
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 22745408
         },
         "paused": false,
         "superchainConfig": "0x15144FB8621cB3c4ED3DB223c173ffb58C8D2aB8",
@@ -315,10 +315,10 @@
         "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 12,
         "l2BlockTime": 12,
-        "latestBlockNumber": 1968480,
-        "latestOutputIndex": 16403,
-        "nextBlockNumber": 1968600,
-        "nextOutputIndex": 16404,
+        "latestBlockNumber": 2046480,
+        "latestOutputIndex": 17053,
+        "nextBlockNumber": 2046600,
+        "nextOutputIndex": 17054,
         "proposer": "0x2BD42D6CFA838fB15187F3D59dC19eD169b2659e",
         "PROPOSER": "0x2BD42D6CFA838fB15187F3D59dC19eD169b2659e",
         "startingBlockNumber": 0,
@@ -413,6 +413,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xa446331bD28cbe0186A983a27C528f566B6bedE0",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xF005dFb08377faD44588Af68d0884D272A6fb050",
           "role": "admin",
           "via": [
             { "address": "ethereum:0xbE81A9D662422f667F634f3Fc301e2E360FeFB30" }
@@ -590,6 +598,11 @@
           "permission": "upgrade",
           "from": "ethereum:0xa446331bD28cbe0186A983a27C528f566B6bedE0",
           "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xF005dFb08377faD44588Af68d0884D272A6fb050",
+          "role": "admin"
         }
       ],
       "sinceTimestamp": 1725868115,
@@ -667,6 +680,7 @@
       "sinceTimestamp": 1725868115,
       "sinceBlock": 20711663,
       "values": {
+        "$admin": "0xbE81A9D662422f667F634f3Fc301e2E360FeFB30",
         "$immutable": false,
         "$implementation": "0x5b531AA3ef066E74eBb81cca3B6F841321148369",
         "$pastUpgrades": [
@@ -678,7 +692,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632720",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632836",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1085,5 +1099,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xa0dc1c34a54513b49aa68d733810eae56cf01a97989f83cdbfe737c878a428ae"
+  "permissionsConfigHash": "0xf71b723a3c496ae94cadc82480e3a12c907150a45aa8cc782a4450d07e21f01e"
 }
