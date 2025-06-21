@@ -5,32 +5,50 @@ import { NewHeadsEvent } from './types'
 
 export class EventIndexer extends RootIndexer {
   private blockNumber: number = 0
+  private reconnectTimeout: NodeJS.Timeout | undefined = undefined
 
   constructor(
-    url: string,
+    private readonly url: string,
     source: string,
     logger: Logger,
-    private readonly ws = new WebSocket(url),
+    // we need to be able to mock WebSocket in tests
+    private readonly createdWebSocket: () => WebSocket = () =>
+      new WebSocket(url),
   ) {
     super(logger.tag({ chain: source, project: source }))
   }
 
   override async initialize() {
-    this.ws.on('open', () => {
+    const ws = this.createdWebSocket()
+
+    ws.on('open', () => {
       this.logger.info('WebSocket connection opened.')
-      this.sendSubscriptionRequest()
+
+      // Clear any pending reconnect timeouts
+      if (this.reconnectTimeout) {
+        clearTimeout(this.reconnectTimeout)
+        this.reconnectTimeout = undefined
+      }
+
+      this.sendSubscriptionRequest(ws)
     })
 
-    this.ws.on('message', (data) => {
+    ws.on('message', (data) => {
       this.processEvent(data)
     })
 
-    this.ws.on('error', (error) => {
+    ws.on('error', (error) => {
       this.logger.error('WebSocket error', error)
     })
 
-    this.ws.on('close', (code, reason) => {
+    ws.on('close', (code, reason) => {
       this.logger.info(`WebSocket closed. Code: ${code}, reason: ${reason}`)
+
+      // Schedule reconnect
+      this.reconnectTimeout = setTimeout(() => {
+        this.logger.info('Attempting to reconnect...')
+        this.initialize()
+      }, 5000)
     })
 
     return Promise.resolve(undefined)
@@ -40,7 +58,7 @@ export class EventIndexer extends RootIndexer {
     return Promise.resolve(this.blockNumber)
   }
 
-  private sendSubscriptionRequest() {
+  private sendSubscriptionRequest(ws: WebSocket) {
     const subscriptionRequest = {
       id: 1,
       method: 'eth_subscribe',
@@ -48,7 +66,7 @@ export class EventIndexer extends RootIndexer {
       jsonrpc: '2.0',
     }
 
-    this.ws.send(JSON.stringify(subscriptionRequest), undefined)
+    ws.send(JSON.stringify(subscriptionRequest), undefined)
   }
 
   private processEvent(data: RawData) {

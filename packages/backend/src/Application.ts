@@ -11,6 +11,7 @@ import { initDataAvailabilityModule } from './modules/data-availability/DataAvai
 import { createFinalityModule } from './modules/finality/FinalityModule'
 import { createFlatSourcesModule } from './modules/flat-sources/createFlatSourcesModule'
 import { createMetricsModule } from './modules/metrics/MetricsModule'
+import { createSharedModule } from './modules/shared/SharedModule'
 import { createTrackedTxsModule } from './modules/tracked-txs/TrackedTxsModule'
 import { initTvsModule } from './modules/tvs/TvsModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
@@ -58,6 +59,7 @@ export class Application {
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
+      createSharedModule(config, logger, providers, database),
       initActivityModule(config, logger, clock, providers, database),
       initDataAvailabilityModule(
         config,

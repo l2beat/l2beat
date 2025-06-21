@@ -52,4 +52,28 @@ export class AnomalyStatsRepository extends BaseRepository {
 
     return row && toRecord(row)
   }
+
+  async getLatestStats(): Promise<AnomalyStatsRecord[]> {
+    const subQuery = this.db
+      .selectFrom('AnomalyStats')
+      .select([
+        'projectId',
+        'subtype',
+        this.db.fn.max('timestamp').as('maxTimestamp'),
+      ])
+      .groupBy(['projectId', 'subtype'])
+
+    const rows = await this.db
+      .selectFrom('AnomalyStats as ans')
+      .innerJoin(subQuery.as('latest'), (join) =>
+        join
+          .onRef('ans.projectId', '=', 'latest.projectId')
+          .onRef('ans.subtype', '=', 'latest.subtype')
+          .onRef('ans.timestamp', '=', 'latest.maxTimestamp'),
+      )
+      .selectAll('ans')
+      .execute()
+
+    return rows.map(toRecord)
+  }
 }
