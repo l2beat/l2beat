@@ -16,6 +16,13 @@
     - [Proof system](./code_walkthroughs/scroll/proof_system.md)
     - [Admin operations](./code_walkthroughs/scroll/admin_ops.md)
 
+- [DA Layers](./code_walkthroughs/dalayers/README.md)
+    - [Celestia](./code_walkthroughs/dalayers/celestia/README.md)
+        - [Blob Lifecycle](./code_walkthroughs/dalayers/celestia/blob_lifecycle.md)
+    - [EigenDA](./code_walkthroughs/dalayers/eigenda/README.md)
+        - [Blob Lifecycle](./code_walkthroughs/dalayers/eigenda/blob_lifecycle.md)
+
+
 
 # L2BEAT specs
 
