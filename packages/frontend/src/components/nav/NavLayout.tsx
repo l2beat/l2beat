@@ -145,7 +145,7 @@ export function NavLayout({
         <ZkCatalogIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
       ),
     },
-    env.NEXT_PUBLIC_ECOSYSTEMS && {
+    env.NEXT_PUBLIC_PARTNERS && {
       type: 'multiple',
       title: 'Ecosystems',
       match: 'ecosystems',

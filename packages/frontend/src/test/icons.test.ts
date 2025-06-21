@@ -53,7 +53,7 @@ describe('icons', () => {
         where: ['ecosystemConfig'],
       })
       for (const ecosystem of ecosystems) {
-        const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
+        const icons = getIcons(`../../static/partners/${ecosystem.slug}`)
         expect(icons).toInclude('logo')
       }
     })
@@ -63,7 +63,7 @@ describe('icons', () => {
         where: ['ecosystemConfig'],
       })
       for (const ecosystem of ecosystems) {
-        const icons = getIcons(`../../static/ecosystems/${ecosystem.slug}`)
+        const icons = getIcons(`../../static/partners/${ecosystem.slug}`)
         const hasDarkIcon = !!icons.find((i) => i.endsWith('.dark'))
         if (!hasDarkIcon) {
           continue
@@ -71,13 +71,13 @@ describe('icons', () => {
         const lightIconBuffer = readFileSync(
           path.join(
             __dirname,
-            `../../static/ecosystems/${ecosystem.slug}/logo.png`,
+            `../../static/partners/${ecosystem.slug}/logo.png`,
           ),
         )
         const darkIconBuffer = readFileSync(
           path.join(
             __dirname,
-            `../../static/ecosystems/${ecosystem.slug}/logo.dark.png`,
+            `../../static/partners/${ecosystem.slug}/logo.dark.png`,
           ),
         )
         const lightIconDimensions = getImageDimensions(lightIconBuffer)

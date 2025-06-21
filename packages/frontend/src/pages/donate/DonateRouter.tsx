@@ -1,7 +1,7 @@
 import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '../../utils/Manifest'
-import { getDonateData } from './GetDonateData'
+import { getDonateData } from './getDonateData'
 
 export function createDonateRouter(manifest: Manifest, render: RenderFunction) {
   const router = express.Router()
