@@ -1,5 +1,4 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -15,12 +14,9 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import { getRecategorisedEntries } from '~/pages/scaling/utils/GetRecategorisedEntries'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { UopsExplorerLink } from '../../components/UopsExplorerLink'
@@ -32,33 +28,13 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 
 export function ScalingActivityTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
-
-  const entries = checked
-    ? // No need to sort because it is done later by TPS/UOPS switch
-      getRecategorisedEntries(filteredEntries, undefined)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
-  )
 
   const initialSort = {
     id: 'data_pastDayCount',
@@ -136,10 +112,6 @@ export function ScalingActivityTabs(props: Props) {
             />
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.others} />
-            <OtherMigrationTabNotice
-              projectsToBeMigrated={projectToBeMigratedToOthers}
-              className="mt-2"
-            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

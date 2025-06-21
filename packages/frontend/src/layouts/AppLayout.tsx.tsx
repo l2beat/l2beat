@@ -3,7 +3,6 @@ import { DevAutoReloader } from '~/components/DevAutoReloader'
 import { TooltipProvider } from '~/components/core/tooltip/Tooltip'
 import type { GlossaryTermWithoutDescription } from '~/components/markdown/GlossaryContext'
 import { GlossaryContextProvider } from '~/components/markdown/GlossaryContext'
-import { RecategorisationPreviewContextProvider } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { SearchBarContextProvider } from '~/components/search-bar/SearchBarContext'
 import type { SearchBarProject } from '~/components/search-bar/SearchBarEntry'
 import { env } from '~/env'
@@ -32,9 +31,7 @@ export function AppLayout({
         <TooltipProvider delayDuration={300} disableHoverableContent>
           <GlossaryContextProvider terms={terms}>
             <SearchBarContextProvider projects={searchBarProjects}>
-              <RecategorisationPreviewContextProvider>
-                {children}
-              </RecategorisationPreviewContextProvider>
+              {children}
             </SearchBarContextProvider>
           </GlossaryContextProvider>
         </TooltipProvider>

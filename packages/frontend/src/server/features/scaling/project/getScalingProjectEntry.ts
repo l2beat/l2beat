@@ -44,8 +44,6 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import type { ProjectCountdownsWithContext } from '../utils/getCountdowns'
-import { getCountdowns } from '../utils/getCountdowns'
 import { isProjectOther } from '../utils/isProjectOther'
 import { getScalingDaSolution } from './getScalingDaSolution'
 import type { ScalingRosette } from './getScalingRosetteValues'
@@ -99,7 +97,6 @@ export interface ProjectScalingEntry {
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
-  countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
@@ -149,12 +146,10 @@ export async function getScalingProjectEntry(
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
-      previewRecategorisation: false,
     }),
     helpers.activity.chart.fetch({
       range: '1y',
       filter: { type: 'projects', projectIds: [project.id] },
-      previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
       ? helpers.costs.projectChart.fetch({
@@ -235,7 +230,6 @@ export async function getScalingProjectEntry(
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    countdowns: getCountdowns(project),
     rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
     stageConfig: isProjectOther(project.scalingInfo)

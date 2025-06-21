@@ -57,7 +57,6 @@ export function EcosystemsActivityChart({
       type: 'projects',
       projectIds: entries.map((project) => project.id),
     },
-    previewRecategorisation: false,
   })
 
   const chartMeta = useMemo(() => {

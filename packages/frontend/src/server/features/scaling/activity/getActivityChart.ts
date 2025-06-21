@@ -19,7 +19,6 @@ export type ActivityChartParams = z.infer<typeof ActivityChartParams>
 export const ActivityChartParams = z.object({
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: z.boolean(),
 })
 
 export type ActivityChartData = {
@@ -41,15 +40,14 @@ export type ActivityChartData = {
 export async function getActivityChart({
   filter,
   range,
-  previewRecategorisation,
 }: ActivityChartParams): Promise<ActivityChartData> {
   if (env.MOCK) {
-    return getMockActivityChart({ filter, range, previewRecategorisation })
+    return getMockActivityChart({ filter, range })
   }
 
   const db = getDb()
   const projects = (await getActivityProjects())
-    .filter(createActivityProjectsFilter(filter, previewRecategorisation))
+    .filter(createActivityProjectsFilter(filter))
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project

@@ -2,7 +2,6 @@ import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { ContentWrapper } from '~/components/ContentWrapper'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
-import { OtherMigrationNotice } from '~/components/countdowns/other-migration/OtherMigrationNotice'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
@@ -10,7 +9,6 @@ import { ProjectDetails } from '~/components/projects/ProjectDetails'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
 import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
-import { featureFlags } from '~/consts/featureFlags'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { TopNavLayout } from '~/layouts/TopNavLayout'
@@ -59,12 +57,6 @@ export function ScalingProjectPage({
                     />
                   </div>
                   <div className="w-full">
-                    {projectEntry.countdowns.otherMigration &&
-                      !featureFlags.othersMigrated() && (
-                        <OtherMigrationNotice
-                          {...projectEntry.countdowns.otherMigration}
-                        />
-                      )}
                     {projectEntry.header.category === 'Other' &&
                       projectEntry.reasonsForBeingOther &&
                       projectEntry.reasonsForBeingOther.length > 0 && (

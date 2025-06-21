@@ -26,7 +26,6 @@ export async function getScalingProjectTvsBreakdownData(
       projectIds: [tvsBreakdownData.project.id.toString()],
     },
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
     range: '1y',
   })
 

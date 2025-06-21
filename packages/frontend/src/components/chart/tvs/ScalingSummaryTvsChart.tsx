@@ -29,7 +29,6 @@ import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommo
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { tooltipContentVariants } from '~/components/core/tooltip/Tooltip'
 import { CustomLink } from '~/components/link/CustomLink'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { api } from '~/trpc/React'
@@ -65,11 +64,9 @@ export function ScalingSummaryTvsChart({
   unit,
   timeRange,
 }: { unit: ChartUnit; timeRange: TvsChartRange }) {
-  const { checked } = useRecategorisationPreviewContext()
   const { data, isLoading } = api.tvs.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'layer2' },
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(() => {

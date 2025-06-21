@@ -1,4 +1,3 @@
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
@@ -10,7 +9,8 @@ const localStorageTag = 'top-banner'
 const purpose = 'recategorisation-live'
 
 export function Banner({ className }: { className?: string }) {
-  const enabled = UnixTime.now() >= PROJECT_COUNTDOWNS.otherMigration
+  const enabled =
+    UnixTime.now() < UnixTime.fromDate(new Date('2025-07-10T00:00:00Z'))
   const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
     `${localStorageTag}-${purpose}-is-hidden`,

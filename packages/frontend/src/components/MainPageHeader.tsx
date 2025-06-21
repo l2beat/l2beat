@@ -1,10 +1,6 @@
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
-import { UnixTime } from '@l2beat/shared-pure'
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 import { ShowMoreText } from './ShowMoreText'
-import { useRecategorisationPreviewContext } from './recategorisation-preview/RecategorisationPreviewProvider'
-import { RecategorisationPreviewSwitch } from './recategorisation-preview/RecategorisationPreviewSwitch'
 import { SearchBarButton } from './search-bar/SearchBarButton'
 
 interface Props {
@@ -20,8 +16,6 @@ export function MainPageHeader({
   description,
   warning,
 }: Props) {
-  const { isScalingMainPage } = useRecategorisationPreviewContext()
-
   return (
     <div>
       <header
@@ -35,10 +29,6 @@ export function MainPageHeader({
           <h1 className="font-bold text-[26px]">{children}</h1>
         </div>
         <div className="flex items-center gap-5">
-          {isScalingMainPage &&
-            PROJECT_COUNTDOWNS.otherMigration > UnixTime.now() && (
-              <RecategorisationPreviewSwitch />
-            )}
           <SearchBarButton />
         </div>
       </header>

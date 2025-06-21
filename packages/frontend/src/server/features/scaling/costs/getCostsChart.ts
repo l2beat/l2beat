@@ -14,7 +14,6 @@ const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 export const CostsChartParams = z.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
-  previewRecategorisation: z.boolean(),
 })
 export type CostsChartParams = z.infer<typeof CostsChartParams>
 
@@ -43,18 +42,16 @@ export type CostsChartData = CostsChartDataPoint[]
 export async function getCostsChart({
   range: timeRange,
   filter,
-  previewRecategorisation,
 }: CostsChartParams): Promise<CostsChartData> {
   if (env.MOCK) {
     return getMockCostsChartData({
       range: timeRange,
       filter,
-      previewRecategorisation,
     })
   }
 
   const db = getDb()
-  const projects = await getCostsProjects(filter, previewRecategorisation)
+  const projects = await getCostsProjects(filter)
   if (projects.length === 0) {
     return []
   }

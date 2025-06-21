@@ -84,7 +84,6 @@ async function getQueryState(
     },
     range: '1y',
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
   })
   return helpers.dehydrate()
 }
