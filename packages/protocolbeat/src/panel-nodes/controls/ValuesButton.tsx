@@ -16,9 +16,20 @@ export function ValuesButton() {
   const hasAnyFields = selectedNode && selectedNode.fields.length > 0
   const disabled = !isSingleSelected || !hasAnyFields
 
+  const visibleFields = selectedNode?.fields.filter(
+    (field) => !selectedNode.hiddenFields.includes(field.name),
+  )
+
+  const fieldStat = selectedNode
+    ? ` (${visibleFields?.length ?? 0}/${selectedNode.fields.length})`
+    : undefined
+
   return (
     <ValuesDialog.Root>
-      <ValuesDialog.Trigger disabled={disabled} />
+      <ValuesDialog.Trigger disabled={disabled}>
+        Values
+        {fieldStat}
+      </ValuesDialog.Trigger>
       {selectedNode && <ValuesDialog.Body node={selectedNode} />}
     </ValuesDialog.Root>
   )
