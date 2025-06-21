@@ -1,1 +1,6 @@
-export const THROUGHPUT_ENABLED_DA_LAYERS = ['ethereum', 'celestia', 'avail']
+export const THROUGHPUT_ENABLED_DA_LAYERS = [
+  'ethereum',
+  'celestia',
+  'avail',
+  'eigenda',
+]

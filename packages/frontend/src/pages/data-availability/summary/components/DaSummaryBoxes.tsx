@@ -120,7 +120,8 @@ function SummaryThroughputBox({
     0,
   )
 
-  const total = latest.ethereum + latest.celestia + latest.avail
+  const total =
+    latest.ethereum + latest.celestia + latest.avail + latest.eigenda
 
   const breakdown: BreakdownItem[] = [
     {
@@ -140,6 +141,12 @@ function SummaryThroughputBox({
       value: latest.avail,
       className: 'bg-chart-emerald',
       percentage: round((latest.avail / total) * 100, 2),
+    },
+    {
+      label: 'EigenDA',
+      value: latest.eigenda,
+      className: 'bg-chart-eigenda',
+      percentage: round((latest.eigenda / total) * 100, 2),
     },
   ]
 

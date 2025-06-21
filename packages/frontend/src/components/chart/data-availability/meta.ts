@@ -21,5 +21,10 @@ export function getDaChartMeta({
       color: 'hsl(var(--chart-emerald))',
       indicatorType: { shape },
     },
+    eigenda: {
+      label: 'EigenDA',
+      color: 'hsl(var(--chart-eigenda))',
+      indicatorType: { shape },
+    },
   } satisfies ChartMeta
 }
