@@ -185,7 +185,7 @@ export class ArbitrumScheduledTransactionsHandler implements Handler {
   // the address of the inbox that it will pass the L2 call to. We split the
   // decoding into decoding pre-BoLD and post-BoLD.
   //
-  // Altought I'm still not 100% certain that this is actually correct because
+  // Although I'm still not 100% certain that this is actually correct because
   // we only have a single case to explore. If you're reading this and something
   // else has taken place feel free to disregard this comment and correct it.
   async decodeL2CallPreBoLD(
