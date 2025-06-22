@@ -30,7 +30,7 @@ To force transactions on Scroll through L1, the following steps are taken:
 1. The EOA sends a message to the L2 through the `sendTransaction` function on the `EnforcedTxGateway` contract.
 2. The `sendTransaction` function calls the `appendEnforcedTransaction` function on the `L1MessageQueue` contract, which pushes the message to the queue through the `messageRollingHashes` (uint256 => bytes32, messageIndex => timestamp-rollingHash) mapping.
 3. At each finalization (`finalizeBundlePostEuclidV2`) the number of messages processed in the bundle (`totalL1MessagesPoppedOverall`) is passed as input
-4. In the internal `_finalizeBundlePostEuclidV2` function, the `messageQueueHash` is computed up to the `totalL1MessagesPoppedOverall - 1` queue index
+4. In the internal `finalizeBundlePostEuclidV2` function, the `messageQueueHash` is computed up to the `totalL1MessagesPoppedOverall - 1` queue index
 5. The `messageQueueHash` is passed a public input to the verifier.
 
 Should messages not be processed by the permissioned sequencer, the EOA waits for either:
