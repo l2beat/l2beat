@@ -101,6 +101,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -108,6 +110,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -115,6 +119,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
@@ -225,6 +231,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -234,6 +242,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -267,6 +277,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -276,6 +288,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -324,6 +338,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -333,6 +349,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })

@@ -9,7 +9,6 @@ import {
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
-  EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
   RISK_VIEW,
@@ -17,13 +16,13 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { BADGES } from '../../common/badges'
-import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('cartesi-prt-honeypot')
 const minChallengePeriodBlocks = discovery.getContractValue<number>(
@@ -43,6 +42,7 @@ export const cartesiprthoneypot: ScalingProject = {
     BADGES.DA.EthereumCalldata,
     BADGES.Stack.Cartesi,
   ],
+  reviewStatus: 'inReview',
   display: {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
@@ -144,43 +144,44 @@ export const cartesiprthoneypot: ScalingProject = {
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE_NO_SEQUENCER,
     proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_ROOTS,
   },
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
-        securityCouncilProperlySetUp: null,
-      },
-      stage2: {
-        proofSystemOverriddenOnlyInCaseOfABug: null,
-        fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: {
-          satisfied: true,
-          message:
-            'Users can exit at any time and the rollup contract is immutable.',
-          mode: 'replace',
-        },
-      },
-    },
-    {
-      rollupNodeLink:
-        'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
-      additionalConsiderations: {
-        short:
-          'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
-        long: "Users can deposit (donate) CTSI tokens to the Honeypot. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
-      },
-    },
-  ),
+  stage: { stage: 'UnderReview' },
+  // getStage(
+  //   {
+  //     stage0: {
+  //       callsItselfRollup: true,
+  //       stateRootsPostedToL1: true,
+  //       dataAvailabilityOnL1: true,
+  //       rollupNodeSourceAvailable: true,
+  //     },
+  //     stage1: {
+  //       principle: false,
+  //       stateVerificationOnL1: true,
+  //       fraudProofSystemAtLeast5Outsiders: true,
+  //       usersHave7DaysToExit: true,
+  //       usersCanExitWithoutCooperation: true,
+  //       securityCouncilProperlySetUp: null,
+  //     },
+  //     stage2: {
+  //       proofSystemOverriddenOnlyInCaseOfABug: null,
+  //       fraudProofSystemIsPermissionless: true,
+  //       delayWith30DExitWindow: {
+  //         satisfied: true,
+  //         message:
+  //           'Users can exit at any time and the rollup contract is immutable.',
+  //         mode: 'replace',
+  //       },
+  //     },
+  //   },
+  //   {
+  //     rollupNodeLink:
+  //       'https://github.com/cartesi/dave/tree/main/cartesi-rollups/node',
+  //     additionalConsiderations: {
+  //       short:
+  //         'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits and withdrawals.',
+  //       long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. To request a withdrawal, they need to post an input to the InputBox with the application address and `0x` arguments as described in the Withdrawals section. Withdrawals are configured to go to a single address (not the user's).",
+  //     },
+  //   },
+  // ),
   technology: {
     dataAvailability: {
       ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
@@ -206,7 +207,10 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     exitMechanisms: [
       {
-        ...EXITS.REGULAR_MESSAGING('optimistic'),
+        name: 'No user withdrawals',
+        description:
+          'No address apart from the Cartesi Multisig can trigger a withdrawal and deposits are considered donations to the Honeypot. If a withdrawal is requested by them, all funds in the escrow are withdrawn to it.',
+        risks: [],
         references: [
           {
             title: 'Requesting withdrawals, Honeypot Wiki',
@@ -297,4 +301,5 @@ export const cartesiprthoneypot: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

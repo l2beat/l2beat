@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations."
+}

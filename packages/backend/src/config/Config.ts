@@ -266,6 +266,7 @@ export type TimestampLayerDaTrackingConfig = {
   url: string
   callsPerMinute: number
   startingTimestamp: UnixTime
+  perProjectUrl?: string
 }
 
 export interface DataAvailabilityTrackingConfig {

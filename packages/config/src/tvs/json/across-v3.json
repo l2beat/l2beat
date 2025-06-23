@@ -999,7 +999,14 @@
       },
       "category": "stablecoin",
       "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Blast"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

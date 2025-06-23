@@ -296,6 +296,30 @@
           },
           "isAssociated": {
             "type": "boolean"
+          },
+          "bridgedUsing": {
+            "type": "object",
+            "properties": {
+              "bridges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "warning": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
           }
         },
         "required": [

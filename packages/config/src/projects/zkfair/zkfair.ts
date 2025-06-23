@@ -21,6 +21,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -386,4 +387,5 @@ export const zkfair: ScalingProject = {
       membersCount: membersCountDAC,
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

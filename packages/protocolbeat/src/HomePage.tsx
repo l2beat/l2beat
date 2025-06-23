@@ -3,6 +3,7 @@ import { createRef, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { getProjects } from './api/api'
 import type { ApiProjectEntry } from './api/types'
+import { ErrorState } from './components/ErrorState'
 import { IconStarEmpty } from './icons/IconStarEmpty'
 import { IconStarFull } from './icons/IconStarFull'
 
@@ -187,11 +188,20 @@ function AllProjects(props: { search: string }) {
   ])
 
   if (result.isPending) {
-    return <div>Loading</div>
+    return (
+      <>
+        <WithHeader title="Favorites">
+          <ProjectListSkeleton amount={4} />
+        </WithHeader>
+        <WithHeader title="Projects">
+          <ProjectListSkeleton amount={16} />
+        </WithHeader>
+      </>
+    )
   }
 
   if (result.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   function toggleFavorite(project: string) {
@@ -210,10 +220,9 @@ function AllProjects(props: { search: string }) {
   if (filtered.length === 0) {
     return (
       <>
-        <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
-          Projects
-        </p>
-        <p className="pl-6">No matching projects</p>
+        <WithHeader title="Projects">
+          <p className="pl-6">No matching projects</p>
+        </WithHeader>
       </>
     )
   }
@@ -224,10 +233,7 @@ function AllProjects(props: { search: string }) {
   return (
     <>
       {favoriteList.length > 0 && (
-        <>
-          <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
-            Favorites
-          </p>
+        <WithHeader title="Favorites">
           <ProjectList
             favorites
             entries={favoriteList}
@@ -236,13 +242,10 @@ function AllProjects(props: { search: string }) {
             columnCount={columnCount}
             itemRefs={favoriteRefs}
           />
-        </>
+        </WithHeader>
       )}
       {otherList.length > 0 && (
-        <>
-          <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
-            Projects
-          </p>
+        <WithHeader>
           <ProjectList
             entries={otherList}
             toggleFavorite={toggleFavorite}
@@ -250,7 +253,7 @@ function AllProjects(props: { search: string }) {
             columnCount={columnCount}
             itemRefs={projectRefs}
           />
-        </>
+        </WithHeader>
       )}
     </>
   )
@@ -329,4 +332,45 @@ function readFavorites() {
 
 function writeFavorites(favorites: string[]) {
   localStorage.setItem('favorites', favorites.join(','))
+}
+
+function WithHeader({
+  children,
+  title = 'Projects',
+}: { children: React.ReactNode; title?: string }) {
+  return (
+    <>
+      <p className="mb-2 border-coffee-600 border-b pb-2 pl-6 font-semibold text-sm uppercase">
+        {title}
+      </p>
+      {children}
+    </>
+  )
+}
+
+function ProjectListSkeleton(props: { amount: number }) {
+  return (
+    <ol className="mb-8 grid grid-cols-2 gap-x-1 gap-y-4 md:grid-cols-4">
+      {Array.from({ length: props.amount }).map((_, i) => {
+        const projectNameWidth = randomWidth(40, 100)
+        const chainsWidth = randomWidth(20, 80)
+        return (
+          <div key={i} className="flex flex-col gap-1">
+            <li
+              className="h-5 animate-breath rounded bg-coffee-400/50"
+              style={{ width: `${projectNameWidth}%` }}
+            />
+            <li
+              className="h-2 animate-breath rounded bg-coffee-400/30"
+              style={{ width: `${chainsWidth}%` }}
+            />
+          </div>
+        )
+      })}
+    </ol>
+  )
+}
+
+function randomWidth(min: number, max: number) {
+  return Math.random() * (max - min) + min
 }

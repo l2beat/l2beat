@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9caff1ce211ab3954488513b83c215787289efd1
+
+# Diff at Wed, 18 Jun 2025 11:38:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593567
+- current block number: 22731118
+
+## Description
+
+MS signer changed.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) {
+    +++ description: None
+      values.$members.4:
+-        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
++        "0xCA730AFfb87935E70E5889418C731eb196237476"
+    }
+```
+
 Generated with discovered.json: 0x816f2e05a6447c2270f700b70ea353b6a50d11af
 
 # Diff at Mon, 16 Jun 2025 10:14:40 GMT:

@@ -2,7 +2,7 @@
   "name": "pepeunchained",
   "chain": "ethereum",
   "blockNumber": 22615673,
-  "configHash": "0x1380284e8a23aef0e1ed838f7f77acdacbc8bbe406869bdd9129caef3473b11f",
+  "configHash": "0x399f3db8e9aeb3793ac09bfb32717840c7885a7429058c55bdf189b31f6f1335",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

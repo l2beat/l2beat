@@ -26,6 +26,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('scroll')
 const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
@@ -699,4 +700,5 @@ export const scroll: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery, l2Discovery]),
 }

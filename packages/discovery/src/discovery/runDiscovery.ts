@@ -63,7 +63,7 @@ export async function runDiscovery(
     templatesFolder,
   })
 
-  // TODO(radomski): This is a disaster from the point of view of seperation of
+  // TODO(radomski): This is a disaster from the point of view of separation of
   // concerns. We should agree on what even is a shared module and how to
   // handle them cleanly.
   if (config.project.startsWith('shared-')) {

@@ -6,6 +6,8 @@ import { getProject } from '../api/api'
 import type { ApiAddressEntry, ApiProjectChain } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconFolder } from '../icons/IconFolder'
@@ -22,10 +24,10 @@ export function ListPanel() {
     queryFn: () => getProject(project),
   })
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
   return (
     <div className="h-full w-full overflow-x-hidden">

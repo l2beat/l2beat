@@ -11,6 +11,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const upgradeDelay = 0
 const discovery = new ProjectDiscovery('gluon')
@@ -134,4 +135,5 @@ export const gluon: ScalingProject = {
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -6,6 +6,7 @@ import type { ProjectChanges } from '../projects-change-report/getProjectsChange
 import type { CommonProjectEntry } from '../utils/getCommonProjectEntry'
 import { getIsProjectVerified } from '../utils/getIsProjectVerified'
 import { getProjectIcon } from '../utils/getProjectIcon'
+import { isProjectOther } from './utils/isProjectOther'
 
 export interface CommonScalingEntry
   extends CommonProjectEntry,
@@ -104,7 +105,7 @@ export function getScalingTab(
 
   return project.statuses.reviewStatus === 'initialReview'
     ? 'underReview'
-    : project.scalingInfo.isOther
+    : isProjectOther(project.scalingInfo)
       ? 'others'
       : isRollup
         ? 'rollups'

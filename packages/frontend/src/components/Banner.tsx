@@ -34,7 +34,7 @@ export function Banner({ className }: { className?: string }) {
           className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
         />
       </div>
-      <div className="text-sm">
+      <div className="text-balance text-center text-sm max-md:px-6">
         We recently introduced recategorisation and some projects were moved to
         Others.
       </div>

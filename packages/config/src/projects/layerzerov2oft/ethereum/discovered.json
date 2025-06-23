@@ -2,7 +2,7 @@
   "name": "layerzerov2oft",
   "chain": "ethereum",
   "blockNumber": 22567567,
-  "configHash": "0x51be063880350a4244ab77bde2ee7d3efea1bc4150abff80f5fdac9fc70ae251",
+  "configHash": "0x40b5f6adb80d520e8c33c2372caffc14b74d35691fcb449b9dbc7ec4bfeb37c1",
   "entries": [
     {
       "address": "0x00F6D2b4B69Ce697f913Da16A9D73283dc4C78F2",
