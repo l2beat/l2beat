@@ -4,8 +4,8 @@ import { getDiscoveryPaths, readJsonc, toPrettyJson } from '@l2beat/discovery'
 import type { EthereumAddress } from '@l2beat/shared-pure'
 
 interface ConfigSkeleton {
-    chains?: Record<string, object>
-    import?: string[]
+  chains?: Record<string, object>
+  import?: string[]
 }
 
 export async function initDiscovery(
