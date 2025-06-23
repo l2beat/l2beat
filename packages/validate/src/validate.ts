@@ -12,6 +12,7 @@ export interface Parser<T> {
     predicate: (value: T) => value is U,
     message?: string,
   ): Parser<U>
+  transform: <U>(transformer: (value: T) => U) => Parser<U>
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
@@ -76,6 +77,13 @@ class ParserImpl<T> implements Parser<T> {
     ])
   }
 
+  transform<U>(transformer: (value: T) => U): Parser<U> {
+    return new ParserImpl(spTransform(this.safeParse, transformer), [
+      'transform',
+      transformer,
+    ])
+  }
+
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>> {
@@ -136,21 +144,10 @@ class ValidatorImpl<T> implements Validator<T> {
   }
 
   transform<U>(transformer: (value: T) => U): Parser<U> {
-    return new ParserImpl(
-      (value: unknown): Result<U> => {
-        const result = this.safeParse(value)
-        if (!result.success) {
-          return result
-        }
-        try {
-          return { success: true, data: transformer(result.data) }
-        } catch (e) {
-          const message = e instanceof Error ? e.message : `${e}`
-          return { success: false, path: '', message }
-        }
-      },
-      ['transform', transformer],
-    )
+    return new ParserImpl(spTransform(this.safeParse, transformer), [
+      'transform',
+      transformer,
+    ])
   }
 
   default(
@@ -191,6 +188,22 @@ function check<T>(
       }
     }
     return result
+  }
+}
+
+function spTransform<T, U>(
+  safeParse: Parser<T>['safeParse'],
+  transformer: (value: T) => U,
+) {
+  return function spDefault(value: unknown): Result<U> {
+    const result = safeParse(value)
+    if (!result.success) return result
+    try {
+      return { success: true, data: transformer(result.data) }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : `${e}`
+      return { success: false, path: '', message }
+    }
   }
 }
 
