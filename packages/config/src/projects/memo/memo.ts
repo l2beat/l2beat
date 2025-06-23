@@ -8,6 +8,7 @@ export const memo: BaseProject = {
   slug: 'memo',
   name: 'Meeda',
   shortName: undefined,
+  archivedAt: UnixTime.fromDate(new Date('2025-06-03')),
   addedAt: UnixTime.fromDate(new Date('2024-09-03')),
   // tags
   isDaLayer: true,
@@ -17,7 +18,7 @@ export const memo: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `Meeda (MemoDA) is a blockchain-based cloud storage protocol developed by MEMO Labs.`,

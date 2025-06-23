@@ -10,6 +10,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('shibarium')
 
@@ -39,7 +40,7 @@ export const shibarium: ScalingProject = {
     purposes: ['Universal'],
     links: {
       websites: ['https://shibarium.shib.io/'],
-      apps: ['https://shibarium.shib.io/bridge'],
+      bridges: ['https://shibarium.shib.io/bridge'],
       documentation: [
         'https://docs.shib.io/docs/shibarium/welcome/welcome-overview',
       ],
@@ -141,4 +142,5 @@ export const shibarium: ScalingProject = {
   permissions: {
     [discovery.chain]: discovery.getDiscoveredPermissions(),
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

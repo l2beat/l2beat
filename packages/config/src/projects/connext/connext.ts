@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('connext')
 
@@ -16,7 +17,7 @@ export const connext: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://bridge.connext.network/', 'https://connext.network/'],
-      apps: ['https://bridge.connext.network/'],
+      bridges: ['https://bridge.connext.network/'],
       explorers: ['https://connextscan.io/'],
       socialMedia: [
         'https://twitter.com/connextnetwork',
@@ -115,4 +116,5 @@ export const connext: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

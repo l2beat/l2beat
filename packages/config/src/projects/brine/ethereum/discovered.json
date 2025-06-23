@@ -2,7 +2,7 @@
   "name": "brine",
   "chain": "ethereum",
   "blockNumber": 21981345,
-  "configHash": "0x76afc03340a6576cb93a124f96c750f181ea755c8176069e7b40c59336d9ad3b",
+  "configHash": "0x4a30ec1d26db58def464119340226b6402fbc773ba9d54739e22207bbaf63518",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -138,18 +138,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "from": "ethereum:0x1390f521A79BaBE99b69B37154D63D431da27A07",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "from": "ethereum:0x1390f521A79BaBE99b69B37154D63D431da27A07",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "from": "ethereum:0x1390f521A79BaBE99b69B37154D63D431da27A07",
           "role": ".$admin"
         }
       ]
@@ -161,7 +161,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "from": "ethereum:0x1390f521A79BaBE99b69B37154D63D431da27A07",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -296,7 +296,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x1390f521A79BaBE99b69B37154D63D431da27A07",
+          "from": "ethereum:0x1390f521A79BaBE99b69B37154D63D431da27A07",
           "role": ".operators"
         }
       ]

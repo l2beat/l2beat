@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('polynetwork')
 
@@ -23,7 +24,7 @@ export const polynetwork: Bridge = {
     warning: warningText,
     links: {
       websites: ['https://bridge.poly.network/', 'https://poly.network/'],
-      apps: ['https://bridge.poly.network/'],
+      bridges: ['https://bridge.poly.network/'],
       socialMedia: [
         'https://twitter.com/PolyNetwork2',
         'https://polynetwork.medium.com/',
@@ -248,4 +249,5 @@ export const polynetwork: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

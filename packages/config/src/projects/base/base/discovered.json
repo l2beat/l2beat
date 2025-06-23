@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "base",
-  "blockNumber": 30124700,
-  "configHash": "0xb1dd9135205192b5a8e6713e5f38c54890c6d9153b0b66b801388af9712f3b64",
+  "blockNumber": 31338532,
+  "configHash": "0x30535ca679720c27a7dddcaec1496da7dfe1a6e12aacaf2d8e24c259596f7940",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -19,7 +19,7 @@
       "sinceTimestamp": 1686802803,
       "sinceBlock": 6728,
       "values": {
-        "$admin": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
+        "$admin": "0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
         "$implementation": "0x45969D00739d518f0Dde41920B67cE30395135A0",
         "$pastUpgrades": [
           [
@@ -32,7 +32,7 @@
         "BASIS_POINT_SCALE": 10000,
         "FEE_DISBURSEMENT_INTERVAL": 86400,
         "L1_WALLET": "0x23B597f33f6f2621F77DA117523Dffd634cDf4ea",
-        "lastDisbursementTime": 1746921623,
+        "lastDisbursementTime": 1749340809,
         "netFeeRevenue": 0,
         "OPTIMISM_GROSS_REVENUE_SHARE_BASIS_POINTS": 250,
         "OPTIMISM_NET_REVENUE_SHARE_BASIS_POINTS": 1500,
@@ -56,16 +56,6 @@
     },
     {
       "address": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -95,7 +85,7 @@
         "$upgradeCount": 0,
         "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292659120",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292660374",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -306,7 +296,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "basefee": 5406916494,
+        "basefee": 4013994797,
         "baseFeeScalar": 2269,
         "batcherHash": "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9",
         "blobBaseFee": 1,
@@ -318,15 +308,15 @@
         },
         "gasPayingTokenName": "Ether",
         "gasPayingTokenSymbol": "ETH",
-        "hash": "0x9f482e96be28bf5b6212fe6dc354c5dc8258a58477a56d320de3ac1d450e7a37",
+        "hash": "0x3cb8135a46c81d3066500a9b794caf86d242a418618e2e3c433007246ae5b43e",
         "isCustomGasToken": false,
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 22466027,
+        "number": 22666534,
         "operatorFeeConstant": 0,
         "operatorFeeScalar": 0,
-        "sequenceNumber": 2,
-        "timestamp": 1747038563,
+        "sequenceNumber": 0,
+        "timestamp": 1749466235,
         "version": "1.6.0"
       },
       "implementationNames": {
@@ -400,72 +390,72 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000007",
+          "from": "base:0x4200000000000000000000000000000000000007",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000010",
+          "from": "base:0x4200000000000000000000000000000000000010",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000011",
+          "from": "base:0x4200000000000000000000000000000000000011",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000012",
+          "from": "base:0x4200000000000000000000000000000000000012",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000013",
+          "from": "base:0x4200000000000000000000000000000000000013",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000014",
+          "from": "base:0x4200000000000000000000000000000000000014",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000015",
+          "from": "base:0x4200000000000000000000000000000000000015",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000016",
+          "from": "base:0x4200000000000000000000000000000000000016",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000017",
+          "from": "base:0x4200000000000000000000000000000000000017",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "base:0x4200000000000000000000000000000000000018",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000019",
+          "from": "base:0x4200000000000000000000000000000000000019",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000001A",
+          "from": "base:0x420000000000000000000000000000000000001A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000020",
+          "from": "base:0x4200000000000000000000000000000000000020",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000021",
+          "from": "base:0x4200000000000000000000000000000000000021",
           "role": "admin"
         }
       ],
@@ -631,17 +621,7 @@
       }
     },
     {
-      "address": "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x6CD3850756b7894774Ab715D136F9dD02837De50",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -659,93 +639,121 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000007",
+          "from": "base:0x4200000000000000000000000000000000000007",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000010",
+          "from": "base:0x4200000000000000000000000000000000000010",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000011",
+          "from": "base:0x4200000000000000000000000000000000000011",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000012",
+          "from": "base:0x4200000000000000000000000000000000000012",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000013",
+          "from": "base:0x4200000000000000000000000000000000000013",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000014",
+          "from": "base:0x4200000000000000000000000000000000000014",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000015",
+          "from": "base:0x4200000000000000000000000000000000000015",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000016",
+          "from": "base:0x4200000000000000000000000000000000000016",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000017",
+          "from": "base:0x4200000000000000000000000000000000000017",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "base:0x4200000000000000000000000000000000000018",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000019",
+          "from": "base:0x4200000000000000000000000000000000000019",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x420000000000000000000000000000000000001A",
+          "from": "base:0x420000000000000000000000000000000000001A",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000020",
+          "from": "base:0x4200000000000000000000000000000000000020",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000021",
+          "from": "base:0x4200000000000000000000000000000000000021",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "base:0x4200000000000000000000000000000000000018" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "base:0x4200000000000000000000000000000000000018",
           "role": ".owner"
         }
       ]
@@ -785,53 +793,16 @@
       }
     },
     {
-      "address": "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
+      "address": "0xaD5B57FEB77e294fD7BF5EBE9aB01caA0a90B221",
       "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "GnosisSafeL2",
-      "address": "0xd94E416cf2c7167608B2515B7e4102B41efff94f",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
-      ],
-      "proxyType": "gnosis safe",
+      "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
+          "from": "base:0x09C7bAD99688a55a2e83644BFAed09e62bDcCcBA",
           "role": "admin"
         }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1688064179,
-      "sinceBlock": 637416,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": [
-          "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
-          "0xB011a32ED8b4F70D9943A2199F539bbeCd7b62F7",
-          "0x3Dad2200849925Bb46d9bF05aFa5f7F213F4c18E",
-          "0x5FbEFA105bbd53b43bf537Cbc5cD30804Dd0c993",
-          "0x3cd692eCE8b6573A2220ae00d0dEb98f0DfFA9a1",
-          "0x6CD3850756b7894774Ab715D136F9dD02837De50"
-        ],
-        "$threshold": 3,
-        "domainSeparator": "0xd16e718462d25bb73b8c6aba4611b4bc91c8e12dbf5180f9cd42af8080cffae9",
-        "getChainId": 8453,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 9,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "0xd94E416cf2c7167608B2515B7e4102B41efff94f": "GnosisSafeProxy",
-        "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
-      }
+      ]
     },
     {
       "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
@@ -845,11 +816,6 @@
     },
     {
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xf9e320f3dA12E68af219d9E2A490Dd649f6B177c",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1239,9 +1205,6 @@
       "function version() view returns (string)",
       "function withdraw()"
     ],
-    "0xd94E416cf2c7167608B2515B7e4102B41efff94f": [
-      "constructor(address _singleton)"
-    ],
     "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
       "event AddedOwner(address owner)",
       "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
@@ -1335,5 +1298,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0x32d1b09ccd589baf06a761f9f1c7e31b096f58ac63446a4c07a82cf07456b825"
+  "permissionsConfigHash": "0x859d91146480f9afc7ee3001df20297fe50d8ac9013df1e2dfd7b13a5ae541fd"
 }

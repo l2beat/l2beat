@@ -1,0 +1,37 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EspressoTEEVerifier",
+  "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
+  "fields": {
+    "mrEnclaves": {
+      "description": "Identifier of the TEE code used (hash of enclave's code and initial data).",
+      "handler": {
+        "type": "event",
+        "select": "mrEnclave",
+        "add": {
+          "event": "MREnclaveSet",
+          "where": ["=", "#_isValid", true]
+        },
+        "remove": {
+          "event": "MREnclaveSet",
+          "where": ["=", "#_isValid", false]
+        }
+      }
+    },
+    "mrSigners": {
+      "description": "Hash of the signer's public key (who signed the code running on the TEE).",
+      "handler": {
+        "type": "event",
+        "select": "mrSigner",
+        "add": {
+          "event": "MRSignerSet",
+          "where": ["=", "#_isValid", true]
+        },
+        "remove": {
+          "event": "MRSignerSet",
+          "where": ["=", "#_isValid", false]
+        }
+      }
+    }
+  }
+}

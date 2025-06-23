@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('deversifi')
@@ -69,7 +70,7 @@ export const deversifi: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://rhino.fi/'],
-      apps: ['https://app.rhino.fi/'],
+      bridges: ['https://app.rhino.fi/'],
       documentation: [
         'https://docs.rhino.fi/',
         'https://support.rhino.fi/en/',
@@ -191,4 +192,5 @@ export const deversifi: ScalingProject = {
     },
   ],
   customDa: StarkexDAC({ discovery }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -98,7 +98,7 @@ export interface ScalingProject {
   /** Things we have or haven't checked while assesing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
-  discoveryInfo?: ProjectDiscoveryInfo
+  discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
 }
@@ -254,8 +254,8 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
-  discoveryInfo?: ProjectDiscoveryInfo
   upgradesAndGovernance?: string
+  discoveryInfo: ProjectDiscoveryInfo
 }
 
 export interface BridgeDisplay {

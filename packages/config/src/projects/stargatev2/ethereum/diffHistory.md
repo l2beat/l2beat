@@ -1,4 +1,64 @@
-Generated with discovered.json: 0x30c5876d88a2959a8c5422fe8eb76584f584a1a5
+Generated with discovered.json: 0xf0dd2ce55073ec49480733619251a017c0f6a58d
+
+# Diff at Mon, 09 Jun 2025 10:36:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22593859
+- current block number: 22666357
+
+## Description
+
+config: add stargate pool shapes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593859 (main branch discovery), not current.
+
+```diff
+    contract StargatePoolNative (0x77b2043768d28E9C9aB44E1aBfC95944bcE57931) {
+    +++ description: None
+      template:
++        "stargate/StargatePoolNative"
+    }
+```
+
+```diff
+    contract StargatePoolMigratable (0x933597a323Eb81cAe705C5bC29985172fd5A3973) {
+    +++ description: None
+      template:
++        "stargate/StargatePoolMigratable"
+    }
+```
+
+```diff
+    contract StargatePoolUSDC (0xc026395860Db2d07ee33e05fE50ed7bD583189C7) {
+    +++ description: None
+      template:
++        "stargate/StargatePoolUSDC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract FeeLibV1 (0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Metis Token (0x9E32b13ce7f2E80A01932B42553652E053D6ed8e)
+    +++ description: Metis token contract.
+```
+
+```diff
++   Status: CREATED
+    contract LPToken (0xF14EEe033D8b00101aB147F87cB238a2d3E74940)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x505f1804f955ad6ed50fb8ca934bcf81de25f3f0
 
 # Diff at Mon, 26 May 2025 15:50:38 GMT:
 

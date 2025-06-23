@@ -1,3 +1,4 @@
+import { Logger } from '@l2beat/backend-tools'
 import type {
   BlobClient,
   BlobsInBlock,
@@ -35,6 +36,7 @@ export class LowLevelProvider {
     private readonly etherscanClient: IEtherscanClient,
     private readonly celestiaApiClient?: CelestiaApiClient,
     private readonly blobClient?: BlobClient,
+    private readonly logger: Logger = Logger.SILENT,
   ) {}
 
   getRawProviders(): RawProviders {
@@ -61,7 +63,7 @@ export class LowLevelProvider {
           )
           return Bytes.fromHex(result)
         },
-
+        this.logger,
         `call ${address.toString()} ${data.length} ${blockNumber}`,
       )
     }, ProviderMeasurement.CALL)
@@ -73,14 +75,18 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        const result = await this.provider.getStorageAt(
-          address.toString(),
-          slot instanceof Bytes ? slot.toString() : slot,
-          blockNumber,
-        )
-        return Bytes.fromHex(result)
-      }, `getStorage ${address.toString()} ${slot} ${blockNumber}`)
+      return rpcWithRetries(
+        async () => {
+          const result = await this.provider.getStorageAt(
+            address.toString(),
+            slot instanceof Bytes ? slot.toString() : slot,
+            blockNumber,
+          )
+          return Bytes.fromHex(result)
+        },
+        this.logger,
+        `getStorage ${address.toString()} ${slot} ${blockNumber}`,
+      )
     }, ProviderMeasurement.GET_STORAGE)
   }
 
@@ -91,14 +97,18 @@ export class LowLevelProvider {
     toBlock: number,
   ): Promise<providers.Log[]> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        return await this.eventProvider.getLogs({
-          address: address.toString(),
-          fromBlock,
-          toBlock,
-          topics,
-        })
-      }, `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`)
+      return rpcWithRetries(
+        async () => {
+          return await this.eventProvider.getLogs({
+            address: address.toString(),
+            fromBlock,
+            toBlock,
+            topics,
+          })
+        },
+        this.logger,
+        `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
+      )
     }, ProviderMeasurement.GET_LOGS)
   }
 
@@ -106,12 +116,16 @@ export class LowLevelProvider {
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse | undefined> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        return (
-          (await this.provider.getTransaction(transactionHash.toString())) ??
-          undefined
-        )
-      }, `getTransaction ${transactionHash.toString()}`)
+      return rpcWithRetries(
+        async () => {
+          return (
+            (await this.provider.getTransaction(transactionHash.toString())) ??
+            undefined
+          )
+        },
+        this.logger,
+        `getTransaction ${transactionHash.toString()}`,
+      )
     }, ProviderMeasurement.GET_TRANSACTION)
   }
 
@@ -119,13 +133,17 @@ export class LowLevelProvider {
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        const response = await this.provider.send('debug_traceTransaction', [
-          transactionHash.toString(),
-          { tracer: 'callTracer' },
-        ])
-        return DebugTransactionCallResponse.parse(response)
-      }, `debug_traceTransaction ${transactionHash.toString()}`)
+      return rpcWithRetries(
+        async () => {
+          const response = await this.provider.send('debug_traceTransaction', [
+            transactionHash.toString(),
+            { tracer: 'callTracer' },
+          ])
+          return DebugTransactionCallResponse.parse(response)
+        },
+        this.logger,
+        `debug_traceTransaction ${transactionHash.toString()}`,
+      )
     }, ProviderMeasurement.GET_DEBUG_TRACE)
   }
 
@@ -134,13 +152,17 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        const result = await this.provider.getCode(
-          address.toString(),
-          blockNumber,
-        )
-        return Bytes.fromHex(result)
-      }, `getCode ${address.toString()} ${blockNumber}`)
+      return rpcWithRetries(
+        async () => {
+          const result = await this.provider.getCode(
+            address.toString(),
+            blockNumber,
+          )
+          return Bytes.fromHex(result)
+        },
+        this.logger,
+        `getCode ${address.toString()} ${blockNumber}`,
+      )
     }, ProviderMeasurement.GET_BYTECODE)
   }
 
@@ -193,17 +215,25 @@ export class LowLevelProvider {
 
   getBlock(blockNumber: number): Promise<providers.Block> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        return await this.provider.getBlock(blockNumber)
-      }, `getBlock ${blockNumber}`)
+      return rpcWithRetries(
+        async () => {
+          return await this.provider.getBlock(blockNumber)
+        },
+        this.logger,
+        `getBlock ${blockNumber}`,
+      )
     }, ProviderMeasurement.GET_BLOCK)
   }
 
   getBlockNumber(): Promise<number> {
     return this.measure(() => {
-      return rpcWithRetries(async () => {
-        return await this.provider.getBlockNumber()
-      }, `getBlockNumber`)
+      return rpcWithRetries(
+        async () => {
+          return await this.provider.getBlockNumber()
+        },
+        this.logger,
+        `getBlockNumber`,
+      )
     }, ProviderMeasurement.GET_BLOCKNUMBER)
   }
 
@@ -252,6 +282,7 @@ export class LowLevelProvider {
 
 export async function rpcWithRetries<T>(
   fn: () => Promise<T>,
+  logger: Logger,
   description: string,
 ): Promise<T> {
   let attempts = 0
@@ -267,9 +298,7 @@ export async function rpcWithRetries<T>(
       if (result.shouldStop) {
         throw e
       }
-      // TODO: (sz-piotr) Why console and not logger :(
-      console.error('awaiting', description)
-      console.error(e)
+      logger.warn('Retrying RPC call', description, e)
       await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
     }
   }

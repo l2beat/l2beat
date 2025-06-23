@@ -1,7 +1,6 @@
 import '@tanstack/react-table'
 import type { CellContext } from '@tanstack/react-table'
 import type { ReactNode } from 'react'
-import type { Plausible } from '~/hooks/use-tracking'
 import type { SsrData } from '../pages/ClientPageRouter'
 declare module '@tanstack/react-table' {
   interface ColumnMeta<TData extends RowData, TValue> {
@@ -34,6 +33,6 @@ declare global {
   interface Window {
     __SSR_DATA__: SsrData
     __ENV__: Record<string, string>
-    plausible: Plausible
+    plausible: Plausible | undefined
   }
 }

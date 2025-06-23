@@ -22,7 +22,7 @@ export const parallel: ScalingProject = orbitStackL2({
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     links: {
       websites: ['https://parallel.fi'],
-      apps: ['https://parallel.fi/airdrop'],
+      bridges: ['https://parallel.fi/airdrop'],
       documentation: ['https://docs.parallel.fi/parallel-chain/overview'],
       explorers: [
         'https://explorerl2new-surprised-harlequin-bonobo-fvcy2k9oqh.t.conduit.xyz/',

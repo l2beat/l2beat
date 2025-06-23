@@ -137,6 +137,7 @@ export async function getAggLayerTokens(
           sinceTimestamp,
           ...(untilTimestamp ? { untilTimestamp } : {}),
         },
+        bridgedUsing: token.bridgedUsing,
       }
     })
     .filter(notUndefined)

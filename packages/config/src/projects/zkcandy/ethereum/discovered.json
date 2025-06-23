@@ -1,8 +1,8 @@
 {
   "name": "zkcandy",
   "chain": "ethereum",
-  "blockNumber": 22593199,
-  "configHash": "0xe8a6a0bd37fb453a4624dc459ede8b528f256758c01b31b6c83441b5904c7c3c",
+  "blockNumber": 22731194,
+  "configHash": "0x0fc67d8e7962219e71d73dd1162a69445b1d6a6833b3902be0899ffbab5287ab",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -65,12 +65,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -92,7 +92,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
+          "from": "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
@@ -137,7 +137,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
+          "from": "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -186,7 +186,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
+          "from": "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -225,16 +225,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF2704433d11842d15aa76BBF0E00407267a99C92",
+          "from": "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
-          "via": [{ "address": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2" }]
+          "via": [
+            { "address": "ethereum:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x309EfA797ec5cd324Cb473F141F95214F3a25ab2",
+          "from": "ethereum:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2",
           "role": ".owner"
         }
       ],
@@ -315,12 +317,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -521,29 +523,29 @@
           "0x907b30407249949521Bf0c89A43558dae200146A",
           "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
         ],
-        "getFirstUnprocessedPriorityTx": 2669,
+        "getFirstUnprocessedPriorityTx": 3200,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
-        "getL2SystemContractsUpgradeBatchNumber": 3987,
-        "getL2SystemContractsUpgradeBlockNumber": 3987,
-        "getL2SystemContractsUpgradeTxHash": "0x7ead5e3e088ce4a6d739a729550f453bdc83ca10104b1916d9b0ee8722946d4a",
+        "getL2SystemContractsUpgradeBatchNumber": 0,
+        "getL2SystemContractsUpgradeBlockNumber": 0,
+        "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 30,
-        "getPriorityTreeRoot": "0xf73226b929c0072014a3251b11315f2f47df16fa1d8164746fb13cc21ad1f6de",
+        "getPriorityQueueSize": 35,
+        "getPriorityTreeRoot": "0xc845ac655c76ee8e08de96ebddc825370ca32e2bee00bf34b6968a9ba208820c",
         "getPriorityTreeStartIndex": 56,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 3988,
-        "getTotalBatchesExecuted": 3986,
-        "getTotalBatchesVerified": 3986,
-        "getTotalBlocksCommitted": 3988,
-        "getTotalBlocksExecuted": 3986,
-        "getTotalBlocksVerified": 3986,
-        "getTotalPriorityTxs": 2699,
+        "getTotalBatchesCommitted": 4042,
+        "getTotalBatchesExecuted": 4040,
+        "getTotalBatchesVerified": 4041,
+        "getTotalBlocksCommitted": 4042,
+        "getTotalBlocksExecuted": 4040,
+        "getTotalBlocksVerified": 4041,
+        "getTotalPriorityTxs": 3235,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {

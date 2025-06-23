@@ -26,6 +26,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('scroll')
 const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
@@ -71,7 +72,7 @@ export const scroll: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: ['https://scroll.io/bridge'],
+      bridges: ['https://scroll.io/bridge'],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
@@ -135,7 +136,7 @@ export const scroll: ScalingProject = {
     {
       rollupNodeLink: 'https://github.com/scroll-tech/go-ethereum',
       securityCouncilReference:
-        'https://scroll.io/gov-docs/content/security-council',
+        'https://scroll-governance-documentation.vercel.app/gov-docs/content/what-is-security-council',
     },
   ),
   chainConfig: {
@@ -385,7 +386,7 @@ export const scroll: ScalingProject = {
       references: [
         {
           title:
-            'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+            'ScrollChain.sol - Etherscan source code commitBatches() function',
           url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
@@ -438,11 +439,11 @@ export const scroll: ScalingProject = {
     nodeSoftware:
       'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
     compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+      'Data batches are compressed using the [zstd](https://github.com/facebook/zstd) algorithm.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV7Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/da-codec/blob/main/encoding/codecv7_types.go#L20).',
   },
   stateValidation: {
     description:
@@ -456,7 +457,7 @@ export const scroll: ScalingProject = {
       {
         title: 'ZK Circuits',
         description:
-          'Scroll circuits are [openvm](https://book.openvm.dev/) based Guest Programs based on the Halo2 proof system. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
+          'Scroll circuits are [OpenVM](https://book.openvm.dev/)-based Guest Programs that use the OpenVM prover. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
       },
       {
         title: 'Verification Keys Generation',
@@ -469,7 +470,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-            url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+            url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
           },
         ],
       },
@@ -627,11 +628,11 @@ export const scroll: ScalingProject = {
     [l2Discovery.chain]: l2Discovery.getDiscoveredPermissions(),
   },
   upgradesAndGovernance:
-    'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposal through the `AgoraGovernor` contract on L2. However, upgrades are not triggered automatically, the Security Council is in charge of executing upgrades.',
+    'All core contracts in the Scroll protocol are upgradable by the `ProxyAdmin`, which is controlled by the Security Council through the `ScrollOwner` contract. The ScrollOwner is a central governance contract controlled by four distinct Timelocks: two governed by the Security Council multisig and two by the Scroll team multisigs. Each multisig can initiate specific types of changes with differing delay guarantees. The team can change parameters that affect L1->L2 messaging and the activation of permissionless sequencing (i.e., enforcedBatchMode), such as by calling the `updateMessageQueueParameters` and `updateEnforcedBatchParameters` functions through the `TimelockFast`, or by pausing the `EnforcedTXGateway` through the `TimelockEmergency`. It also has authority to revert unfinalized batches and add or remove sequencers and provers while sequencing is in permissioned mode. As the ScrollOwner admin, the Security Council can revert the team actions by revoking the team roles in the ScrollOwner contract (through the `TimelockSCSlow`) and upgrading the affected contracts. SCR token holders perform onchain voting on governance proposals through the `AgoraGovernor` contract on L2. However, onchain governance proposals do not contain transaction payloads, so onchain voting only acts as an onchain temperature check. The Security Council is in charge of executing upgrades.',
   milestones: [
     {
       title: 'Emergency upgrade',
-      url: 'https://etherscan.io/tx/0xba98265b96c11b6b22d44f813082daf29a4dd0dd3dc40057ac4f9f6619362d0d',
+      url: 'https://forum.scroll.io/t/security-council-report-scroll-mainnet-emergency-upgrade-on-2025-05-26/810',
       date: '2025-05-26T00:00:00Z',
       description:
         'The SecurityCouncil emergency upgrades to fix a bug in the plonky3-based proof system.',
@@ -699,4 +700,5 @@ export const scroll: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery, l2Discovery]),
 }

@@ -15,6 +15,7 @@ import {
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('eclipse')
 
@@ -42,7 +43,7 @@ export const eclipse: ScalingProject = {
     purposes: ['Universal'],
     links: {
       websites: ['https://eclipse.xyz/'],
-      apps: ['https://app.eclipse.xyz/'],
+      bridges: ['https://app.eclipse.xyz/'],
       documentation: ['https://docs.eclipse.xyz/'],
       explorers: ['https://eclipsescan.xyz/'],
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],
@@ -192,4 +193,5 @@ export const eclipse: ScalingProject = {
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

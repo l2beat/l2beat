@@ -23,6 +23,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -111,7 +112,7 @@ export const taiko: ScalingProject = {
     category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.taiko.xyz/'],
+      bridges: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
       explorers: ['https://taikoscan.io', 'https://taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
@@ -424,6 +425,14 @@ export const taiko: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+    {
       title: 'Taiko Pacaya Hardfork',
       url: 'https://taiko.mirror.xyz/pIchmo0E-DfSySCzL52BFbus54Z3XJEO0k0Ptqqpm_I',
       date: '2025-05-21T00:00:00.00Z',
@@ -453,4 +462,5 @@ export const taiko: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

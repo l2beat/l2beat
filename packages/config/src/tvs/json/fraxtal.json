@@ -171,7 +171,8 @@
             "chain": "ethereum",
             "escrowAddress": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
             "decimals": 18,
-            "sinceTimestamp": 1706811599
+            "sinceTimestamp": 1706811599,
+            "untilTimestamp": 1745953200
           },
           {
             "type": "balanceOfEscrow",
@@ -179,7 +180,8 @@
             "chain": "ethereum",
             "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
             "decimals": 18,
-            "sinceTimestamp": 1706811599
+            "sinceTimestamp": 1706811599,
+            "untilTimestamp": 1745953200
           }
         ]
       },
@@ -222,7 +224,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -265,10 +275,43 @@
     {
       "mode": "auto",
       "id": "fraxtal-FRAX",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+            "decimals": 18,
+            "sinceTimestamp": 1706811599
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
+            "chain": "ethereum",
+            "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+            "decimals": 18,
+            "sinceTimestamp": 1706811599
+          }
+        ]
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": true
+    },
+    {
+      "mode": "auto",
+      "id": "fraxtal-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
@@ -313,25 +356,6 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "fraxtal-FXS",
-      "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-        "decimals": 18,
-        "sinceTimestamp": 1706811599
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": true
     },
     {
       "mode": "auto",
@@ -392,11 +416,11 @@
     },
     {
       "mode": "auto",
-      "id": "fraxtal-sFRAX",
+      "id": "fraxtal-sFRAX.legacy",
       "priceId": "staked-frax",
-      "symbol": "sFRAX",
-      "name": "Staked FRAX",
-      "iconUrl": "https://assets.coingecko.com/coins/images/35383/large/sfrax.png?1708445569",
+      "symbol": "sFRAX.legacy",
+      "name": "Legaxy Staked FRAX Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35383/large/sfrax-logo.png?1739780377",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32",
@@ -463,7 +487,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -576,7 +608,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -670,6 +710,25 @@
         "sinceTimestamp": 1706811599
       },
       "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "fraxtal-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0bc529c00C6401aEF6D220BE8C6Ea1667F6Ad93e",
+        "chain": "ethereum",
+        "escrowAddress": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+        "decimals": 18,
+        "sinceTimestamp": 1706811599
+      },
+      "category": "other",
       "source": "canonical",
       "isAssociated": false
     }

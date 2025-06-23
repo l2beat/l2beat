@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0x11ec0b0d9f473c89f6f97e16afc0e0069ec0fd9be768101e4a544c693c393b1c",
+  "configHash": "0x8f1c53a04201d47ea6938bd8597afe695206532e82ae10cd3514b727475e2f53",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".operators"
         }
       ]
@@ -113,7 +113,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".operators"
         }
       ]
@@ -126,18 +126,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".$admin"
         }
       ]
@@ -149,7 +149,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }

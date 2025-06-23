@@ -2,7 +2,7 @@
   "name": "espresso",
   "chain": "ethereum",
   "blockNumber": 22397507,
-  "configHash": "0xc7692d12317dcb5bcfde8f6dfbbd46fde6cfd0a1cda46ef49906815f7176b049",
+  "configHash": "0x1328c039a8ebdb185641cb1cfc3d1778cef2847856bb1c399c913056c49c4347",
   "entries": [
     {
       "name": "EspressoMultisig",
@@ -17,13 +17,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "from": "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can authorize an upgrade, update the permissioned prover, disable permissioned prover mode and set the state history retention period.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "from": "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "role": "admin"
         }
       ],
@@ -63,7 +63,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
+          "from": "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458",
           "description": "can call newFinalizedState() to prove the latest HotShot state.",
           "role": ".permissionedProver"
         }

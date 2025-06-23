@@ -2,7 +2,7 @@
   "name": "debridge",
   "chain": "ethereum",
   "blockNumber": 19531527,
-  "configHash": "0xf47b11ccbacc1302c2aaa782c20e4fb6c89cd5f9e6d103fc38e4c4e342bd5f16",
+  "configHash": "0x2e8ed10ec6ed936c3c7e46272f74f2eff84a2c0a2f6534a95365dce8634aca0c",
   "entries": [
     {
       "address": "0x1c0720B124e7251e881a0fbCfe259d085C59f205",
@@ -469,27 +469,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
+          "from": "ethereum:0x43dE2d77BF8027e25dBD179B491e8d64f38398aA",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
+          "from": "ethereum:0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
+          "from": "ethereum:0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
+          "from": "ethereum:0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
+          "from": "ethereum:0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636",
           "role": "admin"
         }
       ],

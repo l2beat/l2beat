@@ -16,7 +16,7 @@ export const skatechain: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://skatechain.org/'],
-      apps: ['https://park.skatechain.org/'],
+      bridges: ['https://park.skatechain.org/'],
       documentation: ['https://docs.skatechain.org/'],
       explorers: ['https://scan.skatechain.org/'],
       repositories: ['https://github.com/Skate-Org'],

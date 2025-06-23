@@ -2,7 +2,7 @@
   "name": "apex",
   "chain": "ethereum",
   "blockNumber": 21981180,
-  "configHash": "0x7d1ff6957f7be14351f64c6577d02b524d3b77c913c561570aceb25e056a68ac",
+  "configHash": "0x3a84d6f83044fc0fdfefa1e79944b17f9183c9b43e42700f81f65344d62b728a",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -126,18 +126,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -150,7 +150,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".operators"
         }
       ]
@@ -162,24 +162,24 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         },
         {
           "permission": "interact",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         },
         {
           "permission": "operateStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".operators"
         },
         {
           "permission": "operateStarknet",
-          "from": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".operators"
         }
       ]
@@ -234,7 +234,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".operators"
         }
       ]
@@ -457,18 +457,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -683,18 +683,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
           "role": ".$admin"
         }

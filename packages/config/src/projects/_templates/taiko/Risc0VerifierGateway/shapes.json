@@ -10,5 +10,11 @@
     "address": "0x801878e56A8DA58d6a837006345CDD11a9E6a852",
     "chain": "ethereum",
     "blockNumber": 22565516
+  },
+  "TaikoRisc0Verifier": {
+    "hash": "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6",
+    "address": "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be",
+    "chain": "ethereum",
+    "blockNumber": 22694475
   }
 }

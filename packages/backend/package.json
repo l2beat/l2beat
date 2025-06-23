@@ -43,6 +43,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",
     "@polkadot/api": "^12.4.2",
+    "@types/ws": "^8.18.1",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
     "elastic-apm-node": "^4.11.2",
@@ -60,9 +61,9 @@
     "source-map-support": "^0.5.21",
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
-    "viem": "^2.8.14",
-    "zod": "^3.22.2",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "ws": "^8.18.2",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
@@ -79,9 +80,9 @@
     "@types/stream-chain": "^2.1.0",
     "@types/stream-json": "^1.7.7",
     "@types/supertest": "^2.0.12",
+    "@types/uuid": "^9.0.8",
     "cmd-ts": "^0.13.0",
     "supertest": "^6.2.3",
-    "ts-node-dev": "^2.0.0",
-    "@types/uuid": "^9.0.8"
+    "ts-node-dev": "^2.0.0"
   }
 }

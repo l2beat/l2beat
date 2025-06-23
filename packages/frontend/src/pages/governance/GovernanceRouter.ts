@@ -3,9 +3,9 @@ import { z } from 'zod'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
-import { getGovernanceData } from './getGovernanceData'
-import { getGovernancePublicationData } from './publication/getGovernancePublicationData'
-import { getGovernancePublicationsData } from './publications/getGovernancePublicationsData'
+import { getGovernanceData } from './GetGovernanceData'
+import { getGovernancePublicationData } from './publication/GetGovernancePublicationData'
+import { getGovernancePublicationsData } from './publications/GetGovernancePublicationsData'
 
 export function createGovernanceRouter(
   manifest: Manifest,

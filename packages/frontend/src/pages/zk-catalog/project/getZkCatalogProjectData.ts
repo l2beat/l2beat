@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/get-zk-catalog-project-details'
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
+import { getZkCatalogProjectDetails } from '~/pages/zk-catalog/project/utils/getZkCatalogProjectDetails'
+import { getVerifiers } from '~/server/features/zk-catalog/getVerifiers'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'

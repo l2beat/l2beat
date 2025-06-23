@@ -11,6 +11,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -54,7 +55,7 @@ export const polygonpos: ScalingProject = {
     links: {
       websites: ['https://polygon.technology'],
       explorers: ['https://polygonscan.com'],
-      apps: ['https://wallet.polygon.technology'],
+      bridges: ['https://wallet.polygon.technology'],
       repositories: ['https://github.com/maticnetwork/'],
       documentation: ['https://docs.polygon.technology/pos/'],
       socialMedia: [
@@ -288,4 +289,5 @@ export const polygonpos: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

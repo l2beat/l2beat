@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 22415188,
-  "configHash": "0x0ebbf1aca1475ea6bd4b145b119506921aea42263c6a25457d24efd8f8fa32d3",
+  "blockNumber": 22673062,
+  "configHash": "0xafd3ec6616d92ac6cdc279792e5fd8d1ae0edbd0d87b8a73b1b53958123fb2bd",
   "entries": [
     {
       "name": "TokenBridge",
@@ -69,11 +69,17 @@
           },
           "SET_CUSTOM_CONTRACT_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+            ]
           },
           "REMOVE_RESERVED_TOKEN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+            ]
           },
           "SET_MESSAGE_SERVICE_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -85,7 +91,10 @@
           },
           "SET_RESERVED_TOKEN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+            ]
           }
         },
         "CONTRACT_VERSION": "1.0",
@@ -132,12 +141,7 @@
       }
     },
     {
-      "address": "0x1111111111111111111111111111111111111111",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
+      "address": "0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -164,7 +168,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "submit and finalize blocks as the Operator role when 6 months of no finalizations have passed.",
           "role": ".fallbackOperator"
         }
@@ -215,6 +219,11 @@
       }
     },
     {
+      "address": "0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "PlonkVerifierMainnetFull",
       "address": "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
       "type": "Contract",
@@ -238,7 +247,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF24f1DC519d88246809B660eb56D94048575d083",
+          "from": "ethereum:0xF24f1DC519d88246809B660eb56D94048575d083",
           "description": "pause the TokenBridge, the USDCBridge and the core functionalities of the system (via Roles module, LineaRollup contract).",
           "role": ".pausers"
         }
@@ -251,7 +260,7 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": ".Operators"
         }
       ]
@@ -273,10 +282,15 @@
       "receivedPermissions": [
         {
           "permission": "operateLinea",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": ".Operators"
         }
       ]
+    },
+    {
+      "address": "0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE",
@@ -284,7 +298,12 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Linea Multisig",
+      "address": "0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Linea Multisig 1",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -296,70 +315,76 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "description": "manage all critical access control roles and permissions (full admin of the main bridge escrow).",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
+          "from": "ethereum:0x971f46a2852d11D59dbF0909e837cfd06f357DeB",
           "description": "change the beacon implementation.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "description": "manage all critical access control roles and permissions (full admin of the rollup system).",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "cancel queued transactions.",
           "role": ".cancellerAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "execute transactions that are ready.",
           "role": ".executorAC"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
-          "via": [{ "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }]
+          "via": [
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "propose transactions.",
           "role": ".proposerAC"
         },
         {
           "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "role": "admin",
           "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+            {
+              "address": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+            },
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": "admin",
           "via": [
-            { "address": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6" },
-            { "address": "0xd6B95c960779c72B8C6752119849318E5d550574" }
+            {
+              "address": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+            },
+            { "address": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "role": ".executorAC"
         }
       ],
@@ -372,7 +397,7 @@
         "$members": [
           "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
           "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
-          "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
+          "0x535dE1e2A961529AA84EF208981f8cF4e7dcbdF5",
           "0x5822D8457c00FB82203918ED92907b935B9D40AE",
           "0x9376c137AF5124FFc39bD8940A3D88D1cd508992",
           "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
@@ -384,7 +409,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 57,
+        "nonce": 59,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -419,6 +444,11 @@
       }
     },
     {
+      "address": "0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
       "type": "EOA",
       "proxyType": "EOA"
@@ -429,20 +459,47 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PlonkVerifierForMultiTypeDataAggregation",
-      "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+      "name": "Linea Multisig 2",
+      "address": "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051",
       "type": "Contract",
-      "template": "linea/Verifier",
+      "template": "GnosisSafe",
       "sourceHashes": [
-        "0x47f89dc90dfffe4c8914bdac8b7c92bc4cbee0df1bf52f3926e43fe0934a2ff4"
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
-      "proxyType": "immutable",
-      "description": "Smart contract used to verify the proofs of Linea zkEVM execution.",
-      "sinceTimestamp": 1721038943,
-      "sinceBlock": 20311286,
-      "values": { "$immutable": true },
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
+          "description": "propose transactions.",
+          "role": ".proposerAC"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1748512535,
+      "sinceBlock": 22587649,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x3acC729EdE75355EDab57aB82bEb32011cB1B079",
+          "0x727833aB68F32a7f2ab96f15aD67336660eCBBD0",
+          "0xF112a2438a4e08836046D587350f9315C0eAE300",
+          "0xA9714aE1A9FBd20E1bc0BD03A1B7755aBF73A451",
+          "0x0645A95411C3431BB2fc58Fa61BC837FFA2e12F2"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xc00e33af56f8ccba4ad8898e0858c3b0d9b46e751023faec112ed32395a3dc89",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
       "implementationNames": {
-        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": "PlonkVerifierForMultiTypeDataAggregation"
+        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -590,11 +647,11 @@
           }
         },
         "CONTRACT_VERSION": "6.0",
-        "currentFinalizedShnarf": "0xdb892be05f64972db747dbaa7d68ffaba9eefc9549b0b03024be47c613eb0d6e",
-        "currentFinalizedState": "0x573b1028e1bd21b61fcf41ad64fd744ddf7fd8d88e4deacc2d7a091f978f1526",
+        "currentFinalizedShnarf": "0xf30b8034199eb9d3b4081365c97ac996b322efc41cacc995955bf1bd4e9fd188",
+        "currentFinalizedState": "0x7dfe33f2c4924bbab85f8233dfa63f5dc0538821b8a854dec7e828b1b764d284",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "16300000000000000",
+        "currentPeriodAmountInWei": "104729093605821426455",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdminAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
         "fallbackOperator": "0x3697bD0bC6C050135b8321F989a5316eACbF367D",
@@ -636,14 +693,14 @@
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "VERIFIER_UNSETTER_ROLE": "0x6b5661ddfbd1fbd525c902a513e0f47d9c74f1c1ee8a2d4f1937ad305fb8f41a",
         "verifiers": [
-          "0x1111111111111111111111111111111111111111",
+          "0xED39C0C41A7651006953AB58Ecb3039363620995",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
-          "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+          "0x0000000000000000000000000000000000000000",
           "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7",
           "0x0000000000000000000000000000000000000000",
-          "0x1111111111111111111111111111111111111111",
-          "0x1111111111111111111111111111111111111111",
+          "0x0000000000000000000000000000000000000000",
+          "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
@@ -689,12 +746,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
+          "from": "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xd6B95c960779c72B8C6752119849318E5d550574",
+          "from": "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574",
           "description": "manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC"
         }
@@ -714,7 +771,10 @@
           },
           "PROPOSER_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
-            "members": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"]
+            "members": [
+              "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+              "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+            ]
           },
           "EXECUTOR_ROLE": {
             "adminRole": "TIMELOCK_ADMIN_ROLE",
@@ -733,13 +793,36 @@
         "getMinDelay": 0,
         "minDelayFormatted": "0s",
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
-        "proposerAC": ["0x892bb7EeD71efB060ab90140e7825d8127991DD3"],
+        "proposerAC": [
+          "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051"
+        ],
         "TIMELOCK_ADMIN_ROLE": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
         "timelockAdminAC": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
       },
       "implementationNames": {
         "0xd6B95c960779c72B8C6752119849318E5d550574": "TimeLock"
       }
+    },
+    {
+      "name": "PlonkVerifierMainnetFull",
+      "address": "0xED39C0C41A7651006953AB58Ecb3039363620995",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xb87d66914fca067b6c490e46194aeef92a6c4930a9a6e53bfd2833813b0685a8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1748943779,
+      "sinceBlock": 22623305,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xED39C0C41A7651006953AB58Ecb3039363620995": "PlonkVerifierMainnetFull"
+      }
+    },
+    {
+      "address": "0xF112a2438a4e08836046D587350f9315C0eAE300",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Roles",
@@ -754,7 +837,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
+          "from": "ethereum:0x892bb7EeD71efB060ab90140e7825d8127991DD3",
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -837,12 +920,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "from": "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+          "from": "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
           "role": "admin"
         }
       ],
@@ -1131,6 +1214,54 @@
       "function transfer(address to, uint256 amount) returns (bool)",
       "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ],
+    "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
+      "constructor()",
+      "event AddedOwner(address indexed owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address indexed handler)",
+      "event ChangedGuard(address indexed guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address indexed module)",
+      "event EnabledModule(address indexed module)",
+      "event ExecutionFailure(bytes32 indexed txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 indexed txHash, uint256 payment)",
+      "event RemovedOwner(address indexed owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
     "0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7": [
       "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
@@ -1147,8 +1278,8 @@
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)"
     ],
-    "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": [
+      "constructor(address _singleton)"
     ],
     "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
@@ -1244,6 +1375,9 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "0xED39C0C41A7651006953AB58Ecb3039363620995": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
+    ],
     "0xF24f1DC519d88246809B660eb56D94048575d083": [
       "constructor(address _owner, address _avatar, address _target)",
       "error ArraysDifferentLength()",
@@ -1319,5 +1453,5 @@
     "linea/TokenBridge": "0xcdfbcffad1aec11d1ae369ff780e03bfaf9ae88849d375022f632ddd7bbcd48b",
     "linea/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xbcda861cbfd1b6632c78d6febcb7d62b6379485207b7828e5e1f254e25072ca3"
+  "permissionsConfigHash": "0xe6caff14b40f3f88897572a8b5d00554c4b74bed10ea5fd273827a0629ff37a4"
 }

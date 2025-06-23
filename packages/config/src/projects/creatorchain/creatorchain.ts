@@ -16,7 +16,7 @@ export const creatorchain: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://creatorchain.io/'],
-      apps: ['https://bridge.creatorchain.io/'],
+      bridges: ['https://bridge.creatorchain.io/'],
       documentation: ['https://docs.creatorchain.io/'],
       explorers: ['https://explorer.creatorchain.io/'],
       socialMedia: [

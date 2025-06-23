@@ -2,7 +2,7 @@
   "name": "immutablex",
   "chain": "ethereum",
   "blockNumber": 21995398,
-  "configHash": "0x0b545e1d5995416d15048b56294a2411b43879fbd7c7c1f2adc85fae2739b2b1",
+  "configHash": "0x07b2bf928b3f0a2d6c9f452203dba1a07835f15be61e0deaf7e1dd59225773ba",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -351,7 +351,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "role": ".operators"
         }
       ]
@@ -389,18 +389,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -444,7 +444,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -457,7 +457,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
+          "from": "ethereum:0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }

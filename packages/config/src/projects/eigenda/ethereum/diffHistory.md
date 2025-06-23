@@ -1,3 +1,309 @@
+Generated with discovered.json: 0x57db56ee72ee24af201b2c124573508c36a6db0f
+
+# Diff at Tue, 03 Jun 2025 16:21:03 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@6300ee5652726c1ebabccf96f71a6db963946434 block: 22425142
+- current block number: 22625202
+
+## Description
+
+Preparation for EigenDA V2 Blazaar, no impactful changes.
+
+- RegistryCoordinator: Added socket registry, error format changes
+- Socket registry: new contract that maps operators to their sockets
+- EjectionManager: added check for amountEjectable & stakeForEjection >0
+- EigenDAServiceManager: added EigenDADisperserRegistry, EigenDAThresholdRegistry, EigenDARelayRegistry. Removed quorum mentions, new data structures, new rewards functions
+- EigenDADisperserRegistry: Registry for EigenDA disperser info such as disperser key to address mapping
+- EigenDAThresholdRegistry: Registry of EigenDA threshold (adversary threshold percentage for a quorum, confirmation threshold percentage for a quorum)
+- EigenDARelayRegistry: Registry for EigenDA relay keys, maps key to address
+- PaymentVault: Entrypoint for making reservations and on demand payments for EigenDA
+
+## Watched changes
+
+```diff
+    contract EigenDAOperationsMultisig (0x002721B4790d97dC140a049936aA710152Ba92D5) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin","via":[{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin","via":[{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin","via":[{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin","via":[{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin","via":[{"address":"0x8247EF5705d3345516286B72bFE6D690197C2E99"}]}
+      receivedPermissions.7.from:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      receivedPermissions.6.from:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      receivedPermissions.5.from:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      receivedPermissions.4.from:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      receivedPermissions.3.from:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
+      receivedPermissions.2.from:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
+    }
+```
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.
+      sourceHashes.0:
+-        "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
++        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
+      values.$implementation:
+-        "0xdcabf0bE991d4609096CCe316df08d091356E03F"
++        "0x2088435ABcB1234A9427B755931C9064C93a2595"
+      values.$pastUpgrades.3:
++        ["2024-04-05T21:49:59.000Z","0x6a6489dbfbe688c34d924a3e86de303d3d427dc328652e931926333729f242be",["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"]]
+      values.$pastUpgrades.2.2:
+-        ["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"]
++        "0x3a9b2c12f66b0acc238c64eebdf84faee5e7539710be705584432368f1724d7f"
+      values.$pastUpgrades.2.1:
+-        "0x6a6489dbfbe688c34d924a3e86de303d3d427dc328652e931926333729f242be"
++        "2024-04-05T21:49:47.000Z"
+      values.$pastUpgrades.2.0:
+-        "2024-04-05T21:49:59.000Z"
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.1.2:
+-        "0x3a9b2c12f66b0acc238c64eebdf84faee5e7539710be705584432368f1724d7f"
++        ["0x2088435ABcB1234A9427B755931C9064C93a2595"]
+      values.$pastUpgrades.1.1:
+-        "2024-04-05T21:49:47.000Z"
++        "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282"
+      values.$pastUpgrades.1.0:
+-        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
++        "2025-05-29T22:04:35.000Z"
+      values.$upgradeCount:
+-        3
++        4
+      values.socketRegistry:
++        "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2"
+      implementationNames.0xdcabf0bE991d4609096CCe316df08d091356E03F:
+-        "RegistryCoordinator"
+      implementationNames.0x2088435ABcB1234A9427B755931C9064C93a2595:
++        "RegistryCoordinator"
+    }
+```
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      sourceHashes.0:
+-        "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
++        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
+      values.$implementation:
+-        "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"
++        "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
+      values.$pastUpgrades.3:
++        ["2024-05-10T13:31:35.000Z","0xd04d3d0dbf04adf100c0edbe832d60786758b828ce9073e205b8ab3675864d32",["0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"]]
+      values.$pastUpgrades.2.2:
+-        ["0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"]
++        "0x7dcee857c6f42698dd0db59a3032770cdffa8607b6902fee32f3d498991df44a"
+      values.$pastUpgrades.2.1:
+-        "0xd04d3d0dbf04adf100c0edbe832d60786758b828ce9073e205b8ab3675864d32"
++        ["0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"]
+      values.$pastUpgrades.2.0:
+-        "2024-05-10T13:31:35.000Z"
++        "2024-08-07T15:52:47.000Z"
+      values.$pastUpgrades.1.2:
+-        "0x7dcee857c6f42698dd0db59a3032770cdffa8607b6902fee32f3d498991df44a"
++        "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282"
+      values.$pastUpgrades.1.1.0:
+-        "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"
++        "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"
+      values.$pastUpgrades.1.0:
+-        "2024-08-07T15:52:47.000Z"
++        "2025-05-29T22:04:35.000Z"
+      values.$upgradeCount:
+-        3
++        4
+      implementationNames.0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f:
+-        "EjectionManager"
+      implementationNames.0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A:
++        "EjectionManager"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2","role":"admin"}
+      directlyReceivedPermissions.9:
++        {"permission":"upgrade","from":"0x006124Ae7976137266feeBFb3F4D2BE4C073139D","role":"admin"}
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05","role":"admin"}
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"0x130d8EA0052B45554e4C99079B84df292149Bd5E","role":"admin"}
+      directlyReceivedPermissions.6:
++        {"permission":"upgrade","from":"0xdb4c89956eEa6F606135E7d366322F2bDE609F15","role":"admin"}
+      directlyReceivedPermissions.5.from:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
+      directlyReceivedPermissions.4.from:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      directlyReceivedPermissions.3.from:
+-        "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505"
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      directlyReceivedPermissions.2.from:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      directlyReceivedPermissions.1.from:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
+      directlyReceivedPermissions.0.from:
+-        "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
++        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
+    }
+```
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.
+      sourceHashes.1:
+-        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
++        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
+      sourceHashes.0:
+-        "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"
++        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d"
+      values.$implementation:
+-        "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"
++        "0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
+      values.$pastUpgrades.6:
++        ["2024-09-17T14:17:11.000Z","0xaedce35d052ceaed37943107a78d8fb3d833ac5619edeab62a8772d67afaaff9",["0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"]]
+      values.$pastUpgrades.5.2:
+-        "0xaedce35d052ceaed37943107a78d8fb3d833ac5619edeab62a8772d67afaaff9"
++        "0xfacff9a26f07d7ae55c6b9fc80059faa016f249c4624841cfcd43c34717cbaf7"
+      values.$pastUpgrades.5.1.0:
+-        "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"
++        "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"
+      values.$pastUpgrades.5.0:
+-        "2024-09-17T14:17:11.000Z"
++        "2024-08-03T16:14:35.000Z"
+      values.$pastUpgrades.4.2:
+-        "0xfacff9a26f07d7ae55c6b9fc80059faa016f249c4624841cfcd43c34717cbaf7"
++        ["0x26089e9738b809d8308B0011B93b4225a112DB8C"]
+      values.$pastUpgrades.4.1:
+-        ["0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"]
++        "0xb40a6884127043977ba87604e5b6a7447b7f8e6fa88b3ab3d940507c8e1c92d8"
+      values.$pastUpgrades.4.0:
+-        "2024-08-03T16:14:35.000Z"
++        "2024-05-09T21:13:11.000Z"
+      values.$pastUpgrades.3.2:
+-        ["0x26089e9738b809d8308B0011B93b4225a112DB8C"]
++        "0x43cca617c25c2c5ac4164bdfbeedb8dbf7325056844893fe61bb9e2034ebad1e"
+      values.$pastUpgrades.3.1:
+-        "0xb40a6884127043977ba87604e5b6a7447b7f8e6fa88b3ab3d940507c8e1c92d8"
++        ["0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"]
+      values.$pastUpgrades.3.0:
+-        "2024-05-09T21:13:11.000Z"
++        "2024-05-21T19:56:59.000Z"
+      values.$pastUpgrades.2.2:
+-        "0x43cca617c25c2c5ac4164bdfbeedb8dbf7325056844893fe61bb9e2034ebad1e"
++        "0xb51ad742d1c13af667acb1608d33790a5dcc4970153a6ac2f415390b16fb485e"
+      values.$pastUpgrades.2.1:
+-        ["0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"]
++        "2024-04-05T21:49:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "2024-05-21T19:56:59.000Z"
++        ["0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"]
+      values.$pastUpgrades.1.2:
+-        "0xb51ad742d1c13af667acb1608d33790a5dcc4970153a6ac2f415390b16fb485e"
++        "2024-04-05T21:49:47.000Z"
+      values.$pastUpgrades.1.1:
+-        "2024-04-05T21:49:59.000Z"
++        ["0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"]
+      values.$pastUpgrades.1.0:
+-        ["0xF5fD25A90902c27068CF5eBe53Be8da693Ac899e"]
++        "0x0742f1a4d072fc85fe39830a9d21536bf3e09c0ce5a7571cab93bd85d09ff576"
+      values.$pastUpgrades.0.2:
+-        "2024-04-05T21:49:47.000Z"
++        "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282"
+      values.$pastUpgrades.0.1.0:
+-        "0x1f96861fEFa1065a5A96F20Deb6D8DC3ff48F7f9"
++        "0xae448D008B6F69033AfdA361b46b36C472B6FEE0"
+      values.$pastUpgrades.0.0:
+-        "0x0742f1a4d072fc85fe39830a9d21536bf3e09c0ce5a7571cab93bd85d09ff576"
++        "2025-05-29T22:04:35.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.eigenDADisperserRegistry:
++        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad"
+      values.eigenDARelayRegistry:
++        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B"
+      values.eigenDAThresholdRegistry:
++        "0xdb4c89956eEa6F606135E7d366322F2bDE609F15"
+      values.paymentVault:
++        "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05"
+      implementationNames.0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07:
+-        "EigenDAServiceManager"
+      implementationNames.0xae448D008B6F69033AfdA361b46b36C472B6FEE0:
++        "EigenDAServiceManager"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SocketRegistry (0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EigenDADisperserRegistry (0x78cb05379a3b66E5227f2C1496432D7FFE794Fad)
+    +++ description: Registry for EigenDA disperser info such as disperser key to address mapping.
+```
+
+```diff
++   Status: CREATED
+    contract PaymentVault (0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05)
+    +++ description: Entrypoint for making reservations and on demand payments for EigenDA.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDARelayRegistry (0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B)
+    +++ description: Registry for EigenDA relay keys, maps key to address.
+```
+
+```diff
++   Status: CREATED
+    contract EigenDAThresholdRegistry (0xdb4c89956eEa6F606135E7d366322F2bDE609F15)
+    +++ description: Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)
+```
+
+## Source code changes
+
+```diff
+.../EigenDADisperserRegistry.sol                   |  410 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++++
+ .../EigenDARelayRegistry/EigenDARelayRegistry.sol  |  420 +++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++++
+ .../EigenDAServiceManager.sol                      | 1822 +++++++++++++-------
+ .../EigenDAThresholdRegistry.sol                   |  715 ++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++++
+ .../EjectionManager/EjectionManager.sol            |   61 +-
+ .../ethereum/.flat/PaymentVault/PaymentVault.sol   |  594 +++++++
+ .../PaymentVault/TransparentUpgradeableProxy.p.sol |  631 +++++++
+ .../RegistryCoordinator/RegistryCoordinator.sol    |  104 +-
+ .../.flat/SocketRegistry/SocketRegistry.sol        |   53 +
+ .../TransparentUpgradeableProxy.p.sol              |  631 +++++++
+ 13 files changed, 6635 insertions(+), 699 deletions(-)
+```
+
 Generated with discovered.json: 0x117dfaf8cdbc33a782a6e24f797d6a09fb98c618
 
 # Diff at Fri, 23 May 2025 09:40:55 GMT:

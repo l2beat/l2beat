@@ -16,7 +16,7 @@ export const lachain: ScalingProject = zkStackL2({
       'LaChain by Ripio is a general purpose ZK rollup designed for the Latin American ecosystem. Scalable, secure, and part of the Elastic Chain by ZKsync.',
     links: {
       websites: ['https://lachain.network'],
-      apps: ['https://bridge.zk.lachain.network/'],
+      bridges: ['https://bridge.zk.lachain.network/'],
       documentation: ['https://lachain.gitbook.io/lachain-docs'],
       explorers: ['https://explorer.zk.lachain.network'],
       socialMedia: ['https://x.com/LaChain_Network'],

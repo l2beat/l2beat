@@ -30,6 +30,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -139,13 +140,13 @@ const escrowUNIMaxTotalBalanceString = formatMaxTotalBalanceString(
 )
 
 const escrowFRAXMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FRAX',
+  'FRAX.legacy',
   discovery.getContractValue<number>('FRAXBridge', 'maxTotalBalance'),
   18,
 )
 
 const escrowFXSMaxTotalBalanceString = formatMaxTotalBalanceString(
-  'FXS',
+  'FRAX',
   discovery.getContractValue<number>('FXSBridge', 'maxTotalBalance'),
   18,
 )
@@ -200,7 +201,7 @@ export const starknet: ScalingProject = {
     category: 'ZK Rollup',
 
     links: {
-      apps: ['https://starkgate.starknet.io/'],
+      bridges: ['https://starkgate.starknet.io/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -505,13 +506,13 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FRAX_ADDRESS),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         description:
           'StarkGate bridge for FRAX.' + ' ' + escrowFRAXMaxTotalBalanceString,
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress(ESCROW_FXS_ADDRESS),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         description:
           'StarkGate bridge for FXS.' + ' ' + escrowFXSMaxTotalBalanceString,
       }),
@@ -1064,4 +1065,5 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

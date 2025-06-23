@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Contract that allows anyone to perform transfers of ERC-20 tokens to Cartesi DApps."
+}

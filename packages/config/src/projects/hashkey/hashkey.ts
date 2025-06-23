@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -29,7 +29,7 @@ export const hashkey = opStackL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://hsk.xyz/'],
-      apps: ['https://bridge.hsk.xyz/'],
+      bridges: ['https://bridge.hsk.xyz/'],
       documentation: ['https://docs.hsk.xyz/'],
       explorers: [
         'https://explorer.hsk.xyz/',
@@ -42,6 +42,9 @@ export const hashkey = opStackL2({
         'https://discord.com/invite/ujaF7aKAEk',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   chainConfig: {
     name: 'hashkey',

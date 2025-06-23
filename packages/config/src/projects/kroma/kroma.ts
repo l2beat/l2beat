@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('kroma')
 
@@ -71,7 +72,7 @@ export const kroma: ScalingProject = {
     stack: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
-      apps: ['https://kroma.network/bridge/'],
+      bridges: ['https://kroma.network/bridge/'],
       documentation: [
         'https://docs.kroma.network/',
         'https://specs.kroma.network/',
@@ -384,6 +385,14 @@ export const kroma: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+    {
       title: 'SP1 fault proofs upgrade',
       url: 'https://blog.kroma.network/kromas-transition-to-zkvm-fault-proof-b8c8d2dc39c6',
       date: '2025-02-11T00:00:00Z',
@@ -423,4 +432,5 @@ export const kroma: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

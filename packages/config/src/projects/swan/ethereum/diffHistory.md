@@ -1,4 +1,52 @@
-Generated with discovered.json: 0xcb9ca4a5cc4628d21f40c6f7fd0015570f8f4ff0
+Generated with discovered.json: 0x3d8306d0b319e3cba6c5fa1c4bd977acb9e0c3c0
+
+# Diff at Mon, 16 Jun 2025 08:43:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x15567C4FfD9109795dFf1D9A5233D10aef0738D2) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"
+    }
+```
+
+```diff
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x1c22740A0B4511E11D76434A424487862b593901","role":"admin","via":[{"address":"ethereum:0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3"}]}
+      receivedPermissions.7.from:
+-        "ethereum:0x1c22740A0B4511E11D76434A424487862b593901"
++        "ethereum:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x1c22740A0B4511E11D76434A424487862b593901","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x1c22740A0B4511E11D76434A424487862b593901"
++        "ethereum:0x15567C4FfD9109795dFf1D9A5233D10aef0738D2"
+    }
+```
+
+Generated with discovered.json: 0x6da6625087c81d3ba28c98b7dc9fc4aa9a5dcdad
 
 # Diff at Fri, 30 May 2025 07:16:51 GMT:
 

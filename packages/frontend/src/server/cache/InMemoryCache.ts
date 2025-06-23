@@ -1,3 +1,4 @@
+import { PROJECT_COUNTDOWNS } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import type { ICache } from './ICache'
@@ -5,7 +6,7 @@ import type { ICache } from './ICache'
 const PROMISE_TIMEOUT = 30
 
 interface Options {
-  key: string[]
+  key: (string | undefined)[]
   ttl: number
   staleWhileRevalidate?: number
 }
@@ -26,7 +27,7 @@ export class InMemoryCache implements ICache {
   }
 
   async get<T>(options: Options, fallback: () => Promise<T>): Promise<T> {
-    if (env.NODE_ENV !== 'production' || env.DISABLE_CACHE) {
+    if (env.DEPLOYMENT_ENV !== 'production' || env.DISABLE_CACHE) {
       return fallback()
     }
 
@@ -34,8 +35,17 @@ export class InMemoryCache implements ICache {
     const result = this.cache.get(key)
     const now = UnixTime.now()
 
+    const isStalePostMigration =
+      now > PROJECT_COUNTDOWNS.otherMigration &&
+      !!result &&
+      result.timestamp < PROJECT_COUNTDOWNS.otherMigration
+
     // If we have a result and it's not expired, return it immediately
-    if (result && result.timestamp + options.ttl > now) {
+    if (
+      result &&
+      result.timestamp + options.ttl > now &&
+      !isStalePostMigration
+    ) {
       return result.result as T
     }
 
@@ -43,7 +53,8 @@ export class InMemoryCache implements ICache {
     if (
       result &&
       options.staleWhileRevalidate &&
-      result.timestamp + options.ttl + options.staleWhileRevalidate > now
+      result.timestamp + options.ttl + options.staleWhileRevalidate > now &&
+      !isStalePostMigration
     ) {
       void this.revalidateInBackground(key, fallback)
       return result.result as T
@@ -111,7 +122,7 @@ export class InMemoryCache implements ICache {
     this.cache.set(key, value)
   }
 
-  private getKey(key: string[]) {
-    return key.join('-')
+  private getKey(key: (string | undefined)[]) {
+    return key.filter(Boolean).join('-')
   }
 }

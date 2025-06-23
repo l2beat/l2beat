@@ -158,11 +158,10 @@
         "0x41545f8b9472D758bB669ed8EaEEEcD7a9C4Ec29": "Forta Token",
         "0x884255F543b40AcCB5feE3a4b2D1f74bc065C257": "Fortune Token",
         "0xc770EEfAd204B5180dF6a14Ee197D99d808ee52d": "FOX Token",
-        "0x853d955aCEf822Db058eb8505911ED77F175b99e": "Frax Token",
+        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": "Frax (prev. FXS) Token",
         "0x5E8422345238F34275888049021821E8E08CAa1f": "Frax Ether Token",
         "0x5Ca135cB8527d76e932f34B5145575F9d8cbE08E": "Frax Price Index Token",
         "0xc2544A32872A91F4A553b404C6950e89De901fdb": "Frax Price Index Share Token",
-        "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0": "Frax Share Token",
         "0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9": "FTT Token",
         "0x675B68AA4d9c2d3BB3F0397048e62E6B7192079c": "FUEL Token",
         "0x4eb8A4015A67975A23adc80aA50d2d996986F43D": "FUL Token",
@@ -208,6 +207,10 @@
         "0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D": "iZUMi Bond USD Token",
         "0x7420B4b9a0110cdC71fB720908340C03F9Bc03EC": "JasmyCoin Token",
         "0x91fbB2503AC69702061f1AC6885759Fc853e6EaE": "K9 Finance DAO Token",
+        "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": "Katana Pre-Deposit USDC Token",
+        "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb": "Katana Pre-Deposit USDT Token",
+        "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728": "Katana Pre-Deposit WBTC Token",
+        "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF": "Katana Pre-Deposit WETH Token",
         "0x85Eee30c52B0b379b046Fb0F85F4f3Dc3009aFEC": "KEEP Token",
         "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44": "Keep3rV1 Token",
         "0x02e7F808990638E9e67E1f00313037EDe2362361": "KiboShib Token",
@@ -217,6 +220,8 @@
         "0x8971f9fd7196e5cEE2C1032B50F656855af7Dd26": "Lambda Token",
         "0x61E90A50137E1F645c9eF4a0d3A4f01477738406": "League of Kingdoms Arena Token",
         "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc": "Ledgity Token",
+        "0x853d955aCEf822Db058eb8505911ED77F175b99e": "Legacy Frax Dollar Token",
+        "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32": "Legaxy Staked FRAX Dollar Token",
         "0x1ff1dC3cB9eeDbC6Eb2d99C03b30A05cA625fB5a": "Lens Wrapped GHO Token",
         "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32": "Lido DAO Token",
         "0x0921799CB1d702148131024d18fCdE022129Dc73": "LightLink Token",
@@ -304,6 +309,8 @@
         "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d": "Pinakion Token",
         "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6": "Pirex Ether Token",
         "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430": "PlayDapp Token",
+        "0x4C1746A800D224393fE2470C70A35717eD4eA5F1": "Plume Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token",
         "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD": "pNetwork Token",
         "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2": "Polkamon Token",
         "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "Polygon Ecosystem Token",
@@ -369,7 +376,6 @@
         "0xc96Aa65F31E41b4Ca6924B86D93e25686019E59C": "Staked Aethir Token",
         "0x3742f3Fcc56B2d46c7B8CA77c23be60Cd43Ca80a": "Staked Avail Token",
         "0x5C5b196aBE0d54485975D1Ec29617D42D9198326": "Staked deUSD Token",
-        "0xA663B02CF0a4b149d2aD41910CB81e23e1c41c32": "Staked FRAX Token",
         "0xac3E018457B222d93114458476f3E3416Abbe38F": "Staked Frax Ether Token",
         "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": "Staked USDe Token",
         "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7": "Staked USDz Token",
@@ -413,6 +419,7 @@
         "0x0000000000095413afC295d19EDeb1Ad7B71c952": "Tokenlon",
         "0xcccCb68e1A848CBDB5b60a974E07aAE143ed40C3": "TOPIA Token",
         "0xaA7a9CA87d3694B5755f213B5D04094b8d0F0A6F": "Trace Token",
+        "0xD5e0eda0214f1d05af466E483d9376a77A67448b": "TRALA TOKEN",
         "0xdE8CD13B812BcD82218754A740b27E76ec1e86aD": "Trestle Token",
         "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B": "Tribe Token",
         "0x0000000000085d4780B73119b644AE5ecd22b376": "TrueUSD Token",
@@ -561,6 +568,7 @@
     },
     "zksync2": {
       "names": {
+        "0x57fD71a86522Dc06D6255537521886057c1772A3": "Blockchain Capital Token",
         "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4": "Bridged USDC (zkSync) Token",
         "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656": "Dai Stablecoin Token",
         "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9": "Fidelity ILF USD Fund Class G Acc Token",
@@ -572,6 +580,7 @@
         "0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2": "Holdstation Token",
         "0x6bE2425C381eb034045b527780D2Bf4E21AB7236": "KelpDao Restaked ETH Token",
         "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31": "Mountain Protocol USD Token",
+        "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164": "Private Credit Direct Deal0000031 Token",
         "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32": "Staked Frax Ether Token",
         "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C": "Tether USD Token",
         "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4": "USDC Token",
@@ -783,6 +792,7 @@
         "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A": "Wrapped eETH Token",
         "0x4200000000000000000000000000000000000006": "Wrapped Ether Token",
         "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452": "Wrapped liquid staked Ether 2.0 Token",
+        "0xD8724322f44E5c58D7A815F542036fb17DbbF839": "Wrapped OETH Token",
         "0x1111111111166b7FE7bd91427724B487980aFc69": "Zora Token"
       }
     },
@@ -972,6 +982,7 @@
     },
     "bob": {
       "names": {
+        "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0": "Bridged USDC (BOB) Token",
         "0xC96dE26018A54D51c097160568752c4E3BD6C364": "Fire Bitcoin Token",
         "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77": "Solv BTC Token",
         "0xCC0966D8418d412c599A6421b760a847eB169A8c": "SolvBTC Babylon Token",
@@ -996,6 +1007,12 @@
     "xchain": {
       "names": {
         "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6": "Bridged USDC (Stargate) Token"
+      }
+    },
+    "plumenetwork": {
+      "names": {
+        "0x78adD880A697070c1e765Ac44D65323a0DcCE913": "Bridged USDC (Stargate) Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token"
       }
     },
     "real": {

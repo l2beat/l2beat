@@ -2,7 +2,7 @@
   "name": "morph",
   "chain": "ethereum",
   "blockNumber": 22466462,
-  "configHash": "0xaea22eaea3760e409d464a2f6bb956466c3fc11b018239475ae533f2e2c99699",
+  "configHash": "0x88eccfbc295e408517d0f5665f87c4d01ff04ae7d2ed7cb0f1a268363d6c50df",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -28,7 +28,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -116,7 +116,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -176,7 +176,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -193,42 +193,42 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "from": "ethereum:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "from": "ethereum:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "from": "ethereum:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "from": "ethereum:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "from": "ethereum:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "from": "ethereum:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "role": "admin"
         }
       ],
@@ -249,7 +249,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -261,7 +261,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -393,7 +393,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -440,7 +440,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -484,7 +484,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -496,7 +496,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -509,7 +509,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -522,7 +522,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -534,7 +534,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -546,7 +546,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -705,7 +705,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -717,7 +717,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -729,7 +729,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -741,7 +741,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -753,7 +753,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -765,7 +765,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -777,7 +777,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -800,7 +800,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -812,7 +812,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -831,18 +831,18 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         },
         {
           "permission": "interact",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "description": "can pause and unpause, override any batch, revert batch, update proof window, update challengers, modify verifiers",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "from": "ethereum:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "description": "can pause and unpause",
           "role": ".owner"
         }
@@ -883,7 +883,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }
@@ -896,7 +896,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -908,7 +908,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -920,7 +920,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -932,7 +932,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -992,7 +992,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1004,7 +1004,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1021,7 +1021,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1082,7 +1082,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1094,7 +1094,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1132,57 +1132,73 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+          "from": "ethereum:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+          "from": "ethereum:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+          "from": "ethereum:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+          "from": "ethereum:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+          "from": "ethereum:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+          "from": "ethereum:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
           "role": "admin",
-          "via": [{ "address": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }]
+          "via": [
+            { "address": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+          "from": "ethereum:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
           "role": ".owner"
         }
       ],
@@ -1222,7 +1238,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1239,7 +1255,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1251,7 +1267,7 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+          "from": "ethereum:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
           "role": ".challengers"
         }
       ]
@@ -1263,7 +1279,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
           "description": "Actors allowed to commit transaction batches and propose state roots",
           "role": ".getActiveStakers"
         }

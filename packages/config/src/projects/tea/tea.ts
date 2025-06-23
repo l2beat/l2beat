@@ -16,7 +16,7 @@ export const tea: ScalingProject = upcomingL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://tea.xyz/assam'],
-      apps: [
+      bridges: [
         'https://tea-assam-fo46m5b966-32f74f2af939fed4.testnets.rollbridge.app',
       ],
       explorers: ['https://assam.tea.xyz/'],

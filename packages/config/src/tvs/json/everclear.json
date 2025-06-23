@@ -18,7 +18,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": true
+      "isAssociated": true,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

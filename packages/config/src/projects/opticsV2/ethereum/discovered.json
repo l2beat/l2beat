@@ -2,7 +2,7 @@
   "name": "opticsV2",
   "chain": "ethereum",
   "blockNumber": 21937191,
-  "configHash": "0xacbf15a3b768b94898f71e4c2ce92c261142db9c7745c484a408d42746f9b389",
+  "configHash": "0x74a6ec88ced630ef5dd18156163e49c56289d9dc0668b98c83afb3eeb59cae54",
   "entries": [
     {
       "name": "HomeUpgradeBeacon",
@@ -129,22 +129,22 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
+          "from": "ethereum:0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
+          "from": "ethereum:0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
+          "from": "ethereum:0xa73a3a74C7044B5411bD61E1990618A1400DA379",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
+          "from": "ethereum:0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
           "role": "admin"
         }
       ],

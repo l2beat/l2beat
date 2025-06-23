@@ -65,7 +65,7 @@ describe('layer2s', () => {
             it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
               // try to resolve escrow by address
               // if it does not exist the assert will throw
-              discovery.getContractByAddress(escrow.address.toString())
+              discovery.getContractByAddress(escrow.address)
             })
           }
         } catch {
@@ -219,7 +219,7 @@ describe('layer2s', () => {
 
             const discovery = new ProjectDiscovery(project.id.toString())
             addresses.forEach((a) => {
-              discovery.getContractByAddress(a.toString())
+              discovery.getContractByAddress(a)
             })
           }
         })

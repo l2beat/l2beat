@@ -79,11 +79,11 @@
     },
     {
       "mode": "auto",
-      "id": "starknet-FXS",
+      "id": "starknet-FRAX",
       "priceId": "frax-share",
-      "symbol": "FXS",
-      "name": "Frax Share",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13423/large/Frax_Shares_icon.png?1696513183",
+      "symbol": "FRAX",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
       "amount": {
         "type": "balanceOfEscrow",
         "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
@@ -170,6 +170,24 @@
       },
       "category": "ether",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-rUSDC-stark",
+      "priceId": "relend-network-usdc-starknet",
+      "symbol": "rUSDC-stark",
+      "name": "Relend Network USDC - Starknet",
+      "iconUrl": "https://assets.coingecko.com/coins/images/55061/large/rUSDC-_200x200.png?1743524727",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02019e47a0bc54ea6b4853c6123ffc8158ea3ae2af4166928b0de6e89f06de6c",
+        "chain": "starknet",
+        "decimals": 6,
+        "sinceTimestamp": 1739893482
+      },
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false
     },
     {

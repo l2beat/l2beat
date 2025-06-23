@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -50,7 +50,10 @@ export const fraxtal: ScalingProject = opStackL2({
     bridge: DA_BRIDGES.NONE,
     badge: BADGES.DA.CustomDA,
   },
-  associatedTokens: ['FXS', 'FPIS'],
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
+  associatedTokens: ['FRAX', 'FPIS'],
   discovery,
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.NO_PROOFS,
@@ -63,7 +66,7 @@ export const fraxtal: ScalingProject = opStackL2({
       'Fraxtal is an EVM equivalent Optimium utilizing the OP stack as its smart contract platform and execution environment.',
     links: {
       websites: ['https://frax.com/'],
-      apps: ['https://app.frax.finance/'],
+      bridges: ['https://app.frax.finance/'],
       documentation: ['https://docs.frax.com/'],
       explorers: ['https://fraxscan.com/'],
       repositories: ['https://github.com/FraxFinance'],
@@ -83,6 +86,7 @@ export const fraxtal: ScalingProject = opStackL2({
     // ~ Timestamp of block number 1
     sinceTimestamp: UnixTime(1706810713),
     coingeckoPlatform: 'fraxtal',
+    gasTokens: ['FRAX'],
     apis: [
       {
         type: 'rpc',
@@ -96,7 +100,7 @@ export const fraxtal: ScalingProject = opStackL2({
     ],
   },
   nonTemplateEscrows: [],
-  nonTemplateOptimismPortalEscrowTokens: ['frxETH'],
+  nonTemplateOptimismPortalEscrowTokens: ['frxETH', 'FRAX'],
   customDa: {
     type: 'Custom',
     name: 'FraxtalDA',

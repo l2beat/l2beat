@@ -20,7 +20,7 @@ export const winr: ScalingProject = orbitStackL3({
       'WINR is a Layer 3 on Arbitrum, based on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
     links: {
       websites: ['https://winr.games/'],
-      apps: ['https://just.bet/'],
+      bridges: ['https://just.bet/'],
       documentation: ['https://docs.winr.games/'],
       explorers: ['https://explorer.winr.games/'],
       socialMedia: ['https://x.com/WINRProtocol'],

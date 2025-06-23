@@ -1,5 +1,5 @@
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
-import type { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/project-filter-utils'
+import { getTvsChart } from '~/server/features/scaling/tvs/getTvsChartData'
+import type { TvsProjectFilterType } from '~/server/features/scaling/tvs/utils/projectFilterUtils'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 
 interface Params {

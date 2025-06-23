@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Provides constant configuration data for the tournament system. It defines parameters like the number of levels (3), the minimum challenge period of ~7d, and the size of computation segments at each stage of a dispute.",
+  "fields": {
+    "topTournamentParameters": {
+      "description": "levels: number of levels for the tournament, maxAllowance: minimum challenge period in L1 blocks, log2step: sparsity of the machine hash (every 2^x cycles), height: height of the machine hash merkle tree, matchEffort: time bonus in L1 blocks granted to participants when they enter a match.",
+      "handler": {
+        "type": "call",
+        "method": "tournamentParameters",
+        "args": [0]
+      }
+    },
+    "minChallengePeriodBlocks": {
+      "copy": "topTournamentParameters",
+      "edit": ["get", "maxAllowance"]
+    }
+  }
+}

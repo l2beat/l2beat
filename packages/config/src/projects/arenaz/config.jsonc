@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "arenaz",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -7,7 +7,9 @@
       "initialAddresses": ["0x564Eb0CeFCcA86160649a8986C419693c82F3678"],
       "overrides": {
         "0x658656A14AFdf9c507096aC406564497d13EC754": {
-          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+        },
+        "0x80533687a66A1bB366094A9B622873a6CA8415a5": {
           "fields": {
             "proposer": { "permissions": [{ "type": "propose" }] },
             "challenger": { "permissions": [{ "type": "challenge" }] }

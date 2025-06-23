@@ -16,7 +16,7 @@ export const polygonpos2: ScalingProject = upcomingL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://polygon.technology'],
-      apps: ['https://wallet.polygon.technology/'],
+      bridges: ['https://wallet.polygon.technology/'],
       documentation: ['https://wiki.polygon.technology/'],
       explorers: ['https://polygonscan.com/'],
       repositories: ['https://github.com/maticnetwork/'],

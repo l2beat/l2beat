@@ -1,3 +1,86 @@
+Generated with discovered.json: 0x5a1e514aaf883cbc9bbb8a6a1b0dfdf6e13e91ac
+
+# Diff at Wed, 18 Jun 2025 12:22:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22629685
+- current block number: 22629685
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22629685 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x866124199405e0e0bc9421e0da6caa85a7b7a005
+
+# Diff at Wed, 04 Jun 2025 07:07:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22122735
+- current block number: 22629685
+
+## Description
+
+add fastconfirmer with worst possible config: EOA, minimum assertion period 1 block.
+
+## Watched changes
+
+```diff
+    EOA  (0x75feC8Bb2d99076D776A5D46D1E3d42686520eF1) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"fastconfirm","from":"0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"}]}
+      receivedPermissions.1:
++        {"permission":"validate","from":"0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"}]}
+    }
+```
+
+```diff
+    contract RollupProxy (0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      values.anyTrustFastConfirmer:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"
++++ description: Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. 
+      values.minimumAssertionPeriod:
+-        75
++        1
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        3
++        4
+      values.validators.5:
++        "0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafeL2/GnosisSafeL2.sol   | 1032 ++++++++++++++++++++
+ .../.flat/GnosisSafeL2/GnosisSafeProxy.p.sol       |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0xa9b33d8dcfda3d020edcd4ba387cc4d66256b306
 
 # Diff at Tue, 27 May 2025 08:26:53 GMT:

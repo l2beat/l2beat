@@ -188,8 +188,8 @@ export const chains: ChainConfig[] = [
     shortName: 'mantle',
     multicall: getMulticall3Config(304717),
     explorer: {
-      type: 'routescan',
-      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+      type: 'blockscout',
+      url: 'https://explorer.mantle.xyz/api',
     },
   },
   {

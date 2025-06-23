@@ -1,3 +1,4 @@
+import { env } from '~/env'
 import type { Manifest } from '~/utils/Manifest'
 import { FontStyles } from './FontStyles'
 import { fonts } from './fonts'
@@ -37,12 +38,21 @@ export function Head({ manifest, metadata }: HeadProps) {
 
       <OpengraphMeta {...metadata} />
       <TwitterMeta {...metadata} />
-      <script defer data-domain="l2beat.com" src="/plausible/script.js" />
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
-        }}
-      />
+      {env.DEPLOYMENT_ENV === 'production' && (
+        <>
+          <script
+            defer
+            data-domain="l2beat.com"
+            data-api="/plausible/event"
+            src="/plausible/script.js"
+          />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,
+            }}
+          />
+        </>
+      )}
     </>
   )
 }

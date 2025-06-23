@@ -7,6 +7,8 @@ import type {
   ApiProjectResponse,
   FieldValue,
 } from '../api/types'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
 import type { Field, Node } from './store/State'
@@ -27,15 +29,15 @@ export function NodesPanel() {
   useLoadNodes(response.data, project)
 
   if (response.isLoading) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   return (
     <div className="h-full w-full overflow-x-hidden">
-      <NodesApp panelMode />
+      <NodesApp />
     </div>
   )
 }
@@ -121,7 +123,7 @@ function useSynchronizeSelection() {
       selectGlobal(selectedNodes[0])
     } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
       rememberSelection([selectedGlobal])
-      selectNodes([selectedGlobal])
+      selectNodes(selectedGlobal)
     }
   }, [
     lastSelection,

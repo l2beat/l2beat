@@ -8,6 +8,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('omni')
 
@@ -27,7 +28,7 @@ export const omni: Bridge = {
     warning: warningText,
     category: 'Single-chain',
     links: {
-      apps: ['https://bridge.gnosischain.com'],
+      bridges: ['https://bridge.gnosischain.com'],
       websites: ['https://bridge.gnosischain.com/bridge-explorer/bridges'],
       documentation: ['https://docs.gnosischain.com/bridges/'],
       explorers: [
@@ -162,9 +163,20 @@ export const omni: Bridge = {
       risks: [],
     },
   },
+  milestones: [
+    {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+  ],
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

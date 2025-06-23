@@ -28,7 +28,7 @@ export const onyx: ScalingProject = underReviewL3({
       repositories: ['https://github.com/Onyx-Protocol'],
       documentation: ['https://docs.onyx.org/'],
       explorers: ['https://explorer.onyx.org/'],
-      apps: ['https://app.onyx.org/', 'https://bridge.onyx.org/'],
+      bridges: ['https://app.onyx.org/', 'https://bridge.onyx.org/'],
       socialMedia: [
         'https://x.com/OnyxDAO',
         'https://t.me/Onyx',

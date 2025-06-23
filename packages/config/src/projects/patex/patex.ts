@@ -15,7 +15,7 @@ export const patex: ScalingProject = upcomingL2({
     purposes: ['RWA'],
     links: {
       websites: ['https://patex.io/network'],
-      apps: ['https://patex.io/cabinet/converter'],
+      bridges: ['https://patex.io/cabinet/converter'],
       documentation: ['https://docs.patex.io/tech/patex-network'],
       explorers: ['https://patexscan.io/'],
       repositories: ['https://github.com/patex-ecosystem/patex-network'],

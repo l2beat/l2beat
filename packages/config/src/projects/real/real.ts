@@ -26,7 +26,7 @@ export const real: ScalingProject = orbitStackL2({
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     links: {
       websites: ['https://re.al'],
-      apps: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
+      bridges: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
       documentation: ['https://docs.re.al/'],
       explorers: ['https://explorer.re.al'],
       repositories: ['https://github.com/re-al-Foundation'],

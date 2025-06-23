@@ -62,6 +62,11 @@ export type ProjectRiskCategory =
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
 
+export interface ProjectUnverifiedContract {
+  chain: string
+  address: EthereumAddress
+}
+
 export interface BaseProject {
   id: ProjectId
   slug: string
@@ -138,7 +143,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  isUnverified: boolean
+  unverifiedContracts: ProjectUnverifiedContract[]
   // countdowns
   otherMigration?: {
     expiresAt: number
@@ -156,8 +161,8 @@ export interface ProjectDisplay {
 export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites?: string[]
-  /** Links to web apps. */
-  apps?: string[]
+  /** Links to bridges. */
+  bridges?: string[]
   documentation?: string[]
   explorers?: string[]
   repositories?: string[]
@@ -209,6 +214,7 @@ export type BadgeFilterId =
   | 'raas'
   | 'infrastructure'
   | 'vm'
+  | 'other'
 
 export interface Milestone {
   title: string
@@ -871,9 +877,15 @@ export type ProjectFinalityConfig =
 export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
+  | BlockDaTrackingConfig
+  | TimestampDaTrackingConfig
+
+export type BlockDaTrackingConfig =
   | EthereumDaTrackingConfig
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
+
+export type TimestampDaTrackingConfig = EigenDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -899,6 +911,14 @@ export interface AvailDaTrackingConfig {
   appId: string
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface EigenDaTrackingConfig {
+  type: 'eigen-da'
+  daLayer: ProjectId
+  customerId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {
@@ -1052,6 +1072,7 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
+  blockNumberPerChain: Record<string, number>
 }
 // #endregion
 
@@ -1198,6 +1219,17 @@ export const TvsTokenSchema = z.object({
   category: z.enum(['ether', 'stablecoin', 'other']),
   source: z.enum(['canonical', 'external', 'native']),
   isAssociated: z.boolean(),
+  bridgedUsing: z.optional(
+    z.object({
+      bridges: z.array(
+        z.object({
+          name: z.string(),
+          slug: z.string().optional(),
+        }),
+      ),
+      warning: z.string().optional(),
+    }),
+  ),
 })
 
 export const ProjectTvsConfigSchema = z.object({

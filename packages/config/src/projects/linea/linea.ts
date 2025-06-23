@@ -15,7 +15,6 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   FRONTRUNNING_RISK,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   STATE_VALIDATION,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -30,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { ProjectPermissionedAccount } from '../../types'
 
 const discovery = new ProjectDiscovery('linea')
@@ -84,18 +84,16 @@ export const linea: ScalingProject = {
   id: ProjectId('linea'),
   capability: 'universal',
   addedAt: UnixTime(1679651674), // 2023-03-24T09:54:34Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
     name: 'Linea',
     slug: 'linea',
-    warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
-      apps: ['https://bridge.linea.build/'],
+      bridges: ['https://bridge.linea.build/'],
       documentation: ['https://docs.linea.build/'],
       explorers: [
         'https://lineascan.build/',
@@ -374,6 +372,7 @@ export const linea: ScalingProject = {
   },
   riskView: {
     stateValidation: {
+      // TODO: linea proof system is now complete
       ...RISK_VIEW.STATE_ZKP_SN,
       secondLine: formatExecutionDelay(finalizationPeriod),
     },
@@ -504,24 +503,37 @@ export const linea: ScalingProject = {
     categories: [
       {
         title: 'Prover Architecture',
-        description: 'The source code of the prover is currently not public.',
+        description:
+          'The Linea prover code is [available on Github](https://github.com/Consensys/linea-monorepo/tree/main/prover). Linea splits proving into: **Corset** (Go + Lisp DSL) expands EVM execution traces and generates a bespoke constraint system for the zk-EVM. **gnark** (Go) ingests the expanded traces and constraint system, instantiates the circuits and produces the SNARK proof.',
       },
       {
         title: 'ZK Circuits',
-        description: 'The source code of the circuits is currently not public.',
-        risks: [
-          {
-            category: 'Funds can be stolen if',
-            text: 'the prover is able to generate false proofs.',
-          },
-        ],
+        description:
+          'The constraint system lives in the public [linea-constraints](https://github.com/Consensys/linea-constraints) repo and is authored in a Lisp-style DSL before being compiled to Go. Gnark then turns those constraints into PLONK-compatible circuits over **BN254**. Internally, Linea’s flow uses a recursive proof stack called [Vortex → Arcane → PLONK compression](https://docs.linea.build/technology/transaction-lifecycle#step-5-generating-a-zk-proof-using-transaction-data): Vortex/Arcane supply small inner proofs that are finally aggregated into a single PLONK proof that the L1 contract can verify.',
       },
       {
         title: 'Verification Keys Generation',
         description:
-          'Given that the circuit is not public, the generation of the verification keys is not public either.',
+          'Linea uses a Plonk-based proof system which requires a trusted setup. The verification keys are hardcoded in the verifier contract on-chain.',
       },
-      STATE_VALIDATION.VALIDITY_PROOFS,
+      {
+        ...STATE_VALIDATION.VALIDITY_PROOFS,
+        references: [
+          {
+            title:
+              'LineaRollup.sol - Etherscan source code, finalizeBlocks() and _verifyProof() calls',
+            url: 'https://etherscan.io/address/0x07ddce60658a61dc1732cacf2220fce4a01c49b0#code#F37#L41',
+          },
+          {
+            title: 'PlonkVerifierMainnetFull.sol 1 (100% complete)',
+            url: 'https://etherscan.io/address/0xED39C0C41A7651006953AB58Ecb3039363620995#code',
+          },
+          {
+            title: 'PlonkVerifierMainnetFull.sol 2 (99% complete)',
+            url: 'https://etherscan.io/address/0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7#code',
+          },
+        ],
+      },
     ],
     proofVerification: {
       shortDescription: 'Linea is a universal ZK-EVM rollup on Ethereum.',
@@ -529,49 +541,31 @@ export const linea: ScalingProject = {
       requiredTools: [],
       verifiers: [
         {
-          name: 'LineaVerifier (ProofType 1)',
+          name: 'LineaVerifier (ProofType 4)',
           description:
             'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
           verified: 'failed',
           performedBy: PERFORMED_BY.l2beat,
           contractAddress: EthereumAddress(
-            '0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              proofSystem: '?',
-              mainArithmetization: '?',
-              mainPCS: '?',
-            },
-          ],
-        },
-        {
-          name: 'LineaVerifier (ProofType 3)',
-          description:
-            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              proofSystem: '?',
-              mainArithmetization: '?',
-              mainPCS: '?',
-            },
-          ],
-        },
-        {
-          name: 'LineaVerifier (ProofType 4)',
-          description:
-            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
             '0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main circuit',
+              proofSystem: '?',
+              mainArithmetization: '?',
+              mainPCS: '?',
+            },
+          ],
+        },
+        {
+          name: 'LineaVerifier (ProofType 0)',
+          description:
+            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0xED39C0C41A7651006953AB58Ecb3039363620995',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
@@ -587,6 +581,14 @@ export const linea: ScalingProject = {
     },
   },
   milestones: [
+    {
+      title: 'Proof system is complete',
+      url: 'https://x.com/LineaBuild/status/1932172959587913816',
+      date: '2024-06-09T00:00:00Z',
+      description:
+        'The Linea proof system and verifier on ethereum covers 100% of the zkEVM.',
+      type: 'general',
+    },
     {
       title: 'Linea starts using blobs',
       url: 'https://twitter.com/LineaBuild/status/1772711269159567483',
@@ -618,4 +620,5 @@ export const linea: ScalingProject = {
     },
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

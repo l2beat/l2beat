@@ -185,6 +185,25 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-BCAP",
+      "priceId": "blockchain-capital",
+      "symbol": "BCAP",
+      "name": "Blockchain Capital Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56040/large/bcap_logo_200.png?1748088291",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "blockchain-capital",
+        "decimals": 2,
+        "sinceTimestamp": 1748476800,
+        "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
+        "chain": "zksync2"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-BEL-1",
       "priceId": "bella-protocol",
       "symbol": "BEL",
@@ -505,7 +524,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -523,7 +550,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -541,15 +576,23 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
-      "id": "zksync2-FRAX-2",
+      "id": "zksync2-FRAX.legacy-1",
       "priceId": "frax",
-      "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -577,7 +620,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -599,7 +650,7 @@
     },
     {
       "mode": "auto",
-      "id": "zksync2-FXS-1",
+      "id": "zksync2-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -613,7 +664,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1069,6 +1128,25 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-PC0000031",
+      "priceId": "tradable-na-rent-financing-platform-sstn",
+      "symbol": "PC0000031",
+      "name": "Private Credit Direct Deal0000031",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "tradable-na-rent-financing-platform-sstn",
+        "decimals": 6,
+        "sinceTimestamp": 1748476800,
+        "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+        "chain": "zksync2"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-PEPE-1",
       "priceId": "pepe",
       "symbol": "PEPE",
@@ -1227,7 +1305,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1281,7 +1367,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1429,6 +1523,24 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-TRALA-1",
+      "priceId": "trala-token",
+      "symbol": "TRALA",
+      "name": "TRALA TOKEN",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38900/large/TRALA.png?1719456891",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x145e082E384A9fC86E95eEA805Dc9012f1B76cB7",
+        "chain": "zksync2",
+        "decimals": 18,
+        "sinceTimestamp": 1739109131
+      }
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-TRB-1",
       "priceId": "tellor",
       "symbol": "TRB",
@@ -1551,7 +1663,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

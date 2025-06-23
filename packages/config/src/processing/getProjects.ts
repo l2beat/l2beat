@@ -24,7 +24,7 @@ import {
 import { runConfigAdjustments } from './adjustments'
 import { bridges } from './bridges'
 import { ecosystems } from './ecosystems'
-import { isVerified } from './isVerified'
+import { getProjectUnverifiedContracts } from './getUnverifiedContracts'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 import { refactored } from './refactored'
@@ -64,7 +64,7 @@ function layer2Or3ToProject(
       redWarning: p.display.redWarning,
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
-      isUnverified: !isVerified(p, daBridges),
+      unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
       // countdowns
       otherMigration:
         p.reasonsForBeingOther && p.display.category !== 'Other'
@@ -82,7 +82,7 @@ function layer2Or3ToProject(
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
@@ -205,7 +205,7 @@ function bridgeToProject(p: Bridge): BaseProject {
       redWarning: undefined,
       emergencyWarning: undefined,
       reviewStatus: p.reviewStatus,
-      isUnverified: !isVerified(p),
+      unverifiedContracts: getProjectUnverifiedContracts(p),
     },
     display: {
       description: p.display.description,
@@ -224,7 +224,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvsInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
@@ -309,7 +309,7 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-export function getDiscoveryInfo(
+export function adjustDiscoveryInfo(
   project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
@@ -321,6 +321,7 @@ export function getDiscoveryInfo(
     contractsDiscoDriven,
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
+    blockNumberPerChain: project.discoveryInfo.blockNumberPerChain,
   }
 }
 

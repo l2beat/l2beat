@@ -1,4 +1,138 @@
-Generated with discovered.json: 0x58c4b17dee49acc237ff46ffc7c4d0ffb868e2e4
+Generated with discovered.json: 0x496bfdfc86977814dc290b467d5367c2ad62a02b
+
+# Diff at Thu, 19 Jun 2025 11:17:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22731088
+- current block number: 22738142
+
+## Description
+
+Upgrade to Vector DA bridge from Avail.
+
+## Watched changes
+
+```diff
+    contract Lens Multisig (0x4968A0E4b025eD7d095753E54058377969b41abC) {
+    +++ description: None
+      values.$members.7:
++        "0x2a80091816D7872850D500F6Ade835354238Af17"
+      values.$members.6:
++        "0x5063b3D23C3640d51c9E2aef41063B1d482C70ff"
+      values.$members.5:
++        "0x62Ae8d9B6d0D9817bd9D41b9AfEAc301dBa713B8"
+      values.$members.4:
++        "0x5dc301EcD8Bd7694BB1074B3E58Aa0916EE7887d"
+      values.$members.3:
+-        "0x2a80091816D7872850D500F6Ade835354238Af17"
++        "0xfbDF62F0a73DED0BF5A264867cFD022E192B5526"
+      values.$members.2:
+-        "0x5063b3D23C3640d51c9E2aef41063B1d482C70ff"
++        "0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c"
+      values.$members.1:
+-        "0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c"
++        "0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b"
+      values.$members.0:
+-        "0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b"
++        "0x71910321A1d3b3f743ca52569f5Aa82f09538A2e"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 8 (25%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
+    contract LensZkEvm (0xc29d04A93F893700015138E3E334eB828dAC3cef) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
++        "0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x907b30407249949521Bf0c89A43558dae200146A"
++        "0x8f50d93B9955B285f787043B30B5F51D09bE0120"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120)
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+```
+
+## Source code changes
+
+```diff
+.../AvailL1DAValidator.sol}                        | 60 +++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 12 deletions(-)
+```
+
+Generated with discovered.json: 0xacafbb1171690feb55b9c16a1432574a84440809
+
+# Diff at Wed, 18 Jun 2025 12:24:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593196
+- current block number: 22731088
+
+## Description
+
+2 valis removed.
+
+## Watched changes
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      values.validatorsVTL.3:
+-        "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+      values.validatorsVTL.2:
+-        "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
+      values.validatorsVTL.1:
+-        "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9"
++        "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
+      values.validatorsVTL.0:
+-        "0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374"
++        "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67"
+    }
+```
+
+```diff
+    EOA  (0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"validateZkStack","from":"ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5","role":".validatorsVTL"}
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+```diff
+    EOA  (0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"validateZkStack","from":"ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5","role":".validatorsVTL"}
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+Generated with discovered.json: 0xdc3687fdb8096bfa96124652ef206d1ae3292e3c
 
 # Diff at Tue, 27 May 2025 08:30:34 GMT:
 

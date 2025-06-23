@@ -1,3 +1,210 @@
+Generated with discovered.json: 0x5c5688c0fc1f37774dcc36991c8f73335f130f91
+
+# Diff at Fri, 20 Jun 2025 06:58:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@70109db050355e01a50f54497c60fdd17bbdbc2d block: 22631283
+- current block number: 22744050
+
+## Description
+
+elasticity +50%.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x7c51dfb9be4110c40daae1719d6b0574cbfa5172
+
+# Diff at Mon, 16 Jun 2025 08:41:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22631283
+- current block number: 22631283
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22631283 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321","role":"admin"}
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
++        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
++        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321","role":"admin","via":[{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.11.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
+      receivedPermissions.10.from:
+-        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
++        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      receivedPermissions.9.from:
+-        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+      receivedPermissions.8.from:
+-        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
++        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      receivedPermissions.7.from:
+-        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      receivedPermissions.6.from:
+-        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+      receivedPermissions.5.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.5.via:
+-        [{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+      receivedPermissions.5.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      receivedPermissions.4.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.4.via:
++        [{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
+    }
+```
+
+Generated with discovered.json: 0x459fd1149f8160317e48b6c68f151414ba0a1be1
+
+# Diff at Fri, 06 Jun 2025 12:28:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53e2933f99050c9e14880373922d3232f9074832 block: 22631283
+- current block number: 22631283
+
+## Description
+
+config: silent maker/sky escrow template added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22631283 (main branch discovery), not current.
+
+```diff
+    contract Escrow (0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
+Generated with discovered.json: 0x2a2d62314698afd8359e9b7614d29b2b5ac58df5
+
+# Diff at Wed, 04 Jun 2025 12:31:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22593373
+- current block number: 22631283
+
+## Description
+
+Base Multisig 1 signer rotation.
+
+## Watched changes
+
+```diff
+    contract Base Multisig 1 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      values.$members.13:
+-        "0xe32868ec7762650DdE723e945D638A05900974F4"
++        "0x9bF96DCf51959915c8c343a3E50820Ad069A1859"
+      values.$members.12:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0x541a833E4303EB56a45bE7E8E4A908db97568d1e"
+      values.$members.7:
+-        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
++        "0x4427683AA1f0ff25ccDC4a5Db83010c1DE9b5fF4"
+      values.$members.6:
+-        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
++        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
+      values.$members.5:
+-        "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
++        "0xA31E1c38d5c37D8ECd0e94C80C0F7FD624d009A3"
+      values.$members.4:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0x644e3DedB0e4F83Bfcf8F9992964d240224B74dc"
+      values.$members.3:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0x24c3AE1AeDB8142D32BB6d3B988f5910F272D53b"
+      values.$members.2:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.1:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0xB37B2D42cb0C10ebf96279CcECa2cBFc47C6f236"
+    }
+```
+
 Generated with discovered.json: 0x9ea22db911b764a132aeb53caa4cf572aaaa7ee0
 
 # Diff at Fri, 30 May 2025 05:26:00 GMT:

@@ -61,19 +61,23 @@ export class OrbitPostsBlobsHandler implements Handler {
           0,
           currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
-        async ({ eventProvider }) => {
+        async ({ eventProvider }, logger) => {
           const fromBlock = Math.max(
             0,
             currentBlockNumber - blockStep * multiplier,
           )
-          return await rpcWithRetries(async () => {
-            return await eventProvider.getLogs({
-              address: address.toString(),
-              topics: [abi.getEventTopic('SequencerBatchDelivered')],
-              fromBlock,
-              toBlock: currentBlockNumber,
-            })
-          }, `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`)
+          return await rpcWithRetries(
+            async () => {
+              return await eventProvider.getLogs({
+                address: address.toString(),
+                topics: [abi.getEventTopic('SequencerBatchDelivered')],
+                fromBlock,
+                toBlock: currentBlockNumber,
+              })
+            },
+            logger,
+            `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
+          )
         },
       )
       currentBlockNumber -= blockStep * multiplier

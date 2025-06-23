@@ -1,8 +1,8 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 22266078,
-  "configHash": "0xf0b04845aa221ba92a1c2e0706435d1f6381a0c98e91e65a63086b429c7a238e",
+  "blockNumber": 22624983,
+  "configHash": "0xc2556ae981c01bebaab247f111e8f33bd2133e620b0f1cf03c80131075e3f146",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -71,7 +71,7 @@
           "systemTxMaxGas": 1000000,
           "maximumBaseFee": "340282366920938463463374607431768211455"
         },
-        "scalar": "452312848583266388373324160190187140051835877600158453279134629208464056484",
+        "scalar": "452312848583266388373324160190187140051835877600158453279136350051535720694",
         "sequencerInbox": "0xFf00000000000000000000000000000000001135",
         "START_BLOCK_SLOT": "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f",
         "startBlock": 19788851,
@@ -102,12 +102,12 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": ".proposer"
         },
         {
           "permission": "propose",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": ".PROPOSER"
         }
       ]
@@ -159,10 +159,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 14936400,
-        "latestOutputIndex": 1382,
-        "nextBlockNumber": 14947200,
-        "nextOutputIndex": 1383,
+        "latestBlockNumber": 17107200,
+        "latestOutputIndex": 1583,
+        "nextBlockNumber": 17118000,
+        "nextOutputIndex": 1584,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -296,8 +296,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 980060,
-          "prevBlockNum": 22265943
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 22624977
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -352,6 +352,7 @@
       "sinceTimestamp": 1714730087,
       "sinceBlock": 19788827,
       "values": {
+        "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$immutable": false,
         "$implementation": "0x0318A37e2662507789a6E17E85A506709F89488b",
         "$pastUpgrades": [
@@ -363,7 +364,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292628711",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630482",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -502,7 +503,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "from": "ethereum:0x05f23282FFDCA8286E4738C1aF79079f3d843750",
           "role": ".batcherHash"
         }
       ]
@@ -535,107 +536,134 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": ".challenger"
         },
         {
           "permission": "challenge",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": ".CHALLENGER"
         },
         {
           "permission": "guard",
-          "from": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
+          "from": "ethereum:0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
           "role": ".guardian"
         },
         {
           "permission": "guard",
-          "from": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+          "from": "ethereum:0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
           "role": ".guardian"
         },
         {
           "permission": "guard",
-          "from": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+          "from": "ethereum:0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
           "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
-          "from": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "from": "ethereum:0x05f23282FFDCA8286E4738C1aF79079f3d843750",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
+          "from": "ethereum:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "from": "ethereum:0x05f23282FFDCA8286E4738C1aF79079f3d843750",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+          "from": "ethereum:0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
+          "from": "ethereum:0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+          "from": "ethereum:0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
+          "from": "ethereum:0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
+          "from": "ethereum:0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
           "role": "admin",
           "via": [
-            { "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d" },
-            { "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d"
+            },
+            { "address": "ethereum:0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45" }
           ]
         }
       ],
@@ -662,7 +690,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 10 (40%)",
-        "nonce": 30,
+        "nonce": 32,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -752,6 +780,54 @@
       }
     },
     {
+      "name": "L1OpEURCBridgeAdapter",
+      "address": "0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677",
+      "type": "Contract",
+      "template": "circle/L1OpEURCBridgeAdapter",
+      "sourceHashes": [
+        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6",
+        "0x54fe8d50c1e462bc4bc77f3edef769d75b14fe44a09a708ceb8125d9760e71db"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Escrow for EURC that uses the canonical bridge for messaging but is governed externally.",
+      "sinceTimestamp": 1748849495,
+      "sinceBlock": 22615527,
+      "values": {
+        "$admin": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+        "$implementation": "0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80",
+        "$pastUpgrades": [
+          [
+            "2025-06-02T07:31:35.000Z",
+            "0x842ad723004e0ab6eec96d63e9480318f20b4262a5727cdf8ab01df70aed9c83",
+            ["0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "BRIDGE_MESSAGE_TYPEHASH": "0x87e4683aad14f1869b43140e06b846bd1b00c2e08e9825f6719d163b4cfef2a6",
+        "burnAmount": 0,
+        "burnCaller": "0x0000000000000000000000000000000000000000",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "OpEURCBridgeAdapter",
+          "version": "1.0.0",
+          "chainId": 1,
+          "verifyingContract": "0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "EURC": "0x1aBaEA1f7C830bD89Acc67eC4af516284b1bC33c",
+        "LINKED_ADAPTER": "0x4db1c96C1f9c3d5429fDf35ED2e684b309b0c281",
+        "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
+        "messengerStatus": 0,
+        "owner": "0xD2D7535e099F26EbfbA26d96bD1a661d3531d0e9",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "implementationNames": {
+        "0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677": "ERC1967Proxy",
+        "0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80": "L1OpEURCBridgeAdapter"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
       "type": "Contract",
@@ -763,44 +839,49 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
+          "from": "ethereum:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x05f23282FFDCA8286E4738C1aF79079f3d843750",
+          "from": "ethereum:0x05f23282FFDCA8286E4738C1aF79079f3d843750",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
+          "from": "ethereum:0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+          "from": "ethereum:0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
+          "from": "ethereum:0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
+          "from": "ethereum:0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
+          "from": "ethereum:0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
+          "from": "ethereum:0x3A44A3b263FB631cdbf25f339e2D29497511A81f",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
           "role": "admin"
         }
       ],
@@ -829,7 +910,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
+          "from": "ethereum:0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
           "role": ".owner"
         }
       ],
@@ -1099,6 +1180,78 @@
       "function userNonces(address _user, uint256 _nonce) view returns (bool _used)",
       "function withdrawLockedFunds(address _spender, address _user)"
     ],
+    "0x7C82666cE6C2DCFD8458148c98C8b156D6Bc0d80": [
+      "constructor(address _eurc, address _messenger, address _linkedAdapter)",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error IOpEURCBridgeAdapter_BlacklistedAddress()",
+      "error IOpEURCBridgeAdapter_BurnAmountNotSet()",
+      "error IOpEURCBridgeAdapter_ForbiddenTransaction()",
+      "error IOpEURCBridgeAdapter_InvalidAddress()",
+      "error IOpEURCBridgeAdapter_InvalidCaller()",
+      "error IOpEURCBridgeAdapter_InvalidNonce()",
+      "error IOpEURCBridgeAdapter_InvalidSender()",
+      "error IOpEURCBridgeAdapter_InvalidSignature()",
+      "error IOpEURCBridgeAdapter_InvalidTransaction()",
+      "error IOpEURCBridgeAdapter_MessageExpired()",
+      "error IOpEURCBridgeAdapter_MessagingDisabled()",
+      "error IOpEURCBridgeAdapter_MessagingEnabled()",
+      "error IOpEURCBridgeAdapter_NotMigrated()",
+      "error IOpEURCBridgeAdapter_NotUpgrading()",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error SafeERC20FailedOperation(address token)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event BurnAmountSet(uint256 _burnAmount)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event LockedFundsWithdrawn(address indexed _user, uint256 _amountWithdrawn)",
+      "event MessageFailed(address indexed _spender, address indexed _user, uint256 _amount, address indexed _messenger)",
+      "event MessageReceived(address indexed _spender, address indexed _user, uint256 _amount, address indexed _messenger)",
+      "event MessageSent(address indexed _user, address indexed _to, uint256 _amount, address indexed _messenger, uint32 _minGasLimit)",
+      "event MessagingResumed(address _messenger)",
+      "event MessagingStopped(address _messenger)",
+      "event MigratingToNative(address _messenger, address _caller)",
+      "event MigrationComplete(uint256 _burnedAmount)",
+      "event NonceCanceled(address _caller, uint256 _nonce)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function BRIDGE_MESSAGE_TYPEHASH() view returns (bytes32)",
+      "function EURC() view returns (address)",
+      "function LINKED_ADAPTER() view returns (address)",
+      "function MESSENGER() view returns (address)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function attemptTransfer(address _to, uint256 _amount)",
+      "function burnAmount() view returns (uint256)",
+      "function burnCaller() view returns (address)",
+      "function burnLockedEURC()",
+      "function cancelSignature(uint256 _nonce)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(address _owner)",
+      "function lockedFundsDetails(address _spender, address _user) view returns (uint256 _lockedAmount)",
+      "function messengerStatus() view returns (uint8)",
+      "function migrateToNative(address _roleCaller, address _burnCaller, uint32 _minGasLimitReceiveOnL2, uint32 _minGasLimitSetBurnAmount)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function receiveMessage(address _user, address _spender, uint256 _amount)",
+      "function receiveWithdrawLockedFundsPostMigration(address _spender, uint256 _amount)",
+      "function renounceOwnership()",
+      "function resumeMessaging(uint32 _minGasLimit)",
+      "function sendMessage(address _signer, address _to, uint256 _amount, bytes _signature, uint256 _nonce, uint256 _deadline, uint32 _minGasLimit)",
+      "function sendMessage(address _to, uint256 _amount, uint32 _minGasLimit)",
+      "function setBurnAmount(uint256 _amount)",
+      "function stopMessaging(uint32 _minGasLimit)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function userNonces(address _user, uint256 _nonce) view returns (bool _used)",
+      "function withdrawLockedFunds(address _spender, address _user)"
+    ],
     "0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error ErrorNotAdmin()",
@@ -1334,6 +1487,14 @@
       "function submissionInterval() view returns (uint256)",
       "function version() view returns (string)"
     ],
+    "0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d": [
       "constructor(address _owner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -1378,6 +1539,7 @@
     ]
   },
   "usedTemplates": {
+    "circle/L1OpEURCBridgeAdapter": "0x9558fb5fe22cd0b1f423b24a3d9e1d9cb01739d661c546db9892ed9262890b0a",
     "circle/L1OpUSDCBridgeAdapter": "0x7b0fd1c71ea89926c8c9ca49fd95cae9afc360f88c556a040665a4e1f50221a0",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -1392,5 +1554,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x14e872a5c8a7c740cbec38de7d4f36994f9be9c3c5bb157930249fe6c94ed673"
+  "permissionsConfigHash": "0x366f5d4b8308605c477dbdde3736e2dc1a217104eee19e35acfc40dfc737fcd7"
 }

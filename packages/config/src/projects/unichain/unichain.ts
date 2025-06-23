@@ -25,7 +25,7 @@ export const unichain: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
-      apps: ['https://unichain.org/bridge'],
+      bridges: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
       explorers: ['https://uniscan.xyz/'],
       socialMedia: [
@@ -95,6 +95,13 @@ export const unichain: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A'),
+      tokens: ['USDS', 'sUSDS'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
   ],
   chainConfig: {

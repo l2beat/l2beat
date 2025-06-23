@@ -8,6 +8,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
@@ -86,7 +87,7 @@ export const eigenda: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description:
@@ -169,6 +170,15 @@ export const eigenda: BaseProject = {
       economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('EIGEN'),
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
     },
+    pruningWindow: 86400 * 14, // 14 days in seconds
+    throughput: [
+      {
+        size: 15728640, // 15 MB
+        frequency: 1, // x second
+        sinceTimestamp: 1726095600, // 2024-09-12,
+      },
+    ],
+    finality: 600, // ~10 minutes
   },
   daBridge: {
     name: 'Service Manager',
@@ -283,4 +293,5 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

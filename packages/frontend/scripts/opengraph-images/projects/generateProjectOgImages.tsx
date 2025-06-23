@@ -3,7 +3,7 @@ import path from 'path'
 import type { Project } from '@l2beat/config'
 import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
-import { ProjectOpengraphImage } from '~/components/opengraph-image/project'
+import { ProjectOpengraphImage } from '~/components/opengraph-image/Project'
 import { ps } from '~/server/projects'
 
 export async function generateProjectOgImages(

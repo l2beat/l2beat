@@ -20,7 +20,7 @@ export const molten: ScalingProject = orbitStackL3({
       'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',
     links: {
       websites: ['https://moltennetwork.com/'],
-      apps: [
+      bridges: [
         'https://molten.calderabridge.xyz/',
         'https://leverage.unidex.exchange/',
       ],
