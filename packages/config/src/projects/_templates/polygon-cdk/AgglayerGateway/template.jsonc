@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on that.",
+  "category": "shared",
+  "fields": {
+    "fields": {
+      "accessControl": {
+        "handler": {
+          "type": "accessControl"
+        }
+      }
+    }
+  }
+}

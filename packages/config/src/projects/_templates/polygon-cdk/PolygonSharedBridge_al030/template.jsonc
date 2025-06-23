@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PolygonSharedBridge",
+  "description": "The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+  "ignoreMethods": [
+    "claimedBitMap",
+    "depositCount",
+    "lastUpdatedDepositCount",
+    "INIT_BYTECODE_TRANSPARENT_PROXY"
+  ],
+  "ignoreInWatchMode": ["getRoot"],
+  "ignoreRelatives": [
+    "getWrappedTokenBridgeImplementation",
+    "wrappedTokenBytecodeStorer"
+  ],
+  "fields": {
+    "isEmergencyState": {
+      "description": "pauses the bridge, managed by the PolygonRollupManager.",
+      "severity": "HIGH"
+    }
+  },
+  "category": "shared"
+}
