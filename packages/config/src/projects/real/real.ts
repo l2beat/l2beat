@@ -107,6 +107,14 @@ export const real: ScalingProject = orbitStackL2({
       description: 'Re.al launches the RWA token and its governance protocol.',
       type: 'general',
     },
+    {
+      title: 'Re.al Halts Block Production',
+      date: '2025-06-20T00:00:00Z',
+      description:
+        'Re.al halted block production and state updates without prior notice.',
+      type: 'incident',
+      url: 'https://x.com/donnoh_eth/status/1937136543195398578',
+    },
   ],
   customDa: AnytrustDAC({ discovery }),
 })
