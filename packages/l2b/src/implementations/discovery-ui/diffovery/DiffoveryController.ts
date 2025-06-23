@@ -38,7 +38,8 @@ export class DiffoveryController {
     address: EthereumAddress,
   ): Promise<Record<string, string> | undefined> {
     const client = this.getClient(chain)
-    const cached = this.cache.get(address.toString())
+    const cacheKey = `${chain}:${address.toString()}`
+    const cached = this.cache.get(cacheKey)
     if (cached !== undefined) {
       return splitFlatSolidity(cached)
     }
@@ -58,7 +59,7 @@ export class DiffoveryController {
     const flat = flattenStartingFrom(source.name, input, source.remappings, {
       includeAll: true,
     })
-    this.cache.set(address.toString(), flat)
+    this.cache.set(cacheKey, flat)
     return splitFlatSolidity(flat)
   }
 }
