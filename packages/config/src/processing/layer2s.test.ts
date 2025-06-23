@@ -1,3 +1,4 @@
+import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -300,11 +301,26 @@ describe('layer2s', () => {
     })
 
     describe('technology references are valid', () => {
+      const paths = getDiscoveryPaths()
+      const configReader = new ConfigReader(paths.discovery)
+
       for (const layer2 of layer2s) {
         try {
-          const discovery = new ProjectDiscovery(layer2.id.toString())
-          if (!layer2.technology || layer2.technology?.isUnderReview === true)
+          if (!layer2.technology || layer2.technology?.isUnderReview === true) {
             continue
+          }
+
+          const availableChains =
+            configReader.readAllDiscoveredChainsForProject(layer2.id.toString())
+          const discoveries = availableChains.map(
+            (chain) => new ProjectDiscovery(layer2.id.toString(), chain),
+          )
+          const allAddresses = discoveries
+            .flatMap((perChainDiscovery) => [
+              perChainDiscovery.getAllContractAddresses(),
+              perChainDiscovery.getContractsAndEoas().map((m) => m.address),
+            ])
+            .flat()
 
           for (const [key, choicesAny] of Object.entries(layer2.technology)) {
             if (choicesAny === undefined) {
@@ -322,9 +338,6 @@ describe('layer2s', () => {
                 choices.flatMap((c) => c.references).map((ref) => ref.url),
               )
 
-              const allAddresses = discovery
-                .getAllContractAddresses()
-                .concat(discovery.getContractsAndEoas().map((m) => m.address))
               for (const address of referencedAddresses) {
                 expect(allAddresses.includes(address)).toBeTruthy()
               }
