@@ -43,6 +43,9 @@ export class BlockIndexer extends ManagedChildIndexer {
       })
     }
 
+    const delay = to - adjustedFrom
+    this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
+
     for (let blockNumber = adjustedFrom; blockNumber <= to; blockNumber++) {
       this.logger.info('Fetching block', { blockNumber })
       const block =
