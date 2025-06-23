@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xdafe3716c4bee3850c6b77f63c5983e29f8df503
+
+# Diff at Mon, 23 Jun 2025 14:57:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22466462
+- current block number: 22767866
+
+## Description
+
+Some stakers (sequencer/proposer) removed (3 left).
+
+## Watched changes
+
+```diff
+    contract L1Staking (0x0Dc417F8AF88388737c5053FF73f345f080543F7) {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for stakers registering and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      values.deleteList.3:
++        "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65"
+      values.deleteList.2:
++        "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23"
+      values.deleteList.1:
++        "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
+      values.deleteList.0:
++        "0x61F2945d4bc9E40B66a6376d1094a50438f613e2"
+      values.getActiveStakers.6:
+-        "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
+      values.getActiveStakers.5:
+-        "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0"
+      values.getActiveStakers.4:
+-        "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65"
+      values.getActiveStakers.3:
+-        "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80"
+      values.getActiveStakers.2:
+-        "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23"
++        "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
+      values.getActiveStakers.1:
+-        "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
++        "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0"
+      values.getActiveStakers.0:
+-        "0x61F2945d4bc9E40B66a6376d1094a50438f613e2"
++        "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80"
+    }
+```
+
+```diff
+    EOA  (0x61F2945d4bc9E40B66a6376d1094a50438f613e2) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7","description":"Actors allowed to commit transaction batches and propose state roots","role":".getActiveStakers"}]
+    }
+```
+
+```diff
+    EOA  (0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7","description":"Actors allowed to commit transaction batches and propose state roots","role":".getActiveStakers"}]
+    }
+```
+
+```diff
+    EOA  (0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7","description":"Actors allowed to commit transaction batches and propose state roots","role":".getActiveStakers"}]
+    }
+```
+
+```diff
+    EOA  (0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7","description":"Actors allowed to commit transaction batches and propose state roots","role":".getActiveStakers"}]
+    }
+```
+
 Generated with discovered.json: 0xa30282117b815def1e861e3be5408ec2a9bd833d
 
 # Diff at Fri, 23 May 2025 09:41:00 GMT:
