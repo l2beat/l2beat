@@ -67,8 +67,8 @@ export class ProjectDiscovery {
 
   get blockNumber(): number {
     return this.discoveries.reduce(
-      (min, d) => Math.min(min, d.blockNumber),
-      Infinity,
+      (min, d) => Math.max(min, d.blockNumber),
+      0,
     )
   }
 
