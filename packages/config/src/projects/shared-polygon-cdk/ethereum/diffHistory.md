@@ -3911,7 +3911,7 @@ Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
 
 ## Description
 
-xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the verifier differs.
 
 ## Watched changes
 

@@ -29,7 +29,8 @@ export function attachDiffoveryRouter(
     try {
       const result = await controller.handle(chain, EthereumAddress(address))
       res.json(result)
-    } catch {
+    } catch (e) {
+      console.error(e)
       res.status(500).json({ error: 'Invalid query address' })
     }
   })

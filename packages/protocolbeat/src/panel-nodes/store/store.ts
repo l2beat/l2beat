@@ -49,6 +49,7 @@ const INITIAL_STATE: State = {
   userPreferences: {
     hideUnknownOnLoad: true,
     enableDimming: true,
+    hideLargeArrays: true,
   },
 }
 

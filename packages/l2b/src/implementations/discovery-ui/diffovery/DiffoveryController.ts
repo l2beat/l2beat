@@ -68,16 +68,20 @@ function splitFlatSolidity(flat: string): Record<string, string> {
 
   const AST = parse(flat, { range: true })
   for (const child of AST.children) {
-    assert(child.range !== undefined)
-    const childContent = flat.substring(child.range[0], child.range[1] + 1)
     const childName = getASTTopLevelChildName(child)
+
     assert(childName !== undefined)
+    assert(child.range !== undefined)
+
+    const childContent = flat.substring(child.range[0], child.range[1] + 1)
     result[childName] = childContent
   }
 
   return result
 }
 
+// NOTE(radomski): This function needs to handle all nodes listed in
+// https://docs.soliditylang.org/en/latest/grammar.html#a4.SolidityParser
 function getASTTopLevelChildName(child: ASTNode): string | undefined {
   switch (child.type) {
     case 'UsingForDeclaration':
@@ -104,8 +108,10 @@ function getASTTopLevelChildName(child: ASTNode): string | undefined {
     case 'PragmaDirective':
     case 'ImportDirective':
       return undefined
+    case 'TypeDefinition':
+      return child.name
     default: {
-      assert(false)
+      assert(false, `Unhandled child type: ${child.type}`)
     }
   }
 }
