@@ -7,7 +7,7 @@ Generated with discovered.json: 0x431da193506a5fb2d46657b35d8b6b3d970d79d2
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery to check L1->L2 exclusions.
 
 ## Initial discovery
 
