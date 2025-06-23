@@ -573,7 +573,9 @@ function svEnum<T extends string | number>(values: readonly T[]) {
   }
 }
 
-function _enum<T extends string | number>(values: readonly T[]): Validator<T> {
+function _enum<const T extends string | number>(
+  values: readonly T[],
+): Validator<T> {
   const sv = svEnum(values)
   return new ValidatorImpl(sv, sv, ['enum', values])
 }
