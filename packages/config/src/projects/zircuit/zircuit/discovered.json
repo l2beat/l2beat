@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "zircuit",
-  "blockNumber": 14505450,
-  "configHash": "0xb6e342b3566b1ee1373dee72ecded338317a27b171f0571d18b636efd9ae52b2",
+  "blockNumber": 15364203,
+  "configHash": "0x15be06f79f2c3bad509bc3b0229caf057e7f2a4e6819fa05c779ebc7f9e56e13",
   "entries": [
     {
       "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
@@ -20,10 +20,13 @@
       "proxyType": "EOA"
     },
     {
-      "name": "",
+      "name": "L1Block",
       "address": "0x4200000000000000000000000000000000000015",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x58e0fa3818df29fbb7de4e09a8c62f8952335a4ac32e30256ae72fd9681d7b50",
+        "0xbb69c5830d6e822e4bf9c51ad08b5ade53450cf808a5cabc8665f40e5c6d7c1a"
+      ],
       "proxyType": "EIP1967 proxy",
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
@@ -35,11 +38,27 @@
             ["0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12"]
           ]
         ],
-        "$upgradeCount": 1
+        "$upgradeCount": 1,
+        "basefee": 602997202,
+        "baseFeeScalar": 1368,
+        "batcherHash": "0x000000000000000000000000af1e4f6a47af647f87c0ec814d8032c4a4bff145",
+        "blobBaseFee": 1,
+        "blobBaseFeeScalar": 810949,
+        "depositExclusions": "0x",
+        "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
+        "hash": "0x860409be6049dd06c3bfe74926a7a552c3277fdd865315938507dfb5731814cc",
+        "l1FeeOverhead": 0,
+        "l1FeeScalar": 0,
+        "number": 22765716,
+        "operatorFeeConstant": 0,
+        "operatorFeeScalar": 0,
+        "sequenceNumber": 0,
+        "timestamp": 1750664615,
+        "version": "1.3.0"
       },
       "implementationNames": {
         "0x4200000000000000000000000000000000000015": "Proxy",
-        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": ""
+        "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": "L1Block"
       }
     },
     {
@@ -55,12 +74,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000015",
+          "from": "zircuit:0x4200000000000000000000000000000000000015",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "zircuit:0x4200000000000000000000000000000000000018",
           "role": "admin"
         }
       ],
@@ -105,21 +124,25 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000015",
+          "from": "zircuit:0x4200000000000000000000000000000000000015",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "zircuit:0x4200000000000000000000000000000000000018" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "zircuit:0x4200000000000000000000000000000000000018",
           "role": "admin",
-          "via": [{ "address": "0x4200000000000000000000000000000000000018" }]
+          "via": [
+            { "address": "zircuit:0x4200000000000000000000000000000000000018" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x4200000000000000000000000000000000000018",
+          "from": "zircuit:0x4200000000000000000000000000000000000018",
           "role": ".owner"
         }
       ],
@@ -162,6 +185,11 @@
     },
     {
       "address": "0xD8399320cF3a6C7068DaC0C35ea5e74ddd650BD4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -251,10 +279,34 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address _proxy, address _implementation)",
       "function upgradeAndCall(address _proxy, address _implementation, bytes _data) payable"
+    ],
+    "0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12": [
+      "function DEPOSITOR_ACCOUNT() view returns (address)",
+      "function baseFeeScalar() view returns (uint32)",
+      "function basefee() view returns (uint256)",
+      "function batcherHash() view returns (bytes32)",
+      "function blobBaseFee() view returns (uint256)",
+      "function blobBaseFeeScalar() view returns (uint32)",
+      "function depositExclusions() view returns (bytes)",
+      "function hash() view returns (bytes32)",
+      "function l1FeeOverhead() view returns (uint256)",
+      "function l1FeeScalar() view returns (uint256)",
+      "function number() view returns (uint64)",
+      "function operatorFeeConstant() view returns (uint64)",
+      "function operatorFeeScalar() view returns (uint32)",
+      "function sequenceNumber() view returns (uint64)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar)",
+      "function setL1BlockValues(uint64 _number, uint64 _timestamp, uint256 _basefee, bytes32 _hash, uint64 _sequenceNumber, bytes32 _batcherHash, uint256 _l1FeeOverhead, uint256 _l1FeeScalar, bytes _depositExclusions)",
+      "function setL1BlockValuesEcotone()",
+      "function setL1BlockValuesEcotoneExclusions()",
+      "function setL1BlockValuesIsthmus()",
+      "function setL1BlockValuesIsthmusExclusions()",
+      "function timestamp() view returns (uint64)",
+      "function version() view returns (string)"
     ]
   },
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x9a7507aea3dc10979074a5dad33a93c7bf126497cb82e97b529cfcab3ce299d3"
+  "permissionsConfigHash": "0xa6e8e39b9ed6cc7f9ec51f79004bcc0b5739f7faedd46e27112d013d7156665d"
 }
