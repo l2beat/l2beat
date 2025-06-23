@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
 
+import { UnixTime } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   ChartContainer,
@@ -21,8 +22,13 @@ import { getDaChartMeta } from './meta'
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
+  includeScalingOnly: boolean
 }
-export function DaPercentageThroughputChart({ data, isLoading }: Props) {
+export function DaPercentageThroughputChart({
+  data,
+  isLoading,
+  includeScalingOnly,
+}: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
     return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
@@ -90,7 +96,9 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
             allowDataOverflow: true,
           },
         })}
-        <ChartTooltip content={<CustomTooltip />} />
+        <ChartTooltip
+          content={<CustomTooltip includeScalingOnly={includeScalingOnly} />}
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -100,9 +108,14 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
+  includeScalingOnly,
+}: TooltipProps<number, string> & {
+  includeScalingOnly: boolean
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
+
+  const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
 
   return (
     <ChartTooltipWrapper>
@@ -114,6 +127,10 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry) return null
+
+          // We don't have data for EigenDA projects for the past day, so we show estimated data for the current day
+          const isEstimated =
+            includeScalingOnly && isCurrentDay && entry.name === 'eigenda'
 
           return (
             <div
@@ -130,12 +147,18 @@ function CustomTooltip({
                 </span>
               </div>
               <span className="label-value-15-medium text-primary tabular-nums">
-                {entry.value?.toFixed(2)}%
+                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)}%
               </span>
             </div>
           )
         })}
       </div>
+      {includeScalingOnly && isCurrentDay && (
+        <div className="label-value-13-medium mt-2 max-w-[230px] text-secondary leading-[130%]">
+          Scaling project usage data for EigenDA is only available for the past
+          day.
+        </div>
+      )}
     </ChartTooltipWrapper>
   )
 }
