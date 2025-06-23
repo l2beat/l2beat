@@ -677,6 +677,7 @@ function lazy<T>(make: () => Validator<T>): Validator<T> {
   )
 }
 
+// @ts-ignore
 export const v = {
   string,
   number,

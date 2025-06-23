@@ -1063,11 +1063,7 @@ importers:
         specifier: ^5
         version: 5.6.3
 
-  packages/validate:
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
+  packages/validate: {}
 
 packages:
 

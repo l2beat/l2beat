@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { type Validator, v } from './validate'
+import { type Validator, v } from './validate.js'
 
 describe('validate', () => {
   const NamePosition = v.object({

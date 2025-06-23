@@ -2,12 +2,21 @@
   "name": "@l2beat/validate",
   "version": "0.1.0",
   "private": true,
-  "main": "build/index.js",
-  "types": "build/index.d.ts",
   "sideEffects": false,
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "clean": "rm -rf build",
+    "clean": "rm -rf dist",
+    "build": "pnpm run clean && pnpm run build:esm && pnpm run build:cjs",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && cp cjs-package.json dist/cjs/package.json",
     "format:fix": "biome format --write .",
     "format": "biome format .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -16,7 +25,5 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {},
-  "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*"
-  }
+  "devDependencies": {}
 }
