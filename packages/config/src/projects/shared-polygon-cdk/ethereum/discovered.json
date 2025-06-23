@@ -33,6 +33,24 @@
           ]
         ],
         "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AGGCHAIN_DEFAULT_VKEY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "AL_ADD_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AL_FREEZE_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -2030,7 +2048,7 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygon-cdk/AgglayerGateway": "0xec0e3db3f80aa7e746339e47fd1ae753728be4b85701b226356777c68b460426",
+    "polygon-cdk/AgglayerGateway": "0xb9e0478d60752df151211f7cc05975fd33dd25646a5e70e02878c2900cb1b218",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
     "polygon-cdk/PolygonRollupManager_al030": "0x07e6443363d3b1a55f9514d38946df4f6030615786d629c78e66e0e134c8b383",
     "polygon-cdk/PolygonSharedBridge_al030": "0x5e4548039f3a021a79577d1440fb434622b54fbddd5adb60e80173856bf2aa1c",

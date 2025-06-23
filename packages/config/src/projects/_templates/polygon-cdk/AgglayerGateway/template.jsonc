@@ -3,10 +3,13 @@
   "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on that.",
   "category": "shared",
   "fields": {
-    "fields": {
-      "accessControl": {
-        "handler": {
-          "type": "accessControl"
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x131410eab1236cee2db19035b0e825c94e5ab705dffe23321dd53856da531617": "AGGCHAIN_DEFAULT_VKEY_ROLE",
+          "0x0fdc2a718b96bc741c7544001e3dd7c26730802c54781668fa78a120e622629b": "AL_ADD_PP_ROUTE_ROLE",
+          "0xca75ae4228cde6195f9fa3dbde8dc352fb30aa63780717a378ccfc50274355dd": "AL_FREEZE_PP_ROUTE_ROLE"
         }
       }
     }

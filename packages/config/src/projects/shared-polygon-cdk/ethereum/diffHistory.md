@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x5b5a9bfd727fcc188a21255fa01b314df5112457
+Generated with discovered.json: 0xd94e03e8563b3f884fdd7368f1546f64190c401a
 
-# Diff at Mon, 23 Jun 2025 16:37:20 GMT:
+# Diff at Mon, 23 Jun 2025 16:54:07 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22744056
@@ -8,7 +8,9 @@ Generated with discovered.json: 0x5b5a9bfd727fcc188a21255fa01b314df5112457
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+agglayer v0.3.0 upgrade.
+- pessimistic proofs router (gateway, manages chain -> vkey mapping)
+- wrapped tokens in the bridge (bridge l2 natives)
 
 ## Watched changes
 
