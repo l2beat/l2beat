@@ -72,7 +72,7 @@ export function SettingsTray() {
             checked={preferences.hideLargeArrays}
             onClick={toggleHideLargeArrays}
           />
-          <span>Hide large arrays</span>
+          <span>Hide large arrays on load</span>
         </ControlButton>
       </div>
     </div>

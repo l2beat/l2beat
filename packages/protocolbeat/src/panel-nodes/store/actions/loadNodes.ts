@@ -6,7 +6,7 @@ import {
   HEADER_HEIGHT,
   NODE_WIDTH,
 } from '../utils/constants'
-import { recallNodeLayout } from '../utils/storage'
+import { type StoredNodeLayout, recallNodeLayout } from '../utils/storage'
 import { layout } from './other'
 
 export function loadNodes(
@@ -35,7 +35,8 @@ export function loadNodes(
       BOTTOM_PADDING
     const savedColor = saved?.colors?.[node.id]
     const color = typeof savedColor === 'number' ? savedColor : node.color
-    const hiddenFields = saved?.hiddenFields?.[node.id] ?? []
+    const hiddenFields = combinedHiddenFields(node, saved)
+
     return {
       ...node,
       color,
@@ -99,4 +100,13 @@ function idToUnknown(id: string): Node {
     hiddenFields: [],
     data: null,
   }
+}
+
+function combinedHiddenFields(
+  node: Node,
+  saved: StoredNodeLayout | undefined,
+): string[] {
+  const recalledHiddenFields = saved?.hiddenFields?.[node.id] ?? []
+  const defaultHiddenFields = node.hiddenFields
+  return [...new Set([...recalledHiddenFields, ...defaultHiddenFields])]
 }
