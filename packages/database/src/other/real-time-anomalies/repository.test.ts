@@ -1,37 +1,34 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import type { AnomalyStatsRecord } from './entity'
-import { AnomalyStatsRepository } from './repository'
+import type { RealTimeAnomalyRecord } from './entity'
+import { RealTimeAnomaliesRepository } from './repository'
 
-describeDatabase(AnomalyStatsRepository.name, (db) => {
-  const repository = db.anomalyStats
+describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
+  const repository = db.realTimeAnomalies
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.now()
-  const DATA: AnomalyStatsRecord[] = [
+  const DATA: RealTimeAnomalyRecord[] = [
     {
-      timestamp: START - 1 * UnixTime.HOUR,
+      start: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
-      mean: 10,
-      stdDev: 12,
+      status: 'ongoing',
     },
     {
-      timestamp: START - 2 * UnixTime.HOUR,
+      start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
-      subtype: 'proofSubmissions',
-      mean: 20,
-      stdDev: 22,
+      subtype: 'batchSubmissions',
+      status: 'approved',
     },
     {
-      timestamp: START - 3 * UnixTime.HOUR,
+      start: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
-      mean: 30,
-      stdDev: 33,
+      status: 'recovered',
     },
   ]
 
@@ -41,24 +38,23 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     await repository.upsertMany(DATA)
   })
 
-  describe(AnomalyStatsRepository.prototype.upsertMany.name, () => {
+  describe(RealTimeAnomaliesRepository.prototype.upsertMany.name, () => {
     it('add new and update existing', async () => {
-      const newRows: AnomalyStatsRecord[] = [
+      const newRows: RealTimeAnomalyRecord[] = [
         // to update
         {
-          timestamp: START - 1 * UnixTime.HOUR,
+          start: START - 1 * UnixTime.HOUR,
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          mean: 1,
-          stdDev: 2,
+          status: 'approved',
+          end: START,
         },
         //to add
         {
-          timestamp: START - 4 * UnixTime.HOUR,
+          start: START - 4 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
-          mean: 40,
-          stdDev: 44,
+          status: 'ongoing',
         },
       ]
 
@@ -68,20 +64,20 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
       expect(results).toEqualUnsorted([
         newRows[0]!,
         {
-          timestamp: START - 2 * UnixTime.HOUR,
+          start: START - 2 * UnixTime.HOUR,
           projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          mean: 20,
-          stdDev: 22,
+          subtype: 'batchSubmissions',
+          status: 'approved',
+          end: undefined,
         },
         {
-          timestamp: START - 3 * UnixTime.HOUR,
+          start: START - 3 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
-          mean: 30,
-          stdDev: 33,
+          status: 'recovered',
+          end: undefined,
         },
-        newRows[1]!,
+        { ...newRows[1]!, end: undefined },
       ])
     })
 
@@ -90,39 +86,34 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     })
   })
 
-  describe(AnomalyStatsRepository.prototype.getAll.name, () => {
+  describe(RealTimeAnomaliesRepository.prototype.getAll.name, () => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted(
         DATA.map((e) => ({
           ...e,
+          end: undefined,
         })),
       )
     })
   })
 
-  describe(AnomalyStatsRepository.prototype.getLatestByProjectIdAndSubtype
+  describe(RealTimeAnomaliesRepository.prototype.getOngoingAnomalies
     .name, () => {
-    it('should return latest for project and subtype', async () => {
-      const result = await repository.getLatestByProjectIdAndSubtype(
-        PROJECT_B,
-        'proofSubmissions',
+    it('should return all ongoing anomalies', async () => {
+      const results = await repository.getOngoingAnomalies()
+
+      expect(results).toEqualUnsorted(
+        DATA.filter((e) => e.status !== 'recovered').map((e) => ({
+          ...e,
+          end: undefined,
+        })),
       )
-
-      expect(result).toEqual(DATA[1])
     })
   })
 
-  describe(AnomalyStatsRepository.prototype.getLatestStats.name, () => {
-    it('should return latest stats', async () => {
-      const result = await repository.getLatestStats()
-
-      expect(result).toEqual([DATA[0]!, DATA[1]!])
-    })
-  })
-
-  describe(AnomalyStatsRepository.prototype.deleteAll.name, () => {
+  describe(RealTimeAnomaliesRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
 
