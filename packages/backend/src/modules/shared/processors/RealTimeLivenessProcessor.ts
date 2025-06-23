@@ -106,6 +106,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
     this.logger.info(
       `Created ${records.length} liveness records for block ${block.number}`,
+      { blockNumber: block.number, count: records.length },
     )
 
     await this.db.realTimeLiveness.insertMany(records)
