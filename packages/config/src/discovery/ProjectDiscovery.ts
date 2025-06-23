@@ -66,10 +66,7 @@ export class ProjectDiscovery {
   }
 
   get blockNumber(): number {
-    return this.discoveries.reduce(
-      (min, d) => Math.max(min, d.blockNumber),
-      0,
-    )
+    return this.discoveries.reduce((min, d) => Math.max(min, d.blockNumber), 0)
   }
 
   getName(address: EthereumAddress): string {
