@@ -6,7 +6,7 @@ import type {
   ProjectColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
 import { getCollection } from '~/content/getCollection'
@@ -42,6 +42,7 @@ import { getTvsByTokenType } from './getTvsByTokenType'
 const EXCLUDED_FILTERS = ['stack', 'infrastructure', 'vm']
 
 export interface EcosystemEntry {
+  id: ProjectId
   slug: string
   name: string
   logo: {
@@ -79,6 +80,7 @@ export interface EcosystemEntry {
 
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
+  gasTokens?: string[]
 }
 
 export async function getEcosystemEntry(
@@ -173,6 +175,7 @@ export async function getEcosystemEntry(
         )
         return {
           ...entry,
+          gasTokens: project.chainConfig?.gasTokens,
           ecosystemInfo: project.ecosystemInfo,
           filterable: entry.filterable?.filter(
             (f) => !EXCLUDED_FILTERS.includes(f.id),
