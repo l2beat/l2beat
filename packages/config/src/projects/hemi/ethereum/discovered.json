@@ -1,8 +1,8 @@
 {
   "name": "hemi",
   "chain": "ethereum",
-  "blockNumber": 22746105,
-  "configHash": "0xd6df59737b8d24c80f17c6c0d2399edcab165cb4f7fb551ef7e745b3dcf163ff",
+  "blockNumber": 22765735,
+  "configHash": "0x67435ed7b82192ad1e844da4d4aeaf535e42ba5fce70214cf0def58b7349fffd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -127,8 +127,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 22745408
+          "prevBoughtGas": 491822,
+          "prevBlockNum": 22764770
         },
         "paused": false,
         "superchainConfig": "0x15144FB8621cB3c4ED3DB223c173ffb58C8D2aB8",
@@ -315,10 +315,10 @@
         "finalizationPeriodSeconds": 86400,
         "L2_BLOCK_TIME": 12,
         "l2BlockTime": 12,
-        "latestBlockNumber": 2046480,
-        "latestOutputIndex": 17053,
-        "nextBlockNumber": 2046600,
-        "nextOutputIndex": 17054,
+        "latestBlockNumber": 2066400,
+        "latestOutputIndex": 17219,
+        "nextBlockNumber": 2066520,
+        "nextOutputIndex": 17220,
         "proposer": "0x2BD42D6CFA838fB15187F3D59dC19eD169b2659e",
         "PROPOSER": "0x2BD42D6CFA838fB15187F3D59dC19eD169b2659e",
         "startingBlockNumber": 0,
@@ -692,7 +692,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632836",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292632856",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
