@@ -136,7 +136,7 @@ export const zircuit: ScalingProject = opStackL2({
     sequencerFailure: {
       ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
       description:
-        RISK_VIEW.SEQUENCER_NO_MECHANISM() +
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
         ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
     },
   },
