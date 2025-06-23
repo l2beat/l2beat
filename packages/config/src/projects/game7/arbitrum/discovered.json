@@ -1,9 +1,22 @@
 {
   "name": "game7",
   "chain": "arbitrum",
-  "blockNumber": 343817776,
+  "blockNumber": 350404779,
   "configHash": "0xfa5de218496a06da8cd6a4ab55e84d10be279eb474d95f6144c8b1b8ce31be7a",
   "entries": [
+    {
+      "address": "0x026919DbCFab70a2A45775088C933331A7B25Ac6",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
     {
       "name": "OneStepProverHostIo",
       "address": "0x0446E34D1cC4eBA5F336627BaAe82332c8607043",
@@ -22,6 +35,19 @@
       }
     },
     {
+      "address": "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "name": "ValidatorUtils",
       "address": "0x08Ca9925b88c54100568c8d41eFAF8Fecc695d3a",
       "type": "Contract",
@@ -37,6 +63,19 @@
       "implementationNames": {
         "0x08Ca9925b88c54100568c8d41eFAF8Fecc695d3a": "ValidatorUtils"
       }
+    },
+    {
+      "address": "0x0C79a90C94E1C1091D7D3a188730105be00798f9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "GnosisSafeL2",
@@ -68,19 +107,50 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$members": ["0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0"],
+        "$members": ["0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"],
         "$threshold": 1,
         "domainSeparator": "0x2c3c37b161b4c8d556294d7e6c9bd1187d71d68041cc81f1e79c52839e3a7e2b",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 2341,
+        "nonce": 2615,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
         "0x1a8902780F37e0526788198Dee30b8375A0B24Bc": "GnosisSafeProxy",
         "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": "GnosisSafeL2"
       }
+    },
+    {
+      "address": "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
+          ]
+        },
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
+          ]
+        },
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "Bridge",
@@ -127,8 +197,8 @@
         "outboxHistory": ["0xfbe537816d181888fAbE52338a5D921eE131E9Db"],
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "sequencerMessageCount": 3234,
-        "sequencerReportedSubMessageCount": 1645716
+        "sequencerMessageCount": 3509,
+        "sequencerReportedSubMessageCount": 1647829
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -176,6 +246,19 @@
       "implementationNames": {
         "0x23264394923E4aEB990234180c37Bf757667C6f7": "OneStepProofEntry"
       }
+    },
+    {
+      "address": "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "address": "0x36921bAAD215c5f3c5dffa89B1C2A5CF4BDAdC77",
@@ -358,9 +441,25 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 3234,
+        "batchCount": 3509,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
-        "batchPosters": ["0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"],
+        "batchPosters": [
+          "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90",
+          "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5",
+          "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885",
+          "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31",
+          "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a",
+          "0x79F4b4f9103298460486EC644499Df9985E34170",
+          "0x7CD925c107dE5C06C100F2084bFA0422F21140f0",
+          "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772",
+          "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F",
+          "0xD327b75C2CA829835b2B5EA9535827e9a06a480B",
+          "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155",
+          "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc",
+          "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1",
+          "0xbE119cCc44373B15517e921e9a7D54362250662D",
+          "0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"
+        ],
         "bridge": "0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
@@ -387,7 +486,7 @@
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1,
+        "setIsBatchPosterCount": 2,
         "totalDelayedMessagesRead": 387,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
@@ -409,9 +508,61 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
       "address": "0x50930d652266EF4127FA3A1906B7Cb9951076628",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "name": "RollupProxy",
@@ -459,13 +610,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 2449,
+        "firstUnresolvedNode": 2722,
         "inbox": "0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 20938249,
-        "latestConfirmed": 2448,
-        "latestNodeCreated": 2448,
+        "lastStakeBlock": 22746354,
+        "latestConfirmed": 2721,
+        "latestNodeCreated": 2721,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 1,
         "outbox": "0xfbe537816d181888fAbE52338a5D921eE131E9Db",
@@ -474,14 +625,28 @@
         "rollupDeploymentBlock": 20934656,
         "rollupEventInbox": "0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
         "sequencerInbox": "0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
-        "setValidatorCount": 2,
-        "stakerCount": 1,
+        "setValidatorCount": 3,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
+          "0x026919DbCFab70a2A45775088C933331A7B25Ac6",
+          "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21",
+          "0x0C79a90C94E1C1091D7D3a188730105be00798f9",
+          "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E",
           "0x1a8902780F37e0526788198Dee30b8375A0B24Bc",
-          "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0"
+          "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB",
+          "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7",
+          "0x83433d51B327392aA694455231D2db092eE2A5Db",
+          "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
+          "0xB180d28c01D3248C3fa88d67154a5070e5039135",
+          "0xC929c820dC03C2a22e44F440721Af3c835e071fc",
+          "0xD47FB043557CB2289B31d813dd4BC1223C91f872",
+          "0xEBe1766201dd69A09a2953B08081829E90f4a8d3",
+          "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05",
+          "0xe7685c09633B47Fe123ff47ebeA903C3763924a2",
+          "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
         ],
         "validatorUtils": "0x08Ca9925b88c54100568c8d41eFAF8Fecc695d3a",
         "validatorWalletCreator": "0x27a722f5Ba1E7119a48A990eE5C262413249eB2B",
@@ -548,6 +713,19 @@
         }
       ],
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "Conduit Multisig 2",
@@ -708,7 +886,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 80,
+        "nonce": 82,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -717,9 +895,48 @@
       }
     },
     {
+      "address": "0x79F4b4f9103298460486EC644499Df9985E34170",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "address": "0x7Ca9c81d2AdD8bff46CEE9813d52bD84d94901DD",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x7CD925c107dE5C06C100F2084bFA0422F21140f0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "name": "GatewayRouter",
@@ -798,6 +1015,19 @@
         "0x2A8ccC4829c0323b470357cffDaD492C789f9315": "ChallengeManager"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
+    },
+    {
+      "address": "0x83433d51B327392aA694455231D2db092eE2A5Db",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
@@ -889,28 +1119,23 @@
       }
     },
     {
-      "address": "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
+      "address": "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
-          "permission": "fastconfirm",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
-          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
-          "role": ".anyTrustFastConfirmer",
-          "via": [
-            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
-          ]
-        },
-        {
-          "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators",
-          "via": [
-            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
-          ]
-        },
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
         {
           "permission": "validate",
           "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
@@ -933,6 +1158,19 @@
       "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "name": "Inbox",
@@ -975,6 +1213,58 @@
         "0xD87f160f8c414d834cBDd9477c3D8c3ad1802255": "ERC20Inbox"
       },
       "category": { "name": "Canonical Bridges", "priority": 2 }
+    },
+    {
+      "address": "0xB180d28c01D3248C3fa88d67154a5070e5039135",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "0xbE119cCc44373B15517e921e9a7D54362250662D",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0xC929c820dC03C2a22e44F440721Af3c835e071fc",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "name": "ProxyAdmin",
@@ -1043,6 +1333,58 @@
       }
     },
     {
+      "address": "0xD327b75C2CA829835b2B5EA9535827e9a06a480B",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0xD47FB043557CB2289B31d813dd4BC1223C91f872",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
+    },
+    {
+      "address": "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "address": "0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1061,6 +1403,19 @@
           "permission": "act",
           "from": "arbitrum:0x401eCb1D350407f13ba348573E5630B83638E30D",
           "role": ".owner"
+        }
+      ]
+    },
+    {
+      "address": "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
         }
       ]
     },
@@ -1115,6 +1470,32 @@
       ]
     },
     {
+      "address": "0xe7685c09633B47Fe123ff47ebeA903C3763924a2",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
+      "address": "0xEBe1766201dd69A09a2953B08081829E90f4a8d3",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1128,6 +1509,19 @@
       "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
     },
     {
       "name": "Outbox",
@@ -1994,5 +2388,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x17f0682d10fca78d829ec06f1559f305c4eabec698517bd621c3bea8fd246c08"
+  "permissionsConfigHash": "0xbd9edac4d7f66e3f8a16181b7ac621b84de292ab3948ff8d7ba83c52f1c4c3a9"
 }
