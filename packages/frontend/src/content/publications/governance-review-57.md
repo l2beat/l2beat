@@ -29,7 +29,7 @@ You can find us to discuss everything related to Optimism’s governance, from c
 
 **Upcoming Events (Times in UTC):**
 
-Season 8 Intent AMA - on 24.6 at 18:30.
+[Season 8 Intent AMA](https://gov.optimism.io/t/season-8-intent-ama-questions-thread/10028) - on 24.6 at 18:30.
 
 [govNERDs Community Office Hours](meet.google.com/eqb-dfkk-mui) - on 24.6 at 19:00.
 
