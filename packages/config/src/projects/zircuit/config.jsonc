@@ -1,9 +1,7 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zircuit",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
       "initialAddresses": [
@@ -22,9 +20,7 @@
       }
     },
     "zircuit": {
-      "initialAddresses": [
-        "0x4200000000000000000000000000000000000015"
-      ]
+      "initialAddresses": ["0x4200000000000000000000000000000000000015"]
     }
   }
 }
