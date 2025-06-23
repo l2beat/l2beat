@@ -213,4 +213,4 @@ You can find us to discuss everything related to Scroll’s governance, from cur
 
 [Weekly DAO & Governance Call](meet.google.com/nug-uygx-hbd) - 25.4 at 11:30.
 
-[Weekly DAO & Governance Call]( meet.google.com/pcm-nxzr-rig) - 25.4 at 17:00.
+[Weekly DAO & Governance Call](meet.google.com/pcm-nxzr-rig) - 25.4 at 17:00.
