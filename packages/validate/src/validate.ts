@@ -659,6 +659,24 @@ function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   ])
 }
 
+function lazy<T>(make: () => Validator<T>): Validator<T>
+// @ts-ignore: This is correct
+function lazy<T>(make: () => Parser<T>): Parser<T>
+function lazy<T>(make: () => Validator<T>): Validator<T> {
+  let made: Validator<T> | undefined
+  return new ValidatorImpl<T>(
+    (value) => {
+      if (!made) made = make()
+      return made.safeValidate(value)
+    },
+    (value) => {
+      if (!made) made = make()
+      return made.safeParse(value)
+    },
+    ['lazy', undefined],
+  )
+}
+
 export const v = {
   string,
   number,
@@ -675,6 +693,7 @@ export const v = {
   enum: _enum,
   tuple,
   unknown,
+  lazy,
 }
 
 // biome-ignore lint/style/noNamespace: Needed to mimick z.infer

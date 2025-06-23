@@ -1,5 +1,5 @@
 import { expect } from 'earl'
-import { v } from './validate'
+import { type Validator, v } from './validate'
 
 describe('validate', () => {
   const NamePosition = v.object({
@@ -224,6 +224,24 @@ describe('validate', () => {
     expect(C.safeParse([1, undefined, 'foo'])).toEqual({
       success: true,
       data: [1, undefined, 'foo'],
+    })
+  })
+
+  it('lazy', () => {
+    interface List {
+      item: number
+      next: List | null
+    }
+    const List: Validator<List> = v.lazy(() =>
+      v.object({
+        item: v.number(),
+        next: v.union([v.null(), List]),
+      }),
+    )
+    const list = { item: 1, next: { item: 2, next: { item: 3, next: null } } }
+    expect(List.safeParse(list)).toEqual({
+      success: true,
+      data: list,
     })
   })
 })
