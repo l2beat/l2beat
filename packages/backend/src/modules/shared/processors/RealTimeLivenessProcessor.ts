@@ -8,9 +8,14 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { Config } from '../../../config'
-import type { TrackedTxsConfig } from '../../../config/Config'
+import {
+  assert,
+  type Block,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import type { Config, TrackedTxsConfig } from '../../../config/Config'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -118,26 +123,22 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     const ongoingAnomalies =
       await this.db.realTimeAnomalies.getOngoingAnomalies()
 
-    const configs: TrackedTxLivenessConfig[] = [
-      ...this.transfers,
-      ...this.functionCalls,
-      ...this.sharpSubmissions,
-      ...this.sharedBridges,
-    ]
-
     const records: RealTimeAnomalyRecord[] = []
+    const configGroups = this.groupConfigurations()
 
-    for (const config of configs) {
-      const latestRecord = latestRecords.find(
-        (r) => r.configurationId === config.id,
-      )
+    for (const group of configGroups.values()) {
+      const groupRecords = latestRecords
+        .filter((r) => group.configurationIds.includes(r.configurationId))
+        .sort((a, b) => b.timestamp - a.timestamp)
+      const latestRecord =
+        groupRecords.length === 0 ? undefined : groupRecords[0]
 
       const latestStat = latestStats.find(
-        (s) => s.projectId === config.projectId && s.subtype === config.subtype,
+        (s) => s.projectId === group.projectId && s.subtype === group.subtype,
       )
 
       const ongoingAnomaly = ongoingAnomalies.find(
-        (a) => a.projectId === config.projectId && a.subtype === config.subtype,
+        (a) => a.projectId === group.projectId && a.subtype === group.subtype,
       )
 
       if (!latestRecord || !latestStat) {
@@ -150,30 +151,24 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
       if (isAnomaly) {
         if (ongoingAnomaly) {
-          this.logger.info(
-            `Ongoing anomaly detected for configuration ${config.id}`,
-            {
-              projectId: config.projectId,
-              subtype: config.subtype,
-              duration: interval,
-            },
-          )
+          this.logger.info(`Ongoing anomaly detected`, {
+            projectId: group.projectId,
+            subtype: group.subtype,
+            duration: interval,
+          })
           continue
         }
 
-        this.logger.info(
-          `New anomaly detected for configuration ${config.id}`,
-          {
-            projectId: config.projectId,
-            subtype: config.subtype,
-            duration: interval,
-          },
-        )
+        this.logger.info(`New anomaly detected`, {
+          projectId: group.projectId,
+          subtype: group.subtype,
+          duration: interval,
+        })
 
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
-          projectId: config.projectId,
-          subtype: config.subtype,
+          projectId: group.projectId,
+          subtype: group.subtype,
           status: 'ongoing',
         }
 
@@ -183,13 +178,10 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           continue
         }
 
-        this.logger.info(
-          `Configuration ${config.id} has recovered from anomaly`,
-          {
-            projectId: config.projectId,
-            subtype: config.subtype,
-          },
-        )
+        this.logger.info(`Recovered from anomaly`, {
+          projectId: group.projectId,
+          subtype: group.subtype,
+        })
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
@@ -207,6 +199,45 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     }
 
     await this.db.realTimeAnomalies.upsertMany(records)
+  }
+
+  private groupConfigurations(): Map<
+    string,
+    {
+      projectId: ProjectId
+      subtype: TrackedTxsConfigSubtype
+      configurationIds: string[]
+    }
+  > {
+    const configs: TrackedTxLivenessConfig[] = [
+      ...this.transfers,
+      ...this.functionCalls,
+      ...this.sharpSubmissions,
+      ...this.sharedBridges,
+    ]
+
+    const configGroups = new Map<
+      string,
+      {
+        projectId: ProjectId
+        subtype: TrackedTxsConfigSubtype
+        configurationIds: string[]
+      }
+    >()
+
+    for (const config of configs) {
+      const key = `${config.projectId}-${config.subtype}`
+      if (!configGroups.has(key)) {
+        configGroups.set(key, {
+          projectId: config.projectId,
+          subtype: config.subtype,
+          configurationIds: [],
+        })
+      }
+      configGroups.get(key)?.configurationIds.push(config.id)
+    }
+
+    return configGroups
   }
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {

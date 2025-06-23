@@ -134,7 +134,8 @@ describe(RealTimeLivenessProcessor.name, () => {
   describe(RealTimeLivenessProcessor.prototype.checkForAnomalies.name, () => {
     it('should detect new anomaly', async () => {
       const projectId = ProjectId('project-id')
-      const configurationId = 'tracked-tx-1'
+      const configurationId1 = 'tracked-tx-1'
+      const configurationId2 = 'tracked-tx-2'
       const subtype = 'stateUpdates'
       const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
 
@@ -155,10 +156,16 @@ describe(RealTimeLivenessProcessor.name, () => {
       >({
         getLatestRecords: mockFn().resolvesTo([
           {
-            configurationId,
+            configurationId: configurationId1,
             txHash: '0x123',
             blockNumber: 123,
             timestamp: lastTxTimestamp,
+          },
+          {
+            configurationId: configurationId1,
+            txHash: '0x123',
+            blockNumber: 123,
+            timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
           },
         ] as RealTimeLivenessRecord[]),
       })
@@ -173,7 +180,19 @@ describe(RealTimeLivenessProcessor.name, () => {
       const configurations: TrackedTxConfigEntry[] = [
         {
           type: 'liveness' as const,
-          id: configurationId,
+          id: configurationId1,
+          projectId,
+          subtype: 'stateUpdates' as const,
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer' as const,
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+          },
+        },
+        {
+          type: 'liveness' as const,
+          id: configurationId2,
           projectId,
           subtype: 'stateUpdates' as const,
           sinceTimestamp: UnixTime.now(),
