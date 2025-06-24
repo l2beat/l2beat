@@ -48,7 +48,7 @@ export const cartesiprthoneypot: ScalingProject = {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
     headerWarning:
-      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The purpose of this Appchain is to test the Cartesi PRT optimistic fraud proof system. Withdrawals by users are not possible.',
+      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The purpose of this Appchain is to test the Cartesi PRT optimistic fraud proof system. Withdrawals by users are not possible. Note that given the unique purpose of this Appchain, the Risk Rosette and Stages framework do not perfectly apply and additional considerations are required.',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
