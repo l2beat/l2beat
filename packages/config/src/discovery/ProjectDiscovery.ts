@@ -670,6 +670,17 @@ export class ProjectDiscovery {
     return [...this.getContracts(), ...this.getEoas()]
   }
 
+  getTopLevelAddresses(): EthereumAddress[] {
+    const contracts = this.getContracts()
+    const implementations = contracts.flatMap((contract) =>
+      get$Implementations(contract.values),
+    )
+
+    const contractsAddresses = contracts.map((e) => e.address)
+    const eoasAddresses = this.getEoas().map((e) => e.address)
+    return [...contractsAddresses, ...implementations, ...eoasAddresses]
+  }
+
   getPermissionsByRole(
     role: (typeof RolePermissionEntries)[number],
   ): ProjectPermissionedAccount[] {

@@ -8,7 +8,6 @@ export async function getScalingSummaryApiData() {
       range: '30d',
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
-      previewRecategorisation: false,
     }),
   ])
   return {

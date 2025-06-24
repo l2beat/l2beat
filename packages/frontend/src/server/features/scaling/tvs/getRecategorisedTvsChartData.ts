@@ -18,7 +18,6 @@ import { TvsChartRange, rangeToResolution } from './utils/range'
 export const RecategorisedTvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  previewRecategorisation: z.boolean(),
 })
 
 export type RecategorisedTvsChartDataParams = z.infer<
@@ -41,21 +40,14 @@ export type RecategorisedTvsChartData = (readonly [
 export async function getRecategorisedTvsChart({
   range,
   filter,
-  previewRecategorisation,
 }: RecategorisedTvsChartDataParams): Promise<RecategorisedTvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData({ range, filter, previewRecategorisation })
+    return getMockTvsChartData({ range, filter })
   }
 
-  const projectsFilter = createTvsProjectsFilter(
-    filter,
-    previewRecategorisation,
-  )
+  const projectsFilter = createTvsProjectsFilter(filter)
 
-  const tvsProjects = await getTvsProjects(
-    projectsFilter,
-    previewRecategorisation,
-  )
+  const tvsProjects = await getTvsProjects(projectsFilter)
 
   if (tvsProjects.length === 0) {
     return []

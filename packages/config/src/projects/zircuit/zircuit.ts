@@ -8,6 +8,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
+import { safeGetImplementation } from '../../templates/utils'
 import type { ProjectScalingStateValidationCategory } from '../../types'
 
 const discovery = new ProjectDiscovery('zircuit')
@@ -23,6 +24,8 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
     'L2OutputOracle',
     'withdrawalKeepalivePeriodSecondsFmt',
   )
+
+const verifierV2 = discovery.getContract('VerifierV2')
 
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
@@ -46,7 +49,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
     },
     {
       title: 'VerifierV2.sol - Etherscan source code',
-      url: 'https://etherscan.io/address/0xd5b424ac36928e2da7da9eca9807938a56988f5a#code',
+      url: safeGetImplementation(verifierV2),
     },
   ],
 }

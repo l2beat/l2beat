@@ -301,7 +301,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Data hashes posted to EOA',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x4dbb3a65f411b2319dc5c824804a6593d6bf6b482a76493e9089e1e055267123',
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
@@ -309,7 +309,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Metis starts using blobs',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x1c28c8e7b89c5da880a52c3e4e4ca6da332816e72c0600d55c18479be897c8b7',
       date: '2025-05-13T00:00:00Z',
       description: 'Permissioned batcher is posting blobs to the inbox.',
       type: 'general',

@@ -1,4 +1,3 @@
-import { ConfigReader, getDiscoveryPaths } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
@@ -14,7 +13,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
 import { checkRisk } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
-import type { ProjectTechnologyChoice, ReferenceLink } from '../types'
+import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
 import { layer2s, milestonesLayer2s } from './layer2s'
 
@@ -273,81 +272,31 @@ describe('layer2s', () => {
   })
 
   describe('references', () => {
-    describe('permissions references are valid', () => {
-      for (const layer2 of layer2s) {
-        try {
-          const discovery = new ProjectDiscovery(layer2.id.toString())
+    for (const layer2 of layer2s) {
+      it(`${layer2.id.toString()}`, () => {
+        const chains = Object.keys(layer2.discoveryInfo.blockNumberPerChain)
+        const discoveryAddresses = new Set(
+          chains
+            .flatMap((chain) =>
+              new ProjectDiscovery(layer2.id, chain).getTopLevelAddresses(),
+            )
+            .map((address) => address.toString().toLowerCase()),
+        )
 
-          for (const perChain of Object.values(layer2.permissions ?? {})) {
-            const all = [...(perChain.roles ?? []), ...(perChain.actors ?? [])]
-            for (const { name, references } of all) {
-              const referencedAddresses = getAddressFromReferences(references)
-              if (referencedAddresses.length === 0) continue
+        const referencedAddresses = new Set(
+          JSON.stringify(layer2)
+            .match(/address\/(0x[a-fA-F0-9]{40})/g)
+            ?.map((match) => match.slice(8).toLowerCase()) || [],
+        )
 
-              it(`${layer2.id.toString()} : ${name}`, () => {
-                const contractAddresses = discovery.getAllContractAddresses()
-                expect(
-                  contractAddresses.some((a) =>
-                    referencedAddresses.includes(a),
-                  ),
-                ).toEqual(true)
-              })
-            }
-          }
-        } catch {
-          continue
-        }
-      }
-    })
-
-    describe('technology references are valid', () => {
-      const paths = getDiscoveryPaths()
-      const configReader = new ConfigReader(paths.discovery)
-
-      for (const layer2 of layer2s) {
-        try {
-          if (!layer2.technology || layer2.technology?.isUnderReview === true) {
-            continue
-          }
-
-          const availableChains =
-            configReader.readAllDiscoveredChainsForProject(layer2.id.toString())
-          const discoveries = availableChains.map(
-            (chain) => new ProjectDiscovery(layer2.id.toString(), chain),
+        for (const address of referencedAddresses) {
+          assert(
+            discoveryAddresses.has(address),
+            `${layer2.id} references ${address} but it's not found in discovery`,
           )
-          const allAddresses = discoveries
-            .flatMap((perChainDiscovery) => [
-              perChainDiscovery.getAllContractAddresses(),
-              perChainDiscovery.getContractsAndEoas().map((m) => m.address),
-            ])
-            .flat()
-
-          for (const [key, choicesAny] of Object.entries(layer2.technology)) {
-            if (choicesAny === undefined) {
-              continue
-            }
-            it(`${layer2.id.toString()} : ${key}`, () => {
-              const choicesTyped = choicesAny as
-                | ProjectTechnologyChoice
-                | ProjectTechnologyChoice[]
-
-              const choices = Array.isArray(choicesTyped)
-                ? choicesTyped
-                : [choicesTyped]
-              const referencedAddresses = getReferencedAddresses(
-                choices.flatMap((c) => c.references).map((ref) => ref.url),
-              )
-
-              for (const address of referencedAddresses) {
-                expect(allAddresses.includes(address)).toBeTruthy()
-              }
-            })
-          }
-        } catch {
-          continue
         }
-      }
-    })
+      })
+    }
   })
 
   describe('display', () => {
@@ -552,11 +501,6 @@ describe('layer2s', () => {
     }
   })
 })
-
-function getAddressFromReferences(references: ReferenceLink[] = []) {
-  const addresses = references.map((r) => r.url)
-  return getReferencedAddresses(addresses)
-}
 
 export function getReferencedAddresses(addresses: string[] = []) {
   return [...addresses.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>

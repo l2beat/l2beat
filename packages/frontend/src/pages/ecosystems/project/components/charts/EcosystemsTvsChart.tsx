@@ -46,7 +46,6 @@ export function EcosystemsTvsChart({
       type: 'projects',
       projectIds: entries.map((project) => project.id),
     },
-    previewRecategorisation: false,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(
