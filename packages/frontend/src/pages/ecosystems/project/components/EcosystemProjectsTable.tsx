@@ -1,18 +1,20 @@
+import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTable } from '~/hooks/useTable'
-import { scalingSummaryColumns } from '~/pages/scaling/summary/components/table/Columns'
-import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
+import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
+import { getEcosystemProjectsColumns } from './table/Columns'
 import { EcosystemWidget } from './widgets/EcosystemWidget'
 
 interface Props {
-  entries: ScalingSummaryEntry[]
+  entries: EcosystemProjectEntry[]
+  ecosystemId: ProjectId
 }
 
-export function EcosystemProjectsTable({ entries }: Props) {
+export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
   const table = useTable({
     data: entries,
-    columns: scalingSummaryColumns,
+    columns: getEcosystemProjectsColumns(ecosystemId),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
