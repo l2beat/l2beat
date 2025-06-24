@@ -197,7 +197,7 @@ export const cartesiprthoneypot: ScalingProject = {
       additionalConsiderations: {
         short:
           'The Cartesi PRT Honeypot is a minimal appchain (running a Cartesi Machine / dApp) for the purpose of incentivizing the testing of the Cartesi PRT proof system. Inputs/actions in the appchain are limited to deposits of CTSI by anyone and withdrawals by a single user.',
-        long: "Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. The appchain has the very specific purpose of a bug bounty on the proof system, defining the Cartesi Multisig as its only 'user' for the risk assessment. The risk and stages framework thus only applies from the perspective of this single address.",
+        long: 'Users can deposit (donate) CTSI tokens to the Honeypot. The funds can only be withdrawn by the Cartesi Multisig to its own address. The appchain has the very specific purpose of a bug bounty on the proof system, incentivizing security researchers to break it and claim the deposited funds.',
       },
     },
   ),
