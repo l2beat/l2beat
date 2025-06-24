@@ -13,7 +13,7 @@ import { ProjectDiscovery } from '../discovery/ProjectDiscovery'
 import type { ProjectScalingTechnology } from '../internalTypes'
 import { checkRisk } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
-import type { ProjectTechnologyChoice, ReferenceLink } from '../types'
+import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
 import { layer2s, milestonesLayer2s } from './layer2s'
 
@@ -501,11 +501,6 @@ describe('layer2s', () => {
     }
   })
 })
-
-function getAddressFromReferences(references: ReferenceLink[] = []) {
-  const addresses = references.map((r) => r.url)
-  return getReferencedAddresses(addresses)
-}
 
 export function getReferencedAddresses(addresses: string[] = []) {
   return [...addresses.join(';').matchAll(/0x[a-fA-F0-9]{40}/g)].map((e) =>
