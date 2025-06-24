@@ -131,16 +131,16 @@ function SummaryThroughputBox({
       percentage: round((latest.ethereum / total) * 100, 2),
     },
     {
-      label: 'Celestia',
-      value: latest.celestia,
-      className: 'bg-chart-fuchsia',
-      percentage: round((latest.celestia / total) * 100, 2),
-    },
-    {
       label: 'Avail',
       value: latest.avail,
       className: 'bg-chart-sky',
       percentage: round((latest.avail / total) * 100, 2),
+    },
+    {
+      label: 'Celestia',
+      value: latest.celestia,
+      className: 'bg-chart-fuchsia',
+      percentage: round((latest.celestia / total) * 100, 2),
     },
     {
       label: 'EigenDA',
