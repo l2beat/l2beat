@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22768020,
+  "blockNumber": 22772707,
   "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
@@ -329,7 +329,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x1ad9dbfc4e7d2bf7fcff943bf33393bf5849b8e1acb3d0ea64567d131a768d4a",
+        "getRoot": "0x13bbfe2636de0698d299c1ba91de6c6d99a27dd06e5293b3ef49abdf4f8865ca",
         "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -556,10 +556,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xa05b598f8455ceb0fc400e71bd4b917f88f085f1b60b2d8a808507ccb4eede08",
+        "getRollupExitRoot": "0x7e8f4d82d015216ab79f4dd4674c91bb790b99ceea6e291e096155b77a9b95a1",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1750692083,
+        "lastAggregationTimestamp": 1750748231,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -838,8 +838,8 @@
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           }
         ],
-        "totalSequencedBatches": 761164,
-        "totalVerifiedBatches": 760574,
+        "totalSequencedBatches": 761642,
+        "totalVerifiedBatches": 761156,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -919,9 +919,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59696,
+        "depositCount": 59730,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x5d338816ff0c154d733be81a6bb4d18c3915d85c1eb3470e6af52b1e5baca51c",
+        "getRoot": "0x0f4a4f67ec8e1108694db374d927509eb941758e14b4c827d9dd5ef7e28146ea",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
