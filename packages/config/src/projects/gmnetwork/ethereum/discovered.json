@@ -2,7 +2,7 @@
   "name": "gmnetwork",
   "chain": "ethereum",
   "blockNumber": 22208402,
-  "configHash": "0x66b1df6f43c42f577cd4ccc1573913c09936f8c29bb56f9fc63d04d553987b36",
+  "configHash": "0x696cbb176f510a9269a2bb207422d5fafd41f89d8db8d9ccfb06ee0a19e0c9d6",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
