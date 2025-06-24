@@ -3,8 +3,8 @@ import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
-import type { ProjectScalingStateValidationCategory } from '../../types'
 import { safeGetImplementation } from '../../templates/utils'
+import type { ProjectScalingStateValidationCategory } from '../../types'
 
 const discovery = new ProjectDiscovery('zircuit')
 
