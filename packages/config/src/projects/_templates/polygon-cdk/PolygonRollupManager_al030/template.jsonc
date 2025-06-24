@@ -103,7 +103,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager."
         }
       ]
     },

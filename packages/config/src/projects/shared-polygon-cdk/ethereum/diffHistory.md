@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4b07217cdbb7826ff64e78f98ecf3ea4f9ccd3da
+Generated with discovered.json: 0x999e4a9ce02c16d8178c32b64eb3c72fac9f9e59
 
-# Diff at Tue, 24 Jun 2025 14:45:26 GMT:
+# Diff at Tue, 24 Jun 2025 15:18:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@165a3574e7a5112b92cf5b6d87a202235001fcdf block: 22744056
@@ -9,8 +9,8 @@ Generated with discovered.json: 0x4b07217cdbb7826ff64e78f98ecf3ea4f9ccd3da
 ## Description
 
 agglayer v0.3.0 upgrade.
-- pessimistic proofs router (gateway, manages chain -> vkey mapping)
-- wrapped tokens in the bridge (bridge l2 natives)
+- pessimistic proofs router: 'algateway', manages a selector -> (verifier,vkey) mapping used for `verifyPessimisticProof()` and a yet unused aggchainselector -> vkey mapping
+- new 'factory' for wrapped tokens in the bridge: a wrapped token contract gets deployed when `PolygonRollupManager.claimAsset()` is called for an asset that does not exist on this chain. previously these token contracts were not upgradeable, now they are (most likely by the `PolygonZkEVMBridgeV2.proxiedTokensManager()`, pinged polygon team to verify the proxy bytecode).
 
 ## Watched changes
 
@@ -141,6 +141,9 @@ agglayer v0.3.0 upgrade.
       receivedPermissions.1.role:
 -        ".defaultAdminAC"
 +        ".addPpRouteAC"
+      receivedPermissions.0.description:
+-        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
++        "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager."
     }
 ```
 
@@ -634,6 +637,15 @@ agglayer v0.3.0 upgrade.
 -        "PolygonZkEVMGlobalExitRootV2"
       implementationNames.0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48:
 +        "PolygonZkEVMGlobalExitRootV2"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
++        "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager."
     }
 ```
 

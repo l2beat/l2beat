@@ -234,7 +234,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         },
         {
@@ -1088,7 +1088,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         }
       ],
@@ -2173,5 +2173,5 @@
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x05c2d3b332d7d94b4020f8165909d930018e8e8bb4ec2b5fab9ebdfb9431120a"
+  "permissionsConfigHash": "0x348c3deccef8869986a9dcf1ca4104b6e8a468c71c9adb59bf66a3e9db2077a4"
 }
