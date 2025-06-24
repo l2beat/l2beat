@@ -614,8 +614,14 @@ function impEnum<T extends string | number>(values: readonly T[]) {
   }
 }
 
-function _enum<const T extends string | number>(values: T[]): Validator<T> {
-  return new Imp({ type: 'enum', values }, impEnum(values), impEnum(values))
+function _enum<const T extends string | number>(
+  values: readonly T[],
+): Validator<T> {
+  return new Imp(
+    { type: 'enum', values: values as unknown[] },
+    impEnum(values),
+    impEnum(values),
+  )
 }
 
 function impUnknown(value: unknown): Result<unknown> {
