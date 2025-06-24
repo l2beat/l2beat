@@ -26,6 +26,18 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('metis')
 
+const blobBatcher = discovery.getContractValue<string>(
+  'Lib_AddressManager',
+  'blobBatcher',
+)
+
+const inboxAddress = discovery.getContractValue<string>(
+  'Lib_AddressManager',
+  'inboxAddress',
+)
+
+const stateCommitmentChain = discovery.getContract('StateCommitmentChain')
+
 const upgradeDelay = 0
 
 const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
@@ -150,6 +162,49 @@ export const metis: ScalingProject = {
         sinceBlock: 22472728,
         inbox: '0xFf00000000000000000000000000000000001088',
         sequencers: ['0xae4d46bd9117cb017c5185844699c51107cb28a9'],
+      },
+    ],
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: EthereumAddress(blobBatcher),
+          to: EthereumAddress(inboxAddress),
+          sinceTimestamp: UnixTime(1747234799),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: stateCommitmentChain.address,
+          selector: '0x5b297172',
+          functionSignature:
+            'function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',
+          sinceTimestamp: UnixTime(1710992939),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          // this query assumes that the chain id used is always metis' chain id (1088)
+          formula: 'functionCall',
+          address: stateCommitmentChain.address,
+          selector: '0x0a17d699',
+          functionSignature:
+            'function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string _proposer, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',
+          sinceTimestamp: UnixTime(1710992939),
+        },
       },
     ],
   },
@@ -301,7 +356,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Data hashes posted to EOA',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x4dbb3a65f411b2319dc5c824804a6593d6bf6b482a76493e9089e1e055267123',
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
@@ -309,7 +364,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Metis starts using blobs',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x1c28c8e7b89c5da880a52c3e4e4ca6da332816e72c0600d55c18479be897c8b7',
       date: '2025-05-13T00:00:00Z',
       description: 'Permissioned batcher is posting blobs to the inbox.',
       type: 'general',

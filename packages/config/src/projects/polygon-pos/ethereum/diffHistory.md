@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xd72e618e15f1e09891b28933bab5153388efe21c
+
+# Diff at Mon, 23 Jun 2025 15:16:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22731100
+- current block number: 22767964
+
+## Description
+
+-1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
 Generated with discovered.json: 0x5e95b68ff5024c9022f0447579fab6a8812767c3
 
 # Diff at Wed, 18 Jun 2025 11:34:58 GMT:

@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x642afe96e73d7379237bef6bc51f476f1ffbdb14
+
+# Diff at Mon, 23 Jun 2025 15:18:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22744143
+- current block number: 22767970
+
+## Description
+
+v28 upgrade complete.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.4:
++        {"_protocolVersion":115964116992,"_upgradeTimestamp":1746435600}
+      values.upgradeTimestamps.3._protocolVersion:
+-        115964116992
++        120259084288
+      values.upgradeTimestamps.3._upgradeTimestamp:
+-        1746435600
++        1750042800
+    }
+```
+
 Generated with discovered.json: 0x34e56c064e3683bce438c2bcf4545c803f423735
 
 # Diff at Fri, 20 Jun 2025 07:28:00 GMT:

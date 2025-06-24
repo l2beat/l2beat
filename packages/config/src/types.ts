@@ -144,12 +144,6 @@ export interface ProjectStatuses {
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ProjectUnverifiedContract[]
-  // countdowns
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ProjectScalingCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }
 
 export interface ProjectDisplay {
@@ -266,6 +260,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
+  | SourcifyApi
   | StarkexApi
   | EtherscanApi
 
@@ -291,6 +286,11 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+}
+
+export interface SourcifyApi {
+  type: 'sourcify'
+  chainId: number
 }
 
 // #endregion

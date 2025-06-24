@@ -11,11 +11,11 @@ export interface TvsProject {
 
 export async function getTvsProjects(
   filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
-  previewRecategorisation?: boolean,
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
     select: ['statuses', 'tvsConfig'],
     optional: ['chainConfig', 'scalingInfo', 'isBridge'],
+    whereNot: ['isUpcoming', 'archivedAt'],
   })
 
   const filteredProjects = projects
@@ -24,19 +24,18 @@ export async function getTvsProjects(
 
   return filteredProjects.map((project) => ({
     projectId: project.id,
-    category: getCategory(project, previewRecategorisation),
+    category: getCategory(project),
   }))
 }
 
 function getCategory(
   p: Project<never, 'scalingInfo'>,
-  previewRecategorisation?: boolean,
 ): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
   if (!p.scalingInfo) {
     return undefined
   }
 
-  if (isProjectOther(p.scalingInfo, previewRecategorisation)) {
+  if (isProjectOther(p.scalingInfo)) {
     return 'others'
   }
 

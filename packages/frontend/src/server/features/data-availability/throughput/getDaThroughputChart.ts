@@ -16,6 +16,7 @@ export type DaThroughputDataPoint = [
   ethereum: number,
   celestia: number,
   avail: number,
+  eigenda: number,
 ]
 
 export const DaThroughputChartParams = z.object({
@@ -54,17 +55,33 @@ export async function getDaThroughputChart({
     resolution,
   )
 
+  const lastEigenDAData = Object.entries(grouped).findLast(([_, values]) => {
+    return values.eigenda && values.eigenda > 0
+  })
+
   const timestamps = generateTimestamps(
     [minTimestamp, maxTimestamp],
     resolution,
   )
   return timestamps.map((timestamp) => {
     const timestampValues = grouped[timestamp]
+
+    // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to fill the gaps with the last known value for most recent data
+    let eigenda = timestampValues?.eigenda ?? 0
+    if (
+      includeScalingOnly &&
+      lastEigenDAData &&
+      timestamp > Number(lastEigenDAData[0])
+    ) {
+      eigenda = lastEigenDAData[1]['eigenda'] ?? 0
+    }
+
     return [
       timestamp,
       timestampValues?.ethereum ?? 0,
       timestampValues?.celestia ?? 0,
       timestampValues?.avail ?? 0,
+      eigenda,
     ]
   })
 }
@@ -119,12 +136,14 @@ function getMockDaThroughputChartData({
     const ethereum = Math.random() * 900_000_000 + 90_000_000
     const celestia = ethereum * Math.max(21 * Math.random(), 1)
     const avail = ethereum * 1.5 * Math.random()
+    const eigenda = ethereum * 3 * Math.random()
 
     return [
       timestamp,
       Math.round(ethereum),
       Math.round(celestia),
       Math.round(avail),
+      Math.round(eigenda),
     ]
   })
 }
