@@ -83,8 +83,8 @@ export type ImpMeta =
       transformer: (value: any) => any
       parent: Imp<unknown>
     }
-  | { type: 'lazy'; make: () => Imp<unknown> }
-  | { type: 'tuple'; schema: Imp<unknown>[] }
+  | { type: 'lazy'; get: () => Imp<unknown> }
+  | { type: 'tuple'; values: Imp<unknown>[] }
 
 export class Imp<T> implements Validator<T>, Parser<T> {
   meta: ImpMeta
@@ -689,18 +689,18 @@ function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
 }
 
 function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
-  schema: T,
+  values: T,
 ): Validator<Tuple<T>>
 function tuple<T extends [] | [Parser<unknown>, ...Parser<unknown>[]]>(
-  schema: T,
+  values: T,
 ): Parser<Tuple<T>>
 function tuple<T extends [] | [Imp<unknown>, ...Imp<unknown>[]]>(
-  schema: T,
+  values: T,
 ): Imp<Tuple<T>> {
   return new Imp(
-    { type: 'tuple', schema },
-    impTuple(schema, false),
-    impTuple(schema, true),
+    { type: 'tuple', values },
+    impTuple(values, false),
+    impTuple(values, true),
   )
 }
 
@@ -710,13 +710,19 @@ function lazy<T>(make: () => Parser<T>): Parser<T>
 function lazy<T>(make: () => Imp<T>): Imp<T> {
   let imp: Imp<T> | undefined
   return new Imp<T>(
-    { type: 'lazy', make },
+    {
+      type: 'lazy',
+      get: () => {
+        imp ??= make()
+        return imp
+      },
+    },
     (value) => {
-      if (!imp) imp = make()
+      imp ??= make()
       return imp.safeValidate(value)
     },
     (value) => {
-      if (!imp) imp = make()
+      imp ??= make()
       return imp.safeParse(value)
     },
   )

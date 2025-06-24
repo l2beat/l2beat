@@ -6,3 +6,4 @@ export {
   type Result,
   type Validator,
 } from './validate.js'
+export { toJsonSchema } from './schema.js'
