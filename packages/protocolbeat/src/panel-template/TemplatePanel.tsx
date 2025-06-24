@@ -2,13 +2,13 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { EditorView } from '../components/editor/EditorView'
 import type { EditorFile } from '../components/editor/store'
 import { isReadOnly } from '../config'
 import { useProjectData } from '../hooks/useProjectData'
-import { ActionNeededState } from '../components/ActionNeededState'
-import { ErrorState } from '../components/ErrorState'
-import { LoadingState } from '../components/LoadingState'
 
 export function TemplatePanel() {
   const { project, selectedAddress, projectResponse } = useProjectData()

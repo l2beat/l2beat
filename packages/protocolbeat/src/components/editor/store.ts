@@ -1,6 +1,6 @@
 import { create } from 'zustand'
-import type { Editor, EditorSupportedLanguage } from './editor'
 import type { DiffEditor } from './diffEditor'
+import type { Editor, EditorSupportedLanguage } from './editor'
 
 export interface Range {
   startOffset: number
