@@ -36,9 +36,17 @@ export function DaThroughputChart() {
         <ChartTimeRange range={chartRange} />
       </div>
       {metric === 'percentage' ? (
-        <DaPercentageThroughputChart data={data} isLoading={isLoading} />
+        <DaPercentageThroughputChart
+          data={data}
+          isLoading={isLoading}
+          includeScalingOnly={includeScalingOnly}
+        />
       ) : (
-        <DaAbsoluteThroughputChart data={data} isLoading={isLoading} />
+        <DaAbsoluteThroughputChart
+          data={data}
+          isLoading={isLoading}
+          includeScalingOnly={includeScalingOnly}
+        />
       )}
       <div className="mt-2 flex justify-between gap-2">
         <div className="flex flex-wrap items-center gap-2">
