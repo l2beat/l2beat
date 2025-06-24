@@ -21,10 +21,7 @@ export function toJsonSchema(
   while (state.remaining.length > 0) {
     // biome-ignore lint/style/noNonNullAssertion: It's there
     const [key, imp] = state.remaining.shift()!
-    let unpacked = imp
-    while (unpacked.meta.type === 'lazy') {
-      unpacked = unpacked.meta.get()
-    }
+    const unpacked = imp.meta.type === 'lazy' ? imp.meta.get() : imp
     state.skipRefs = true
     definitions[key] = decompose(unpacked, state)
   }
