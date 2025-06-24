@@ -1,1 +1,8 @@
-export * from './validate.js'
+export {
+  v,
+  type OptionalParser,
+  type OptionalValidator,
+  type Parser,
+  type Result,
+  type Validator,
+} from './validate.js'

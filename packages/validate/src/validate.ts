@@ -54,20 +54,52 @@ const CANNOT_VALIDATE = () => {
   throw new Error('Cannot call validate on a parser object.')
 }
 
-class Imp<T> implements Validator<T>, Parser<T> {
+export type ImpMeta =
+  | { type: 'unknown' }
+  | { type: 'string' }
+  | { type: 'number' }
+  | { type: 'bigint' }
+  | { type: 'undefined' }
+  | { type: 'null' }
+  | { type: 'boolean' }
+  | { type: 'enum'; values: unknown[] }
+  | { type: 'object'; schema: Record<string, Imp<unknown>>; strict: boolean }
+  | { type: 'literal'; value: unknown }
+  | { type: 'array'; element: Imp<unknown> }
+  | { type: 'union'; values: Imp<unknown>[] }
+  | { type: 'optional'; parent: Imp<unknown> }
+  | { type: 'record'; key: Imp<unknown>; value: Imp<unknown> }
+  | { type: 'default'; value: unknown; parent: Imp<unknown> }
+  | { type: 'catch'; value: unknown; parent: Imp<unknown> }
+  | {
+      type: 'check'
+      // biome-ignore lint/suspicious/noExplicitAny: We need it here
+      predicate: (value: any) => boolean | string
+      parent: Imp<unknown>
+    }
+  | {
+      type: 'transform'
+      // biome-ignore lint/suspicious/noExplicitAny: We need it here
+      transformer: (value: any) => any
+      parent: Imp<unknown>
+    }
+  | { type: 'lazy'; make: () => Imp<unknown> }
+  | { type: 'tuple'; schema: Imp<unknown>[] }
+
+export class Imp<T> implements Validator<T>, Parser<T> {
+  meta: ImpMeta
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
-  params: [string, unknown]
   isOptional = false
 
   constructor(
+    meta: ImpMeta,
     safeValidate: (value: unknown) => Result<T>,
     safeParse: (value: unknown) => Result<T>,
-    params: [string, unknown],
   ) {
+    this.meta = meta
     this.safeValidate = safeValidate
     this.safeParse = safeParse
-    this.params = params
   }
 
   validate(value: unknown): T {
@@ -94,40 +126,43 @@ class Imp<T> implements Validator<T>, Parser<T> {
 
   check(predicate: (value: T) => boolean | string, message?: string) {
     return new Imp(
+      { type: 'check', predicate, parent: this },
       svpCheck(predicate, this.safeValidate, message),
       svpCheck(predicate, this.safeParse, message),
-      ['check', predicate],
     )
   }
 
   transform<U>(transformer: (value: T) => U): Parser<U> {
-    return new Imp(CANNOT_VALIDATE, spTransform(this.safeParse, transformer), [
-      'transform',
-      transformer,
-    ])
+    return new Imp(
+      { type: 'transform', transformer, parent: this },
+      CANNOT_VALIDATE,
+      spTransform(this.safeParse, transformer),
+    )
   }
 
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>> {
-    return new Imp(CANNOT_VALIDATE, spDefault(this.safeParse, value), [
-      'default',
-      value,
-    ])
+    return new Imp(
+      { type: 'default', value, parent: this },
+      CANNOT_VALIDATE,
+      spDefault(this.safeParse, value),
+    )
   }
 
   catch(value: T): Parser<T> {
-    return new Imp(CANNOT_VALIDATE, spCatch(this.safeParse, value), [
-      'catch',
-      value,
-    ])
+    return new Imp(
+      { type: 'catch', value, parent: this },
+      CANNOT_VALIDATE,
+      spCatch(this.safeParse, value),
+    )
   }
 
   optional(): OptionalValidator<T | undefined> {
     const imp = new Imp(
+      { type: 'optional', parent: this },
       svpOptional(this.safeValidate),
       svpOptional(this.safeParse),
-      this.params,
     )
     imp.isOptional = true
     return imp as OptionalValidator<T>
@@ -245,7 +280,7 @@ function svString(value: unknown): Result<string> {
 }
 
 function string(): Validator<string> {
-  return new Imp(svString, svString, ['string', undefined])
+  return new Imp({ type: 'string' }, svString, svString)
 }
 
 function svNumber(value: unknown): Result<number> {
@@ -255,7 +290,7 @@ function svNumber(value: unknown): Result<number> {
 }
 
 function number(): Validator<number> {
-  return new Imp(svNumber, svNumber, ['number', undefined])
+  return new Imp({ type: 'number' }, svNumber, svNumber)
 }
 
 function svBoolean(value: unknown): Result<boolean> {
@@ -265,7 +300,7 @@ function svBoolean(value: unknown): Result<boolean> {
 }
 
 function boolean(): Validator<boolean> {
-  return new Imp(svBoolean, svBoolean, ['boolean', undefined])
+  return new Imp({ type: 'boolean' }, svBoolean, svBoolean)
 }
 
 function svBigint(value: unknown): Result<bigint> {
@@ -275,7 +310,7 @@ function svBigint(value: unknown): Result<bigint> {
 }
 
 function bigint(): Validator<bigint> {
-  return new Imp(svBigint, svBigint, ['bigint', undefined])
+  return new Imp({ type: 'bigint' }, svBigint, svBigint)
 }
 
 function svNull(value: unknown): Result<null> {
@@ -285,7 +320,7 @@ function svNull(value: unknown): Result<null> {
 }
 
 function _null(): Validator<null> {
-  return new Imp(svNull, svNull, ['null', undefined])
+  return new Imp({ type: 'null' }, svNull, svNull)
 }
 
 function svUndefined(value: unknown): Result<undefined> {
@@ -295,7 +330,7 @@ function svUndefined(value: unknown): Result<undefined> {
 }
 
 function _undefined(): Validator<undefined> {
-  return new Imp(svUndefined, svUndefined, ['undefined', undefined])
+  return new Imp({ type: 'undefined' }, svUndefined, svUndefined)
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
@@ -341,10 +376,10 @@ function svpObject<T extends object>(
           continue
         }
         if (
-          validator.params[0] === 'default' ||
-          validator.params[0] === 'catch'
+          validator.meta.type === 'default' ||
+          validator.meta.type === 'catch'
         ) {
-          result[key] = structuredClone(validator.params[1])
+          result[key] = structuredClone(validator.meta.value)
           continue
         }
       }
@@ -369,11 +404,15 @@ function object<T extends { [key: string]: Validator<unknown> }>(
 function object<T extends { [key: string]: Parser<unknown> }>(
   schema: T,
 ): Parser<Object<T>>
-function object<T extends object>(schema: T): Parser<Object<T>> {
+function object<T extends object>(schema: T): Imp<Object<T>> {
   return new Imp(
+    {
+      type: 'object',
+      strict: false,
+      schema: schema as Record<string, Imp<unknown>>,
+    },
     svpObject(schema, false, false),
     svpObject(schema, true, false),
-    ['object', schema],
   )
 }
 
@@ -383,11 +422,15 @@ function strictObject<T extends { [key: string]: Validator<unknown> }>(
 function strictObject<T extends { [key: string]: Parser<unknown> }>(
   schema: T,
 ): Parser<Object<T>>
-function strictObject<T extends object>(schema: T): Parser<Object<T>> {
+function strictObject<T extends object>(schema: T): Imp<Object<T>> {
   return new Imp(
+    {
+      type: 'object',
+      strict: true,
+      schema: schema as Record<string, Imp<unknown>>,
+    },
     svpObject(schema, false, true),
     svpObject(schema, true, true),
-    ['strictObject', schema],
   )
 }
 
@@ -414,14 +457,15 @@ function svpArray<T>(valueValidator: Validator<T>, clone: boolean) {
   }
 }
 
+// @ts-ignore: This is correct
 function array<T>(element: Validator<T>): Validator<T[]>
-// @ts-ignore We allow this error for simplicity of use
 function array<T>(element: Parser<T>): Parser<T[]>
-function array<T>(element: Validator<T>): Validator<T[]> {
-  return new Imp(svpArray(element, false), svpArray(element, true), [
-    'array',
-    element,
-  ])
+function array<T>(element: Imp<T>): Imp<T[]> {
+  return new Imp(
+    { type: 'array', element },
+    svpArray(element, false),
+    svpArray(element, true),
+  )
 }
 
 function svpLiteral<T extends string | number | boolean | bigint>(
@@ -442,7 +486,11 @@ function svpLiteral<T extends string | number | boolean | bigint>(
 function literal<T extends string | number | boolean | bigint>(
   value: T,
 ): Validator<T> {
-  return new Imp(svpLiteral(value), svpLiteral(value), ['literal', value])
+  return new Imp(
+    { type: 'literal', value },
+    svpLiteral(value),
+    svpLiteral(value),
+  )
 }
 
 function svpUnion<
@@ -467,17 +515,18 @@ function svpUnion<
 
 function union<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
->(elements: T): Validator<Infer<T[number]>>
+>(values: T): Validator<Infer<T[number]>>
 function union<
   T extends [Parser<unknown>, Parser<unknown>, ...Parser<unknown>[]],
->(elements: T): Parser<Infer<T[number]>>
-function union<
-  T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
->(elements: T): Validator<Infer<T[number]>> {
-  return new Imp(svpUnion(elements, false), svpUnion(elements, true), [
-    'union',
-    elements,
-  ])
+>(values: T): Parser<Infer<T[number]>>
+function union<T extends [Imp<unknown>, Imp<unknown>, ...Imp<unknown>[]]>(
+  values: T,
+): Imp<Infer<T[number]>> {
+  return new Imp(
+    { type: 'union', values },
+    svpUnion(values, false),
+    svpUnion(values, true),
+  )
 }
 
 function svpRecord<K extends string | number, V>(
@@ -489,9 +538,9 @@ function svpRecord<K extends string | number, V>(
   if (
     keyValidator instanceof Imp &&
     !(valueValidator instanceof Imp && valueValidator.isOptional) &&
-    keyValidator.params[0] === 'enum'
+    keyValidator.meta.type === 'enum'
   ) {
-    enumKeys = keyValidator.params[1] as (string | number)[]
+    enumKeys = keyValidator.meta.values as (string | number)[]
   }
 
   return function svpRecord(value: unknown): Result<Record<K, V>> {
@@ -504,10 +553,10 @@ function svpRecord<K extends string | number, V>(
         if (!(key in value)) {
           const validator = valueValidator as Imp<V>
           if (
-            validator.params[0] === 'default' ||
-            validator.params[0] === 'catch'
+            validator.meta.type === 'default' ||
+            validator.meta.type === 'catch'
           ) {
-            result[key as K] = structuredClone(validator.params[1] as V)
+            result[key as K] = structuredClone(validator.meta.value as V)
             continue
           }
           return {
@@ -544,23 +593,24 @@ function svpRecord<K extends string | number, V>(
   }
 }
 
+// @ts-ignore: This is correct
 function record<K extends string | number, V>(
   key: Validator<K>,
   value: Validator<V>,
 ): Validator<Record<K, V>>
-// @ts-ignore We allow this error for simplicity of use
 function record<K extends string | number, V>(
   key: Parser<K>,
   value: Parser<V>,
 ): Parser<Record<K, V>>
 function record<K extends string | number, V>(
-  key: Validator<K>,
-  value: Validator<V>,
-): Validator<Record<K, V>> {
-  return new Imp(svpRecord(key, value, false), svpRecord(key, value, true), [
-    'record',
-    [key, value],
-  ])
+  key: Imp<K>,
+  value: Imp<V>,
+): Imp<Record<K, V>> {
+  return new Imp(
+    { type: 'record', key, value },
+    svpRecord(key, value, false),
+    svpRecord(key, value, true),
+  )
 }
 
 function svEnum<T extends string | number>(values: readonly T[]) {
@@ -576,11 +626,9 @@ function svEnum<T extends string | number>(values: readonly T[]) {
   }
 }
 
-function _enum<const T extends string | number>(
-  values: readonly T[],
-): Validator<T> {
+function _enum<const T extends string | number>(values: T[]): Validator<T> {
   const sv = svEnum(values)
-  return new Imp(sv, sv, ['enum', values])
+  return new Imp({ type: 'enum', values }, sv, sv)
 }
 
 function svUnknown(value: unknown): Result<unknown> {
@@ -588,7 +636,7 @@ function svUnknown(value: unknown): Result<unknown> {
 }
 
 function unknown(): Validator<unknown> {
-  return new Imp(svUnknown, svUnknown, ['unknown', undefined])
+  return new Imp({ type: 'unknown' }, svUnknown, svUnknown)
 }
 
 type Tuple<T extends unknown[]> = T extends []
@@ -610,8 +658,8 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
     const imp = schema[i] as Imp<unknown>
     if (
       imp.isOptional ||
-      imp.params[0] === 'default' ||
-      imp.params[0] === 'catch'
+      imp.meta.type === 'default' ||
+      imp.meta.type === 'catch'
     ) {
       requiredLength--
     } else {
@@ -666,30 +714,31 @@ function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
 function tuple<T extends [] | [Parser<unknown>, ...Parser<unknown>[]]>(
   schema: T,
 ): Parser<Tuple<T>>
-function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
+function tuple<T extends [] | [Imp<unknown>, ...Imp<unknown>[]]>(
   schema: T,
-): Validator<Tuple<T>> {
-  return new Imp(svpTuple(schema, false), svpTuple(schema, true), [
-    'tuple',
-    schema,
-  ])
+): Imp<Tuple<T>> {
+  return new Imp(
+    { type: 'tuple', schema },
+    svpTuple(schema, false),
+    svpTuple(schema, true),
+  )
 }
 
-function lazy<T>(make: () => Validator<T>): Validator<T>
 // @ts-ignore: This is correct
+function lazy<T>(make: () => Validator<T>): Validator<T>
 function lazy<T>(make: () => Parser<T>): Parser<T>
-function lazy<T>(make: () => Validator<T>): Validator<T> {
-  let made: Validator<T> | undefined
+function lazy<T>(make: () => Imp<T>): Imp<T> {
+  let imp: Imp<T> | undefined
   return new Imp<T>(
+    { type: 'lazy', make },
     (value) => {
-      if (!made) made = make()
-      return made.safeValidate(value)
+      if (!imp) imp = make()
+      return imp.safeValidate(value)
     },
     (value) => {
-      if (!made) made = make()
-      return made.safeParse(value)
+      if (!imp) imp = make()
+      return imp.safeParse(value)
     },
-    ['lazy', undefined],
   )
 }
 
