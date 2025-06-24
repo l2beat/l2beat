@@ -15,11 +15,18 @@ export function getEcosystemLogo(slug: string) {
   if (dark?.width !== light.width || dark?.height !== light.height) {
     throw new Error('Ecosystem logo dimensions mismatch')
   }
+  const hasAlternative = existsSync(
+    path.join(process.cwd(), 'static', `partners/${slug}/alternative-logo.png`),
+  )
+  const alternative = hasAlternative
+    ? getImageParams(`/partners/${slug}/alternative-logo.png`)
+    : undefined
 
   return {
     width: light.width,
     height: light.height,
     light: light.src,
     dark: dark?.src,
+    alternative: alternative?.src,
   }
 }

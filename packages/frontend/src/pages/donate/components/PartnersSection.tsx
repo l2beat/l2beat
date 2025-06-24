@@ -55,17 +55,20 @@ export function EcosystemTierCard({
       className="group hover:-translate-y-1 transform transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
     >
       <a href={`/ecosystems/${partner.slug}`} className="block">
-        <div className="relative h-[160px] cursor-pointer overflow-hidden rounded bg-gradient-radial from-[--ecosystem-secondary] to-[--ecosystem-primary] shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
+        <div className="relative h-40 cursor-pointer overflow-hidden rounded bg-gradient-radial from-[--ecosystem-secondary] to-[--ecosystem-primary] shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
           {/* Background pattern/texture overlay */}
           <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
 
           {/* Content */}
-          <div className="md:group-hover:-translate-y-6 relative z-10 h-[104px] items-center justify-center justify-items-center p-6 text-white transition-transform ease-in-out max-md:grid max-md:grid-cols-[1fr_56px_1fr] md:flex md:h-full md:flex-col">
-            <div className="h-[50px] max-md:h-12">
+          <div className="md:group-hover:-translate-y-8 relative z-10 h-[104px] items-center justify-center justify-items-center p-6 text-white transition-transform ease-in-out max-md:grid max-md:grid-cols-[1fr_56px_1fr] max-md:pb-4 md:flex md:h-full md:flex-col md:justify-center">
+            <div className="flex h-14 items-center justify-center md:h-18">
               <img
-                src={partner.ecosystemLogo.dark}
+                src={
+                  partner.ecosystemLogo.alternative ??
+                  partner.ecosystemLogo.dark
+                }
                 alt={partner.project.name}
-                className="h-full object-contain"
+                className="h-full max-w-36 object-contain md:max-w-[180px]"
               />
             </div>
             <HorizontalSeparator className="mt-6 mb-4 border-pure-white/40 max-md:hidden" />
@@ -75,6 +78,7 @@ export function EcosystemTierCard({
             <div className="h-12 text-center">
               <p className="text-2xs text-pure-white/70">PARTNER:</p>
               <img
+                className="max-md:max-w-[120px]"
                 src={partner.mainPartnerLogo.src}
                 width={partner.mainPartnerLogo.width / 2}
                 height={partner.mainPartnerLogo.height / 2}
@@ -112,7 +116,7 @@ export function InnovatorTierCard({
         alt={partner.slug}
         className="h-[42px] w-fit md:h-[52px]"
       />
-      <ArrowButtonIcon className="absolute right-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
+      <ArrowButtonIcon className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
   )
 }
@@ -129,7 +133,7 @@ export function SupporterTierCard({
       className="group relative flex h-14 items-center justify-between rounded border border-divider bg-center bg-cover px-6 py-4 lg:h-16"
     >
       <img className="h-full" src={partner.logo.src} alt={partner.slug} />
-      <ArrowButtonIcon className="absolute right-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
+      <ArrowButtonIcon className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
   )
 }
