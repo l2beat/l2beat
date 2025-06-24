@@ -53,7 +53,7 @@ export function attachTemplateRouter(
 
     const { chain, addresses, templateId, fileName, blockNumber } = data.data
 
-    const result = await wrapError(async () =>
+    const result = await wrapError(() =>
       createShape(
         templateService,
         addresses.map(EthereumAddress),
