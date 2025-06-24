@@ -118,6 +118,10 @@ export const zircuit: ScalingProject = opStackL2({
         url: 'https://zircuit-mainnet.drpc.org/',
         callsPerMinute: 1500,
       },
+      {
+        type: 'sourcify',
+        chainId: 48900,
+      },
     ],
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
