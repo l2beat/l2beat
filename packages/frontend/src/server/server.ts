@@ -64,7 +64,7 @@ function renderToHtml(data: RenderData, url: string) {
     Object.entries(process.env)
       .map(([key, value]) => {
         if (
-          !key.startsWith('NEXT_PUBLIC_') &&
+          !key.startsWith('CLIENT_SIDE_') &&
           key !== 'NODE_ENV' &&
           key !== 'DEPLOYMENT_ENV'
         ) {
