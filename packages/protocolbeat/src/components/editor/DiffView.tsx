@@ -132,6 +132,7 @@ export function DiffView(props: DiffViewProps) {
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
+            // TODO(radomski): On swap change the URL, don't style the button
             onClick={() => setSwapped(editor?.swapSides() ?? false)}
             title="Swap sides"
           >
