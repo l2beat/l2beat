@@ -85,6 +85,12 @@ export class Editor {
   onSave(onSaveCallback: (content: string) => void) {
     this.onSaveCallback = onSaveCallback
   }
+
+  detachListeners() {
+    this.onSaveCallback = null
+    this.onChangeCallback = null
+  }
+
   onChange(onChangeCallback: (content: string) => void) {
     this.onChangeCallback = onChangeCallback
   }

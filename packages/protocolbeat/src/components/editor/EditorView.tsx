@@ -33,6 +33,7 @@ export function EditorView(props: Props) {
   useEffect(() => {
     if (editor && props.files.length > 0) {
       const activeFile = props.files[activeFileIndex]
+      editor.detachListeners()
       if (activeFile) {
         if (!activeFile.readOnly) {
           editor.onSave((content) => {
