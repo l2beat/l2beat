@@ -394,7 +394,7 @@ Generated with discovered.json: 0xc71a501d48f53213c790a3384e7b43fa16bf7ecd
 
 ## Description
 
-Abtract sub-MS member changes.
+Abstract sub-MS member changes.
 
 ## Watched changes
 
