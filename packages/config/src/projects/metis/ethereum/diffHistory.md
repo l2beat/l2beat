@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x4e028964bfbdf05a633872f5c0bd914532d79de2
+
+# Diff at Tue, 24 Jun 2025 12:44:56 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@165a3574e7a5112b92cf5b6d87a202235001fcdf block: 22739723
+- current block number: 22774371
+
+## Description
+
+Adds missing hardcoded values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22739723 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1A9da0aedA630dDf2748a453BF6d92560762D914) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x918778e825747a892b17C66fe7D24C618262867d","role":".txChainBatcher"}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.txChainBatcher:
+-        "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+      values.inboxAddress:
++        "0xFf00000000000000000000000000000000001088"
+    }
+```
+
 Generated with discovered.json: 0x1e232db2a1106231a47c3641020ffaf90c56ce7c
 
 # Diff at Fri, 20 Jun 2025 09:04:23 GMT:
