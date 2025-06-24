@@ -133,19 +133,19 @@ function SummaryThroughputBox({
     {
       label: 'Celestia',
       value: latest.celestia,
-      className: 'bg-chart-da-celestia',
+      className: 'bg-chart-fuchsia',
       percentage: round((latest.celestia / total) * 100, 2),
     },
     {
       label: 'Avail',
       value: latest.avail,
-      className: 'bg-chart-emerald',
+      className: 'bg-chart-sky',
       percentage: round((latest.avail / total) * 100, 2),
     },
     {
       label: 'EigenDA',
       value: latest.eigenda,
-      className: 'bg-chart-eigenda',
+      className: 'bg-chart-lime',
       percentage: round((latest.eigenda / total) * 100, 2),
     },
   ]

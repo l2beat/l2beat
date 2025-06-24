@@ -2,9 +2,9 @@ export function CyanFillGradientDef({ id }: { id: string }) {
   return (
     <linearGradient id={id} x1="0" y1="0" x2="0" y2="1">
       <stop
-        offset="0%"
+        offset="25%"
         stopColor="hsl(var(--chart-cyan-fill-gradient))"
-        stopOpacity={1}
+        stopOpacity={0.8}
       />
       <stop
         offset="50%"

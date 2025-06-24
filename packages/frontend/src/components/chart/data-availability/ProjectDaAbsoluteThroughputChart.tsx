@@ -15,16 +15,10 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EigenFillGradientDef } from '~/components/core/chart/defs/EigenGradientDef'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
+import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
+import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
+import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { formatTimestamp } from '~/utils/dates'
 import { getDaDataParams } from './getDaDataParams'
@@ -89,32 +83,20 @@ export function ProjectDaAbsoluteThroughputChart({
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           {projectId === 'ethereum' && (
-            <>
-              <EthereumFillGradientDef id="ethereum-fill" />
-              <EthereumStrokeGradientDef id="ethereum-stroke" />
-            </>
+            <EthereumFillGradientDef id="ethereum-fill" />
           )}
           {projectId === 'celestia' && (
-            <>
-              <PinkFillGradientDef id="celestia-fill" />
-              <PinkStrokeGradientDef id="celestia-stroke" />
-            </>
+            <FuchsiaFillGradientDef id="celestia-fill" />
           )}
-          {projectId === 'avail' && <EmeraldFillGradientDef id="avail-fill" />}
-          {projectId === 'eigenda' && (
-            <EigenFillGradientDef id="eigenda-fill" />
-          )}
+          {projectId === 'avail' && <SkyFillGradientDef id="avail-fill" />}
+          {projectId === 'eigenda' && <LimeFillGradientDef id="eigenda-fill" />}
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         <Area
           dataKey="project"
           fill={`url(#${projectId}-fill)`}
           fillOpacity={1}
-          stroke={
-            projectId === 'avail' || projectId === 'eigenda'
-              ? projectChartMeta.project?.color
-              : `url(#${projectId}-stroke)`
-          }
+          stroke={projectChartMeta.project?.color}
           strokeWidth={2}
           isAnimationActive={false}
           dot={false}
@@ -232,12 +214,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-da-celestia))',
+          color: 'hsl(var(--chart-fuchsia))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-da-celestia))',
+          color: 'hsl(var(--chart-fuchsia))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -245,12 +227,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-emerald))',
+          color: 'hsl(var(--chart-sky))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-emerald))',
+          color: 'hsl(var(--chart-sky))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta
@@ -258,12 +240,12 @@ function getProjectChartMeta(projectId: ProjectId) {
       return {
         project: {
           label: 'Actual data size',
-          color: 'hsl(var(--chart-eigenda))',
+          color: 'hsl(var(--chart-lime))',
           indicatorType: { shape: 'line' },
         },
         projectMax: {
           label: 'Max capacity',
-          color: 'hsl(var(--chart-eigenda))',
+          color: 'hsl(var(--chart-lime))',
           indicatorType: { shape: 'line', strokeDasharray: '3 3' },
         },
       } satisfies ChartMeta

@@ -13,16 +13,10 @@ import {
   useChart,
 } from '~/components/core/chart/Chart'
 import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
-import { EigenFillGradientDef } from '~/components/core/chart/defs/EigenGradientDef'
-import { EmeraldFillGradientDef } from '~/components/core/chart/defs/EmeraldGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
-import {
-  PinkFillGradientDef,
-  PinkStrokeGradientDef,
-} from '~/components/core/chart/defs/PinkGradientDef'
+import { EthereumFillGradientDef } from '~/components/core/chart/defs/EthereumGradientDef'
+import { FuchsiaFillGradientDef } from '~/components/core/chart/defs/FuchsiaGradientDef'
+import { LimeFillGradientDef } from '~/components/core/chart/defs/LimeGradientDef'
+import { SkyFillGradientDef } from '~/components/core/chart/defs/SkyGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import type { DaThroughputDataPoint } from '~/server/features/data-availability/throughput/getDaThroughputChart'
@@ -69,29 +63,27 @@ export function DaAbsoluteThroughputChart({
       <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
         <defs>
           <EthereumFillGradientDef id="ethereum-fill" />
-          <EthereumStrokeGradientDef id="ethereum-stroke" />
-          <PinkFillGradientDef id="pink-fill" />
-          <PinkStrokeGradientDef id="pink-stroke" />
-          <EmeraldFillGradientDef id="emerald-fill" />
-          <EigenFillGradientDef id="eigenda-fill" />
+          <FuchsiaFillGradientDef id="celestia-fill" />
+          <LimeFillGradientDef id="eigenda-fill" />
+          <SkyFillGradientDef id="avail-fill" />
         </defs>
         <ChartLegend content={<ChartLegendContent />} />
         {getStrokeOverFillAreaComponents({
           data: [
             {
               dataKey: 'ethereum',
-              stroke: 'url(#ethereum-stroke)',
+              stroke: chartMeta.ethereum.color,
               fill: 'url(#ethereum-fill)',
             },
             {
               dataKey: 'celestia',
-              stroke: 'url(#pink-stroke)',
-              fill: 'url(#pink-fill)',
+              stroke: chartMeta.celestia.color,
+              fill: 'url(#celestia-fill)',
             },
             {
               dataKey: 'avail',
               stroke: chartMeta.avail.color,
-              fill: 'url(#emerald-fill)',
+              fill: 'url(#avail-fill)',
             },
             {
               dataKey: 'eigenda',
