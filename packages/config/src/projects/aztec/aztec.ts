@@ -18,6 +18,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('aztec')
 
@@ -63,7 +64,7 @@ export const aztec: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://old.zk.money'],
+      bridges: ['https://old.zk.money'],
       repositories: ['https://github.com/AztecProtocol/aztec-2-bug-bounty'],
       socialMedia: [
         'https://twitter.com/aztecnetwork',
@@ -338,4 +339,5 @@ export const aztec: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

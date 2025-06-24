@@ -1,15 +1,15 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/get-da-throughput-entries'
+import { getDaThroughputEntries } from '~/server/features/data-availability/throughput/getDaThroughputEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getDataAvailabilityThroughputData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [appLayoutProps, entries] = await Promise.all([
     getAppLayoutProps(),
     getDaThroughputEntries(),

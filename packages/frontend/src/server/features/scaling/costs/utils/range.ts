@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { MIN_TIMESTAMPS } from '~/consts/min-timestamps'
-import { rangeToDays } from '~/utils/range/range-to-days'
+import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
+import { rangeToDays } from '~/utils/range/rangeToDays'
 
 export const CostsTimeRange = z.union([
   z.literal('1d'),
@@ -36,6 +36,9 @@ export function rangeToResolution(value: CostsTimeRange) {
   const days = rangeToDays(value)
   if (days && days < 30) {
     return 'hourly'
+  }
+  if (days && days <= 90) {
+    return 'sixHourly'
   }
 
   return 'daily'

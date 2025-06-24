@@ -4,5 +4,11 @@
     "address": "0xd1934807041B168f383870A0d8F565aDe2DF9D7D",
     "chain": "ethereum",
     "blockNumber": 22474843
+  },
+  "TaikoDAOController_dryrun": {
+    "hash": "0xacca94dada8d52e2f59e26907cb2b2de0a50f5241a1548ba8ceb5e2162f45040",
+    "address": "0x4347df63bdC82b8835fC9FF47bC5a71a12cC0f06",
+    "chain": "ethereum",
+    "blockNumber": 22666471
   }
 }

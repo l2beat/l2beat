@@ -2,7 +2,7 @@
   "name": "zkfair",
   "chain": "ethereum",
   "blockNumber": 22322978,
-  "configHash": "0xb4983605e7311f0a7b548e2d43b3061896467119aec926da60af2f365bbfaa16",
+  "configHash": "0x2d24ed99b4e5aca211b216e78b95e5bbb2de8ccb2176f645fc826f86ba1a9808",
   "entries": [
     {
       "name": "ZKFairAdmin",
@@ -130,33 +130,41 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+          "from": "ethereum:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
           "role": "admin",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+          "via": [
+            { "address": "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+          "from": "ethereum:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
           "role": "admin",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+          "via": [
+            { "address": "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x997CfB0838544f68E59f877EDc905001456F125b",
+          "from": "ethereum:0x997CfB0838544f68E59f877EDc905001456F125b",
           "role": "admin",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+          "via": [
+            { "address": "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+          "from": "ethereum:0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
           "role": "admin",
-          "via": [{ "address": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }]
+          "via": [
+            { "address": "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
+          "from": "ethereum:0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3",
           "role": ".owner"
         }
       ],
@@ -435,22 +443,22 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
+          "from": "ethereum:0x1CbC08bf0D48b18F9f97796c61352b192d1850A5",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
+          "from": "ethereum:0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x997CfB0838544f68E59f877EDc905001456F125b",
+          "from": "ethereum:0x997CfB0838544f68E59f877EDc905001456F125b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
+          "from": "ethereum:0x9cb4706e20A18E59a48ffa7616d700A3891e1861",
           "role": "admin"
         }
       ],

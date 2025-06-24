@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "shared-zk-stack",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -90,6 +90,21 @@
         "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub"
       },
       "overrides": {
+        "0x303a465B659cBB0ab36eE643eA362c509EEb5213": {
+          "fields": {
+            "admin": {
+              // manual override while we are lacking cross-module permissions
+              // this adds the permissions from the zksync2 module to the shared-zk-stack module
+              "permissions": [
+                {
+                  "type": "interact",
+                  "description": "create new zk chains (based on the current version), register tokens (ZK cluster Admin role)."
+                }
+              ]
+            }
+          }
+        },
+        // sub-ms spam
         "0x13f07d9BF17615f6a17F272fe1A913168C275A66": { "category": "spam" },
         "0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a": { "category": "spam" },
         "0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F": { "category": "spam" },

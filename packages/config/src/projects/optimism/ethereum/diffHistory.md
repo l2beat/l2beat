@@ -1,4 +1,87 @@
-Generated with discovered.json: 0x0c7ad54db54047e522bade45af3a361bf6761e92
+Generated with discovered.json: 0x2bcbfa17532cf9f269da8f62f760c437b84aae20
+
+# Diff at Mon, 16 Jun 2025 08:43:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22567749
+- current block number: 22567749
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC","role":"admin"}
+      directlyReceivedPermissions.10.from:
+-        "ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC","role":"admin","via":[{"address":"ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"}]}
+      receivedPermissions.12.from:
+-        "ethereum:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbC"
++        "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1"
+    }
+```
+
+Generated with discovered.json: 0xfaf887eecbfababe6dc711b593376a93ddfdbb2c
+
+# Diff at Wed, 11 Jun 2025 10:36:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@9d1575fea6364921032f9ded0a049bdf9fc57604 block: 22567749
+- current block number: 22567749
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract FeesCollector (0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa) {
+    +++ description: Collecting sequencer, base- and L1 fees from L2.
+      sourceHashes.1:
++        "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
+      proxyType:
+-        "immutable"
++        "EIP1167 proxy"
+      values.$immutable:
+-        true
+      values.$implementation:
++        "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E"
+      implementationNames.0xE8E847cf573Fc8ed75621660A36AffD18c543d7E:
++        "WalletSimple"
+    }
+```
+
+Generated with discovered.json: 0xcb5ed4e4c4ca8496b10afa9ffd1eee3c3c99763c
 
 # Diff at Fri, 30 May 2025 07:10:10 GMT:
 

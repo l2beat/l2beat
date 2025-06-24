@@ -1,4 +1,41 @@
-Generated with discovered.json: 0x986bc4155bee624c2ae841959189f2cb1df36bd5
+Generated with discovered.json: 0x439c7e41a33b65853bce6900eec6e2c285959392
+
+# Diff at Wed, 18 Jun 2025 11:59:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 30439434
+- current block number: 31729291
+
+## Description
+
+alchemy MS signer change.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.4:
+-        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
++        "0xCA730AFfb87935E70E5889418C731eb196237476"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30439434 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x58E3fe88b1E8a7e2D578000aCD9C6d5989FE9e09) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x487241a1c40ac05327ce17a7dcd46bd11c7abf94
 
 # Diff at Tue, 27 May 2025 08:31:22 GMT:
 

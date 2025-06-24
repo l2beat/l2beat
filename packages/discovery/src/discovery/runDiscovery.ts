@@ -63,8 +63,13 @@ export async function runDiscovery(
     templatesFolder,
   })
 
+  // TODO(radomski): This is a disaster from the point of view of separation of
+  // concerns. We should agree on what even is a shared module and how to
+  // handle them cleanly.
   if (config.project.startsWith('shared-')) {
-    const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
+    const allConfigs = configReader.readAllDiscoveredConfigsForChain(
+      config.chain.name,
+    )
     const backrefConfigs = allConfigs
       .filter((c) => c.structure.sharedModules.includes(config.project))
       .map((c) => c.structure)

@@ -7,6 +7,7 @@ import {
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fraxferry')
 
@@ -26,7 +27,7 @@ export const fraxferry: Bridge = {
     slug: 'fraxferry',
     links: {
       websites: ['https://frax.com/'],
-      apps: ['https://mainnet.frax.com/tools/bridge/'],
+      bridges: ['https://mainnet.frax.com/tools/bridge/'],
       repositories: ['https://github.com/FraxFinance/frax-solidity'],
       socialMedia: ['https://twitter.com/fraxfinance'],
     },
@@ -36,25 +37,25 @@ export const fraxferry: Bridge = {
   },
   config: {
     associatedTokens: [
+      'FRAX.legacy',
       'FRAX',
-      'FXS',
       'frxETH',
       'sfrxETH',
       'FPI',
       'FPIS',
-      'sFRAX',
+      'sFRAX.legacy',
     ],
     escrows: [
       {
         address: EthereumAddress('0x85c5f05Ae4CB68190C695a22b292C3bA90696128'),
         sinceTimestamp: UnixTime(1668365795),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x4b8792aF00eaE944484bF572bc33029B2184a50C'),
         sinceTimestamp: UnixTime(1674284051),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -84,25 +85,25 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x2453b1FbD17ceA069A31C9D16A27f4F93a85Cc0d'),
         sinceTimestamp: UnixTime(1699757711),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x6ac96F65156281a9383455D704b58A74ea9C9eC4'),
         sinceTimestamp: UnixTime(1667947727),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xA381d58e96eC3818c825E1fb264099448945CF8b'),
         sinceTimestamp: UnixTime(1668366083),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x9Ab224996D25bfDCB91d838F7f1902698Ac0a742'),
         sinceTimestamp: UnixTime(1674285035),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -132,25 +133,25 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x59ae66FB395893E3FD965aDb06A52d06C49dF8A9'),
         sinceTimestamp: UnixTime(1699758155),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x3eF1d856EA62A2292B8690855042095a7aC48B4b'),
         sinceTimestamp: UnixTime(1672248143),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xDAe210BfB0cF8c81EDB4b459e2e0bA14D553e2D9'),
         sinceTimestamp: UnixTime(1668366227),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x9B62402Eb9A755677dEbdaE3639CB531c0Af0E5d'),
         sinceTimestamp: UnixTime(1674287039),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -180,25 +181,25 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0xe3e7F354ac948ceBa925181C81618D7c9b3da8C9'),
         sinceTimestamp: UnixTime(1699758071),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2d2261f970F605C813f160E8BAEd455E9004A842'),
         sinceTimestamp: UnixTime(1672248275),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xfB788F9E20ef426a32A67986654750172A6c1788'),
         sinceTimestamp: UnixTime(1668366371),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x1313d143BE1ac25aCACEFF39Bf31877bccDb9622'),
         sinceTimestamp: UnixTime(1674288047),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -216,13 +217,13 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE'),
         sinceTimestamp: UnixTime(1708806587),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6'),
         sinceTimestamp: UnixTime(1708806875),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -246,19 +247,19 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47'),
         sinceTimestamp: UnixTime(1708807475),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xF1E1deA8F1053FD9C5F47f72F1f03977E17aF242'),
         sinceTimestamp: UnixTime(1668366491),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x2De1354c98880889643c4cA8B06FA2Fb8Fc1Fd7A'),
         sinceTimestamp: UnixTime(1674326627),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -276,25 +277,25 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x15ADa72A3B52A88E25DdD2CC2bA1120234e34bb0'),
         sinceTimestamp: UnixTime(1668385439),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xFe7ebA20c20C8FF12A337F940Ce7A97c6e2594DE'),
         sinceTimestamp: UnixTime(1676510819),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x06Fa869caa1160754C6a0B744Da6454c5EA325d4'),
         sinceTimestamp: UnixTime(1668366683),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x6650D5183C4Cd294a81B1F724c365b0c42f8270a'),
         sinceTimestamp: UnixTime(1674326999),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -324,19 +325,19 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x9694dcF5b6CCF6216B05FE64945f62603e2d2367'),
         sinceTimestamp: UnixTime(1699758239),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x43959A388603DCb6B02Ca084A55d4c7f3b442c57'),
         sinceTimestamp: UnixTime(1668366839),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xCa026e80F1E9e44da7ce3eD6aC2E9630260B9276'),
         sinceTimestamp: UnixTime(1674325883),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -354,13 +355,13 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x86E71075e55F0aaD27D700017E0783458310c98a'),
         sinceTimestamp: UnixTime(1680647207),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0xBa32Df0b78b1A68F7FA304BbD4Ed7a56A74c525a'),
         sinceTimestamp: UnixTime(1680647363),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -390,19 +391,19 @@ export const fraxferry: Bridge = {
       {
         address: EthereumAddress('0x602cCfee6B4BA8Eb5e35Cf26e05fDEDE379e578E'),
         sinceTimestamp: UnixTime(1699758395),
-        tokens: ['sFRAX'],
+        tokens: ['sFRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x32dDf80508cfD8feD8ABe375582FC7cfD20372C4'),
         sinceTimestamp: UnixTime(1682187443),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x27E97F35D80514D5DD1Caa730e22a292E912a214'),
         sinceTimestamp: UnixTime(1682187515),
-        tokens: ['FXS'],
+        tokens: ['FRAX'],
         chain: 'ethereum',
       },
       {
@@ -1220,4 +1221,5 @@ export const fraxferry: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

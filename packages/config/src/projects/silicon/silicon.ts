@@ -42,7 +42,7 @@ export const silicon: ScalingProject = polygonCDKStack({
       'Silicon is a Validium built on the Polygon CDK Stack, aiming to become the social network of the future.',
     links: {
       websites: ['https://silicon.network/'],
-      apps: ['https://bridge.silicon.network/'],
+      bridges: ['https://bridge.silicon.network/'],
       documentation: ['https://docs.silicon.network/'],
       explorers: ['https://scope.silicon.network'],
       socialMedia: ['https://x.com/0xSilicon'],

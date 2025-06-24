@@ -24,7 +24,10 @@ export const lisk: ScalingProject = opStackL2({
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
       websites: ['https://lisk.com/'],
-      apps: ['https://bridge.lisk.com/bridge/lisk', 'https://portal.lisk.com/'],
+      bridges: [
+        'https://bridge.lisk.com/bridge/lisk',
+        'https://portal.lisk.com/',
+      ],
       documentation: ['https://docs.lisk.com/'],
       explorers: ['https://blockscout.lisk.com/'],
       repositories: ['https://github.com/LiskHQ/lisk-node'],
@@ -83,6 +86,14 @@ export const lisk: ScalingProject = opStackL2({
       description:
         'Custom externally governed escrow for USDC bridged to Lisk.',
       tokens: ['USDC'],
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677'),
+      name: 'External EURC Vault',
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Custom externally governed escrow for EURC bridged to Lisk.',
+      tokens: ['EURC'],
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf'),

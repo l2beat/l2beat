@@ -17,7 +17,7 @@ export const avail: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description:
@@ -26,7 +26,7 @@ export const avail: BaseProject = {
       websites: ['https://www.availproject.org/'],
       documentation: ['https://docs.availproject.org/'],
       repositories: ['https://github.com/availproject/'],
-      apps: ['https://bridge.availproject.org/'],
+      bridges: ['https://bridge.availproject.org/'],
       explorers: [
         'https://explorer.avail.so/#/explorer',
         'https://avail.subscan.io/',
@@ -85,7 +85,7 @@ App-specific data can be reconstructed by app clients, which request and assembl
       references: [
         {
           title: 'Avail Documentation',
-          url: 'https://docs.availproject.org/docs/learn-about-avail/consensus/npos',
+          url: 'https://docs.availproject.org/docs/welcome-to-avail-docs',
         },
         {
           title: 'Avail Light Client - Source Code',

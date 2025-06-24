@@ -500,7 +500,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -518,7 +526,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -536,15 +552,42 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
       "id": "polygonzkevm-FRAX-2",
-      "priceId": "frax",
+      "priceId": "frax-share",
       "symbol": "FRAX",
-      "name": "Frax",
-      "iconUrl": "https://assets.coingecko.com/coins/images/13422/large/FRAX_icon.png?1696513182",
+      "name": "Frax (prev. FXS)",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7940DEAe60FA6dBB56dE469dFCdDc84D2B6b17EA",
+        "chain": "polygonzkevm",
+        "decimals": 18,
+        "sinceTimestamp": 1679679015,
+        "untilTimestamp": 1749103200
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "polygonzkevm-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false,
@@ -572,7 +615,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -594,7 +645,7 @@
     },
     {
       "mode": "auto",
-      "id": "polygonzkevm-FXS-1",
+      "id": "polygonzkevm-FXS",
       "priceId": "frax-share",
       "symbol": "FXS",
       "name": "Frax Share",
@@ -608,7 +659,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1203,7 +1262,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1221,7 +1288,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

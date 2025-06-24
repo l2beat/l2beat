@@ -5,6 +5,9 @@ import type { ApiCodeResponse } from '../api/types'
 import { toShortenedAddress } from '../common/toShortenedAddress'
 import { EditorView } from '../components/editor/EditorView'
 import { type EditorFile, useCodeStore } from '../components/editor/store'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { isReadOnly } from '../config'
 import { useProjectData } from '../hooks/useProjectData'
 import { RediscoverPrompt } from './RediscoverPrompt'
@@ -53,15 +56,15 @@ export function CodePanel() {
   const showRediscoverInfo = codeResponse.isError && !isReadOnly
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selected === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   return (

@@ -17,7 +17,7 @@ export const ozean: ScalingProject = upcomingL2({
     links: {
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],
-      apps: ['https://app.ozean.finance/bridge'],
+      bridges: ['https://app.ozean.finance/bridge'],
       explorers: [],
       repositories: ['https://github.com/clearpool-finance'],
       socialMedia: [

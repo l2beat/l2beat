@@ -1,7 +1,7 @@
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingArchivedEntries } from '~/server/features/scaling/archived/get-scaling-archived-entries'
+import { getScalingArchivedEntries } from '~/server/features/scaling/archived/getScalingArchivedEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

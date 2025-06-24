@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Simple contract that returns the latest L1 block number.",
   "ignoreMethods": ["getL1BlockNumber"]
 }

@@ -16,6 +16,7 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('honeypot')
 
@@ -32,8 +33,8 @@ export const honeypot: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    name: 'Honeypot (Cartesi)',
-    shortName: 'Honeypot',
+    name: 'Cartesi Authority Honeypot',
+    shortName: 'Honeypot Authority',
     slug: 'cartesi-honeypot',
     stack: 'Cartesi Rollups',
     description:
@@ -43,7 +44,7 @@ export const honeypot: ScalingProject = {
 
     links: {
       websites: ['https://cartesi.io/'],
-      apps: ['https://explorer.cartesi.io/stake'],
+      bridges: ['https://explorer.cartesi.io/stake'],
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
       explorers: ['https://cartesiscan.io/', 'https://explorer.cartesi.io/'],
       repositories: ['https://github.com/cartesi/honeypot'],
@@ -243,4 +244,5 @@ export const honeypot: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

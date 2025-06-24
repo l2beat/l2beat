@@ -95,6 +95,7 @@ describe(mapLegacyConfig.name, () => {
       category: 'ether',
       source: 'canonical',
       isAssociated: false,
+      bridgedUsing: undefined,
     })
 
     expect(
@@ -121,6 +122,7 @@ describe(mapLegacyConfig.name, () => {
       category: 'other',
       source: 'native',
       isAssociated: true,
+      bridgedUsing: undefined,
     })
 
     expect(
@@ -143,6 +145,13 @@ describe(mapLegacyConfig.name, () => {
       category: 'other',
       source: 'external',
       isAssociated: false,
+      bridgedUsing: {
+        bridges: [
+          {
+            name: 'Axelar (ITS)',
+          },
+        ],
+      },
     })
   })
 })

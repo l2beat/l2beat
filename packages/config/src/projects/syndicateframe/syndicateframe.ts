@@ -25,7 +25,7 @@ export const syndicateframe: ScalingProject = opStackL3({
       'Syndicate Frame Chain is an OP Stack L3 on Base for Farcaster Frame developers.',
     links: {
       websites: ['https://syndicate.io/blog/syndicate-frame-chain'],
-      apps: [
+      bridges: [
         'https://bridge-frame.syndicate.io/',
         'https://frame.syndicate.io/',
       ],

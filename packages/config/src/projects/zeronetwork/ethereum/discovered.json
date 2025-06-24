@@ -2,7 +2,7 @@
   "name": "zeronetwork",
   "chain": "ethereum",
   "blockNumber": 22593198,
-  "configHash": "0x27884f441f9cbad6e07e62b82b781fab1ae21bfffe91218009d55d6ea4f7a7f6",
+  "configHash": "0x458f1ea3347bc12faf2252205b0a06eb1bb2afb245e0d0d18ef9e6126250570f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -39,12 +39,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -88,16 +88,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "from": "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
-          "via": [{ "address": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3" }]
+          "via": [
+            { "address": "ethereum:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
+          "from": "ethereum:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3",
           "role": ".owner"
         }
       ],
@@ -144,12 +146,12 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         },
         {
           "permission": "validateZkStack",
-          "from": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -167,7 +169,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "from": "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -206,7 +208,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "from": "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -280,7 +282,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
+          "from": "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }

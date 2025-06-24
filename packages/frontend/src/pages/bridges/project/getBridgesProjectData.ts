@@ -1,9 +1,9 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getBridgesProjectEntry } from '~/server/features/bridges/project/get-bridges-project-entry'
+import { getBridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getBridgesProjectData(
@@ -36,16 +36,10 @@ export async function getBridgesProjectData(
 
   if (!project) return undefined
 
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
-    getBridgesProjectEntry(project),
-    helpers.tvs.chart.prefetch({
-      range: '1y',
-      filter: { type: 'projects', projectIds: [project.id] },
-      excludeAssociatedTokens: false,
-      previewRecategorisation: false,
-    }),
+    getBridgesProjectEntry(helpers, project),
   ])
 
   return {

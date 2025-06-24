@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "everclear",
   "blockNumber": 1122116,
-  "configHash": "0x0d89fc56a1f9e62a79be08517ddf5cb98cd493ae8937f965f748962a2342d6e9",
+  "configHash": "0x28722c147bec42a5913187cfed740c0bda49a00ec6a6a5eb7ea42a875a971652",
   "entries": [
     {
       "address": "0x2eEd1440842990Fa61F0c396f981375Fa6004131",
@@ -128,12 +128,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "from": "everclear:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
+          "from": "everclear:0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
           "role": "admin"
         }
       ],

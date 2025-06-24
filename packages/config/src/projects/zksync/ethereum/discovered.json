@@ -2,7 +2,7 @@
   "name": "zksync",
   "chain": "ethereum",
   "blockNumber": 22081893,
-  "configHash": "0x0bae14e2b3786e52680371e831eb94d78838d47a9753ac4e0fe3d043a9822677",
+  "configHash": "0x0037b079d57749eea9d757531c7c4d47c7df4ae05e27019c70faf9d8ea07456c",
   "entries": [
     {
       "name": "Multisig 1",
@@ -224,17 +224,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "from": "ethereum:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
+          "from": "ethereum:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
+          "from": "ethereum:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF",
           "role": "admin"
         }
       ],

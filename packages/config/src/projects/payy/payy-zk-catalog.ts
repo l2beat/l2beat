@@ -22,7 +22,7 @@ export const payy: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'A privacy-preserving payment system.',

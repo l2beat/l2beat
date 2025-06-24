@@ -28,7 +28,7 @@ export const cronoszkevm: ScalingProject = zkStackL2({
       'Cronos zkEVM is a general-purpose Validium on Ethereum built on the ZK Stack, scaling the existing portfolio of Cronos apps and chains.',
     links: {
       websites: ['https://cronos.org/zkevm'],
-      apps: ['https://zkevm.cronos.org/bridge'],
+      bridges: ['https://zkevm.cronos.org/bridge'],
       documentation: ['https://docs-zkevm.cronos.org/'],
       explorers: ['https://explorer.zkevm.cronos.org/'],
       socialMedia: [

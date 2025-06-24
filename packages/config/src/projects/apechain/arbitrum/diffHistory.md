@@ -1,4 +1,93 @@
-Generated with discovered.json: 0x43aaa2b249e10bf5768774236b711221560fb9e6
+Generated with discovered.json: 0xdbd16d4e72be493d483faf49a78ed8244b5c7e76
+
+# Diff at Wed, 18 Jun 2025 11:54:22 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 287770407
+- current block number: 348632330
+
+## Description
+
+late upgrade to standard orbit implementations.
+
+## Watched changes
+
+```diff
+    contract Inbox (0x1B98e4ED82Ee1a91A65a38C690e2266364064D15) {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.0:
+-        "0xb2c117c2e00734a82fe4ab27d5fe91a6e152c06bbcdbf83db021ad32b6be3e60"
++        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
+      values.$implementation:
+-        "0xCd26Db56B29e88b5394063aEA727DB1a03E961a7"
++        "0xFa76A234b41f932Fa769f92d85574e1BEEfE8218"
+      values.$pastUpgrades.1:
++        ["2025-06-13T13:06:09.000Z","0xe385aeb814e7282eac24484389ea3b1f4e6b612a750b25b547bacc5dffb70544",["0xFa76A234b41f932Fa769f92d85574e1BEEfE8218"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.0xCd26Db56B29e88b5394063aEA727DB1a03E961a7:
+-        "ERC20Inbox"
+      implementationNames.0xFa76A234b41f932Fa769f92d85574e1BEEfE8218:
++        "ERC20Inbox"
+    }
+```
+
+```diff
+    contract ApeChainMultisig (0x2B1FbeE3c7D278bFD9E179893FF304fE49FA7DDF) {
+    +++ description: None
+      values.$members.4:
++        "0xd125c9222160C308EdC5Cf642573Ca8a14D9d33c"
+      values.multisigThreshold:
+-        "3 of 4 (75%)"
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xE6a92Ae29E24C343eE66A2B3D3ECB783d65E4a3C) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.0:
+-        "0x50cf57b01499408fa99da27cf0fee96ec30f0d40667d1aa090c442bc80f0636b"
++        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
+      values.$implementation:
+-        "0x51120FA6D564A70E9F80874c0a55A4ee0c7396Fe"
++        "0x0DD7dA1805d207511bb3Edabe9352B9E316048bE"
+      values.$pastUpgrades.1:
++        ["2025-06-13T13:06:09.000Z","0xe385aeb814e7282eac24484389ea3b1f4e6b612a750b25b547bacc5dffb70544",["0x0DD7dA1805d207511bb3Edabe9352B9E316048bE"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.0x51120FA6D564A70E9F80874c0a55A4ee0c7396Fe:
+-        "SequencerInbox"
+      implementationNames.0x0DD7dA1805d207511bb3Edabe9352B9E316048bE:
++        "SequencerInbox"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Inbox/ERC20Inbox.sol                           | 16 +++++++++++++--
+ .../SequencerInbox/SequencerInbox.sol              | 24 +++++++++++++++-------
+ 2 files changed, 31 insertions(+), 9 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 287770407 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x374de579AE15aD59eD0519aeAf1A23F348Df259c) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x3d6e4368a1eb33fc5c402f4372d9357d61a61bd8
 
 # Diff at Tue, 27 May 2025 08:30:51 GMT:
 

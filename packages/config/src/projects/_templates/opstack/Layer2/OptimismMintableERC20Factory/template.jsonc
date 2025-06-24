@@ -1,4 +1,4 @@
 {
-  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens."
 }

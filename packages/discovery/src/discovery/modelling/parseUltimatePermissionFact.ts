@@ -1,4 +1,4 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type ChainSpecificAddress } from '@l2beat/shared-pure'
 import type { Permission } from '../config/PermissionConfig'
 import type { ModelIdRegistry } from './ModelIdRegistry'
 import type { ClingoFact } from './clingoparser'
@@ -8,20 +8,14 @@ export function parseUltimatePermissionFact(
   modelIdRegistry: ModelIdRegistry,
 ) {
   const delay = Number(fact.params[3])
-  // const totalDelay = Number(fact.params[6])
-  const receiverData = modelIdRegistry.getAddressData(String(fact.params[0]))
   return {
-    receiver: modelIdRegistry.idToChainPrefixedAddress(String(fact.params[0])),
-    receiverChain: receiverData.chain,
+    receiver: modelIdRegistry.idToChainSpecificAddress(String(fact.params[0])),
     permission: String(fact.params[1]) as Permission,
-    from: EthereumAddress(
-      modelIdRegistry.idToChainPrefixedAddress(String(fact.params[2])),
-    ),
+    from: modelIdRegistry.idToChainSpecificAddress(String(fact.params[2])),
     delay: delay === 0 ? undefined : delay,
     description: orUndefined(String, fact.params[4]),
     role: orUndefined(String, fact.params[5]),
     condition: orUndefined(String, fact.params[6]),
-    // totalDelay: totalDelay === 0 ? undefined : totalDelay,
     via:
       fact.params[8] === undefined
         ? undefined
@@ -42,9 +36,7 @@ export function parseUltimatePermissionVia(
 ) {
   const delay = Number(via.params[2])
   return {
-    address: EthereumAddress(
-      modelIdRegistry.idToChainPrefixedAddress(String(via.params[0])),
-    ),
+    address: modelIdRegistry.idToChainSpecificAddress(String(via.params[0])),
     // permission: String(via.params[1]),
     delay: delay === 0 ? undefined : delay,
     condition: orUndefined(String, via.params[3]),
@@ -54,12 +46,10 @@ export function parseUltimatePermissionVia(
 export function parseEoaWithMajorityUpgradePermissionsFacts(
   facts: ClingoFact[],
   modelIdRegistry: ModelIdRegistry,
-): EthereumAddress[] | undefined {
+): ChainSpecificAddress[] | undefined {
   const result = facts.map((f) => {
     assert(f.atom === 'eoaWithMajorityUpgradePermissions')
-    return EthereumAddress(
-      modelIdRegistry.idToChainPrefixedAddress(String(f.params[0])),
-    )
+    return modelIdRegistry.idToChainSpecificAddress(String(f.params[0]))
   })
   return result.length === 0 ? undefined : result
 }

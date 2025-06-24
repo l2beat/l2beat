@@ -2,7 +2,7 @@
   "name": "degate3",
   "chain": "ethereum",
   "blockNumber": 21394291,
-  "configHash": "0x9fcb6a963408a78548ec070b7af7c5f7359603945551d0f64f37865ba61e903d",
+  "configHash": "0xc3c76df9e79df60f040e393d07457d4ce3d0960b916af77eb86b3a66e96a4656",
   "entries": [
     {
       "name": "TimeLock1",
@@ -15,7 +15,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x9C07A72177c5A05410cA338823e790876E79D73B",
+          "from": "ethereum:0x9C07A72177c5A05410cA338823e790876E79D73B",
           "role": "admin"
         }
       ],
@@ -348,7 +348,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x54D7aE423Edb07282645e740C046B9373970a168",
+          "from": "ethereum:0x54D7aE423Edb07282645e740C046B9373970a168",
           "role": "admin"
         }
       ],

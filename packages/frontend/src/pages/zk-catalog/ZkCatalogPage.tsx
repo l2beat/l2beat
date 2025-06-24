@@ -1,133 +1,39 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionItem,
-  AccordionTrigger,
-} from '@radix-ui/react-accordion'
-import { MainPageHeader } from '~/components/main-page-header'
-import { ChevronIcon } from '~/icons/chevron'
-import { AppLayout, type AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import { VerifiedCountWithDetails } from '~/pages/zk-catalog/project/components/verified-count-with-details'
-import { DetailsItem } from './components/details-item'
-import { DetailsLink } from './components/details-link'
-import { VerifierCard } from './components/verifier-card'
-import type { ZkCatalogEntry } from './utils/get-zk-catalog-entries'
+import {} from '@radix-ui/react-accordion'
+import { MainPageHeader } from '~/components/MainPageHeader'
+import { CustomLink } from '~/components/link/CustomLink'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { InfoIcon } from '~/icons/Info'
+import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
 
-interface Props extends AppLayoutProps {
-  entries: ZkCatalogEntry[]
-}
+interface Props extends AppLayoutProps {}
 
-export function ZkCatalogPage({ entries, ...props }: Props) {
+export function ZkCatalogPage({ ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
         <MainPageHeader>ZK Catalog</MainPageHeader>
-        <p className="mx-6 text-secondary text-xs max-md:mt-6">
-          ZK Catalog by L2BEAT is a community-driven resource offering detailed
-          insights into the ZK technology utilized by various blockchain
-          projects. It aims to enhance transparency and understanding of ZK tech
-          implementations across the industry.
-        </p>
-        <ProjectList entries={entries} />
+        <div className="flex flex-col items-center gap-2 pt-[20vh] md:mt-[10%] md:pt-0">
+          <PrimaryCard className="bg-yellow-200/25 shadow-sm md:w-3/4 md:border-2 md:border-warning/50 md:bg-yellow-200/10">
+            <h2 className="mb-3 flex items-center gap-2 font-semibold text-warning text-xl xs:text-2xl">
+              <InfoIcon className="size-5 xs:size-6 fill-current" />
+              <span>ZK Catalog rework in progress</span>
+            </h2>
+            <p className="mb-4">
+              We are in the process of reworking the ZK Catalog to provide you
+              with better insights and more comprehensive data about
+              zero-knowledge solutions.
+            </p>
+            <p>
+              Previous version can be found here:{' '}
+              <CustomLink href="/zk-catalog/v1">ZK Catalog V1</CustomLink>
+            </p>
+          </PrimaryCard>
+          <p className="text-balance px-6 text-center text-secondary text-sm">
+            We appreciate your patience as we work to improve your experience.
+          </p>
+        </div>
       </SideNavLayout>
     </AppLayout>
-  )
-}
-
-function ProjectList({ entries }: { entries: ZkCatalogEntry[] }) {
-  return (
-    <main className="mt-4 md:mt-6">
-      <Accordion className="space-y-3" type="multiple">
-        {entries.map((entry) => (
-          <AccordionItem key={entry.slug} value={entry.slug}>
-            <AccordionHeader asChild>
-              <AccordionTrigger
-                asChild
-                className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-divider bg-surface-primary px-6 py-4 md:flex-row"
-              >
-                <div className="grid md:grid-cols-[1.5fr,1fr,1fr,1fr,130px,70px]">
-                  <div className="mb-3 flex items-center gap-2 md:hidden">
-                    <img
-                      width={18}
-                      height={18}
-                      alt={entry.name}
-                      src={entry.icon}
-                      className="size-[18px]"
-                    />
-                    <span className="font-bold text-lg">{entry.name}</span>
-                  </div>
-                  <DetailsItem
-                    title="Name"
-                    className="hidden flex-col items-start justify-start md:flex"
-                  >
-                    <div className="flex items-center gap-2">
-                      <img
-                        width={18}
-                        height={18}
-                        alt={entry.name}
-                        src={entry.icon}
-                        className="size-[18px]"
-                      />
-                      <span>{entry.name}</span>
-                    </div>
-                  </DetailsItem>
-                  <DetailsItem
-                    title="Number of verifiers"
-                    className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
-                  >
-                    <VerifiedCountWithDetails verifiers={entry.verifiers} />
-                  </DetailsItem>
-                  <DetailsItem
-                    title="Aggregation"
-                    tooltip="Shows if recursive proof aggregation is used."
-                    className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
-                  >
-                    {entry.aggregation ? 'Yes' : 'No'}
-                  </DetailsItem>
-                  <DetailsItem
-                    title="Trusted setup"
-                    tooltip="Shows if a trusted setup is used anywhere in the proving stack."
-                    className="flex-row items-baseline justify-between md:flex-col md:items-start md:justify-start"
-                  >
-                    {entry.trustedSetup}
-                  </DetailsItem>
-                  <DetailsLink
-                    slug={entry.slug}
-                    className="self-center justify-self-center"
-                  />
-                  <div className="flex items-center justify-center">
-                    <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
-                      <span className="font-bold text-base">Verifiers</span>
-                      <ChevronIcon className="group-data-[state=open]:-rotate-180 fill-current transition-transform duration-300 ease-out" />
-                    </div>
-                    <ChevronIcon className="group-data-[state=open]:-rotate-180 hidden fill-current transition-transform duration-300 ease-out md:block" />
-                  </div>
-                </div>
-              </AccordionTrigger>
-            </AccordionHeader>
-            <AccordionContent className="-top-3 relative rounded-b-xl border border-divider border-t-0 bg-surface-primary pt-3 md:space-y-2 md:px-6 md:pb-6">
-              {entry.shortDescription ? (
-                <div className="my-7 flex flex-col gap-0.5 px-5">
-                  <div className="font-medium text-2xs text-secondary uppercase">
-                    Description
-                  </div>
-                  <div className="font-medium text-sm">
-                    {entry.shortDescription}
-                  </div>
-                </div>
-              ) : null}
-              {entry.verifiers.map((verifier) => (
-                <VerifierCard
-                  key={`${entry.name}-${verifier.name}`}
-                  verifier={verifier}
-                />
-              ))}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
-    </main>
   )
 }

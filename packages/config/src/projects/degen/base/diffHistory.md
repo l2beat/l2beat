@@ -1,4 +1,41 @@
-Generated with discovered.json: 0xc55d94aca031f7d44c023eb3c5158baf64d69443
+Generated with discovered.json: 0x18d01e4369d146a52c22359e5689f1ade37e50d1
+
+# Diff at Wed, 18 Jun 2025 11:58:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 29954256
+- current block number: 31729275
+
+## Description
+
+alchemy MS signer change.
+
+## Watched changes
+
+```diff
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6) {
+    +++ description: None
+      values.$members.4:
+-        "0x0a214444613E3970049BD74a8d72d5bF9EF0094c"
++        "0xCA730AFfb87935E70E5889418C731eb196237476"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 29954256 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x75be7d88885530993bb37bb4793aa6a2405973c9
 
 # Diff at Tue, 27 May 2025 08:31:18 GMT:
 
@@ -1931,7 +1968,7 @@ Generated with discovered.json: 0x4dc1e62f8d759083d693975e0570bbb5e477dc3a
 
 ## Description
 
-A new OFT adapter contract (for the DEGEN token) is added as allowed Outbox to the main bridge. This gives the OFT adapter the permission to make any calls as the bridge (including sending all tokens from the bridge). See the Sanko L3 on Arbitrum for a similar contruction. The LayerZero AMB now has access to the canonically escrowed funds and the bridge escrow serves doubly as a canonical escrow and OFT adapter lockbox.
+A new OFT adapter contract (for the DEGEN token) is added as allowed Outbox to the main bridge. This gives the OFT adapter the permission to make any calls as the bridge (including sending all tokens from the bridge). See the Sanko L3 on Arbitrum for a similar construction. The LayerZero AMB now has access to the canonically escrowed funds and the bridge escrow serves doubly as a canonical escrow and OFT adapter lockbox.
 
 ## Watched changes
 

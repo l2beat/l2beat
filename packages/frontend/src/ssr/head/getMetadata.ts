@@ -1,5 +1,4 @@
 import type { Manifest } from '~/utils/Manifest'
-import { getBaseUrl } from '~/utils/get-base-url'
 import { stripQueryParams } from '~/utils/stripQueryParams'
 
 export type OpenGraph = {
@@ -40,7 +39,7 @@ function getOpenGraph(
   manifest: Manifest,
   { url, image, type }: PartialMetadata['openGraph'],
 ): OpenGraph {
-  const baseUrl = getBaseUrl()
+  const baseUrl = 'https://l2beat.com'
   return {
     url: baseUrl + stripQueryParams(url),
     image: image ? baseUrl + manifest.getUrl(image) : undefined,

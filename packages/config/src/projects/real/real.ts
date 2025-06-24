@@ -15,6 +15,7 @@ export const real: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
+  archivedAt: UnixTime(1750747670), //2025-06-24T06:47:50Z
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
@@ -22,11 +23,13 @@ export const real: ScalingProject = orbitStackL2({
   display: {
     name: 'Re.al',
     slug: 'real',
+    redWarning:
+      "re.al halted block production and state updates on June 20, 2025 without prior notice. If state updates are not resumed, the state proposer whitelist gets dropped and anyone can propose state updates. If this happens, but the DAC doesn't serve the necessary data, funds can be compromised as there is no way to challenge invalid state roots.",
     description:
       'Re.al is an Arbitrum Orbit stack L2 with AnyTrust data availability, focusing on Real World Assets.',
     links: {
       websites: ['https://re.al'],
-      apps: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
+      bridges: ['https://re.al/bridge/', 'https://re.al/app/bridge/'],
       documentation: ['https://docs.re.al/'],
       explorers: ['https://explorer.re.al'],
       repositories: ['https://github.com/re-al-Foundation'],
@@ -104,6 +107,14 @@ export const real: ScalingProject = orbitStackL2({
       date: '2024-05-15T00:00:00Z',
       description: 'Re.al launches the RWA token and its governance protocol.',
       type: 'general',
+    },
+    {
+      title: 'Re.al Halts Block Production',
+      date: '2025-06-20T00:00:00Z',
+      description:
+        'Re.al halted block production and state updates without prior notice.',
+      type: 'incident',
+      url: 'https://x.com/donnoh_eth/status/1937136543195398578',
     },
   ],
   customDa: AnytrustDAC({ discovery }),

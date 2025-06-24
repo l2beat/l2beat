@@ -1,4 +1,4 @@
-import { getActivityChart } from '~/server/features/scaling/activity/get-activity-chart'
+import { getActivityChart } from '~/server/features/scaling/activity/getActivityChart'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { ps } from '~/server/projects'
 
@@ -29,7 +29,6 @@ export async function getScalingActivityProjectApiData({
       ? { type: 'all' }
       : { type: 'projects', projectIds: project ? [project.id] : [] },
     range,
-    previewRecategorisation: false,
   })
 
   const oldestProjectData = data.at(0)

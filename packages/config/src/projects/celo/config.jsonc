@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "celo",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -14,11 +14,7 @@
       "overrides": {
         "0xD1C635987B6Aa287361d08C6461491Fa9df087f2": { "category": "spam" },
         "0xFbAC162162f4009Bb007C6DeBC36B1dAC10aF683": {
-          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
-          "fields": {
-            "proposer": { "permissions": [{ "type": "propose" }] },
-            "challenger": { "permissions": [{ "type": "challenge" }] }
-          }
+          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
         },
         "0x2bCeB78Fda0d5e3bfA7F4B8c499aa74bDf8D7755": {
           "fields": {

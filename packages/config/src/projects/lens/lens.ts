@@ -2,7 +2,6 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
-  REASON_FOR_BEING_OTHER,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
@@ -19,18 +18,18 @@ const bridge = discovery.getContract('L1NativeTokenVault')
 export const lens: ScalingProject = zkStackL2({
   capability: 'universal',
   additionalPurposes: ['Social'],
-  additionalBadges: [BADGES.DA.Avail],
+  additionalBadges: [BADGES.DA.AvailVector],
   addedAt: UnixTime(1716536821), // 2024-05-24T07:47:01Z
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_DA_ORACLE],
   display: {
     name: 'Lens',
     slug: 'lens',
     description:
       "Lens Network is the main social networking hub for the user base of Lens Protocol, built on a Validium using ZKsync's ZK Stack technology.",
     stack: 'ZK Stack',
+    architectureImage: 'zkstack-validium-vector',
     links: {
       websites: ['https://lens.xyz'],
-      apps: [
+      bridges: [
         'https://app.across.to/bridge?destinationChainId=232',
         'https://onboarding.lens.xyz/explore',
       ],
@@ -80,17 +79,17 @@ export const lens: ScalingProject = zkStackL2({
   ],
   daProvider: {
     layer: DA_LAYERS.AVAIL,
-    riskView: RISK_VIEW.DATA_AVAIL(false),
+    riskView: RISK_VIEW.DATA_AVAIL(true),
     technology: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(false),
+      ...TECHNOLOGY_DATA_AVAILABILITY.AVAIL_OFF_CHAIN(true),
       references: [
         {
-          title: 'ExecutorFacet - _commitOneBatch() function',
-          url: 'https://etherscan.io/address/0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490#code#F1#L50',
+          title: 'AvailL1DAValidator - checkDA() function',
+          url: 'https://etherscan.io/address/0x8f50d93B9955B285f787043B30B5F51D09bE0120#code#F1#L16',
         },
       ],
     },
-    bridge: DA_BRIDGES.NONE,
+    bridge: DA_BRIDGES.VECTOR,
   },
   availDa: {
     sinceBlock: 1180000, // avail block number, roughly 04/03 right before mainnet launch (chain was active before)
@@ -141,6 +140,14 @@ export const lens: ScalingProject = zkStackL2({
     },
   ],
   milestones: [
+    {
+      title: 'Upgrade to Vector DA Bridge',
+      url: 'https://etherscan.io/tx/0x2e3912d3ae33abe684199823322702094a610681ab982b76f2cfc0c7ef34d87f', // TODO better announcement link
+      date: '2025-04-23T00:00:00.00Z',
+      description:
+        'Lens integrates with the Vector data availability bridge to Avail.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://lens.xyz/news/build-socialfi-apps-faster-with-lens-now-on-mainnet',

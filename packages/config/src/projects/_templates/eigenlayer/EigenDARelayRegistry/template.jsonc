@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry for EigenDA relay keys, maps key to address.",
+  "fields": {
+    "relayers": {
+      "severity": "HIGH",
+      "type": "RISK_PARAMETER",
+      "handler": {
+        "type": "event",
+        "select": ["relay", "relayURL"],
+        "add": { "event": "RelayAdded" }
+      },
+      "permissions": [{ "type": "relayDA" }]
+    }
+  }
+}

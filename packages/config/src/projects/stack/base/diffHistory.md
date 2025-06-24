@@ -1,4 +1,66 @@
-Generated with discovered.json: 0x065b54a8c2b8169788732b810b0688676ac997ae
+Generated with discovered.json: 0x61072aeb755b4d5a6b5da875108cc8b14da59b7f
+
+# Diff at Mon, 16 Jun 2025 08:41:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 30898222
+- current block number: 30898222
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30898222 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x25aBB510386A658c622280f488844BD3b485DC32) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E","role":"admin"}
+      directlyReceivedPermissions.4.from:
+-        "base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
++        "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
+      directlyReceivedPermissions.3.from:
+-        "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
++        "base:0x727a91e8251A262A4ad5F2D5811c6cD862961759"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x727a91e8251A262A4ad5F2D5811c6cD862961759) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x25aBB510386A658c622280f488844BD3b485DC32"
+    }
+```
+
+```diff
+    contract Conduit Multisig 3 (0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"guard","from":"base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E","role":".GUARDIAN"}
+      receivedPermissions.7.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.7.role:
+-        ".GUARDIAN"
++        "admin"
+      receivedPermissions.7.via:
++        [{"address":"base:0x25aBB510386A658c622280f488844BD3b485DC32"}]
+      receivedPermissions.6.from:
+-        "base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E"
++        "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
+      receivedPermissions.5.from:
+-        "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37"
++        "base:0x727a91e8251A262A4ad5F2D5811c6cD862961759"
+    }
+```
+
+Generated with discovered.json: 0x8fd78fa597a012b7652963391845b95091d3a90b
 
 # Diff at Fri, 30 May 2025 06:17:31 GMT:
 

@@ -1,24 +1,24 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/project-stacked-tvs-chart'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { HorizontalSeparator } from '~/components/core/horizontal-separator'
-import { HighlightablePrimaryCard } from '~/components/primary-card/highlightable-primary-card'
-import { PrimaryCard } from '~/components/primary-card/primary-card'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { TopNavLayout } from '~/layouts/top-nav-layout'
-import type { ScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/get-scaling-project-tvs-breakdown-data'
-import { RequestTokenBox } from './components/request-token-box'
-import { CanonicallyBridgedTable } from './components/tables/canonically-bridged-table'
-import { ExternallyBridgedTable } from './components/tables/externally-bridges-table'
-import { NativelyMintedTable } from './components/tables/natively-minted-table'
-import { TvsBreakdownPageHeader } from './components/tvs-breakdown-page-header'
-import { TvsBreakdownSummaryBox } from './components/tvs-breakdown-summary-box'
+import { ContentWrapper } from '~/components/ContentWrapper'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { ProjectStackedTvsChart } from '~/components/chart/tvs/stacked/ProjectStackedTvsChart'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { HighlightablePrimaryCard } from '~/components/primary-card/HighlightablePrimaryCard'
+import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { TopNavLayout } from '~/layouts/TopNavLayout'
+import type { ScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
+import { RequestTokenBox } from './components/RequestTokenBox'
+import { TvsBreakdownPageHeader } from './components/TvsBreakdownPageHeader'
+import { TvsBreakdownSummaryBox } from './components/TvsBreakdownSummaryBox'
+import { CanonicallyBridgedTable } from './components/tables/CanonicallyBridgedTable'
+import { ExternallyBridgedTable } from './components/tables/ExternallyBridgesTable'
+import { NativelyMintedTable } from './components/tables/NativelyMintedTable'
 
 interface Props extends AppLayoutProps {
-  tvsBreakdownData: ScalingProjectTvsBreakdownData
+  tvsBreakdownData: ScalingProjectTvsBreakdown
   queryState: DehydratedState
 }
 

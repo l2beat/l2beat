@@ -1,15 +1,15 @@
 import {
   DaThroughputChartParams,
   getDaThroughputChart,
-} from '~/server/features/data-availability/throughput/get-da-throughput-chart'
+} from '~/server/features/data-availability/throughput/getDaThroughputChart'
 import {
   DaThroughputChartByProjectParams,
   getDaThroughputChartByProject,
-} from '~/server/features/data-availability/throughput/get-da-throughput-chart-by-project'
+} from '~/server/features/data-availability/throughput/getDaThroughputChartByProject'
 import {
   ProjectDaThroughputChartParams,
   getProjectDaThroughputChart,
-} from '~/server/features/data-availability/throughput/get-project-da-throughput-chart'
+} from '~/server/features/data-availability/throughput/getProjectDaThroughputChart'
 import { procedure, router } from '../trpc'
 
 export const daRouter = router({

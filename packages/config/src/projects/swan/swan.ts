@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -18,7 +18,7 @@ export const swan: ScalingProject = opStackL2({
       'Swan Chain is an OP Stack L2 providing comprehensive AI infrastructure on the blockchain.',
     links: {
       websites: ['https://swanchain.io/'],
-      apps: ['https://bridge.swanchain.io/'],
+      bridges: ['https://bridge.swanchain.io/'],
       documentation: ['https://docs.swanchain.io/'],
       explorers: [
         'https://mainnet-explorer.swanchain.io/',
@@ -33,6 +33,9 @@ export const swan: ScalingProject = opStackL2({
         'https://swanchain.medium.com/',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   genesisTimestamp: UnixTime(1718640220),
   // failing, needs different analyzer?

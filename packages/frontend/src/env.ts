@@ -16,6 +16,7 @@ const CLIENT_CONFIG = {
   NODE_ENV: z
     .enum(['development', 'test', 'production'])
     .default('development'),
+  DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
   NEXT_PUBLIC_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
   NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
   NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
@@ -36,12 +37,11 @@ const SERVER_CONFIG = {
   ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
   MOCK: coerceBoolean.default('false'),
   CRON_SECRET: z.string().optional(),
-  VERCEL_GIT_COMMIT_REF: z.string().optional(),
-  VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
-  VERCEL_URL: z.string().optional(),
-  VERCEL_ENV: z.enum(['production', 'preview', 'development']).optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
+
+  // Heroku specific (available only on previews)
+  HEROKU_APP_NAME: z.string().optional(),
 
   // Elastic Search
   ES_ENABLED: coerceBoolean.default('false'),
@@ -93,15 +93,11 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     ETHEREUM_RPC_URL: process.env.ETHEREUM_RPC_URL,
     MOCK: process.env.MOCK,
     NODE_ENV: process.env.NODE_ENV,
+    HEROKU_APP_NAME: process.env.HEROKU_APP_NAME,
+    DEPLOYMENT_ENV: process.env.DEPLOYMENT_ENV,
     CRON_SECRET: process.env.CRON_SECRET,
-    VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
-    VERCEL_GIT_COMMIT_SHA: process.env.VERCEL_GIT_COMMIT_SHA,
-    VERCEL_ENV: process.env.VERCEL_ENV,
-    VERCEL_URL: process.env.VERCEL_URL,
     EXCLUDED_ACTIVITY_PROJECTS: process.env.EXCLUDED_ACTIVITY_PROJECTS,
     EXCLUDED_TVS_PROJECTS: process.env.EXCLUDED_TVS_PROJECTS,
-
-    // Elastic Search
     ES_ENABLED: process.env.ES_ENABLED,
     ES_NODE: process.env.ES_NODE,
     ES_API_KEY: process.env.ES_API_KEY,

@@ -11,6 +11,7 @@ import {
 } from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   type LegacyTokenBridgedUsing,
   UnixTime,
@@ -62,6 +63,10 @@ export class ProjectDiscovery {
       ),
     ]
     this.permissionRegistry = new PermissionsFromDiscovery(this)
+  }
+
+  get blockNumber(): number {
+    return this.discoveries.reduce((min, d) => Math.max(min, d.blockNumber), 0)
   }
 
   getName(address: EthereumAddress): string {
@@ -270,7 +275,9 @@ export class ProjectDiscovery {
 
   getContract(identifier: string): EntryParameters {
     try {
-      identifier = utils.getAddress(identifier)
+      identifier = identifier.includes(':')
+        ? identifier
+        : utils.getAddress(identifier)
     } catch {
       const contracts = this.getContractByName(identifier)
 
@@ -286,7 +293,9 @@ export class ProjectDiscovery {
       return contracts[0]
     }
 
-    const contract = this.getContractByAddress(identifier)
+    const contract = identifier.includes(':')
+      ? this.getContractByChainSpecificAddress(ChainSpecificAddress(identifier))
+      : this.getContractByAddress(EthereumAddress(identifier))
     assert(
       contract,
       `No contract of ${identifier} address found (${this.projectName})`,
@@ -303,7 +312,9 @@ export class ProjectDiscovery {
       return contracts.length === 1
     }
 
-    const contract = this.getContractByAddress(identifier)
+    const contract = identifier.includes(':')
+      ? this.getContractByChainSpecificAddress(ChainSpecificAddress(identifier))
+      : this.getContractByAddress(EthereumAddress(identifier))
     return contract !== undefined
   }
 
@@ -565,13 +576,16 @@ export class ProjectDiscovery {
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
-  getContractByAddress(
-    address: string | EthereumAddress,
-  ): EntryParameters | undefined {
+  getContractByAddress(address: EthereumAddress): EntryParameters | undefined {
     const contracts = this.getContracts()
-    return contracts.find(
-      (contract) => contract.address === EthereumAddress(address.toString()),
-    )
+    return contracts.find((contract) => contract.address === address)
+  }
+
+  getContractByChainSpecificAddress(
+    address: ChainSpecificAddress,
+  ): EntryParameters | undefined {
+    const contracts = this.getPrefixedContracts()
+    return contracts[address]
   }
 
   getEOAByAddress(
@@ -585,9 +599,16 @@ export class ProjectDiscovery {
     )
   }
 
-  getEntryByAddress(
-    address: string | EthereumAddress,
+  getEntryByChainSpecificAddress(
+    chainSpecificAddress: ChainSpecificAddress,
   ): EntryParameters | undefined {
+    const [chain, address] = chainSpecificAddress.toString().split(':')
+    const entries = this.discoveries
+      .filter((discovery) => discovery.chain === chain)
+      .flatMap((discovery) => discovery.entries)
+    return entries.find((entry) => entry.address === address)
+  }
+  getEntryByAddress(address: EthereumAddress): EntryParameters | undefined {
     const entries = this.discoveries.flatMap((discovery) => discovery.entries)
     return entries.find(
       (entry) => entry.address === EthereumAddress(address.toString()),
@@ -613,6 +634,26 @@ export class ProjectDiscovery {
     return this.discoveries.flatMap((discovery) => discovery.entries)
   }
 
+  getPrefixedContracts(): { [chainSpecificAddress: string]: EntryParameters } {
+    const result: { [chainSpecificAddress: string]: EntryParameters } = {}
+    this.discoveries.forEach((discovery) => {
+      discovery.entries.forEach((e) => {
+        if (e.type === 'Contract') {
+          const chainSpecificAddress = ChainSpecificAddress(
+            `${discovery.chain}:${e.address}`,
+          )
+          if (result[chainSpecificAddress] !== undefined) {
+            throw new Error(
+              `Duplicate contract address entry: ${chainSpecificAddress}`,
+            )
+          }
+          result[chainSpecificAddress] = e
+        }
+      })
+    })
+    return result
+  }
+
   getContracts(): EntryParameters[] {
     return this.discoveries
       .flatMap((discovery) => discovery.entries)
@@ -627,6 +668,17 @@ export class ProjectDiscovery {
 
   getContractsAndEoas(): EntryParameters[] {
     return [...this.getContracts(), ...this.getEoas()]
+  }
+
+  getTopLevelAddresses(): EthereumAddress[] {
+    const contracts = this.getContracts()
+    const implementations = contracts.flatMap((contract) =>
+      get$Implementations(contract.values),
+    )
+
+    const contractsAddresses = contracts.map((e) => e.address)
+    const eoasAddresses = this.getEoas().map((e) => e.address)
+    return [...contractsAddresses, ...implementations, ...eoasAddresses]
   }
 
   getPermissionsByRole(
@@ -697,7 +749,7 @@ export class ProjectDiscovery {
           .map((p) =>
             this.formatViaPath(
               {
-                address: c.address,
+                address: ChainSpecificAddress(`${this.chain}:${c.address}`),
                 condition: p.condition,
                 delay: p.delay,
               },
@@ -736,7 +788,8 @@ export class ProjectDiscovery {
     skipName: boolean = false,
   ): string {
     const name =
-      this.getContractByAddress(path.address)?.name ?? path.address.toString()
+      this.getContractByChainSpecificAddress(path.address)?.name ??
+      path.address.toString()
 
     const result = skipName ? [] : [name]
     if (path.delay) {
@@ -767,7 +820,7 @@ export class ProjectDiscovery {
     const addresses = s.match(ethereumAddressRegex) ?? []
 
     for (const address of addresses) {
-      const contract = this.getContractByAddress(address)
+      const contract = this.getContractByAddress(EthereumAddress(address))
       if (contract !== undefined && contract.name !== undefined) {
         s = s.replace(address, contract.name)
       }
@@ -782,7 +835,11 @@ export class ProjectDiscovery {
 
     const permissions = entry.receivedPermissions.map((p) => p.from)
     const priority = permissions.reduce((acc, permission) => {
-      return acc + (this.getEntryByAddress(permission)?.category?.priority ?? 0)
+      return (
+        acc +
+        (this.getEntryByChainSpecificAddress(permission)?.category?.priority ??
+          0)
+      )
     }, 0)
 
     return priority

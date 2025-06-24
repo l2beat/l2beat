@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('stargate')
 
@@ -107,7 +108,7 @@ export const stargate: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xfA0F307783AC21C39E939ACFF795e27b650F6e68'),
         sinceTimestamp: UnixTime(1668459527),
-        tokens: ['FRAX'],
+        tokens: ['FRAX.legacy'],
         description: 'FRAX Escrow',
       }),
       discovery.getEscrowDetails({
@@ -215,4 +216,5 @@ export const stargate: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

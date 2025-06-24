@@ -23,7 +23,7 @@ export const fluence: ScalingProject = orbitStackL2({
       'Fluence is an Optimium on Ethereum, built on the Orbit stack. It enables a decentralized serverless platform & computing marketplace powered by blockchain economics.',
     links: {
       websites: ['https://fluence.network/'],
-      apps: ['https://bridge.fluence.network/bridge/fluence'],
+      bridges: ['https://bridge.fluence.network/bridge/fluence'],
       documentation: ['https://fluence.dev/docs/learn/overview'],
       explorers: ['https://blockscout.mainnet.fluence.dev/'],
       repositories: ['https://github.com/fluencelabs'],

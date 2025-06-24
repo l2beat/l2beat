@@ -1,8 +1,8 @@
 {
   "name": "nebraupa",
   "chain": "ethereum",
-  "blockNumber": 20826378,
-  "configHash": "0xa484bbc7fc71e42404b774fb895d01e005c3b9f0c8aa4f0cb089a63efdf8da4c",
+  "blockNumber": 22666223,
+  "configHash": "0x18ad673c7e1c45b029fd0c01b17acdb3f9e5114d9ec31264e0dc311c2f434013",
   "entries": [
     {
       "address": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -28,7 +28,8 @@
         "nextSubmissionIdxToVerify",
         "nextProofIdx",
         "getNextSubmissionIdx",
-        "lastVerifiedSubmissionHeight"
+        "lastVerifiedSubmissionHeight",
+        "verifiedSubmissionIdxForAllocatedFee"
       ],
       "sinceTimestamp": 1723653167,
       "sinceBlock": 20528085,
@@ -44,7 +45,7 @@
         ],
         "$upgradeCount": 1,
         "aggregatorCollateral": "10000000000000000",
-        "claimableFees": "69718270173240000",
+        "claimableFees": 0,
         "DUMMY_PROOF_ID": "0x84636c7b9793a9833ef7ca3e1c118d7d21dadb97ef7bf1fbfd549c10bca3553f",
         "feeAllocated": 0,
         "feeRecipient": "0x0188485989e211eDde9e5ba5794a3c6a3429BDb4",
@@ -56,19 +57,19 @@
           "0x6dd87ed53c75bcf4b71ea175076439d03ce87fd155ef425a77f53b8e95c60e38",
           "0xce48e1cc84d60e97002a3a2cf4922518d29807902411c8fab5717ba51e0a3fa4"
         ],
-        "getNextSubmissionIdx": 83,
-        "lastVerifiedSubmissionHeight": 20825974,
+        "getNextSubmissionIdx": 600,
+        "lastVerifiedSubmissionHeight": 22002673,
         "MAX_DUPLICATE_SUBMISSIONS": 256,
         "MAX_NUM_PROOFS_PER_SUBMISSION": 32,
         "MAX_SUBMISSION_MERKLE_DEPTH": 5,
         "maxNumPublicInputs": 16,
-        "nextProofIdx": 284,
-        "nextSubmissionIdxToVerify": 83,
+        "nextProofIdx": 2058,
+        "nextSubmissionIdxToVerify": 600,
         "outerVerifier": "0xE990F8e3505391d2b42C80683d403A8371Ee88B9",
         "owner": "0xb463603469Bf31f189E3F6625baf8378880Df14e",
         "paused": false,
         "UPGRADE_INTERFACE_VERSION": "5.0.0",
-        "verifiedSubmissionIdxForAllocatedFee": 0,
+        "verifiedSubmissionIdxForAllocatedFee": 599,
         "version": 10201,
         "worker": "0x7545b173780F07BF9EFA7e1561bb35B52907974D"
       },
@@ -105,7 +106,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x3B946743DEB7B6C97F05B7a31B23562448047E3E",
+          "from": "ethereum:0x3B946743DEB7B6C97F05B7a31B23562448047E3E",
           "role": "admin"
         }
       ],

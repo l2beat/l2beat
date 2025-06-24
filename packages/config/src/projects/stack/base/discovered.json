@@ -2,7 +2,7 @@
   "name": "stack",
   "chain": "base",
   "blockNumber": 30898222,
-  "configHash": "0x8be9ecd298efb038c09c3fdd3c6c21e55f3b84113e8d505d0eae10f173000661",
+  "configHash": "0x461163b5f5a29794a67d1974c92ebc7f03aac396efc410e9c66cb03250bf777d",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -21,29 +21,34 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+          "from": "base:0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "from": "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "from": "base:0x727a91e8251A262A4ad5F2D5811c6cD862961759",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
+          "from": "base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "from": "base:0xCC61c26901E719B73273C1484e337cBAB84369EF",
           "role": "admin"
         }
       ],
@@ -66,7 +71,7 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "from": "base:0xCC61c26901E719B73273C1484e337cBAB84369EF",
           "role": ".PROPOSER"
         }
       ]
@@ -192,6 +197,7 @@
       "sinceTimestamp": 1709680209,
       "sinceBlock": 11445431,
       "values": {
+        "$admin": "0x25aBB510386A658c622280f488844BD3b485DC32",
         "$immutable": false,
         "$implementation": "0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3",
         "$pastUpgrades": [
@@ -284,57 +290,75 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "from": "base:0xCC61c26901E719B73273C1484e337cBAB84369EF",
           "role": ".CHALLENGER"
         },
         {
           "permission": "guard",
-          "from": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "from": "base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
           "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
-          "from": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+          "from": "base:0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
           "description": "set and change address mappings.",
           "role": ".owner",
-          "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
         },
         {
           "permission": "interact",
-          "from": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "from": "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "from": "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
           "role": "admin",
-          "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "from": "base:0x727a91e8251A262A4ad5F2D5811c6cD862961759",
           "role": "admin",
-          "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
+          "from": "base:0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "role": "admin",
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "base:0xbA256039AEdaD407692D8Deb366308BE6Bb2515C",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
-          "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "from": "base:0xCC61c26901E719B73273C1484e337cBAB84369EF",
           "role": "admin",
-          "via": [{ "address": "0x25aBB510386A658c622280f488844BD3b485DC32" }]
+          "via": [
+            { "address": "base:0x25aBB510386A658c622280f488844BD3b485DC32" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x25aBB510386A658c622280f488844BD3b485DC32",
+          "from": "base:0x25aBB510386A658c622280f488844BD3b485DC32",
           "role": ".owner"
         }
       ],
@@ -489,7 +513,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "from": "base:0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
           "role": ".batcherHash"
         }
       ]
@@ -779,5 +803,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x693a893278c2d231e0ad015faeac10facfea3b02563fbdd09777e38c143e6705"
+  "permissionsConfigHash": "0x9ccca07b88afe9ebb06642183df56baf6cbb102c31fa257d408d3656861c0600"
 }

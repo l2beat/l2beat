@@ -2,7 +2,7 @@
   "name": "polygonzkevm",
   "chain": "ethereum",
   "blockNumber": 21744722,
-  "configHash": "0x722c38317ad05ea0cb555e9ed43752b1bfc58df65ce6dc3501570ba3abd69a34",
+  "configHash": "0xe9b17598abde9b294eb702dcf4ffcb18de5012813bddd09845a0a41f8776e058",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -17,7 +17,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
+          "from": "ethereum:0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
           "role": ".trustedSequencer"
         }
       ]
@@ -327,17 +327,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+          "from": "ethereum:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+          "from": "ethereum:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
+          "from": "ethereum:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01",
           "role": "admin"
         }
       ],

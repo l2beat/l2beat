@@ -3,6 +3,7 @@ import { BridgesArchivedPage } from './bridges/archived/BridgesArchivedPage'
 import { BridgesProjectPage } from './bridges/project/BridgesProjectPage'
 import { BridgesSummaryPage } from './bridges/summary/BridgesSummaryPage'
 import { DaRiskFrameworkPage } from './da-risk-framework/DaRiskFrameworkPage'
+import { DataAvailabilityArchivedPage } from './data-availability/archived/DataAvailabilityArchivedPage'
 import { DataAvailabilityProjectPage } from './data-availability/project/DataAvailabilityProjectPage'
 import { DataAvailabilityRiskPage } from './data-availability/risk/DataAvailabilityRiskPage'
 import { DataAvailabilitySummaryPage } from './data-availability/summary/DataAvailabilitySummaryPage'
@@ -30,6 +31,7 @@ import { ScalingUpcomingPage } from './scaling/upcoming/ScalingUpcomingPage'
 import { TermsOfServicePage } from './terms-of-service/TermsOfServicePage'
 import { ZkCatalogPage } from './zk-catalog/ZkCatalogPage'
 import { ZkCatalogProjectPage } from './zk-catalog/project/ZkCatalogProjectPage'
+import { ZkCatalogPageV1 } from './zk-catalog/v1/ZkCatalogPageV1'
 export type Pages = typeof pages
 
 export type SsrData = {
@@ -62,8 +64,10 @@ const pages = {
   DataAvailabilityRiskPage,
   DataAvailabilityThroughputPage,
   DataAvailabilityProjectPage,
+  DataAvailabilityArchivedPage,
   // ZK Catalog
   ZkCatalogPage,
+  ZkCatalogPageV1,
   ZkCatalogProjectPage,
   // Ecosystems
   EcosystemProjectPage,

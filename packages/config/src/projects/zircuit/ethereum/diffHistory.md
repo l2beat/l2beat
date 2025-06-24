@@ -1,4 +1,82 @@
-Generated with discovered.json: 0xd8c03b656d791831de5a1275418320667931dc9f
+Generated with discovered.json: 0x127e555543ac121bf9aa7f46782d5ce0699bd0e0
+
+# Diff at Wed, 18 Jun 2025 11:51:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22438012
+- current block number: 22731151
+
+## Description
+
+New verifier with new digest/vKey. No change to the backdoor / dummy proofs in the other active verifier.
+
+## Watched changes
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system.
+      sourceHashes.0:
+-        "0x3d0ebf0f8aafb6672ca85a4e9b3f8c912466ace744a78b5749a0b763bdc7876b"
++        "0x709abb48f790c58a1517d5b15d470a3b3058adc8ff1953bb2764302ffd552c1b"
+      values.$implementation:
+-        "0x89223192E728a830F09b32d93D51AaC88b6a466e"
++        "0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0"
+      values.$pastUpgrades.2:
++        ["2025-05-07T18:25:23.000Z","0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570",["0x89223192E728a830F09b32d93D51AaC88b6a466e"]]
+      values.$pastUpgrades.1.2:
+-        "0x19f086f222696bf287600d456e602d10dd4a1db43027e97262e1abb52f347570"
++        "0x273c02e325a3bd80d508d1b259225e739853611a87491e1bbb1642141a6b1612"
+      values.$pastUpgrades.1.1:
+-        "2025-05-07T18:25:23.000Z"
++        "2025-06-11T21:09:23.000Z"
+      values.$pastUpgrades.1.0.0:
+-        "0x89223192E728a830F09b32d93D51AaC88b6a466e"
++        "0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0"
+      values.$upgradeCount:
+-        2
++        3
+      values.digest:
+-        "0x1adec13f00764ae27bbb7ba225b373bc80f120f4c4c0125619c4dd74b18ceb43"
++        "0x167f5fa574c6c6d9dec2cca7c084f607c905044487a03eb3290089b218bd1f0f"
+      implementationNames.0x89223192E728a830F09b32d93D51AaC88b6a466e:
+-        "VerifierV2"
+      implementationNames.0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0:
++        "VerifierV2"
+      template:
++        "opstack/zircuit/Verifier"
+      description:
++        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+## Source code changes
+
+```diff
+.../VerifierV2/VerifierV2.sol                      | 1171 +++++++++++++++-----
+ 1 file changed, 923 insertions(+), 248 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438012 (main branch discovery), not current.
+
+```diff
+    contract VerifierV2 (0xC25D093D3A3f58952252D2e763BEAF2559dc9737) {
+    +++ description: None
+      template:
+-        "opstack/zircuit/Verifier"
+      description:
+-        "ZK verifier that verifies zk-SNARKs using the PLONK proving system to prove correct EVM state transitions. Core of the proof system."
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+Generated with discovered.json: 0x7d3ec8c8969a7dc080398d70e5ea7d34d1f6f96c
 
 # Diff at Fri, 30 May 2025 07:18:58 GMT:
 

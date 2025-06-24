@@ -1,6 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
-import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/get-da-throughput-summary'
+import { getDaSummaryEntries } from '~/server/features/data-availability/summary/getDaSummaryEntries'
+import { getDaThroughputSummary } from '~/server/features/data-availability/throughput/getDaThroughputSummary'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'

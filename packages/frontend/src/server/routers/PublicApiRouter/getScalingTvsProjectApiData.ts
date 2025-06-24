@@ -1,4 +1,4 @@
-import { getTvsChart } from '~/server/features/scaling/tvs/get-tvs-chart-data'
+import { getTvsChart } from '~/server/features/scaling/tvs/getTvsChartData'
 import type { TvsChartRange } from '~/server/features/scaling/tvs/utils/range'
 import { ps } from '~/server/projects'
 
@@ -29,7 +29,6 @@ export async function getScalingTvsProjectApiData({
     range,
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens,
-    previewRecategorisation: false,
   })
 
   const oldestTvsData = data.at(0)

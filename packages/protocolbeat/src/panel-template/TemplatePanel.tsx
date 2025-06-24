@@ -6,6 +6,9 @@ import { EditorView } from '../components/editor/EditorView'
 import type { EditorFile } from '../components/editor/store'
 import { isReadOnly } from '../config'
 import { useProjectData } from '../hooks/useProjectData'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 
 export function TemplatePanel() {
   const { project, selectedAddress, projectResponse } = useProjectData()
@@ -47,15 +50,15 @@ export function TemplatePanel() {
   )
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selectedAddress === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
 
   return (

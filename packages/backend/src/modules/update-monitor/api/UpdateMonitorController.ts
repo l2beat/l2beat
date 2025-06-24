@@ -23,9 +23,8 @@ export class UpdateMonitorController {
     private readonly projectService: ProjectService,
   ) {
     for (const chain of chains) {
-      this.onDiskConfigs[chain.name] = this.configReader.readAllConfigsForChain(
-        chain.name,
-      )
+      this.onDiskConfigs[chain.name] =
+        this.configReader.readAllDiscoveredConfigsForChain(chain.name)
     }
   }
 
@@ -33,7 +32,7 @@ export class UpdateMonitorController {
     const projects: Record<string, DashboardProject[]> = {}
     for (const chain of this.chains) {
       projects[chain.name] = await getDashboardProjects(
-        this.onDiskConfigs[chain.name],
+        this.onDiskConfigs[chain.name].filter((config) => !config.archived),
         this.configReader,
         this.db,
         chain.name,

@@ -1,3 +1,144 @@
+Generated with discovered.json: 0x0abbd5c9cdb97bb3e314666213f4286a1fb2e180
+
+# Diff at Mon, 16 Jun 2025 08:41:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22666214
+- current block number: 22666214
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666214 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
++        "ethereum:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
++        "ethereum:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
++        "ethereum:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed"
+    }
+```
+
+```diff
+    contract Fraxtal Multisig 1 (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: None
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"ethereum:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2","role":"admin","via":[{"address":"ethereum:0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"}]}
+      receivedPermissions.12.from:
+-        "ethereum:0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
++        "ethereum:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+      receivedPermissions.11.from:
+-        "ethereum:0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
++        "ethereum:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      receivedPermissions.10.from:
+-        "ethereum:0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
++        "ethereum:0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed"
+    }
+```
+
+Generated with discovered.json: 0xac130e8bd9496e40e6c5bcdd75db74e298170370
+
+# Diff at Mon, 09 Jun 2025 09:46:36 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22629752
+- current block number: 22666214
+
+## Description
+
+basefeeScalar x10.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        5000000
++        50000000
+    }
+```
+
+Generated with discovered.json: 0xdb9242323cbab2c718a7b013e5bb0efe07f25070
+
+# Diff at Wed, 04 Jun 2025 07:21:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@2c1561a0dd20d4853f867f43267ae9042bbca2cd block: 22567345
+- current block number: 22629752
+
+## Description
+
+manual withdrawal through upgrade:
+- [some address](https://etherscan.io/address/0x42097117dc0248cbbf9af5b27fd1a915f0766f04) tries to [withdraw](https://etherscan.io/tx/0xf92ff382faa06a0712d60dbbf30cdcb4c54118de5aec4dc8c700aba6c38aee65), [fails](https://etherscan.io/tx/0xa740813abebf99fd8c995d1ed70d68f0d9c374bd9aae332d3ab1c0a36b6e4903)
+- admin [upgrades the optiportal and withdraws](https://etherscan.io/tx/0xdca2297bd52b872499233c5e6605707a70a21ebd0d617b3f565c084fc4a775b6) for them
+
+also basefeeScalar increase: together with the previous increases, we are now at 10 000 x.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.basefeeScalar:
+-        500000
++        5000000
+    }
+```
+
+```diff
+    contract OptimismPortal (0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.$pastUpgrades.6:
++        ["2024-05-14T20:13:47.000Z","0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669",["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]]
+      values.$pastUpgrades.5:
++        ["2025-04-29T19:05:59.000Z","0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e",["0x87520f4104878c7dcda3E9296B572A5fe034E129"]]
+      values.$pastUpgrades.4.2:
+-        ["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"]
++        "2025-06-02T20:28:59.000Z"
+      values.$pastUpgrades.4.1:
+-        "2024-05-14T20:13:47.000Z"
++        "0xdca2297bd52b872499233c5e6605707a70a21ebd0d617b3f565c084fc4a775b6"
+      values.$pastUpgrades.4.0:
+-        "0x25f146ab6043f07c95e3b314e0200d2b5a8a0cb590cbcd9f094f753efef7d669"
++        ["0x553D60F9D5912e2ba9C3133550BC8eA551Fb0c0f"]
+      values.$pastUpgrades.3.2:
+-        ["0x87520f4104878c7dcda3E9296B572A5fe034E129"]
++        "2025-06-02T20:28:59.000Z"
+      values.$pastUpgrades.3.1:
+-        "2025-04-29T19:05:59.000Z"
++        "0xdca2297bd52b872499233c5e6605707a70a21ebd0d617b3f565c084fc4a775b6"
+      values.$pastUpgrades.3.0:
+-        "0xf1f2d8c52f1e2303dad74c3c2ee9c72ac4935bc5efbedc95ab52036e80133d1e"
++        ["0xcA11bde05977b3631167028862bE2a173976CA11"]
+      values.$upgradeCount:
+-        5
++        7
+    }
+```
+
 Generated with discovered.json: 0xc2ff0e5cd6f50ea9288da4b0803e312a832b742a
 
 # Diff at Fri, 30 May 2025 06:58:31 GMT:

@@ -27,6 +27,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -76,7 +77,7 @@ export const reddioex: ScalingProject = {
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
-      apps: [
+      bridges: [
         'https://reddio.com/explore',
         'https://dashboard.reddio.com',
         'https://bridge.reddio.com',
@@ -189,4 +190,5 @@ export const reddioex: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

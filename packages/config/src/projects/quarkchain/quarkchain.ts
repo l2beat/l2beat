@@ -15,7 +15,7 @@ export const quarkchain: ScalingProject = upcomingL2({
     category: 'Optimistic Rollup',
     links: {
       websites: ['https://quarkchain.io/'],
-      apps: [
+      bridges: [
         'https://bridge.beta.testnet.l2.quarkchain.io',
         'https://qkc-l2-faucet.eth.sep.w3link.io',
       ],

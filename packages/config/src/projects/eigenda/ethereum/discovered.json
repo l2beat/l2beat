@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22425142,
-  "configHash": "0xa5506cb2528e467c43b3f4090275fa86f6afe8354ab201f88960fba15179bb2a",
+  "blockNumber": 22625202,
+  "configHash": "0x0a53743e6a43cf59dd888d507ef0c8d4627f6d8fd2f9074ae6e9be2becf32ed9",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -18,57 +18,109 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can add and remove strategies",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "from": "ethereum:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "from": "ethereum:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
           "role": "admin",
-          "via": [{ "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99" }]
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "from": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "role": ".owner"
         }
       ],
@@ -92,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 5,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -206,7 +258,7 @@
       "template": "eigenlayer/RegistryCoordinator",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0x223309c7d816ce318a9371a50683d99b1ace4ccb775c4a4b3e6ec1238f0a5c68"
+        "0x7e7c9cae80b660c369700ce034c417e93999b08e43dabd1c37a1e76599552575"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum.",
@@ -215,7 +267,7 @@
       "sinceBlock": 19592322,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-        "$implementation": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
+        "$implementation": "0x2088435ABcB1234A9427B755931C9064C93a2595",
         "$pastUpgrades": [
           [
             "2024-04-05T21:49:47.000Z",
@@ -231,9 +283,14 @@
             "2024-07-24T15:18:11.000Z",
             "0x28e327c2afc40ceec4bbc6e6a960b2f7744632a20e48da93c657bdd82c92bf5c",
             ["0xdcabf0bE991d4609096CCe316df08d091356E03F"]
+          ],
+          [
+            "2025-05-29T22:04:35.000Z",
+            "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282",
+            ["0x2088435ABcB1234A9427B755931C9064C93a2595"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
         "ejectionCooldown": 259200,
@@ -323,25 +380,18 @@
           "0xc9b5d442ddc595b864aa084df07b9916eb8f0cdd5db35b3bb31ee0d92f3f87a7",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0x5daadb1375f140b8fc46467900d9fdf9bc1102865f14cd03b97828dca7370f5d",
-          "0xe5cd2e818d6329b8798fd0458768ff2556e64399843ee9e1a4745594c845f29f",
-          "0xff1a2ff97703610ad072e0d3792fea94aa13f2b5d95b791a884916c7e148dc7c",
           "0xc821b71eedeb24dc5b0da3644bfecea1aadfb73ec66ee09f7ecb76165232cd77",
           "0xe2a7aca3a4a60407b3faf5aeb525404c583d39336e7fcb00328fa9d5ae8ab2ce",
           "0x5a3cb349f8416f06020994e9d0288283b70b432b049ddc0d6cd88823a1238f54",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
-          "0xf8b0b901ae17361800f2d618d7d9cd26a65278223e626ca3283b4615206f3062",
-          "0x2023a021dc96aa0b419cb0b038f65204c8cc6c228d319c6a25e90bc4f43143dd",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
-          "0x67e288f64b9bd7da3d1f4ae16f9f95ec4f45a43ac2c482780d0dff2a8a25b978",
           "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
           "0x5d74f63c8e2caeabd1a496ca30d3b767e0c061411010c631392e363d8db39ae3",
           "0x1d4a7b4c590e8caae1f8e026fffe978b77e1dd3c4cd238951b0753fc724fb6d0",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0xfaadebdb6cb8d82a27c41dccb96d35b6a42c45132cb777a1b3ba70c3fb6b2370",
           "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
-          "0x6c1d43ae1a74bfbb3194940cac14182a6d75bd447e79f5dd5d8c4e1f5a19bc12",
           "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
           "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
           "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
@@ -349,13 +399,11 @@
           "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
           "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
           "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
-          "0xd22fce558d2330f8020d4e9e79e044af282d72062247d7e7a8461a9ca942ded1",
           "0xff7ca6eb4373179d6d3fb35a62911d7dda217b44d3e2db42dc6b912c393d0663",
           "0x83a970734199a554104e51933e39e7f712000abb43de137401120483a36bce50",
           "0x3ceb264831fd0409c2be704857d44726a904ffb020c199cc0e965c076104d170",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
-          "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
           "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0x7020be1384be2be43386e97a3b5b332027a86df13dd684a5b2c6f109b560e0af",
@@ -386,7 +434,6 @@
           "0x29ef6b67feaaa31f210c9a7b8ef073a3fb35eeb5f6fe063f5e75247b884abd0a",
           "0xe00658029de46cca6f8cc46d3cfcbb24e633b6014a642907fe2e484148224e42",
           "0xd1bfc317efb9f0d3ae5a0bd8c3a6c1948d10e63cebd06250aa7d2d20fec2f851",
-          "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245",
           "0x3b874990e71ab573e41e7807e8c884700858af957cb72c728369aaf7b1b7ef94",
           "0x4104842f50e49ad930345cd0c3620b615730315b983118d55ddb256fb97ab0d8",
           "0x2e8be17a9566a25a30c37aaaa57a870a922d9713833cd401a0d59d9e67fa9dcc",
@@ -400,8 +447,6 @@
           "0x5d1b4cf5cb2b91e53f4f9bcf8caec3555d2470c1d525423cafe86f5e66f56c24",
           "0xd6d38b5a8e2a4cf5abf95c8173840aa774fac2ad98fd2c7bdaed8921063e6425",
           "0x4234c98d060d30258d25732fa8f252686dddda8758ccd6e3fe1fc82f4b97f6b5",
-          "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
-          "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
           "0x01d0d6d4276a88ba70ae6ef384288f846bab6d311716a4147111c7cf486b38c9",
           "0xdc504cf506e8b0562bf55d13e75704869c2e80b2c17ce834840e7baaf1ffed7a",
           "0xbdd732ea30885f35952cc61fb2fa054a2bad17bc86626ef2abd0e26aab36442e",
@@ -413,9 +458,7 @@
           "0x52cdf25657d146c979e43ac697ed359fc5efb203895b5ed797b3c534e6354eb0",
           "0xa5ed4323be04f277e312a5924bd6028e843d2948f646eb540b73ed8ee23379b8",
           "0xc0cfa2a72cc4eb8e33a6a76fb2a5e4c89b5dc28151a0e072cdbb509abdfb7d82",
-          "0x0caff7e91769a74c203b21a099a9095df26726a888c8ae50ec29c661a698d5d5",
           "0x1c110f1cd7a151472377c5576c61825dec9d057ab1d188fe02b77900ab890424",
-          "0x5b2274de8738752b57013b4b6bc7da9d3b1d231d9f09e9cec3387c806f84f2a0",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x8482ab441df56bd6332c29b019b37eb8810cda09a7011316f9d8f1448a77b52b",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
@@ -426,7 +469,17 @@
           "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
-          "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3"
+          "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
+          "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
+          "0x0bab77e7b94af273411482782c1999adfc91b7d76af43eb60b4802278b8204d0",
+          "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
+          "0xd22fce558d2330f8020d4e9e79e044af282d72062247d7e7a8461a9ca942ded1",
+          "0x0caff7e91769a74c203b21a099a9095df26726a888c8ae50ec29c661a698d5d5",
+          "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
+          "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
+          "0xe53ff57b72c0ea3dc215523a33d43340a5d1aadb25f8395de0bce768f17a84c5",
+          "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
+          "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -434,6 +487,7 @@
           "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
         ],
         "serviceManager": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+        "socketRegistry": "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
       },
       "fieldMeta": {
@@ -462,7 +516,7 @@
       },
       "implementationNames": {
         "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656": "TransparentUpgradeableProxy",
-        "0xdcabf0bE991d4609096CCe316df08d091356E03F": "RegistryCoordinator"
+        "0x2088435ABcB1234A9427B755931C9064C93a2595": "RegistryCoordinator"
       }
     },
     {
@@ -478,7 +532,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "role": ".pauserRegistry"
         }
@@ -505,7 +559,7 @@
       "template": "eigenlayer/EjectionManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xe0842698f9d2aadda65d129ee9797efd5820d2c146dc3f368826b9815f5b8c9f"
+        "0x94a826fe3f9609e445cfd3cd6d7d9709c559367e9cb49a9b6d7952cd3a116cd0"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).",
@@ -513,7 +567,7 @@
       "sinceBlock": 19839949,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-        "$implementation": "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f",
+        "$implementation": "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A",
         "$pastUpgrades": [
           [
             "2024-05-10T13:31:35.000Z",
@@ -529,9 +583,14 @@
             "2024-08-07T15:52:47.000Z",
             "0x7dcee857c6f42698dd0db59a3032770cdffa8607b6902fee32f3d498991df44a",
             ["0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"]
+          ],
+          [
+            "2025-05-29T22:04:35.000Z",
+            "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282",
+            ["0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "ejectableStakePercent": [3333],
         "ejectionRateLimitWindow": [604800, 259200],
         "ejectors": [
@@ -552,7 +611,7 @@
       },
       "implementationNames": {
         "0x130d8EA0052B45554e4C99079B84df292149Bd5E": "TransparentUpgradeableProxy",
-        "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f": "EjectionManager"
+        "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A": "EjectionManager"
       }
     },
     {
@@ -568,7 +627,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can create rewards submissions.",
           "role": ".rewardsInitiator"
         }
@@ -591,7 +650,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -626,7 +685,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
@@ -643,13 +702,43 @@
       "proxyType": "EOA"
     },
     {
+      "name": "SocketRegistry",
+      "address": "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+      "type": "Contract",
+      "template": "eigenlayer/SocketRegistry",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x20ad72ba1402c7715031bdbe60a9bf87718c4a9444c65a68650a7a2c662f43e2"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1733339723,
+      "sinceBlock": 21331160,
+      "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4",
+        "$pastUpgrades": [
+          [
+            "2024-12-04T19:15:23.000Z",
+            "0xac0215d6889603e179b545d19d00944d5655764c4763ef724ffd7956b4d346b2",
+            ["0x5b60105ceD5207D6ad217BF2d426e133454eCFB4"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
+      },
+      "implementationNames": {
+        "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": "TransparentUpgradeableProxy",
+        "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4": "SocketRegistry"
+      }
+    },
+    {
       "address": "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
@@ -666,6 +755,41 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDADisperserRegistry",
+      "address": "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+      "type": "Contract",
+      "template": "eigenlayer/EigenDADisperserRegistry",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x8d337ccea9456dccbcd3d6b82ca9d61509d3a9343487e057438b300efe5484c6"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry for EigenDA disperser info such as disperser key to address mapping.",
+      "sinceTimestamp": 1744750295,
+      "sinceBlock": 22276885,
+      "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5",
+        "$pastUpgrades": [
+          [
+            "2025-04-15T20:51:35.000Z",
+            "0x19a69477f502e4c9c6ffa34582f15519fcd131c25e889864b5ce976d865bacd2",
+            ["0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "dispersers": ["0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9"],
+        "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5"
+      },
+      "fieldMeta": {
+        "dispersers": { "severity": "HIGH", "type": "RISK_PARAMETER" }
+      },
+      "implementationNames": {
+        "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": "TransparentUpgradeableProxy",
+        "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5": "EigenDADisperserRegistry"
+      }
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
       "type": "Contract",
@@ -677,32 +801,57 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "from": "ethereum:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "from": "ethereum:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
           "role": "admin"
         }
       ],
@@ -723,7 +872,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "description": "can eject DA operators from a quorum.",
           "role": ".ejectors"
         }
@@ -736,7 +885,7 @@
       "template": "eigenlayer/EigenDAServiceManager",
       "sourceHashes": [
         "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
-        "0xb0f8e019272d9343047a9e89cbb9526954b9e2a1149fdc2476e7c29759b38951"
+        "0x41471c5c89db3f645030775d3f3cc317047a179f36469fbd736db24baed6523e"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Bridge contract that accepts blob batches data availability attestations. Batches availability is attested by EigenDA operators signatures and relayed to the service manager contract by the EigenDA disperser.",
@@ -745,7 +894,7 @@
       "sinceBlock": 19592322,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-        "$implementation": "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07",
+        "$implementation": "0xae448D008B6F69033AfdA361b46b36C472B6FEE0",
         "$pastUpgrades": [
           [
             "2024-04-05T21:49:47.000Z",
@@ -776,19 +925,27 @@
             "2024-09-17T14:17:11.000Z",
             "0xaedce35d052ceaed37943107a78d8fb3d833ac5619edeab62a8772d67afaaff9",
             ["0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07"]
+          ],
+          [
+            "2025-05-29T22:04:35.000Z",
+            "0xfa483d640a2793a223b75e6a2c6fb8f9eaa2a1c0df1e6ca69d7d332251981282",
+            ["0xae448D008B6F69033AfdA361b46b36C472B6FEE0"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "batchConfirmers": [
           "0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8",
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 96751,
+        "batchId": 102526,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
+        "eigenDADisperserRegistry": "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+        "eigenDARelayRegistry": "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+        "eigenDAThresholdRegistry": "0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
         "getRestakeableStrategies": [
           "0xbeaC0eeEeeeeEEeEeEEEEeeEEeEeeeEeeEEBEaC0",
           "0x93c4b944D05dfe6df7645A86cd2206016c51564D",
@@ -809,6 +966,7 @@
         "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5",
         "paused": 0,
         "pauserRegistry": "0x0c431C66F4dE941d089625E5B423D00707977060",
+        "paymentVault": "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
         "quorumAdversaryThresholdPercentages": "0x212121",
         "quorumConfirmationThresholdPercentages": "0x373737",
         "quorumNumbersRequired": "0x0001",
@@ -817,7 +975,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 96751,
+        "taskNumber": 102526,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -844,7 +1002,7 @@
       },
       "implementationNames": {
         "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0": "TransparentUpgradeableProxy",
-        "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07": "EigenDAServiceManager"
+        "0xae448D008B6F69033AfdA361b46b36C472B6FEE0": "EigenDAServiceManager"
       }
     },
     {
@@ -859,7 +1017,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
@@ -869,6 +1027,44 @@
       "address": "0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PaymentVault",
+      "address": "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+      "type": "Contract",
+      "template": "eigenlayer/PaymentVault",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0xf39de15799feffaa8711b3b5e9ff8fb4c66ef1cbac1fe00cc984f957663d73d1"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Entrypoint for making reservations and on demand payments for EigenDA.",
+      "sinceTimestamp": 1744750295,
+      "sinceBlock": 22276885,
+      "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x62242213E6FA34E943844f9B3124150EFb9CB0dD",
+        "$pastUpgrades": [
+          [
+            "2025-04-15T20:51:35.000Z",
+            "0x359ca1fa527881edba34879bf633971940ab7addc0c00d96eebbe318fb3f8bd5",
+            ["0x62242213E6FA34E943844f9B3124150EFb9CB0dD"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "globalRatePeriodInterval": 30,
+        "globalSymbolsPerPeriod": 131072,
+        "lastPriceUpdateTime": 1744750295,
+        "minNumSymbols": 4096,
+        "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5",
+        "pricePerSymbol": 447000000,
+        "priceUpdateCooldown": 1,
+        "reservationPeriodInterval": 300
+      },
+      "implementationNames": {
+        "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05": "TransparentUpgradeableProxy",
+        "0x62242213E6FA34E943844f9B3124150EFb9CB0dD": "PaymentVault"
+      }
     },
     {
       "name": "IndexRegistry",
@@ -913,17 +1109,107 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDARelayRegistry",
+      "address": "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+      "type": "Contract",
+      "template": "eigenlayer/EigenDARelayRegistry",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x2a5d28cd901637b2eed614152fc63ba60a2a5e10127efe030849aec4cfe64007"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry for EigenDA relay keys, maps key to address.",
+      "sinceTimestamp": 1744750223,
+      "sinceBlock": 22276879,
+      "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0xF6D82FBBdf700c086389e72C3023812e956ECa9e",
+        "$pastUpgrades": [
+          [
+            "2025-04-15T20:50:23.000Z",
+            "0x5542d5049911c1b3f1a3d0e2f2c861a7e473c817622998049b78529202e6a374",
+            ["0xF6D82FBBdf700c086389e72C3023812e956ECa9e"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "nextRelayKey": 1,
+        "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5",
+        "relayers": [
+          {
+            "relay": "0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a",
+            "relayURL": "relay-0-mainnet-ethereum.eigenda.xyz"
+          }
+        ]
+      },
+      "fieldMeta": {
+        "relayers": { "severity": "HIGH", "type": "RISK_PARAMETER" }
+      },
+      "implementationNames": {
+        "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B": "TransparentUpgradeableProxy",
+        "0xF6D82FBBdf700c086389e72C3023812e956ECa9e": "EigenDARelayRegistry"
+      }
+    },
+    {
       "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "description": "can eject DA operators from a quorum.",
           "role": ".ejectors"
         }
       ]
+    },
+    {
+      "name": "EigenDAThresholdRegistry",
+      "address": "0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+      "type": "Contract",
+      "template": "eigenlayer/EigenDAThresholdRegistry",
+      "sourceHashes": [
+        "0xd87f004d37330210f1eb137e4498b14ba6340f079eaa0e9e7a22c1d4f76dde7d",
+        "0x7de6bfaca27d4a2d2ff694543af488ed523e89a1f239036f972852611a228eae"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "Registry of EigenDA threshold (i.e, adversary and confirmation threshold percentage for a quorum)",
+      "sinceTimestamp": 1744750211,
+      "sinceBlock": 22276878,
+      "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x92104977f16dAe423966caa5cD9C115F2D25a8D6",
+        "$pastUpgrades": [
+          [
+            "2025-04-15T20:50:11.000Z",
+            "0x903e00f79e1b98e13ebbc40db4c023249e3dca47685bd30ad86962d60aa83292",
+            ["0x92104977f16dAe423966caa5cD9C115F2D25a8D6"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "nextBlobVersion": 1,
+        "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5",
+        "quorumAdversaryThresholdPercentages": "0x212121",
+        "quorumConfirmationThresholdPercentages": "0x373737",
+        "quorumNumbersRequired": "0x0001"
+      },
+      "fieldMeta": {
+        "getQuorumAdversaryThresholdPercentage": {
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
+        },
+        "getQuorumConfirmationThresholdPercentage": {
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
+        },
+        "quorumNumbersRequired": {
+          "severity": "HIGH",
+          "type": "RISK_PARAMETER"
+        }
+      },
+      "implementationNames": {
+        "0xdb4c89956eEa6F606135E7d366322F2bDE609F15": "TransparentUpgradeableProxy",
+        "0x92104977f16dAe423966caa5cD9C115F2D25a8D6": "EigenDAThresholdRegistry"
+      }
     },
     {
       "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
@@ -932,9 +1218,21 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can approve the replacement of churned operators from a quorum",
           "role": ".churnApprover"
+        }
+      ]
+    },
+    {
+      "address": "0xe8437B66E834B7CdC90cC5D98B8DD6e636b37D7a",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "relayDA",
+          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "role": ".relayers"
         }
       ]
     },
@@ -942,6 +1240,18 @@
       "address": "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xF3d7C0D52fF8f4CF74A3CD9C53778516f4235bE9",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "disperse",
+          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "role": ".dispersers"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1061,27 +1371,71 @@
       "function updateOperatorStake(address operator, bytes32 operatorId, bytes quorumNumbers) returns (uint192)",
       "function weightOfOperatorForQuorum(uint8 quorumNumber, address operator) view returns (uint96)"
     ],
-    "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f": [
-      "constructor(address _registryCoordinator, address _stakeRegistry)",
-      "event EjectorUpdated(address ejector, bool status)",
+    "0x2088435ABcB1234A9427B755931C9064C93a2595": [
+      "constructor(address _serviceManager, address _stakeRegistry, address _blsApkRegistry, address _indexRegistry, address _socketRegistry)",
+      "event ChurnApproverUpdated(address prevChurnApprover, address newChurnApprover)",
+      "event EjectorUpdated(address prevEjector, address newEjector)",
       "event Initialized(uint8 version)",
-      "event OperatorEjected(bytes32 operatorId, uint8 quorumNumber)",
+      "event OperatorDeregistered(address indexed operator, bytes32 indexed operatorId)",
+      "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
+      "event OperatorSetParamsUpdated(uint8 indexed quorumNumber, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams)",
+      "event OperatorSocketUpdate(bytes32 indexed operatorId, string socket)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event QuorumEjection(uint32 ejectedOperators, bool ratelimitHit)",
-      "event QuorumEjectionParamsSet(uint8 quorumNumber, uint32 rateLimitWindow, uint16 ejectableStakePercent)",
-      "function amountEjectableForQuorum(uint8 _quorumNumber) view returns (uint256)",
-      "function ejectOperators(bytes32[][] _operatorIds)",
-      "function initialize(address _owner, address[] _ejectors, tuple(uint32 rateLimitWindow, uint16 ejectableStakePercent)[] _quorumEjectionParams)",
-      "function isEjector(address) view returns (bool)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event QuorumBlockNumberUpdated(uint8 indexed quorumNumber, uint256 blocknumber)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "function OPERATOR_CHURN_APPROVAL_TYPEHASH() view returns (bytes32)",
+      "function PUBKEY_REGISTRATION_TYPEHASH() view returns (bytes32)",
+      "function blsApkRegistry() view returns (address)",
+      "function calculateOperatorChurnApprovalDigestHash(address registeringOperator, bytes32 registeringOperatorId, tuple(uint8 quorumNumber, address operator)[] operatorKickParams, bytes32 salt, uint256 expiry) view returns (bytes32)",
+      "function churnApprover() view returns (address)",
+      "function createQuorum(tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams, uint96 minimumStake, tuple(address strategy, uint96 multiplier)[] strategyParams)",
+      "function deregisterOperator(bytes quorumNumbers)",
+      "function ejectOperator(address operator, bytes quorumNumbers)",
+      "function ejectionCooldown() view returns (uint256)",
+      "function ejector() view returns (address)",
+      "function getCurrentQuorumBitmap(bytes32 operatorId) view returns (uint192)",
+      "function getOperator(address operator) view returns (tuple(bytes32 operatorId, uint8 status))",
+      "function getOperatorFromId(bytes32 operatorId) view returns (address)",
+      "function getOperatorId(address operator) view returns (bytes32)",
+      "function getOperatorSetParams(uint8 quorumNumber) view returns (tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake))",
+      "function getOperatorStatus(address operator) view returns (uint8)",
+      "function getQuorumBitmapAtBlockNumberByIndex(bytes32 operatorId, uint32 blockNumber, uint256 index) view returns (uint192)",
+      "function getQuorumBitmapHistoryLength(bytes32 operatorId) view returns (uint256)",
+      "function getQuorumBitmapIndicesAtBlockNumber(uint32 blockNumber, bytes32[] operatorIds) view returns (uint32[])",
+      "function getQuorumBitmapUpdateByIndex(bytes32 operatorId, uint256 index) view returns (tuple(uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint192 quorumBitmap))",
+      "function indexRegistry() view returns (address)",
+      "function initialize(address _initialOwner, address _churnApprover, address _ejector, address _pauserRegistry, uint256 _initialPausedStatus, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake)[] _operatorSetParams, uint96[] _minimumStakes, tuple(address strategy, uint96 multiplier)[][] _strategyParams)",
+      "function isChurnApproverSaltUsed(bytes32) view returns (bool)",
+      "function lastEjectionTimestamp(address) view returns (uint256)",
+      "function numRegistries() view returns (uint256)",
       "function owner() view returns (address)",
-      "function quorumEjectionParams(uint8) view returns (uint32 rateLimitWindow, uint16 ejectableStakePercent)",
-      "function registryCoordinator() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function pubkeyRegistrationMessageHash(address operator) view returns (tuple(uint256 X, uint256 Y))",
+      "function quorumCount() view returns (uint8)",
+      "function quorumUpdateBlockNumber(uint8) view returns (uint256)",
+      "function registerOperator(bytes quorumNumbers, string socket, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
+      "function registerOperatorWithChurn(bytes quorumNumbers, string socket, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(uint8 quorumNumber, address operator)[] operatorKickParams, tuple(bytes signature, bytes32 salt, uint256 expiry) churnApproverSignature, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
+      "function registries(uint256) view returns (address)",
       "function renounceOwnership()",
-      "function setEjector(address _ejector, bool _status)",
-      "function setQuorumEjectionParams(uint8 _quorumNumber, tuple(uint32 rateLimitWindow, uint16 ejectableStakePercent) _quorumEjectionParams)",
-      "function stakeEjectedForQuorum(uint8, uint256) view returns (uint256 timestamp, uint256 stakeEjected)",
+      "function serviceManager() view returns (address)",
+      "function setChurnApprover(address _churnApprover)",
+      "function setEjectionCooldown(uint256 _ejectionCooldown)",
+      "function setEjector(address _ejector)",
+      "function setOperatorSetParams(uint8 quorumNumber, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams)",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function socketRegistry() view returns (address)",
       "function stakeRegistry() view returns (address)",
-      "function transferOwnership(address newOwner)"
+      "function transferOwnership(address newOwner)",
+      "function unpause(uint256 newPausedStatus)",
+      "function updateOperators(address[] operators)",
+      "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
+      "function updateSocket(string socket)"
     ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1131,58 +1485,24 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x58fDE694Db83e589ABb21A6Fe66cb20Ce5554a07": [
-      "constructor(address __avsDirectory, address __rewardsCoordinator, address __registryCoordinator, address __stakeRegistry)",
-      "event BatchConfirmed(bytes32 indexed batchHeaderHash, uint32 batchId)",
-      "event BatchConfirmerStatusChanged(address batchConfirmer, bool status)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event RewardsInitiatorUpdated(address prevRewardsInitiator, address newRewardsInitiator)",
-      "event StaleStakesForbiddenUpdate(bool value)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function BLOCK_STALE_MEASURE() view returns (uint32)",
-      "function STORE_DURATION_BLOCKS() view returns (uint32)",
-      "function THRESHOLD_DENOMINATOR() view returns (uint256)",
-      "function avsDirectory() view returns (address)",
-      "function batchId() view returns (uint32)",
-      "function batchIdToBatchMetadataHash(uint32) view returns (bytes32)",
-      "function blsApkRegistry() view returns (address)",
-      "function checkSignatures(bytes32 msgHash, bytes quorumNumbers, uint32 referenceBlockNumber, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) params) view returns (tuple(uint96[] signedStakeForQuorum, uint96[] totalStakeForQuorum), bytes32)",
-      "function confirmBatch(tuple(bytes32 blobHeadersRoot, bytes quorumNumbers, bytes signedStakeForQuorums, uint32 referenceBlockNumber) batchHeader, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature)",
-      "function createAVSRewardsSubmission(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration)[] rewardsSubmissions)",
-      "function delegation() view returns (address)",
-      "function deregisterOperatorFromAVS(address operator)",
-      "function getOperatorRestakedStrategies(address operator) view returns (address[])",
-      "function getRestakeableStrategies() view returns (address[])",
-      "function initialize(address _pauserRegistry, uint256 _initialPausedStatus, address _initialOwner, address[] _batchConfirmers, address _rewardsInitiator)",
-      "function isBatchConfirmer(address) view returns (bool)",
-      "function latestServeUntilBlock(uint32 referenceBlockNumber) view returns (uint32)",
-      "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function quorumAdversaryThresholdPercentages() view returns (bytes)",
-      "function quorumConfirmationThresholdPercentages() view returns (bytes)",
-      "function quorumNumbersRequired() view returns (bytes)",
-      "function registerOperatorToAVS(address operator, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
+    "0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x5b60105ceD5207D6ad217BF2d426e133454eCFB4": [
+      "constructor(address _registryCoordinator)",
+      "function getOperatorSocket(bytes32 _operatorId) view returns (string)",
+      "function migrateOperatorSockets(bytes32[] _operatorIds, string[] _sockets)",
+      "function operatorIdToSocket(bytes32) view returns (string)",
       "function registryCoordinator() view returns (address)",
-      "function renounceOwnership()",
-      "function rewardsInitiator() view returns (address)",
-      "function setBatchConfirmer(address _batchConfirmer)",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function setRewardsInitiator(address newRewardsInitiator)",
-      "function setStaleStakesForbidden(bool value)",
-      "function stakeRegistry() view returns (address)",
-      "function staleStakesForbidden() view returns (bool)",
-      "function taskNumber() view returns (uint32)",
-      "function transferOwnership(address newOwner)",
-      "function trySignatureAndApkVerification(bytes32 msgHash, tuple(uint256 X, uint256 Y) apk, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma) view returns (bool pairingSuccessful, bool siganatureIsValid)",
-      "function unpause(uint256 newPausedStatus)",
-      "function updateAVSMetadataURI(string _metadataURI)"
+      "function setOperatorSocket(bytes32 _operatorId, string _socket)"
     ],
     "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b": [
       "constructor(address _registryCoordinator)",
@@ -1209,6 +1529,66 @@
       "function registerOperator(address operator, bytes quorumNumbers)",
       "function registryCoordinator() view returns (address)"
     ],
+    "0x62242213E6FA34E943844f9B3124150EFb9CB0dD": [
+      "constructor()",
+      "event GlobalRatePeriodIntervalUpdated(uint64 previousValue, uint64 newValue)",
+      "event GlobalSymbolsPerPeriodUpdated(uint64 previousValue, uint64 newValue)",
+      "event Initialized(uint8 version)",
+      "event OnDemandPaymentUpdated(address indexed account, uint80 onDemandPayment, uint80 totalDeposit)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PriceParamsUpdated(uint64 previousMinNumSymbols, uint64 newMinNumSymbols, uint64 previousPricePerSymbol, uint64 newPricePerSymbol, uint64 previousPriceUpdateCooldown, uint64 newPriceUpdateCooldown)",
+      "event ReservationPeriodIntervalUpdated(uint64 previousValue, uint64 newValue)",
+      "event ReservationUpdated(address indexed account, tuple(uint64 symbolsPerSecond, uint64 startTimestamp, uint64 endTimestamp, bytes quorumNumbers, bytes quorumSplits) reservation)",
+      "function depositOnDemand(address _account) payable",
+      "function getOnDemandTotalDeposit(address _account) view returns (uint80)",
+      "function getOnDemandTotalDeposits(address[] _accounts) view returns (uint80[] _payments)",
+      "function getReservation(address _account) view returns (tuple(uint64 symbolsPerSecond, uint64 startTimestamp, uint64 endTimestamp, bytes quorumNumbers, bytes quorumSplits))",
+      "function getReservations(address[] _accounts) view returns (tuple(uint64 symbolsPerSecond, uint64 startTimestamp, uint64 endTimestamp, bytes quorumNumbers, bytes quorumSplits)[] _reservations)",
+      "function globalRatePeriodInterval() view returns (uint64)",
+      "function globalSymbolsPerPeriod() view returns (uint64)",
+      "function initialize(address _initialOwner, uint64 _minNumSymbols, uint64 _pricePerSymbol, uint64 _priceUpdateCooldown, uint64 _globalSymbolsPerPeriod, uint64 _reservationPeriodInterval, uint64 _globalRatePeriodInterval)",
+      "function lastPriceUpdateTime() view returns (uint64)",
+      "function minNumSymbols() view returns (uint64)",
+      "function onDemandPayments(address) view returns (uint80 totalDeposit)",
+      "function owner() view returns (address)",
+      "function pricePerSymbol() view returns (uint64)",
+      "function priceUpdateCooldown() view returns (uint64)",
+      "function renounceOwnership()",
+      "function reservationPeriodInterval() view returns (uint64)",
+      "function reservations(address) view returns (uint64 symbolsPerSecond, uint64 startTimestamp, uint64 endTimestamp, bytes quorumNumbers, bytes quorumSplits)",
+      "function setGlobalRatePeriodInterval(uint64 _globalRatePeriodInterval)",
+      "function setGlobalSymbolsPerPeriod(uint64 _globalSymbolsPerPeriod)",
+      "function setPriceParams(uint64 _minNumSymbols, uint64 _pricePerSymbol, uint64 _priceUpdateCooldown)",
+      "function setReservation(address _account, tuple(uint64 symbolsPerSecond, uint64 startTimestamp, uint64 endTimestamp, bytes quorumNumbers, bytes quorumSplits) _reservation)",
+      "function setReservationPeriodInterval(uint64 _reservationPeriodInterval)",
+      "function transferOwnership(address newOwner)",
+      "function withdraw(uint256 _amount)",
+      "function withdrawERC20(address _token, uint256 _amount)"
+    ],
+    "0x78cb05379a3b66E5227f2C1496432D7FFE794Fad": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x7DECf99BE82Ea4Cf72F381a5fCBc04228955FBE5": [
+      "constructor()",
+      "event DisperserAdded(uint32 indexed key, address indexed disperser)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function disperserKeyToAddress(uint32 _key) view returns (address)",
+      "function disperserKeyToInfo(uint32) view returns (address disperserAddress)",
+      "function initialize(address _initialOwner)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setDisperserInfo(uint32 _disperserKey, tuple(address disperserAddress) _disperserInfo)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0x8247EF5705d3345516286B72bFE6D690197C2E99": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1231,7 +1611,143 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
+    "0x92104977f16dAe423966caa5cD9C115F2D25a8D6": [
+      "constructor()",
+      "event DefaultSecurityThresholdsV2Updated(tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) previousDefaultSecurityThresholdsV2, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) newDefaultSecurityThresholdsV2)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QuorumAdversaryThresholdPercentagesUpdated(bytes previousQuorumAdversaryThresholdPercentages, bytes newQuorumAdversaryThresholdPercentages)",
+      "event QuorumConfirmationThresholdPercentagesUpdated(bytes previousQuorumConfirmationThresholdPercentages, bytes newQuorumConfirmationThresholdPercentages)",
+      "event QuorumNumbersRequiredUpdated(bytes previousQuorumNumbersRequired, bytes newQuorumNumbersRequired)",
+      "event VersionedBlobParamsAdded(uint16 indexed version, tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate) versionedBlobParams)",
+      "function addVersionedBlobParams(tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate) _versionedBlobParams) returns (uint16)",
+      "function getBlobParams(uint16 version) view returns (tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate))",
+      "function getIsQuorumRequired(uint8 quorumNumber) view returns (bool)",
+      "function getQuorumAdversaryThresholdPercentage(uint8 quorumNumber) view returns (uint8 adversaryThresholdPercentage)",
+      "function getQuorumConfirmationThresholdPercentage(uint8 quorumNumber) view returns (uint8 confirmationThresholdPercentage)",
+      "function initialize(address _initialOwner, bytes _quorumAdversaryThresholdPercentages, bytes _quorumConfirmationThresholdPercentages, bytes _quorumNumbersRequired, tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate)[] _versionedBlobParams)",
+      "function nextBlobVersion() view returns (uint16)",
+      "function owner() view returns (address)",
+      "function quorumAdversaryThresholdPercentages() view returns (bytes)",
+      "function quorumConfirmationThresholdPercentages() view returns (bytes)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function versionedBlobParams(uint16) view returns (uint32 maxNumOperators, uint32 numChunks, uint8 codingRate)"
+    ],
+    "0xae448D008B6F69033AfdA361b46b36C472B6FEE0": [
+      "constructor(address __avsDirectory, address __rewardsCoordinator, address __registryCoordinator, address __stakeRegistry, address __eigenDAThresholdRegistry, address __eigenDARelayRegistry, address __paymentVault, address __eigenDADisperserRegistry)",
+      "event BatchConfirmed(bytes32 indexed batchHeaderHash, uint32 batchId)",
+      "event BatchConfirmerStatusChanged(address batchConfirmer, bool status)",
+      "event DefaultSecurityThresholdsV2Updated(tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) previousDefaultSecurityThresholdsV2, tuple(uint8 confirmationThreshold, uint8 adversaryThreshold) newDefaultSecurityThresholdsV2)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address indexed account, uint256 newPausedStatus)",
+      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
+      "event QuorumAdversaryThresholdPercentagesUpdated(bytes previousQuorumAdversaryThresholdPercentages, bytes newQuorumAdversaryThresholdPercentages)",
+      "event QuorumConfirmationThresholdPercentagesUpdated(bytes previousQuorumConfirmationThresholdPercentages, bytes newQuorumConfirmationThresholdPercentages)",
+      "event QuorumNumbersRequiredUpdated(bytes previousQuorumNumbersRequired, bytes newQuorumNumbersRequired)",
+      "event RewardsInitiatorUpdated(address prevRewardsInitiator, address newRewardsInitiator)",
+      "event StaleStakesForbiddenUpdate(bool value)",
+      "event Unpaused(address indexed account, uint256 newPausedStatus)",
+      "event VersionedBlobParamsAdded(uint16 indexed version, tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate) versionedBlobParams)",
+      "function BLOCK_STALE_MEASURE() view returns (uint32)",
+      "function STORE_DURATION_BLOCKS() view returns (uint32)",
+      "function THRESHOLD_DENOMINATOR() view returns (uint256)",
+      "function avsDirectory() view returns (address)",
+      "function batchId() view returns (uint32)",
+      "function batchIdToBatchMetadataHash(uint32) view returns (bytes32)",
+      "function blsApkRegistry() view returns (address)",
+      "function checkSignatures(bytes32 msgHash, bytes quorumNumbers, uint32 referenceBlockNumber, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) params) view returns (tuple(uint96[] signedStakeForQuorum, uint96[] totalStakeForQuorum), bytes32)",
+      "function confirmBatch(tuple(bytes32 blobHeadersRoot, bytes quorumNumbers, bytes signedStakeForQuorums, uint32 referenceBlockNumber) batchHeader, tuple(uint32[] nonSignerQuorumBitmapIndices, tuple(uint256 X, uint256 Y)[] nonSignerPubkeys, tuple(uint256 X, uint256 Y)[] quorumApks, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma, uint32[] quorumApkIndices, uint32[] totalStakeIndices, uint32[][] nonSignerStakeIndices) nonSignerStakesAndSignature)",
+      "function createAVSRewardsSubmission(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, uint256 amount, uint32 startTimestamp, uint32 duration)[] rewardsSubmissions)",
+      "function createOperatorDirectedAVSRewardsSubmission(tuple(tuple(address strategy, uint96 multiplier)[] strategiesAndMultipliers, address token, tuple(address operator, uint256 amount)[] operatorRewards, uint32 startTimestamp, uint32 duration, string description)[] operatorDirectedRewardsSubmissions)",
+      "function delegation() view returns (address)",
+      "function deregisterOperatorFromAVS(address operator)",
+      "function eigenDADisperserRegistry() view returns (address)",
+      "function eigenDARelayRegistry() view returns (address)",
+      "function eigenDAThresholdRegistry() view returns (address)",
+      "function getBlobParams(uint16 version) view returns (tuple(uint32 maxNumOperators, uint32 numChunks, uint8 codingRate))",
+      "function getIsQuorumRequired(uint8 quorumNumber) view returns (bool)",
+      "function getOperatorRestakedStrategies(address operator) view returns (address[])",
+      "function getQuorumAdversaryThresholdPercentage(uint8 quorumNumber) view returns (uint8)",
+      "function getQuorumConfirmationThresholdPercentage(uint8 quorumNumber) view returns (uint8)",
+      "function getRestakeableStrategies() view returns (address[])",
+      "function initialize(address _pauserRegistry, uint256 _initialPausedStatus, address _initialOwner, address[] _batchConfirmers, address _rewardsInitiator)",
+      "function isBatchConfirmer(address) view returns (bool)",
+      "function latestServeUntilBlock(uint32 referenceBlockNumber) pure returns (uint32)",
+      "function owner() view returns (address)",
+      "function pause(uint256 newPausedStatus)",
+      "function pauseAll()",
+      "function paused(uint8 index) view returns (bool)",
+      "function paused() view returns (uint256)",
+      "function pauserRegistry() view returns (address)",
+      "function paymentVault() view returns (address)",
+      "function quorumAdversaryThresholdPercentages() view returns (bytes)",
+      "function quorumConfirmationThresholdPercentages() view returns (bytes)",
+      "function quorumNumbersRequired() view returns (bytes)",
+      "function registerOperatorToAVS(address operator, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
+      "function registryCoordinator() view returns (address)",
+      "function renounceOwnership()",
+      "function rewardsInitiator() view returns (address)",
+      "function setBatchConfirmer(address _batchConfirmer)",
+      "function setClaimerFor(address claimer)",
+      "function setPauserRegistry(address newPauserRegistry)",
+      "function setRewardsInitiator(address newRewardsInitiator)",
+      "function setStaleStakesForbidden(bool value)",
+      "function stakeRegistry() view returns (address)",
+      "function staleStakesForbidden() view returns (bool)",
+      "function taskNumber() view returns (uint32)",
+      "function transferOwnership(address newOwner)",
+      "function trySignatureAndApkVerification(bytes32 msgHash, tuple(uint256 X, uint256 Y) apk, tuple(uint256[2] X, uint256[2] Y) apkG2, tuple(uint256 X, uint256 Y) sigma) view returns (bool pairingSuccessful, bool siganatureIsValid)",
+      "function unpause(uint256 newPausedStatus)",
+      "function updateAVSMetadataURI(string _metadataURI)"
+    ],
+    "0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xC125fECDDabFe13f29EB287Bb8551892AEE7C98A": [
+      "constructor(address _registryCoordinator, address _stakeRegistry)",
+      "event EjectorUpdated(address ejector, bool status)",
+      "event Initialized(uint8 version)",
+      "event OperatorEjected(bytes32 operatorId, uint8 quorumNumber)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event QuorumEjection(uint32 ejectedOperators, bool ratelimitHit)",
+      "event QuorumEjectionParamsSet(uint8 quorumNumber, uint32 rateLimitWindow, uint16 ejectableStakePercent)",
+      "function amountEjectableForQuorum(uint8 _quorumNumber) view returns (uint256)",
+      "function ejectOperators(bytes32[][] _operatorIds)",
+      "function initialize(address _owner, address[] _ejectors, tuple(uint32 rateLimitWindow, uint16 ejectableStakePercent)[] _quorumEjectionParams)",
+      "function isEjector(address) view returns (bool)",
+      "function owner() view returns (address)",
+      "function quorumEjectionParams(uint8) view returns (uint32 rateLimitWindow, uint16 ejectableStakePercent)",
+      "function registryCoordinator() view returns (address)",
+      "function renounceOwnership()",
+      "function setEjector(address _ejector, bool _status)",
+      "function setQuorumEjectionParams(uint8 _quorumNumber, tuple(uint32 rateLimitWindow, uint16 ejectableStakePercent) _quorumEjectionParams)",
+      "function stakeEjectedForQuorum(uint8, uint256) view returns (uint256 timestamp, uint256 stakeEjected)",
+      "function stakeRegistry() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
+    "0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
@@ -1291,82 +1807,48 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xdcabf0bE991d4609096CCe316df08d091356E03F": [
-      "constructor(address _serviceManager, address _stakeRegistry, address _blsApkRegistry, address _indexRegistry)",
-      "event ChurnApproverUpdated(address prevChurnApprover, address newChurnApprover)",
-      "event EjectorUpdated(address prevEjector, address newEjector)",
+    "0xdb4c89956eEa6F606135E7d366322F2bDE609F15": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)",
+      "function admin() returns (address admin_)",
+      "function changeAdmin(address newAdmin)",
+      "function implementation() returns (address implementation_)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xF6D82FBBdf700c086389e72C3023812e956ECa9e": [
+      "constructor()",
       "event Initialized(uint8 version)",
-      "event OperatorDeregistered(address indexed operator, bytes32 indexed operatorId)",
-      "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
-      "event OperatorSetParamsUpdated(uint8 indexed quorumNumber, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams)",
-      "event OperatorSocketUpdate(bytes32 indexed operatorId, string socket)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address indexed account, uint256 newPausedStatus)",
-      "event PauserRegistrySet(address pauserRegistry, address newPauserRegistry)",
-      "event QuorumBlockNumberUpdated(uint8 indexed quorumNumber, uint256 blocknumber)",
-      "event Unpaused(address indexed account, uint256 newPausedStatus)",
-      "function OPERATOR_CHURN_APPROVAL_TYPEHASH() view returns (bytes32)",
-      "function PUBKEY_REGISTRATION_TYPEHASH() view returns (bytes32)",
-      "function blsApkRegistry() view returns (address)",
-      "function calculateOperatorChurnApprovalDigestHash(address registeringOperator, bytes32 registeringOperatorId, tuple(uint8 quorumNumber, address operator)[] operatorKickParams, bytes32 salt, uint256 expiry) view returns (bytes32)",
-      "function churnApprover() view returns (address)",
-      "function createQuorum(tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams, uint96 minimumStake, tuple(address strategy, uint96 multiplier)[] strategyParams)",
-      "function deregisterOperator(bytes quorumNumbers)",
-      "function ejectOperator(address operator, bytes quorumNumbers)",
-      "function ejectionCooldown() view returns (uint256)",
-      "function ejector() view returns (address)",
-      "function getCurrentQuorumBitmap(bytes32 operatorId) view returns (uint192)",
-      "function getOperator(address operator) view returns (tuple(bytes32 operatorId, uint8 status))",
-      "function getOperatorFromId(bytes32 operatorId) view returns (address)",
-      "function getOperatorId(address operator) view returns (bytes32)",
-      "function getOperatorSetParams(uint8 quorumNumber) view returns (tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake))",
-      "function getOperatorStatus(address operator) view returns (uint8)",
-      "function getQuorumBitmapAtBlockNumberByIndex(bytes32 operatorId, uint32 blockNumber, uint256 index) view returns (uint192)",
-      "function getQuorumBitmapHistoryLength(bytes32 operatorId) view returns (uint256)",
-      "function getQuorumBitmapIndicesAtBlockNumber(uint32 blockNumber, bytes32[] operatorIds) view returns (uint32[])",
-      "function getQuorumBitmapUpdateByIndex(bytes32 operatorId, uint256 index) view returns (tuple(uint32 updateBlockNumber, uint32 nextUpdateBlockNumber, uint192 quorumBitmap))",
-      "function indexRegistry() view returns (address)",
-      "function initialize(address _initialOwner, address _churnApprover, address _ejector, address _pauserRegistry, uint256 _initialPausedStatus, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake)[] _operatorSetParams, uint96[] _minimumStakes, tuple(address strategy, uint96 multiplier)[][] _strategyParams)",
-      "function isChurnApproverSaltUsed(bytes32) view returns (bool)",
-      "function lastEjectionTimestamp(address) view returns (uint256)",
-      "function numRegistries() view returns (uint256)",
+      "event RelayAdded(address indexed relay, uint32 indexed key, string relayURL)",
+      "function addRelayInfo(tuple(address relayAddress, string relayURL) relayInfo) returns (uint32)",
+      "function initialize(address _initialOwner)",
+      "function nextRelayKey() view returns (uint32)",
       "function owner() view returns (address)",
-      "function pause(uint256 newPausedStatus)",
-      "function pauseAll()",
-      "function paused(uint8 index) view returns (bool)",
-      "function paused() view returns (uint256)",
-      "function pauserRegistry() view returns (address)",
-      "function pubkeyRegistrationMessageHash(address operator) view returns (tuple(uint256 X, uint256 Y))",
-      "function quorumCount() view returns (uint8)",
-      "function quorumUpdateBlockNumber(uint8) view returns (uint256)",
-      "function registerOperator(bytes quorumNumbers, string socket, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
-      "function registerOperatorWithChurn(bytes quorumNumbers, string socket, tuple(tuple(uint256 X, uint256 Y) pubkeyRegistrationSignature, tuple(uint256 X, uint256 Y) pubkeyG1, tuple(uint256[2] X, uint256[2] Y) pubkeyG2) params, tuple(uint8 quorumNumber, address operator)[] operatorKickParams, tuple(bytes signature, bytes32 salt, uint256 expiry) churnApproverSignature, tuple(bytes signature, bytes32 salt, uint256 expiry) operatorSignature)",
-      "function registries(uint256) view returns (address)",
+      "function relayKeyToAddress(uint32 key) view returns (address)",
+      "function relayKeyToInfo(uint32) view returns (address relayAddress, string relayURL)",
+      "function relayKeyToUrl(uint32 key) view returns (string)",
       "function renounceOwnership()",
-      "function serviceManager() view returns (address)",
-      "function setChurnApprover(address _churnApprover)",
-      "function setEjectionCooldown(uint256 _ejectionCooldown)",
-      "function setEjector(address _ejector)",
-      "function setOperatorSetParams(uint8 quorumNumber, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams)",
-      "function setPauserRegistry(address newPauserRegistry)",
-      "function stakeRegistry() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause(uint256 newPausedStatus)",
-      "function updateOperators(address[] operators)",
-      "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
-      "function updateSocket(string socket)"
+      "function transferOwnership(address newOwner)"
     ]
   },
   "usedTemplates": {
     "eigenlayer/BLSApkRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/EigenDADisperserRegistry": "0x2c838fbf8c11140f540ad7325afadb6581a83d99e20b209772f8f4a52ff01ea4",
     "eigenlayer/EigenDAPauserRegistry": "0x650c2bb1c48c3b4074538696cc4c8cc5a1610e60b132f774c9b120c619c34086",
+    "eigenlayer/EigenDARelayRegistry": "0x0d507fbf4a396f03440bf549c0390245960539ae8aee2eac66ed61a0d5e37737",
     "eigenlayer/EigenDAServiceManager": "0x43be05ba9f6891eb189c2895b180400592e5a6628f6148b82760ee4bfb6ce1c6",
+    "eigenlayer/EigenDAThresholdRegistry": "0x60726ce29319c0806396dbbc935f55a813ae0b3ae4e7af1019d742c45d281915",
     "eigenlayer/EjectionManager": "0xbf1efcdc54104ebb9105e95373588d3451b5a97a4fcfdc4cbab5c69278a04a8b",
     "eigenlayer/IndexRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/PaymentVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RegistryCoordinator": "0xeef8d3302c7236f5745dd51b4d6b05b44a371c9708994d86a8d2b7e4b573dedc",
+    "eigenlayer/SocketRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/StakeRegistry": "0x354e5717008504cef09d88027f76fe2fe308210a96b59fce263f4d8ec5868080",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x960334a57dd948ad07a3b8fb850419bd072ee6e0f910baaac2d8353be3ee0036"
+  "permissionsConfigHash": "0x8f849f98638d0a59ec6045196a986fcf0406a2bca0b82e548beae6dc3d02f904"
 }

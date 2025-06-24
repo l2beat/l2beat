@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "blockNumber": 314504547,
-  "configHash": "0x2d61111abb1cceaa43547117e3d4c1aa91c54c16a21e13b786c64bf524d3d777",
+  "configHash": "0x8e102738d79db50b54bfbde058207b5b745ade355222b02f66bc9ae76c3d39ea",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -21,7 +21,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+          "from": "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
           "role": "admin"
         }
       ],
@@ -107,25 +107,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+          "from": "arbitrum:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+          "from": "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
           "role": "admin",
-          "via": [{ "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917" }]
+          "via": [
+            { "address": "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917" }
+          ]
         },
         {
           "permission": "upgrade",
-          "from": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
+          "from": "arbitrum:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
+          "from": "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917",
           "role": ".owner"
         }
       ],

@@ -2,7 +2,7 @@
   "name": "stargate",
   "chain": "ethereum",
   "blockNumber": 21723798,
-  "configHash": "0x3d0c9929b6dc7f5f40dcff3f8c141e4f105197aca73603fc439b50babc690656",
+  "configHash": "0x68d4034eaa291757bda326936e109ed1328da7ecb4a543e80a86a8fd9051c4c6",
   "entries": [
     {
       "name": "Factory",
@@ -1255,7 +1255,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5a54fe5234E811466D5366846283323c954310B2",
+          "from": "ethereum:0x5a54fe5234E811466D5366846283323c954310B2",
           "role": "admin"
         }
       ],
@@ -1465,7 +1465,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x902F09715B6303d4173037652FA7377e5b98089E",
+          "from": "ethereum:0x902F09715B6303d4173037652FA7377e5b98089E",
           "role": "admin"
         }
       ],

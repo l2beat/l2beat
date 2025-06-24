@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "zircuit",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -18,6 +18,9 @@
           "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
         }
       }
+    },
+    "zircuit": {
+      "initialAddresses": ["0x4200000000000000000000000000000000000015"]
     }
   }
 }

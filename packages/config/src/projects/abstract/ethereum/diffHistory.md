@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x85ee8e9e9afe1654b7951b4cf2c26cb82ada4165
+Generated with discovered.json: 0x4ca4ad9c493b6efc0ff8d7091a8e4d362e6e618e
 
 # Diff at Fri, 30 May 2025 04:33:20 GMT:
 
@@ -394,7 +394,7 @@ Generated with discovered.json: 0xc71a501d48f53213c790a3384e7b43fa16bf7ecd
 
 ## Description
 
-Abtract sub-MS member changes.
+Abstract sub-MS member changes.
 
 ## Watched changes
 

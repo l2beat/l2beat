@@ -46,7 +46,7 @@ export interface ApiProjectChain {
   blockNumber: number
 }
 
-export type ApiListTemplatesResponse = Record<string, string[]>
+export type ApiListTemplatesResponse = string[]
 
 export interface ApiTemplateFileResponse {
   template: string

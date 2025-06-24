@@ -31,7 +31,7 @@ rm -rf dist
 
 # Start processes and capture their PIDs
 esbuild \
-  src/ssr/client-entry.tsx \
+  src/ssr/ClientEntry.tsx \
   --bundle \
   --watch=forever \
   --outfile=static/index.js < /dev/tty &

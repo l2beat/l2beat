@@ -1,5 +1,5 @@
 {
-  "$schema": "../../../../../discovery/schemas/config.v2.schema.json",
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "sophon",
   "import": ["../globalConfig.jsonc"],
   "chains": {
@@ -16,9 +16,6 @@
         "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
       },
       "overrides": {
-        "0x8f50d93B9955B285f787043B30B5F51D09bE0120": {
-          "ignoreRelatives": ["bridge", "vectorx"]
-        },
         "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564": {
           "fields": {
             "validatorsVTL": {

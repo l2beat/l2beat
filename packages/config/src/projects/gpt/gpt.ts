@@ -42,7 +42,7 @@ export const gpt: ScalingProject = polygonCDKStack({
       'GPT Protocol is a Validium built on the Polygon CDK stack. The purpose of the project is to create a decentralized market of AI compute power.',
     links: {
       websites: ['https://gptprotocol.org/'],
-      apps: [
+      bridges: [
         'https://bridge.gptprotocol.io/',
         'https://assistant.gptprotocol.io/',
         'https://staking.gptprotocol.org/',

@@ -1,4 +1,64 @@
-Generated with discovered.json: 0x2eca3ebe5e6369fb999ffa77c3774bcbe24866b2
+Generated with discovered.json: 0xbcd846050d698b8c4a0ec43490f1ec80ad4eee5d
+
+# Diff at Mon, 16 Jun 2025 08:42:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22346290
+- current block number: 22346290
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22346290 (main branch discovery), not current.
+
+```diff
+    contract Race Multisig 1 (0x5A669B2193718F189b0576c0cdcedfEd6f40F9Ea) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x0f33D824d74180598311b3025095727BeA61f219","role":"admin","via":[{"address":"ethereum:0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"}]}
+      receivedPermissions.7.from:
+-        "ethereum:0x0f33D824d74180598311b3025095727BeA61f219"
++        "ethereum:0xCB73B7348705a9F925643150Eb00350719380FF8"
+      receivedPermissions.6.from:
+-        "ethereum:0xCB73B7348705a9F925643150Eb00350719380FF8"
++        "ethereum:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32"
+      receivedPermissions.5.from:
+-        "ethereum:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32"
++        "ethereum:0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x0f33D824d74180598311b3025095727BeA61f219","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x0f33D824d74180598311b3025095727BeA61f219"
++        "ethereum:0xCB73B7348705a9F925643150Eb00350719380FF8"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xCB73B7348705a9F925643150Eb00350719380FF8"
++        "ethereum:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xCf6A32dB8b3313b3d439CE6909511c2c3415fa32"
++        "ethereum:0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xf54B2BAEF894cfF5511A5722Acaac0409F2F2d89) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x9B3C6D1d33F1fd82Ebb8dFbE38dA162B329De191"
+    }
+```
+
+Generated with discovered.json: 0xfe4d0327c02f6c8d7468167c14a0ed8660c7f501
 
 # Diff at Fri, 30 May 2025 07:13:31 GMT:
 

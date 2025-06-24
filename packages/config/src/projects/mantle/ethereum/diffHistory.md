@@ -1,4 +1,52 @@
-Generated with discovered.json: 0xcb0d4406e2e0cd7a8821820c8709a8b12cbacf91
+Generated with discovered.json: 0x82547ad56d8b7b878840e1db8c8650a8d8c4f43c
+
+# Diff at Mon, 16 Jun 2025 08:42:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22273219
+- current block number: 22273219
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22273219 (main branch discovery), not current.
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0x427Ea0710FA5252057F0D88274f7aeb308386cAf","role":"admin","via":[{"address":"ethereum:0xca35F8338054739D138884685e08b39EE2217794"}]}
+      receivedPermissions.11.from:
+-        "ethereum:0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "ethereum:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x676A795fe6E43C17c668de16730c3F690FEB7120) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0xca35F8338054739D138884685e08b39EE2217794"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      directlyReceivedPermissions.5:
++        {"permission":"upgrade","from":"ethereum:0x427Ea0710FA5252057F0D88274f7aeb308386cAf","role":"admin"}
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "ethereum:0x676A795fe6E43C17c668de16730c3F690FEB7120"
+    }
+```
+
+Generated with discovered.json: 0x6ae361aaaba69e9c856293bf0c2bd5eff5dc56cc
 
 # Diff at Fri, 30 May 2025 07:09:25 GMT:
 

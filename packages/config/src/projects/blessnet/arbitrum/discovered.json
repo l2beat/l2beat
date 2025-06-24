@@ -2,7 +2,7 @@
   "name": "blessnet",
   "chain": "arbitrum",
   "blockNumber": 336620777,
-  "configHash": "0x7926379d1866c3f8a9a9e41ecdedea5372d370418de8260a0578561403a4274a",
+  "configHash": "0x090873213c12cebe49a761b75601379748d6459e43e32df8b3cbff0bd54b0cbd",
   "entries": [
     {
       "name": "Blessnet Multisig 2",
@@ -17,13 +17,13 @@
       "receivedPermissions": [
         {
           "permission": "fastconfirm",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
           "permission": "validate",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -227,7 +227,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -263,7 +263,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -324,7 +324,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -439,85 +439,103 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
-          "via": [{ "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }]
-        },
-        {
-          "permission": "upgrade",
-          "from": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
-          "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
+          "from": "arbitrum:0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
+          "from": "arbitrum:0x1e751242C9CE10E165969EeD91E5D98587904aad",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x67B01721383baedF4b27B745bf533F6F7bDc4AE4",
+          "from": "arbitrum:0x46B6462301182B393ac5f014779687d3B6d4FB57",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
+          "from": "arbitrum:0x67B01721383baedF4b27B745bf533F6F7bDc4AE4",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
+          "from": "arbitrum:0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
+          "from": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
           "role": "admin",
           "via": [
-            { "address": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b" },
-            { "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
           "role": "admin",
-          "via": [{ "address": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }]
+          "via": [
+            {
+              "address": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b"
+            },
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "role": "admin",
+          "via": [
+            { "address": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
+          "from": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
           "role": ".executors"
         }
       ],
@@ -553,7 +571,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -600,7 +618,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
+          "from": "arbitrum:0x1e751242C9CE10E165969EeD91E5D98587904aad",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -620,18 +638,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b",
+          "from": "arbitrum:0xf201805BD417f9E0d229A0C379c3e5B91bf18A8b",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "0xF9327276c0E0d255543C095AC6D243B555e645D9",
+          "from": "arbitrum:0xF9327276c0E0d255543C095AC6D243B555e645D9",
           "role": "admin"
         }
       ],
@@ -784,7 +802,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
+          "from": "arbitrum:0x1e751242C9CE10E165969EeD91E5D98587904aad",
           "description": "Add/remove batchPosters (Sequencers).",
           "role": ".batchPosterManager"
         }
@@ -802,37 +820,37 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
+          "from": "arbitrum:0x12c0163237819Eb81c469F71Ea0672e3e8dbF6dB",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x1e751242C9CE10E165969EeD91E5D98587904aad",
+          "from": "arbitrum:0x1e751242C9CE10E165969EeD91E5D98587904aad",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x46B6462301182B393ac5f014779687d3B6d4FB57",
+          "from": "arbitrum:0x46B6462301182B393ac5f014779687d3B6d4FB57",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x67B01721383baedF4b27B745bf533F6F7bDc4AE4",
+          "from": "arbitrum:0x67B01721383baedF4b27B745bf533F6F7bDc4AE4",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
+          "from": "arbitrum:0x6f857Cfcb32951cE5A6fAD7B809af8Bcbc3d551A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
+          "from": "arbitrum:0xa5e62aAC82Af6dA4Fd23ca5219132a7D941B4fe3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
+          "from": "arbitrum:0xC1bf6E0Ac80e92A331c4D448652C4824D4195459",
           "role": "admin"
         }
       ],
@@ -985,6 +1003,7 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }

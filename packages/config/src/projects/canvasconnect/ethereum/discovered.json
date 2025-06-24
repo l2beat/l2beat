@@ -2,7 +2,7 @@
   "name": "canvasconnect",
   "chain": "ethereum",
   "blockNumber": 19825363,
-  "configHash": "0x839635d70d87c245eb86eed2319f97bc03e507121647cedcd07bfc5478f5c7c4",
+  "configHash": "0xf09a9805ee7ffc2a60c87d2f501354e3b2fb79c0e76aa1f114416273eb41b72c",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".operators"
         }
       ]
@@ -24,7 +24,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -90,7 +90,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".operators"
         }
       ]
@@ -293,18 +293,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
+          "from": "ethereum:0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
           "role": ".$admin"
         }
       ]

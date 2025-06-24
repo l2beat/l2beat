@@ -11,6 +11,7 @@ import type {
   DaTechnology,
   DacInfo,
   ProjectCustomDa,
+  TableReadyValue,
 } from '../types'
 
 export interface DacTemplateVars {
@@ -19,6 +20,7 @@ export interface DacTemplateVars {
   dac: DacInfo
   technology: DaTechnology
   risks?: Partial<DaLayerRisks & DaBridgeRisks>
+  fallback?: TableReadyValue
 }
 
 export function DAC(template: DacTemplateVars): ProjectCustomDa {
@@ -55,5 +57,6 @@ The DA bridge is a smart contract verifying a data availability claim from DAC M
       fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
       ...template.risks,
     },
+    fallback: template.fallback,
   }
 }

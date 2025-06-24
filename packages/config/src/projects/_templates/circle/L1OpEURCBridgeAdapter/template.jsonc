@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Escrow for EURC that uses the canonical bridge for messaging but is governed externally.",
+  "ignoreRelatives": ["EURC", "LINKED_ADAPTER", "$admin", "owner"],
+  "ignoreMethods": ["proxiableUUID"]
+}

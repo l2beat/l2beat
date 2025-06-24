@@ -29,7 +29,7 @@ export const stack: ScalingProject = opStackL3({
             Stack Chain is a blockchain for bringing points onchain, allowing brands to create and own their loyalty programs.',
     links: {
       websites: ['https://stack.so/'],
-      apps: ['https://bridge.stack.so'],
+      bridges: ['https://bridge.stack.so'],
       documentation: ['https://docs.stack.so'],
       explorers: ['https://explorer.stack.so'],
       repositories: ['https://github.com/stack-so/protocol-interfaces'],

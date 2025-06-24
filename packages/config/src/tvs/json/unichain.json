@@ -127,7 +127,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -145,6 +153,32 @@
       },
       "category": "other",
       "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Kraken EOA"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-LDO",
+      "priceId": "lido-dao",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13573/large/Lido_DAO.png?1696513326",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -182,7 +216,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -199,6 +241,75 @@
         "sinceTimestamp": 1743532853
       },
       "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-sUSDS-2",
+      "priceId": "susds",
+      "symbol": "sUSDS",
+      "name": "Savings USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+        "chain": "ethereum",
+        "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+        "decimals": 18,
+        "sinceTimestamp": 1745940647
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+              "chain": "ethereum",
+              "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+              "decimals": 18,
+              "sinceTimestamp": 1745940647
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+              "chain": "unichain",
+              "escrowAddress": "0x7b42ed932f26509465f7ce3faf76ffce1275312f",
+              "decimals": 18,
+              "sinceTimestamp": 1747159670
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+              "chain": "unichain",
+              "escrowAddress": "0x345E368fcCd62266B3f5F37C9a131FD1c39f5869",
+              "decimals": 18,
+              "sinceTimestamp": 1747159670
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
@@ -237,10 +348,18 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "unichain-USDC",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -253,8 +372,110 @@
         "decimals": 6,
         "sinceTimestamp": 1730847151
       },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+              "chain": "unichain",
+              "decimals": 6,
+              "sinceTimestamp": 1730847151
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+              "chain": "unichain",
+              "escrowAddress": "0x7b42ed932f26509465f7ce3faf76ffce1275312f",
+              "decimals": 6,
+              "sinceTimestamp": 1747159670
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x078D782b760474a361dDA0AF3839290b0EF57AD6",
+              "chain": "unichain",
+              "escrowAddress": "0x345E368fcCd62266B3f5F37C9a131FD1c39f5869",
+              "decimals": 6,
+              "sinceTimestamp": 1747159670
+            }
+          }
+        ]
+      },
       "category": "stablecoin",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-USDS-2",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+        "chain": "ethereum",
+        "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+        "decimals": 18,
+        "sinceTimestamp": 1745940647
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+              "chain": "ethereum",
+              "escrowAddress": "0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A",
+              "decimals": 18,
+              "sinceTimestamp": 1745940647
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+              "chain": "unichain",
+              "escrowAddress": "0x7b42Ed932f26509465F7cE3FAF76FfCe1275312f",
+              "decimals": 18,
+              "sinceTimestamp": 1747159670
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xA06b10Db9F390990364A3984C04FaDf1c13691b5",
+              "chain": "unichain",
+              "escrowAddress": "0x345E368fcCd62266B3f5F37C9a131FD1c39f5869",
+              "decimals": 18,
+              "sinceTimestamp": 1747159670
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -292,7 +513,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -329,7 +558,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -367,6 +604,25 @@
       },
       "category": "ether",
       "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-ZRX",
+      "priceId": "0x",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/863/large/0x.png?1696501996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     }
   ]

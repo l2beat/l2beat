@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, type EthereumAddress } from '@l2beat/shared-pure'
 import { ethers } from 'ethers'
 import { z } from 'zod'
 import type { ContractValue } from '../../output/types'
@@ -172,12 +172,14 @@ export function decodeConstructorArgs(
 
   let longestDecodedArgs: ethers.utils.Result | undefined = undefined
   const offset = 64
-  for (let i = txData.length - offset; i >= 0; i -= offset) {
-    const slice = txData.slice(i)
+  const bytecode = popLeadingZeros(txData)
+  for (let i = bytecode.length - offset; i >= 0; i -= offset) {
+    const slice = bytecode.slice(i)
 
     try {
-      const offsetEncoded = ((i - 2) / 2).toString(16)
-      if (!txData.includes(offsetEncoded)) {
+      const offset = ((i - 2) / 2).toString(16)
+      const offsetEncoded = offset.length % 2 === 0 ? offset : `0${offset}`
+      if (!bytecode.includes(offsetEncoded)) {
         continue
       }
 
@@ -194,4 +196,15 @@ export function decodeConstructorArgs(
     throw new Error('Could not decode constructor args')
   }
   return longestDecodedArgs
+}
+
+function popLeadingZeros(data: string): string {
+  const bytes = Bytes.fromHex(data)
+
+  let index = 0
+  while (bytes.get(index) === 0) {
+    index += 1
+  }
+
+  return bytes.slice(index, bytes.length).toString()
 }

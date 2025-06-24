@@ -1,4 +1,46 @@
-Generated with discovered.json: 0xd73ca5710f23d5a17c6d2c6195dfb8938a2892b0
+Generated with discovered.json: 0xf8b87edd4b99da687644e18a2aa77d2e0e28dbcd
+
+# Diff at Mon, 09 Jun 2025 08:29:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22517852
+- current block number: 22665827
+
+## Description
+
+Upgrade worldchain adapter to support CCTPv2.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract WorldChain_Adapter (0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.480:
+-        "0xA8399e221a583A57F54Abb5bA22f31b5D6C09f32"
++        "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract WorldChain_Adapter (0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../WorldChain_Adapter.sol                         | 121 ++++++++++++++-------
+ 1 file changed, 84 insertions(+), 37 deletions(-)
+```
+
+Generated with discovered.json: 0x6a374b7269092d9f4856136eb52f9a7cb8c8efbc
 
 # Diff at Fri, 23 May 2025 09:40:52 GMT:
 

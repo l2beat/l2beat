@@ -1,4 +1,4 @@
-import type { ChartMeta } from '~/components/core/chart/chart'
+import type { ChartMeta } from '~/components/core/chart/Chart'
 
 export function getDaChartMeta({
   shape,
@@ -13,12 +13,17 @@ export function getDaChartMeta({
     },
     celestia: {
       label: 'Celestia',
-      color: 'hsl(var(--chart-da-celestia))',
+      color: 'hsl(var(--chart-fuchsia))',
       indicatorType: { shape },
     },
     avail: {
       label: 'Avail',
-      color: 'hsl(var(--chart-emerald))',
+      color: 'hsl(var(--chart-sky))',
+      indicatorType: { shape },
+    },
+    eigenda: {
+      label: 'EigenDA',
+      color: 'hsl(var(--chart-lime))',
       indicatorType: { shape },
     },
   } satisfies ChartMeta

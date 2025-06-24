@@ -165,3 +165,14 @@ export async function createShape(
     throw new Error(data.error)
   }
 }
+
+export async function getFlatSource(
+  address: string,
+): Promise<Record<string, string>> {
+  const res = await fetch(`/api/flat-sources/${address.toLowerCase()}`)
+  if (!res.ok) {
+    throw new Error(res.statusText)
+  }
+  const data = await res.json()
+  return data as Record<string, string>
+}

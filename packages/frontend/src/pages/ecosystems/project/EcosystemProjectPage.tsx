@@ -1,26 +1,29 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { CssVariables } from '~/components/css-variables'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { SideNavLayout } from '~/layouts/side-nav-layout'
-import type { EcosystemEntry } from '~/server/features/ecosystems/get-ecosystem-entry'
+import { CssVariables } from '~/components/CssVariables'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
+import { TableFilters } from '~/components/table/filters/TableFilters'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
-import { EcosystemsActivityChart } from './components/charts/ecosystems-activity-chart'
-import { EcosystemsProjectsChart } from './components/charts/ecosystems-projects-chart'
-import { EcosystemsTvsChart } from './components/charts/ecosystems-tvs-chart'
-import { EcosystemPageHeader } from './components/ecosystem-page-header'
-import { EcosystemProjectsTable } from './components/ecosystem-projects-table'
-import { EcosystemBuildOnLink } from './components/widgets/ecosystem-build-on-link'
-import { EcosystemGovernanceLinks } from './components/widgets/ecosystem-governance-links'
-import { EcosystemLearnMoreLink } from './components/widgets/ecosystem-learn-more-link'
-import { EcosystemMilestonesAndIncidents } from './components/widgets/ecosystem-milestones-and-incidents'
-import { EcosystemMobileProjectLinks } from './components/widgets/ecosystem-mobile-project-links'
-import { EcosystemProjectsByDaLayer } from './components/widgets/ecosystem-projects-by-da-layer'
-import { EcosystemProjectsByRaas } from './components/widgets/ecosystem-projects-by-raas'
-import { EcosystemToken } from './components/widgets/ecosystem-token'
-import { EcosystemTvsByStage } from './components/widgets/ecosystem-tvs-by-stage'
-import { EcosystemTvsByTokenType } from './components/widgets/ecosystem-tvs-by-token-type'
+import { EcosystemPageHeader } from './components/EcosystemPageHeader'
+import { EcosystemProjectsTable } from './components/EcosystemProjectsTable'
+import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
+import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
+import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
+import { EcosystemBuildOnLink } from './components/widgets/EcosystemBuildOnLink'
+import { EcosystemGovernanceLinks } from './components/widgets/EcosystemGovernanceLinks'
+import { EcosystemLearnMoreLink } from './components/widgets/EcosystemLearnMoreLink'
+import { EcosystemMilestonesAndIncidents } from './components/widgets/EcosystemMilestonesAndIncidents'
+import { EcosystemMobileProjectLinks } from './components/widgets/EcosystemMobileProjectLinks'
+import { EcosystemProjectsByDaLayer } from './components/widgets/EcosystemProjectsByDaLayer'
+import { EcosystemProjectsByRaas } from './components/widgets/EcosystemProjectsByRaas'
+import { EcosystemToken } from './components/widgets/EcosystemToken'
+import { EcosystemTvsByStage } from './components/widgets/EcosystemTvsByStage'
+import { EcosystemTvsByTokenType } from './components/widgets/EcosystemTvsByTokenType'
 interface Props extends AppLayoutProps {
   ecosystem: EcosystemEntry
   queryState: DehydratedState
@@ -134,7 +137,16 @@ export function EcosystemProjectPage({
                   className="col-span-12 lg:col-span-8"
                 />
               </main>
-              <EcosystemProjectsTable entries={ecosystem.projects} />
+              <HorizontalSeparator className="my-4 max-md:hidden" />
+              <TableFilterContextProvider>
+                <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
+                  <TableFilters entries={ecosystem.projects} />
+                </div>
+                <EcosystemProjectsTable
+                  entries={ecosystem.projects}
+                  ecosystemId={ecosystem.id}
+                />
+              </TableFilterContextProvider>
             </div>
           </div>
         </SideNavLayout>

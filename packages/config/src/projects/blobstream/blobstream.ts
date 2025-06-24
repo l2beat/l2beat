@@ -10,6 +10,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
@@ -28,7 +29,7 @@ export const blobstream: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
@@ -112,7 +113,22 @@ export const blobstream: BaseProject = {
       },
     ],
   },
+  milestones: [
+    {
+      title: 'Plonky3 vulnerability patch',
+      url: 'https://x.com/SuccinctLabs/status/1929773028034204121',
+      date: '2025-06-04T00:00:00.00Z',
+      description:
+        'SP1 verifier is patched to fix critical vulnerability in Plonky3 proof system (SP1 dependency).',
+      type: 'incident',
+    },
+  ],
   permissions: generateDiscoveryDrivenPermissions([
+    ethereumDiscovery,
+    arbitrumDiscovery,
+    baseDiscovery,
+  ]),
+  discoveryInfo: getDiscoveryInfo([
     ethereumDiscovery,
     arbitrumDiscovery,
     baseDiscovery,

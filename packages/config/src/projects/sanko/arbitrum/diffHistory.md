@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xdb6a73bffdbff3e7744cf37456ee8a8ef19465aa
+Generated with discovered.json: 0xd067763ed2d94d512a1c4d382abed9005c46fba5
+
+# Diff at Wed, 18 Jun 2025 12:22:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 332541642
+- current block number: 332541642
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 332541642 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
+Generated with discovered.json: 0x0e9683e29fcef5b8de14b4840af5a9f96d697add
 
 # Diff at Tue, 27 May 2025 08:31:09 GMT:
 

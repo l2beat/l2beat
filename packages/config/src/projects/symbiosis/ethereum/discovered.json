@@ -2,7 +2,7 @@
   "name": "symbiosis",
   "chain": "ethereum",
   "blockNumber": 22022451,
-  "configHash": "0x875ba6d1b78c93c950f9e43fcc84d56655e6bc799099aead456faeb6ebf5ef34",
+  "configHash": "0xda1f535816d2f6bb386fe9f947b5e6dc9da5674494a3a6b75840fba3471f7d41",
   "entries": [
     {
       "address": "0x0ee552336134B6f8F0a72927b6124f8A81865928",
@@ -20,12 +20,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+          "from": "ethereum:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+          "from": "ethereum:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
           "role": "admin"
         }
       ],
@@ -60,7 +60,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
+          "from": "ethereum:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
           "role": "admin"
         }
       ],

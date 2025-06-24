@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -25,7 +25,7 @@ export const mantle: ScalingProject = opStackL2({
       'Mantle is a modular general-purpose Optimium with a protocol design philosophy that aims to offer users a less costly and more user-friendly experience, provide developers with a simpler and more flexible development environment, and deliver a comprehensive set of infrastructure for the next wave of mass-adopted dApps.',
     links: {
       websites: ['https://mantle.xyz/'],
-      apps: ['https://bridge.mantle.xyz'],
+      bridges: ['https://bridge.mantle.xyz'],
       documentation: ['https://docs-v2.mantle.xyz/'],
       explorers: ['https://explorer.mantle.xyz/', 'https://mantlescan.info'],
       repositories: ['https://github.com/mantlenetworkio'],
@@ -59,8 +59,8 @@ export const mantle: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'routescan',
-        url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+        type: 'blockscout',
+        url: 'https://explorer.mantle.xyz/api',
       },
     ],
   },
@@ -96,4 +96,12 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
+  nonTemplateDaTracking: [
+    {
+      type: 'eigen-da',
+      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1738821600),
+    },
+  ],
 })

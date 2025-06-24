@@ -1,21 +1,19 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/content-wrapper'
-import { OtherMigrationNotice } from '~/components/countdowns/other-migration/other-migration-notice'
-import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/why-am-i-here-notice'
-import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/stage-one-requirements-change-notice'
-import { HighlightableLinkContextProvider } from '~/components/link/highlightable/highlightable-link-context'
-import { DesktopProjectNavigation } from '~/components/projects/navigation/desktop-project-navigation'
-import { MobileProjectNavigation } from '~/components/projects/navigation/mobile-project-navigation'
+import { ContentWrapper } from '~/components/ContentWrapper'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
+import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
+import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
+import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
+import { ProjectDetails } from '~/components/projects/ProjectDetails'
+import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
+import { MobileProjectNavigation } from '~/components/projects/navigation/MobileProjectNavigation'
 import { projectDetailsToNavigationSections } from '~/components/projects/navigation/types'
-import { ProjectDetails } from '~/components/projects/project-details'
-import { ScrollToTopButton } from '~/components/scroll-to-top-button'
-import { featureFlags } from '~/consts/feature-flags'
-import type { AppLayoutProps } from '~/layouts/app-layout.tsx'
-import { AppLayout } from '~/layouts/app-layout.tsx'
-import { TopNavLayout } from '~/layouts/top-nav-layout'
-import type { ProjectScalingEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { ProjectScalingSummary } from './components/scaling-project-summary'
+import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
+import { AppLayout } from '~/layouts/AppLayout.tsx'
+import { TopNavLayout } from '~/layouts/TopNavLayout'
+import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
+import { ProjectScalingSummary } from './components/ScalingProjectSummary'
 
 interface Props extends AppLayoutProps {
   projectEntry: ProjectScalingEntry
@@ -59,12 +57,6 @@ export function ScalingProjectPage({
                     />
                   </div>
                   <div className="w-full">
-                    {projectEntry.countdowns.otherMigration &&
-                      !featureFlags.othersMigrated() && (
-                        <OtherMigrationNotice
-                          {...projectEntry.countdowns.otherMigration}
-                        />
-                      )}
                     {projectEntry.header.category === 'Other' &&
                       projectEntry.reasonsForBeingOther &&
                       projectEntry.reasonsForBeingOther.length > 0 && (

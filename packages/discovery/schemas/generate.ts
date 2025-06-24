@@ -67,11 +67,28 @@ async function main() {
     ...ContractPermission.omit({ fields: true }).shape,
     fields: z.record(MergedField).optional(),
   })
-  const MergedConfig = z.object({
-    ...StructureConfig.omit({ overrides: true }).shape,
+  const ChainConfig = z.object({
+    ...StructureConfig.omit({
+      overrides: true,
+      name: true,
+      chain: true,
+      archived: true,
+    }).shape,
     ...ColorConfig.omit({ overrides: true }).shape,
     ...PermissionsConfig.omit({ overrides: true }).shape,
     overrides: z.record(MergedContract).optional(),
+    types: z.optional(z.record(z.string(), DiscoveryCustomType)),
+  })
+
+  // Create the main config schema with chains structure
+  const MergedConfig = z.object({
+    // Global properties
+    name: z.string().min(1),
+    import: z.optional(z.array(z.string())),
+    sharedModules: z.array(z.string()).default([]),
+    // Chain-specific configurations
+    chains: z.record(z.string(), ChainConfig),
+    archived: z.optional(z.boolean()),
   })
 
   await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')

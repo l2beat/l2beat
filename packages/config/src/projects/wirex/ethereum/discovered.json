@@ -2,7 +2,7 @@
   "name": "wirex",
   "chain": "ethereum",
   "blockNumber": 22187530,
-  "configHash": "0xeb16f64711fa8c430e69b62663d397f7c598ee5b085c8aae10f4595e6b4060a8",
+  "configHash": "0x8a2c0635d6acc1cc56443173ada1d9d96fd7250f1f5d10831a4c4152cecadfc2",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -30,7 +30,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "role": ".trustedSequencer"
         }
       ]
@@ -47,7 +47,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "role": "admin"
         }
       ],
@@ -190,15 +190,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "role": "admin",
-          "via": [{ "address": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }]
+          "via": [
+            { "address": "ethereum:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
+          "from": "ethereum:0x2B966b9824c11f274aa39f2f72cF25C4b47c3A78",
           "role": ".owner"
         }
       ]
@@ -210,13 +212,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
+          "from": "ethereum:0x755e9A5B4BAEFc78Bb82BA7E6d2386CCB2F238a5",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         }
@@ -229,7 +231,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "0x78253E2E6120164bd826668A4C96Db20f78A94c9",
+          "from": "ethereum:0x78253E2E6120164bd826668A4C96Db20f78A94c9",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         }

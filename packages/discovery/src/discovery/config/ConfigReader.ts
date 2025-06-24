@@ -60,6 +60,7 @@ export class ConfigReader {
     const chainRawConfig = {
       chain,
       name,
+      ...(rawConfig.archived ? { archived: true } : {}),
       ...merge(
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         (rawConfig.chains as any)['all'],
@@ -102,7 +103,39 @@ export class ConfigReader {
     return Hash160(`0x${hasher.digest('hex')}`)
   }
 
-  readAllProjectChainPairs(): { project: string; chains: string[] }[] {
+  // NOTE(radomski): This returns all projects and chains on which they are
+  // configured that have a config.jsonc file. They might not yet have a
+  // discovered.json file. Most of the time you want to use
+  // readAllDiscoveredProjects()
+  readAllConfiguredProjects(): { project: string; chains: string[] }[] {
+    return readdirSync(path.join(this.rootPath), { withFileTypes: true })
+      .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
+      .map((projectDir) => {
+        const projectPath = path.join(this.rootPath, projectDir.name)
+
+        try {
+          const parsed = readJsonc(path.join(projectPath, 'config.jsonc'))
+          assert(
+            'chains' in parsed &&
+              typeof parsed.chains === 'object' &&
+              parsed.chains !== null,
+          )
+
+          return {
+            project: projectDir.name,
+            chains: Object.keys(parsed.chains),
+          }
+        } catch {
+          return { project: projectDir.name, chains: [] }
+        }
+      })
+      .filter((x) => x.chains.length > 0)
+  }
+
+  // NOTE(radomski): Generates a list of projects that _have_ a
+  // discovered.json. Most of the time this is what you want to use. We assume
+  // that projects that have a discovered.json are also configured.
+  readAllDiscoveredProjects(): { project: string; chains: string[] }[] {
     return readdirSync(path.join(this.rootPath), { withFileTypes: true })
       .filter((x) => x.isDirectory() && !x.name.startsWith('_'))
       .map((projectDir) => {
@@ -110,26 +143,19 @@ export class ConfigReader {
         const chains = readdirSync(projectPath, { withFileTypes: true })
           .filter((x) => x.isDirectory())
           .map((x) => x.name)
+          .filter((chain) =>
+            existsSync(path.join(projectPath, chain, 'discovered.json')),
+          )
         return { project: projectDir.name, chains }
       })
+      .filter((x) => x.chains.length > 0)
   }
 
-  readAllChains(): string[] {
-    const chains = new Set(
-      this.readAllProjectChainPairs().flatMap((x) => x.chains),
-    )
-    return [...chains]
-  }
-
-  readAllConfigs(): ConfigRegistry[] {
-    return this.readAllChains().flatMap((chain) =>
-      this.readAllConfigsForChain(chain),
-    )
-  }
-
-  readAllConfigsForChain(chain: string): ConfigRegistry[] {
+  readAllDiscoveredConfigsForChain(chain: string): ConfigRegistry[] {
     const result: ConfigRegistry[] = []
-    const projects = this.readAllProjectsForChain(chain)
+    const projects = this.readAllDiscoveredProjects()
+      .filter((p) => p.chains.includes(chain))
+      .map((x) => x.project)
 
     for (const project of projects) {
       const contents = this.readConfig(project, chain)
@@ -139,7 +165,7 @@ export class ConfigReader {
     return result
   }
 
-  readAllChainsForProject(name: string) {
+  readAllDiscoveredChainsForProject(name: string) {
     if (!existsSync(path.join(this.rootPath, name, 'config.jsonc'))) {
       return []
     }
@@ -150,26 +176,12 @@ export class ConfigReader {
         typeof parsed.chains === 'object' &&
         parsed.chains !== null,
     )
-    return Object.keys(parsed.chains)
-  }
+    const chains = Object.keys(parsed.chains)
+    const result = chains.filter((chain) =>
+      existsSync(path.join(this.rootPath, name, chain, 'discovered.json')),
+    )
 
-  readAllProjectsForChain(chain: string): string[] {
-    const folders = readdirSync(path.join(this.rootPath), {
-      withFileTypes: true,
-    }).filter((x) => x.isDirectory())
-
-    const projects = []
-
-    for (const folder of folders) {
-      const allChains = this.readAllChainsForProject(folder.name)
-      if (!allChains.includes(chain)) {
-        continue
-      }
-
-      projects.push(folder.name)
-    }
-
-    return projects
+    return result
   }
 
   readDiffHistoryHash(name: string, chain: string): Hash160 | undefined {

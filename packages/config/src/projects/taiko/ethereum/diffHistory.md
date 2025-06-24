@@ -1,3 +1,704 @@
+Generated with discovered.json: 0x375f6b8891b6a923cdfe2360c4becc0eb11bc870
+
+# Diff at Thu, 19 Jun 2025 11:31:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22731123
+- current block number: 22738242
+
+## Description
+
+Some core upgrade permissions transfered to DAOController.
+
+## Watched changes
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.1.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.0.from:
+-        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+    }
+```
+
+```diff
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E) {
+    +++ description: Defines withdrawal limits per token.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.25:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.24:
+-        {"permission":"upgrade","from":"ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
+      receivedPermissions.23:
+-        {"permission":"upgrade","from":"ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"}
+      receivedPermissions.22.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.21.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.20.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.19.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.18.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.17.from:
+-        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.16.from:
+-        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.15.from:
+-        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.14.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.13.from:
+-        "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.12.from:
+-        "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+Generated with discovered.json: 0xb379b39a31df47264ec84c5407bcab9f94fa8c98
+
+# Diff at Wed, 18 Jun 2025 11:39:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22694475
+- current block number: 22731123
+
+## Description
+
+New test proposal (no actions, will be vetoed).
+
+## Watched changes
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        19
++        20
+      values.proposalIds.19:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.18:
+-        "594516471058441525137805458817300690127055486982"
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.17:
+-        "594368007222883387369940600290236287695678603267"
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.16:
+-        "594789857995414210150628315872956409027640688649"
++        "595223436259438596154551751121806216745162113041"
+      values.proposalIds.15:
+-        "595223436259438596154551751121806216745162113041"
++        "595223403592331371744459256866956472219296858128"
+      values.proposalIds.14:
+-        "595223403592331371744459256866956472219296858128"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.13:
+-        "594333890512775894079591912881534348495153004546"
++        "595517191137765700860044776076277647522733752339"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        10
++        11
+    }
+```
+
+Generated with discovered.json: 0xbdc90e6d9c07377b6e510bfc21a5ed4f0d87fdf1
+
+# Diff at Fri, 13 Jun 2025 08:40:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@47036f369616cc0b23ec8b94f0706f5c105ac1f5 block: 22666471
+- current block number: 22694475
+
+## Description
+
+Risc0 verifier update (gateway and groth16 verifier changes are minimal).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract RiscZeroGroth16Verifier (0x48E32eFbe22e180A3FFe617f4955cD83B983dd98)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.13.name:
+-        "0x72697363305f67726f746831365f766572696669657200000000000000000000"
++        "bond_token"
+      values.namedAddresses.13.address:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.12.name:
+-        "bond_token"
++        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
+      values.namedAddresses.12.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.11.name:
+-        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
++        "taiko_token"
+      values.namedAddresses.11.address:
+-        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      values.namedAddresses.10.name:
+-        "taiko_token"
++        "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000"
+      values.namedAddresses.10.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      values.namedAddresses.9.name:
+-        "0x6175746f6d6174615f646361705f6174746573746174696f6e00000000000000"
++        "0x72697363305f726574685f766572696669657200000000000000000000000000"
+      values.namedAddresses.9.address:
+-        "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      values.namedAddresses.8.name:
+-        "0x72697363305f726574685f766572696669657200000000000000000000000000"
++        "bridge"
+      values.namedAddresses.8.address:
+-        "0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+      values.namedAddresses.7.name:
+-        "bridge"
++        "0x72697363305f67726f746831365f766572696669657200000000000000000000"
+      values.namedAddresses.7.address:
+-        "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+    }
+```
+
+```diff
+    contract Risc0VerifierGateway (0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE) {
+    +++ description: Entry contract to verify batches using RISC Zero.
+      sourceHashes.1:
+-        "0xd24723da846efa982924d892e9d3e52d38b6d85eab9d8e2f0a298ff07d18d994"
++        "0xbf2f7f196a5a1b3990b49d6d86c282eedd22259e4e1c970138b25b38cced4ac6"
+      values.$implementation:
+-        "0x801878e56A8DA58d6a837006345CDD11a9E6a852"
++        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.$pastUpgrades.1:
++        ["2025-05-15T00:25:59.000Z","0x2c106efd4e844195ff8597792c0e87d8319c23b5f4b6f675f878d75181c27baa",["0x801878e56A8DA58d6a837006345CDD11a9E6a852"]]
+      values.$pastUpgrades.0.2:
+-        ["0x801878e56A8DA58d6a837006345CDD11a9E6a852"]
++        "2025-06-12T03:50:35.000Z"
+      values.$pastUpgrades.0.1:
+-        "0x2c106efd4e844195ff8597792c0e87d8319c23b5f4b6f675f878d75181c27baa"
++        "0x2b9250ebdcf10b1a1ec658e5cc9e7fd9aa19dd32573e6ab5bc036499682dea3a"
+      values.$pastUpgrades.0.0:
+-        "2025-05-15T00:25:59.000Z"
++        ["0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "0x801878e56A8DA58d6a837006345CDD11a9E6a852"
++        "0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be"
+      values.riscoGroth16Verifier:
+-        "0x48E32eFbe22e180A3FFe617f4955cD83B983dd98"
++        "0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a"
+      implementationNames.0x801878e56A8DA58d6a837006345CDD11a9E6a852:
+-        "Risc0Verifier"
+      implementationNames.0xB1c6fF8dCbED16FE412291E7BDA0d611405944Be:
++        "TaikoRisc0Verifier"
+    }
+```
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.13:
++        "0xb09f9005e4612526e378466b5c16ab6028478e81c085812d6ed37166c4cda10e"
+      values.mrEnclaves.12:
++        "0x6e43c1d575b5b785d0f6259dfac44998c6f0c164864f9f98270fb740c14eb943"
+    }
+```
+
+```diff
+    contract MainnetERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: Shared vault for Taiko chains for bridged ERC20 tokens.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.26:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.25.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.24.from:
+-        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.23.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.22.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract RiscZeroGroth16Verifier (0xfB3Ca570A5348FD101e65303eECdB5Bf43C5548a)
+    +++ description: Verifier contract for RISC Zero Groth16 proofs.
+```
+
+## Source code changes
+
+```diff
+.../Risc0VerifierGateway/TaikoRisc0Verifier.sol}   | 80 ++--------------------
+ .../RiscZeroGroth16Verifier.sol                    |  4 +-
+ 2 files changed, 8 insertions(+), 76 deletions(-)
+```
+
+Generated with discovered.json: 0xa09e2062598ded8a0f11be8153bf99e8073b6d56
+
+# Diff at Mon, 09 Jun 2025 10:52:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22630425
+- current block number: 22666471
+
+## Description
+
+New daocontroller for the TAIKO token, which is now controlled by the DAO.
+
+## Watched changes
+
+```diff
+    contract Taiko Token (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: ERC20 contract implementing the TAIKO token. It defines a list of addresses designated as non-voting.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        14
++        19
+      values.proposalIds.18:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.17:
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.16:
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.15:
++        "595223436259438596154551751121806216745162113041"
+      values.proposalIds.14:
++        "595223403592331371744459256866956472219296858128"
+      values.proposalIds.13:
+-        "594516471058441525137805458817300690127055486982"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.12:
+-        "594368007222883387369940600290236287695678603267"
++        "594544283016854707280302755040001935835586887687"
+      values.proposalIds.11:
+-        "594789857995414210150628315872956409027640688649"
++        "594516360806954642753743290707182802352260251653"
+      values.proposalIds.10:
+-        "594333890512775894079591912881534348495153004546"
++        "594868197801926748603689506985812031612995502090"
+      values.proposalIds.9:
+-        "594544283016854707280302755040001935835586887687"
++        "594516275055798178677248899489514254466604335108"
+      values.proposalIds.8:
+-        "594516360806954642753743290707182802352260251653"
++        "594544466769332844587073035223531748793578946568"
+      values.proposalIds.7:
+-        "594868197801926748603689506985812031612995502090"
++        "595202819231391590334926314529761202858453106703"
+      values.proposalIds.6:
+-        "594516275055798178677248899489514254466604335108"
++        "595112788683881116119978678391417950963358498829"
+      values.proposalIds.5:
+-        "594544466769332844587073035223531748793578946568"
++        "594932801089851422612858457733038049577270247436"
+      values.proposalIds.4:
+-        "595112788683881116119978678391417950963358498829"
++        "594333808845007833054360677244409987180489867265"
+      values.proposalIds.3:
+-        "594932801089851422612858457733038049577270247436"
++        "594318504305273196926027118847304676812617940992"
+      values.proposalIds.2:
+-        "594333808845007833054360677244409987180489867265"
++        "594868769476303175780308156445682560815637463051"
+      values.proposalIds.1:
+-        "594318504305273196926027118847304676812617940992"
++        "595168678020953678736974786657474616653076496398"
+      values.proposalIds.0:
+-        "594868769476303175780308156445682560815637463051"
++        "595300306046126036153418824792663965561388007442"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.27:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.26.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.25.from:
+-        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.24.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.23.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.22.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.21.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.20.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.19.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.18.from:
+-        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.17.from:
+-        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.16.from:
+-        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.15.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.14.from:
+-        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+      receivedPermissions.1:
++        {"permission":"upgrade","from":"ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3","role":"admin"}
+      receivedPermissions.0.from:
+-        "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "ethereum:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        9
++        10
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a)
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+```
+
+## Source code changes
+
+```diff
+.../ERC1967Proxy.p.sol                             |    0
+ .../TaikoDAOController.sol                         | 1409 ++++++++++++++++++++
+ .../ERC1967Proxy.p.sol                             |  594 +++++++++
+ .../TaikoDAOController.sol                         |    0
+ 4 files changed, 2003 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630425 (main branch discovery), not current.
+
+```diff
+    contract TaikoDAOController (0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      description:
+-        "Contract that maintains ownership of all contracts and assets, owned by the DAO. Its token weight does not count towards the DAO quorum."
++        "Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum."
+    }
+```
+
+Generated with discovered.json: 0x9ce400284a479aa2af9b01856e428c1b2a4b6c51
+
+# Diff at Fri, 06 Jun 2025 07:27:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1eba1823c240619119cd080ff8cbb757c1c3feda block: 22630425
+- current block number: 22630425
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630425 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B) {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      description:
+-        "Verifier contract for SP1 proofs."
++        "Verifier contract for SP1 proofs (v5.0.0)."
+    }
+```
+
+Generated with discovered.json: 0x23992b35ffbf24a03ab26b97c00cb66f078a728a
+
+# Diff at Wed, 04 Jun 2025 13:52:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@243ef5b7e32e78ae0ff8985c4f129996d0c48c80 block: 22616262
+- current block number: 22630425
+
+## Description
+
+SP1 verifier upgrade to v5 (plonky3 vuln related). Security Council signer removed (internal test signer). The DAO/SC is now in prod configuration, but hasn't got any critical permissions yet.
+
+## Watched changes
+
+```diff
+    contract SignerList (0x0F95E6968EC1B28c794CF1aD99609431de5179c2) {
+    +++ description: A signer list for registering agents, similar to a Multisig.
+      values.addresslistLength:
+-        9
++        8
+      values.getEncryptionAgents.8:
+-        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.7:
+-        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
++        "0x824Dce8d292a393DAb5FFdeb788DC1086257f678"
+      values.getEncryptionAgents.6:
+-        "0x85f21919ed6046d7CE1F36a613eBA8f5EaC3d070"
++        "0x1d955983044548E03DAA583B36A37cA4bdE6F556"
+      values.settings.minSignerListLength:
+-        9
++        8
+    }
+```
+
+```diff
+    contract EmergencyMultisig (0x2AffADEb2ef5e1F2a7F58964ee191F1e88317ECd) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing encrypted proposals (e.g. for Security Council emergency proposals).
++++ description: The total count of encrypted emergency proposals created.
+      values.proposalCount:
+-        21
++        23
+    }
+```
+
+```diff
+    contract DefaultResolver (0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a) {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      values.namedAddresses.11.name:
+-        "taiko_token"
++        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
+      values.namedAddresses.11.address:
+-        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      values.namedAddresses.10.name:
+-        "0x7370315f72656d6f74655f766572696669657200000000000000000000000000"
++        "taiko_token"
+      values.namedAddresses.10.address:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+```diff
+    contract OptimisticTokenVotingPlugin (0x989E348275b659d36f8751ea1c10D146211650BE) {
+    +++ description: An optimistic governance module. Proposals pass and can be executed unless 10% of votable TAIKO veto them within 7d.
+      values.proposalCount:
+-        13
++        14
+      values.proposalIds.13:
++        "594516471058441525137805458817300690127055486982"
+      values.proposalIds.12:
+-        "594516471058441525137805458817300690127055486982"
++        "594368007222883387369940600290236287695678603267"
+      values.proposalIds.11:
+-        "594368007222883387369940600290236287695678603267"
++        "594789857995414210150628315872956409027640688649"
+      values.proposalIds.10:
+-        "594789857995414210150628315872956409027640688649"
++        "594333890512775894079591912881534348495153004546"
+      values.proposalIds.9:
+-        "594333890512775894079591912881534348495153004546"
++        "594544283016854707280302755040001935835586887687"
+      values.proposalIds.8:
+-        "594544283016854707280302755040001935835586887687"
++        "594516360806954642753743290707182802352260251653"
+      values.proposalIds.7:
+-        "594516360806954642753743290707182802352260251653"
++        "594868197801926748603689506985812031612995502090"
+      values.proposalIds.6:
+-        "594868197801926748603689506985812031612995502090"
++        "594516275055798178677248899489514254466604335108"
+      values.proposalIds.5:
+-        "594516275055798178677248899489514254466604335108"
++        "594544466769332844587073035223531748793578946568"
+      values.proposalIds.4:
+-        "594544466769332844587073035223531748793578946568"
++        "595112788683881116119978678391417950963358498829"
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (0xbee1040D0Aab17AE19454384904525aE4A3602B9) {
+    +++ description: Entry contract to verify batches using SP1.
+      sourceHashes.1:
+-        "0x5ae248a45849f9700bac9ab8fbd1570be72258e51c738511f3468f788e1127ca"
++        "0x21ba9895a752c42c9a52b397fdc8ee7c4c22e621273f53176f80c853e2502ca0"
+      values.$implementation:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.$pastUpgrades.1:
++        ["2025-06-04T00:40:23.000Z","0xbdc86ada3808a5987cd1f4bbc49ecd2d7e577bf90642956442a3d14cffa827ec",["0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.impl:
+-        "0x35f26e14D0dAeDd1904843370f761C60B891D466"
++        "0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7"
+      values.sp1RemoteVerifier:
+-        "0x68593ad19705E9Ce919b2E368f5Cb7BAF04f7371"
++        "0xFF5Adab685362DC4C33536a65aF5873738D1216B"
+      implementationNames.0x35f26e14D0dAeDd1904843370f761C60B891D466:
+-        "SP1Verifier"
+      implementationNames.0x2E17aC86CafC1db939C9942E478F92bF0E548Ee7:
++        "TaikoSP1Verifier"
+    }
+```
+
+```diff
+    contract Multisig (0xD7dA1C25E915438720692bC55eb3a7170cA90321) {
+    +++ description: Modular Governance contract allowing for proposing, voting on and executing proposals (e.g. for Security Council standard proposals).
+      values.proposalCount:
+-        6
++        9
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0xFF5Adab685362DC4C33536a65aF5873738D1216B)
+    +++ description: Verifier contract for SP1 proofs.
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22616262 => .flat}/SP1Verifier.sol      | 2682 ++++++++++----------
+ .../SP1VerifierGateway/TaikoSP1Verifier.sol}       |   75 +-
+ 2 files changed, 1329 insertions(+), 1428 deletions(-)
+```
+
 Generated with discovered.json: 0x287517d33b3633841ff8cdced485ab5de6e0e5d0
 
 # Diff at Mon, 02 Jun 2025 10:17:30 GMT:
