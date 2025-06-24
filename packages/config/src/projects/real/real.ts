@@ -15,6 +15,7 @@ export const real: ScalingProject = orbitStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['RWA'],
+  archivedAt: UnixTime(1750747670), //2025-06-24T06:47:50Z
   reasonsForBeingOther: [
     REASON_FOR_BEING_OTHER.CLOSED_PROOFS,
     REASON_FOR_BEING_OTHER.SMALL_DAC,
