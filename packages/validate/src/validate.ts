@@ -127,8 +127,8 @@ export class Imp<T> implements Validator<T>, Parser<T> {
   check(predicate: (value: T) => boolean | string, message?: string) {
     return new Imp(
       { type: 'check', predicate, parent: this },
-      svpCheck(predicate, this.safeValidate, message),
-      svpCheck(predicate, this.safeParse, message),
+      impCheck(predicate, this.safeValidate, message),
+      impCheck(predicate, this.safeParse, message),
     )
   }
 
@@ -136,7 +136,7 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     return new Imp(
       { type: 'transform', transformer, parent: this },
       CANNOT_VALIDATE,
-      spTransform(this.safeParse, transformer),
+      impTransform(this.safeParse, transformer),
     )
   }
 
@@ -146,7 +146,7 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     return new Imp(
       { type: 'default', value, parent: this },
       CANNOT_VALIDATE,
-      spDefault(this.safeParse, value),
+      impDefault(this.safeParse, value),
     )
   }
 
@@ -154,27 +154,27 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     return new Imp(
       { type: 'catch', value, parent: this },
       CANNOT_VALIDATE,
-      spCatch(this.safeParse, value),
+      impCatch(this.safeParse, value),
     )
   }
 
   optional(): OptionalValidator<T | undefined> {
     const imp = new Imp(
       { type: 'optional', parent: this },
-      svpOptional(this.safeValidate),
-      svpOptional(this.safeParse),
+      impOptional(this.safeValidate),
+      impOptional(this.safeParse),
     )
     imp.isOptional = true
     return imp as OptionalValidator<T>
   }
 }
 
-function svpCheck<T>(
+function impCheck<T>(
   predicate: (value: T) => string | boolean,
   parseOrValidate: (value: unknown) => Result<T>,
   message: string | undefined,
 ) {
-  return function svpCheck(value: unknown): Result<T> {
+  return function impCheck(value: unknown): Result<T> {
     const result = parseOrValidate(value)
     if (result.success) {
       const checkResult = predicate(result.data)
@@ -193,11 +193,11 @@ function svpCheck<T>(
   }
 }
 
-function spTransform<T, U>(
+function impTransform<T, U>(
   safeParse: (value: unknown) => Result<T>,
   transformer: (value: T) => U,
 ) {
-  return function spTransform(value: unknown): Result<U> {
+  return function impTransform(value: unknown): Result<U> {
     const result = safeParse(value)
     if (!result.success) return result
     try {
@@ -209,11 +209,11 @@ function spTransform<T, U>(
   }
 }
 
-function spDefault<T, U>(
+function impDefault<T, U>(
   safeParse: (value: unknown) => Result<T>,
   fallback: U,
 ) {
-  return function spDefault(
+  return function impDefault(
     value: unknown,
   ): Result<Exclude<T, null | undefined> | U> {
     if (value === null || value === undefined) {
@@ -227,8 +227,8 @@ function spDefault<T, U>(
   }
 }
 
-function spCatch<T, U>(safeParse: (value: unknown) => Result<T>, fallback: U) {
-  return function spCatch(value: unknown): Result<T | U> {
+function impCatch<T, U>(safeParse: (value: unknown) => Result<T>, fallback: U) {
+  return function impCatch(value: unknown): Result<T | U> {
     const result = safeParse(value)
     if (!result.success) {
       return { success: true, data: structuredClone(fallback) }
@@ -237,8 +237,8 @@ function spCatch<T, U>(safeParse: (value: unknown) => Result<T>, fallback: U) {
   }
 }
 
-function svpOptional<T>(safeParse: (value: unknown) => Result<T>) {
-  return function svpOptional(value: unknown): Result<T | undefined> {
+function impOptional<T>(safeParse: (value: unknown) => Result<T>) {
+  return function impOptional(value: unknown): Result<T | undefined> {
     if (value === undefined) {
       return { success: true, data: undefined }
     }
@@ -273,64 +273,64 @@ function failType(
   }
 }
 
-function svString(value: unknown): Result<string> {
+function impString(value: unknown): Result<string> {
   return typeof value === 'string'
     ? { success: true, data: value }
     : failType('string', value)
 }
 
 function string(): Validator<string> {
-  return new Imp({ type: 'string' }, svString, svString)
+  return new Imp({ type: 'string' }, impString, impString)
 }
 
-function svNumber(value: unknown): Result<number> {
+function impNumber(value: unknown): Result<number> {
   return typeof value === 'number'
     ? { success: true, data: value }
     : failType('number', value)
 }
 
 function number(): Validator<number> {
-  return new Imp({ type: 'number' }, svNumber, svNumber)
+  return new Imp({ type: 'number' }, impNumber, impNumber)
 }
 
-function svBoolean(value: unknown): Result<boolean> {
+function impBoolean(value: unknown): Result<boolean> {
   return typeof value === 'boolean'
     ? { success: true, data: value }
     : failType('boolean', value)
 }
 
 function boolean(): Validator<boolean> {
-  return new Imp({ type: 'boolean' }, svBoolean, svBoolean)
+  return new Imp({ type: 'boolean' }, impBoolean, impBoolean)
 }
 
-function svBigint(value: unknown): Result<bigint> {
+function impBigint(value: unknown): Result<bigint> {
   return typeof value === 'bigint'
     ? { success: true, data: value }
     : failType('bigint', value)
 }
 
 function bigint(): Validator<bigint> {
-  return new Imp({ type: 'bigint' }, svBigint, svBigint)
+  return new Imp({ type: 'bigint' }, impBigint, impBigint)
 }
 
-function svNull(value: unknown): Result<null> {
+function impNull(value: unknown): Result<null> {
   return value === null
     ? { success: true, data: value }
     : failType('null', value)
 }
 
 function _null(): Validator<null> {
-  return new Imp({ type: 'null' }, svNull, svNull)
+  return new Imp({ type: 'null' }, impNull, impNull)
 }
 
-function svUndefined(value: unknown): Result<undefined> {
+function impUndefined(value: unknown): Result<undefined> {
   return value === undefined
     ? { success: true, data: value }
     : failType('undefined', value)
 }
 
 function _undefined(): Validator<undefined> {
-  return new Imp({ type: 'undefined' }, svUndefined, svUndefined)
+  return new Imp({ type: 'undefined' }, impUndefined, impUndefined)
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
@@ -347,12 +347,12 @@ type Object<T> = Simplify<
   }
 >
 
-function svpObject<T extends object>(
+function impObject<T extends object>(
   schema: T,
   clone: boolean,
   strict: boolean,
 ) {
-  return function svpObject(value: unknown): Result<Object<T>> {
+  return function impObject(value: unknown): Result<Object<T>> {
     if (typeof value !== 'object' || value === null || Array.isArray(object)) {
       return failType('object', value)
     }
@@ -369,23 +369,18 @@ function svpObject<T extends object>(
     }
     const result = {} as Record<string, unknown>
     for (const key in schema) {
-      const validator = schema[key] as Imp<unknown>
+      const imp = schema[key] as Imp<unknown>
       const prop = (value as { [record: string]: unknown })[key]
       if (prop === undefined) {
-        if (validator.isOptional) {
+        if (imp.isOptional) {
           continue
         }
-        if (
-          validator.meta.type === 'default' ||
-          validator.meta.type === 'catch'
-        ) {
-          result[key] = structuredClone(validator.meta.value)
+        if (imp.meta.type === 'default' || imp.meta.type === 'catch') {
+          result[key] = structuredClone(imp.meta.value)
           continue
         }
       }
-      const res = clone
-        ? validator.safeParse(prop)
-        : validator.safeValidate(prop)
+      const res = clone ? imp.safeParse(prop) : imp.safeValidate(prop)
       if (res.success === false) {
         res.path = `.${key}${res.path}`
         return res
@@ -411,8 +406,8 @@ function object<T extends object>(schema: T): Imp<Object<T>> {
       strict: false,
       schema: schema as Record<string, Imp<unknown>>,
     },
-    svpObject(schema, false, false),
-    svpObject(schema, true, false),
+    impObject(schema, false, false),
+    impObject(schema, true, false),
   )
 }
 
@@ -429,13 +424,13 @@ function strictObject<T extends object>(schema: T): Imp<Object<T>> {
       strict: true,
       schema: schema as Record<string, Imp<unknown>>,
     },
-    svpObject(schema, false, true),
-    svpObject(schema, true, true),
+    impObject(schema, false, true),
+    impObject(schema, true, true),
   )
 }
 
-function svpArray<T>(valueValidator: Validator<T>, clone: boolean) {
-  return function svpArray(value: unknown): Result<T[]> {
+function impArray<T>(valueValidator: Validator<T>, clone: boolean) {
+  return function impArray(value: unknown): Result<T[]> {
     if (!Array.isArray(value)) {
       return failType('array', value)
     }
@@ -463,15 +458,15 @@ function array<T>(element: Parser<T>): Parser<T[]>
 function array<T>(element: Imp<T>): Imp<T[]> {
   return new Imp(
     { type: 'array', element },
-    svpArray(element, false),
-    svpArray(element, true),
+    impArray(element, false),
+    impArray(element, true),
   )
 }
 
-function svpLiteral<T extends string | number | boolean | bigint>(
+function impLiteral<T extends string | number | boolean | bigint>(
   valueValidator: T,
 ) {
-  return function svpLiteral(value: unknown): Result<T> {
+  return function impLiteral(value: unknown): Result<T> {
     if (value === valueValidator) {
       return { success: true, data: valueValidator }
     }
@@ -488,15 +483,15 @@ function literal<T extends string | number | boolean | bigint>(
 ): Validator<T> {
   return new Imp(
     { type: 'literal', value },
-    svpLiteral(value),
-    svpLiteral(value),
+    impLiteral(value),
+    impLiteral(value),
   )
 }
 
-function svpUnion<
+function impUnion<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T, clone: boolean) {
-  return function svpUnion(value: unknown): Result<Infer<T[number]>> {
+  return function impUnion(value: unknown): Result<Infer<T[number]>> {
     for (const element of elements) {
       const result = clone
         ? element.safeParse(value)
@@ -524,26 +519,22 @@ function union<T extends [Imp<unknown>, Imp<unknown>, ...Imp<unknown>[]]>(
 ): Imp<Infer<T[number]>> {
   return new Imp(
     { type: 'union', values },
-    svpUnion(values, false),
-    svpUnion(values, true),
+    impUnion(values, false),
+    impUnion(values, true),
   )
 }
 
-function svpRecord<K extends string | number, V>(
-  keyValidator: Validator<K>,
-  valueValidator: Validator<V>,
+function impRecord<K extends string | number, V>(
+  keyImp: Imp<K>,
+  valueImp: Imp<V>,
   clone: boolean,
 ) {
   let enumKeys: (string | number)[] | undefined
-  if (
-    keyValidator instanceof Imp &&
-    !(valueValidator instanceof Imp && valueValidator.isOptional) &&
-    keyValidator.meta.type === 'enum'
-  ) {
-    enumKeys = keyValidator.meta.values as (string | number)[]
+  if (!valueImp.isOptional && keyImp.meta.type === 'enum') {
+    enumKeys = keyImp.meta.values as (string | number)[]
   }
 
-  return function svpRecord(value: unknown): Result<Record<K, V>> {
+  return function impRecord(value: unknown): Result<Record<K, V>> {
     if (typeof value !== 'object' || value === null || Array.isArray(object)) {
       return failType('object', value)
     }
@@ -551,12 +542,11 @@ function svpRecord<K extends string | number, V>(
     if (enumKeys) {
       for (const key of enumKeys) {
         if (!(key in value)) {
-          const validator = valueValidator as Imp<V>
           if (
-            validator.meta.type === 'default' ||
-            validator.meta.type === 'catch'
+            valueImp.meta.type === 'default' ||
+            valueImp.meta.type === 'catch'
           ) {
-            result[key as K] = structuredClone(validator.meta.value as V)
+            result[key as K] = structuredClone(valueImp.meta.value as V)
             continue
           }
           return {
@@ -568,9 +558,7 @@ function svpRecord<K extends string | number, V>(
       }
     }
     for (const key in value) {
-      const keyRes = clone
-        ? keyValidator.safeParse(key)
-        : keyValidator.safeValidate(key)
+      const keyRes = clone ? keyImp.safeParse(key) : keyImp.safeValidate(key)
       if (!keyRes.success) {
         keyRes.path = `.${key}${keyRes.path}`
         return keyRes
@@ -578,8 +566,8 @@ function svpRecord<K extends string | number, V>(
 
       const prop = (value as { [record: string]: unknown })[key]
       const propRes = clone
-        ? valueValidator.safeParse(prop)
-        : valueValidator.safeValidate(prop)
+        ? valueImp.safeParse(prop)
+        : valueImp.safeValidate(prop)
       if (!propRes.success) {
         propRes.path = `.${key}${propRes.path}`
         return propRes
@@ -608,13 +596,13 @@ function record<K extends string | number, V>(
 ): Imp<Record<K, V>> {
   return new Imp(
     { type: 'record', key, value },
-    svpRecord(key, value, false),
-    svpRecord(key, value, true),
+    impRecord(key, value, false),
+    impRecord(key, value, true),
   )
 }
 
-function svEnum<T extends string | number>(values: readonly T[]) {
-  return function svEnum(value: unknown): Result<T> {
+function impEnum<T extends string | number>(values: readonly T[]) {
+  return function impEnum(value: unknown): Result<T> {
     if (values.includes(value as T)) {
       return { success: true, data: value as T }
     }
@@ -627,16 +615,15 @@ function svEnum<T extends string | number>(values: readonly T[]) {
 }
 
 function _enum<const T extends string | number>(values: T[]): Validator<T> {
-  const sv = svEnum(values)
-  return new Imp({ type: 'enum', values }, sv, sv)
+  return new Imp({ type: 'enum', values }, impEnum(values), impEnum(values))
 }
 
-function svUnknown(value: unknown): Result<unknown> {
+function impUnknown(value: unknown): Result<unknown> {
   return { success: true, data: value }
 }
 
 function unknown(): Validator<unknown> {
-  return new Imp({ type: 'unknown' }, svUnknown, svUnknown)
+  return new Imp({ type: 'unknown' }, impUnknown, impUnknown)
 }
 
 type Tuple<T extends unknown[]> = T extends []
@@ -649,13 +636,17 @@ type Tuple<T extends unknown[]> = T extends []
         : never
     : never
 
-function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
+function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   schema: T,
   clone: boolean,
 ) {
   let requiredLength = schema.length
+  let defaultLength = schema.length
   for (let i = schema.length - 1; i >= 0; i--) {
     const imp = schema[i] as Imp<unknown>
+    if (imp.isOptional && requiredLength === defaultLength) {
+      defaultLength--
+    }
     if (
       imp.isOptional ||
       imp.meta.type === 'default' ||
@@ -666,17 +657,8 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
       break
     }
   }
-  let defaultLength = schema.length
-  for (let i = schema.length - 1; i >= 0; i--) {
-    const imp = schema[i] as Imp<unknown>
-    if (imp.isOptional) {
-      defaultLength--
-    } else {
-      break
-    }
-  }
 
-  return function svpTuple(value: unknown): Result<Tuple<T>> {
+  return function impTuple(value: unknown): Result<Tuple<T>> {
     if (!Array.isArray(value)) {
       return failType('array', value)
     }
@@ -691,17 +673,15 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
     const arrayResult: unknown[] = []
     for (let i = 0; i < Math.max(value.length, defaultLength); i++) {
       // biome-ignore lint/style/noNonNullAssertion: It's there
-      const validator = schema[i]! as Imp<unknown>
+      const imp = schema[i]! as Imp<unknown>
       const item = value[i]
-      const res = clone
-        ? validator.safeParse(item)
-        : validator.safeValidate(item)
-      if (res.success === false) {
-        res.path = `[${i}]${res.path}`
-        return res
+      const result = clone ? imp.safeParse(item) : imp.safeValidate(item)
+      if (result.success === false) {
+        result.path = `[${i}]${result.path}`
+        return result
       }
       if (clone) {
-        arrayResult.push(res.data)
+        arrayResult.push(result.data)
       }
     }
     return { success: true, data: (clone ? arrayResult : value) as Tuple<T> }
@@ -719,8 +699,8 @@ function tuple<T extends [] | [Imp<unknown>, ...Imp<unknown>[]]>(
 ): Imp<Tuple<T>> {
   return new Imp(
     { type: 'tuple', schema },
-    svpTuple(schema, false),
-    svpTuple(schema, true),
+    impTuple(schema, false),
+    impTuple(schema, true),
   )
 }
 
