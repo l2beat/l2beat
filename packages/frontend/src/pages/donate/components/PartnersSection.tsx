@@ -1,7 +1,7 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { ArrowRightIcon } from '~/icons/ArrowRight'
+import { ArrowButtonIcon } from '~/icons/ArrowButton'
 import type { Partners } from '../getDonateData'
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
 
 export function PartnersSection({ partners }: Props) {
   return (
-    <PrimaryCard className="space-y-8 border-divider border-t md:mt-6 md:border-t-0">
+    <PrimaryCard className="space-y-4 border-divider border-t md:mt-6 md:space-y-8 md:border-t-0">
       <h2 className="font-bold text-xl">Partners</h2>
       <div>
         <h3 className="font-medium text-secondary text-xs">ECOSYSTEMS TIER</h3>
@@ -29,10 +29,12 @@ export function PartnersSection({ partners }: Props) {
         </div>
       </div>
       <div>
-        <h3 className="mb-3 font-medium text-secondary text-xs">
-          SUPPORTERS TIER
-        </h3>
-        <SupporterTierTable partners={partners.supporter} />
+        <h3 className="font-medium text-secondary text-xs">SUPPORTERS TIER</h3>
+        <div className="mt-3 flex flex-col gap-2">
+          {partners.supporter.map((partner) => (
+            <SupporterTierCard key={partner.slug} partner={partner} />
+          ))}
+        </div>
       </div>
     </PrimaryCard>
   )
@@ -110,60 +112,24 @@ export function InnovatorTierCard({
         alt={partner.slug}
         className="h-[42px] w-fit md:h-[52px]"
       />
-      <svg
-        width="32"
-        height="32"
-        viewBox="0 0 32 32"
-        fill="none"
-        className="absolute right-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden"
-      >
-        <g clipPath="url(#clip0_9936_27892)">
-          <path
-            d="M34 34H-2V-2H34V34ZM13.8486 8.15137C13.38 7.68274 12.62 7.68274 12.1514 8.15137C11.6827 8.62 11.6827 9.38 12.1514 9.84863L18.3027 16L12.1514 22.1514L12.0693 22.2422C11.6846 22.7135 11.7119 23.4092 12.1514 23.8486C12.5908 24.2881 13.2865 24.3154 13.7578 23.9307L13.8486 23.8486L20.75 16.9473C21.2728 16.4241 21.2728 15.5759 20.75 15.0527L13.8486 8.15137Z"
-            fill="white"
-          />
-        </g>
-        <defs>
-          <clipPath id="clip0_9936_27892">
-            <rect width="32" height="32" rx="4" fill="white" />
-          </clipPath>
-        </defs>
-      </svg>
+      <ArrowButtonIcon className="absolute right-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
   )
 }
 
-export function SupporterTierTable({
-  partners,
-}: { partners: Partners['supporter'] }) {
+export function SupporterTierCard({
+  partner,
+}: { partner: Partners['supporter'][number] }) {
   return (
-    <div className="overflow-hidden rounded">
-      <table className="w-full">
-        <tbody>
-          {partners.map((partner) => (
-            <tr key={partner.slug} className="h-14 border-divider border-t">
-              <td className="pl-7">
-                <div className="flex items-center gap-1.5">
-                  <img
-                    src={partner.logo.src}
-                    alt={partner.name}
-                    className="size-6 object-contain"
-                  />
-                  <span className="font-medium text-sm">{partner.name}</span>
-                </div>
-              </td>
-              <td className="p-4">
-                <a
-                  href={partner.link}
-                  className="flex items-center gap-1 font-medium text-link text-xs underline max-md:justify-end"
-                >
-                  Go to project page <ArrowRightIcon className="size-[14px]" />
-                </a>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <a
+      href={partner.link}
+      style={{
+        backgroundImage: `url(${partner.backgroundImage.src})`,
+      }}
+      className="group relative flex h-14 items-center justify-between rounded border border-divider bg-center bg-cover px-6 py-4 lg:h-16"
+    >
+      <img className="h-full" src={partner.logo.src} alt={partner.slug} />
+      <ArrowButtonIcon className="absolute right-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
+    </a>
   )
 }

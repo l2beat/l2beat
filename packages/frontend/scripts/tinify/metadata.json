@@ -1382,5 +1382,7 @@
   "static/partners/unichain/background.png": "38590b3bba68e71af87c722e776f1e91",
   "static/partners/unichain/logo.png": "fe05edd8740ccad4d05240122adb64d0",
   "static/partners/world/background.png": "754fbb68f4a74766d341fe68e0af483a",
-  "static/partners/world/logo.png": "41732beb81b30974d3f4f9d92e68df15"
+  "static/partners/world/logo.png": "41732beb81b30974d3f4f9d92e68df15",
+  "static/partners/nethermind/background.png": "17e01eea8a0c77824a6aa8f5c9fec38a",
+  "static/partners/nethermind/logo.png": "0d9064e1f38777ceca673c23efb6777b"
 }

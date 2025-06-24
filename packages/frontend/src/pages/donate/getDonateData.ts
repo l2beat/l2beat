@@ -88,8 +88,11 @@ async function getPartners() {
 
       return {
         ...e.data,
-        logo: manifest.getImage(`/icons/${e.data.slug}.png`),
+        logo: manifest.getImage(`/partners/${e.data.slug}/logo.png`),
         link: e.data.link ?? `/scaling/projects/${e.data.slug}`,
+        backgroundImage: manifest.getImage(
+          `/partners/${e.data.slug}/background.png`,
+        ),
       }
     })
     .filter((e) => e !== undefined)
