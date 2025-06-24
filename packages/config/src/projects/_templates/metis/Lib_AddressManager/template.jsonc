@@ -3,76 +3,98 @@
   "name": "Lib_AddressManager",
   "description": "Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
   // Lib_AddressManager
-  "ignoreRelatives": ["undefined_MVM_FraudVerifier"],
+  "ignoreRelatives": [
+    "undefined_MVM_FraudVerifier"
+  ],
   "fields": {
     "DisputeGameFactory": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["DisputeGameFactory"]
+        "args": [
+          "DisputeGameFactory"
+        ]
       }
     },
     "BondManager": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["BondManager"]
+        "args": [
+          "BondManager"
+        ]
       }
     },
     "CanonicalTransactionChain": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["CanonicalTransactionChain"]
+        "args": [
+          "CanonicalTransactionChain"
+        ]
       }
     },
     "MVM_DiscountOracle": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["MVM_DiscountOracle"]
+        "args": [
+          "MVM_DiscountOracle"
+        ]
       }
     },
     "METIS_MANAGER": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["METIS_MANAGER"]
+        "args": [
+          "METIS_MANAGER"
+        ]
       }
     },
     "_1088_MVM_Sequencer_Wrapper": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["1088_MVM_Sequencer_Wrapper"]
+        "args": [
+          "1088_MVM_Sequencer_Wrapper"
+        ]
       }
     },
     "Proxy__MVM_CanonicalTransaction": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["Proxy__MVM_CanonicalTransaction"]
+        "args": [
+          "Proxy__MVM_CanonicalTransaction"
+        ]
       }
     },
     "_1088_MVM_FraudVerifier": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["1088_MVM_FraudVerifier"]
+        "args": [
+          "1088_MVM_FraudVerifier"
+        ]
       }
     },
     "Proxy__MVM_Verifier": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["Proxy__MVM_Verifier"]
+        "args": [
+          "Proxy__MVM_Verifier"
+        ]
       }
     },
     "ChainStorageContainer_CTC_queue": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["ChainStorageContainer-CTC-queue"]
+        "args": [
+          "ChainStorageContainer-CTC-queue"
+        ]
       }
     },
     "StateCommitmentChain": {
@@ -82,21 +104,27 @@
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["StateCommitmentChain"]
+        "args": [
+          "StateCommitmentChain"
+        ]
       }
     },
     "Proxy__MVM_ChainManager": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["Proxy__MVM_ChainManager"]
+        "args": [
+          "Proxy__MVM_ChainManager"
+        ]
       }
     },
     "_1088_MVM_Proposer": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["1088_MVM_Proposer"]
+        "args": [
+          "1088_MVM_Proposer"
+        ]
       },
       "permissions": [
         {
@@ -108,28 +136,36 @@
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["1088_MVM_Sequencer"]
+        "args": [
+          "1088_MVM_Sequencer"
+        ]
       }
     },
     "L2CrossDomainMessenger": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["L2CrossDomainMessenger"]
+        "args": [
+          "L2CrossDomainMessenger"
+        ]
       }
     },
     "undefined_MVM_FraudVerifier": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["undefined_MVM_FraudVerifier"]
+        "args": [
+          "undefined_MVM_FraudVerifier"
+        ]
       }
     },
     "Proxy__OVM_L1StandardBridge": {
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["Proxy__OVM_L1StandardBridge"]
+        "args": [
+          "Proxy__OVM_L1StandardBridge"
+        ]
       }
     },
     // contract allowed to delete batches
@@ -137,7 +173,9 @@
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["1088_MVM_FraudVerifier"]
+        "args": [
+          "1088_MVM_FraudVerifier"
+        ]
       },
       "permissions": [
         {
@@ -150,7 +188,9 @@
       "handler": {
         "type": "call",
         "method": "getAddress",
-        "args": ["FaultProofLockingPool"]
+        "args": [
+          "FaultProofLockingPool"
+        ]
       }
     },
     // specified on L2 node (https://github.com/MetisProtocol/mvm/blob/e816c6c461a8e91db3a9ccaa33d2d0f6a60633d5/go/op-program/chainconfig/rollupcfg.go#L85)
@@ -165,16 +205,22 @@
         }
       ]
     },
-    "txChainBatcher": {
+    "inboxAddress": {
       "handler": {
         "type": "hardcoded",
-        "value": "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+        "value": "0xFf00000000000000000000000000000000001088"
       },
-      "permissions": [
-        {
-          "type": "sequence"
-        }
-      ]
+      "txChainBatcher": {
+        "handler": {
+          "type": "hardcoded",
+          "value": "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+        },
+        "permissions": [
+          {
+            "type": "sequence"
+          }
+        ]
+      }
     }
   }
 }
