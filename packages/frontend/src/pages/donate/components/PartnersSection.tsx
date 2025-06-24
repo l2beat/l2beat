@@ -103,27 +103,31 @@ export function InnovatorTierCard({
       style={{
         backgroundImage: `url(${partner.backgroundImage.src})`,
       }}
-      className="group relative flex h-14 items-center justify-between rounded border border-divider bg-center bg-cover px-6 max-md:pr-4 md:h-20"
+      className="group relative flex h-20 items-center justify-between rounded border border-divider bg-center bg-cover px-6 max-md:pr-4 lg:h-24"
     >
       <img
         src={partner.logo.src}
         alt={partner.slug}
         className="h-[42px] w-fit md:h-[52px]"
       />
-      <div className="hidden rounded border border-link-stroke bg-surface-primary px-3 py-2 font-medium text-link text-xs leading-none max-md:block">
-        Go to Project Details
-      </div>
       <svg
         width="32"
         height="32"
         viewBox="0 0 32 32"
         fill="none"
-        className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden"
+        className="absolute right-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden"
       >
-        <path
-          d="M16 0C24.8366 0 32 7.16344 32 16C32 24.8366 24.8366 32 16 32C7.16344 32 0 24.8366 0 16C0 7.16344 7.16344 0 16 0ZM14.248 8.48438C13.7795 8.01635 13.0203 8.01628 12.5518 8.48438C12.0831 8.95298 12.0831 9.71294 12.5518 10.1816L18.3691 16L12.5518 21.8184C12.0831 22.287 12.0831 23.047 12.5518 23.5156C13.0203 23.9837 13.7795 23.9837 14.248 23.5156L20.8213 16.9424C21.3414 16.4218 21.3414 15.5782 20.8213 15.0576L14.248 8.48438Z"
-          fill="white"
-        />
+        <g clipPath="url(#clip0_9936_27892)">
+          <path
+            d="M34 34H-2V-2H34V34ZM13.8486 8.15137C13.38 7.68274 12.62 7.68274 12.1514 8.15137C11.6827 8.62 11.6827 9.38 12.1514 9.84863L18.3027 16L12.1514 22.1514L12.0693 22.2422C11.6846 22.7135 11.7119 23.4092 12.1514 23.8486C12.5908 24.2881 13.2865 24.3154 13.7578 23.9307L13.8486 23.8486L20.75 16.9473C21.2728 16.4241 21.2728 15.5759 20.75 15.0527L13.8486 8.15137Z"
+            fill="white"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_9936_27892">
+            <rect width="32" height="32" rx="4" fill="white" />
+          </clipPath>
+        </defs>
       </svg>
     </a>
   )
