@@ -7,17 +7,17 @@ type Infer<T> = T extends Parser<infer U> ? U : never
 export interface Parser<T> {
   parse: (value: unknown) => T
   safeParse: (value: unknown) => Result<T>
-  optional(): OptionalParser<T>
   check<U extends T>(
     predicate: (value: T) => value is U,
     message?: string,
   ): Parser<U>
+  check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
   transform: <U>(transformer: (value: T) => U) => Parser<U>
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
-  check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
+  optional(): OptionalParser<T>
 }
 
 export interface OptionalParser<T> extends Parser<T> {
@@ -50,64 +50,15 @@ export interface OptionalValidator<T> extends Validator<T> {
   isOptional: true
 }
 
-class ParserImpl<T> implements Parser<T> {
-  safeParse: (value: unknown) => Result<T>
-  isOptional = false
-  params: [string, unknown]
-
-  constructor(
-    safeParse: (value: unknown) => Result<T>,
-    params: [string, unknown],
-  ) {
-    this.safeParse = safeParse
-    this.params = params
-  }
-
-  parse(value: unknown): T {
-    const result = this.safeParse(value)
-    if (result.success) {
-      return result.data
-    } else {
-      throw new Error(`At ${result.path || '@'}: ${result.message}`)
-    }
-  }
-
-  check(predicate: (value: T) => boolean | string, message?: string) {
-    return new ParserImpl(check(predicate, this.safeParse, message), [
-      'check',
-      predicate,
-    ])
-  }
-
-  transform<U>(transformer: (value: T) => U): Parser<U> {
-    return new ParserImpl(spTransform(this.safeParse, transformer), [
-      'transform',
-      transformer,
-    ])
-  }
-
-  default(
-    value: Exclude<T, null | undefined>,
-  ): Parser<Exclude<T, null | undefined>> {
-    return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
-  }
-
-  catch(value: T): Parser<T> {
-    return new ParserImpl(spCatch(this.safeParse, value), ['catch', value])
-  }
-
-  optional(): OptionalParser<T> {
-    const impl = new ParserImpl(this.safeParse, this.params)
-    impl.isOptional = true
-    return impl as OptionalParser<T>
-  }
+const CANNOT_VALIDATE = () => {
+  throw new Error('Cannot call validate on a parser object.')
 }
 
-class ValidatorImpl<T> implements Validator<T> {
+class Imp<T> implements Validator<T>, Parser<T> {
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
-  isOptional = false
   params: [string, unknown]
+  isOptional = false
 
   constructor(
     safeValidate: (value: unknown) => Result<T>,
@@ -115,7 +66,7 @@ class ValidatorImpl<T> implements Validator<T> {
     params: [string, unknown],
   ) {
     this.safeValidate = safeValidate
-    this.safeParse = safeParse ?? safeValidate
+    this.safeParse = safeParse
     this.params = params
   }
 
@@ -142,15 +93,15 @@ class ValidatorImpl<T> implements Validator<T> {
   }
 
   check(predicate: (value: T) => boolean | string, message?: string) {
-    return new ValidatorImpl(
-      check(predicate, this.safeValidate, message),
-      check(predicate, this.safeParse, message),
+    return new Imp(
+      svpCheck(predicate, this.safeValidate, message),
+      svpCheck(predicate, this.safeParse, message),
       ['check', predicate],
     )
   }
 
   transform<U>(transformer: (value: T) => U): Parser<U> {
-    return new ParserImpl(spTransform(this.safeParse, transformer), [
+    return new Imp(CANNOT_VALIDATE, spTransform(this.safeParse, transformer), [
       'transform',
       transformer,
     ])
@@ -159,30 +110,32 @@ class ValidatorImpl<T> implements Validator<T> {
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>> {
-    return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
+    return new Imp(CANNOT_VALIDATE, spDefault(this.safeParse, value), [
+      'default',
+      value,
+    ])
   }
 
   catch(value: T): Parser<T> {
-    return new ParserImpl(spCatch(this.safeParse, value), ['catch', value])
+    return new Imp(CANNOT_VALIDATE, spCatch(this.safeParse, value), [
+      'catch',
+      value,
+    ])
   }
 
   optional(): OptionalValidator<T> {
-    const impl = new ValidatorImpl(
-      this.safeValidate,
-      this.safeParse,
-      this.params,
-    )
+    const impl = new Imp(this.safeValidate, this.safeParse, this.params)
     impl.isOptional = true
     return impl as OptionalValidator<T>
   }
 }
 
-function check<T>(
+function svpCheck<T>(
   predicate: (value: T) => string | boolean,
-  parseOrValidate: Parser<T>['safeParse'],
+  parseOrValidate: (value: unknown) => Result<T>,
   message: string | undefined,
 ) {
-  return function check(value: unknown): Result<T> {
+  return function svpCheck(value: unknown): Result<T> {
     const result = parseOrValidate(value)
     if (result.success) {
       const checkResult = predicate(result.data)
@@ -202,7 +155,7 @@ function check<T>(
 }
 
 function spTransform<T, U>(
-  safeParse: Parser<T>['safeParse'],
+  safeParse: (value: unknown) => Result<T>,
   transformer: (value: T) => U,
 ) {
   return function spTransform(value: unknown): Result<U> {
@@ -217,7 +170,10 @@ function spTransform<T, U>(
   }
 }
 
-function spDefault<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
+function spDefault<T, U>(
+  safeParse: (value: unknown) => Result<T>,
+  fallback: U,
+) {
   return function spDefault(
     value: unknown,
   ): Result<Exclude<T, null | undefined> | U> {
@@ -232,7 +188,7 @@ function spDefault<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
   }
 }
 
-function spCatch<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
+function spCatch<T, U>(safeParse: (value: unknown) => Result<T>, fallback: U) {
   return function spCatch(value: unknown): Result<T | U> {
     const result = safeParse(value)
     if (!result.success) {
@@ -276,7 +232,7 @@ function svString(value: unknown): Result<string> {
 }
 
 function string(): Validator<string> {
-  return new ValidatorImpl(svString, svString, ['string', undefined])
+  return new Imp(svString, svString, ['string', undefined])
 }
 
 function svNumber(value: unknown): Result<number> {
@@ -286,7 +242,7 @@ function svNumber(value: unknown): Result<number> {
 }
 
 function number(): Validator<number> {
-  return new ValidatorImpl(svNumber, svNumber, ['number', undefined])
+  return new Imp(svNumber, svNumber, ['number', undefined])
 }
 
 function svBoolean(value: unknown): Result<boolean> {
@@ -296,7 +252,7 @@ function svBoolean(value: unknown): Result<boolean> {
 }
 
 function boolean(): Validator<boolean> {
-  return new ValidatorImpl(svBoolean, svBoolean, ['boolean', undefined])
+  return new Imp(svBoolean, svBoolean, ['boolean', undefined])
 }
 
 function svBigint(value: unknown): Result<bigint> {
@@ -306,7 +262,7 @@ function svBigint(value: unknown): Result<bigint> {
 }
 
 function bigint(): Validator<bigint> {
-  return new ValidatorImpl(svBigint, svBigint, ['bigint', undefined])
+  return new Imp(svBigint, svBigint, ['bigint', undefined])
 }
 
 function svNull(value: unknown): Result<null> {
@@ -316,7 +272,7 @@ function svNull(value: unknown): Result<null> {
 }
 
 function _null(): Validator<null> {
-  return new ValidatorImpl(svNull, svNull, ['null', undefined])
+  return new Imp(svNull, svNull, ['null', undefined])
 }
 
 function svUndefined(value: unknown): Result<undefined> {
@@ -326,7 +282,7 @@ function svUndefined(value: unknown): Result<undefined> {
 }
 
 function _undefined(): Validator<undefined> {
-  return new ValidatorImpl(svUndefined, svUndefined, ['undefined', undefined])
+  return new Imp(svUndefined, svUndefined, ['undefined', undefined])
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
@@ -365,7 +321,7 @@ function svpObject<T extends object>(
     }
     const result = {} as Record<string, unknown>
     for (const key in schema) {
-      const validator = schema[key] as ValidatorImpl<unknown>
+      const validator = schema[key] as Imp<unknown>
       const prop = (value as { [record: string]: unknown })[key]
       if (prop === undefined) {
         if (validator.isOptional) {
@@ -401,7 +357,7 @@ function object<T extends { [key: string]: Parser<unknown> }>(
   schema: T,
 ): Parser<Object<T>>
 function object<T extends object>(schema: T): Parser<Object<T>> {
-  return new ValidatorImpl(
+  return new Imp(
     svpObject(schema, false, false),
     svpObject(schema, true, false),
     ['object', schema],
@@ -415,7 +371,7 @@ function strictObject<T extends { [key: string]: Parser<unknown> }>(
   schema: T,
 ): Parser<Object<T>>
 function strictObject<T extends object>(schema: T): Parser<Object<T>> {
-  return new ValidatorImpl(
+  return new Imp(
     svpObject(schema, false, true),
     svpObject(schema, true, true),
     ['strictObject', schema],
@@ -449,7 +405,7 @@ function array<T>(element: Validator<T>): Validator<T[]>
 // @ts-ignore We allow this error for simplicity of use
 function array<T>(element: Parser<T>): Parser<T[]>
 function array<T>(element: Validator<T>): Validator<T[]> {
-  return new ValidatorImpl(svpArray(element, false), svpArray(element, true), [
+  return new Imp(svpArray(element, false), svpArray(element, true), [
     'array',
     element,
   ])
@@ -473,10 +429,7 @@ function svpLiteral<T extends string | number | boolean | bigint>(
 function literal<T extends string | number | boolean | bigint>(
   value: T,
 ): Validator<T> {
-  return new ValidatorImpl(svpLiteral(value), svpLiteral(value), [
-    'literal',
-    value,
-  ])
+  return new Imp(svpLiteral(value), svpLiteral(value), ['literal', value])
 }
 
 function svpUnion<
@@ -508,11 +461,10 @@ function union<
 function union<
   T extends [Validator<unknown>, Validator<unknown>, ...Validator<unknown>[]],
 >(elements: T): Validator<Infer<T[number]>> {
-  return new ValidatorImpl(
-    svpUnion(elements, false),
-    svpUnion(elements, true),
-    ['union', elements],
-  )
+  return new Imp(svpUnion(elements, false), svpUnion(elements, true), [
+    'union',
+    elements,
+  ])
 }
 
 function svpRecord<K extends string | number, V>(
@@ -522,8 +474,8 @@ function svpRecord<K extends string | number, V>(
 ) {
   let enumKeys: (string | number)[] | undefined
   if (
-    keyValidator instanceof ValidatorImpl &&
-    !(valueValidator instanceof ValidatorImpl && valueValidator.isOptional) &&
+    keyValidator instanceof Imp &&
+    !(valueValidator instanceof Imp && valueValidator.isOptional) &&
     keyValidator.params[0] === 'enum'
   ) {
     enumKeys = keyValidator.params[1] as (string | number)[]
@@ -537,7 +489,7 @@ function svpRecord<K extends string | number, V>(
     if (enumKeys) {
       for (const key of enumKeys) {
         if (!(key in value)) {
-          const validator = valueValidator as ValidatorImpl<V>
+          const validator = valueValidator as Imp<V>
           if (
             validator.params[0] === 'default' ||
             validator.params[0] === 'catch'
@@ -592,11 +544,10 @@ function record<K extends string | number, V>(
   key: Validator<K>,
   value: Validator<V>,
 ): Validator<Record<K, V>> {
-  return new ValidatorImpl(
-    svpRecord(key, value, false),
-    svpRecord(key, value, true),
-    ['record', [key, value]],
-  )
+  return new Imp(svpRecord(key, value, false), svpRecord(key, value, true), [
+    'record',
+    [key, value],
+  ])
 }
 
 function svEnum<T extends string | number>(values: readonly T[]) {
@@ -616,7 +567,7 @@ function _enum<const T extends string | number>(
   values: readonly T[],
 ): Validator<T> {
   const sv = svEnum(values)
-  return new ValidatorImpl(sv, sv, ['enum', values])
+  return new Imp(sv, sv, ['enum', values])
 }
 
 function svUnknown(value: unknown): Result<unknown> {
@@ -624,7 +575,7 @@ function svUnknown(value: unknown): Result<unknown> {
 }
 
 function unknown(): Validator<unknown> {
-  return new ValidatorImpl(svUnknown, svUnknown, ['unknown', undefined])
+  return new Imp(svUnknown, svUnknown, ['unknown', undefined])
 }
 
 type Tuple<T extends unknown[]> = T extends []
@@ -643,7 +594,7 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
 ) {
   let requiredLength = schema.length
   for (let i = schema.length - 1; i >= 0; i--) {
-    if ((schema[i] as ValidatorImpl<unknown>).isOptional) {
+    if ((schema[i] as Imp<unknown>).isOptional) {
       requiredLength--
     } else {
       break
@@ -665,7 +616,7 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
     const arrayResult: unknown[] = []
     for (let i = 0; i < value.length; i++) {
       // biome-ignore lint/style/noNonNullAssertion: It's there
-      const validator = schema[i]! as ValidatorImpl<unknown>
+      const validator = schema[i]! as Imp<unknown>
       const item = value[i]
       let res: Result<unknown>
       if (item === undefined && validator.isOptional) {
@@ -694,7 +645,7 @@ function tuple<T extends [] | [Parser<unknown>, ...Parser<unknown>[]]>(
 function tuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   schema: T,
 ): Validator<Tuple<T>> {
-  return new ValidatorImpl(svpTuple(schema, false), svpTuple(schema, true), [
+  return new Imp(svpTuple(schema, false), svpTuple(schema, true), [
     'tuple',
     schema,
   ])
@@ -705,7 +656,7 @@ function lazy<T>(make: () => Validator<T>): Validator<T>
 function lazy<T>(make: () => Parser<T>): Parser<T>
 function lazy<T>(make: () => Validator<T>): Validator<T> {
   let made: Validator<T> | undefined
-  return new ValidatorImpl<T>(
+  return new Imp<T>(
     (value) => {
       if (!made) made = make()
       return made.safeValidate(value)
