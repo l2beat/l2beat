@@ -195,7 +195,7 @@ function spTransform<T, U>(
   safeParse: Parser<T>['safeParse'],
   transformer: (value: T) => U,
 ) {
-  return function spDefault(value: unknown): Result<U> {
+  return function spTransform(value: unknown): Result<U> {
     const result = safeParse(value)
     if (!result.success) return result
     try {
@@ -212,11 +212,11 @@ function spDefault<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
     value: unknown,
   ): Result<Exclude<T, null | undefined> | U> {
     if (value === null || value === undefined) {
-      return { success: true, data: fallback }
+      return { success: true, data: structuredClone(fallback) }
     }
     const result = safeParse(value)
     if (result.success && (result.data === null || result.data === undefined)) {
-      return { success: true, data: fallback }
+      return { success: true, data: structuredClone(fallback) }
     }
     return result as Result<Exclude<T, null | undefined>>
   }
@@ -352,7 +352,7 @@ function svpObject<T extends object>(
           continue
         }
         if (validator.params[0] === 'default') {
-          result[key] = validator.params[1]
+          result[key] = structuredClone(validator.params[1])
           continue
         }
       }
@@ -514,9 +514,9 @@ function svpRecord<K extends string | number, V>(
     if (enumKeys) {
       for (const key of enumKeys) {
         if (!(key in value)) {
-          if ((valueValidator as ValidatorImpl<V>).params[0] === 'default') {
-            result[key as K] = (valueValidator as ValidatorImpl<V>)
-              .params[1] as V
+          const validator = valueValidator as ValidatorImpl<V>
+          if (validator.params[0] === 'default') {
+            result[key as K] = structuredClone(validator.params[1] as V)
             continue
           }
           return {

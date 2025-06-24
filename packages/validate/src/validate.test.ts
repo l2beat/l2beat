@@ -199,6 +199,14 @@ describe('validate', () => {
     })
   })
 
+  it('default - structuredClone', () => {
+    const Foo = v.array(v.number()).default([])
+    const x = Foo.parse(undefined)
+    x.push(1)
+    const y = Foo.parse(undefined)
+    expect(y).toEqual([])
+  })
+
   it('tuple', () => {
     const A = v.tuple([v.number(), v.string()])
     expect(A.safeParse([1, 'foo'])).toEqual({
