@@ -1,44 +1,53 @@
-import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { getProject, readTemplateFile } from '../api/api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMemo } from 'react'
+import { readTemplateFile, writeTemplateFile } from '../api/api'
 import type { ApiProjectChain, ApiTemplateFileResponse } from '../api/types'
 import { ActionNeededState } from '../components/ActionNeededState'
 import { ErrorState } from '../components/ErrorState'
 import { LoadingState } from '../components/LoadingState'
-import { CodeView } from '../components/editor/CodeView'
-import type { EditorSupportedLanguage } from '../components/editor/editor'
-import { IconCodeFile } from '../icons/IconCodeFile'
-import { usePanelStore } from '../store/store'
+import { EditorView } from '../components/editor/EditorView'
+import type { EditorFile } from '../components/editor/store'
+import { isReadOnly } from '../config'
+import { useProjectData } from '../hooks/useProjectData'
 
 export function TemplatePanel() {
-  const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
-  const projectResponse = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const selectedAddress = usePanelStore((state) => state.selected)
-  const [fileIndex, setFileIndex] = useState(0)
-  const template = findTemplateId(
-    projectResponse.data?.entries ?? [],
-    selectedAddress,
+  const { project, selectedAddress, projectResponse } = useProjectData()
+  const queryClient = useQueryClient()
+
+  const template = useMemo(
+    () => findTemplateId(projectResponse.data?.entries ?? [], selectedAddress),
+    [projectResponse.data?.entries, selectedAddress],
   )
 
   const templateResponse = useQuery({
-    queryKey: ['projects', project, 'template', template],
-    queryFn: () => readTemplateFile(template),
+    queryKey: ['projects', project, 'template', template, selectedAddress],
+    queryFn: () => {
+      if (!template) {
+        return null
+      }
+      return readTemplateFile(template)
+    },
     enabled: template !== undefined,
   })
 
-  const sources = getSources(templateResponse.data)
+  const saveTemplate = useMutation({
+    mutationFn: async (content: string) => {
+      if (!template) {
+        return
+      }
+      await writeTemplateFile(template, content)
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ['projects', project, 'template', template],
+      })
+    },
+  })
 
-  useEffect(() => {
-    setFileIndex(0)
-  }, [template])
+  const files = useMemo(
+    () => getTemplateFiles(templateResponse, selectedAddress),
+    [templateResponse, selectedAddress],
+  )
 
   if (projectResponse.isError) {
     return <ErrorState />
@@ -53,38 +62,20 @@ export function TemplatePanel() {
   }
 
   return (
-    <div className="flex h-full w-full select-none flex-col">
-      <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-        {sources.map((x, i) => (
-          <button
-            key={i}
-            onClick={() => setFileIndex(i)}
-            className={clsx(
-              'flex h-6 items-center gap-1 px-2 text-sm',
-              fileIndex === i && 'bg-autumn-300 text-black',
-            )}
-          >
-            <IconCodeFile />
-            {x.name}
-          </button>
-        ))}
-      </div>
-      <CodeView
-        code={sources[fileIndex]?.code ?? 'No contents'}
-        range={undefined}
-        language={sources[fileIndex]?.language}
-        editorKey="template-panel"
-      />
-    </div>
+    <EditorView
+      editorId="template-panel"
+      files={files}
+      callbacks={{ onSave: saveTemplate.mutate }}
+    />
   )
 }
 
-export function findTemplateId(
+function findTemplateId(
   chains: ApiProjectChain[],
   address: string | undefined,
 ): string | undefined {
   if (!address) {
-    return
+    return undefined
   }
 
   for (const chain of chains) {
@@ -99,36 +90,60 @@ export function findTemplateId(
       }
     }
   }
+  return undefined
 }
 
-function getSources(response: ApiTemplateFileResponse | undefined) {
-  const sources: {
-    name: string
-    code: string
-    language?: EditorSupportedLanguage
-  }[] = []
+function getTemplateFiles(
+  templateResponse: ReturnType<typeof useQuery<ApiTemplateFileResponse | null>>,
+  selectedAddress: string | undefined,
+): EditorFile[] {
+  if (!selectedAddress) {
+    return []
+  }
 
-  if (response?.template) {
+  const data = templateResponse.data
+
+  if (!data) {
+    return [
+      {
+        id: 'template',
+        name: 'template.jsonc',
+        content: '// No template files - no template response',
+        language: 'json',
+        readOnly: isReadOnly,
+      },
+    ]
+  }
+
+  const sources: EditorFile[] = []
+
+  if (data.template) {
     sources.push({
+      id: `template-${selectedAddress}`,
       name: 'template.jsonc',
-      code: response.template,
+      content: data.template,
       language: 'json',
+      readOnly: false,
     })
   }
 
-  if (response?.shapes) {
+  if (data.shapes) {
     sources.push({
+      id: `shapes-${selectedAddress}`,
       name: 'shapes.json',
-      code: response.shapes,
+      content: data.shapes,
       language: 'json',
+      readOnly: true,
     })
   }
 
-  if (response?.criteria) {
+  if (data.criteria) {
     sources.push({
+      id: `criteria-${selectedAddress}`,
       name: 'criteria.json',
-      code: response.criteria,
+      content: data.criteria,
       language: 'json',
+      readOnly: true,
     })
   }
 
