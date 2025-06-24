@@ -1253,11 +1253,11 @@ function computedStage(
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable:
           templateVars.isNodeAvailable ?? 'UnderReview',
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,

@@ -86,11 +86,11 @@ export const morph: ScalingProject = {
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
       rollupNodeSourceAvailable: 'UnderReview',
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: false,
     },
     stage1: {
       principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: false,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,

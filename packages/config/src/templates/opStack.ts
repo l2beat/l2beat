@@ -820,11 +820,11 @@ function computedStage(
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+        stateVerificationOnL1: fraudProofType !== 'None',
+        fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: fraudProofType !== 'None',
-        fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp:

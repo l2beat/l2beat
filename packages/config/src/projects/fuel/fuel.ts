@@ -167,11 +167,11 @@ export const fuel: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersCanExitWithoutCooperation: false,
         usersHave7DaysToExit: false,
         securityCouncilProperlySetUp: false,
