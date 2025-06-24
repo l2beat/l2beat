@@ -1,6 +1,6 @@
 import { expect } from 'earl'
-import { v, type Validator } from './validate.js'
 import { SCHEMA_VERSION, toJsonSchema } from './schema.js'
+import { type Validator, v } from './validate.js'
 
 describe('toJsonSchema', () => {
   it('unknown', () => {

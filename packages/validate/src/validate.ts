@@ -17,11 +17,7 @@ export interface Parser<T> {
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
-  optional(): OptionalParser<T | undefined>
-}
-
-export interface OptionalParser<T> extends Parser<T> {
-  isOptional: true
+  optional(): Parser<T | undefined>
 }
 
 export interface Validator<T> {
@@ -43,11 +39,7 @@ export interface Validator<T> {
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
-  optional(): OptionalValidator<T | undefined>
-}
-
-export interface OptionalValidator<T> extends Validator<T> {
-  isOptional: true
+  optional(): Validator<T | undefined>
 }
 
 const CANNOT_VALIDATE = () => {
@@ -90,7 +82,6 @@ export class Imp<T> implements Validator<T>, Parser<T> {
   meta: ImpMeta
   safeValidate: (value: unknown) => Result<T>
   safeParse: (value: unknown) => Result<T>
-  isOptional = false
 
   constructor(
     meta: ImpMeta,
@@ -158,14 +149,12 @@ export class Imp<T> implements Validator<T>, Parser<T> {
     )
   }
 
-  optional(): OptionalValidator<T | undefined> {
-    const imp = new Imp(
+  optional(): Validator<T | undefined> {
+    return new Imp(
       { type: 'optional', parent: this },
       impOptional(this.safeValidate),
       impOptional(this.safeParse),
     )
-    imp.isOptional = true
-    return imp as OptionalValidator<T>
   }
 }
 
@@ -334,17 +323,15 @@ function _undefined(): Validator<undefined> {
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
-
+type UndefinedToOptional<T> = {
+  [K in keyof T as undefined extends T[K] ? K : never]?: T[K]
+} & {
+  [K in keyof T as undefined extends T[K] ? never : K]: T[K]
+}
 type Object<T> = Simplify<
-  {
-    [K in keyof T as T[K] extends { isOptional: true }
-      ? never
-      : K]: T[K] extends Parser<infer U> ? U : never
-  } & {
-    [K in keyof T as T[K] extends { isOptional: true }
-      ? K
-      : never]?: T[K] extends Parser<infer U> ? U : never
-  }
+  UndefinedToOptional<{
+    [K in keyof T]: T[K] extends Parser<infer U> ? U : never
+  }>
 >
 
 function impObject<T extends object>(
@@ -372,7 +359,7 @@ function impObject<T extends object>(
       const imp = schema[key] as Imp<unknown>
       const prop = (value as { [record: string]: unknown })[key]
       if (prop === undefined) {
-        if (imp.isOptional) {
+        if (imp.meta.type === 'optional') {
           continue
         }
         if (imp.meta.type === 'default' || imp.meta.type === 'catch') {
@@ -530,7 +517,7 @@ function impRecord<K extends string | number, V>(
   clone: boolean,
 ) {
   let enumKeys: (string | number)[] | undefined
-  if (!valueImp.isOptional && keyImp.meta.type === 'enum') {
+  if (valueImp.meta.type !== 'optional' && keyImp.meta.type === 'enum') {
     enumKeys = keyImp.meta.values as (string | number)[]
   }
 
@@ -635,7 +622,7 @@ function unknown(): Validator<unknown> {
 type Tuple<T extends unknown[]> = T extends []
   ? []
   : T extends [infer X, ...infer XS]
-    ? X extends OptionalParser<infer U>
+    ? X extends Parser<infer U | undefined>
       ? [U?, ...Tuple<XS>]
       : X extends Parser<infer U>
         ? [U, ...Tuple<XS>]
@@ -650,11 +637,11 @@ function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   let defaultLength = schema.length
   for (let i = schema.length - 1; i >= 0; i--) {
     const imp = schema[i] as Imp<unknown>
-    if (imp.isOptional && requiredLength === defaultLength) {
+    if (imp.meta.type === 'optional' && requiredLength === defaultLength) {
       defaultLength--
     }
     if (
-      imp.isOptional ||
+      imp.meta.type === 'optional' ||
       imp.meta.type === 'default' ||
       imp.meta.type === 'catch'
     ) {

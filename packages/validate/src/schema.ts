@@ -106,7 +106,7 @@ function decompose(imp: Imp<unknown>, state: State): object {
       const required = Object.entries(imp.meta.schema)
         .filter(
           ([_, v]) =>
-            !v.isOptional &&
+            v.meta.type !== 'optional' &&
             v.meta.type !== 'default' &&
             v.meta.type !== 'catch',
         )
