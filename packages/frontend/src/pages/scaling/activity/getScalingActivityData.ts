@@ -82,11 +82,9 @@ async function getQueryState(
     helpers.activity.chart.prefetch({
       range: '1y',
       filter: { type: tab },
-      previewRecategorisation: false,
     }),
     helpers.activity.chartStats.prefetch({
       filter: { type: tab },
-      previewRecategorisation: false,
     }),
   ])
   return helpers.dehydrate()

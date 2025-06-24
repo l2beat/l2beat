@@ -144,12 +144,6 @@ export interface ProjectStatuses {
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ProjectUnverifiedContract[]
-  // countdowns
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ProjectScalingCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }
 
 export interface ProjectDisplay {

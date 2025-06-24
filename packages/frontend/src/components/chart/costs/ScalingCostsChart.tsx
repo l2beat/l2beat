@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import {
   type CostsMetric,
@@ -29,7 +28,6 @@ interface Props {
 
 export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
-  const { checked } = useRecategorisationPreviewContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
   const { state: filters } = useTableFilterContext()
@@ -57,7 +55,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter,
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(() => {
