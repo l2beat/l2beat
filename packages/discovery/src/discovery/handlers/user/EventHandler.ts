@@ -1,4 +1,4 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, unique } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { isDeepStrictEqual } from 'util'
@@ -98,9 +98,12 @@ export class EventHandler implements Handler {
       events.push(...actionEvents)
     }
 
-    const fragments = events.map((e) => getEventFragment(e, stringAbi))
-    this.abi = new utils.Interface(fragments)
-    this.topic0s = [...new Set(fragments.map((f) => this.abi.getEventTopic(f)))]
+    const fragments = events.map((e) => getEventFragment(e, unique(stringAbi)))
+    const uniqueFragments = unique(fragments, (f) => f.format())
+    this.abi = new utils.Interface(uniqueFragments)
+    this.topic0s = [
+      ...new Set(uniqueFragments.map((f) => this.abi.getEventTopic(f))),
+    ]
   }
 
   async execute(
