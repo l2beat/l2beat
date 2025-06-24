@@ -48,7 +48,7 @@ export const cartesiprthoneypot: ScalingProject = {
     name: 'Cartesi PRT Honeypot',
     shortName: 'Honeypot PRT',
     headerWarning:
-      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The risk- and stages framework is applied from the perspective of the **single** address which is permissioned to withdraw.',
+      'Bug Bounty Appchain: Any user deposit is a **donation** to the Honeypot. The purpose of this Appchain is to test the Cartesi PRT optimistic fraud proof system. Withdrawals by users are not possible.',
     warning: 'The challenge protocol can be subject to delay attacks.',
     slug: 'cartesi-prt-honeypot',
     category: 'Optimistic Rollup',
@@ -156,9 +156,13 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW_NON_UPGRADABLE,
+      value: 'None',
+      description: 'Users cannot exit their funds as there are no withdrawals.',
+      sentiment: 'neutral',
+      orderHint: -Infinity,
       warning: {
-        value: 'Only the single hardcoded address can withdraw.',
+        value:
+          'Bug bounty Appchain: The single hardcoded address can withdraw all funds.',
         sentiment: 'bad',
       },
     },
@@ -177,19 +181,14 @@ export const cartesiprthoneypot: ScalingProject = {
         principle: true,
         stateVerificationOnL1: true,
         fraudProofSystemAtLeast5Outsiders: true,
-        usersHave7DaysToExit: true,
-        usersCanExitWithoutCooperation: true,
+        usersHave7DaysToExit: null,
+        usersCanExitWithoutCooperation: null,
         securityCouncilProperlySetUp: null,
       },
       stage2: {
         proofSystemOverriddenOnlyInCaseOfABug: null,
         fraudProofSystemIsPermissionless: true,
-        delayWith30DExitWindow: {
-          satisfied: true,
-          message:
-            'The single user can exit at any time and the rollup contract is immutable.',
-          mode: 'replace',
-        },
+        delayWith30DExitWindow: null,
       },
     },
     {
