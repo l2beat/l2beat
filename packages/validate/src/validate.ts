@@ -323,13 +323,13 @@ function _undefined(): Validator<undefined> {
 }
 
 type Simplify<T> = { [KeyType in keyof T]: T[KeyType] } & {}
-type UndefinedToOptional<T> = {
+type PatchObject<T> = {
   [K in keyof T as undefined extends T[K] ? K : never]?: T[K]
 } & {
   [K in keyof T as undefined extends T[K] ? never : K]: T[K]
 }
 type Object<T> = Simplify<
-  UndefinedToOptional<{
+  PatchObject<{
     [K in keyof T]: T[K] extends Parser<infer U> ? U : never
   }>
 >
@@ -619,15 +619,14 @@ function unknown(): Validator<unknown> {
   return new Imp({ type: 'unknown' }, impUnknown, impUnknown)
 }
 
-type Tuple<T extends unknown[]> = T extends []
-  ? []
-  : T extends [infer X, ...infer XS]
-    ? X extends Parser<infer U | undefined>
-      ? [U?, ...Tuple<XS>]
-      : X extends Parser<infer U>
-        ? [U, ...Tuple<XS>]
-        : never
-    : never
+type PatchTuple<T> = T extends [...infer XS, infer X]
+  ? undefined extends X
+    ? [...PatchTuple<XS>, X?]
+    : [...PatchTuple<XS>, X]
+  : T
+type Tuple<T> = PatchTuple<
+  T extends [...infer XS, Parser<infer X>] ? [...Tuple<XS>, X] : T
+>
 
 function impTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
   schema: T,
