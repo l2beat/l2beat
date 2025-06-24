@@ -207,6 +207,23 @@ describe('validate', () => {
     expect(y).toEqual([])
   })
 
+  it('catch', () => {
+    const Foo = v.string().catch('foo')
+    expect(Foo.parse(42)).toEqual('foo')
+  })
+
+  it('catch - default', () => {
+    const Foo = v.object({
+      foo: v.string().catch('foo'),
+    })
+    expect(Foo.parse({})).toEqual({ foo: 'foo' })
+  })
+
+  it('catch - structuredClone', () => {
+    const Foo = v.array(v.number()).catch([])
+    expect(Foo.parse('not array')).toEqual([])
+  })
+
   it('tuple', () => {
     const A = v.tuple([v.number(), v.string()])
     expect(A.safeParse([1, 'foo'])).toEqual({

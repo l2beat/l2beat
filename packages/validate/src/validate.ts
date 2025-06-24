@@ -16,6 +16,7 @@ export interface Parser<T> {
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
+  catch(value: T): Parser<T>
   check(predicate: (value: T) => boolean | string, message?: string): Parser<T>
 }
 
@@ -41,6 +42,7 @@ export interface Validator<T> {
   default(
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
+  catch(value: T): Parser<T>
   optional(): OptionalValidator<T>
 }
 
@@ -88,6 +90,10 @@ class ParserImpl<T> implements Parser<T> {
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>> {
     return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
+  }
+
+  catch(value: T): Parser<T> {
+    return new ParserImpl(spCatch(this.safeParse, value), ['catch', value])
   }
 
   optional(): OptionalParser<T> {
@@ -156,6 +162,10 @@ class ValidatorImpl<T> implements Validator<T> {
     return new ParserImpl(spDefault(this.safeParse, value), ['default', value])
   }
 
+  catch(value: T): Parser<T> {
+    return new ParserImpl(spCatch(this.safeParse, value), ['catch', value])
+  }
+
   optional(): OptionalValidator<T> {
     const impl = new ValidatorImpl(
       this.safeValidate,
@@ -219,6 +229,16 @@ function spDefault<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
       return { success: true, data: structuredClone(fallback) }
     }
     return result as Result<Exclude<T, null | undefined>>
+  }
+}
+
+function spCatch<T, U>(safeParse: Parser<T>['safeParse'], fallback: U) {
+  return function spCatch(value: unknown): Result<T | U> {
+    const result = safeParse(value)
+    if (!result.success) {
+      return { success: true, data: structuredClone(fallback) }
+    }
+    return result
   }
 }
 
@@ -351,7 +371,10 @@ function svpObject<T extends object>(
         if (validator.isOptional) {
           continue
         }
-        if (validator.params[0] === 'default') {
+        if (
+          validator.params[0] === 'default' ||
+          validator.params[0] === 'catch'
+        ) {
           result[key] = structuredClone(validator.params[1])
           continue
         }
@@ -515,7 +538,10 @@ function svpRecord<K extends string | number, V>(
       for (const key of enumKeys) {
         if (!(key in value)) {
           const validator = valueValidator as ValidatorImpl<V>
-          if (validator.params[0] === 'default') {
+          if (
+            validator.params[0] === 'default' ||
+            validator.params[0] === 'catch'
+          ) {
             result[key as K] = structuredClone(validator.params[1] as V)
             continue
           }
