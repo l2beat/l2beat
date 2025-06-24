@@ -2,7 +2,6 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ArrowRightIcon } from '~/icons/ArrowRight'
-import { cn } from '~/utils/cn'
 import type { Partners } from '../getDonateData'
 
 interface Props {
@@ -54,14 +53,12 @@ export function EcosystemTierCard({
       className="group hover:-translate-y-1 transform transition-all duration-300 ease-out hover:scale-[1.02] active:scale-[0.98]"
     >
       <a href={`/ecosystems/${partner.slug}`} className="block">
-        <div
-          className={`relative h-[135px] cursor-pointer overflow-hidden rounded bg-gradient-radial from-[--ecosystem-secondary] to-[--ecosystem-primary] shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px]`}
-        >
+        <div className="relative h-[160px] cursor-pointer overflow-hidden rounded bg-gradient-radial from-[--ecosystem-secondary] to-[--ecosystem-primary] shadow-lg transition-shadow duration-300 group-hover:shadow-xl md:h-[260px] lg:h-[272px]">
           {/* Background pattern/texture overlay */}
           <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/10" />
 
           {/* Content */}
-          <div className="max-md:-translate-y-5 md:group-hover:-translate-y-6 relative z-10 h-full items-center justify-center justify-items-center p-6 text-white transition-transform ease-in-out max-md:grid max-md:grid-cols-[1fr_56px_1fr] md:flex md:flex-col">
+          <div className="md:group-hover:-translate-y-6 relative z-10 h-[104px] items-center justify-center justify-items-center p-6 text-white transition-transform ease-in-out max-md:grid max-md:grid-cols-[1fr_56px_1fr] md:flex md:h-full md:flex-col">
             <div className="h-[50px] max-md:h-12">
               <img
                 src={partner.ecosystemLogo.dark}
@@ -73,15 +70,8 @@ export function EcosystemTierCard({
             <div className="flex items-center justify-center md:hidden">
               <VerticalSeparator className="h-12 border-pure-white/40 border-t-0" />
             </div>
-            <div className="h-16 text-center">
-              <p
-                className={cn(
-                  'text-2xs text-pure-white/70',
-                  partner.project.id !== 'arbitrum-orbit' && 'mb-2',
-                )}
-              >
-                PARTNER:
-              </p>
+            <div className="h-12 text-center">
+              <p className="text-2xs text-pure-white/70">PARTNER:</p>
               <img
                 src={partner.mainPartnerLogo.src}
                 width={partner.mainPartnerLogo.width / 2}
@@ -92,7 +82,7 @@ export function EcosystemTierCard({
             <div className="-translate-x-full pointer-events-none absolute inset-0 transform bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full" />
           </div>
 
-          <div className="ease absolute inset-x-6 bottom-4 flex translate-y-full items-center justify-center rounded border border-link-stroke bg-surface-primary p-3 font-medium text-link text-xs leading-none transition-[opacity,transform] duration-200 ease-in-out max-md:translate-y-0 md:bottom-6 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+          <div className="ease absolute inset-x-6 bottom-4 flex translate-y-full items-center justify-center rounded border border-link-stroke bg-surface-primary p-3 font-medium text-primary text-xs leading-none transition-[opacity,transform] duration-200 ease-in-out max-md:translate-y-0 md:bottom-6 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
             Go to ecosystem page
           </div>
 
