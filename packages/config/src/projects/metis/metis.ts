@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import {
   CONTRACTS,
@@ -26,6 +31,11 @@ const upgradeDelay = 0
 const CHALLENGE_PERIOD_SECONDS = discovery.getContractValue<number>(
   'StateCommitmentChain',
   'FRAUD_PROOF_WINDOW',
+)
+
+const DISPUTE_TIMEOUT_PERIOD = discovery.getContractValue<number>(
+  'DisputeGameFactory',
+  'DISPUTE_TIMEOUT_PERIOD',
 )
 
 export const metis: ScalingProject = {
@@ -177,9 +187,16 @@ export const metis: ScalingProject = {
       },
       {
         title: 'Challenges',
-        description:
-          'Games are created on demand by the permissioned `GameCreator` should a dispute arise. Once resolved, disputed state batches can be marked as such in the `StateCommitmentChain`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the `Metis Multisig`.',
-        risks: [],
+        description: `Games are created on demand by the permissioned GameCreator should a dispute arise. Users can signal the need for a dispute through the dispute() function of the \`DisputeGameFactory\`. Should a game not be created by the \`GameCreator\` within the dispute timeout period of ${formatSeconds(
+          DISPUTE_TIMEOUT_PERIOD,
+        )}, sequencer deposits in the \`FaultProofLockingPool\` can be slashed and transfered to the dispute creator. Should a game be created and resolved, disputed state batches can be marked as such in the \`StateCommitmentChain\`. Then, these flagged batches can be deleted (within the fraud proof window). Batches can only be deleted from the MVM_Verifier contract address, which currently corresponds to the \`Metis Multisig\`.`,
+        risks: [
+          {
+            category: 'Funds can be stolen if',
+            text: 'an invalid state root is submitted to the system and no dispute game is created by the permissioned GameCreator.',
+            isCritical: true,
+          },
+        ],
         references: [
           {
             title:
@@ -284,7 +301,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Data hashes posted to EOA',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x4dbb3a65f411b2319dc5c824804a6593d6bf6b482a76493e9089e1e055267123',
       date: '2023-03-15T00:00:00Z',
       description:
         'Hashes to data blobs are now posted to EOA address instead of CanonicalTransactionChain contract.',
@@ -292,7 +309,7 @@ export const metis: ScalingProject = {
     },
     {
       title: 'Metis starts using blobs',
-      url: 'https://etherscan.io/address/0xFf00000000000000000000000000000000001088',
+      url: 'https://etherscan.io/tx/0x1c28c8e7b89c5da880a52c3e4e4ca6da332816e72c0600d55c18479be897c8b7',
       date: '2025-05-13T00:00:00Z',
       description: 'Permissioned batcher is posting blobs to the inbox.',
       type: 'general',

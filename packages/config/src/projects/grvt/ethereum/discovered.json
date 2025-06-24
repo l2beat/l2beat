@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 22593196,
-  "configHash": "0x1f657dbc0ee875b958fcb2dd8d7960bb241fd1114fefd4d365d8f0e1e3809486",
+  "configHash": "0x8644498fffc2861dd0ed5fbbafe98b3fa21b3d156a6997da22d48240e4825a4f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {

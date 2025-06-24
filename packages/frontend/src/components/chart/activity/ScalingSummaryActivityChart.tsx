@@ -28,7 +28,6 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { CustomLink } from '~/components/link/CustomLink'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
@@ -67,15 +66,12 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'withoutOthers' },
-    previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(() => {

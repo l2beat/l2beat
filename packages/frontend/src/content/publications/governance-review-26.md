@@ -72,7 +72,7 @@ ImmutableLawyer [published a post on behalf of the ADPC](https://forum.arbitrum.
 * Guardian
 * Hacken
 
-For projects interested in security-service subsidies, please complete this expression of interest form: [Declaration of Interest—Subsidy Fund—NoteForms](https://noteforms.com/forms/declaration-of-interest-subsidy-fund-poiiqy).
+For projects interested in security-service subsidies, please complete this expression of interest form: [Declaration of Interest—Subsidy Fund—NoteForms](https://forum.arbitrum.foundation/t/apply-for-the-security-subsidy-fund/27040).
 
 
 ### **[ARDC] August Update**

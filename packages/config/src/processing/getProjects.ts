@@ -5,9 +5,8 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { badgesCompareFn } from '../common/badges'
-import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
 import {
   type BaseProject,
@@ -65,15 +64,6 @@ function layer2Or3ToProject(
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
-      // countdowns
-      otherMigration:
-        p.reasonsForBeingOther && p.display.category !== 'Other'
-          ? {
-              expiresAt: PROJECT_COUNTDOWNS.otherMigration,
-              pretendingToBe: p.display.category,
-              reasons: p.reasonsForBeingOther,
-            }
-          : undefined,
     },
     display: {
       description: p.display.description,
@@ -87,10 +77,7 @@ function layer2Or3ToProject(
       layer: p.type,
       type: p.display.category,
       capability: p.capability,
-      isOther:
-        p.display.category === 'Other' ||
-        (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
-          !!p.reasonsForBeingOther),
+      isOther: p.display.category === 'Other' || !!p.reasonsForBeingOther,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,

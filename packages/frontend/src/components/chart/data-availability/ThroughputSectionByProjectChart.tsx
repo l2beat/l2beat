@@ -93,6 +93,7 @@ export function ThroughputSectionByProjectChart({
         </div>
       </div>
       <DaThroughputByProjectChart
+        daLayer={daLayer}
         data={data}
         isLoading={isLoading}
         projectsToShow={projectsToShow}

@@ -1,4 +1,3 @@
-import { PROJECT_COUNTDOWNS } from '@l2beat/config/build/global/countdowns'
 import { UnixTime } from '@l2beat/shared-pure'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
@@ -10,7 +9,8 @@ const localStorageTag = 'top-banner'
 const purpose = 'recategorisation-live'
 
 export function Banner({ className }: { className?: string }) {
-  const enabled = UnixTime.now() >= PROJECT_COUNTDOWNS.otherMigration
+  const enabled =
+    UnixTime.now() < UnixTime.fromDate(new Date('2025-07-10T00:00:00Z'))
   const isClient = useIsClient()
   const [isHidden, setIsHidden] = useLocalStorage(
     `${localStorageTag}-${purpose}-is-hidden`,
@@ -34,7 +34,7 @@ export function Banner({ className }: { className?: string }) {
           className="size-[12px] cursor-pointer fill-white transition-colors duration-200 hover:fill-white/90 md:size-[16px]"
         />
       </div>
-      <div className="text-sm">
+      <div className="text-balance text-center text-sm max-md:px-6">
         We recently introduced recategorisation and some projects were moved to
         Others.
       </div>

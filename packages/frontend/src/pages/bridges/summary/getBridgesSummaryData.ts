@@ -18,7 +18,6 @@ export async function getBridgesSummaryData(
       range: '1y',
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
-      previewRecategorisation: false,
     }),
   ])
 

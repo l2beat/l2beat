@@ -142,7 +142,10 @@ export function EcosystemProjectPage({
                 <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
                   <TableFilters entries={ecosystem.projects} />
                 </div>
-                <EcosystemProjectsTable entries={ecosystem.projects} />
+                <EcosystemProjectsTable
+                  entries={ecosystem.projects}
+                  ecosystemId={ecosystem.id}
+                />
               </TableFilterContextProvider>
             </div>
           </div>

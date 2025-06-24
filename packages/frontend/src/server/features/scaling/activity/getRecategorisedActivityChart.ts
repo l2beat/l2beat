@@ -31,19 +31,14 @@ export type RecategorisedActivityChartData = {
 export async function getRecategorisedActivityChart(
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: boolean,
 ): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
-    return getMockRecategorisedActivityChart(
-      filter,
-      range,
-      previewRecategorisation,
-    )
+    return getMockRecategorisedActivityChart(filter, range)
   }
 
   const db = getDb()
   const projects = (await getActivityProjects()).filter(
-    createActivityProjectsFilter(filter, previewRecategorisation),
+    createActivityProjectsFilter(filter),
   )
 
   const rollups = projects
@@ -51,7 +46,7 @@ export async function getRecategorisedActivityChart(
       (p) =>
         (p.scalingInfo.type === 'ZK Rollup' ||
           p.scalingInfo.type === 'Optimistic Rollup') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        !isProjectOther(p.scalingInfo),
     )
     .map((p) => p.id)
   const validiumsAndOptimiums = projects
@@ -59,7 +54,7 @@ export async function getRecategorisedActivityChart(
       (p) =>
         (p.scalingInfo.type === 'Validium' ||
           p.scalingInfo.type === 'Optimium') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        !isProjectOther(p.scalingInfo),
     )
     .map((p) => p.id)
 
@@ -135,7 +130,6 @@ export async function getRecategorisedActivityChart(
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
-  __: boolean,
 ): RecategorisedActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
