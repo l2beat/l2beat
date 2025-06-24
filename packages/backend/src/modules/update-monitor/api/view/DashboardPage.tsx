@@ -15,7 +15,7 @@ interface DashboardPageProps {
 function DashboardPage(props: DashboardPageProps) {
   return (
     <Page title="Discovery">
-      <table style={{ width: '100%' }}>
+      <table style={{ width: '100%', wordBreak: 'break-word' }}>
         <tbody>
           {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
