@@ -156,8 +156,9 @@ export const cartesiprthoneypot: ScalingProject = {
     },
     dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
     exitWindow: {
-      value: 'None',
-      description: 'Users cannot exit their funds as there are no withdrawals.',
+      value: 'Not applicable',
+      description:
+        'Users cannot exit their funds as all deposits are considered donations.',
       sentiment: 'neutral',
       orderHint: -Infinity,
       warning: {
