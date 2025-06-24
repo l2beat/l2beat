@@ -9,6 +9,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type Block,
   EthereumAddress,
+  type Log,
   ProjectId,
   type Transaction,
   UnixTime,
@@ -41,9 +42,9 @@ describe(RealTimeLivenessProcessor.name, () => {
       const mockCheckForAnomalies = mockFn().resolvesTo(undefined)
       processor.checkForAnomalies = mockCheckForAnomalies
 
-      await processor.processBlock(block)
+      await processor.processBlock(block, [])
 
-      expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block)
+      expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block, [])
       expect(mockCheckForAnomalies).toHaveBeenCalled()
     })
   })
@@ -90,9 +91,12 @@ describe(RealTimeLivenessProcessor.name, () => {
         },
       ]
 
+      const txHash1 = '0x123'
+      const txHash2 = '0x124'
+
       const transactions: Transaction[] = [
         {
-          hash: '0x123',
+          hash: txHash1,
           from,
           to,
           data: `${selector}000123`,
@@ -105,6 +109,23 @@ describe(RealTimeLivenessProcessor.name, () => {
         transactions,
       })
 
+      const logs: Log[] = [
+        {
+          address: to,
+          topics: [],
+          data: `${selector}000123`,
+          transactionHash: txHash1,
+          blockNumber: block.number,
+        },
+        {
+          address: to,
+          topics: [],
+          data: `${selector}000123`,
+          transactionHash: txHash2,
+          blockNumber: block.number,
+        },
+      ]
+
       const config = createMockConfig(projectId, configurations)
       const processor = new RealTimeLivenessProcessor(
         config,
@@ -112,18 +133,24 @@ describe(RealTimeLivenessProcessor.name, () => {
         mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
       )
 
-      await processor.matchLivenessTransactions(block)
+      await processor.matchLivenessTransactions(block, logs)
 
       expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
         {
           configurationId: configurations[0].id,
-          txHash: transactions[0].hash!,
+          txHash: txHash1,
           blockNumber: block.number,
           timestamp: block.timestamp,
         },
         {
           configurationId: configurations[1].id,
-          txHash: transactions[0].hash!,
+          txHash: txHash1,
+          blockNumber: block.number,
+          timestamp: block.timestamp,
+        },
+        {
+          configurationId: configurations[1].id,
+          txHash: txHash2,
           blockNumber: block.number,
           timestamp: block.timestamp,
         },

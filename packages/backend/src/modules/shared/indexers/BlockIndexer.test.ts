@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import type { BlockProvider } from '@l2beat/shared'
-import { type Block, UnixTime } from '@l2beat/shared-pure'
+import type { BlockProvider, LogsProvider } from '@l2beat/shared'
+import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -15,9 +15,14 @@ describe(BlockIndexer.name, () => {
   describe(BlockIndexer.prototype.update.name, () => {
     it('fetches block and calls processors in LATEST_ONLY mode', async () => {
       const block = mockBlock(10)
+      const logs = mockLogs(10)
 
       const mockBlockProvider = mockObject<BlockProvider>({
         getBlockWithTransactions: mockFn().resolvesTo(block),
+      })
+
+      const mockLogsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn().resolvesTo(logs),
       })
 
       const mockProcessor = mockObject<BlockProcessor>({
@@ -27,6 +32,7 @@ describe(BlockIndexer.name, () => {
       const indexer = createIndexer({
         mode: 'LATEST_ONLY',
         blockProvider: mockBlockProvider,
+        logsProvider: mockLogsProvider,
         processors: [mockProcessor],
       })
 
@@ -36,19 +42,31 @@ describe(BlockIndexer.name, () => {
         block.number,
       )
 
-      expect(mockProcessor.processBlock).toHaveBeenCalledWith(block)
+      expect(mockBlockProvider.getBlockWithTransactions).toHaveBeenCalledWith(
+        block.number,
+      )
+
+      expect(mockProcessor.processBlock).toHaveBeenCalledWith(block, logs)
 
       expect(newSafeHeight).toEqual(block.number)
     })
 
     it('fetches block and calls processors in CONTINUOUS mode', async () => {
       const blocks = [mockBlock(8), mockBlock(9), mockBlock(10)]
+      const logs = [mockLogs(8), mockLogs(9), mockLogs(10)]
 
       const mockBlockProvider = mockObject<BlockProvider>({
         getBlockWithTransactions: mockFn()
           .resolvesToOnce(blocks[0])
           .resolvesToOnce(blocks[1])
           .resolvesToOnce(blocks[2]),
+      })
+
+      const mockLogsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn()
+          .resolvesToOnce(logs[0])
+          .resolvesToOnce(logs[1])
+          .resolvesToOnce(logs[2]),
       })
 
       const mockProcessor = mockObject<BlockProcessor>({
@@ -58,6 +76,7 @@ describe(BlockIndexer.name, () => {
       const indexer = createIndexer({
         mode: 'CONTINUOUS',
         blockProvider: mockBlockProvider,
+        logsProvider: mockLogsProvider,
         processors: [mockProcessor],
       })
 
@@ -75,20 +94,37 @@ describe(BlockIndexer.name, () => {
         mockBlockProvider.getBlockWithTransactions,
       ).toHaveBeenNthCalledWith(3, blocks[2].number)
 
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(1, blocks[0])
+      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
+        1,
+        blocks[0],
+        logs[0],
+      )
 
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(2, blocks[1])
+      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
+        2,
+        blocks[1],
+        logs[1],
+      )
 
-      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(3, blocks[2])
+      expect(mockProcessor.processBlock).toHaveBeenNthCalledWith(
+        3,
+        blocks[2],
+        logs[2],
+      )
 
       expect(newSafeHeight).toEqual(10)
     })
 
     it('handles processor errors', async () => {
       const block = mockBlock(10)
+      const logs = mockLogs(10)
 
       const mockBlockProvider = mockObject<BlockProvider>({
         getBlockWithTransactions: mockFn().resolvesTo(block),
+      })
+
+      const mockLogsProvider = mockObject<LogsProvider>({
+        getLogs: mockFn().resolvesTo(logs),
       })
 
       const mockProcessor1 = mockObject<BlockProcessor>({
@@ -102,6 +138,7 @@ describe(BlockIndexer.name, () => {
       const indexer = createIndexer({
         mode: 'LATEST_ONLY',
         blockProvider: mockBlockProvider,
+        logsProvider: mockLogsProvider,
         processors: [mockProcessor1, mockProcessor2],
       })
 
@@ -111,9 +148,9 @@ describe(BlockIndexer.name, () => {
         block.number,
       )
 
-      expect(mockProcessor1.processBlock).toHaveBeenCalledWith(block)
+      expect(mockProcessor1.processBlock).toHaveBeenCalledWith(block, logs)
 
-      expect(mockProcessor2.processBlock).toHaveBeenCalledWith(block)
+      expect(mockProcessor2.processBlock).toHaveBeenCalledWith(block, logs)
 
       expect(newSafeHeight).toEqual(block.number)
     })
@@ -140,6 +177,7 @@ function createIndexer(deps?: Partial<BlockIndexerDeps>): BlockIndexer {
     mode: deps?.mode ?? 'LATEST_ONLY',
     source: 'test',
     blockProvider: mockObject<BlockProvider>({}),
+    logsProvider: mockObject<LogsProvider>({}),
     processors: [],
     ...deps,
   })
@@ -152,4 +190,16 @@ function mockBlock(blockNumber: number): Block {
     timestamp: UnixTime.now(),
     transactions: [],
   }
+}
+
+function mockLogs(blockNumber: number): Log[] {
+  return [
+    {
+      address: '0x123',
+      topics: ['0xabc'],
+      data: '0x',
+      blockNumber,
+      transactionHash: '0x456',
+    },
+  ]
 }

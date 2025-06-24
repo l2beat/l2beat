@@ -11,6 +11,7 @@ import type {
 import {
   assert,
   type Block,
+  type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
@@ -47,12 +48,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     this.mapConfigurations(config.trackedTxsConfig)
   }
 
-  async processBlock(block: Block): Promise<void> {
-    await this.matchLivenessTransactions(block)
+  async processBlock(block: Block, logs: Log[]): Promise<void> {
+    await this.matchLivenessTransactions(block, logs)
     await this.checkForAnomalies()
   }
 
-  async matchLivenessTransactions(block: Block) {
+  async matchLivenessTransactions(block: Block, logs: Log[]) {
     const records: RealTimeLivenessRecord[] = []
 
     for (const tx of block.transactions) {
@@ -107,6 +108,64 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       }))
 
       records.push(...results)
+    }
+
+    for (const log of logs) {
+      const selector = log.data.slice(0, 10)
+
+      const matchingCalls = this.functionCalls.filter(
+        (c) =>
+          c.params.selector === selector &&
+          c.params.address.toLowerCase() === log.address.toLowerCase(),
+      )
+
+      const matchingSubmissions = this.sharpSubmissions.filter(
+        (c) =>
+          c.params.selector === selector &&
+          c.params.address.toLowerCase() === log.address.toLowerCase(),
+      )
+
+      const matchingSharedBridgeCalls = this.sharedBridges.filter(
+        (c) =>
+          c.params.selector === selector &&
+          c.params.address.toLowerCase() === log.address.toLowerCase(),
+      )
+
+      const filteredSubmissions = matchingSubmissions.filter((c) =>
+        isProgramHashProven(
+          { input: log.data as string },
+          c.params.programHashes,
+        ),
+      )
+
+      const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
+        isChainIdMatching(log.data as string, c.params),
+      )
+
+      const results = [
+        ...matchingCalls,
+        ...filteredSubmissions,
+        ...filteredSharedBridgeCalls,
+      ].map((config) => ({
+        timestamp: block.timestamp,
+        blockNumber: block.number,
+        txHash: log.transactionHash as string,
+        configurationId: config.id,
+      }))
+
+      for (const result of results) {
+        if (
+          records.some(
+            (r) =>
+              r.txHash === result.txHash &&
+              r.configurationId === result.configurationId,
+          )
+        ) {
+          continue
+        }
+
+        records.push(result)
+      }
     }
 
     this.logger.info(

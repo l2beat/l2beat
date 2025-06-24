@@ -38,6 +38,7 @@ export function createSharedModule(
     source: 'ethereum',
     mode: 'CONTINUOUS',
     blockProvider: providers.block.getBlockProvider('ethereum'),
+    logsProvider: providers.logs.getLogsProvider('ethereum'),
     indexerService,
   })
 
