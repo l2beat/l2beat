@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x156f19569460c9010989bc9e0f9335632d2257d3
+
+# Diff at Mon, 23 Jun 2025 15:25:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 343817935
+- current block number: 350405394
+
+## Description
+
+Conduit: add 14 permissioned sequencers / validators.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x65AD139061B3f6DDb16170a07b925337ddf42407) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.stakerCount:
+-        1
++        2
+      values.validators.14:
++        "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
+      values.validators.13:
++        "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00"
+      values.validators.12:
++        "0xB180d28c01D3248C3fa88d67154a5070e5039135"
+      values.validators.11:
++        "0xC929c820dC03C2a22e44F440721Af3c835e071fc"
+      values.validators.10:
++        "0x0C79a90C94E1C1091D7D3a188730105be00798f9"
+      values.validators.9:
++        "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
+      values.validators.8:
++        "0xD47FB043557CB2289B31d813dd4BC1223C91f872"
+      values.validators.7:
++        "0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
+      values.validators.6:
++        "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
+      values.validators.5:
++        "0x026919DbCFab70a2A45775088C933331A7B25Ac6"
+      values.validators.4:
++        "0x83433d51B327392aA694455231D2db092eE2A5Db"
+      values.validators.3:
++        "0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
+      values.validators.2:
++        "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
+      values.validators.1:
++        "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
+      values.validators.0:
+-        "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00"
++        "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xa58F38102579dAE7C584850780dDA55744f67DF1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.14:
++        "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
+      values.batchPosters.13:
++        "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
+      values.batchPosters.12:
++        "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
+      values.batchPosters.11:
++        "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
+      values.batchPosters.10:
++        "0x79F4b4f9103298460486EC644499Df9985E34170"
+      values.batchPosters.9:
++        "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
+      values.batchPosters.8:
++        "0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
+      values.batchPosters.7:
++        "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
+      values.batchPosters.6:
++        "0xbE119cCc44373B15517e921e9a7D54362250662D"
+      values.batchPosters.5:
++        "0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
+      values.batchPosters.4:
++        "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"
+      values.batchPosters.3:
++        "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
+      values.batchPosters.2:
++        "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
+      values.batchPosters.1:
++        "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
+      values.batchPosters.0:
+-        "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"
++        "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
+      values.setIsBatchPosterCount:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0x77a7b25ee7171e4420130a8ede681929f1613cec
 
 # Diff at Wed, 18 Jun 2025 12:22:03 GMT:

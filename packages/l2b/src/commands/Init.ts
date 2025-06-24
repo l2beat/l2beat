@@ -21,7 +21,7 @@ export const Init = command({
       description: 'a list of initial addresses.',
     }),
   },
-  handler: (args) => {
-    initDiscovery(args.project, args.chain, args.initialAddresses)
+  handler: async (args) => {
+    await initDiscovery(args.project, args.chain, args.initialAddresses)
   },
 })

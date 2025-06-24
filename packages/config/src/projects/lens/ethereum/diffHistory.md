@@ -1,3 +1,79 @@
+Generated with discovered.json: 0x496bfdfc86977814dc290b467d5367c2ad62a02b
+
+# Diff at Thu, 19 Jun 2025 11:17:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22731088
+- current block number: 22738142
+
+## Description
+
+Upgrade to Vector DA bridge from Avail.
+
+## Watched changes
+
+```diff
+    contract Lens Multisig (0x4968A0E4b025eD7d095753E54058377969b41abC) {
+    +++ description: None
+      values.$members.7:
++        "0x2a80091816D7872850D500F6Ade835354238Af17"
+      values.$members.6:
++        "0x5063b3D23C3640d51c9E2aef41063B1d482C70ff"
+      values.$members.5:
++        "0x62Ae8d9B6d0D9817bd9D41b9AfEAc301dBa713B8"
+      values.$members.4:
++        "0x5dc301EcD8Bd7694BB1074B3E58Aa0916EE7887d"
+      values.$members.3:
+-        "0x2a80091816D7872850D500F6Ade835354238Af17"
++        "0xfbDF62F0a73DED0BF5A264867cFD022E192B5526"
+      values.$members.2:
+-        "0x5063b3D23C3640d51c9E2aef41063B1d482C70ff"
++        "0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c"
+      values.$members.1:
+-        "0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c"
++        "0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b"
+      values.$members.0:
+-        "0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b"
++        "0x71910321A1d3b3f743ca52569f5Aa82f09538A2e"
+      values.multisigThreshold:
+-        "2 of 4 (50%)"
++        "2 of 8 (25%)"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
+    contract LensZkEvm (0xc29d04A93F893700015138E3E334eB828dAC3cef) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
++++ severity: HIGH
+      values.getDAValidatorPair.1:
+-        "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
++        "0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
++++ severity: HIGH
+      values.getDAValidatorPair.0:
+-        "0x907b30407249949521Bf0c89A43558dae200146A"
++        "0x8f50d93B9955B285f787043B30B5F51D09bE0120"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120)
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+```
+
+## Source code changes
+
+```diff
+.../AvailL1DAValidator.sol}                        | 60 +++++++++++++++++-----
+ 1 file changed, 48 insertions(+), 12 deletions(-)
+```
+
 Generated with discovered.json: 0xacafbb1171690feb55b9c16a1432574a84440809
 
 # Diff at Wed, 18 Jun 2025 12:24:52 GMT:

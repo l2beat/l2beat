@@ -38,7 +38,8 @@ export class DiffoveryController {
     address: EthereumAddress,
   ): Promise<Record<string, string> | undefined> {
     const client = this.getClient(chain)
-    const cached = this.cache.get(address.toString())
+    const cacheKey = `${chain}:${address.toString()}`
+    const cached = this.cache.get(cacheKey)
     if (cached !== undefined) {
       return splitFlatSolidity(cached)
     }
@@ -58,7 +59,7 @@ export class DiffoveryController {
     const flat = flattenStartingFrom(source.name, input, source.remappings, {
       includeAll: true,
     })
-    this.cache.set(address.toString(), flat)
+    this.cache.set(cacheKey, flat)
     return splitFlatSolidity(flat)
   }
 }
@@ -68,16 +69,20 @@ function splitFlatSolidity(flat: string): Record<string, string> {
 
   const AST = parse(flat, { range: true })
   for (const child of AST.children) {
-    assert(child.range !== undefined)
-    const childContent = flat.substring(child.range[0], child.range[1] + 1)
     const childName = getASTTopLevelChildName(child)
+
     assert(childName !== undefined)
+    assert(child.range !== undefined)
+
+    const childContent = flat.substring(child.range[0], child.range[1] + 1)
     result[childName] = childContent
   }
 
   return result
 }
 
+// NOTE(radomski): This function needs to handle all nodes listed in
+// https://docs.soliditylang.org/en/latest/grammar.html#a4.SolidityParser
 function getASTTopLevelChildName(child: ASTNode): string | undefined {
   switch (child.type) {
     case 'UsingForDeclaration':
@@ -104,8 +109,10 @@ function getASTTopLevelChildName(child: ASTNode): string | undefined {
     case 'PragmaDirective':
     case 'ImportDirective':
       return undefined
+    case 'TypeDefinition':
+      return child.name
     default: {
-      assert(false)
+      assert(false, `Unhandled child type: ${child.type}`)
     }
   }
 }

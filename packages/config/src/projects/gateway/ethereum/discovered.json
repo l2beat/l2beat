@@ -1,7 +1,7 @@
 {
   "name": "gateway",
   "chain": "ethereum",
-  "blockNumber": 22730620,
+  "blockNumber": 22738078,
   "configHash": "0x41db944b7c1b228c26e34ac04cc51ed846ac39e80139559b5c20ead4e3ac2ecc",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
@@ -134,12 +134,15 @@
       }
     },
     {
-      "name": "",
+      "name": "ProxyAdmin",
       "address": "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
       "type": "Contract",
-      "unverified": true,
+      "template": "global/ProxyAdmin",
+      "sourceHashes": [
+        "0x04a556db1ea1a651e1174247090ad4c7105b455feab1a9672d5c4cd113b9ff0b"
+      ],
       "proxyType": "immutable",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
           "from": "ethereum:0x5540DE94485dB078025318428F813C5d88215823",
@@ -148,9 +151,12 @@
       ],
       "sinceTimestamp": 1748530883,
       "sinceBlock": 22589160,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3"
+      },
       "implementationNames": {
-        "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": ""
+        "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": "ProxyAdmin"
       }
     },
     {
@@ -540,6 +546,21 @@
           "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x5540DE94485dB078025318428F813C5d88215823",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+          "role": ".owner"
         }
       ],
       "sinceTimestamp": 1745941307,
@@ -738,6 +759,17 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x6B0d492D08d436d3BBC7Cc873C03002686Aef734": [
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "function changeProxyAdmin(address proxy, address newAdmin)",
+      "function getProxyAdmin(address proxy) view returns (address)",
+      "function getProxyImplementation(address proxy) view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function transferOwnership(address newOwner)",
+      "function upgrade(address proxy, address implementation)",
+      "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
     "0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9": [
       "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
       "error AddressHasNoCode(address)",
@@ -931,6 +963,7 @@
     ]
   },
   "usedTemplates": {
+    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/GatewayTransactionFilterer": "0xa76aef97935fb7a6867df3455e3fc9e7034f5c104c8330e8dd9cd9c34d1302ed",
@@ -939,5 +972,5 @@
     "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x0d25c7bbcb5ad59dc51a1ebce339f5bbb4a614c708e34e727cc51eb76fec0f40"
+  "permissionsConfigHash": "0x92415662a5082ad2b7cb6cbb9d8ad0a49f4fc5a38f023fa601dbf886ee748577"
 }
