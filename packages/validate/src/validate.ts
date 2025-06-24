@@ -17,7 +17,7 @@ export interface Parser<T> {
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
-  optional(): OptionalParser<T>
+  optional(): OptionalParser<T | undefined>
 }
 
 export interface OptionalParser<T> extends Parser<T> {
@@ -43,7 +43,7 @@ export interface Validator<T> {
     value: Exclude<T, null | undefined>,
   ): Parser<Exclude<T, null | undefined>>
   catch(value: T): Parser<T>
-  optional(): OptionalValidator<T>
+  optional(): OptionalValidator<T | undefined>
 }
 
 export interface OptionalValidator<T> extends Validator<T> {
@@ -123,10 +123,14 @@ class Imp<T> implements Validator<T>, Parser<T> {
     ])
   }
 
-  optional(): OptionalValidator<T> {
-    const impl = new Imp(this.safeValidate, this.safeParse, this.params)
-    impl.isOptional = true
-    return impl as OptionalValidator<T>
+  optional(): OptionalValidator<T | undefined> {
+    const imp = new Imp(
+      svpOptional(this.safeValidate),
+      svpOptional(this.safeParse),
+      this.params,
+    )
+    imp.isOptional = true
+    return imp as OptionalValidator<T>
   }
 }
 
@@ -195,6 +199,15 @@ function spCatch<T, U>(safeParse: (value: unknown) => Result<T>, fallback: U) {
       return { success: true, data: structuredClone(fallback) }
     }
     return result
+  }
+}
+
+function svpOptional<T>(safeParse: (value: unknown) => Result<T>) {
+  return function svpOptional(value: unknown): Result<T | undefined> {
+    if (value === undefined) {
+      return { success: true, data: undefined }
+    }
+    return safeParse(value)
   }
 }
 
@@ -594,8 +607,22 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
 ) {
   let requiredLength = schema.length
   for (let i = schema.length - 1; i >= 0; i--) {
-    if ((schema[i] as Imp<unknown>).isOptional) {
+    const imp = schema[i] as Imp<unknown>
+    if (
+      imp.isOptional ||
+      imp.params[0] === 'default' ||
+      imp.params[0] === 'catch'
+    ) {
       requiredLength--
+    } else {
+      break
+    }
+  }
+  let defaultLength = schema.length
+  for (let i = schema.length - 1; i >= 0; i--) {
+    const imp = schema[i] as Imp<unknown>
+    if (imp.isOptional) {
+      defaultLength--
     } else {
       break
     }
@@ -614,16 +641,13 @@ function svpTuple<T extends [] | [Validator<unknown>, ...Validator<unknown>[]]>(
     }
 
     const arrayResult: unknown[] = []
-    for (let i = 0; i < value.length; i++) {
+    for (let i = 0; i < Math.max(value.length, defaultLength); i++) {
       // biome-ignore lint/style/noNonNullAssertion: It's there
       const validator = schema[i]! as Imp<unknown>
       const item = value[i]
-      let res: Result<unknown>
-      if (item === undefined && validator.isOptional) {
-        res = { success: true, data: undefined }
-      } else {
-        res = clone ? validator.safeParse(item) : validator.safeValidate(item)
-      }
+      const res = clone
+        ? validator.safeParse(item)
+        : validator.safeValidate(item)
       if (res.success === false) {
         res.path = `[${i}]${res.path}`
         return res

@@ -43,30 +43,6 @@ describe('validate', () => {
     })
   })
 
-  it('optional', () => {
-    type Foo = v.infer<typeof Foo>
-    const Foo = v.object({ bar: v.string().optional() })
-
-    const input1 = { baz: 123 }
-    expect(Foo.safeValidate(input1)).toEqual({
-      success: true,
-      data: input1 as Foo,
-    })
-
-    const input2 = { bar: 123 }
-    expect(Foo.safeValidate(input2)).toEqual({
-      success: false,
-      path: '.bar',
-      message: 'Expected string, got number.',
-    })
-
-    const input3 = { bar: undefined, baz: 123 }
-    expect(Foo.safeValidate(input3)).toEqual({
-      success: true,
-      data: input3 as Foo,
-    })
-  })
-
   it('array', () => {
     const Pos = v.object({ x: v.number(), y: v.number() })
     const PosArray = v.array(Pos)
@@ -167,63 +143,6 @@ describe('validate', () => {
     expect(Foo.safeParse(undefined)).toEqual({ success: true, data: 2 })
   })
 
-  it('default - object', () => {
-    const Foo = v.object({
-      a: v.string(),
-      b: v.number().default(2),
-    })
-    expect(Foo.safeParse({ a: 'hi' })).toEqual({
-      success: true,
-      data: { a: 'hi', b: 2 },
-    })
-    expect(Foo.safeParse({ a: 'hi', b: undefined })).toEqual({
-      success: true,
-      data: { a: 'hi', b: 2 },
-    })
-  })
-
-  it('default - record', () => {
-    const Foo = v.record(v.string(), v.number().default(2))
-    expect(
-      Foo.safeParse({
-        a: 1,
-        b: null,
-        c: undefined,
-      }),
-    ).toEqual({ success: true, data: { a: 1, b: 2, c: 2 } })
-
-    const Bar = v.record(v.enum(['a', 'b', 'c']), v.number().default(2))
-    expect(Bar.safeParse({ a: 1 })).toEqual({
-      success: true,
-      data: { a: 1, b: 2, c: 2 },
-    })
-  })
-
-  it('default - structuredClone', () => {
-    const Foo = v.array(v.number()).default([])
-    const x = Foo.parse(undefined)
-    x.push(1)
-    const y = Foo.parse(undefined)
-    expect(y).toEqual([])
-  })
-
-  it('catch', () => {
-    const Foo = v.string().catch('foo')
-    expect(Foo.parse(42)).toEqual('foo')
-  })
-
-  it('catch - default', () => {
-    const Foo = v.object({
-      foo: v.string().catch('foo'),
-    })
-    expect(Foo.parse({})).toEqual({ foo: 'foo' })
-  })
-
-  it('catch - structuredClone', () => {
-    const Foo = v.array(v.number()).catch([])
-    expect(Foo.parse('not array')).toEqual([])
-  })
-
   it('tuple', () => {
     const A = v.tuple([v.number(), v.string()])
     expect(A.safeParse([1, 'foo'])).toEqual({
@@ -267,6 +186,148 @@ describe('validate', () => {
     expect(List.safeParse(list)).toEqual({
       success: true,
       data: list,
+    })
+  })
+
+  describe('optional', () => {
+    it('object missing key', () => {
+      const Schema = v.object({ x: v.number().optional() })
+      expect(Schema.validate({})).toEqual({})
+      expect(Schema.parse({})).toEqual({})
+    })
+
+    it('object undefined key', () => {
+      const Schema = v.object({ x: v.number().optional() })
+      expect(Schema.validate({ x: undefined })).toEqual({ x: undefined })
+      expect(Schema.parse({ x: undefined })).toEqual({})
+    })
+
+    it('enum record missing value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().optional())
+      expect(Schema.validate({ a: 1 })).toEqual({ a: 1 } as any)
+      expect(Schema.parse({ a: 1 })).toEqual({ a: 1 } as any)
+    })
+
+    it('tuple missing element', () => {
+      const Schema = v.tuple([v.number().optional()])
+      expect(Schema.validate([])).toEqual([])
+      expect(Schema.parse([])).toEqual([])
+    })
+
+    it('tuple undefined element', () => {
+      const Schema = v.tuple([v.number().optional()])
+      expect(Schema.validate([undefined])).toEqual([undefined])
+      expect(Schema.parse([undefined])).toEqual([undefined])
+    })
+  })
+
+  describe('default', () => {
+    it('object missing key', () => {
+      const Schema = v.object({ x: v.number().default(42) })
+      expect(Schema.parse({})).toEqual({ x: 42 })
+    })
+
+    it('object undefined key', () => {
+      const Schema = v.object({ x: v.number().default(42) })
+      expect(Schema.parse({ x: undefined })).toEqual({ x: 42 })
+    })
+
+    it('enum record missing value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().default(42))
+      expect(Schema.parse({ a: 1 })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum record undefined value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().default(42))
+      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum undefined value', () => {
+      const Schema = v.record(v.string(), v.number().default(42))
+      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('tuple missing element', () => {
+      const Schema = v.tuple([v.number().default(42)])
+      expect(Schema.parse([])).toEqual([42])
+    })
+
+    it('tuple undefined element', () => {
+      const Schema = v.tuple([v.number().default(42)])
+      expect(Schema.parse([undefined])).toEqual([42])
+    })
+
+    it('structuredClone', () => {
+      const Foo = v.array(v.number()).default([])
+      const x = Foo.parse(undefined)
+      x.push(1)
+      const y = Foo.parse(undefined)
+      expect(y).toEqual([])
+    })
+  })
+
+  describe('catch', () => {
+    it('object missing key', () => {
+      const Schema = v.object({ x: v.number().catch(42) })
+      expect(Schema.parse({})).toEqual({ x: 42 })
+    })
+
+    it('object undefined key', () => {
+      const Schema = v.object({ x: v.number().catch(42) })
+      expect(Schema.parse({ x: undefined })).toEqual({ x: 42 })
+    })
+
+    it('object invalid key', () => {
+      const Schema = v.object({ x: v.number().catch(42) })
+      expect(Schema.parse({ x: 'red' })).toEqual({ x: 42 })
+    })
+
+    it('enum record missing value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
+      expect(Schema.parse({ a: 1 })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum record undefined value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
+      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum record invalid value', () => {
+      const Schema = v.record(v.enum(['a', 'b']), v.number().catch(42))
+      expect(Schema.parse({ a: 1, b: 'red' })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum undefined value', () => {
+      const Schema = v.record(v.string(), v.number().catch(42))
+      expect(Schema.parse({ a: 1, b: undefined })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('enum invalid value', () => {
+      const Schema = v.record(v.string(), v.number().catch(42))
+      expect(Schema.parse({ a: 1, b: 'red' })).toEqual({ a: 1, b: 42 })
+    })
+
+    it('tuple missing element', () => {
+      const Schema = v.tuple([v.number().catch(42)])
+      expect(Schema.parse([])).toEqual([42])
+    })
+
+    it('tuple undefined element', () => {
+      const Schema = v.tuple([v.number().catch(42)])
+      expect(Schema.parse([undefined])).toEqual([42])
+    })
+
+    it('tuple invalid element', () => {
+      const Schema = v.tuple([v.number().catch(42)])
+      expect(Schema.parse(['red'])).toEqual([42])
+    })
+
+    it('catch - structuredClone', () => {
+      const Foo = v.array(v.number()).catch([])
+      const x = Foo.parse('not array')
+      x.push(1)
+      const y = Foo.parse('not array')
+      expect(y).toEqual([])
     })
   })
 })
