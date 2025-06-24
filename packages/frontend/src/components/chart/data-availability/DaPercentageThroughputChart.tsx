@@ -68,15 +68,15 @@ export function DaPercentageThroughputChart({
           isAnimationActive={false}
         />
         <Bar
-          dataKey="celestia"
-          stackId="a"
-          fill={chartMeta.celestia.color}
-          isAnimationActive={false}
-        />
-        <Bar
           dataKey="avail"
           stackId="a"
           fill={chartMeta.avail.color}
+          isAnimationActive={false}
+        />
+        <Bar
+          dataKey="celestia"
+          stackId="a"
+          fill={chartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
