@@ -47,6 +47,7 @@ export async function getChainConfig(
           })
           break
         case 'blockscoutV2':
+        case 'sourcify':
           // TODO: not sure why we don't support this
           break
         case 'rpc':

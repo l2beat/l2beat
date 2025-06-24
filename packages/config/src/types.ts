@@ -260,6 +260,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
+  | SourcifyApi
   | StarkexApi
   | EtherscanApi
 
@@ -285,6 +286,11 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+}
+
+export interface SourcifyApi {
+  type: 'sourcify'
+  chainId: number
 }
 
 // #endregion

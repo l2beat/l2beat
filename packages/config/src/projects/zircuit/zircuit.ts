@@ -1,5 +1,10 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  ESCROW,
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
@@ -116,6 +121,10 @@ export const zircuit: ScalingProject = opStackL2({
         url: 'https://zircuit-mainnet.drpc.org/',
         callsPerMinute: 1500,
       },
+      {
+        type: 'sourcify',
+        chainId: 48900,
+      },
     ],
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
@@ -130,6 +139,14 @@ export const zircuit: ScalingProject = opStackL2({
         'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
     }),
   ],
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
+        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+    },
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -174,6 +191,20 @@ export const zircuit: ScalingProject = opStackL2({
       },
     },
   ],
+  nonTemplateTechnology: {
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      description:
+        OPERATOR.CENTRALIZED_OPERATOR.description +
+        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+      references: [
+        {
+          title: 'L1Block.sol - Sourcify explorer source code',
+          url: 'https://repo.sourcify.dev/48900/0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12',
+        },
+      ],
+    },
+  },
   milestones: [
     {
       title: 'Mainnet Launch',
