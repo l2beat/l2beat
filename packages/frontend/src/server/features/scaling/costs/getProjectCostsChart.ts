@@ -25,7 +25,6 @@ export type ProjectCostsChartResponse = Awaited<
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   const [costsChart, costs, throughput, activityRecords] = await Promise.all([
     getCostsChart({
-      previewRecategorisation: false,
       filter: { type: 'projects', projectIds: [params.projectId] },
       range: params.range,
     }),

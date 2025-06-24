@@ -1,38 +1,58 @@
-import { mkdirSync, writeFileSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
-import { type DiscoveryConfig, getDiscoveryPaths } from '@l2beat/discovery'
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { getDiscoveryPaths, readJsonc, toPrettyJson } from '@l2beat/discovery'
+import { type EthereumAddress, withoutUndefinedKeys } from '@l2beat/shared-pure'
 
-export function initDiscovery(
+interface ConfigSkeleton {
+  chains?: Record<string, object>
+  import?: string[]
+  archived?: boolean
+}
+
+export async function initDiscovery(
   project: string,
   chain: string,
   initalAddresses: EthereumAddress[],
 ) {
   const paths = getDiscoveryPaths()
-  const projectPath = path.join(paths.discovery, project, chain)
+  const projectPath = path.join(paths.discovery, project)
   mkdirSync(projectPath, { recursive: true })
 
+  let existingConfig: ConfigSkeleton = {}
   const configPath = path.join(projectPath, 'config.jsonc')
-  createEmptyConfig(configPath, project, chain, initalAddresses)
+  if (existsSync(configPath)) {
+    existingConfig = readJsonc(configPath) as ConfigSkeleton
+  }
+
+  const config = createEmptyConfig(
+    existingConfig,
+    project,
+    chain,
+    initalAddresses,
+  )
+
+  const content = await toPrettyJson(config)
+  writeFileSync(configPath, content)
 }
 
 function createEmptyConfig(
-  path: string,
+  existingConfig: ConfigSkeleton,
   project: string,
   chain: string,
   initialAddresses: EthereumAddress[],
 ) {
-  const config: Partial<DiscoveryConfig> = {
-    name: project,
-    chain,
-    initialAddresses,
+  const chains = {
+    ...(existingConfig.chains ?? {}),
+    [chain]: { initialAddresses },
   }
 
-  const withSchema = {
+  const config = {
     $schema: '../../../../discovery/schemas/config.v2.schema.json',
-    ...config,
+    name: project,
+    import: existingConfig.import ?? ['../globalConfig.jsonc'],
+    archived: existingConfig.archived ?? undefined,
+    chains,
   }
 
-  const content = JSON.stringify(withSchema, null, 2)
-  writeFileSync(path, `${content}\n`)
+  return withoutUndefinedKeys(config)
 }

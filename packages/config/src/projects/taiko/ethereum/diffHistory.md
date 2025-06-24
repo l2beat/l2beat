@@ -1,3 +1,116 @@
+Generated with discovered.json: 0x375f6b8891b6a923cdfe2360c4becc0eb11bc870
+
+# Diff at Thu, 19 Jun 2025 11:31:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22731123
+- current block number: 22738242
+
+## Description
+
+Some core upgrade permissions transfered to DAOController.
+
+## Watched changes
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab","role":"admin"}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E","role":"admin"}
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C","role":"admin"}
+      receivedPermissions.1.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.0.from:
+-        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+    }
+```
+
+```diff
+    contract QuotaManager (0x91f67118DD47d502B1f0C354D0611997B022f29E) {
+    +++ description: Defines withdrawal limits per token.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.25:
+-        {"permission":"upgrade","from":"ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa","role":"admin"}
+      receivedPermissions.24:
+-        {"permission":"upgrade","from":"ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9","role":"admin"}
+      receivedPermissions.23:
+-        {"permission":"upgrade","from":"ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03","role":"admin"}
+      receivedPermissions.22.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.21.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.20.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.19.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.18.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.17.from:
+-        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.16.from:
+-        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.15.from:
+-        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.14.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.13.from:
+-        "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.12.from:
+-        "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+    }
+```
+
+```diff
+    contract MainnetSignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: The SignalService contract serves as cross-chain message passing system. It defines methods for sending and verifying signals with merkle proofs.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
+```diff
+    contract MainnetBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: Shared bridge for Taiko chains for bridged ETH.
+      values.$admin:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.owner:
+-        "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+    }
+```
+
 Generated with discovered.json: 0xb379b39a31df47264ec84c5407bcab9f94fa8c98
 
 # Diff at Wed, 18 Jun 2025 11:39:33 GMT:

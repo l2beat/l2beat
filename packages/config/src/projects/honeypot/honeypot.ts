@@ -33,8 +33,8 @@ export const honeypot: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    name: 'Honeypot (Cartesi)',
-    shortName: 'Honeypot',
+    name: 'Cartesi Authority Honeypot',
+    shortName: 'Honeypot Authority',
     slug: 'cartesi-honeypot',
     stack: 'Cartesi Rollups',
     description:

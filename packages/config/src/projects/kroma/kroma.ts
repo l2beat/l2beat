@@ -63,6 +63,7 @@ export const kroma: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
+    redWarning: `Kroma will shut down on June 30, 2025. Users must withdraw their funds before that date. After this date, funds retrieval is not guaranteed. See [announcement](https://x.com/kroma_network/status/1936692354603520198) for details.`,
     name: 'Kroma',
     slug: 'kroma',
     description:
@@ -384,6 +385,14 @@ export const kroma: ScalingProject = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   milestones: [
+    {
+      title: 'Kroma shutdown announcement',
+      url: 'https://x.com/kroma_network/status/1936692354603520198',
+      date: '2025-06-20T00:00:00.00Z',
+      description:
+        'Kroma announces its shutdown on June 30, 2025. Users must withdraw their funds before that date.',
+      type: 'incident',
+    },
     {
       title: 'Plonky3 vulnerability patch',
       url: 'https://x.com/SuccinctLabs/status/1929773028034204121',

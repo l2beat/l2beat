@@ -16,7 +16,7 @@ The goal of the contracts section is to list all contracts in the system that ar
 
 ## Single contract view
 
-For each contract, the basic information to be shown is the name and the address. If a contract is a proxy, the implementation contract(s) should also be shown. Optionally, a category can be shown. If a contract has any field with a defined "interact" or "act" permission, the direct permission receiver should be shown. Note that these permisions might not be ultimate permissions. Optionally, if the design allows, the ultimate permission receiver can be shown too. Upgrade permissions should be presented more distinctly, with the ultimate permission receiver shown, and its associated ultimate delay.
+For each contract, the basic information to be shown is the name and the address. If a contract is a proxy, the implementation contract(s) should also be shown. Optionally, a category can be shown. If a contract has any field with a defined "interact" or "act" permission, the direct permission receiver should be shown. Note that these permissions might not be ultimate permissions. Optionally, if the design allows, the ultimate permission receiver can be shown too. Upgrade permissions should be presented more distinctly, with the ultimate permission receiver shown, and its associated ultimate delay.
 
 Let's pick some Arbitrum One's contracts to present an implementation proposal that only shows direct permissions for "interact" and "act" permissions:
 

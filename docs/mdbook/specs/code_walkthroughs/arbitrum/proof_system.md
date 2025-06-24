@@ -567,7 +567,7 @@ The rest of the checks follow the same as the `Block` level edges, starting from
 
 ### `bisectEdge` function
 
-This function is used to bisect edges into two children to break down the dispute process into smaller steps. No new stake as any new edge is checked agaist the history root of the parent edge.
+This function is used to bisect edges into two children to break down the dispute process into smaller steps. No new stake as any new edge is checked against the history root of the parent edge.
 
 ```solidity
 function bisectEdge(
@@ -627,7 +627,7 @@ struct OneStepData {
 
 The `oneStepProofEntry.proveOneStep` function is then called passing the execution context, the machine step, the `beforeHash` and the `proof` to calculate the `afterHash`. It is then checked that the `afterHash`is included in the `endHistoryRoot` at position `machineStep + 1`.
 
-Finally, the edge satus is updated to `Confirmed`, and the `confirmedAtBlock` is set to the current block number. Moreover, it is checked that no other rival is already confirmed through the `confirmedRivals` mapping inside the `store`, and if not the edge is saved there under its mutual id.
+Finally, the edge status is updated to `Confirmed`, and the `confirmedAtBlock` is set to the current block number. Moreover, it is checked that no other rival is already confirmed through the `confirmedRivals` mapping inside the `store`, and if not the edge is saved there under its mutual id.
 
 ### `confirmEdgeByTime` function
 

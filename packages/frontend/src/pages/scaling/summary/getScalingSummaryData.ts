@@ -53,16 +53,13 @@ async function getCachedData() {
     helpers.tvs.recategorisedChart.prefetch({
       range: SCALING_SUMMARY_TIME_RANGE,
       filter: { type: 'layer2' },
-      previewRecategorisation: false,
     }),
     helpers.activity.recategorisedChart.prefetch({
       range: SCALING_SUMMARY_TIME_RANGE,
       filter: { type: 'all' },
-      previewRecategorisation: false,
     }),
     helpers.activity.chartStats.prefetch({
       filter: { type: 'withoutOthers' },
-      previewRecategorisation: false,
     }),
   ])
 

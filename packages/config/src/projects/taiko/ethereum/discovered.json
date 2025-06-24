@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22731123,
+  "blockNumber": 22738242,
   "configHash": "0xc440c4bf1624b7ad98b6c420162551b78f9cdf00b7d9bf72ecc90a6ccaeddefb",
   "entries": [
     {
@@ -360,68 +360,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1213260,
-          "blockId_": 1213260,
+          "batchId_": 1214576,
+          "blockId_": 1214576,
           "ts_": {
-            "parentHash": "0x5ce1bcae19d51192788d3f026e8d82c2beb60eae22f5f165792e0c73ce3cd0af",
-            "blockHash": "0x74a4ae0e4d6c5c76cc04649611055700b7d23a814f74491647d17f1e954dd968",
-            "stateRoot": "0xcfbed6464cd623ce0d7304a04a32b94283e7daddf2cef0f09cbfc270e5affc53",
-            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+            "parentHash": "0x32aa5b823a91a68b02a237e5dd55020b1dd89a89fcf12c10255fe5172437274c",
+            "blockHash": "0xbf57de6ac2028e2a7591265f26d21882032659a5ec35fe483b35492e417b7265",
+            "stateRoot": "0x1f98e51ab25e0ad971fad68ad82d59214fe3e2b6f47b72b8f317382ebd8d8cb7",
+            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1750238963
+            "createdAt": 1750322471
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1213263,
-          "blockHash_": "0x5c69e5282ce7aed58370c0f216a1c6427d708b2bc8230bafd1a74da0dc303a6d",
-          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1739327399
+          "blockId_": 1214576,
+          "blockHash_": "0xbf57de6ac2028e2a7591265f26d21882032659a5ec35fe483b35492e417b7265",
+          "stateRoot_": "0x1f98e51ab25e0ad971fad68ad82d59214fe3e2b6f47b72b8f317382ebd8d8cb7",
+          "verifiedAt_": 1739354495
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1213263,
-          "blockId_": 1213263,
+          "batchId_": 1214576,
+          "blockId_": 1214576,
           "ts_": {
-            "parentHash": "0x4ee6f77bad8bf80310006d93d3e5d5a02d4caa51aeb77e9936859e95dbe86bce",
-            "blockHash": "0x5c69e5282ce7aed58370c0f216a1c6427d708b2bc8230bafd1a74da0dc303a6d",
-            "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "parentHash": "0x32aa5b823a91a68b02a237e5dd55020b1dd89a89fcf12c10255fe5172437274c",
+            "blockHash": "0xbf57de6ac2028e2a7591265f26d21882032659a5ec35fe483b35492e417b7265",
+            "stateRoot": "0x1f98e51ab25e0ad971fad68ad82d59214fe3e2b6f47b72b8f317382ebd8d8cb7",
             "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
             "inProvingWindow": true,
-            "createdAt": 1750236983
+            "createdAt": 1750322471
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1213260,
-            "lastSynecdAt": 1750246235
+            "lastSyncedBlockId": 1214576,
+            "lastSynecdAt": 1750330547
           },
           {
-            "numBlocks": 1213487,
-            "lastVerifiedBlockId": 1213263,
+            "numBlocks": 1214777,
+            "lastVerifiedBlockId": 1214576,
             "provingPaused": false,
-            "lastProposedIn": 22731119,
+            "lastProposedIn": 22738242,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1213260,
-          "lastSyncedAt": 1750246235
+          "lastSyncedBatchId": 1214576,
+          "lastSyncedAt": 1750330547
         },
         "getStats2": {
-          "numBatches": 1213487,
-          "lastVerifiedBatchId": 1213263,
+          "numBatches": 1214777,
+          "lastVerifiedBatchId": 1214576,
           "paused": false,
-          "lastProposedIn": 22731119,
+          "lastProposedIn": 22738242,
           "lastUnpausedAt": 1716571955
         },
         "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
         "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 22731119,
+        "lastProposedIn": 22738242,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -462,14 +462,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1213260,
-            "lastSyncedAt": 1750246235
+            "lastSyncedBatchId": 1214576,
+            "lastSyncedAt": 1750330547
           },
           "stats2": {
-            "numBatches": 1213487,
-            "lastVerifiedBatchId": 1213263,
+            "numBatches": 1214777,
+            "lastVerifiedBatchId": 1214576,
             "paused": false,
-            "lastProposedIn": 22731119,
+            "lastProposedIn": 22738242,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -682,7 +682,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1750246751,
+        "clock": 1750332695,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -911,7 +911,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 97,
+        "nonce": 99,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1355,7 +1355,22 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
           "role": "admin"
         }
       ],
@@ -1646,7 +1661,7 @@
       "sinceTimestamp": 1715578067,
       "sinceBlock": 19859002,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
         "$pastUpgrades": [
           [
@@ -1665,7 +1680,7 @@
         "impl": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "quotaPeriod": 86400,
@@ -1971,16 +1986,6 @@
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
           "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "role": "admin"
         },
@@ -1997,11 +2002,6 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
           "role": "admin"
         },
         {
@@ -2029,7 +2029,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 106,
+        "nonce": 108,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2106,7 +2106,7 @@
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
         "$pastUpgrades": [
           [
@@ -2153,7 +2153,7 @@
         "$upgradeCount": 8,
         "impl": "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
         "inNonReentrant": false,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
@@ -2525,7 +2525,7 @@
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "$pastUpgrades": [
           [
@@ -2596,8 +2596,8 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37368,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "nextMessageId": 37371,
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
@@ -4796,5 +4796,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0xa72cf765281b93b4fe035b6353ccf21c2150be70a26fbb0cdaaa8e858564d83d"
+  "permissionsConfigHash": "0xed12f8a89c5ee43c9b0f9956cd33a2a0f203824f2b0cfe1c9016f5e7e121b7c9"
 }
