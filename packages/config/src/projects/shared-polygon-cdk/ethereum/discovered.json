@@ -1,13 +1,34 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22772707,
+  "blockNumber": 22774522,
   "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
     },
     {
       "name": "AggLayerGateway",
@@ -19,7 +40,7 @@
         "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on that.",
+      "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
       "sinceTimestamp": 1750087643,
       "sinceBlock": 22717971,
       "values": {
@@ -51,7 +72,41 @@
             "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
           }
         },
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+        "addPpRouteAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "aggchainDefaultVKeyAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "aggchainVKeys": {
+          "0x00040001": [
+            {
+              "0": "0x00040001",
+              "1": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f",
+              "selector": "0x00040001",
+              "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+            }
+          ]
+        },
+        "aggchainVKeysUpdated": {},
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "freezePpRouteAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "routes": {
+          "0x00000004": [
+            {
+              "0": "0x00000004",
+              "1": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "2": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30",
+              "selector": "0x00000004",
+              "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            }
+          ]
+        }
+      },
+      "fieldMeta": {
+        "aggchainVKeys": {
+          "description": "First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is not used in verifyPessimisticProof()."
+        },
+        "routes": {
+          "description": "This map is used for routing in verifyPessimisticProof()."
+        }
       },
       "implementationNames": {
         "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
@@ -138,6 +193,44 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".addPpRouteAC",
+          "via": [
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys.",
+          "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".freezePpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager",
+          "via": [
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
         {
           "permission": "interact",
           "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
@@ -329,7 +422,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x13bbfe2636de0698d299c1ba91de6c6d99a27dd06e5293b3ef49abdf4f8865ca",
+        "getRoot": "0x87934c8344301b6b9e6c9229766c8c73d01885134eba5b0009e1b7f621a22027",
         "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -344,6 +437,10 @@
         "isEmergencyState": {
           "severity": "HIGH",
           "description": "pauses the bridge, managed by the PolygonRollupManager."
+        },
+        "proxiedTokensManager": {
+          "severity": "HIGH",
+          "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer."
         }
       },
       "implementationNames": {
@@ -429,7 +526,7 @@
         "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
+      "description": "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -556,10 +653,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x7e8f4d82d015216ab79f4dd4674c91bb790b99ceea6e291e096155b77a9b95a1",
+        "getRollupExitRoot": "0x823f8e9eb0e35b41bc431bba85b8b18ba9d047f2590b8f40ff84fc3782b84e9e",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1750748231,
+        "lastAggregationTimestamp": 1750770779,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -838,8 +935,8 @@
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           }
         ],
-        "totalSequencedBatches": 761642,
-        "totalVerifiedBatches": 761156,
+        "totalSequencedBatches": 761798,
+        "totalVerifiedBatches": 761315,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -919,9 +1016,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59730,
+        "depositCount": 59740,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x0f4a4f67ec8e1108694db374d927509eb941758e14b4c827d9dd5ef7e28146ea",
+        "getRoot": "0x8eecad9b3fb3145fd36f919d72a3bda497eac208f5c6c407dc91cdf5688dfac4",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
@@ -1086,6 +1183,18 @@
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".addPpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager"
         },
         {
           "permission": "interact",
@@ -1599,6 +1708,15 @@
     }
   ],
   "abis": {
+    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2048,11 +2166,12 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "polygon-cdk/AgglayerGateway": "0xb9e0478d60752df151211f7cc05975fd33dd25646a5e70e02878c2900cb1b218",
+    "polygon-cdk/AgglayerGateway": "0xe3233eedc0609119210c56c62004ae0e2f7b5e9d45e5d46aee3f9c2cbdc606d3",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
-    "polygon-cdk/PolygonRollupManager_al030": "0x07e6443363d3b1a55f9514d38946df4f6030615786d629c78e66e0e134c8b383",
-    "polygon-cdk/PolygonSharedBridge_al030": "0x5e4548039f3a021a79577d1440fb434622b54fbddd5adb60e80173856bf2aa1c",
-    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
+    "polygon-cdk/PolygonRollupManager_al030": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
+    "polygon-cdk/PolygonSharedBridge_al030": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xcf50ecc5033647b4c7388c806428c85751d9748e22557e6e7c27e6bdde6537ca"
+  "permissionsConfigHash": "0x05c2d3b332d7d94b4020f8165909d930018e8e8bb4ec2b5fab9ebdfb9431120a"
 }

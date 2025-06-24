@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc30e95863515b6070b4c0a7831832e93e6c282ea
+Generated with discovered.json: 0x4b07217cdbb7826ff64e78f98ecf3ea4f9ccd3da
 
-# Diff at Tue, 24 Jun 2025 07:11:42 GMT:
+# Diff at Tue, 24 Jun 2025 14:45:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@aa3d260a1cabc84e477d1c8da1022e8776e06003 block: 22744056
-- current block number: 22772707
+- comparing to: main@165a3574e7a5112b92cf5b6d87a202235001fcdf block: 22744056
+- current block number: 22774522
 
 ## Description
 
@@ -28,11 +28,119 @@ agglayer v0.3.0 upgrade.
 ```diff
     contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
     +++ description: None
-      receivedPermissions.8:
+      receivedPermissions.12:
 +        {"permission":"upgrade","from":"ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
-      receivedPermissions.7.from:
--        "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","description":"add or update default aggchain verification keys.","role":".aggchainDefaultVKeyAC"}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.role:
+-        "admin"
++        ".proxiedTokensManager"
+      receivedPermissions.7.via.1:
+-        {"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.7.via.0.delay:
++        259200
+      receivedPermissions.7.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.7.description:
++        "upgrade the implementation of wrapped tokens deployed by the bridge."
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.6.role:
+-        "admin"
++        ".timelockAdminAC"
+      receivedPermissions.6.via.1:
+-        {"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.6.via.0.delay:
++        259200
+      receivedPermissions.6.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.6.delay:
++        259200
+      receivedPermissions.6.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.6.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.5.role:
+-        "admin"
++        ".timelockAdminAC"
+      receivedPermissions.5.via:
+-        [{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.5.delay:
++        259200
+      receivedPermissions.5.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.5.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.4.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
 +        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      receivedPermissions.4.delay:
+-        259200
+      receivedPermissions.4.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "freeze routes from proof selector to verifier / vKey for pessimistic proofs."
+      receivedPermissions.4.role:
+-        ".timelockAdminAC"
++        ".freezePpRouteAC"
+      receivedPermissions.4.condition:
+-        "(no delay if in emergency state)"
+      receivedPermissions.4.via:
+-        [{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.3.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.3.delay:
+-        259200
+      receivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+      receivedPermissions.3.role:
+-        ".timelockAdminAC"
++        ".tweakParametersAC"
+      receivedPermissions.3.condition:
+-        "(no delay if in emergency state)"
+      receivedPermissions.2.description:
+-        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      receivedPermissions.2.role:
+-        ".tweakParametersAC"
++        ".defaultAdminAC"
+      receivedPermissions.2.via:
++        [{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.1.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      receivedPermissions.1.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
+      receivedPermissions.1.role:
+-        ".defaultAdminAC"
++        ".addPpRouteAC"
     }
 ```
 
@@ -84,10 +192,14 @@ agglayer v0.3.0 upgrade.
 +        "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d"
       values.pendingProxiedTokensManager:
 +        "0x0000000000000000000000000000000000000000"
++++ description: is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer.
++++ severity: HIGH
       values.proxiedTokensManager:
 +        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
       values.wrappedTokenBytecodeStorer:
 +        "0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
+      fieldMeta.proxiedTokensManager:
++        {"severity":"HIGH","description":"is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer."}
       implementationNames.0x0FeB850B183C57534b56b7d56520133C8f9BDB65:
 -        "PolygonZkEVMBridgeV2"
       implementationNames.0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b:
@@ -97,7 +209,7 @@ agglayer v0.3.0 upgrade.
 
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
-    +++ description: The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
       template:
 -        "polygon-cdk/PolygonRollupManager_pessimistic"
 +        "polygon-cdk/PolygonRollupManager_al030"
@@ -107,6 +219,9 @@ agglayer v0.3.0 upgrade.
       sourceHashes.0:
 -        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a"
 +        "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
+      description:
+-        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
++        "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
       values.$implementation:
 -        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
 +        "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"
@@ -523,20 +638,66 @@ agglayer v0.3.0 upgrade.
 ```
 
 ```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","description":"upgrade the implementation of wrapped tokens deployed by the bridge.","role":".proxiedTokensManager"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      directlyReceivedPermissions.3.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.2.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      directlyReceivedPermissions.2.delay:
+-        259200
+      directlyReceivedPermissions.2.role:
+-        ".timelockAdminAC"
++        ".defaultAdminAC"
+      directlyReceivedPermissions.2.condition:
+-        "(no delay if in emergency state)"
+      directlyReceivedPermissions.2.description:
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      directlyReceivedPermissions.1.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
+      directlyReceivedPermissions.1.role:
+-        ".defaultAdminAC"
++        ".addPpRouteAC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
 +   Status: CREATED
     contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
-    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on that.
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
 ```
 
 ## Source code changes
 
 ```diff
-.../.flat/AggLayerGateway/AggLayerGateway.sol      |  942 ++++++++++++++
- .../TransparentUpgradeableProxy.p.sol              |  695 +++++++++++
+.../.flat/AggLayerGateway/AggLayerGateway.sol      |  942 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  695 ++++++++++
  .../PolygonZkEVMGlobalExitRootV2.sol               |   93 +-
- .../PolygonRollupManager/PolygonRollupManager.sol  |  829 ++++++++++---
- .../PolygonSharedBridge/PolygonZkEVMBridgeV2.sol   | 1295 ++++++++++++++++----
- 5 files changed, 3436 insertions(+), 418 deletions(-)
+ .../PolygonRollupManager/PolygonRollupManager.sol  |  829 ++++++++++--
+ .../PolygonSharedBridge/PolygonZkEVMBridgeV2.sol   | 1295 ++++++++++++++----
+ .../ethereum/.flat/SP1Verifier.sol                 | 1396 ++++++++++++++++++++
+ 6 files changed, 4832 insertions(+), 418 deletions(-)
 ```
 
 Generated with discovered.json: 0xf500f09c9ba1b9f5ac5eb5956794c67797d85d23

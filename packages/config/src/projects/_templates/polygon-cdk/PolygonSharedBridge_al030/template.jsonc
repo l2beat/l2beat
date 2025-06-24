@@ -17,6 +17,16 @@
     "isEmergencyState": {
       "description": "pauses the bridge, managed by the PolygonRollupManager.",
       "severity": "HIGH"
+    },
+    "proxiedTokensManager": {
+      "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer.",
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge."
+        }
+      ]
     }
   },
   "category": "shared"
