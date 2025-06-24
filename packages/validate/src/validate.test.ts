@@ -322,7 +322,7 @@ describe('validate', () => {
       expect(Schema.parse(['red'])).toEqual([42])
     })
 
-    it('catch - structuredClone', () => {
+    it('structuredClone', () => {
       const Foo = v.array(v.number()).catch([])
       const x = Foo.parse('not array')
       x.push(1)
