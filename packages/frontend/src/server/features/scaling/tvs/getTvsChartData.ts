@@ -54,14 +54,17 @@ export async function getTvsChart({
     })
   }
 
-  const projectsFilter = createTvsProjectsFilter(filter)
-  const tvsProjects = await getTvsProjects(projectsFilter)
-  if (tvsProjects.length === 0) {
-    return []
-  }
   // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
   const forSummary =
     filter.type !== 'projects' || filter.projectIds.length !== 1
+
+  const projectsFilter = createTvsProjectsFilter(filter)
+  const tvsProjects = await getTvsProjects(projectsFilter, {
+    withoutArchivedAndUpcoming: forSummary,
+  })
+  if (tvsProjects.length === 0) {
+    return []
+  }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     getSummedTvsValues(
