@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22665827,
+  "blockNumber": 22780541,
   "configHash": "0x71370af50eb2dab4175f0d0fd10c95c6537989ac19ff648f368bf537709ad8f6",
   "entries": [
     {
@@ -17,106 +17,106 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "24287596729254730681261816",
+        "cumulativeStake": "24591382338331765125177516",
         "currentActiveRequests": true,
         "emissionRate": "130000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10122,
-        "getCurrentTime": 1749244439,
+        "getCurrentRoundId": 10132,
+        "getCurrentTime": 1750843487,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 12,
-          "numberResolvedPriceRequests": 1014
+          "numberPendingPriceRequests": 9,
+          "numberResolvedPriceRequests": 1063
         },
         "getPendingRequests": [
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1749043032,
+            "time": 1750780863,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a653036323034326333656439623732626337643837623032643865623666353564393430323266633838383163386163393537633630363331633232303362342c6368696c64426c6f636b4e756d6265723a37323335343738362c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a633238383331303663316265336164383337346636646661343964383538396161643230373538326161306334396462653865376265393131336564386336652c6368696c64426c6f636b4e756d6265723a37333136393739322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1749012266,
+            "time": 1750760901,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a343765656332653363336438663462616437663161316162363938653537646134326536656231386436353265646237353330326331313733643532646430642c6368696c64426c6f636b4e756d6265723a37323334303231342c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a316335663266653135393133303566626633613934386335353866663039626535653639656533393061343661613461393165396635613231646631643262302c6368696c64426c6f636b4e756d6265723a37333135393936392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1749012200,
+            "time": 1750731979,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a393432623563346133383764643839383831303638393131326439336366636432633636643932393833393230633962326235363765366239363731643336342c6368696c64426c6f636b4e756d6265723a37323334303132352c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a316334313865626636303165393736633736633766303062323332333530393037373837373932613133616361356331386532346362373161316134663535652c6368696c64426c6f636b4e756d6265723a37333134383936382c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1749012038,
+            "time": 1750730759,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a623233343766386264313864383437373734393932316433643361306538636463643836353135653539353233343330313665666436326162663731613932352c6368696c64426c6f636b4e756d6265723a37323334303038302c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134363938322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1749011944,
+            "time": 1750733813,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a323966666163336465333263626461613139343464623964313233336265396630333239373538306563353462656634343964313635303662663761376530622c6368696c64426c6f636b4e756d6265723a37323334303030322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a633561343863343437643432343237613165343164393635373033633231633662346134666564333539663134366536383466343861313130666365316263302c6368696c64426c6f636b4e756d6265723a37333134363538392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1748888639,
+            "time": 1750727447,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a333632643466353964646463383835323930366665383439316264303331373834303661393865373235396436366630646363653437333063626361613234372c6368696c64426c6f636b4e756d6265723a37323238353037332c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134363434372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1748898065,
+            "time": 1750717971,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a663930303662643431333530363934343637323862663131616536633234313761313533343337613763623539653738643762646632393035343936303833302c6368696c64426c6f636b4e756d6265723a37323238373033342c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a626163353237613636666563353338386564383430646163373032376638343630353566646631316537383539313730303536616665373931346462376433382c6368696c64426c6f636b4e756d6265723a37333133393836362c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1748968048,
+            "time": 1750719311,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a356337643132613662633132636134346239316233343165346135353764303033663433303935656137343133316663653730633735636138323739333939322c6368696c64426c6f636b4e756d6265723a37323331393639332c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134303234392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           },
           {
-            "lastVotingRound": 10122,
+            "lastVotingRound": 10132,
             "isGovernance": false,
-            "time": 1748980930,
+            "time": 1750723079,
             "rollCount": 0,
             "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a653330613030376533663630663933346666663036633462663361663265613137623266386266336636313133323931643364363936386137646539313135322c6368696c64426c6f636b4e756d6265723a37323332373432302c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
+            "ancillaryData": "0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134333030372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
           }
         ],
         "getRoundEndTime": [172800, 345600, 518400, 691200, 864000],
-        "getVotePhase": 1,
-        "lastRoundIdProcessed": 10122,
-        "lastUpdateTime": 1749244187,
+        "getVotePhase": 0,
+        "lastRoundIdProcessed": 10132,
+        "lastUpdateTime": 1750843331,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 12,
+        "nextPendingIndexToProcess": 9,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "pendingPriceRequestsIds": [
-          "0x29de78b989682441ba9928ac6ac2fc9546bd644e2882d662c896ed6bbad0fe20",
-          "0x80d90283c920aa5cbbb91fc638e6e777423e4e03e05b7f0c0e681b55952bd5f9",
-          "0x9a9cc9123005f79576afb9afcf9700265ec43b84b72014441ad63ccdebbfb298",
-          "0x32cab0554d39cf0bd4d7ab378af7ea4145e40bcd6125b47a91e97acc4759587b",
-          "0xcf35b4086d3644c74566fbe20748e2567d61f564b102a9fa1444f3456245d770"
+          "0xe20991c23f1b6ff5ac7b09d4b3786feab44b22fc7954b133e923d48b2f2f2128",
+          "0x1dc0a19fcbc860e378bbf5531b1278f69bc04b65a68b15f456def1248147affb",
+          "0x08a295c7afefb77752739573c0a14ae91a9e4ea001309a44a0ecad5cae252376",
+          "0x507509b4014dddf4776993bcaca7f36d511ba964e22be23a931623d5c366c459",
+          "0x24c26a68968f4bbf2cec7850f8f8c887205fed22925be9ce01fb9efac5b9d5fc"
         ],
         "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
         "requestSlashingTrackers": [
@@ -163,8 +163,8 @@
           "0x18709d11510a60558eb759461d8bd25f7980d8ea9b5f39bdb412bc68fe23c31b",
           "0xccb635c902b35077eb61ad4b1cc1028f931df70230263db4beb1e77893174808"
         ],
-        "rewardPerToken": "626331916314668974",
-        "rewardPerTokenStored": "626330567478044042",
+        "rewardPerToken": "634851369349248344",
+        "rewardPerTokenStored": "634850544670109897",
         "rounds": [
           ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
           ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
@@ -236,7 +236,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "124860406982455347135404262",
+        "totalSupply": "125167144402051706577957601",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -512,7 +512,7 @@
         "expirationTimestamp": 1598918400,
         "expiryPrice": 0,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "liquidationLiveness": 7200,
         "minSponsorTokens": "100000000000000000000",
         "pfc": { "rawValue": 1 },
@@ -750,7 +750,7 @@
         "expirationTimestamp": 1596240000,
         "expiryPrice": "30560000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "liquidationLiveness": 7200,
         "minSponsorTokens": "1000000000000000000000",
         "pfc": { "rawValue": "1968211525541204902975" },
@@ -915,7 +915,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749457703,
+        "getCurrentTime": 1750843487,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -957,7 +957,7 @@
       "values": {
         "$immutable": true,
         "fixedOracleFeePerSecondPerPfc": 0,
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
@@ -982,7 +982,7 @@
       "sinceBlock": 9937467,
       "values": {
         "$immutable": true,
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
@@ -1116,11 +1116,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1749457703,
+        "getCurrentTime": 1750843487,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2698317,
+        "numberOfDeposits": 2762379,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -1191,7 +1191,7 @@
         "expirationTimestamp": 1596240000,
         "expiryPrice": "134770000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "liquidationLiveness": 7200,
         "minSponsorTokens": "1000000000000000000",
         "pfc": { "rawValue": "519311467383228273761" },
@@ -1226,7 +1226,7 @@
         "name": "Dai Stablecoin",
         "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
         "symbol": "DAI",
-        "totalSupply": "3587832108109405750438427965",
+        "totalSupply": "3654005245136364907946761743",
         "version": "1"
       },
       "implementationNames": {
@@ -1310,7 +1310,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749457703,
+        "getCurrentTime": 1750843487,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1399,7 +1399,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 835,
+        "nonce": 839,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1485,6 +1485,45 @@
       }
     },
     {
+      "name": "Voting",
+      "address": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xfb1fcd6317076fdbef15223fd2648c0717bce848ba28e8a422255da156151c8a"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1613597552,
+      "sinceBlock": 11876839,
+      "values": {
+        "$immutable": true,
+        "ancillaryBytesLimit": 8192,
+        "gatPercentage": "50000000000000000",
+        "getCurrentRoundId": 10132,
+        "getCurrentTime": 1750843487,
+        "getPendingRequests": [],
+        "getVotePhase": 0,
+        "inflationRate": 500000000000000,
+        "migratedAddress": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "rewardsExpirationTimeout": 31536000000,
+        "rounds": [
+          [0, [0], [0], 0],
+          [0, [0], [0], 0],
+          [0, [0], [0], 0],
+          [0, [0], [0], 0],
+          [0, [0], [0], 0]
+        ],
+        "snapshotMessageHash": "0x38b5b145f0c2d3cca373598867950f7f33fe7f7f5dab3f239e2b31966f761859",
+        "timerAddress": "0x0000000000000000000000000000000000000000",
+        "voteTiming": 86400,
+        "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
+      },
+      "errors": { "rounds": "Processing error occurred." },
+      "implementationNames": {
+        "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": "Voting"
+      }
+    },
+    {
       "name": "WorldChain_Adapter",
       "address": "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
       "type": "Contract",
@@ -1529,7 +1568,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1749457703,
+        "getCurrentTime": 1750843487,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1594,7 +1633,7 @@
         "ancillaryBytesLimit": 8192,
         "defaultLiveness": 7200,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "OO_ANCILLARY_DATA_LIMIT": 8139,
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "TOO_EARLY_RESPONSE": "-57896044618658097711785492504343953926634992332820282019728792003956564819968"
@@ -1691,7 +1730,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 333,
+        "nonce": 336,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1720,7 +1759,7 @@
         "expirationTimestamp": 1598918400,
         "expiryPrice": 2300000000000000,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "liquidationLiveness": 7200,
         "minSponsorTokens": "100000000000000000000",
         "pfc": { "rawValue": "38510142056670929655" },
@@ -1768,7 +1807,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2658625110972206838807313"
+        "totalSupply": "2631955875746324781749879"
       },
       "implementationNames": {
         "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -1852,13 +1891,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x17dcc821b3ff34b939d9dc1a60bf8e55f2b6e60885c60072117e2aab9c950ae6",
-          "relayerRefundRoot": "0x1c6ef633d656d8fd5f3146f8e9fecd6a0168a8d2c1541a844318379250e231cd",
+          "poolRebalanceRoot": "0xa12b82c76e94ba4b33d789fa4839aa468922640ce20a97516a990ef25c014590",
+          "relayerRefundRoot": "0x731009c711f16faf0795ba38fe62af9109fc8bfbfe711a13882b20f545ca9a56",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "claimedBitMap": 524287,
+          "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1749457139
+          "unclaimedPoolRebalanceLeafCount": 19,
+          "challengePeriodEndTimestamp": 1750845431
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -1882,7 +1921,7 @@
         "ancillaryBytesLimit": 8192,
         "defaultLiveness": 7200,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1750843487,
         "timerAddress": "0x0000000000000000000000000000000000000000"
       },
       "implementationNames": {
@@ -3908,6 +3947,59 @@
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
+    "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": [
+      "constructor(uint256 _phaseLength, tuple(uint256 rawValue) _gatPercentage, tuple(uint256 rawValue) _inflationRate, uint256 _rewardsExpirationTimeout, address _votingToken, address _finder, address _timerAddress)",
+      "event EncryptedVote(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bytes encryptedVote)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PriceRequestAdded(uint256 indexed roundId, bytes32 indexed identifier, uint256 time)",
+      "event PriceResolved(uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData)",
+      "event RewardsRetrieved(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, uint256 numTokens)",
+      "event VoteCommitted(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData)",
+      "event VoteRevealed(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData, uint256 numTokens)",
+      "function ancillaryBytesLimit() view returns (uint256)",
+      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)[] commits)",
+      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)[] commits)",
+      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, int256 salt)[] reveals)",
+      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)[] reveals)",
+      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)",
+      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)",
+      "function commitVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash)",
+      "function commitVote(bytes32 identifier, uint256 time, bytes32 hash)",
+      "function gatPercentage() view returns (uint256 rawValue)",
+      "function getCurrentRoundId() view returns (uint256)",
+      "function getCurrentTime() view returns (uint256)",
+      "function getPendingRequests() view returns (tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[])",
+      "function getPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (int256)",
+      "function getPrice(bytes32 identifier, uint256 time) view returns (int256)",
+      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
+      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
+      "function getVotePhase() view returns (uint8)",
+      "function hasPrice(bytes32 identifier, uint256 time) view returns (bool)",
+      "function hasPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (bool)",
+      "function inflationRate() view returns (uint256 rawValue)",
+      "function migratedAddress() view returns (address)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function requestPrice(bytes32 identifier, uint256 time, bytes ancillaryData)",
+      "function requestPrice(bytes32 identifier, uint256 time)",
+      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] toRetrieve) returns (tuple(uint256 rawValue) totalRewardToIssue)",
+      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time)[] toRetrieve) returns (tuple(uint256 rawValue))",
+      "function revealVote(bytes32 identifier, uint256 time, int256 price, int256 salt)",
+      "function revealVote(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)",
+      "function rewardsExpirationTimeout() view returns (uint256)",
+      "function rounds(uint256) view returns (uint256 snapshotId, tuple(uint256 rawValue) inflationRate, tuple(uint256 rawValue) gatPercentage, uint256 rewardsExpirationTime)",
+      "function setCurrentTime(uint256 time)",
+      "function setGatPercentage(tuple(uint256 rawValue) newGatPercentage)",
+      "function setInflationRate(tuple(uint256 rawValue) newInflationRate)",
+      "function setMigrated(address newVotingAddress)",
+      "function setRewardsExpirationTimeout(uint256 NewRewardsExpirationTimeout)",
+      "function snapshotCurrentRound(bytes signature)",
+      "function snapshotMessageHash() view returns (bytes32)",
+      "function timerAddress() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function voteTiming() view returns (uint256 phaseLength)",
+      "function votingToken() view returns (address)"
+    ],
     "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
       "event MessageRelayed(address target, bytes message)",
@@ -4514,5 +4606,5 @@
     "acrossv3/Registry": "0xb4e746d4370da3da1b38b8385b75e0b9c1ece346ddce15d86f4deff355726b4a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x5bf12d17b4c924d241c971392788f1c346ec05a4aff53476b18cfb66eb4e7511"
+  "permissionsConfigHash": "0x810c1fbed346d7c3e4b955d29cf61ef293dedc9bc7b36603d30d7d42dfedc1de"
 }
