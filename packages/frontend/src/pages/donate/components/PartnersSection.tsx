@@ -68,7 +68,7 @@ export function EcosystemTierCard({
                   partner.ecosystemLogo.dark
                 }
                 alt={partner.project.name}
-                className="h-full max-w-36 object-contain md:max-w-[180px]"
+                className="h-full max-w-full xs:max-w-36 object-contain md:max-w-[180px]"
               />
             </div>
             <HorizontalSeparator className="mt-6 mb-4 border-pure-white/40 max-md:hidden" />
