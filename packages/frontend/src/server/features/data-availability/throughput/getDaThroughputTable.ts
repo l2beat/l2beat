@@ -171,9 +171,9 @@ function getMockDaThroughputTableData(
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
-                avgThroughputPerSecond: 1.5,
+                avgThroughputPerSecond: 100000,
               },
-              maxThroughputPerSecond: 4.3,
+              maxThroughputPerSecond: 400000,
             },
           ] as const
         })
@@ -194,14 +194,14 @@ function getMockDaThroughputTableData(
                   totalPosted: 123123,
                   href: '/scaling/projects/base',
                 },
-                avgThroughputPerSecond: 1.0,
+                avgThroughputPerSecond: 100000,
               },
               syncedUntil:
                 daLayerId === 'avail'
                   ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
-              maxThroughputPerSecond: 4.3,
+              maxThroughputPerSecond: 400000,
             },
           ] as const
         })

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xbf00e0835a896ff936f684a40e7e6b623726d37f
+
+# Diff at Wed, 25 Jun 2025 07:14:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593193
+- current block number: 22593193
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593193 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/ValidiumL1DAValidator"
++        "shared-zk-stack/ValidiumL1DAValidator"
+    }
+```
+
 Generated with discovered.json: 0x402dbd90004a3398cf926ff50d70011cd535edfd
 
 # Diff at Fri, 30 May 2025 04:33:32 GMT:

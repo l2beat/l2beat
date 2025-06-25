@@ -130,5 +130,11 @@
     "address": "0x795277B6aD8778E27aa70813157134cfC4a4D446",
     "chain": "ethereum",
     "blockNumber": 22438012
+  },
+  "SystemConfig_v2.5.0_maxgas500m": {
+    "hash": "0x44a79df61c4e5a48fa30bc46adf51d2a5ac4d98cdd6a6e9a38aef9f6dee96934",
+    "address": "0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e",
+    "chain": "ethereum",
+    "blockNumber": 22779924
   }
 }

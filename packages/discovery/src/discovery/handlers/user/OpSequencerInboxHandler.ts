@@ -1,5 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { v } from '@l2beat/validate'
 
 import type { Transaction } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'
@@ -11,12 +11,12 @@ import {
 } from '../reference'
 import { valueToAddress } from '../utils/valueToAddress'
 
-export type OpStackSequencerInboxHandlerDefinition = z.infer<
+export type OpStackSequencerInboxHandlerDefinition = v.infer<
   typeof OpStackSequencerInboxHandlerDefinition
 >
-export const OpStackSequencerInboxHandlerDefinition = z.strictObject({
-  type: z.literal('opStackSequencerInbox'),
-  sequencerAddress: z.string(),
+export const OpStackSequencerInboxHandlerDefinition = v.strictObject({
+  type: v.literal('opStackSequencerInbox'),
+  sequencerAddress: v.string(),
 })
 
 export class OpStackSequencerInboxHandler implements Handler {

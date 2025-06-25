@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x82dd96bdcd5cacc9367b2cce0386921c7152ab88
+
+# Diff at Wed, 25 Jun 2025 07:17:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593196
+- current block number: 22593196
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593196 (main branch discovery), not current.
+
+```diff
+    contract SophonZkEvm (0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+```diff
+    contract AvailL1DAValidator (0x8f50d93B9955B285f787043B30B5F51D09bE0120) {
+    +++ description: Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.
+      template:
+-        "shared-zk-stack/v26/AvailL1DAValidator"
++        "shared-zk-stack/AvailL1DAValidator"
+    }
+```
+
 Generated with discovered.json: 0x9851c2742058196d2936e13d6eaa07e28e5e584f
 
 # Diff at Fri, 30 May 2025 04:34:03 GMT:

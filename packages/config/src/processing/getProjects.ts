@@ -327,7 +327,7 @@ function getTvsConfig(
 
   if (!result.success) {
     throw new Error(
-      `Invalid TVS config for project ${project.id}: ${result.error.toString()}`,
+      `Invalid TVS config for project ${project.id}: ${result.path} : ${result.message}`,
     )
   }
 

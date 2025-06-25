@@ -3,32 +3,30 @@ import {
   CoingeckoId,
   EthereumAddress,
   UnixTime,
-  numberAs,
-  stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 export type GeneratedToken = z.infer<typeof GeneratedToken>
 export const GeneratedToken = z.object({
   name: z.string(),
-  coingeckoId: stringAs((s) => CoingeckoId(s)),
-  address: stringAs((s) => EthereumAddress(s)).optional(),
+  coingeckoId: z.string().transform(CoingeckoId),
+  address: z.string().transform(EthereumAddress).optional(),
   symbol: z.string(),
   decimals: z.number(),
-  deploymentTimestamp: numberAs((n) => UnixTime(n)),
+  deploymentTimestamp: z.number().transform(UnixTime),
   // This is either coingecko listing timestamp or min timestamp of ethereum
-  coingeckoListingTimestamp: numberAs((n) => UnixTime(n)),
-  untilTimestamp: numberAs((n) => UnixTime(n)).optional(),
+  coingeckoListingTimestamp: z.number().transform(UnixTime),
+  untilTimestamp: z.number().transform(UnixTime).optional(),
   /** @deprecated */
   category: z.enum(['ether', 'stablecoin', 'other']),
-  iconUrl: z.optional(z.string()),
-  chainId: numberAs(ChainId),
+  iconUrl: z.string().optional(),
+  chainId: z.number().transform(ChainId),
   source: z.enum(['canonical', 'external', 'native']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
   excludeFromTotal: z.literal(true).optional(),
   premint: z.string().optional(),
-  bridgedUsing: z.optional(
-    z.object({
+  bridgedUsing: z
+    .object({
       bridges: z.array(
         z.object({
           name: z.string(),
@@ -36,20 +34,20 @@ export const GeneratedToken = z.object({
         }),
       ),
       warning: z.string().optional(),
-    }),
-  ),
+    })
+    .optional(),
 })
 
 export type SourceEntry = z.infer<typeof SourceEntry>
 export const SourceEntry = z.object({
   symbol: z.string(),
-  address: stringAs(EthereumAddress).optional(),
-  coingeckoId: stringAs(CoingeckoId).optional(),
+  address: z.string().transform(EthereumAddress).optional(),
+  coingeckoId: z.string().transform(CoingeckoId).optional(),
   category: z.enum(['ether', 'stablecoin', 'other']).optional(),
   source: z.enum(['canonical', 'external', 'native']).optional(),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']).optional(),
-  bridgedUsing: z.optional(
-    z.object({
+  bridgedUsing: z
+    .object({
       bridges: z.array(
         z.object({
           name: z.string(),
@@ -57,14 +55,14 @@ export const SourceEntry = z.object({
         }),
       ),
       warning: z.string().optional(),
-    }),
-  ),
-  deploymentTimestamp: numberAs((n) => UnixTime(n)).optional(),
+    })
+    .optional(),
+  deploymentTimestamp: z.number().transform(UnixTime).optional(),
   excludeFromTotal: z.literal(true).optional(),
 })
 
 export type Source = z.infer<typeof Source>
-export const Source = z.record(z.array(SourceEntry))
+export const Source = z.record(z.string(), z.array(SourceEntry))
 
 export type Output = z.infer<typeof Output>
 export const Output = z.object({

@@ -1,7 +1,7 @@
 {
   "name": "katana",
   "chain": "ethereum",
-  "blockNumber": 22637654,
+  "blockNumber": 22780105,
   "configHash": "0x823c54bf1d51b5627b1a1a1b8aa2e04b6019250a7540198c1f3d862cfa23950a",
   "entries": [
     {
@@ -57,8 +57,8 @@
           "0x310B7Ea7475A0B449Cfd73bE81522F1B88eFAFaa",
           "0xBC64210D565aabca8eb6Eb795833Cc505ac3647F"
         ],
-        "deposit_limit": 250000000000000,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
+        "deposit_limit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "deposit_limit_module": "0x793D85F585145c050487c7AfBF0e9B97143fF1CB",
         "DOMAIN_SEPARATOR": "0xceed67918f219b820ec939ec0af1492ad306b9bf8570309bf979e8d2c4c4dd31",
         "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
         "fullProfitUnlockDate": 0,
@@ -76,10 +76,10 @@
         "profitUnlockingRate": 0,
         "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
         "symbol": "kpdUSDT",
-        "totalAssets": 1489365217152,
-        "totalDebt": 1459366762626,
-        "totalIdle": 29998454526,
-        "totalSupply": 1489365217152,
+        "totalAssets": 10682835922188,
+        "totalDebt": 10458658180786,
+        "totalIdle": 224177741402,
+        "totalSupply": 10682835922188,
         "unlockedShares": 0,
         "use_default_queue": false,
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
@@ -103,6 +103,25 @@
       "address": "0x700F1a984C962b447CcDb95c4c2D8074C65098a3",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "DepositModule",
+      "address": "0x793D85F585145c050487c7AfBF0e9B97143fF1CB",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x2dcb20f15462247500764e9ccdcad72556c8d26c19a8498b6a0f461ce0afdbe8"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1750781543,
+      "sinceBlock": 22775402,
+      "values": {
+        "$immutable": true,
+        "governance": "0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7",
+        "SHARE_RECEIVER": "0x836304B832687f3811a0dF935934C724B40578eB"
+      },
+      "implementationNames": {
+        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB": "DepositModule"
+      }
     },
     {
       "name": "Katana Pre-Deposit USDC Token",
@@ -134,8 +153,8 @@
           "0xBe53A109B494E5c9f97b9Cd39Fe969BE68BF6204",
           "0x63a028963907F5a0c1cEb7e47100f52DfC611117"
         ],
-        "deposit_limit": 300000000000000,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
+        "deposit_limit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "deposit_limit_module": "0x793D85F585145c050487c7AfBF0e9B97143fF1CB",
         "DOMAIN_SEPARATOR": "0x322b414561eb64090f902726b7fbcea41c4778b3768590cfd0609983e943de68",
         "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
         "fullProfitUnlockDate": 0,
@@ -153,10 +172,10 @@
         "profitUnlockingRate": 0,
         "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
         "symbol": "kpdUSDC",
-        "totalAssets": 11394930114775,
-        "totalDebt": 11394930114775,
-        "totalIdle": 0,
-        "totalSupply": 11394930114775,
+        "totalAssets": 56252238915199,
+        "totalDebt": 56226225416996,
+        "totalIdle": 26013498203,
+        "totalSupply": 56252238915199,
         "unlockedShares": 0,
         "use_default_queue": false,
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
@@ -214,8 +233,8 @@
           "0x751F0cC6115410A3eE9eC92d08f46Ff6Da98b708",
           "0xb3760eD42E9e87497A371697fF4F08b510C93Df1"
         ],
-        "deposit_limit": 250000000000,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
+        "deposit_limit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "deposit_limit_module": "0x793D85F585145c050487c7AfBF0e9B97143fF1CB",
         "DOMAIN_SEPARATOR": "0xbb571004f8dd36f597d2192502ac7651ce590edbc8ed1060b44fd538fb68a8ce",
         "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
         "fullProfitUnlockDate": 0,
@@ -233,10 +252,10 @@
         "profitUnlockingRate": 0,
         "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
         "symbol": "kpdWBTC",
-        "totalAssets": 2369016777,
-        "totalDebt": 2369016777,
-        "totalIdle": 0,
-        "totalSupply": 2369016777,
+        "totalAssets": 12577342265,
+        "totalDebt": 12576631025,
+        "totalIdle": 711240,
+        "totalSupply": 12577342265,
         "unlockedShares": 0,
         "use_default_queue": false,
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
@@ -314,8 +333,8 @@
           "0xc56413869c6CDf96496f2b1eF801fEDBdFA7dDB0",
           "0x30EAaCaD508BA57B30edafa1aD6bD337B211A9DE"
         ],
-        "deposit_limit": "140000000000000000000000",
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
+        "deposit_limit": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+        "deposit_limit_module": "0x793D85F585145c050487c7AfBF0e9B97143fF1CB",
         "DOMAIN_SEPARATOR": "0x9b264ab674ac2118d2624b8c7681d9d4b279aaa47cab9910c25a0bf902d1aebf",
         "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
         "fullProfitUnlockDate": 0,
@@ -333,10 +352,10 @@
         "profitUnlockingRate": 0,
         "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
         "symbol": "kpdWETH",
-        "totalAssets": "3527003679104501121712",
-        "totalDebt": "3527003679104501121712",
-        "totalIdle": 0,
-        "totalSupply": "3527003679104501121712",
+        "totalAssets": "17355335003412205355243",
+        "totalDebt": "17265335003412205355243",
+        "totalIdle": "90000000000000000000",
+        "totalSupply": "17355335003412205355243",
         "unlockedShares": 0,
         "use_default_queue": false,
         "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
@@ -441,7 +460,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
         "multisigThreshold": "6 of 9 (67%)",
-        "nonce": 2157,
+        "nonce": 2167,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -571,6 +590,16 @@
       "function name() view returns (string)",
       "function symbol() view returns (string)",
       "function nonces(address arg0) view returns (uint256)"
+    ],
+    "0x793D85F585145c050487c7AfBF0e9B97143fF1CB": [
+      "constructor(address _governance, address _shareReceiver)",
+      "event GovernanceTransferred(address indexed previousGovernance, address indexed newGovernance)",
+      "function SHARE_RECEIVER() view returns (address)",
+      "function available_deposit_limit(address _receiver) view returns (uint256)",
+      "function depositCap(address) view returns (uint256)",
+      "function governance() view returns (address)",
+      "function setDepositCap(address _vault, uint256 _cap)",
+      "function transferGovernance(address _newGovernance)"
     ],
     "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": [
       "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
@@ -1184,5 +1213,5 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "yearn/vaultv3": "0xfa2c8148050d24bcc2f100b33c5f19da7574046371aa1b2622d2944f4facb0ff"
   },
-  "permissionsConfigHash": "0x0b5dfe96ee9833b81de57cb9e894b8bc96041f7f540ccd1ce0138557bfa47fa9"
+  "permissionsConfigHash": "0x5c011de3255ca16072facc27d7b1d769163339b56e372e134f6d7c554c7e06c8"
 }

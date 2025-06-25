@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 export const TrackedTxsConfigSubtypeValues = [
   'stateUpdates',

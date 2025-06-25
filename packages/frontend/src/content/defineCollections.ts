@@ -1,6 +1,12 @@
+import type { Parser, Validator } from '@l2beat/validate'
+
 type CollectionType = 'data' | 'content'
 
-interface CollectionInput<T extends CollectionType, S extends Zod.Schema> {
+interface CollectionInput<
+  T extends CollectionType,
+  P,
+  S extends Validator<P> | Parser<P>,
+> {
   type: T
   schema: S
 }
@@ -12,8 +18,9 @@ const typeToExtension = {
 
 export function defineCollection<
   T extends CollectionType,
-  S extends Zod.Schema,
->(input: CollectionInput<T, S>) {
+  P,
+  S extends Validator<P> | Parser<P>,
+>(input: CollectionInput<T, P, S>) {
   return {
     type: input.type,
     schema: input.schema,

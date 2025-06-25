@@ -1,6 +1,6 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
@@ -11,11 +11,11 @@ import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
-export const CostsChartParams = z.object({
+export const CostsChartParams = v.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
 })
-export type CostsChartParams = z.infer<typeof CostsChartParams>
+export type CostsChartParams = v.infer<typeof CostsChartParams>
 
 export type CostsChartDataPoint = readonly [
   timestamp: number,

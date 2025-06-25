@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -15,8 +15,8 @@ import {
 } from './utils/projectFilterUtils'
 import { ActivityTimeRange } from './utils/range'
 
-export type ActivityChartParams = z.infer<typeof ActivityChartParams>
-export const ActivityChartParams = z.object({
+export type ActivityChartParams = v.infer<typeof ActivityChartParams>
+export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
 })

@@ -1,10 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const TvsProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum([
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const TvsProjectFilter = v.union([
+  v.object({
+    type: v.enum([
       'layer2',
       'rollups',
       'validiumsAndOptimiums',
@@ -12,14 +14,14 @@ export const TvsProjectFilter = z.discriminatedUnion('type', [
       'bridge',
     ]),
   }),
-  z.object({
-    type: z.literal('projects'),
-    projectIds: z.array(z.string()),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
   }),
 ])
-export type TvsProjectFilter = z.infer<typeof TvsProjectFilter>
+export type TvsProjectFilter = v.infer<typeof TvsProjectFilter>
 
-export const TvsProjectFilterType = z.enum([
+export const TvsProjectFilterType = v.enum([
   'layer2',
   'rollups',
   'validiumsAndOptimiums',
@@ -27,7 +29,7 @@ export const TvsProjectFilterType = z.enum([
   'bridge',
   'projects',
 ])
-export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
+export type TvsProjectFilterType = v.infer<typeof TvsProjectFilterType>
 
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,

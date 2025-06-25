@@ -110,7 +110,7 @@ function getTemplateFiles(
         name: 'template.jsonc',
         content: '// No template files - no template response',
         language: 'json',
-        readOnly: isReadOnly,
+        readOnly: true,
       },
     ]
   }
@@ -123,7 +123,7 @@ function getTemplateFiles(
       name: 'template.jsonc',
       content: data.template,
       language: 'json',
-      readOnly: false,
+      readOnly: isReadOnly,
     })
   }
 

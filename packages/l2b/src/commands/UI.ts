@@ -1,16 +1,21 @@
-import { command, flag } from 'cmd-ts'
+import { command, flag, option, optional, string } from 'cmd-ts'
 import { runDiscoveryUi } from '../implementations/discovery-ui/main'
-import { explorerApiKey } from './args'
 
 export const UI = command({
   name: 'ui',
   description: 'Launches DiscoUI.',
   version: '1.0.0',
   args: {
-    explorerApiKey,
     readonly: flag({
       long: 'readonly',
       description: 'Run in read-only mode',
+    }),
+    etherscanApiKey: option({
+      type: optional(string),
+      env: 'L2B_ETHERSCAN_API_KEY',
+      long: 'etherscan-key',
+      short: 'k',
+      defaultValue: () => 'YourApiKeyToken',
     }),
   },
   handler: runDiscoveryUi,

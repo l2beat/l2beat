@@ -1,17 +1,17 @@
 import { type EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { DebugTransactionCall } from '../../provider/DebugTransactionTrace'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ArbitrumActorsHandlerDefinition = z.infer<
+export type ArbitrumActorsHandlerDefinition = v.infer<
   typeof ArbitrumActorsHandlerDefinition
 >
-export const ArbitrumActorsHandlerDefinition = z.strictObject({
-  type: z.literal('arbitrumActors'),
-  actorType: z.union([z.literal('validator'), z.literal('batchPoster')]),
+export const ArbitrumActorsHandlerDefinition = v.strictObject({
+  type: v.literal('arbitrumActors'),
+  actorType: v.union([v.literal('validator'), v.literal('batchPoster')]),
 })
 
 export class ArbitrumActorsHandler implements Handler {

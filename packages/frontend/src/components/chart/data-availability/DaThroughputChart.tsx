@@ -2,7 +2,10 @@ import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
+import {
+  type DaThroughputTimeRange,
+  DaThroughputTimeRangeValues,
+} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
@@ -49,7 +52,7 @@ export function DaThroughputChart() {
         />
       )}
       <div className="mt-2 flex justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
           <RadioGroup
             name="metric"
             value={metric}
@@ -67,15 +70,17 @@ export function DaThroughputChart() {
               )
             }
           >
-            <span className="max-md:hidden">Include scaling projects only</span>
-            <span className="md:hidden">Scaling projects only</span>
+            <span className="max-lg:hidden">
+              Include only projects scaling Ethereum
+            </span>
+            <span className="lg:hidden">Ethereum scaling projects only</span>
           </Checkbox>
         </div>
         <ChartTimeRangeControls
           name="Range"
           value={range}
           setValue={setRange}
-          options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+          options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
             value: v,
             label: v.toUpperCase(),
           }))}

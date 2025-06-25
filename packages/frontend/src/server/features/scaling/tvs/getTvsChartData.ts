@@ -1,6 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,13 +15,13 @@ import {
 } from './utils/projectFilterUtils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
 
-export const TvsChartDataParams = z.object({
+export const TvsChartDataParams = v.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  excludeAssociatedTokens: z.boolean(),
+  excludeAssociatedTokens: v.boolean(),
 })
 
-export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
+export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
 type TvsChartDataPoint = readonly [
   timestamp: number,
@@ -54,14 +54,17 @@ export async function getTvsChart({
     })
   }
 
-  const projectsFilter = createTvsProjectsFilter(filter)
-  const tvsProjects = await getTvsProjects(projectsFilter)
-  if (tvsProjects.length === 0) {
-    return []
-  }
   // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
   const forSummary =
     filter.type !== 'projects' || filter.projectIds.length !== 1
+
+  const projectsFilter = createTvsProjectsFilter(filter)
+  const tvsProjects = await getTvsProjects(projectsFilter, {
+    withoutArchivedAndUpcoming: forSummary,
+  })
+  if (tvsProjects.length === 0) {
+    return []
+  }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     getSummedTvsValues(

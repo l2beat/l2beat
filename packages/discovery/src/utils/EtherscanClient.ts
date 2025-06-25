@@ -1,17 +1,13 @@
 import { type Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { HttpClient } from '@l2beat/shared'
 import {
   assert,
   EthereumAddress,
   Hash256,
   Retries,
   UnixTime,
-  stringAsInt,
 } from '@l2beat/shared-pure'
-
-import type { ContractSource } from './IEtherscanClient'
-
-import type { HttpClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import {
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
@@ -19,6 +15,7 @@ import {
   TransactionListResult,
   tryParseEtherscanResponse,
 } from './EtherscanModels'
+import type { ContractSource } from './IEtherscanClient'
 import type {
   EtherscanUnsupportedMethods,
   IEtherscanClient,
@@ -93,7 +90,11 @@ export class EtherscanClient implements IEtherscanClient {
           closest: 'before',
         })
 
-        return stringAsInt().parse(result)
+        return v
+          .string()
+          .transform(Number)
+          .check(Number.isInteger)
+          .parse(result)
       } catch (error) {
         if (typeof error !== 'object') {
           const errorString =
@@ -288,9 +289,9 @@ export class EtherscanClient implements IEtherscanClient {
   }
 }
 
-const Sources = z.record(z.object({ content: z.string() }))
-const Settings = z.object({ remappings: z.array(z.string()).optional() })
-const EtherscanSource = z.object({ sources: Sources, settings: Settings })
+const Sources = v.record(v.string(), v.object({ content: v.string() }))
+const Settings = v.object({ remappings: v.array(v.string()).optional() })
+const EtherscanSource = v.object({ sources: Sources, settings: Settings })
 
 interface DecodedSource {
   sources: [string, string][]

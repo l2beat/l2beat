@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export const celestiaTools = {
   decodeCommitment,
@@ -88,16 +88,16 @@ function extractNamespacesFromLog(log: string) {
   return namespaces.flat()
 }
 
-const MsgEventArray = z.array(
-  z.object({
-    msg_index: z.number(),
-    events: z.array(
-      z.object({
-        type: z.string(),
-        attributes: z.array(
-          z.object({
-            key: z.string(),
-            value: z.string(),
+const MsgEventArray = v.array(
+  v.object({
+    msg_index: v.number(),
+    events: v.array(
+      v.object({
+        type: v.string(),
+        attributes: v.array(
+          v.object({
+            key: v.string(),
+            value: v.string(),
           }),
         ),
       }),

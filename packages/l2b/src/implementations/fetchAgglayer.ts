@@ -73,6 +73,20 @@ export class AgglayerDataFetcher {
     '12': 'aggchainFEP',
   }
 
+  // map rollupVerifierType to string
+  private getRollupVerifierTypeString(verifierType: number): string {
+    switch (verifierType) {
+      case 0:
+        return 'statetransition (0)'
+      case 1:
+        return 'pessimistic (1)'
+      case 2:
+        return 'algateway-pp (2)'
+      default:
+        return `unknown (${verifierType})`
+    }
+  }
+
   private rollupManagerAbi = [
     'function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)',
   ]
@@ -163,8 +177,9 @@ export class AgglayerDataFetcher {
         lastVerifiedBatchBeforeUpgrade:
           data.lastVerifiedBatchBeforeUpgrade.toString(),
         rollupTypeID: `${rollupTypeID} (${rollupTypeName})`,
-        rollupVerifierType:
-          data.rollupVerifierType === 0 ? 'standard (0)' : 'pessimistic (1)',
+        rollupVerifierType: this.getRollupVerifierTypeString(
+          data.rollupVerifierType,
+        ),
         lastPessimisticRoot: data.lastPessimisticRoot,
         programVKey: data.programVKey,
       }
@@ -197,8 +212,9 @@ export class AgglayerDataFetcher {
     const rows: string[][] = []
 
     rollupDataList.forEach((data) => {
-      const verifierTypeString =
-        data.rollupVerifierType === 0 ? 'standard' : 'pessimistic'
+      const rollupVerifierTypeString = this.getRollupVerifierTypeString(
+        data.rollupVerifierType,
+      )
       const rollupTypeID = data.rollupTypeID.toString()
       const rollupTypeName = this.getFromStringMap(
         this.rollupTypeNames,
@@ -213,7 +229,7 @@ export class AgglayerDataFetcher {
         data.chainID.toString(),
         data.forkID.toString(),
         rollupTypeString,
-        verifierTypeString,
+        rollupVerifierTypeString,
       ])
     })
 

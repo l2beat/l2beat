@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
@@ -7,8 +7,8 @@ export type FilterableValue = {
   id: FilterableValueId
   value: string
 }
-export type FilterableValueId = z.infer<typeof FilterableValueId>
-export const FilterableValueId = z.enum([
+export type FilterableValueId = v.infer<typeof FilterableValueId>
+export const FilterableValueId = v.enum([
   'type',
   'stack',
   'stage',

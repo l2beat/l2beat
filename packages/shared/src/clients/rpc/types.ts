@@ -4,20 +4,19 @@ import {
   type EthereumAddress,
   HEX_REGEX,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 export const RpcResponse = z.object({ id: z.string(), result: z.unknown() })
 
 export const Quantity = {
-  decode: z.preprocess((s) => {
-    const res = z.string().parse(s)
-    assert(res.startsWith('0x'), 'Quantity should start with 0x')
-    assert(res !== '0x', 'Zero should be represented as 0x0')
-    if (res.startsWith('0x0') && res.length !== 3) {
+  decode: z.string().transform((s) => {
+    assert(s.startsWith('0x'), 'Quantity should start with 0x')
+    assert(s !== '0x', 'Zero should be represented as 0x0')
+    if (s.startsWith('0x0') && s.length !== 3) {
       throw new Error('No leading zeroes allowed')
     }
-    return BigInt(res)
-  }, z.bigint()),
+    return BigInt(s)
+  }),
 
   encode: (n: bigint) => `0x${n.toString(16)}`,
 }
@@ -67,20 +66,22 @@ export const EVMTransactionReceiptResponse = z.object({
   result: EVMTransactionReceipt,
 })
 
-export type EVMBlock = z.infer<typeof EVMBlock>
-const EVMBlock = z.object({
+const _EVMBlock = {
   timestamp: Quantity.decode.transform((n) => Number(n)),
   hash: z.string(),
   number: Quantity.decode.transform((n) => Number(n)),
   parentBeaconBlockRoot: z.string().optional(),
-})
+}
+export type EVMBlock = z.infer<typeof EVMBlock>
+const EVMBlock = z.object(_EVMBlock)
 
 export const EVMBlockResponse = z.object({
   result: EVMBlock,
 })
 
 export type EVMBlockWithTransactions = z.infer<typeof EVMBlockWithTransactions>
-const EVMBlockWithTransactions = EVMBlock.extend({
+const EVMBlockWithTransactions = z.object({
+  ..._EVMBlock,
   transactions: z.array(EVMTransaction),
 })
 
@@ -93,7 +94,7 @@ export const EVMBalanceResponse = z.object({
 })
 
 export const EVMCallResponse = z.object({
-  result: z.string().regex(HEX_REGEX, 'Invalid hex string'),
+  result: z.string().check((s) => HEX_REGEX.test(s), 'Invalid hex string'),
 })
 
 export interface CallParameters {
