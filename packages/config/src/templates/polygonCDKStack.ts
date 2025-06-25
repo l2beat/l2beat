@@ -174,8 +174,11 @@ export function polygonCDKStack(
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      category:
-        templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      category: templateVars.reasonsForBeingOther
+        ? 'Other'
+        : templateVars.daProvider !== undefined
+          ? 'Validium'
+          : 'ZK Rollup',
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
@@ -254,11 +257,11 @@ export function polygonCDKStack(
                 stateRootsPostedToL1: true,
                 dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable: true,
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: null,
               },
               stage1: {
                 principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: {

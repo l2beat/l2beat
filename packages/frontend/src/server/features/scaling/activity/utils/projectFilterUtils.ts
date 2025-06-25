@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { isProjectOther } from '../../utils/isProjectOther'
 
 // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
 // support it yet. It's a performance issue.
@@ -38,32 +37,25 @@ export function createActivityProjectsFilter(
       return (project) => !(project.statuses.reviewStatus === 'initialReview')
     case 'rollups':
       return (project) =>
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        isProjectOther(project.scalingInfo) &&
+        project.scalingInfo.type === 'Other' &&
         !(project.statuses.reviewStatus === 'initialReview')
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'withoutOthers':
       return (project) =>
-        !isProjectOther(project.scalingInfo) &&
-        !(project.statuses.reviewStatus === 'initialReview') &&
-        (project.scalingInfo.type === 'Optimistic Rollup' ||
-          project.scalingInfo.type === 'ZK Rollup' ||
-          project.scalingInfo.type === 'Validium' ||
-          project.scalingInfo.type === 'Optimium' ||
-          project.scalingInfo.type === 'Plasma')
+        project.scalingInfo.type !== 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)
   }

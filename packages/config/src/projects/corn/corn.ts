@@ -19,7 +19,6 @@ export const corn: ScalingProject = orbitStackL2({
   display: {
     name: 'Corn',
     slug: 'corn',
-    category: 'Optimium',
     description:
       'Corn is an Orbit Stack-based Layer 2 focused on Bitcoin-centric DeFi applications. Corn uses Bitcorn (BTCN) as its gas token, the popCORN System for long-term incentives, and LayerZero for cross-chain asset transfers.',
     links: {

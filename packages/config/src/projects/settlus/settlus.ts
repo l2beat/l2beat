@@ -16,7 +16,6 @@ export const settlus: ScalingProject = opStackL2({
   display: {
     name: 'Settlus',
     slug: 'settlus',
-    category: 'Optimistic Rollup',
     stack: 'OP Stack',
     description:
       'Settlus is an OP stack L2 designed to provide transparent settlement system for the creator economy.',

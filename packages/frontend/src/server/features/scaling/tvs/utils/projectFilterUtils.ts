@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
-import { isProjectOther } from '../../utils/isProjectOther'
 
 // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
 // support it yet. It's a performance issue.
@@ -47,14 +46,12 @@ export function createTvsProjectsFilter(
     case 'rollups':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
@@ -62,7 +59,7 @@ export function createTvsProjectsFilter(
     case 'others':
       return (project) =>
         !!project.scalingInfo &&
-        isProjectOther(project.scalingInfo) &&
+        project.scalingInfo.type === 'Other' &&
         !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)

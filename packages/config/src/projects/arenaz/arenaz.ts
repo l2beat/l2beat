@@ -21,7 +21,6 @@ export const arenaz = opStackL2({
     slug: 'arenaz',
     description:
       'Arena-Z is an OP stack Optimistic Rollup where studios and gamers, creators and players unite to pioneer the future of entertainment.',
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arena-z.gg/'],
       bridges: [

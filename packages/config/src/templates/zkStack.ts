@@ -267,7 +267,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         templateVars.daProvider !== undefined
           ? 'zkstack-validium'
           : 'zkstack-rollup',
-      category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      category: templateVars.reasonsForBeingOther
+        ? 'Other'
+        : daProvider !== undefined
+          ? 'Validium'
+          : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
           ? `${templateVars.display.name} is a ${
@@ -352,11 +356,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 stateRootsPostedToL1: true,
                 dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable: true,
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: null,
               },
               stage1: {
                 principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: null,

@@ -26,7 +26,6 @@ export const hashkey = opStackL2({
     slug: 'hashkey',
     description:
       "HashKey Chain is a regulatory-compliant, institutional-grade OP stack Layer 2 solution bridging traditional finance and Web3. It is powered by Hong Kong's premier virtual asset ecosystem.",
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://hsk.xyz/'],
       bridges: ['https://bridge.hsk.xyz/'],

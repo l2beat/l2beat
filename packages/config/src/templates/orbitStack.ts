@@ -476,7 +476,11 @@ function orbitStackCommon(
       stack: 'Arbitrum',
       category:
         templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToExternalDA
+            ? 'Optimium'
+            : 'Optimistic Rollup'),
     },
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
@@ -1253,11 +1257,11 @@ function computedStage(
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable:
           templateVars.isNodeAvailable ?? 'UnderReview',
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,

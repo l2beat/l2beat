@@ -77,7 +77,6 @@ function layer2Or3ToProject(
       layer: p.type,
       type: p.display.category,
       capability: p.capability,
-      isOther: p.display.category === 'Other' || !!p.reasonsForBeingOther,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
       stack: p.display.stack,

@@ -20,7 +20,6 @@ export const race: ScalingProject = opStackL2({
     slug: 'race',
     description:
       'Race Network is a Layer-2 designed for the tokenization and distribution of real-world assets (RWA).',
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://raceecosystem.com/'],
       bridges: [
