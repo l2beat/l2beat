@@ -12,6 +12,7 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { v } from '@l2beat/validate'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -218,7 +219,9 @@ const TRANSFERS_RESPONSE = [
   },
 ]
 
-const parsedTransfers = BigQueryTransferResult.array().parse(TRANSFERS_RESPONSE)
+const parsedTransfers = v
+  .array(BigQueryTransferResult)
+  .parse(TRANSFERS_RESPONSE)
 const TRANSFERS_RESULT = transformTransfersQueryResult(
   [CONFIGURATIONS[0]],
   parsedTransfers,
@@ -283,8 +286,9 @@ const FUNCTIONS_RESPONSE = [
   },
 ]
 
-const parsedFunctionCalls =
-  BigQueryFunctionCallResult.array().parse(FUNCTIONS_RESPONSE)
+const parsedFunctionCalls = v
+  .array(BigQueryFunctionCallResult)
+  .parse(FUNCTIONS_RESPONSE)
 const FUNCTIONS_RESULT = transformFunctionCallsQueryResult(
   [CONFIGURATIONS[1]],
   [CONFIGURATIONS[2]],
