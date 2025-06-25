@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x065418562223d97427b0569a0af789e6d217767f
+Generated with discovered.json: 0x8305c0edba028775a6533e638705b59bc4a1acc8
 
-# Diff at Wed, 25 Jun 2025 09:25:29 GMT:
+# Diff at Wed, 25 Jun 2025 17:07:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 22665827
@@ -8,179 +8,19 @@ Generated with discovered.json: 0x065418562223d97427b0569a0af789e6d217767f
 
 ## Description
 
-disco improv in progress
+discodrive, add UMA.
 
 ## Watched changes
 
 ```diff
     contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac) {
-    +++ description: None
-      values.cumulativeStake:
--        "24299212485640014426776324"
-+        "24591382338331765125177516"
-      values.currentActiveRequests:
--        false
-+        true
-      values.getCurrentRoundId:
--        10124
-+        10132
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-      values.getNumberOfPriceRequests.numberPendingPriceRequests:
--        1
-+        9
-      values.getNumberOfPriceRequests.numberResolvedPriceRequests:
--        1026
-+        1063
-      values.getPendingRequests.8:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750760901,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a316335663266653135393133303566626633613934386335353866663039626535653639656533393061343661613461393165396635613231646631643262302c6368696c64426c6f636b4e756d6265723a37333135393936392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.7:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750727447,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134363434372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.6:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750730759,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134363938322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.5:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750717971,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a626163353237613636666563353338386564383430646163373032376638343630353566646631316537383539313730303536616665373931346462376433382c6368696c64426c6f636b4e756d6265723a37333133393836362c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.4:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750731979,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a316334313865626636303165393736633736633766303062323332333530393037373837373932613133616361356331386532346362373161316134663535652c6368696c64426c6f636b4e756d6265723a37333134383936382c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.3:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750780863,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a633238383331303663316265336164383337346636646661343964383538396161643230373538326161306334396462653865376265393131336564386336652c6368696c64426c6f636b4e756d6265723a37333136393739322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.2:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750719311,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134303234392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.1:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750733813,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a633561343863343437643432343237613165343164393635373033633231633662346134666564333539663134366536383466343861313130666365316263302c6368696c64426c6f636b4e756d6265723a37333134363538392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.getPendingRequests.0:
-+        {"lastVotingRound":10132,"isGovernance":false,"time":1750723079,"rollCount":0,"identifier":"0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000","ancillaryData":"0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134333030372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"}
-      values.lastRoundIdProcessed:
--        10124
-+        10132
-      values.lastUpdateTime:
--        1749442031
-+        1750843331
-      values.nextPendingIndexToProcess:
--        1
-+        9
-      values.pendingPriceRequestsIds.4:
-+        "0x08a295c7afefb77752739573c0a14ae91a9e4ea001309a44a0ecad5cae252376"
-      values.pendingPriceRequestsIds.3:
-+        "0xe20991c23f1b6ff5ac7b09d4b3786feab44b22fc7954b133e923d48b2f2f2128"
-      values.pendingPriceRequestsIds.2:
-+        "0x24c26a68968f4bbf2cec7850f8f8c887205fed22925be9ce01fb9efac5b9d5fc"
-      values.pendingPriceRequestsIds.1:
-+        "0x507509b4014dddf4776993bcaca7f36d511ba964e22be23a931623d5c366c459"
-      values.pendingPriceRequestsIds.0:
--        "0x6e1fea99cb74f848b8938b3e26233adc4a41c2061d9d9c44d76a607b7764269d"
-+        "0x1dc0a19fcbc860e378bbf5531b1278f69bc04b65a68b15f456def1248147affb"
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.
       values.rewardPerToken:
 -        "627473210166767069"
 +        "634851369349248344"
       values.rewardPerTokenStored:
 -        "627389365474219770"
 +        "634850544670109897"
-      errors.pendingPriceRequestsIds:
-+        "Processing error occurred."
-    }
-```
-
-```diff
-    contract ExpiringMultiParty (0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract ExpiringMultiParty (0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract Governor (0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract ExpiringMultiParty (0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F) {
-    +++ description: None
-      values.totalSupply:
--        "3599477351767613777719835690"
-+        "3654005245136364907946761743"
-    }
-```
-
-```diff
-    contract Voting (0x8B1631ab830d11531aE83725fDa4D86012eCCd77) {
-    +++ description: None
-      values.getCurrentRoundId:
--        10124
-+        10132
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract ExpiringMultiParty (0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
-    }
-```
-
-```diff
-    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) {
-    +++ description: None
-      values.totalSupply:
--        "2654462763235527496914830"
-+        "2631955875746324781749879"
-    }
-```
-
-```diff
-    contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6) {
-    +++ description: None
-      values.getCurrentTime:
--        1749457703
-+        1750843487
     }
 ```
 
@@ -191,143 +31,261 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22665827 (main branch discovery), not current.
 
 ```diff
+-   Status: DELETED
+    contract VotingToken (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828)
+    +++ description: None
+```
+
+```diff
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61) {
+    +++ description: Simple data store used by the Universal_Adapter to store message calldata hashes.
+      template:
++        "acrossv3/HubPoolStore"
+      description:
++        "Simple data store used by the Universal_Adapter to store message calldata hashes."
+    }
+```
+
+```diff
+    contract AcrossConfigStore (0x3B03509645713718B78951126E0A6de6f10043f5) {
+    +++ description: Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.
+      template:
++        "acrossv3/AcrossConfigStore"
+      description:
++        "Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data."
+    }
+```
+
+```diff
     contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
-    +++ description: Maps interface names to contract addresses.
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
       values.namedAddresses:
 +        [{"name":"OptimisticOracleV3","address":"0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"},{"name":"OptimisticOracleV2","address":"0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"},{"name":"Registry","address":"0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"},{"name":"FinancialContractsAdmin","address":"0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A"},{"name":"SkinnyOptimisticOracle","address":"0xeE3Afe347D5C74317041E2618C49534dAf887c24"},{"name":"OptimisticAsserter","address":"0x0000000000000000000000000000000000000000"},{"name":"Store","address":"0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"},{"name":"OptimisticOracle","address":"0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"},{"name":"IdentifierWhitelist","address":"0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"},{"name":"CollateralWhitelist","address":"0xdBF90434dF0B98219f87d112F37d74B1D90758c7"},{"name":"Oracle","address":"0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"}]
       template:
-+        "acrossv3/Finder"
++        "uma/Finder"
       description:
-+        "Maps interface names to contract addresses."
++        "Maps interface names to contract addresses (UMA protocol contracts)."
       usedTypes:
 +        [{"typeCaster":"Mapping","arg":{"0x4f7261636c650000000000000000000000000000000000000000000000000000":"Oracle","0x5265676973747279000000000000000000000000000000000000000000000000":"Registry","0x46696e616e6369616c436f6e74726163747341646d696e000000000000000000":"FinancialContractsAdmin","0x53746f7265000000000000000000000000000000000000000000000000000000":"Store","0x4964656e74696669657257686974656c69737400000000000000000000000000":"IdentifierWhitelist","0x436f6c6c61746572616c57686974656c69737400000000000000000000000000":"CollateralWhitelist","0x4f7074696d69737469634f7261636c6500000000000000000000000000000000":"OptimisticOracle","0x536b696e6e794f7074696d69737469634f7261636c6500000000000000000000":"SkinnyOptimisticOracle","0x4f7074696d69737469634f7261636c6556320000000000000000000000000000":"OptimisticOracleV2","0x4f7074696d697374696341737365727465720000000000000000000000000000":"OptimisticAsserter","0x4f7074696d69737469634f7261636c6556330000000000000000000000000000":"OptimisticOracleV3"}}]
     }
 ```
 
 ```diff
+-   Status: DELETED
+    contract PolygonTokenBridger (0x48d990AbDA20afa1fD1da713AbC041B60a922c65)
+    +++ description: None
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+      template:
++        "uma/ProposerV2"
+      description:
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens."
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"propose governance actions.","role":".proposer"}]
+    }
+```
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+      values.proxiableUUID:
+-        "EXPECT_REVERT"
+      template:
++        "acrossv3/SpokePool"
+      description:
++        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+      values.emergencyProposer:
++        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      values.owner:
++        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.proposer:
++        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      template:
++        "uma/GovernorV2"
+      description:
++        "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes."
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF","description":"set fees for disputes and manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove and slash proposals, set the bond amount and the expiry time, manage the executor address.","role":".owner"},{"permission":"interact","from":"ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC","description":"set the bond amount.","role":".owner"},{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"manage all roles in the contract.","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LpTokenFactory (0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d)
+    +++ description: None
+```
+
+```diff
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      name:
+-        "EmergencyProposalExecutor"
++        "UMA Multisig"
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove proposals, execute emergency proposals.","role":".executor"}]
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds.
+      values.bondFmt:
++        "2"
+      values.delayFmt:
++        "2d"
+      template:
++        "acrossv3/OptimisticGovernor"
+      description:
++        "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds."
+      fieldMeta:
++        {"rules":{"description":"string of rules that a proposer is accepting when posting a proposal with a bond."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x3B03509645713718B78951126E0A6de6f10043f5","description":"update configuration values.","role":".owner","via":[{"address":"ethereum:0xB524735356985D2f267FA010D681f061DfF03715"}]},{"permission":"interact","from":"ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991","description":"set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.","role":".owner","via":[{"address":"ethereum:0xB524735356985D2f267FA010D681f061DfF03715"}]}]
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+      values.bondFmt:
++        "5,000,000"
+      values.delayFmt:
++        "10d"
+      template:
++        "uma/EmergencyProposer"
+      description:
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"can bypass the voting system and execute proposals immediately.","role":".emergencyProposer"}]
+    }
+```
+
+```diff
+    contract Across Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      name:
+-        "HubPool Multisig"
++        "Across Multisig"
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x3B03509645713718B78951126E0A6de6f10043f5","description":"update configuration values.","role":".owner"},{"permission":"interact","from":"ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991","description":"set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.","role":".owner"}]
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract CoveredCallFinancialProductLibrary (0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58)
+    +++ description: None
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h.
+      values.finalizationDelayFmt:
++        "1h"
+      values.spokePool:
++        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      template:
++        "acrossv3/HubPool"
+      description:
++        "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h."
+    }
+```
+
+```diff
+    contract AcrossBondToken (ABT) (0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea) {
+    +++ description: A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.
+      name:
+-        "BondToken"
++        "AcrossBondToken (ABT)"
+      template:
++        "acrossv3/BondToken"
+      description:
++        "A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals."
+      fieldMeta:
++        {"proposers":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24) {
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
+      name:
+-        "UMAOptimisticOracle"
++        "SkinnyOptimisticOracle"
+      template:
++        "uma/SkinnyOptimisticOracle"
+      description:
++        "Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution."
+    }
+```
+
+```diff
+    EOA  (0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea","description":"use ABT as a bond in the HubPool contract for root bundle proposals.","role":".proposers"}]
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+      template:
++        "uma/OptimisticOracleV3"
+      description:
++        "Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes."
+    }
+```
+
+```diff
 +   Status: CREATED
     contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SyntheticToken (0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ExpiringMultiParty (0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759)
-    +++ description: None
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.
 ```
 
 ```diff
 +   Status: CREATED
     contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ExpiringMultiParty (0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract FinancialContractsAdmin (0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A)
-    +++ description: None
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
 ```
 
 ```diff
 +   Status: CREATED
     contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Governor (0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ExpiringMultiParty (0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Dai Stablecoin Token (0x6B175474E89094C44Da98b954EedeAC495271d0F)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SyntheticToken (0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SyntheticToken (0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Voting (0x8B1631ab830d11531aE83725fDa4D86012eCCd77)
-    +++ description: None
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
 ```
 
 ```diff
 +   Status: CREATED
     contract FixedSlashSlashingLibrary (0x9a406ba5a99983250Fd663947b3c968D387ce5cd)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ExpiringMultiParty (0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Wrapped Ether Token (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract SyntheticToken (0xc78Ce805599188eD734C943C912800658807fA14)
-    +++ description: None
+    +++ description: Stores slashing parameters and calculates slashing amounts based on that (UMA protocol).
 ```
 
 ```diff
 +   Status: CREATED
     contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
-    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol.
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
 ```
 
 ```diff
 +   Status: CREATED
     contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
-    +++ description: Implements a simple address whitelist.
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
 ```
 
 Generated with discovered.json: 0xf8b87edd4b99da687644e18a2aa77d2e0e28dbcd

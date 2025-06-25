@@ -2,16 +2,28 @@
   "name": "across-v3",
   "chain": "ethereum",
   "blockNumber": 22780541,
-  "configHash": "0x71370af50eb2dab4175f0d0fd10c95c6537989ac19ff648f368bf537709ad8f6",
+  "configHash": "0x0b7fa96fe04ab217e12ea897c8ac004783f4afe3bde3af0d173e240bb36bc73f",
   "entries": [
     {
       "name": "VotingV2",
       "address": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
       "type": "Contract",
+      "template": "uma/VotingV2",
       "sourceHashes": [
         "0xef18268ad698461591028993ca19fa3b717ace3ee3371f86e68c1d0a3658d87e"
       ],
       "proxyType": "immutable",
+      "description": "Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.",
+      "ignoreInWatchMode": [
+        "nextPendingIndexToProcess",
+        "lastUpdateTime",
+        "lastRoundIdProcessed",
+        "getVotePhase",
+        "getNumberOfPriceRequests",
+        "getCurrentRoundId",
+        "currentActiveRequests",
+        "cumulativeStake"
+      ],
       "sinceTimestamp": 1677229919,
       "sinceBlock": 16697232,
       "values": {
@@ -23,86 +35,10 @@
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
         "getCurrentRoundId": 10132,
-        "getCurrentTime": 1750843487,
         "getNumberOfPriceRequests": {
           "numberPendingPriceRequests": 9,
           "numberResolvedPriceRequests": 1063
         },
-        "getPendingRequests": [
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750780863,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a633238383331303663316265336164383337346636646661343964383538396161643230373538326161306334396462653865376265393131336564386336652c6368696c64426c6f636b4e756d6265723a37333136393739322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750760901,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a316335663266653135393133303566626633613934386335353866663039626535653639656533393061343661613461393165396635613231646631643262302c6368696c64426c6f636b4e756d6265723a37333135393936392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750731979,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a316334313865626636303165393736633736633766303062323332333530393037373837373932613133616361356331386532346362373161316134663535652c6368696c64426c6f636b4e756d6265723a37333134383936382c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750730759,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134363938322c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750733813,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a633561343863343437643432343237613165343164393635373033633231633662346134666564333539663134366536383466343861313130666365316263302c6368696c64426c6f636b4e756d6265723a37333134363538392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750727447,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134363434372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750717971,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a626163353237613636666563353338386564383430646163373032376638343630353566646631316537383539313730303536616665373931346462376433382c6368696c64426c6f636b4e756d6265723a37333133393836362c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750719311,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a613035323633633431623232313265636533336666646261303937363637393931613633383437383133383237616135363938393161616236616232613332302c6368696c64426c6f636b4e756d6265723a37333134303234392c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          },
-          {
-            "lastVotingRound": 10132,
-            "isGovernance": false,
-            "time": 1750723079,
-            "rollCount": 0,
-            "identifier": "0x5945535f4f525f4e4f5f51554552590000000000000000000000000000000000",
-            "ancillaryData": "0x616e63696c6c61727944617461486173683a366663343761363161323662643539636662393034303663356130356132613664303166643264333335343261343930356666633965366561373731326337382c6368696c64426c6f636b4e756d6265723a37333134333030372c6368696c644f7261636c653a616336303335336135343837336334343631303132313638323961366139386364626263336633642c6368696c645265717565737465723a656533616665333437643563373433313730343165323631386334393533346461663838376332342c6368696c64436861696e49643a313337"
-          }
-        ],
-        "getRoundEndTime": [172800, 345600, 518400, 691200, 864000],
         "getVotePhase": 0,
         "lastRoundIdProcessed": 10132,
         "lastUpdateTime": 1750843331,
@@ -111,80 +47,15 @@
         "migratedAddress": "0x0000000000000000000000000000000000000000",
         "nextPendingIndexToProcess": 9,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "pendingPriceRequestsIds": [
-          "0xe20991c23f1b6ff5ac7b09d4b3786feab44b22fc7954b133e923d48b2f2f2128",
-          "0x1dc0a19fcbc860e378bbf5531b1278f69bc04b65a68b15f456def1248147affb",
-          "0x08a295c7afefb77752739573c0a14ae91a9e4ea001309a44a0ecad5cae252376",
-          "0x507509b4014dddf4776993bcaca7f36d511ba964e22be23a931623d5c366c459",
-          "0x24c26a68968f4bbf2cec7850f8f8c887205fed22925be9ce01fb9efac5b9d5fc"
-        ],
         "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "requestSlashingTrackers": [
-          [
-            0,
-            1000000000000000,
-            "894122295269549157065",
-            "18617019924951271803176298",
-            9712
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "2627298461910141446152",
-            "17332349229228232282508129",
-            9715
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "547691395181260367025",
-            "19455197208095905107170651",
-            9716
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "7708320665789019986251",
-            "12902557915899573849218434",
-            9720
-          ],
-          [
-            1000000000000000,
-            1000000000000000,
-            "7707999233215283798858",
-            "12902879348473310036611129",
-            9720
-          ]
-        ],
-        "resolvedPriceRequestIds": [
-          "0x84652155397d434717ac79a3360312d09eadd05f03fd7ea849e85d5b499984af",
-          "0xcdbcf6810ad1ca548e3824411ec6fdafe42cee09f1c5624edc2b2a03eee5cf7a",
-          "0x1ebf6f9eb66a2dde4e9c3c8f83aa23bacda5b7438b57778f289a7a2788e51b80",
-          "0x18709d11510a60558eb759461d8bd25f7980d8ea9b5f39bdb412bc68fe23c31b",
-          "0xccb635c902b35077eb61ad4b1cc1028f931df70230263db4beb1e77893174808"
-        ],
         "rewardPerToken": "634851369349248344",
         "rewardPerTokenStored": "634850544670109897",
-        "rounds": [
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0],
-          ["0x0000000000000000000000000000000000000000", 0, 0, 0, 0]
-        ],
         "slashingLibrary": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
         "unstakeCoolDown": 604800,
         "voteTiming": 86400,
         "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "errors": {
-        "getRoundEndTime": "Processing error occurred.",
-        "pendingPriceRequestsIds": "Processing error occurred.",
-        "requestSlashingTrackers": "Processing error occurred.",
-        "resolvedPriceRequestIds": "Processing error occurred.",
-        "rounds": "Processing error occurred."
       },
       "implementationNames": {
         "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac": "VotingV2"
@@ -218,40 +89,6 @@
       "implementationNames": {
         "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b": "Zora_Adapter"
       }
-    },
-    {
-      "name": "VotingToken",
-      "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x349b0f612f02a8599667c43efe1e547bf4f18a46732001b3afb6b425a87325e9"
-      ],
-      "proxyType": "immutable",
-      "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"],
-      "sinceTimestamp": 1578581061,
-      "sinceBlock": 9247089,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
-        "name": "UMA Voting Token v1",
-        "symbol": "UMA",
-        "totalSupply": "125167144402051706577957601",
-        "totalSupplyAt": [
-          "100000000000000000000000000",
-          "100000000000000000000000000",
-          "100034524092695877009538769",
-          "100150034524092695877009517"
-        ]
-      },
-      "implementationNames": {
-        "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": "VotingToken"
-      }
-    },
-    {
-      "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Soneium_Adapter",
@@ -318,33 +155,6 @@
       }
     },
     {
-      "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "SyntheticToken",
-      "address": "0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbda74171842ba1423d35071e6911d0bc286d8784d059959e261b67f3ce12b626"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1595437516,
-      "sinceBlock": 10510420,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "getMember": ["0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759"],
-        "name": "USD synthetic token backed by ETH expiring 1 September 2020",
-        "symbol": "yUSD-SEP20",
-        "totalSupply": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-      },
-      "implementationNames": {
-        "0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162": "SyntheticToken"
-      }
-    },
-    {
       "name": "Redstone_Adapter",
       "address": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
       "type": "Contract",
@@ -377,10 +187,12 @@
       "name": "HubPoolStore",
       "address": "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61",
       "type": "Contract",
+      "template": "acrossv3/HubPoolStore",
       "sourceHashes": [
         "0x64b6ef7e9493ba6f142060c8e818ecec991f8f8044b1713489114bec6633a256"
       ],
       "proxyType": "immutable",
+      "description": "Simple data store used by the Universal_Adapter to store message calldata hashes.",
       "sinceTimestamp": 1745854319,
       "sinceBlock": 22368469,
       "values": {
@@ -426,12 +238,15 @@
     {
       "address": "0x2bAaA41d155ad8a4126184950B31F50A1513cE25",
       "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "description": "withdraw fees.",
+          "role": ".withdrawer"
+        }
+      ]
     },
     {
       "name": "Scroll_Adapter",
@@ -492,52 +307,15 @@
       "proxyType": "EOA"
     },
     {
-      "name": "ExpiringMultiParty",
-      "address": "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf6b17fd69e628a2030caafa870bfbf033d5960e779bd1f9f048ced8227a7790f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1595437516,
-      "sinceBlock": 10510420,
-      "values": {
-        "$immutable": true,
-        "collateralCurrency": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "collateralRequirement": "1250000000000000000",
-        "contractState": 0,
-        "cumulativeFeeMultiplier": "1000000000000000000",
-        "disputeBondPct": "100000000000000000",
-        "disputerDisputeRewardPct": "200000000000000000",
-        "expirationTimestamp": 1598918400,
-        "expiryPrice": 0,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "liquidationLiveness": 7200,
-        "minSponsorTokens": "100000000000000000000",
-        "pfc": { "rawValue": 1 },
-        "priceIdentifier": "0x5553444554480000000000000000000000000000000000000000000000000000",
-        "rawLiquidationCollateral": 0,
-        "rawTotalPositionCollateral": 1,
-        "sponsorDisputeRewardPct": "50000000000000000",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "tokenCurrency": "0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162",
-        "totalPositionCollateral": { "rawValue": 1 },
-        "totalTokensOutstanding": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "withdrawalLiveness": 7200
-      },
-      "implementationNames": {
-        "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759": "ExpiringMultiParty"
-      }
-    },
-    {
       "name": "AcrossConfigStore",
       "address": "0x3B03509645713718B78951126E0A6de6f10043f5",
       "type": "Contract",
+      "template": "acrossv3/AcrossConfigStore",
       "sourceHashes": [
         "0x926aa3c074cb5463671ec24c946524d9e03d3aa56a9847ca738b17b747c0e076"
       ],
       "proxyType": "immutable",
+      "description": "Simple, owner-controlled contract for storing protocol-wide, token-specific configuration data.",
       "sinceTimestamp": 1651752742,
       "sinceBlock": 14717196,
       "values": {
@@ -549,19 +327,15 @@
       }
     },
     {
-      "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Registry",
       "address": "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
       "type": "Contract",
-      "template": "acrossv3/Registry",
+      "template": "uma/Registry",
       "sourceHashes": [
         "0xc24ab9710d3eb0d1c35d298ecefe98096f87a672be7bd8051f9e86902122612f"
       ],
       "proxyType": "immutable",
+      "description": "Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).",
       "sinceTimestamp": 1587763861,
       "sinceBlock": 9937650,
       "values": {
@@ -715,69 +489,22 @@
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d"
         ],
-        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
-        "registeredContracts": [
-          "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
-          "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944",
-          "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1",
-          "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759",
-          "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"
-        ]
+        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"]
       },
-      "errors": { "registeredContracts": "Processing error occurred." },
       "implementationNames": {
         "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE": "Registry"
-      }
-    },
-    {
-      "name": "ExpiringMultiParty",
-      "address": "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbf9e0be655aeaefb1e868a2aa4a12e764a3882dd8eaa4352ff0f324719a0e61e"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1589990323,
-      "sinceBlock": 10103723,
-      "values": {
-        "$immutable": true,
-        "collateralCurrency": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "collateralRequirement": "1200000000000000000",
-        "contractState": 2,
-        "cumulativeFeeMultiplier": "999864115641665473",
-        "disputeBondPct": "30000000000000000",
-        "disputerDisputeRewardPct": "50000000000000000",
-        "expirationTimestamp": 1596240000,
-        "expiryPrice": "30560000000000000",
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "liquidationLiveness": 7200,
-        "minSponsorTokens": "1000000000000000000000",
-        "pfc": { "rawValue": "1968211525541204902975" },
-        "priceIdentifier": "0x4554482f42544300000000000000000000000000000000000000000000000000",
-        "rawLiquidationCollateral": 0,
-        "rawTotalPositionCollateral": "1968479011048516214886",
-        "sponsorDisputeRewardPct": "50000000000000000",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "tokenCurrency": "0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42",
-        "totalPositionCollateral": { "rawValue": "1968211525541204902975" },
-        "totalTokensOutstanding": "64404827406453040018173",
-        "withdrawalLiveness": 7200
-      },
-      "implementationNames": {
-        "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944": "ExpiringMultiParty"
       }
     },
     {
       "name": "Finder",
       "address": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
       "type": "Contract",
-      "template": "acrossv3/Finder",
+      "template": "uma/Finder",
       "sourceHashes": [
         "0x6b81a32a0de6b3e8ed743f089a6518d3791b0e4d373300269439642482338ddb"
       ],
       "proxyType": "immutable",
-      "description": "Maps interface names to contract addresses.",
+      "description": "Maps interface names to contract addresses (UMA protocol contracts).",
       "sinceTimestamp": 1578580941,
       "sinceBlock": 9247083,
       "values": {
@@ -854,66 +581,30 @@
       ]
     },
     {
-      "name": "PolygonTokenBridger",
-      "address": "0x48d990AbDA20afa1fD1da713AbC041B60a922c65",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xe3c561b96bc217e32abfe2230f61c22a385dde4d3fcc87ecda9703b78fc89e75"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1651578198,
-      "sinceBlock": 14704448,
-      "values": {
-        "$immutable": true,
-        "destination": "0x6Bb9910c5529Cb3b32c4f0e13E8bC38F903b2534",
-        "l1ChainId": 1,
-        "l1PolygonRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
-        "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "l2ChainId": 137,
-        "l2WrappedMatic": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
-        "maticToken": "0x0000000000000000000000000000000000001010"
-      },
-      "implementationNames": {
-        "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": "PolygonTokenBridger"
-      }
-    },
-    {
-      "name": "FinancialContractsAdmin",
-      "address": "0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x95f1ab2809d91e5ce5b81756f62205f179e0a97a919658683d96463c2dd03f76"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1587764093,
-      "sinceBlock": 9937664,
-      "values": {
-        "$immutable": true,
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-      },
-      "implementationNames": {
-        "0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A": "FinancialContractsAdmin"
-      }
-    },
-    {
-      "address": "0x4e8E101924eDE233C13e2D8622DC8aED2872d505",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
       "type": "Contract",
+      "template": "uma/ProposerV2",
       "sourceHashes": [
         "0x28c93f7b68e31548857633c6cb61284d9d2860cc0fbbcaaede8f631d364d66a4"
       ],
       "proxyType": "immutable",
+      "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "propose governance actions.",
+          "role": ".proposer"
+        }
+      ],
       "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "sinceTimestamp": 1677231527,
       "sinceBlock": 16697363,
       "values": {
         "$immutable": true,
         "bond": "5000000000000000000000",
+        "bondFmt": "5,000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "getCurrentTime": 1750843487,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -922,7 +613,8 @@
       },
       "implementationNames": {
         "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "Ethereum_Adapter",
@@ -948,74 +640,29 @@
       "name": "Store",
       "address": "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
       "type": "Contract",
+      "template": "uma/Store",
       "sourceHashes": [
         "0x6f43084dec3aeec07252527bcb44d7bfafac569030fc87e32d6a5661a0f3e0f1"
       ],
       "proxyType": "immutable",
+      "description": "UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.",
       "sinceTimestamp": 1587762539,
       "sinceBlock": 9937562,
       "values": {
         "$immutable": true,
         "fixedOracleFeePerSecondPerPfc": 0,
-        "getCurrentTime": 1750843487,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
         ],
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "SECONDS_PER_WEEK": 604800,
         "timerAddress": "0x0000000000000000000000000000000000000000",
-        "weeklyDelayFeePerSecondPerPfc": 0
+        "weeklyDelayFeePerSecondPerPfc": 0,
+        "withdrawer": "0x2bAaA41d155ad8a4126184950B31F50A1513cE25"
       },
       "implementationNames": {
         "0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF": "Store"
-      }
-    },
-    {
-      "name": "Governor",
-      "address": "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xaaacd49f25a128d80aa1e90e975c0758ebd112f44347d6a9fa11bdaece99603d"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1587761324,
-      "sinceBlock": 9937467,
-      "values": {
-        "$immutable": true,
-        "getCurrentTime": 1750843487,
-        "getMember": [
-          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-          "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
-        ],
-        "getProposal": [
-          [[], 0],
-          [[], 0],
-          [
-            [
-              ["0x0000000000000000000000000000000000000000", 0, "0x"],
-              ["0x0000000000000000000000000000000000000000", 0, "0x"]
-            ],
-            1589584261
-          ],
-          [
-            [["0x0000000000000000000000000000000000000000", 0, "0x"]],
-            1589584453
-          ],
-          [
-            [["0x0000000000000000000000000000000000000000", 0, "0x"]],
-            1592866714
-          ]
-        ],
-        "numProposals": 191,
-        "proposals": [0, 0, 1589584261, 1589584453, 1592866714],
-        "timerAddress": "0x0000000000000000000000000000000000000000"
-      },
-      "errors": {
-        "getProposal": "Processing error occurred.",
-        "proposals": "Processing error occurred."
-      },
-      "implementationNames": {
-        "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc": "Governor"
       }
     },
     {
@@ -1051,11 +698,13 @@
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
       "type": "Contract",
+      "template": "acrossv3/SpokePool",
       "sourceHashes": [
         "0x669da4e91a9ad0ca23205a174e7f8931e4d7d128453132164ba6458f11f15c72",
         "0x10d81ccfd26fbcb9926942a46436a7bedd3946646911a43f3f0e13dc7eb81517"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
       "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "sinceTimestamp": 1682355155,
       "sinceBlock": 17117454,
@@ -1124,7 +773,6 @@
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
-        "proxiableUUID": "EXPECT_REVERT",
         "UPDATE_ADDRESS_DEPOSIT_DETAILS_HASH": "0x9c6dfd61d811b9950a4f2b9adf46357b717c816d22c420d0bde8f2360148f7cd",
         "UPDATE_BYTES32_DEPOSIT_DETAILS_HASH": "0x8d1994e2bbbd77564cdca06dd819e7ee2a5efa06c80dcb59a4a7b6e39edc538f",
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
@@ -1171,96 +819,6 @@
       }
     },
     {
-      "name": "ExpiringMultiParty",
-      "address": "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbf9e0be655aeaefb1e868a2aa4a12e764a3882dd8eaa4352ff0f324719a0e61e"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1593099690,
-      "sinceBlock": 10335781,
-      "values": {
-        "$immutable": true,
-        "collateralCurrency": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-        "collateralRequirement": "1500000000000000000",
-        "contractState": 2,
-        "cumulativeFeeMultiplier": "999941657113018923",
-        "disputeBondPct": "50000000000000000",
-        "disputerDisputeRewardPct": "100000000000000000",
-        "expirationTimestamp": 1596240000,
-        "expiryPrice": "134770000000000000000",
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "liquidationLiveness": 7200,
-        "minSponsorTokens": "1000000000000000000",
-        "pfc": { "rawValue": "519311467383228273761" },
-        "priceIdentifier": "0x434f4d5055534400000000000000000000000000000000000000000000000000",
-        "rawLiquidationCollateral": 0,
-        "rawTotalPositionCollateral": "519341767281261317183",
-        "sponsorDisputeRewardPct": "200000000000000000",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "tokenCurrency": "0xc78Ce805599188eD734C943C912800658807fA14",
-        "totalPositionCollateral": { "rawValue": "519311467383228273761" },
-        "totalTokensOutstanding": "1232543880033205011",
-        "withdrawalLiveness": 7200
-      },
-      "implementationNames": {
-        "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1": "ExpiringMultiParty"
-      }
-    },
-    {
-      "name": "Dai Stablecoin Token",
-      "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9b792a0d5af6c0a88429413cb318629d76df165fef71bda23764c7f730ce6a70"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1573672677,
-      "sinceBlock": 8928158,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "DOMAIN_SEPARATOR": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7",
-        "name": "Dai Stablecoin",
-        "PERMIT_TYPEHASH": "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb",
-        "symbol": "DAI",
-        "totalSupply": "3654005245136364907946761743",
-        "version": "1"
-      },
-      "implementationNames": {
-        "0x6B175474E89094C44Da98b954EedeAC495271d0F": "Dai"
-      }
-    },
-    {
-      "name": "SyntheticToken",
-      "address": "0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbda74171842ba1423d35071e6911d0bc286d8784d059959e261b67f3ce12b626"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1589990323,
-      "sinceBlock": 10103723,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "getMember": ["0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944"],
-        "name": "ETH/BTC Synthetic Token Expiring 1 August 2020",
-        "symbol": "ETHBTC-AUG20",
-        "totalSupply": "64404827406453040018173"
-      },
-      "implementationNames": {
-        "0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42": "SyntheticToken"
-      }
-    },
-    {
-      "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Alephzero_Adapter",
       "address": "0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
       "type": "Contract",
@@ -1300,15 +858,44 @@
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
       "type": "Contract",
+      "template": "uma/GovernorV2",
       "sourceHashes": [
         "0xdf7f17e5c8ba1f0103fcfaf495da624089f8bfb3d5052217537bb064ca8c60b9"
       ],
       "proxyType": "immutable",
+      "description": "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+          "description": "set the bond amount.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "description": "set fees for disputes and manage all roles in the contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "manage all roles in the contract.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "sinceTimestamp": 1677230459,
       "sinceBlock": 16697276,
       "values": {
         "$immutable": true,
+        "emergencyProposer": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "getCurrentTime": 1750843487,
         "getMember": [
@@ -1316,31 +903,13 @@
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
         ],
-        "numProposals": 210
+        "numProposals": 210,
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+        "proposer": "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
       },
       "implementationNames": {
         "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
       }
-    },
-    {
-      "name": "LpTokenFactory",
-      "address": "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x54ab5e1f981929fca37e28c313db9ab35343de3df6907dbaeb29dda3840aadcd"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1651576251,
-      "sinceBlock": 14704307,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": "LpTokenFactory"
-      }
-    },
-    {
-      "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Ink_Adapter",
@@ -1373,7 +942,7 @@
       }
     },
     {
-      "name": "EmergencyProposalExecutor",
+      "name": "UMA Multisig",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1382,6 +951,14 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "description": "remove proposals, execute emergency proposals.",
+          "role": ".executor"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1597806870,
       "sinceBlock": 10688070,
@@ -1408,28 +985,6 @@
       }
     },
     {
-      "name": "SyntheticToken",
-      "address": "0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbda74171842ba1423d35071e6911d0bc286d8784d059959e261b67f3ce12b626"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1595443659,
-      "sinceBlock": 10510912,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "getMember": ["0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"],
-        "name": "yUSD Synthetic Token Expiring 1 September 2020",
-        "symbol": "yUSD-SEP20",
-        "totalSupply": "4387862381438655664464"
-      },
-      "implementationNames": {
-        "0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5": "SyntheticToken"
-      }
-    },
-    {
       "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1443,10 +998,32 @@
       "name": "OptimisticGovernor",
       "address": "0x8692B776d1Ff0664177c90465038056Dc64f8991",
       "type": "Contract",
+      "template": "acrossv3/OptimisticGovernor",
       "sourceHashes": [
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
       "proxyType": "gnosis safe zodiac module",
+      "description": "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "description": "update configuration values.",
+          "role": ".owner",
+          "via": [
+            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
+          "role": ".owner",
+          "via": [
+            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+          ]
+        }
+      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
@@ -1460,7 +1037,9 @@
         "$immutable": false,
         "avatar": "0xB524735356985D2f267FA010D681f061DfF03715",
         "bondAmount": "2000000000000000000",
+        "bondFmt": "2",
         "collateral": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "delayFmt": "2d",
         "escalationManager": "0x0000000000000000000000000000000000000000",
         "EXPLANATION_KEY": "0x6578706c616e6174696f6e",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -1480,48 +1059,15 @@
         "ZodiacModule_modules": [],
         "ZodiacModule_target": "0xB524735356985D2f267FA010D681f061DfF03715"
       },
+      "fieldMeta": {
+        "rules": {
+          "description": "string of rules that a proposer is accepting when posting a proposal with a bond."
+        }
+      },
       "implementationNames": {
         "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
-      }
-    },
-    {
-      "name": "Voting",
-      "address": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xfb1fcd6317076fdbef15223fd2648c0717bce848ba28e8a422255da156151c8a"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1613597552,
-      "sinceBlock": 11876839,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "gatPercentage": "50000000000000000",
-        "getCurrentRoundId": 10132,
-        "getCurrentTime": 1750843487,
-        "getPendingRequests": [],
-        "getVotePhase": 0,
-        "inflationRate": 500000000000000,
-        "migratedAddress": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "rewardsExpirationTimeout": 31536000000,
-        "rounds": [
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0]
-        ],
-        "snapshotMessageHash": "0x38b5b145f0c2d3cca373598867950f7f33fe7f7f5dab3f239e2b31966f761859",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "voteTiming": 86400,
-        "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
       },
-      "errors": { "rounds": "Processing error occurred." },
-      "implementationNames": {
-        "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": "Voting"
-      }
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "name": "WorldChain_Adapter",
@@ -1557,15 +1103,27 @@
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
       "type": "Contract",
+      "template": "uma/EmergencyProposer",
       "sourceHashes": [
         "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
       ],
       "proxyType": "immutable",
+      "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "description": "can bypass the voting system and execute proposals immediately.",
+          "role": ".emergencyProposer"
+        }
+      ],
       "ignoreInWatchMode": ["getCurrentTime"],
       "sinceTimestamp": 1677231923,
       "sinceBlock": 16697394,
       "values": {
         "$immutable": true,
+        "bondFmt": "5,000,000",
+        "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
         "getCurrentTime": 1750843487,
@@ -1577,17 +1135,8 @@
       },
       "implementationNames": {
         "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": "EmergencyProposer"
-      }
-    },
-    {
-      "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
-      "type": "EOA",
-      "proxyType": "EOA"
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "address": "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
@@ -1598,10 +1147,12 @@
       "name": "FixedSlashSlashingLibrary",
       "address": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
       "type": "Contract",
+      "template": "uma/FixedSlashSlashingLibrary",
       "sourceHashes": [
         "0xae8d83b47cd1a3ae469689823d95cebdc5498a4d9eb62fb5138331c198a23805"
       ],
       "proxyType": "immutable",
+      "description": "Stores slashing parameters and calculates slashing amounts based on that (UMA protocol).",
       "sinceTimestamp": 1677176843,
       "sinceBlock": 16692876,
       "values": {
@@ -1617,30 +1168,6 @@
       "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "OptimisticOracleV2",
-      "address": "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xdd1f9488cffd829d25348f551ab2dbfe747638fa227df49feaca3defe9dcdd09"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1654686988,
-      "sinceBlock": 14926401,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "defaultLiveness": 7200,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "OO_ANCILLARY_DATA_LIMIT": 8139,
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "TOO_EARLY_RESPONSE": "-57896044618658097711785492504343953926634992332820282019728792003956564819968"
-      },
-      "implementationNames": {
-        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": "OptimisticOracleV2"
-      }
     },
     {
       "name": "ZkStack_Adapter",
@@ -1703,7 +1230,7 @@
       }
     },
     {
-      "name": "HubPool Multisig",
+      "name": "Across Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1712,6 +1239,20 @@
         "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
       ],
       "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "description": "update configuration values.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
+          "role": ".owner"
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1636157803,
       "sinceBlock": 13559776,
@@ -1739,88 +1280,15 @@
       }
     },
     {
-      "name": "ExpiringMultiParty",
-      "address": "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf6b17fd69e628a2030caafa870bfbf033d5960e779bd1f9f048ced8227a7790f"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1595443659,
-      "sinceBlock": 10510912,
-      "values": {
-        "$immutable": true,
-        "collateralCurrency": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "collateralRequirement": "1250000000000000000",
-        "contractState": 2,
-        "cumulativeFeeMultiplier": "999984393960142122",
-        "disputeBondPct": "100000000000000000",
-        "disputerDisputeRewardPct": "200000000000000000",
-        "expirationTimestamp": 1598918400,
-        "expiryPrice": 2300000000000000,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "liquidationLiveness": 7200,
-        "minSponsorTokens": "100000000000000000000",
-        "pfc": { "rawValue": "38510142056670929655" },
-        "priceIdentifier": "0x5553444554480000000000000000000000000000000000000000000000000000",
-        "rawLiquidationCollateral": "64586353232846096",
-        "rawTotalPositionCollateral": "38446156703629185447",
-        "sponsorDisputeRewardPct": "50000000000000000",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "tokenCurrency": "0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5",
-        "totalPositionCollateral": { "rawValue": "38445556711375286386" },
-        "totalTokensOutstanding": "4387862381438655664464",
-        "withdrawalLiveness": 7200
-      },
-      "implementationNames": {
-        "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5": "ExpiringMultiParty"
-      }
-    },
-    {
-      "name": "CoveredCallFinancialProductLibrary",
-      "address": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x626fc280735c432e9187554bc59d556389dc73435f1b570e64f424d257f68d09"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1618347170,
-      "sinceBlock": 12234012,
-      "values": { "$immutable": true },
-      "implementationNames": {
-        "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58": "CoveredCallFinancialProductLibrary"
-      }
-    },
-    {
-      "name": "Wrapped Ether Token",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xec8c1fea9a5a10c4c028664a56d678a0776b07cfc510fc7fa54db0aed0978f49"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1513077455,
-      "sinceBlock": 4719568,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "name": "Wrapped Ether",
-        "symbol": "WETH",
-        "totalSupply": "2631955875746324781749879"
-      },
-      "implementationNames": {
-        "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
-      }
-    },
-    {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
       "type": "Contract",
+      "template": "acrossv3/HubPool",
       "sourceHashes": [
         "0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"
       ],
       "proxyType": "immutable",
+      "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h.",
       "receivedPermissions": [
         {
           "permission": "upgrade",
@@ -1881,6 +1349,7 @@
           "534352": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
           "7777777": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
         },
+        "finalizationDelayFmt": "1h",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
         "liveness": 3600,
@@ -1899,55 +1368,12 @@
           "unclaimedPoolRebalanceLeafCount": 19,
           "challengePeriodEndTimestamp": 1750845431
         },
+        "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "implementationNames": {
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool"
-      }
-    },
-    {
-      "name": "OptimisticOracle",
-      "address": "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf396c4025632e439a9c620010cef54a775abed2fd2fe6e4bcc7ca2e6a95a2df7"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1626104040,
-      "sinceBlock": 12813254,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "defaultLiveness": 7200,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
-        "timerAddress": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": "OptimisticOracle"
-      }
-    },
-    {
-      "name": "SyntheticToken",
-      "address": "0xc78Ce805599188eD734C943C912800658807fA14",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbda74171842ba1423d35071e6911d0bc286d8784d059959e261b67f3ce12b626"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1593099690,
-      "sinceBlock": 10335781,
-      "values": {
-        "$immutable": true,
-        "decimals": 18,
-        "getMember": ["0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1"],
-        "name": "yCOMP Synthetic Token Expiring 1 August 2020",
-        "symbol": "yCOMP-AUG20",
-        "totalSupply": "1232543880033205011"
-      },
-      "implementationNames": {
-        "0xc78Ce805599188eD734C943C912800658807fA14": "SyntheticToken"
       }
     },
     {
@@ -1959,12 +1385,12 @@
       "name": "IdentifierWhitelist",
       "address": "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
       "type": "Contract",
-      "template": "acrossv3/IdentifierWhitelist",
+      "template": "uma/IdentifierWhitelist",
       "sourceHashes": [
         "0xde400b9e12dee4cf61dc66db5e9da7fb6d736020292a92092de7ae2a6bff4cac"
       ],
       "proxyType": "immutable",
-      "description": "Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol.",
+      "description": "Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.",
       "sinceTimestamp": 1587764261,
       "sinceBlock": 9937679,
       "values": {
@@ -2528,12 +1954,12 @@
       "name": "AddressWhitelist",
       "address": "0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
       "type": "Contract",
-      "template": "acrossv3/AddressWhitelist",
+      "template": "uma/AddressWhitelist",
       "sourceHashes": [
         "0x34fe953eae62cfc4797c138b47bc03a1d268dc47ac86e5fce536da6e8bc1e195"
       ],
       "proxyType": "immutable",
-      "description": "Implements a simple address whitelist.",
+      "description": "Implements a simple address whitelist for tokens that can be used as bonds and fees.",
       "sinceTimestamp": 1595094721,
       "sinceBlock": 10484890,
       "values": {
@@ -2647,24 +2073,11 @@
           "0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F",
           "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
         ],
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "whitelistIndices": [
-          "0x6B175474E89094C44Da98b954EedeAC495271d0F",
-          "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-          "0xEB4C2781e4ebA804CE9a9803C67d0893436bB27D",
-          "0xeca82185adCE47f39c684352B0439f030f860318",
-          "0x261b45D85cCFeAbb11F022eBa346ee8D1cd488c0"
-        ]
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
-      "errors": { "whitelistIndices": "Processing error occurred." },
       "implementationNames": {
         "0xdBF90434dF0B98219f87d112F37d74B1D90758c7": "AddressWhitelist"
       }
-    },
-    {
-      "address": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Base_Adapter",
@@ -2729,23 +2142,15 @@
       }
     },
     {
-      "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xe7cb3e167e7475dE1331Cf6E0CEb187654619E12",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "BondToken",
+      "name": "AcrossBondToken (ABT)",
       "address": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
       "type": "Contract",
+      "template": "acrossv3/BondToken",
       "sourceHashes": [
         "0x1d9754ae4e99e4320201bbc6f0e19aa5ecac917dcacaadba3b70cfa018910754"
       ],
       "proxyType": "immutable",
+      "description": "A bond token wrapping ETH for usage in the Across protocol. Implements modified ERC20 logic to only allow permissioned proposers to use it as a bond for root bundle proposals.",
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1692831647,
       "sinceBlock": 17980554,
@@ -2759,18 +2164,21 @@
         "symbol": "ABT",
         "totalSupply": "28095402467539846062"
       },
+      "fieldMeta": { "proposers": { "severity": "HIGH" } },
       "implementationNames": {
         "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken"
       }
     },
     {
-      "name": "UMAOptimisticOracle",
+      "name": "SkinnyOptimisticOracle",
       "address": "0xeE3Afe347D5C74317041E2618C49534dAf887c24",
       "type": "Contract",
+      "template": "uma/SkinnyOptimisticOracle",
       "sourceHashes": [
         "0xbe561564083bf80216ae0f5510f70415cf97a624ef4bad88fb98a43dc4231dd6"
       ],
       "proxyType": "immutable",
+      "description": "Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.",
       "sinceTimestamp": 1635958318,
       "sinceBlock": 13545034,
       "values": {
@@ -2783,11 +2191,6 @@
       "implementationNames": {
         "0xeE3Afe347D5C74317041E2618C49534dAf887c24": "SkinnyOptimisticOracle"
       }
-    },
-    {
-      "address": "0xeF684C38F94F48775959ECf2012D7E864ffb9dd4",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "Lisk_Adapter",
@@ -2883,7 +2286,15 @@
     {
       "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "use ABT as a bond in the HubPool contract for root bundle proposals.",
+          "role": ".proposers"
+        }
+      ]
     },
     {
       "name": "DoctorWho_Adapter",
@@ -2918,10 +2329,12 @@
       "name": "OptimisticOracleV3",
       "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
       "type": "Contract",
+      "template": "uma/OptimisticOracleV3",
       "sourceHashes": [
         "0xfb2c9056673690384bb615fd326655f97b80fa2a5601a15a35065b0a68186ae7"
       ],
       "proxyType": "immutable",
+      "description": "Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.",
       "sinceTimestamp": 1676487275,
       "sinceBlock": 16636058,
       "values": {
@@ -3170,33 +2583,6 @@
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
     ],
-    "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Snapshot(uint256 id)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function balanceOfAt(address account, uint256 snapshotId) view returns (uint256)",
-      "function burn(uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function mint(address recipient, uint256 value) returns (bool)",
-      "function name() view returns (string)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function snapshot() returns (uint256)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function totalSupplyAt(uint256 snapshotId) view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
-    ],
     "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": [
       "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -3231,40 +2617,6 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
-    ],
-    "0x17F414fb414F3F7CB3d6c9EBC3C903e20099D162": [
-      "constructor(string tokenName, string tokenSymbol, uint8 tokenDecimals)",
-      "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RemovedSharedMember(uint256 indexed roleId, address indexed oldMember, address indexed manager)",
-      "event ResetExclusiveMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function addBurner(address account)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function addMinter(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function isBurner(address account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function mint(address recipient, uint256 value) returns (bool)",
-      "function name() view returns (string)",
-      "function removeBurner(address account)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function removeMinter(address account)",
-      "function renounceMembership(uint256 roleId)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function resetOwner(address account)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
     "0x188F8C95B7cfB7993B53a4F643efa687916f73fA": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc)",
@@ -3324,76 +2676,6 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable"
     ],
-    "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759": [
-      "constructor(tuple(uint256 expirationTimestamp, uint256 withdrawalLiveness, address collateralAddress, address finderAddress, address tokenFactoryAddress, address timerAddress, bytes32 priceFeedIdentifier, string syntheticName, string syntheticSymbol, tuple(uint256 rawValue) minSponsorTokens, uint256 liquidationLiveness, tuple(uint256 rawValue) collateralRequirement, tuple(uint256 rawValue) disputeBondPct, tuple(uint256 rawValue) sponsorDisputeRewardPct, tuple(uint256 rawValue) disputerDisputeRewardPct) params)",
-      "event ContractExpired(address indexed caller)",
-      "event Deposit(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event DisputeSettled(address indexed caller, address indexed sponsor, address indexed liquidator, address disputer, uint256 liquidationId, bool disputeSucceeded)",
-      "event EmergencyShutdown(address indexed caller, uint256 originalExpirationTimestamp, uint256 shutdownTimestamp)",
-      "event EndedSponsorPosition(address indexed sponsor)",
-      "event FinalFeesPaid(uint256 indexed amount)",
-      "event LiquidationCreated(address indexed sponsor, address indexed liquidator, uint256 indexed liquidationId, uint256 tokensOutstanding, uint256 lockedCollateral, uint256 liquidatedCollateral, uint256 liquidationTime)",
-      "event LiquidationDisputed(address indexed sponsor, address indexed liquidator, address indexed disputer, uint256 liquidationId, uint256 disputeBondAmount)",
-      "event LiquidationWithdrawn(address indexed caller, uint256 withdrawalAmount, uint8 indexed liquidationStatus, uint256 settlementPrice)",
-      "event NewSponsor(address indexed sponsor)",
-      "event PositionCreated(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event Redeem(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event RegularFeesPaid(uint256 indexed regularFee, uint256 indexed lateFee)",
-      "event RequestTransferPosition(address indexed oldSponsor)",
-      "event RequestTransferPositionCanceled(address indexed oldSponsor)",
-      "event RequestTransferPositionExecuted(address indexed oldSponsor, address indexed newSponsor)",
-      "event RequestWithdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalCanceled(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalExecuted(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event SettleExpiredPosition(address indexed caller, uint256 indexed collateralReturned, uint256 indexed tokensBurned)",
-      "event Withdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "function cancelTransferPosition()",
-      "function cancelWithdrawal()",
-      "function collateralCurrency() view returns (address)",
-      "function collateralRequirement() view returns (uint256 rawValue)",
-      "function contractState() view returns (uint8)",
-      "function create(tuple(uint256 rawValue) collateralAmount, tuple(uint256 rawValue) numTokens)",
-      "function createLiquidation(address sponsor, tuple(uint256 rawValue) minCollateralPerToken, tuple(uint256 rawValue) maxCollateralPerToken, tuple(uint256 rawValue) maxTokensToLiquidate, uint256 deadline) returns (uint256 liquidationId, tuple(uint256 rawValue) tokensLiquidated, tuple(uint256 rawValue) finalFeeBond)",
-      "function cumulativeFeeMultiplier() view returns (uint256 rawValue)",
-      "function deposit(tuple(uint256 rawValue) collateralAmount)",
-      "function depositTo(address sponsor, tuple(uint256 rawValue) collateralAmount)",
-      "function dispute(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) totalPaid)",
-      "function disputeBondPct() view returns (uint256 rawValue)",
-      "function disputerDisputeRewardPct() view returns (uint256 rawValue)",
-      "function emergencyShutdown()",
-      "function expirationTimestamp() view returns (uint256)",
-      "function expire()",
-      "function expiryPrice() view returns (uint256 rawValue)",
-      "function finder() view returns (address)",
-      "function getCollateral(address sponsor) view returns (tuple(uint256 rawValue) collateralAmount)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getLiquidations(address sponsor) view returns (tuple(address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)[] liquidationData)",
-      "function liquidationLiveness() view returns (uint256)",
-      "function liquidations(address, uint256) view returns (address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)",
-      "function minSponsorTokens() view returns (uint256 rawValue)",
-      "function payRegularFees() returns (tuple(uint256 rawValue) totalPaid)",
-      "function pfc() view returns (tuple(uint256 rawValue))",
-      "function positions(address) view returns (tuple(uint256 rawValue) tokensOutstanding, uint256 withdrawalRequestPassTimestamp, tuple(uint256 rawValue) withdrawalRequestAmount, tuple(uint256 rawValue) rawCollateral, uint256 transferPositionRequestPassTimestamp)",
-      "function priceIdentifier() view returns (bytes32)",
-      "function rawLiquidationCollateral() view returns (uint256 rawValue)",
-      "function rawTotalPositionCollateral() view returns (uint256 rawValue)",
-      "function redeem(tuple(uint256 rawValue) numTokens) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function remargin()",
-      "function requestTransferPosition()",
-      "function requestWithdrawal(tuple(uint256 rawValue) collateralAmount)",
-      "function setCurrentTime(uint256 time)",
-      "function settleExpired() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function sponsorDisputeRewardPct() view returns (uint256 rawValue)",
-      "function timerAddress() view returns (address)",
-      "function tokenCurrency() view returns (address)",
-      "function totalPositionCollateral() view returns (tuple(uint256 rawValue) totalCollateral)",
-      "function totalTokensOutstanding() view returns (uint256 rawValue)",
-      "function transferPositionPassedRequest(address newSponsorAddress)",
-      "function withdraw(tuple(uint256 rawValue) collateralAmount) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawLiquidation(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawPassedRequest() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawalLiveness() view returns (uint256)"
-    ],
     "0x3B03509645713718B78951126E0A6de6f10043f5": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "event UpdatedGlobalConfig(bytes32 indexed key, string value)",
@@ -3431,76 +2713,6 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
-    "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944": [
-      "constructor(tuple(uint256 expirationTimestamp, uint256 withdrawalLiveness, address collateralAddress, address finderAddress, address tokenFactoryAddress, address timerAddress, bytes32 priceFeedIdentifier, string syntheticName, string syntheticSymbol, tuple(uint256 rawValue) minSponsorTokens, uint256 liquidationLiveness, tuple(uint256 rawValue) collateralRequirement, tuple(uint256 rawValue) disputeBondPct, tuple(uint256 rawValue) sponsorDisputeRewardPct, tuple(uint256 rawValue) disputerDisputeRewardPct) params)",
-      "event ContractExpired(address indexed caller)",
-      "event Deposit(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event DisputeSettled(address indexed caller, address indexed sponsor, address indexed liquidator, address disputer, uint256 liquidationId, bool disputeSucceeded)",
-      "event EmergencyShutdown(address indexed caller, uint256 originalExpirationTimestamp, uint256 shutdownTimestamp)",
-      "event EndedSponsorPosition(address indexed sponsor)",
-      "event FinalFeesPaid(uint256 indexed amount)",
-      "event LiquidationCreated(address indexed sponsor, address indexed liquidator, uint256 indexed liquidationId, uint256 tokensOutstanding, uint256 lockedCollateral, uint256 liquidatedCollateral)",
-      "event LiquidationDisputed(address indexed sponsor, address indexed liquidator, address indexed disputer, uint256 liquidationId, uint256 disputeBondAmount)",
-      "event LiquidationWithdrawn(address indexed caller, uint256 withdrawalAmount, uint8 indexed liquidationStatus)",
-      "event NewSponsor(address indexed sponsor)",
-      "event PositionCreated(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event Redeem(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event RegularFeesPaid(uint256 indexed regularFee, uint256 indexed lateFee)",
-      "event RequestTransferPosition(address indexed oldSponsor)",
-      "event RequestTransferPositionCanceled(address indexed oldSponsor)",
-      "event RequestTransferPositionExecuted(address indexed oldSponsor, address indexed newSponsor)",
-      "event RequestWithdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalCanceled(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalExecuted(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event SettleExpiredPosition(address indexed caller, uint256 indexed collateralReturned, uint256 indexed tokensBurned)",
-      "event Withdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "function cancelTransferPosition()",
-      "function cancelWithdrawal()",
-      "function collateralCurrency() view returns (address)",
-      "function collateralRequirement() view returns (uint256 rawValue)",
-      "function contractState() view returns (uint8)",
-      "function create(tuple(uint256 rawValue) collateralAmount, tuple(uint256 rawValue) numTokens)",
-      "function createLiquidation(address sponsor, tuple(uint256 rawValue) minCollateralPerToken, tuple(uint256 rawValue) maxCollateralPerToken, tuple(uint256 rawValue) maxTokensToLiquidate, uint256 deadline) returns (uint256 liquidationId, tuple(uint256 rawValue) tokensLiquidated, tuple(uint256 rawValue) finalFeeBond)",
-      "function cumulativeFeeMultiplier() view returns (uint256 rawValue)",
-      "function deposit(tuple(uint256 rawValue) collateralAmount)",
-      "function depositTo(address sponsor, tuple(uint256 rawValue) collateralAmount)",
-      "function dispute(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) totalPaid)",
-      "function disputeBondPct() view returns (uint256 rawValue)",
-      "function disputerDisputeRewardPct() view returns (uint256 rawValue)",
-      "function emergencyShutdown()",
-      "function expirationTimestamp() view returns (uint256)",
-      "function expire()",
-      "function expiryPrice() view returns (uint256 rawValue)",
-      "function finder() view returns (address)",
-      "function getCollateral(address sponsor) view returns (tuple(uint256 rawValue) collateralAmount)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getLiquidations(address sponsor) view returns (tuple(address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)[] liquidationData)",
-      "function liquidationLiveness() view returns (uint256)",
-      "function liquidations(address, uint256) view returns (address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)",
-      "function minSponsorTokens() view returns (uint256 rawValue)",
-      "function payRegularFees() returns (tuple(uint256 rawValue) totalPaid)",
-      "function pfc() view returns (tuple(uint256 rawValue))",
-      "function positions(address) view returns (tuple(uint256 rawValue) tokensOutstanding, uint256 withdrawalRequestPassTimestamp, tuple(uint256 rawValue) withdrawalRequestAmount, tuple(uint256 rawValue) rawCollateral, uint256 transferPositionRequestPassTimestamp)",
-      "function priceIdentifier() view returns (bytes32)",
-      "function rawLiquidationCollateral() view returns (uint256 rawValue)",
-      "function rawTotalPositionCollateral() view returns (uint256 rawValue)",
-      "function redeem(tuple(uint256 rawValue) numTokens) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function remargin()",
-      "function requestTransferPosition()",
-      "function requestWithdrawal(tuple(uint256 rawValue) collateralAmount)",
-      "function setCurrentTime(uint256 time)",
-      "function settleExpired() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function sponsorDisputeRewardPct() view returns (uint256 rawValue)",
-      "function timerAddress() view returns (address)",
-      "function tokenCurrency() view returns (address)",
-      "function totalPositionCollateral() view returns (tuple(uint256 rawValue) totalCollateral)",
-      "function totalTokensOutstanding() view returns (uint256 rawValue)",
-      "function transferPositionPassedRequest(address newSponsorAddress)",
-      "function withdraw(tuple(uint256 rawValue) collateralAmount) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawLiquidation(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawPassedRequest() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawalLiveness() view returns (uint256)"
-    ],
     "0x40f941E48A552bF496B154Af6bf55725f18D77c3": [
       "event InterfaceImplementationChanged(bytes32 indexed interfaceName, address indexed newImplementationAddress)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -3508,27 +2720,6 @@
       "function getImplementationAddress(bytes32 interfaceName) view returns (address implementationAddress)",
       "function interfacesImplemented(bytes32) view returns (address)",
       "function isOwner() view returns (bool)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function transferOwnership(address newOwner)"
-    ],
-    "0x48d990AbDA20afa1fD1da713AbC041B60a922c65": [
-      "constructor(address _destination, address _l1PolygonRegistry, address _l1Weth, address _l2WrappedMatic, uint256 _l1ChainId, uint256 _l2ChainId)",
-      "function callExit(bytes data)",
-      "function destination() view returns (address)",
-      "function l1ChainId() view returns (uint256)",
-      "function l1PolygonRegistry() view returns (address)",
-      "function l1Weth() view returns (address)",
-      "function l2ChainId() view returns (uint256)",
-      "function l2WrappedMatic() view returns (address)",
-      "function maticToken() view returns (address)",
-      "function retrieve(address token)",
-      "function send(address token, uint256 amount)"
-    ],
-    "0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A": [
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "function callEmergencyShutdown(address financialContract)",
-      "function callRemargin(address financialContract)",
       "function owner() view returns (address)",
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)"
@@ -3589,28 +2780,6 @@
       "function withdraw(uint256 amount)",
       "function withdrawErc20(address erc20Address, uint256 amount)"
     ],
-    "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc": [
-      "constructor(address _finderAddress, uint256 _startingId, address _timerAddress)",
-      "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event NewProposal(uint256 indexed id, tuple(address to, uint256 value, bytes data)[] transactions)",
-      "event ProposalExecuted(uint256 indexed id, uint256 transactionIndex)",
-      "event RemovedSharedMember(uint256 indexed roleId, address indexed oldMember, address indexed manager)",
-      "event ResetExclusiveMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function executeProposal(uint256 id, uint256 transactionIndex) payable",
-      "function getCurrentTime() view returns (uint256)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function getProposal(uint256 id) view returns (tuple(tuple(address to, uint256 value, bytes data)[] transactions, uint256 requestTime))",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function numProposals() view returns (uint256)",
-      "function proposals(uint256) view returns (uint256 requestTime)",
-      "function propose(tuple(address to, uint256 value, bytes data)[] transactions)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function renounceMembership(uint256 roleId)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function setCurrentTime(uint256 time)",
-      "function timerAddress() view returns (address)"
-    ],
     "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787": [
       "constructor(address _l1Weth, address _l1MessageService, address _l1TokenBridge, address _l1Usdc, address _cctpTokenMessenger)",
       "event MessageRelayed(address target, bytes message)",
@@ -3653,138 +2822,6 @@
       "function relayMessage(address target, bytes message) payable",
       "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
       "function usdcToken() view returns (address)"
-    ],
-    "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1": [
-      "constructor(tuple(uint256 expirationTimestamp, uint256 withdrawalLiveness, address collateralAddress, address finderAddress, address tokenFactoryAddress, address timerAddress, bytes32 priceFeedIdentifier, string syntheticName, string syntheticSymbol, tuple(uint256 rawValue) minSponsorTokens, uint256 liquidationLiveness, tuple(uint256 rawValue) collateralRequirement, tuple(uint256 rawValue) disputeBondPct, tuple(uint256 rawValue) sponsorDisputeRewardPct, tuple(uint256 rawValue) disputerDisputeRewardPct) params)",
-      "event ContractExpired(address indexed caller)",
-      "event Deposit(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event DisputeSettled(address indexed caller, address indexed sponsor, address indexed liquidator, address disputer, uint256 liquidationId, bool disputeSucceeded)",
-      "event EmergencyShutdown(address indexed caller, uint256 originalExpirationTimestamp, uint256 shutdownTimestamp)",
-      "event EndedSponsorPosition(address indexed sponsor)",
-      "event FinalFeesPaid(uint256 indexed amount)",
-      "event LiquidationCreated(address indexed sponsor, address indexed liquidator, uint256 indexed liquidationId, uint256 tokensOutstanding, uint256 lockedCollateral, uint256 liquidatedCollateral)",
-      "event LiquidationDisputed(address indexed sponsor, address indexed liquidator, address indexed disputer, uint256 liquidationId, uint256 disputeBondAmount)",
-      "event LiquidationWithdrawn(address indexed caller, uint256 withdrawalAmount, uint8 indexed liquidationStatus)",
-      "event NewSponsor(address indexed sponsor)",
-      "event PositionCreated(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event Redeem(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event RegularFeesPaid(uint256 indexed regularFee, uint256 indexed lateFee)",
-      "event RequestTransferPosition(address indexed oldSponsor)",
-      "event RequestTransferPositionCanceled(address indexed oldSponsor)",
-      "event RequestTransferPositionExecuted(address indexed oldSponsor, address indexed newSponsor)",
-      "event RequestWithdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalCanceled(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalExecuted(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event SettleExpiredPosition(address indexed caller, uint256 indexed collateralReturned, uint256 indexed tokensBurned)",
-      "event Withdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "function cancelTransferPosition()",
-      "function cancelWithdrawal()",
-      "function collateralCurrency() view returns (address)",
-      "function collateralRequirement() view returns (uint256 rawValue)",
-      "function contractState() view returns (uint8)",
-      "function create(tuple(uint256 rawValue) collateralAmount, tuple(uint256 rawValue) numTokens)",
-      "function createLiquidation(address sponsor, tuple(uint256 rawValue) minCollateralPerToken, tuple(uint256 rawValue) maxCollateralPerToken, tuple(uint256 rawValue) maxTokensToLiquidate, uint256 deadline) returns (uint256 liquidationId, tuple(uint256 rawValue) tokensLiquidated, tuple(uint256 rawValue) finalFeeBond)",
-      "function cumulativeFeeMultiplier() view returns (uint256 rawValue)",
-      "function deposit(tuple(uint256 rawValue) collateralAmount)",
-      "function depositTo(address sponsor, tuple(uint256 rawValue) collateralAmount)",
-      "function dispute(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) totalPaid)",
-      "function disputeBondPct() view returns (uint256 rawValue)",
-      "function disputerDisputeRewardPct() view returns (uint256 rawValue)",
-      "function emergencyShutdown()",
-      "function expirationTimestamp() view returns (uint256)",
-      "function expire()",
-      "function expiryPrice() view returns (uint256 rawValue)",
-      "function finder() view returns (address)",
-      "function getCollateral(address sponsor) view returns (tuple(uint256 rawValue) collateralAmount)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getLiquidations(address sponsor) view returns (tuple(address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)[] liquidationData)",
-      "function liquidationLiveness() view returns (uint256)",
-      "function liquidations(address, uint256) view returns (address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)",
-      "function minSponsorTokens() view returns (uint256 rawValue)",
-      "function payRegularFees() returns (tuple(uint256 rawValue) totalPaid)",
-      "function pfc() view returns (tuple(uint256 rawValue))",
-      "function positions(address) view returns (tuple(uint256 rawValue) tokensOutstanding, uint256 withdrawalRequestPassTimestamp, tuple(uint256 rawValue) withdrawalRequestAmount, tuple(uint256 rawValue) rawCollateral, uint256 transferPositionRequestPassTimestamp)",
-      "function priceIdentifier() view returns (bytes32)",
-      "function rawLiquidationCollateral() view returns (uint256 rawValue)",
-      "function rawTotalPositionCollateral() view returns (uint256 rawValue)",
-      "function redeem(tuple(uint256 rawValue) numTokens) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function remargin()",
-      "function requestTransferPosition()",
-      "function requestWithdrawal(tuple(uint256 rawValue) collateralAmount)",
-      "function setCurrentTime(uint256 time)",
-      "function settleExpired() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function sponsorDisputeRewardPct() view returns (uint256 rawValue)",
-      "function timerAddress() view returns (address)",
-      "function tokenCurrency() view returns (address)",
-      "function totalPositionCollateral() view returns (tuple(uint256 rawValue) totalCollateral)",
-      "function totalTokensOutstanding() view returns (uint256 rawValue)",
-      "function transferPositionPassedRequest(address newSponsorAddress)",
-      "function withdraw(tuple(uint256 rawValue) collateralAmount) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawLiquidation(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawPassedRequest() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawalLiveness() view returns (uint256)"
-    ],
-    "0x6B175474E89094C44Da98b954EedeAC495271d0F": [
-      "constructor(uint256 chainId_)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event LogNote(bytes4 indexed sig, address indexed usr, bytes32 indexed arg1, bytes32 indexed arg2, bytes data) anonymous",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function PERMIT_TYPEHASH() view returns (bytes32)",
-      "function allowance(address, address) view returns (uint256)",
-      "function approve(address usr, uint256 wad) returns (bool)",
-      "function balanceOf(address) view returns (uint256)",
-      "function burn(address usr, uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function deny(address guy)",
-      "function mint(address usr, uint256 wad)",
-      "function move(address src, address dst, uint256 wad)",
-      "function name() view returns (string)",
-      "function nonces(address) view returns (uint256)",
-      "function permit(address holder, address spender, uint256 nonce, uint256 expiry, bool allowed, uint8 v, bytes32 r, bytes32 s)",
-      "function pull(address usr, uint256 wad)",
-      "function push(address usr, uint256 wad)",
-      "function rely(address guy)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function version() view returns (string)",
-      "function wards(address) view returns (uint256)"
-    ],
-    "0x6d002a834480367fb1a1dC5F47E82Fde39EC2c42": [
-      "constructor(string tokenName, string tokenSymbol, uint8 tokenDecimals)",
-      "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RemovedSharedMember(uint256 indexed roleId, address indexed oldMember, address indexed manager)",
-      "event ResetExclusiveMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function addBurner(address account)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function addMinter(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function isBurner(address account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function mint(address recipient, uint256 value) returns (bool)",
-      "function name() view returns (string)",
-      "function removeBurner(address account)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function removeMinter(address account)",
-      "function renounceMembership(uint256 roleId)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function resetOwner(address account)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
     "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": [
       "constructor(address _l1ArbitrumInbox, address _l1ERC20GatewayRouter, address _l2RefundL2Address, address _l1Usdc, address _cctpTokenMessenger, uint32 _cctpDomainId, uint8 _nativeTokenDecimals, address _customGasTokenFunder, uint256 _l2MaxSubmissionCost, uint256 _l2GasPrice)",
@@ -3835,9 +2872,6 @@
       "function renounceMembership(uint256 roleId)",
       "function resetMember(uint256 roleId, address newMember)"
     ],
-    "0x7dB69eb9F52eD773E9b03f5068A1ea0275b2fD9d": [
-      "function createLpToken(address l1Token) returns (address)"
-    ],
     "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": [
       "constructor(address _l1Weth, address _l1Usdc, address _crossDomainMessenger, address _l1StandardBridge, address _l1USDCBridge)",
       "event MessageRelayed(address target, bytes message)",
@@ -3855,40 +2889,6 @@
     ],
     "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
       "constructor(address _masterCopy)"
-    ],
-    "0x81ab848898b5ffD3354dbbEfb333D5D183eEDcB5": [
-      "constructor(string tokenName, string tokenSymbol, uint8 tokenDecimals)",
-      "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RemovedSharedMember(uint256 indexed roleId, address indexed oldMember, address indexed manager)",
-      "event ResetExclusiveMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function addBurner(address account)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function addMinter(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function isBurner(address account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function mint(address recipient, uint256 value) returns (bool)",
-      "function name() view returns (string)",
-      "function removeBurner(address account)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function removeMinter(address account)",
-      "function renounceMembership(uint256 roleId)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function resetOwner(address account)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": [
       "constructor(address _finder, address _owner, address _collateral, uint256 _bondAmount, string _rules, bytes32 _identifier, uint64 _liveness)",
@@ -3947,59 +2947,6 @@
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": [
-      "constructor(uint256 _phaseLength, tuple(uint256 rawValue) _gatPercentage, tuple(uint256 rawValue) _inflationRate, uint256 _rewardsExpirationTimeout, address _votingToken, address _finder, address _timerAddress)",
-      "event EncryptedVote(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bytes encryptedVote)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceRequestAdded(uint256 indexed roundId, bytes32 indexed identifier, uint256 time)",
-      "event PriceResolved(uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData)",
-      "event RewardsRetrieved(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, uint256 numTokens)",
-      "event VoteCommitted(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData)",
-      "event VoteRevealed(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData, uint256 numTokens)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, int256 salt)[] reveals)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)[] reveals)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes32 hash)",
-      "function gatPercentage() view returns (uint256 rawValue)",
-      "function getCurrentRoundId() view returns (uint256)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getPendingRequests() view returns (tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[])",
-      "function getPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (int256)",
-      "function getPrice(bytes32 identifier, uint256 time) view returns (int256)",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getVotePhase() view returns (uint8)",
-      "function hasPrice(bytes32 identifier, uint256 time) view returns (bool)",
-      "function hasPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (bool)",
-      "function inflationRate() view returns (uint256 rawValue)",
-      "function migratedAddress() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requestPrice(bytes32 identifier, uint256 time, bytes ancillaryData)",
-      "function requestPrice(bytes32 identifier, uint256 time)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] toRetrieve) returns (tuple(uint256 rawValue) totalRewardToIssue)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time)[] toRetrieve) returns (tuple(uint256 rawValue))",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, int256 salt)",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)",
-      "function rewardsExpirationTimeout() view returns (uint256)",
-      "function rounds(uint256) view returns (uint256 snapshotId, tuple(uint256 rawValue) inflationRate, tuple(uint256 rawValue) gatPercentage, uint256 rewardsExpirationTime)",
-      "function setCurrentTime(uint256 time)",
-      "function setGatPercentage(tuple(uint256 rawValue) newGatPercentage)",
-      "function setInflationRate(tuple(uint256 rawValue) newInflationRate)",
-      "function setMigrated(address newVotingAddress)",
-      "function setRewardsExpirationTimeout(uint256 NewRewardsExpirationTimeout)",
-      "function snapshotCurrentRound(bytes signature)",
-      "function snapshotMessageHash() view returns (bytes32)",
-      "function timerAddress() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function voteTiming() view returns (uint256 phaseLength)",
-      "function votingToken() view returns (address)"
-    ],
     "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
       "event MessageRelayed(address target, bytes message)",
@@ -4053,38 +3000,6 @@
       "function calcWrongVoteSlashPerTokenGovernance(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex) view returns (uint256)",
       "function governanceSlashAmount() view returns (uint256)"
     ],
-    "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": [
-      "constructor(uint256 _liveness, address _finderAddress, address _timerAddress)",
-      "event DisputePrice(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice)",
-      "event ProposePrice(address indexed requester, address indexed proposer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice, uint256 expirationTimestamp, address currency)",
-      "event RequestPrice(address indexed requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward, uint256 finalFee)",
-      "event Settle(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 price, uint256 payout)",
-      "function OO_ANCILLARY_DATA_LIMIT() view returns (uint256)",
-      "function TOO_EARLY_RESPONSE() view returns (int256)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function defaultLiveness() view returns (uint256)",
-      "function disputePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function disputePriceFor(address disputer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function finder() view returns (address)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getRequest(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (tuple(address proposer, address disputer, address currency, bool settled, tuple(bool eventBased, bool refundOnDispute, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled, uint256 bond, uint256 customLiveness) requestSettings, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee))",
-      "function getState(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (uint8)",
-      "function hasPrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (bool)",
-      "function proposePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function proposePriceFor(address proposer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function requestPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward) returns (uint256 totalBond)",
-      "function requests(bytes32) view returns (address proposer, address disputer, address currency, bool settled, tuple(bool eventBased, bool refundOnDispute, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled, uint256 bond, uint256 customLiveness) requestSettings, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee)",
-      "function setBond(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 bond) returns (uint256 totalBond)",
-      "function setCallbacks(bytes32 identifier, uint256 timestamp, bytes ancillaryData, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled)",
-      "function setCurrentTime(uint256 time)",
-      "function setCustomLiveness(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 customLiveness)",
-      "function setEventBased(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function setRefundOnDispute(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function settle(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 payout)",
-      "function settleAndGetPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (int256)",
-      "function stampAncillaryData(bytes ancillaryData, address requester) pure returns (bytes)",
-      "function timerAddress() view returns (address)"
-    ],
     "0xA374585E6062517Ee367ee5044946A6fBe17724f": [
       "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
       "error ETHGasTokenRequired()",
@@ -4120,100 +3035,6 @@
     ],
     "0xB524735356985D2f267FA010D681f061DfF03715": [
       "constructor(address _singleton)"
-    ],
-    "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5": [
-      "constructor(tuple(uint256 expirationTimestamp, uint256 withdrawalLiveness, address collateralAddress, address finderAddress, address tokenFactoryAddress, address timerAddress, bytes32 priceFeedIdentifier, string syntheticName, string syntheticSymbol, tuple(uint256 rawValue) minSponsorTokens, uint256 liquidationLiveness, tuple(uint256 rawValue) collateralRequirement, tuple(uint256 rawValue) disputeBondPct, tuple(uint256 rawValue) sponsorDisputeRewardPct, tuple(uint256 rawValue) disputerDisputeRewardPct) params)",
-      "event ContractExpired(address indexed caller)",
-      "event Deposit(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event DisputeSettled(address indexed caller, address indexed sponsor, address indexed liquidator, address disputer, uint256 liquidationId, bool disputeSucceeded)",
-      "event EmergencyShutdown(address indexed caller, uint256 originalExpirationTimestamp, uint256 shutdownTimestamp)",
-      "event EndedSponsorPosition(address indexed sponsor)",
-      "event FinalFeesPaid(uint256 indexed amount)",
-      "event LiquidationCreated(address indexed sponsor, address indexed liquidator, uint256 indexed liquidationId, uint256 tokensOutstanding, uint256 lockedCollateral, uint256 liquidatedCollateral, uint256 liquidationTime)",
-      "event LiquidationDisputed(address indexed sponsor, address indexed liquidator, address indexed disputer, uint256 liquidationId, uint256 disputeBondAmount)",
-      "event LiquidationWithdrawn(address indexed caller, uint256 withdrawalAmount, uint8 indexed liquidationStatus, uint256 settlementPrice)",
-      "event NewSponsor(address indexed sponsor)",
-      "event PositionCreated(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event Redeem(address indexed sponsor, uint256 indexed collateralAmount, uint256 indexed tokenAmount)",
-      "event RegularFeesPaid(uint256 indexed regularFee, uint256 indexed lateFee)",
-      "event RequestTransferPosition(address indexed oldSponsor)",
-      "event RequestTransferPositionCanceled(address indexed oldSponsor)",
-      "event RequestTransferPositionExecuted(address indexed oldSponsor, address indexed newSponsor)",
-      "event RequestWithdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalCanceled(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event RequestWithdrawalExecuted(address indexed sponsor, uint256 indexed collateralAmount)",
-      "event SettleExpiredPosition(address indexed caller, uint256 indexed collateralReturned, uint256 indexed tokensBurned)",
-      "event Withdrawal(address indexed sponsor, uint256 indexed collateralAmount)",
-      "function cancelTransferPosition()",
-      "function cancelWithdrawal()",
-      "function collateralCurrency() view returns (address)",
-      "function collateralRequirement() view returns (uint256 rawValue)",
-      "function contractState() view returns (uint8)",
-      "function create(tuple(uint256 rawValue) collateralAmount, tuple(uint256 rawValue) numTokens)",
-      "function createLiquidation(address sponsor, tuple(uint256 rawValue) minCollateralPerToken, tuple(uint256 rawValue) maxCollateralPerToken, tuple(uint256 rawValue) maxTokensToLiquidate, uint256 deadline) returns (uint256 liquidationId, tuple(uint256 rawValue) tokensLiquidated, tuple(uint256 rawValue) finalFeeBond)",
-      "function cumulativeFeeMultiplier() view returns (uint256 rawValue)",
-      "function deposit(tuple(uint256 rawValue) collateralAmount)",
-      "function depositTo(address sponsor, tuple(uint256 rawValue) collateralAmount)",
-      "function dispute(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) totalPaid)",
-      "function disputeBondPct() view returns (uint256 rawValue)",
-      "function disputerDisputeRewardPct() view returns (uint256 rawValue)",
-      "function emergencyShutdown()",
-      "function expirationTimestamp() view returns (uint256)",
-      "function expire()",
-      "function expiryPrice() view returns (uint256 rawValue)",
-      "function finder() view returns (address)",
-      "function getCollateral(address sponsor) view returns (tuple(uint256 rawValue) collateralAmount)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getLiquidations(address sponsor) view returns (tuple(address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)[] liquidationData)",
-      "function liquidationLiveness() view returns (uint256)",
-      "function liquidations(address, uint256) view returns (address sponsor, address liquidator, uint8 state, uint256 liquidationTime, tuple(uint256 rawValue) tokensOutstanding, tuple(uint256 rawValue) lockedCollateral, tuple(uint256 rawValue) liquidatedCollateral, tuple(uint256 rawValue) rawUnitCollateral, address disputer, tuple(uint256 rawValue) settlementPrice, tuple(uint256 rawValue) finalFee)",
-      "function minSponsorTokens() view returns (uint256 rawValue)",
-      "function payRegularFees() returns (tuple(uint256 rawValue) totalPaid)",
-      "function pfc() view returns (tuple(uint256 rawValue))",
-      "function positions(address) view returns (tuple(uint256 rawValue) tokensOutstanding, uint256 withdrawalRequestPassTimestamp, tuple(uint256 rawValue) withdrawalRequestAmount, tuple(uint256 rawValue) rawCollateral, uint256 transferPositionRequestPassTimestamp)",
-      "function priceIdentifier() view returns (bytes32)",
-      "function rawLiquidationCollateral() view returns (uint256 rawValue)",
-      "function rawTotalPositionCollateral() view returns (uint256 rawValue)",
-      "function redeem(tuple(uint256 rawValue) numTokens) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function remargin()",
-      "function requestTransferPosition()",
-      "function requestWithdrawal(tuple(uint256 rawValue) collateralAmount)",
-      "function setCurrentTime(uint256 time)",
-      "function settleExpired() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function sponsorDisputeRewardPct() view returns (uint256 rawValue)",
-      "function timerAddress() view returns (address)",
-      "function tokenCurrency() view returns (address)",
-      "function totalPositionCollateral() view returns (tuple(uint256 rawValue) totalCollateral)",
-      "function totalTokensOutstanding() view returns (uint256 rawValue)",
-      "function transferPositionPassedRequest(address newSponsorAddress)",
-      "function withdraw(tuple(uint256 rawValue) collateralAmount) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawLiquidation(uint256 liquidationId, address sponsor) returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawPassedRequest() returns (tuple(uint256 rawValue) amountWithdrawn)",
-      "function withdrawalLiveness() view returns (uint256)"
-    ],
-    "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58": [
-      "function getStrikeForFinancialProduct(address financialProduct) view returns (tuple(uint256 rawValue))",
-      "function setFinancialProductStrike(address financialProduct, tuple(uint256 rawValue) strikePrice)",
-      "function transformCollateralRequirement(tuple(uint256 rawValue) oraclePrice, tuple(uint256 rawValue) collateralRequirement) view returns (tuple(uint256 rawValue))",
-      "function transformPrice(tuple(uint256 rawValue) oraclePrice, uint256 requestTime) view returns (tuple(uint256 rawValue))",
-      "function transformPriceIdentifier(bytes32 priceIdentifier, uint256 requestTime) view returns (bytes32)"
-    ],
-    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": [
-      "function name() view returns (string)",
-      "function approve(address guy, uint256 wad) returns (bool)",
-      "function totalSupply() view returns (uint256)",
-      "function transferFrom(address src, address dst, uint256 wad) returns (bool)",
-      "function withdraw(uint256 wad)",
-      "function decimals() view returns (uint8)",
-      "function balanceOf(address) view returns (uint256)",
-      "function symbol() view returns (string)",
-      "function transfer(address dst, uint256 wad) returns (bool)",
-      "function deposit() payable",
-      "function allowance(address, address) view returns (uint256)",
-      "event Approval(address indexed src, address indexed guy, uint256 wad)",
-      "event Transfer(address indexed src, address indexed dst, uint256 wad)",
-      "event Deposit(address indexed dst, uint256 wad)",
-      "event Withdrawal(address indexed src, uint256 wad)"
     ],
     "0xc186fA914353c44b2E33eBE05f21846F1048bEda": [
       "constructor(address _lpTokenFactory, address _finder, address _weth, address _timer)",
@@ -4284,68 +3105,6 @@
       "function transferOwnership(address newOwner)",
       "function unclaimedAccumulatedProtocolFees(address) view returns (uint256)",
       "function weth() view returns (address)"
-    ],
-    "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": [
-      "constructor(uint256 _liveness, address _finderAddress, address _timerAddress)",
-      "event DisputePrice(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice)",
-      "event ProposePrice(address indexed requester, address indexed proposer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice, uint256 expirationTimestamp, address currency)",
-      "event RequestPrice(address indexed requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward, uint256 finalFee)",
-      "event Settle(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 price, uint256 payout)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function defaultLiveness() view returns (uint256)",
-      "function disputePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function disputePriceFor(address disputer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function finder() view returns (address)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getRequest(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (tuple(address proposer, address disputer, address currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness))",
-      "function getState(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (uint8)",
-      "function hasPrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (bool)",
-      "function proposePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function proposePriceFor(address proposer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function requestPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward) returns (uint256 totalBond)",
-      "function requests(bytes32) view returns (address proposer, address disputer, address currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness)",
-      "function setBond(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 bond) returns (uint256 totalBond)",
-      "function setCurrentTime(uint256 time)",
-      "function setCustomLiveness(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 customLiveness)",
-      "function setRefundOnDispute(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function settle(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 payout)",
-      "function settleAndGetPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (int256)",
-      "function stampAncillaryData(bytes ancillaryData, address requester) pure returns (bytes)",
-      "function timerAddress() view returns (address)"
-    ],
-    "0xc78Ce805599188eD734C943C912800658807fA14": [
-      "constructor(string tokenName, string tokenSymbol, uint8 tokenDecimals)",
-      "event AddedSharedMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event RemovedSharedMember(uint256 indexed roleId, address indexed oldMember, address indexed manager)",
-      "event ResetExclusiveMember(uint256 indexed roleId, address indexed newMember, address indexed manager)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function addBurner(address account)",
-      "function addMember(uint256 roleId, address newMember)",
-      "function addMinter(address account)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(uint256 value)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function getMember(uint256 roleId) view returns (address)",
-      "function holdsRole(uint256 roleId, address memberToCheck) view returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function isBurner(address account) view returns (bool)",
-      "function isMinter(address account) view returns (bool)",
-      "function mint(address recipient, uint256 value) returns (bool)",
-      "function name() view returns (string)",
-      "function removeBurner(address account)",
-      "function removeMember(uint256 roleId, address memberToRemove)",
-      "function removeMinter(address account)",
-      "function renounceMembership(uint256 roleId)",
-      "function resetMember(uint256 roleId, address newMember)",
-      "function resetOwner(address account)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ],
     "0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -4599,12 +3358,26 @@
     ]
   },
   "usedTemplates": {
+    "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/adapter": "0xb4255921436c1b241e151988fe5443ec28852daad474c31507370e6006903dbe",
-    "acrossv3/AddressWhitelist": "0x9042435932a4dc5774138b141cf7ba57d29835143fa212a4cd3003ff723569ba",
-    "acrossv3/Finder": "0xda74fa90b61bba763f4b2666a821b9b581d6a60c72fb58a97c98350118ddb4c0",
-    "acrossv3/IdentifierWhitelist": "0x9d9f013353e3df01a2ad3645fe57e0c5773340336afe9aefdce794cc8325ec0d",
-    "acrossv3/Registry": "0xb4e746d4370da3da1b38b8385b75e0b9c1ece346ddce15d86f4deff355726b4a",
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "acrossv3/BondToken": "0x2fd02d300bd8cc6a3b615569c5fdc4aaf8af87cfc90a9f6647ddc86e28046bf8",
+    "acrossv3/HubPool": "0x28abeeb395df3da5703d1c7d6f4a1470bd9a7a748cea7e8d1e2edcacf38351da",
+    "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
+    "acrossv3/OptimisticGovernor": "0x3fff5c660f9919596c95429ee518caa6e3510031eb7fcec1945bd422b0e9f93e",
+    "acrossv3/SpokePool": "0x1b92e45d04388d3e6acb41a355f3b4d7e3dd17e0212095dd91a12c1dd1d006f0",
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "uma/AddressWhitelist": "0xe8bb64107fe8545119ad8d71ddd5de3a84aac2a3e7f886f8391a35ef9dfd6b69",
+    "uma/EmergencyProposer": "0x2cf4d5496e11daf1a1ea3a68bde77a515235544c5b17addbedd4d2be5b04091a",
+    "uma/Finder": "0xda74fa90b61bba763f4b2666a821b9b581d6a60c72fb58a97c98350118ddb4c0",
+    "uma/FixedSlashSlashingLibrary": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "uma/GovernorV2": "0x81d6fd7585e7ab2e8891686228a91b2ee97c9d350f07d842951990154e995207",
+    "uma/IdentifierWhitelist": "0x9d9f013353e3df01a2ad3645fe57e0c5773340336afe9aefdce794cc8325ec0d",
+    "uma/OptimisticOracleV3": "0xa6f40ff1fbcf96dc80abe888e0b897303ac393cb09eaf16d46c2cbeec7d676b7",
+    "uma/ProposerV2": "0x0253b13a0deb88312d07815f055d6a3a6bba0f9e9c38608d5ffa43f6aafecb26",
+    "uma/Registry": "0x3e3d5d3acd3a374bce36c8575b7187cf89816c7f51e4b933aecb5d6a94537c6f",
+    "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
+    "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
+    "uma/VotingV2": "0x8add69177c3542bdb4513ea7c6716148c77e33d5c7f4cba05368a35876ce50ec"
   },
-  "permissionsConfigHash": "0x810c1fbed346d7c3e4b955d29cf61ef293dedc9bc7b36603d30d7d42dfedc1de"
+  "permissionsConfigHash": "0x16df5eee28f678c40fc23fc775f2aed28148f9571ed3e667865f566fb011512d"
 }
