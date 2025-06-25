@@ -86,6 +86,8 @@ export function StageSection({
 
   const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
 
+  console.log(stageConfig.summary[0]?.requirements)
+
   return (
     <ProjectSection {...sectionProps}>
       {emergencyWarning && (
@@ -203,11 +205,7 @@ export function StageSection({
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 font-bold">
-                      {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
-                      ) : (
-                        <MissingIcon className="size-4 shrink-0 fill-negative" />
-                      )}
+                      <MissingIcon className="size-4 shrink-0 fill-negative" />
                       <span>{reqTextMissing(missingForLabel.length)}</span>
                     </div>
                   )}
@@ -279,11 +277,7 @@ export function StageSection({
                   ))}
                   {missingRequirements.map((req, i) => (
                     <li key={i} className="flex">
-                      {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
-                      ) : (
-                        <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
-                      )}
+                      <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
                       <Markdown
                         className="ml-2 leading-none max-md:text-base"
                         inline
