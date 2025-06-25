@@ -1,7 +1,7 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22631726,
+  "blockNumber": 22780031,
   "configHash": "0xea4b1193d73adace9eca58401dd0207ba70f4b0703c3df4b9a1ac144bcd97b62",
   "entries": [
     {
@@ -122,12 +122,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 27581400,
-        "latestOutputIndex": 15323,
-        "nextBlockNumber": 27583200,
-        "nextFinalizeOutputIndex": 15155,
-        "nextOutputIndex": 15324,
-        "nextOutputMinL2Timestamp": 1749046789,
+        "latestBlockNumber": 28477800,
+        "latestOutputIndex": 15821,
+        "nextBlockNumber": 28479600,
+        "nextFinalizeOutputIndex": 15654,
+        "nextOutputIndex": 15822,
+        "nextOutputMinL2Timestamp": 1750839589,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -279,8 +279,8 @@
           ]
         ],
         "$upgradeCount": 2,
-        "activatedValidatorCount": 4,
-        "activatedValidatorTotalWeight": "8540736067050768374517708",
+        "activatedValidatorCount": 1,
+        "activatedValidatorTotalWeight": "2622216444085175329279671",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -354,7 +354,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 22628458
+          "prevBlockNum": 22773695
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -494,10 +494,6 @@
       "values": {
         "$immutable": true,
         "activeVerifiers": [
-          {
-            "selector": "0x1b34fe11",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
-          },
           {
             "selector": "0xd4e8ecd2",
             "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
@@ -686,7 +682,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 0,
-        "messageNonce": 4401,
+        "messageNonce": 4414,
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1194,7 +1190,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22631726,
+        "clock": 22780031,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1267,7 +1263,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1287,27 +1283,6 @@
           "role": ".tokenOwners"
         }
       ]
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v4.0.0-rc.3).",
-      "sinceTimestamp": 1735949699,
-      "sinceBlock": 21547470,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      },
-      "implementationNames": {
-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
-      }
     },
     {
       "name": "SecurityCouncilTokenOwners",
@@ -1643,7 +1618,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22631726,
+        "clock": 22780031,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1791,7 +1766,7 @@
         "TAX_NUMERATOR": 20,
         "TERMINATE_OUTPUT_INDEX": 10106,
         "TRUSTED_VALIDATOR": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
-        "validatorCount": 23,
+        "validatorCount": 19,
         "VAULT_REWARD_GAS_LIMIT": 100000,
         "version": "1.1.0"
       },
@@ -2501,15 +2476,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xE36776FFA20a9206dcD742C981402a3f3d81938d": [
       "constructor(address _l2OutputOracle, address _portal, address _securityCouncil, address _trustedValidator, uint256 _requiredBondAmount, uint256 _maxUnbond, uint256 _roundDuration, uint256 _terminateOutputIndex)",
       "event BondIncreased(uint256 indexed outputIndex, address indexed challenger, uint128 amount)",
@@ -2705,5 +2671,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0xd4a024a2a9f1af4aaab332d1435fd8c2edcf38645b2dc7f48013d47fafc46a06"
+  "permissionsConfigHash": "0x64427a2d261844214a40c5d7e78066aa06ba8d9fe19c0c46b4374f5be539a813"
 }
