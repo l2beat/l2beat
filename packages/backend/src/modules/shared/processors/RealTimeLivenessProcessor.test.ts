@@ -45,7 +45,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       await processor.processBlock(block, [])
 
       expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block, [])
-      expect(mockCheckForAnomalies).toHaveBeenCalled()
+      expect(mockCheckForAnomalies).toHaveBeenCalledWith(block)
     })
   })
 
@@ -242,7 +242,13 @@ describe(RealTimeLivenessProcessor.name, () => {
         }),
       )
 
-      await processor.checkForAnomalies()
+      const block = mockObject<Block>({
+        number: 123,
+        timestamp: UnixTime.now(),
+        transactions: [],
+      })
+
+      await processor.checkForAnomalies(block)
 
       expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
       expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
@@ -329,7 +335,13 @@ describe(RealTimeLivenessProcessor.name, () => {
         }),
       )
 
-      await processor.checkForAnomalies()
+      const block = mockObject<Block>({
+        number: 123,
+        timestamp: UnixTime.now(),
+        transactions: [],
+      })
+
+      await processor.checkForAnomalies(block)
 
       expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
       expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()
@@ -410,7 +422,13 @@ describe(RealTimeLivenessProcessor.name, () => {
         }),
       )
 
-      await processor.checkForAnomalies()
+      const block = mockObject<Block>({
+        number: 123,
+        timestamp: UnixTime.now(),
+        transactions: [],
+      })
+
+      await processor.checkForAnomalies(block)
 
       expect(anomalyStatsRepository.getLatestStats).toHaveBeenCalled()
       expect(realTimeLivenessRepository.getLatestRecords).toHaveBeenCalled()

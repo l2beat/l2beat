@@ -122,6 +122,7 @@ import { move } from '../projects/move/move'
 import { myria } from '../projects/myria/myria'
 import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
+import { namechain } from '../projects/namechain/namechain'
 import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
@@ -350,6 +351,7 @@ export const layer2s: ScalingProject[] = [
   myria,
   myshell,
   nal,
+  namechain,
   network3,
   neva,
   nil,

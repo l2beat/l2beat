@@ -1,3 +1,78 @@
+Generated with discovered.json: 0xc999da8bc9ac1cc76b4b9adf54debc12d16c2c58
+
+# Diff at Wed, 25 Jun 2025 07:57:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22637654
+- current block number: 22780105
+
+## Description
+
+deposit limit removed for a deposit module governed by yearn strategist MS.
+
+## Watched changes
+
+```diff
+    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb) {
+    +++ description: None
+      values.deposit_limit:
+-        250000000000000
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.deposit_limit_module:
+-        "0x0000000000000000000000000000000000000000"
++        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822) {
+    +++ description: None
+      values.deposit_limit:
+-        300000000000000
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.deposit_limit_module:
+-        "0x0000000000000000000000000000000000000000"
++        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728) {
+    +++ description: None
+      values.deposit_limit:
+-        250000000000
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.deposit_limit_module:
+-        "0x0000000000000000000000000000000000000000"
++        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF) {
+    +++ description: None
+      values.deposit_limit:
+-        "140000000000000000000000"
++        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      values.deposit_limit_module:
+-        "0x0000000000000000000000000000000000000000"
++        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DepositModule (0x793D85F585145c050487c7AfBF0e9B97143fF1CB)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../katana/ethereum/.flat/DepositModule.sol        | 76 ++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
+```
+
 Generated with discovered.json: 0x26d0d44f72ced7546e79f24db5c69d9d2994af46
 
 # Diff at Wed, 11 Jun 2025 10:34:59 GMT:

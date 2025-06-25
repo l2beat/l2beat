@@ -14,7 +14,6 @@ import {
   type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
-  UnixTime,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../../config/Config'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
@@ -50,7 +49,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
   async processBlock(block: Block, logs: Log[]): Promise<void> {
     await this.matchLivenessTransactions(block, logs)
-    await this.checkForAnomalies()
+    await this.checkForAnomalies(block)
   }
 
   async matchLivenessTransactions(block: Block, logs: Log[]) {
@@ -176,7 +175,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     await this.db.realTimeLiveness.insertMany(records)
   }
 
-  async checkForAnomalies() {
+  async checkForAnomalies(block: Block) {
     const latestStats = await this.db.anomalyStats.getLatestStats()
     const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
     const ongoingAnomalies =
@@ -204,7 +203,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         continue
       }
 
-      const interval = UnixTime.now() - latestRecord.timestamp
+      const interval = block.timestamp - latestRecord.timestamp
       const z = (interval - latestStat.mean) / latestStat.stdDev
       const isAnomaly = z >= 15 && interval > latestStat.mean
 
@@ -214,6 +213,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
             projectId: group.projectId,
             subtype: group.subtype,
             duration: interval,
+            blockNumber: block.number,
           })
           continue
         }
@@ -222,6 +222,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           projectId: group.projectId,
           subtype: group.subtype,
           duration: interval,
+          blockNumber: block.number,
         })
 
         const newAnomaly: RealTimeAnomalyRecord = {
@@ -240,6 +241,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         this.logger.info(`Recovered from anomaly`, {
           projectId: group.projectId,
           subtype: group.subtype,
+          blockNumber: block.number,
         })
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {

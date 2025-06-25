@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xd098a354da45625a55e6a232868e4a4870ffeab9
+
+# Diff at Wed, 25 Jun 2025 07:27:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22744050
+- current block number: 22779924
+
+## Description
+
+Upgrade to new SystemConfig with single line change: maximumGasLimit = 500M (prev 200M, current 150M).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.0:
+-        "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7"
++        "0x44a79df61c4e5a48fa30bc46adf51d2a5ac4d98cdd6a6e9a38aef9f6dee96934"
+      values.$implementation:
+-        "0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"
++        "0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e"
+      values.$pastUpgrades.10:
++        ["2024-12-11T23:00:59.000Z","0x1fdbb2443b479fedc7a6e43400a5f09c883aa00d3e7b40bc7238a08e43625294",["0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"]]
+      values.$pastUpgrades.9.2:
+-        "0x1fdbb2443b479fedc7a6e43400a5f09c883aa00d3e7b40bc7238a08e43625294"
++        "2025-02-04T20:28:47.000Z"
+      values.$pastUpgrades.9.1.0:
+-        "0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"
++        "0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+      values.$pastUpgrades.9.0:
+-        "2024-12-11T23:00:59.000Z"
++        "0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b"
+      values.$pastUpgrades.8.2:
+-        "2025-02-04T20:28:47.000Z"
++        ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
+      values.$pastUpgrades.8.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "2025-02-04T20:28:47.000Z"
+      values.$pastUpgrades.7.2.0:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
+      values.$pastUpgrades.7.1:
+-        "2025-02-04T20:28:47.000Z"
++        "2023-06-15T01:51:47.000Z"
+      values.$pastUpgrades.7.0:
+-        "0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b"
++        "0x0a7442e325dac626d8c16a7a052e9a2ee8cd08a5b8c9796228b4d297e20ea3cc"
+      values.$pastUpgrades.6.2.0:
+-        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      values.$pastUpgrades.6.1:
+-        "2023-06-15T01:51:47.000Z"
++        "0xb690dad4829ca8b07b6944d7e937d7d36048ea29a9278cbae012ab4a66aac817"
+      values.$pastUpgrades.6.0:
+-        "0x0a7442e325dac626d8c16a7a052e9a2ee8cd08a5b8c9796228b4d297e20ea3cc"
++        "2024-06-28T16:32:47.000Z"
+      values.$pastUpgrades.5.2:
+-        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
++        "0x289aeed24a156bbb3b03cbbe0ef4e5fc873436d41cf50c746cdd380ff26be89b"
+      values.$pastUpgrades.5.1:
+-        "0xb690dad4829ca8b07b6944d7e937d7d36048ea29a9278cbae012ab4a66aac817"
++        ["0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e"]
+      values.$pastUpgrades.5.0:
+-        "2024-06-28T16:32:47.000Z"
++        "2025-06-24T20:34:47.000Z"
+      values.$upgradeCount:
+-        10
++        11
+      values.maximumGasLimit:
+-        200000000
++        500000000
+      values.version:
+-        "2.5.0"
++        "2.5.0+max-gas-limit-500M"
+      implementationNames.0x340f923E5c7cbB2171146f64169EC9d5a9FfE647:
+-        "SystemConfig"
+      implementationNames.0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e:
++        "SystemConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22744050 => .flat}/SystemConfig/SystemConfig.sol         | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+```
+
 Generated with discovered.json: 0x5c5688c0fc1f37774dcc36991c8f73335f130f91
 
 # Diff at Fri, 20 Jun 2025 06:58:24 GMT:

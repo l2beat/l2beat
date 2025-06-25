@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xa22333f487a831eb1f862ee46f504a04ff6dabb3
+
+# Diff at Wed, 25 Jun 2025 07:30:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 319332430
+- current block number: 350981738
+
+## Description
+
+operator changes.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0xBaE3B462a2A7fb758F66D91170514C10B14Ce914) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        8
++        9
+      values.validators.5:
+-        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      values.validators.4:
+-        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
+      values.validators.3:
+-        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
+      values.validators.2:
+-        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
+      values.validators.1:
+-        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      values.validators.0:
+-        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
++        "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"
+    }
+```
+
+```diff
+    EOA  (0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"validate","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}
+      receivedPermissions.1:
++        {"permission":"fastconfirm","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"arbitrum:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]}
+      receivedPermissions.0.via:
++        [{"address":"arbitrum:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b"}]
+    }
+```
+
+```diff
+    contract EduFastConfirmerMultisig (0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b) {
+    +++ description: None
+      values.$members.4:
+-        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      values.$members.3:
+-        "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6"
+      values.$members.2:
+-        "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
+      values.$members.1:
+-        "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
+      values.$members.0:
+-        "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77"
++        "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
+      values.$threshold:
+-        3
++        1
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "1 of 1 (100%)"
+      receivedPermissions:
+-        [{"permission":"fastconfirm","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer"},{"permission":"validate","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+      directlyReceivedPermissions:
++        [{"permission":"fastconfirm","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer"},{"permission":"validate","from":"arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators"}]
+    }
+```
+
 Generated with discovered.json: 0xa1358fde346168a0c90a5469a4da37a8541c1096
 
 # Diff at Wed, 18 Jun 2025 12:22:01 GMT:
