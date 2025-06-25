@@ -64,18 +64,18 @@ const matchFlatQuerySchema = z.object({
 
 export function runDiscoveryUi({
   readonly,
-  explorerApiKey,
-}: { readonly: boolean; explorerApiKey: string | undefined }) {
+  etherscanApiKey,
+}: { readonly: boolean; etherscanApiKey: string | undefined }) {
   const app = express()
   const port = process.env.PORT ?? 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
-  assert(explorerApiKey, 'explorerApiKey is required')
+  assert(etherscanApiKey, 'explorerApiKey is required')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
-  const diffoveryController = new DiffoveryController(explorerApiKey)
+  const diffoveryController = new DiffoveryController(etherscanApiKey)
 
   app.use(express.json())
 
