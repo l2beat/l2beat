@@ -336,8 +336,6 @@ export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ProjectScalingCategory
   capability: ProjectScalingCapability
-  /** In the future this will be reflected as `type === 'Other'` */
-  isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
     id: ProjectId

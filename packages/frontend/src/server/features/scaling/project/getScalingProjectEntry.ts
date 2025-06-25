@@ -44,7 +44,6 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import { isProjectOther } from '../utils/isProjectOther'
 import { getScalingDaSolution } from './getScalingDaSolution'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -164,15 +163,12 @@ export async function getScalingProjectEntry(
   ])
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const category = isProjectOther(project.scalingInfo)
-    ? 'Other'
-    : project.scalingInfo.type
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
-    category,
+    category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -232,9 +228,10 @@ export async function getScalingProjectEntry(
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
     rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
-    stageConfig: isProjectOther(project.scalingInfo)
-      ? { stage: 'NotApplicable' as const }
-      : project.scalingStage,
+    stageConfig:
+      project.scalingInfo.type === 'Other'
+        ? { stage: 'NotApplicable' as const }
+        : project.scalingStage,
     discoUiHref:
       project.statuses.reviewStatus === 'initialReview'
         ? undefined

@@ -1,7 +1,6 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { isProjectOther } from '../../utils/isProjectOther'
 
 export const TvsProjectFilter = z.discriminatedUnion('type', [
   z.object({
@@ -45,14 +44,12 @@ export function createTvsProjectsFilter(
     case 'rollups':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo) &&
         !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
@@ -60,7 +57,7 @@ export function createTvsProjectsFilter(
     case 'others':
       return (project) =>
         !!project.scalingInfo &&
-        isProjectOther(project.scalingInfo) &&
+        project.scalingInfo.type === 'Other' &&
         !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)

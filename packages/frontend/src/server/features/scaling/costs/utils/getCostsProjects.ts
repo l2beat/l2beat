@@ -2,7 +2,6 @@ import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { ps } from '~/server/projects'
-import { isProjectOther } from '../../utils/isProjectOther'
 
 export const CostsProjectsFilter = z.discriminatedUnion('type', [
   z.object({
@@ -43,11 +42,10 @@ function filterToCondition(
       return (p) =>
         (p.scalingInfo.type === 'Optimistic Rollup' ||
           p.scalingInfo.type === 'ZK Rollup') &&
-        !isProjectOther(p.scalingInfo) &&
         !(p.statuses.reviewStatus === 'initialReview')
     case 'others':
       return (p) =>
-        isProjectOther(p.scalingInfo) &&
+        p.scalingInfo.type === 'Other' &&
         !(p.statuses.reviewStatus === 'initialReview')
     case 'projects':
       return (p) => new Set(filter.projectIds).has(p.id)
