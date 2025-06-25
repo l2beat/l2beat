@@ -114,7 +114,7 @@ export function InnovatorTierCard({
       <img
         src={partner.logo.src}
         alt={partner.slug}
-        className="h-[42px] w-fit md:h-[52px]"
+        className="h-[42px] w-auto object-contain md:h-[52px]"
       />
       <ArrowButtonIcon className="absolute right-6 opacity-0 transition-opacity duration-300 group-hover:opacity-100 max-md:hidden" />
     </a>
