@@ -1,10 +1,11 @@
-{ "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
-    "fields": {
-        "quorum": {
-            "handler": {
-                "type": "array",
-                "length": 10
-            }
-        }
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "quorum": {
+      "handler": {
+        "type": "array",
+        "length": 10
+      }
     }
- }
+  }
+}

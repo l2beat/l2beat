@@ -1,7 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { BADGES } from '../../common/badges'
 import { REASON_FOR_BEING_OTHER } from '../../common'
+import { BADGES } from '../../common/badges'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from '../../processing/utils/getStage'
 
 const discovery = new ProjectDiscovery('hibachi', 'arbitrum')

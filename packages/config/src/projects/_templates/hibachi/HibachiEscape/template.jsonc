@@ -2,7 +2,7 @@
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "fields": {
     "redemptionTokenAddress": {
-      "handler" : {
+      "handler": {
         "type": "array",
         "length": 5
       }
