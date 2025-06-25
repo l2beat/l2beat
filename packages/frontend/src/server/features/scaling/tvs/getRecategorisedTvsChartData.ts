@@ -47,7 +47,9 @@ export async function getRecategorisedTvsChart({
 
   const projectsFilter = createTvsProjectsFilter(filter)
 
-  const tvsProjects = await getTvsProjects(projectsFilter)
+  const tvsProjects = await getTvsProjects(projectsFilter, {
+    withoutArchivedAndUpcoming: true,
+  })
 
   if (tvsProjects.length === 0) {
     return []
