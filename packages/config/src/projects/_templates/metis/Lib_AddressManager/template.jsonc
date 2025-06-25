@@ -165,16 +165,22 @@
         }
       ]
     },
-    "txChainBatcher": {
+    "inboxAddress": {
       "handler": {
         "type": "hardcoded",
-        "value": "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+        "value": "0xFf00000000000000000000000000000000001088"
       },
-      "permissions": [
-        {
-          "type": "sequence"
-        }
-      ]
+      "txChainBatcher": {
+        "handler": {
+          "type": "hardcoded",
+          "value": "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+        },
+        "permissions": [
+          {
+            "type": "sequence"
+          }
+        ]
+      }
     }
   }
 }
