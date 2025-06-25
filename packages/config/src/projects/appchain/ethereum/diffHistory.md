@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6b05dfaf4d603392a19d51bf0c0f68ddfc6c6df5
+
+# Diff at Wed, 25 Jun 2025 07:34:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22665848
+- current block number: 22779991
+
+## Description
+
+mrenclave changes: hash of enclave's code and initial data.
+
+## Watched changes
+
+```diff
+    contract EspressoTEEVerifier (0x64189bd57B1b281C9EC3f5295B75797ddcB1572c) {
+    +++ description: The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.
++++ description: Identifier of the TEE code used (hash of enclave's code and initial data).
+      values.mrEnclaves.2:
++        "0x1e4d5d3272ba669d22fe4d06d004df616172fb6425946dcf7dc39a031f91018f"
+    }
+```
+
 Generated with discovered.json: 0xaee4bf132045c9c55658511cf483a8464e088fa2
 
 # Diff at Wed, 18 Jun 2025 12:22:22 GMT:
