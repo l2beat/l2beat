@@ -282,7 +282,11 @@ function opStackCommon(
       stack: 'OP Stack',
       category:
         templateVars.display.category ??
-        (postsToEthereum(templateVars) ? 'Optimistic Rollup' : 'Optimium'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToEthereum(templateVars)
+            ? 'Optimistic Rollup'
+            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'

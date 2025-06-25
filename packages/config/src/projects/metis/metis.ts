@@ -53,7 +53,7 @@ export const metis: ScalingProject = {
       'Metis Andromeda is an EVM-equivalent solution originally forked from Optimism OVM. It uses a decentralized Sequencer pool running Tendermint consensus and MPC module to sign transaction batches.',
     purposes: ['Universal'],
     stack: 'OVM',
-    category: 'Optimistic Rollup',
+    category: 'Other',
     links: {
       websites: ['https://metis.io'],
       bridges: ['https://bridge.metis.io'],

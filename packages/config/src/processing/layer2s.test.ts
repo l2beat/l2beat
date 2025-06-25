@@ -27,6 +27,22 @@ describe('layer2s', () => {
     }
   })
 
+  describe('others', () => {
+    for (const layer2 of layer2s) {
+      it(`every project with reasonsForBeingOther has Other category: ${layer2.display.name}`, () => {
+        if (layer2.reasonsForBeingOther) {
+          expect(layer2.display.category === 'Other').toEqual(true)
+        }
+      })
+
+      it(`every Other project has reasonsForBeingOther configured: ${layer2.display.name}`, () => {
+        if (layer2.display.category === 'Other') {
+          expect(!!layer2.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
   describe('links', () => {
     describe('all links do not contain spaces', () => {
       for (const layer2 of layer2s) {

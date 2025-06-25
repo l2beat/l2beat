@@ -476,7 +476,11 @@ function orbitStackCommon(
       stack: 'Arbitrum',
       category:
         templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToExternalDA
+            ? 'Optimium'
+            : 'Optimistic Rollup'),
     },
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),

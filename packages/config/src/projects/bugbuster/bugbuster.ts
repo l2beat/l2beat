@@ -40,7 +40,7 @@ export const bugbuster: ScalingProject = {
     description:
       'Bug Buster is an open source bug bounty platform for web3, powered by Cartesi.',
     purposes: ['Bug bounty'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
     stack: 'Cartesi Rollups',
     redWarning:
       'Critical contract references can be changed by an EOA which could result in the loss of all funds.',

@@ -40,7 +40,7 @@ export const honeypot: ScalingProject = {
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
 
     links: {
       websites: ['https://cartesi.io/'],

@@ -71,7 +71,6 @@ export const zircuit: ScalingProject = opStackL2({
   display: {
     name: 'Zircuit',
     slug: 'zircuit',
-    category: 'ZK Rollup',
     description:
       'Zircuit is a universal ZK Rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
