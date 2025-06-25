@@ -1,6 +1,8 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Main contract handling deposits, withdrawals and state updates.",
+  "ignoreRelatives": ["nativeAssetInfo"],
+  "ignoreInWatchMode": ["accountsRoot", "contractsRoot", "ordersRoot", "stateVersion", "systemTimestamp"],
   "fields": {
     "accessControl": {
       "handler": {
@@ -27,6 +29,12 @@
             true
           ]
         }
+      }
+    },
+    "nativeAssetInfo": {
+      "handler": {
+        "type": "array",
+        "length": 5
       }
     }
   }

@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x5bf26576f3ba09f1e0ff3edb3f9bb67407b39ef1
+Generated with discovered.json: 0x62f209406f6eedcd1612933d5af5ae1f82f0380a
 
-# Diff at Thu, 19 Jun 2025 08:57:43 GMT:
+# Diff at Wed, 25 Jun 2025 13:51:49 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 348773441
+- current block number: 351073243
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery.
 
 ## Initial discovery
 
@@ -25,24 +25,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract OUpgradeable (0x14E4A1B13bf7F943c8ff7C51fb60FA964A298D92)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract SP1VerifierGateway (0x397A5f7f3dBd538f23DE225B51f532c34448dA9B)
     +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
 ```
@@ -55,31 +37,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SafeL2 (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract SP1Verifier (0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Treasury (0x532410B245eB41f24Ed1179BA0f6ffD94738AE70)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x553ec478A66BE27Ba25A6bc5dB20AEc2eD6A1B4A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ReceiveUln302 (0x7B9E184e07a6EE1aC23eAe0fe8D6Be2f663f05e6)
     +++ description: None
 ```
 
@@ -97,18 +55,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract SendUln302 (0x975bcD720be66659e3EB3C0e4F1866a3020E493A)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0xa27A057CAb1a4798c6242F6eE5b2416B7Cd45E5D)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract ProxyAdmin (0xa3F61770BBd12e705734Ad940f382227d0fD82fE)
     +++ description: None
 ```
@@ -121,18 +67,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0xa882c21C9df00958A958cde96f2B2Ae8FB4315B1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ReadLib1002 (0xbcd4CADCac3F767C57c4F402932C4705DF62BEFf)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract GnosisSafe (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
     +++ description: None
 ```
@@ -140,17 +74,5 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract TimelockController (0xDC986a09728F76110FF666eE7b20d99086501d15)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ArbitrumExtensionV2 (0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0xFE22f5D2755b06b9149656C5793Cb15A08d09847)
     +++ description: None
 ```
