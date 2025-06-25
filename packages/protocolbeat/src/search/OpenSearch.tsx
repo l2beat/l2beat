@@ -131,7 +131,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
                       entry.codeLocation[selectedIndex - runningIndex]
                     if (codeLocation !== undefined) {
                       setSourceIndex(entry.address, codeLocation.index)
-                      showRange({
+                      showRange(entry.address, {
                         startOffset: codeLocation.offset,
                         length: getCodeSearchTerm(searchTerm).content.length,
                       })

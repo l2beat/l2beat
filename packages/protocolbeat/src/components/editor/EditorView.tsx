@@ -9,7 +9,10 @@ type Props = {
   callbacks?: EditorCallbacks
   files: EditorFile[]
   initialFileIndex?: number
-  range?: Range
+  range?: {
+    data?: Range
+    index?: number
+  }
 }
 
 export function EditorView(props: Props) {
@@ -19,6 +22,7 @@ export function EditorView(props: Props) {
   )
 
   const editor = useCodeStore((store) => store.editors[props.editorId])
+  const { resetRange } = useCodeStore()
 
   const setDirtyFile = (fileId: string, dirty: boolean) => {
     setDirtyFiles((prev) => ({ ...prev, [fileId]: dirty }))
@@ -52,6 +56,20 @@ export function EditorView(props: Props) {
     }
   }, [editor, props.files, activeFileIndex])
 
+  useEffect(() => {
+    if (props.range?.data !== undefined && editor) {
+      const shouldTrigger = activeFileIndex === props.range.index
+
+      if (!shouldTrigger) {
+        return
+      }
+
+      const { startOffset, length } = props.range.data
+      resetRange()
+      editor.showRange(startOffset, length)
+    }
+  }, [editor, props.range, activeFileIndex])
+
   return (
     <div className="flex h-full w-full select-none flex-col">
       <EditorFileTabs
@@ -62,7 +80,7 @@ export function EditorView(props: Props) {
           onClick: () => setActiveFileIndex(index),
         }))}
       />
-      <CodeView range={props.range} editorKey={props.editorId} />
+      <CodeView editorKey={props.editorId} />
     </div>
   )
 }
