@@ -1,4 +1,5 @@
 import type {
+  ProjectScalingCategory,
   ProjectScalingScopeOfAssessment,
   StageConfigured,
   StageUnderReview,
@@ -36,7 +37,7 @@ import type { ProjectSectionProps } from './types'
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string
   name: string
-  type: string
+  type: ProjectScalingCategory
   stageConfig: StageUnderReview | StageConfigured
   isAppchain: boolean
   emergencyWarning?: string
@@ -83,6 +84,8 @@ export function StageSection({
       ? RoundedWarningIcon
       : UnderReviewIcon
 
+  const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
+
   return (
     <ProjectSection {...sectionProps}>
       {emergencyWarning && (
@@ -101,7 +104,7 @@ export function StageSection({
           height={18}
           className="-top-0.5 relative mr-2 inline-block"
         />
-        {name} is a{' '}
+        {name} is {notEvenAStage0 ? 'not even a' : 'a'}{' '}
         <StageBadge
           stage={stageConfig.stage}
           className="-top-px relative inline-flex"
@@ -109,7 +112,7 @@ export function StageSection({
           appchainClassName="text-base md:text-lg inline"
           inline
         />
-        <span> {type}</span>.
+        <span> {notEvenAStage0 ? 'project' : type}</span>.
       </span>
       {scopeOfAssessment && (
         <ScopeOfAssessment
