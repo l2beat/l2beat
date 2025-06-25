@@ -1,0 +1,34 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is {{getSemverProtocolVersion}}.",
+  "ignoreMethods": [
+    "getChainAdmin",
+    "getHyperchain",
+    "getProtocolVersion",
+    "getZKChain",
+    "getZKChainLegacy",
+    "protocolVersionIsActive",
+    "upgradeCutHash",
+    "protocolVersionDeadline"
+  ],
+  "ignoreRelatives": ["getAllHyperchains", "validatorTimelock"], // ignore validatorTimelock because it needs chain-specific config
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+        }
+      ]
+    },
+    "admin": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "revert batches for any connected chain (ZK cluster Admin role)."
+        }
+      ]
+    }
+  },
+  "category": "shared"
+}

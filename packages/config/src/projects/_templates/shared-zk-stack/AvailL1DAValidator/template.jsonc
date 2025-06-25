@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "category": "shared",
+  "description": "Contract that verifies that the validiums data was made available on Avail by querying the {{bridge}} on Ethereum for a merkle proof of inclusion.",
+  "ignoreRelatives": ["bridge", "vectorx"]
+}
