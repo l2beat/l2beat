@@ -10,12 +10,26 @@
       "name": "Aave Token",
       "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
       "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-        "chain": "ethereum",
-        "escrowAddress": "0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9",
-        "decimals": 18,
-        "sinceTimestamp": 1730652599
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+            "chain": "ethereum",
+            "escrowAddress": "0x4421461239aE746127C13a19177656124433dC60",
+            "decimals": 18,
+            "sinceTimestamp": 1749030047
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+            "chain": "ethereum",
+            "escrowAddress": "0xF90AA670ddC1Ae778015f5B84587ad3407dB7Cf9",
+            "decimals": 18,
+            "sinceTimestamp": 1730652599
+          }
+        ]
       },
       "category": "other",
       "source": "canonical",
@@ -47,6 +61,14 @@
             "escrowAddress": "0x8F5247072e9580624Be243D4EC8cD3F3ABfF86B9",
             "decimals": 8,
             "sinceTimestamp": 1730657447
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+            "chain": "ethereum",
+            "escrowAddress": "0xEb3492A8A15baF729e57F4F7E84DC55B7A34A4e7",
+            "decimals": 8,
+            "sinceTimestamp": 1748903783
           }
         ]
       },
@@ -298,6 +320,25 @@
     },
     {
       "mode": "auto",
+      "id": "socket-OLAS",
+      "priceId": "autonolas",
+      "symbol": "OLAS",
+      "name": "Autonolas",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31099/large/OLAS-token.png?1696529930",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x0001A500A6B18995B03f44bb040A5fFc28E45CB0",
+        "chain": "ethereum",
+        "escrowAddress": "0x412Ac6044401cDf1e9833B7056c14C74AA593D37",
+        "decimals": 18,
+        "sinceTimestamp": 1747300007
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "socket-ONDO",
       "priceId": "ondo-finance",
       "symbol": "ONDO",
@@ -512,30 +553,19 @@
             "type": "balanceOfEscrow",
             "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
             "chain": "ethereum",
+            "escrowAddress": "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856",
+            "decimals": 18,
+            "sinceTimestamp": 1733971199
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x7A56E1C57C7475CCf742a1832B028F0456652F97",
+            "chain": "ethereum",
             "escrowAddress": "0x197cCb40bCDed89c3D7B891824ab44d1913Ee73E",
             "decimals": 18,
             "sinceTimestamp": 1744193267
           }
         ]
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "socket-SolvBTC.BBN",
-      "priceId": "solv-protocol-solvbtc-bbn",
-      "symbol": "SolvBTC.BBN",
-      "name": "SolvBTC Babylon",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/unnamed.png?1721961640",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0xd9D920AA40f578ab794426F5C90F6C731D159DEf",
-        "chain": "ethereum",
-        "escrowAddress": "0xB592512153c22F5Ba573b0c3E04cAB99d4Cd8856",
-        "decimals": 18,
-        "sinceTimestamp": 1733971199
       },
       "category": "other",
       "source": "canonical",
@@ -834,6 +864,14 @@
             "escrowAddress": "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
             "decimals": 18,
             "sinceTimestamp": 1716143951
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+            "chain": "ethereum",
+            "escrowAddress": "0x847579e12CFb96a3357d9C51e374330af61716C2",
+            "decimals": 18,
+            "sinceTimestamp": 1746458207
           }
         ]
       },

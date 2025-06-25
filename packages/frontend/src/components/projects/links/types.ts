@@ -1,6 +1,6 @@
 export type LinkName =
   | 'Website'
-  | 'App'
+  | 'Bridge'
   | 'Docs'
   | 'Explorer'
   | 'Repository'

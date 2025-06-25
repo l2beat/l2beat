@@ -73,7 +73,7 @@ export const witness: ScalingProject = polygonCDKStack({
       'Witness Chain is a Validium built on the Polygon CDK stack and Eigenlayer validates services. The purpose of the project is to create a DePIN coordination Layer.',
     links: {
       websites: ['https://witnesschain.com/'],
-      apps: ['https://witnesschain-bridge.eu-north-2.gateway.fm'],
+      bridges: ['https://witnesschain-bridge.eu-north-2.gateway.fm'],
       documentation: ['https://docs.witnesschain.com/'],
       explorers: ['https://witnesschain-blockscout.eu-north-2.gateway.fm/'],
       repositories: ['https://github.com/witnesschain-com'],

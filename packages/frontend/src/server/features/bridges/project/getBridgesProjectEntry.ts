@@ -10,7 +10,7 @@ import type { ProjectLink } from '~/components/projects/links/types'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
 import { getTokensForProject } from '~/server/features/scaling/tvs/tokens/getTokensForProject'
 import { isTvsChartDataEmpty } from '~/server/features/utils/isChartDataEmpty'
-import { api } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 import { getContractUtils } from '~/utils/project/contracts-and-permissions/getContractUtils'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/getContractsSection'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/getPermissionsSection'
@@ -24,6 +24,7 @@ import { getUnderReviewStatus } from '~/utils/project/underReview'
 import { getProjectsChangeReport } from '../../projects-change-report/getProjectsChangeReport'
 import { get7dTvsBreakdown } from '../../scaling/tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../../scaling/tvs/utils/getAssociatedTokenWarning'
+import { getIsProjectVerified } from '../../utils/getIsProjectVerified'
 import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
@@ -63,6 +64,7 @@ export interface BridgesProjectEntry {
 }
 
 export async function getBridgesProjectEntry(
+  helpers: SsrHelpers,
   project: Project<
     | 'statuses'
     | 'tvsInfo'
@@ -84,11 +86,10 @@ export async function getBridgesProjectEntry(
     await Promise.all([
       getProjectsChangeReport(),
       get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
-      api.tvs.chart({
+      helpers.tvs.chart.fetch({
         range: '1y',
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,
-        previewRecategorisation: false,
       }),
       getTokensForProject(project),
       getContractUtils(),
@@ -182,11 +183,11 @@ export async function getBridgesProjectEntry(
       },
     })
   }
-
-  const riskSummary = getBridgesRiskSummarySection(
-    project,
-    !project.statuses.isUnverified,
+  const isProjectVerified = getIsProjectVerified(
+    project.statuses.unverifiedContracts,
+    changes,
   )
+  const riskSummary = getBridgesRiskSummarySection(project, isProjectVerified)
   if (riskSummary.riskGroups.length > 0) {
     sections.push({
       type: 'RiskSummarySection',
@@ -266,7 +267,7 @@ export async function getBridgesProjectEntry(
     {
       id: project.id,
       slug: project.slug,
-      isVerified: !project.statuses.isUnverified,
+      isVerified: isProjectVerified,
       isUnderReview: !!project.statuses.reviewStatus,
       contracts: project.contracts,
     },

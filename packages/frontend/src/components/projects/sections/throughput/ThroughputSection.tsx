@@ -11,8 +11,8 @@ import type { ProjectSectionProps } from '../types'
 export interface ThroughputSectionProps extends ProjectSectionProps {
   projectId: ProjectId
   throughput: DaLayerThroughput[]
-  pastDayAvgCapacityUtilization: number
-  pastDayAvgThroughputPerSecond: number
+  pastDayAvgCapacityUtilization: number | undefined
+  pastDayAvgThroughputPerSecond: number | undefined
   largestPoster:
     | {
         name: string
@@ -21,7 +21,7 @@ export interface ThroughputSectionProps extends ProjectSectionProps {
         href: string
       }
     | undefined
-  totalPosted: number
+  totalPosted: number | undefined
   customColors: Record<string, string>
   syncStatus: {
     warning: string | undefined
@@ -70,7 +70,9 @@ export function ThroughputSection({
           label="Past day avg. throughput"
           isSynced={syncStatus.isSynced}
         >
-          {formatBpsToMbps(pastDayAvgThroughputPerSecond)}
+          {pastDayAvgThroughputPerSecond
+            ? formatBpsToMbps(pastDayAvgThroughputPerSecond)
+            : undefined}
         </ChartStatsItem>
         <ChartStatsItem
           label="Past day avg. capacity used"
@@ -92,7 +94,7 @@ export function ThroughputSection({
           label="Past day total data posted"
           isSynced={syncStatus.isSynced}
         >
-          {formatBytes(totalPosted)}
+          {totalPosted ? formatBytes(totalPosted) : undefined}
         </ChartStatsItem>
       </ChartStats>
     </ProjectSection>

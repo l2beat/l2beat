@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x4dd4f67b060c2cfdbd328a9f5e51b63378673e74
+
+# Diff at Mon, 16 Jun 2025 08:43:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22437737
+- current block number: 22437737
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437737 (main branch discovery), not current.
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.14:
++        {"permission":"upgrade","from":"ethereum:0xf6b1554F483C391414d3830927E3600c105AaE6E","role":"admin","via":[{"address":"ethereum:0xd56045E68956FCe2576E680c95a4750cf8241f79"}]}
+      receivedPermissions.13.from:
+-        "ethereum:0xf6b1554F483C391414d3830927E3600c105AaE6E"
++        "ethereum:0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
+      receivedPermissions.12.from:
+-        "ethereum:0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
++        "ethereum:0xA8B389A82e088b164cD03230e900980CcED34d29"
+      receivedPermissions.11.from:
+-        "ethereum:0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "ethereum:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      receivedPermissions.10.from:
+-        "ethereum:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "ethereum:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0xd56045E68956FCe2576E680c95a4750cf8241f79"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd56045E68956FCe2576E680c95a4750cf8241f79) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0xf6b1554F483C391414d3830927E3600c105AaE6E","role":"admin"}
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0xf6b1554F483C391414d3830927E3600c105AaE6E"
++        "ethereum:0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0xc4986627A41cdCf6fa33543D96f00F475bCE42f5"
++        "ethereum:0xA8B389A82e088b164cD03230e900980CcED34d29"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0xA8B389A82e088b164cD03230e900980CcED34d29"
++        "ethereum:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364"
++        "ethereum:0x69d3Cf86B2Bf1a9e99875B7e2D9B6a84426c171f"
+    }
+```
+
 Generated with discovered.json: 0x6173bf8884107d03bb7f08897767e9678c922843
 
 # Diff at Fri, 30 May 2025 07:00:18 GMT:

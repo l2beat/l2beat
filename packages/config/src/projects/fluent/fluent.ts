@@ -17,7 +17,7 @@ export const fluent: ScalingProject = upcomingL2({
       websites: ['https://fluent.xyz/'],
       documentation: ['https://docs.fluent.xyz/'],
       repositories: ['https://github.com/fluentlabs-xyz'],
-      apps: ['https://faucet.dev.gblend.xyz/'],
+      bridges: ['https://faucet.dev.gblend.xyz/'],
       explorers: ['https://blockscout.dev.gblend.xyz'],
       socialMedia: [
         'https://x.com/fluentxyz',

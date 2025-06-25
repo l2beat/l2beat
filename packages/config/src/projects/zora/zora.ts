@@ -13,7 +13,7 @@ export const zora: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Zora',
     slug: 'zora',

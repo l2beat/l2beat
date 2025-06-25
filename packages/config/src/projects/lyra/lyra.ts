@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -26,7 +26,7 @@ export const lyra: ScalingProject = opStackL2({
       'Derive Chain is an L2 scaling solution built using OP Stack specially for the Derive protocol - a settlement protocol for spot, perpetuals, and options trading.',
     links: {
       websites: ['https://derive.xyz/'],
-      apps: ['https://derive.xyz/options/eth'],
+      bridges: ['https://derive.xyz/options/eth'],
       documentation: ['https://docs.lyra.finance/'],
       explorers: ['https://explorer.derive.xyz/'],
       repositories: ['https://github.com/lyra-finance/v2-core'],
@@ -36,6 +36,9 @@ export const lyra: ScalingProject = opStackL2({
         'https://discord.gg/Derive',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   genesisTimestamp: UnixTime(1700022479),
   celestiaDa: {

@@ -423,7 +423,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Axelar (ITS)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -555,7 +562,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Multichain",
+            "slug": "multichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -687,7 +702,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -799,7 +822,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1344,7 +1375,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1631,7 +1670,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1801,7 +1848,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1990,7 +2045,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2027,7 +2090,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2045,7 +2116,15 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2101,7 +2180,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2157,7 +2244,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2284,7 +2379,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2434,7 +2537,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "The Graph Custom Gateway"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2642,7 +2752,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -3125,7 +3243,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -3238,7 +3364,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -3275,7 +3409,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -3673,7 +3815,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4033,7 +4183,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4184,7 +4342,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4316,7 +4482,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4353,7 +4527,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4371,7 +4553,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4503,7 +4693,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4654,7 +4852,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4672,7 +4878,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -4728,7 +4942,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5011,7 +5233,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (NTT)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5316,7 +5545,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5446,7 +5683,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5482,7 +5727,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5747,7 +6000,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Transporter",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5912,7 +6173,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole NTT",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -6063,7 +6332,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -6097,7 +6374,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1715731200
+        "sinceTimestamp": 1715731200,
+        "untilTimestamp": 1750222800
       },
       "category": "ether",
       "source": "canonical",

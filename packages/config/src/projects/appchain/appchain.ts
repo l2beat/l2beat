@@ -27,7 +27,7 @@ export const appchain: ScalingProject = orbitStackL2({
       websites: ['https://appchain.xyz/'],
       documentation: ['https://docs.appchain.xyz/'],
       explorers: ['https://explorer.appchain.xyz/'],
-      apps: ['https://bridge.appchain.xyz/'],
+      bridges: ['https://bridge.appchain.xyz/'],
       socialMedia: [
         'https://x.com/onappchain',
         'https://warpcast.com/onappchain',

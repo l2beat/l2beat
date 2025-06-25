@@ -4,6 +4,7 @@ import { CONTRACTS } from '../../common'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('portal')
 
@@ -26,7 +27,7 @@ export const portal: Bridge = {
         'https://docs.wormhole.com/wormhole',
       ],
       explorers: ['https://wormholescan.io/'],
-      apps: ['https://portalbridge.com'],
+      bridges: ['https://portalbridge.com'],
       repositories: ['https://github.com/wormhole-foundation/wormhole'],
       socialMedia: [
         'https://discord.gg/wormholecrypto',
@@ -190,4 +191,5 @@ export const portal: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -3,6 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const PROJECT_ID = ProjectId('beamer-bridge-v2')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -25,7 +26,7 @@ export const beamerbridgev2: Bridge = {
     warning: warningText,
     links: {
       websites: ['https://beamerbridge.com'],
-      apps: ['https://app.beamerbridge.com'],
+      bridges: ['https://app.beamerbridge.com'],
       repositories: ['https://github.com/beamer-bridge/beamer'],
       socialMedia: [
         'https://twitter.com/BeamerBridge',
@@ -162,4 +163,5 @@ export const beamerbridgev2: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -17,7 +17,7 @@ export const near: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `NEAR's Data Availability Layer (NEAR DA) leverages the sharded architecture of the NEAR Protocol to provide a modular data availability layer for layer 2 solutions.`,

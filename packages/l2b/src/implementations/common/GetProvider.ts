@@ -1,5 +1,6 @@
 import { mkdirSync } from 'fs'
 import { dirname } from 'path'
+import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   type DiscoveryChainConfig,
@@ -37,7 +38,12 @@ export async function getProvider(
     },
   ]
 
-  const allProviders = new AllProviders(chainConfigs, httpClient, cache)
+  const allProviders = new AllProviders(
+    chainConfigs,
+    httpClient,
+    cache,
+    Logger.SILENT,
+  )
   const blockNumber =
     await allProviders.getLatestBlockNumber(UNKNOWN_CHAIN_NAME)
   return allProviders.get(UNKNOWN_CHAIN_NAME, blockNumber)

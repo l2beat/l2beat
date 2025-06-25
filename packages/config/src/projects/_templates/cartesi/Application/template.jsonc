@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the {{getOutputsMerkleRootValidator}} contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `{{getTemplateHash}}`.",
+  "ignoreMethods": ["wasOutputExecuted"],
+  "fields": {
+    "withdrawer": {
+      "handler": {
+        "type": "hardcoded",
+        "value": "0x60247492F1538Ed4520e61aE41ca2A8447592Ff5"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw the entire balance in the escrow."
+        }
+      ]
+    }
+  }
+}

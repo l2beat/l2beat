@@ -200,7 +200,8 @@ function SidebarGroupLink({
     <a
       data-active={isActive}
       className={cn(
-        'flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
+        'group flex h-8 w-full items-center gap-2 overflow-hidden rounded-md p-1.5 text-left text-base outline-none ring-brand focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0',
+        'data-[active=true]:text-brand',
         className,
       )}
       {...props}

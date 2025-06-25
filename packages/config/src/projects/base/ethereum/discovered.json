@@ -1,8 +1,8 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 22631283,
-  "configHash": "0x4abadfd874e7192124b36c5f32956fc86608293d62722d7202779c46b35fb68e",
+  "blockNumber": 22744050,
+  "configHash": "0xb5e56417361d15270df50ee892949eccfe661bd03c23e99ae2c16f1c342c31ab",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -98,6 +98,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
           "role": "admin"
         },
         {
@@ -305,7 +310,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 14 (21%)",
-        "nonce": 64,
+        "nonce": 65,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -599,7 +604,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 72,
+        "nonce": 73,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -637,7 +642,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "gameCount": 5180,
+        "gameCount": 5559,
         "gameImpls": [
           "0xAB91FB6cef84199145133f75cBD96B8a31F184ED",
           "0x7344Da3A618b86cdA67f8260C0cc2027D99F5B49",
@@ -727,8 +732,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 374760,
-          "prevBlockNum": 22631274
+          "prevBoughtGas": 60000,
+          "prevBlockNum": 22744029
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -787,11 +792,11 @@
           ]
         ],
         "$upgradeCount": 1,
-        "anchorGame": "0x40CD1eF0f88958c902b997c1de16A23f34099b22",
+        "anchorGame": "0xad0aEe4456bC124AD5359aea075850aaca4357D4",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "getAnchorRoot": [
-          "0x31055302d8039626e1cd958859f741af277375ed9532eb276944b23d5864e82a",
-          30820377
+          "0x4e28bf3be55904f0fadb7e6fb41a7d3d35a0fc59009b9c17ab1bd654b8c4eae0",
+          31502765
         ],
         "portal": "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e",
         "respectedGameType": 0,
@@ -925,7 +930,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1208,8 +1213,8 @@
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e",
         "eip1559Denominator": 50,
-        "eip1559Elasticity": 2,
-        "gasLimit": 140000000,
+        "eip1559Elasticity": 3,
+        "gasLimit": 150000000,
         "getAddresses": {
           "l1CrossDomainMessenger": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
           "l1ERC721Bridge": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
@@ -1375,6 +1380,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8",
           "role": "admin",
           "via": [
@@ -1505,7 +1518,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1528,6 +1541,7 @@
       "sinceTimestamp": 1686793895,
       "sinceBlock": 17482143,
       "values": {
+        "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
         "$immutable": false,
         "$implementation": "0x5D5a095665886119693F0B41d8DFeE78da033e8B",
         "$pastUpgrades": [
@@ -1566,7 +1580,7 @@
         "ENCODING_OVERHEAD": 260,
         "FLOOR_CALLDATA_OVERHEAD": 40,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293044544",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201293050529",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -1940,7 +1954,7 @@
         "name": "Wrapped Ether",
         "owner": "0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c",
         "symbol": "WETH",
-        "totalSupply": "20435013000000000000",
+        "totalSupply": "20682607000000000000",
         "version": "1.3.0"
       },
       "implementationNames": {
@@ -2182,7 +2196,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3423,5 +3437,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x35c478efe0d097232a4031610953c247a63010523d2a2f662e94dd09df6b360d"
+  "permissionsConfigHash": "0x859d91146480f9afc7ee3001df20297fe50d8ac9013df1e2dfd7b13a5ae541fd"
 }

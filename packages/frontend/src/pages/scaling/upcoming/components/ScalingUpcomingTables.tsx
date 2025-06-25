@@ -10,40 +10,30 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingUpcomingEntry } from '~/server/features/scaling/upcoming/getScalingUpcomingEntries'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingUpcomingTable } from './table/ScalingUpcomingTable'
 
 export function ScalingUpcomingTables(
   props: TabbedScalingEntries<ScalingUpcomingEntry>,
 ) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
 
-  const entries = checked
-    ? getRecategorisedEntries(
-        filteredEntries,
-        (a, b) => b.initialOrder - a.initialOrder,
-      )
-    : filteredEntries
-
   const initialSort = {
     id: '#',
     desc: false,
   }
-  const showOthers = checked || entries.others.length > 0
+  const showOthers = entries.others.length > 0
 
   return (
     <>

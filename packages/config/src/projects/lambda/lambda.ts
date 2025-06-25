@@ -22,7 +22,7 @@ export const lambda: ScalingProject = opStackL2({
       'Lambda Chain is an OP Stack Rollup on Ethereum, focusing on long-term data storage and -availability.',
     links: {
       websites: ['https://lambda.im/'],
-      apps: ['https://portal.lambda.im/bridge/'],
+      bridges: ['https://portal.lambda.im/bridge/'],
       documentation: ['https://docs.lambda.im/', 'https://docs.optimism.io/'],
       explorers: ['https://scan.lambda.im/'],
       repositories: ['https://github.com/LambdaIM'],

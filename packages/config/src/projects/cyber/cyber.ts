@@ -1,4 +1,9 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
@@ -57,7 +62,7 @@ export const cyber: ScalingProject = opStackL2({
       'Cyber is a chain designed for social applications using an implementation of OP Plasma with DA challenges.',
     links: {
       websites: ['https://cyber.co/'],
-      apps: [
+      bridges: [
         'https://cyber-bridge.alt.technology/',
         'https://cyber.co/stake',
         'https://wallet.cyber.co/',
@@ -71,6 +76,9 @@ export const cyber: ScalingProject = opStackL2({
         'https://cyber.co/blog',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

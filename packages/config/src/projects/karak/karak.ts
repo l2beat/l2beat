@@ -22,7 +22,7 @@ export const karak: ScalingProject = opStackL2({
     description: 'K2 is a general-purpose Optimium.',
     links: {
       websites: ['https://karak.network/'],
-      apps: ['https://karak.network/karak-xp/'],
+      bridges: ['https://karak.network/karak-xp/'],
       documentation: ['https://docs.karak.network/'],
       explorers: ['https://explorer.karak.network/'],
       socialMedia: [

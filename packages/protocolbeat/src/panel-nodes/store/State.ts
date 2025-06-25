@@ -8,12 +8,14 @@ export interface State {
   readonly userPreferences: {
     readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
+    readonly hideLargeArrays: boolean
   }
   readonly transform: {
     readonly offsetX: number
     readonly offsetY: number
     readonly scale: number
   }
+  readonly viewportContainer?: HTMLElement
   readonly input: {
     readonly shiftPressed: boolean
     readonly spacePressed: boolean

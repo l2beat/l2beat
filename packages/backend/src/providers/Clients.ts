@@ -5,6 +5,7 @@ import {
   BlockIndexerClient,
   CelestiaRpcClient,
   CoingeckoClient,
+  EigenApiClient,
   FuelClient,
   HttpClient,
   LoopringClient,
@@ -31,6 +32,7 @@ export interface Clients {
   beacon: BeaconChainClient | undefined
   celestia: CelestiaRpcClient | undefined
   avail: PolkadotRpcClient | undefined
+  eigen: EigenApiClient | undefined
   getRpcClient: (chain: string) => RpcClient
   getStarknetClient: (chain: string) => StarknetClient
   rpcClients: RpcClient[]
@@ -47,6 +49,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   let beaconChainClient: BeaconChainClient | undefined
   let celestia: CelestiaRpcClient | undefined
   let avail: PolkadotRpcClient | undefined
+  let eigen: EigenApiClient | undefined
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
@@ -179,7 +182,7 @@ export function initClients(config: Config, logger: Logger): Clients {
   }
 
   if (config.da) {
-    for (const layer of config.da.layers) {
+    for (const layer of config.da.blockLayers) {
       switch (layer.type) {
         case 'celestia': {
           celestia = new CelestiaRpcClient({
@@ -205,6 +208,26 @@ export function initClients(config: Config, logger: Logger): Clients {
           })
           blockClients.push(avail)
         }
+      }
+    }
+    for (const layer of config.da.timestampLayers) {
+      switch (layer.type) {
+        case 'eigen-da': {
+          const perProjectUrl = layer.perProjectUrl
+          assert(perProjectUrl, 'EigenDA per project url is required')
+          eigen = new EigenApiClient({
+            sourceName: 'eigen',
+            url: layer.url,
+            perProjectUrl,
+            http,
+            logger,
+            callsPerMinute: layer.callsPerMinute,
+            retryStrategy: 'RELIABLE',
+          })
+          break
+        }
+        default:
+          assertUnreachable(layer.type)
       }
     }
   }
@@ -252,6 +275,7 @@ export function initClients(config: Config, logger: Logger): Clients {
     coingecko: coingeckoClient,
     beacon: beaconChainClient,
     celestia,
+    eigen,
     avail,
     getStarknetClient,
     getRpcClient,

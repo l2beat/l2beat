@@ -29,7 +29,6 @@ export async function getScalingActivityProjectApiData({
       ? { type: 'all' }
       : { type: 'projects', projectIds: project ? [project.id] : [] },
     range,
-    previewRecategorisation: false,
   })
 
   const oldestProjectData = data.at(0)

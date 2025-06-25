@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xc80ef63395e31cda4b90fc6a482934914d349e64
+
+# Diff at Mon, 16 Jun 2025 08:41:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 30252032
+- current block number: 30252032
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30252032 (main branch discovery), not current.
+
+```diff
+    contract HamMultisig1 (0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA) {
+    +++ description: None
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"base:0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF","role":"admin","via":[{"address":"base:0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49"}]}
+      receivedPermissions.7.from:
+-        "base:0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF"
++        "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72"
+      receivedPermissions.6.from:
+-        "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72"
++        "base:0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"base:0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "base:0x38893659CF2b4b3E02B2dC93fe9A55Ea155a3daF"
++        "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72"
+      directlyReceivedPermissions.6.from:
+-        "base:0xFC57b0947C079073A1C5Fe61887Eb3495972EE72"
++        "base:0x3Ef6ce577FC438591d6C683E7a6Ea9e14A8f2d36"
+    }
+```
+
 Generated with discovered.json: 0x62095e1c3c9ea744a62fa887aff1051b609177b0
 
 # Diff at Fri, 30 May 2025 07:20:16 GMT:

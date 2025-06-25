@@ -4,6 +4,7 @@ import { CONTRACTS } from '../../common'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('synapse')
 
@@ -16,7 +17,7 @@ export const synapse: Bridge = {
     slug: 'synapse',
     links: {
       websites: ['https://synapseprotocol.com/landing'],
-      apps: ['https://synapseprotocol.com'],
+      bridges: ['https://synapseprotocol.com'],
       documentation: ['https://docs.synapseprotocol.com/'],
       repositories: ['https://github.com/synapsecns'],
       explorers: ['https://analytics.synapseprotocol.com/'],
@@ -176,4 +177,5 @@ export const synapse: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

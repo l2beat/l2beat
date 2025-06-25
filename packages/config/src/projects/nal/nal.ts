@@ -17,7 +17,7 @@ export const nal: ScalingProject = underReviewL2({
     purposes: ['Universal'],
     links: {
       websites: ['https://nal.network/#/home'],
-      apps: [], //https://bridge.nal.network/deposit for testnet, no mainnet bridge UI is available yet
+      bridges: [], //https://bridge.nal.network/deposit for testnet, no mainnet bridge UI is available yet
       documentation: ['https://docs.nal.network/chain/Overview.html'],
       explorers: ['https://scan.nal.network/'],
       socialMedia: ['https://x.com/nal_network'],

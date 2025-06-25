@@ -25,7 +25,7 @@ export const aevo: ScalingProject = opStackL2({
       'Aevo is a high-performance decentralized options exchange, powered by the OP Stack and EigenDA.',
     links: {
       websites: ['https://aevo.xyz/'],
-      apps: ['https://app.aevo.xyz/'],
+      bridges: ['https://app.aevo.xyz/'],
       documentation: ['https://docs.aevo.xyz/'],
       explorers: ['https://explorer.aevo.xyz/'],
       repositories: ['https://github.com/aevoxyz'],

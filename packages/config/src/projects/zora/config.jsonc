@@ -10,7 +10,9 @@
       ],
       "overrides": {
         "0xB0F15106fa1e473Ddb39790f197275BC979Aa37e": {
-          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+          "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+        },
+        "0x7541f1C32A501E13F722fBb7C57195aD4C8415E7": {
           "fields": {
             "proposer": { "permissions": [{ "type": "propose" }] },
             "challenger": { "permissions": [{ "type": "challenge" }] }

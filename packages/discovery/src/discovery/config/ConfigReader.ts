@@ -60,6 +60,7 @@ export class ConfigReader {
     const chainRawConfig = {
       chain,
       name,
+      ...(rawConfig.archived ? { archived: true } : {}),
       ...merge(
         // biome-ignore lint/suspicious/noExplicitAny: <explanation>
         (rawConfig.chains as any)['all'],

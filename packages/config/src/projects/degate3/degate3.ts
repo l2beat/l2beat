@@ -26,6 +26,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -118,7 +119,7 @@ export const degate3: ScalingProject = {
 
     links: {
       websites: ['https://degate.com/'],
-      apps: ['https://app.degate.com/'],
+      bridges: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
@@ -480,4 +481,5 @@ export const degate3: ScalingProject = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

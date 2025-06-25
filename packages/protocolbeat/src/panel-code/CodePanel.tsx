@@ -1,121 +1,135 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { getCode, getProject } from '../api/api'
+import { useMemo } from 'react'
+import { getCode } from '../api/api'
 import type { ApiCodeResponse } from '../api/types'
-import { findSelected } from '../common/findSelected'
 import { toShortenedAddress } from '../common/toShortenedAddress'
-import { CodeView } from '../components/editor/CodeView'
-import { useCodeStore } from '../components/editor/store'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
+import { EditorView } from '../components/editor/EditorView'
+import { type EditorFile, useCodeStore } from '../components/editor/store'
 import { isReadOnly } from '../config'
-import { IconCodeFile } from '../icons/IconCodeFile'
-import { usePanelStore } from '../store/store'
+import { useProjectData } from '../hooks/useProjectData'
 import { RediscoverPrompt } from './RediscoverPrompt'
 
 export function CodePanel() {
-  const { project } = useParams()
-  if (!project) {
-    throw new Error('Cannot use component outside of project page!')
-  }
-  const projectResponse = useQuery({
-    queryKey: ['projects', project],
-    queryFn: () => getProject(project),
-  })
-  const selectedAddress = usePanelStore((state) => state.selected)
+  const { project, selectedAddress, projectResponse, selected } =
+    useProjectData()
 
-  const selected = projectResponse.data
-    ? findSelected(projectResponse.data.entries, selectedAddress)
-    : undefined
-
-  const hasCode: boolean =
-    selected !== undefined &&
-    'implementationNames' in selected &&
-    selected.implementationNames !== undefined
+  const hasCode = useMemo(
+    () =>
+      selected !== undefined &&
+      'implementationNames' in selected &&
+      selected.implementationNames !== undefined,
+    [selected],
+  )
 
   const codeResponse = useQuery({
     queryKey: ['projects', project, 'code', selectedAddress],
     enabled: selectedAddress !== undefined && hasCode,
-    queryFn: () => getCode(project, selectedAddress),
+    queryFn: () => {
+      if (!selectedAddress) {
+        throw new Error('Selected address is required')
+      }
+      return getCode(project, selectedAddress)
+    },
     retry: 1,
   })
-  const { getSourceIndex, setSourceIndex, range } = useCodeStore()
-  useEffect(() => {
-    if (codeResponse.isSuccess && selectedAddress !== undefined) {
-      if (getSourceIndex(selectedAddress) === undefined) {
-        const hasProxy = codeResponse.data.sources.length > 1
-        setSourceIndex(selectedAddress, hasProxy ? 1 : 0)
-      }
+
+  const { range } = useCodeStore()
+
+  const hasProxy = useMemo(() => {
+    const sources = codeResponse.data?.sources
+
+    if (!sources) {
+      return false
     }
-  }, [codeResponse.data])
-  const sourceIndex = getSourceIndex(selectedAddress ?? 'Loading')
+
+    return sources.length > 1
+  }, [codeResponse.isPending, selectedAddress])
+
+  const files = useMemo(
+    () => getCodeFiles(codeResponse, selectedAddress, hasCode),
+    [codeResponse, selectedAddress, hasCode],
+  )
+
+  const showRediscoverInfo = codeResponse.isError && !isReadOnly
 
   if (projectResponse.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   if (projectResponse.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
 
   if (selected === undefined) {
-    return <div>Select a contract</div>
+    return <ActionNeededState message="Select a contract" />
   }
-
-  let showRediscoverInfo = false
-  const response = codeResponse.data?.sources ?? []
-  let sources: ApiCodeResponse['sources'] = []
-  if (!hasCode) {
-    sources = [
-      {
-        name: selectedAddress ? toShortenedAddress(selectedAddress) : 'Loading',
-        code: '// Entry has no code associated with it',
-      },
-    ]
-  } else if (codeResponse.isPending) {
-    sources = [
-      {
-        name: selectedAddress ? toShortenedAddress(selectedAddress) : 'Loading',
-        code: '// Loading',
-      },
-    ]
-  } else if (codeResponse.isError) {
-    showRediscoverInfo = !isReadOnly
-    sources = [
-      {
-        name: selectedAddress ? toShortenedAddress(selectedAddress) : 'Loading',
-        code: '// ERROR: Failed to find the code for this contract',
-      },
-    ]
-  } else {
-    sources = response
-  }
-
-  const passedRange = codeResponse.isPending ? undefined : range
 
   return (
     <div className="flex h-full w-full select-none flex-col">
-      <div className="flex flex-shrink-0 flex-grow gap-1 overflow-x-auto border-b border-b-coffee-600 px-1 pt-1">
-        {sources.map((x, i) => (
-          <button
-            key={i}
-            onClick={() => setSourceIndex(selectedAddress ?? 'Loading', i)}
-            className={clsx(
-              'flex h-6 items-center gap-1 px-2 text-sm',
-              sourceIndex === i && 'bg-autumn-300 text-black',
-            )}
-          >
-            <IconCodeFile />
-            {x.name}
-          </button>
-        ))}
-      </div>
       {showRediscoverInfo && <RediscoverPrompt chain={selected.chain} />}
-      <CodeView
-        code={sources[sourceIndex ?? 0]?.code ?? '// No code'}
-        range={passedRange}
-        editorKey="code-panel"
+      <EditorView
+        editorId="code-panel"
+        files={files}
+        range={codeResponse.isPending ? undefined : range}
+        initialFileIndex={hasProxy ? 1 : 0}
       />
     </div>
   )
+}
+
+function getCodeFiles(
+  codeResponse: ReturnType<typeof useQuery<ApiCodeResponse>>,
+  selectedAddress: string | undefined,
+  hasCode: boolean,
+): EditorFile[] {
+  const addressName = selectedAddress
+    ? toShortenedAddress(selectedAddress)
+    : 'Loading'
+
+  if (!hasCode) {
+    return [
+      {
+        id: addressName,
+        name: addressName,
+        content: '// Entry has no code associated with it',
+        readOnly: true,
+        language: 'solidity',
+      },
+    ]
+  }
+
+  if (codeResponse.isPending) {
+    return [
+      {
+        id: addressName,
+        name: addressName,
+        content: '// Loading',
+        readOnly: true,
+        language: 'solidity',
+      },
+    ]
+  }
+
+  if (codeResponse.isError) {
+    return [
+      {
+        id: addressName,
+        name: addressName,
+        content: '// ERROR: Failed to find the code for this contract',
+        readOnly: true,
+        language: 'solidity',
+      },
+    ]
+  }
+
+  return codeResponse.data.sources.map((source) => ({
+    id: source.name,
+    name: source.name,
+    content: source.code,
+    readOnly: true,
+    language: 'solidity' as const,
+  }))
 }

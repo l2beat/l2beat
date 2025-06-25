@@ -2,7 +2,7 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22631701,
-  "configHash": "0xafe2357199b43a3780ffe10c666754af016ad18868b8b47d1012006791360be4",
+  "configHash": "0xacb7d400175d8989772a671e211e622ed844fe7b0f927057858fe86c44dc02c1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -168,6 +168,7 @@
       "sinceTimestamp": 1734387299,
       "sinceBlock": 21418005,
       "values": {
+        "$admin": "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E",
         "$immutable": false,
         "$implementation": "0xF4e69D58027De611d9F142e6b0Db6b11569F50E7",
         "$pastUpgrades": [
@@ -224,6 +225,11 @@
           "from": "ethereum:0x51D5C516c818dcf63E67B28cB2516166D8578c06",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -525,6 +531,14 @@
           "from": "ethereum:0xeBf5859b7646ca9cf8A981613569bF28394F2571",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E" }
+          ]
         },
         {
           "permission": "upgrade",
@@ -2294,5 +2308,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x126b3678c4a6824ce0d68500177078669b3e0a3d03845664b814e6125ffd57b8"
+  "permissionsConfigHash": "0xb684ba7ffcd1509bbb3e5eeeb71c6e0cf3605e8db79ecdf7067c0f21a659121d"
 }

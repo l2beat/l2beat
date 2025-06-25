@@ -12,6 +12,7 @@ import {
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('aztecconnect')
 
@@ -31,7 +32,7 @@ export const aztecconnect: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://aztec.network/'],
-      apps: ['https://zk.money'],
+      bridges: ['https://zk.money'],
       documentation: ['https://developers.aztec.network/'],
       explorers: ['https://aztec-connect-prod-explorer.aztec.network/'],
       repositories: ['https://github.com/AztecProtocol/aztec-connect'],
@@ -263,4 +264,5 @@ export const aztecconnect: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,8 +1,8 @@
 {
   "name": "morph",
   "chain": "ethereum",
-  "blockNumber": 22466462,
-  "configHash": "0xaea22eaea3760e409d464a2f6bb956466c3fc11b018239475ae533f2e2c99699",
+  "blockNumber": 22767866,
+  "configHash": "0x88eccfbc295e408517d0f5665f87c4d01ff04ae7d2ed7cb0f1a268363d6c50df",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -77,17 +77,18 @@
         ],
         "$upgradeCount": 2,
         "challengeDeposit": 1,
-        "deleteList": [],
+        "deleteList": [
+          "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
+          "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
+          "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
+          "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
+        ],
         "gasLimitAddStaker": 1000000,
         "gasLimitRemoveStakers": 8000000,
         "getActiveStakers": [
           "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
           "0xBBA36CdF020788f0D08D5688c0Bee3fb30ce1C80",
-          "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796",
-          "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
-          "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
-          "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
-          "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7"
+          "0x34E387B37d3ADEAa6D5B92cE30dE3af3DCa39796"
         ],
         "getStakersFromBitmap": [
           ["0x6aB0E960911b50f6d14f249782ac12EC3E7584A0"],
@@ -310,9 +311,9 @@
         "l2BaseFee": 1000000,
         "maxGasLimit": 30000000,
         "MESSENGER": "0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
-        "nextCrossDomainMessageIndex": 9369,
+        "nextCrossDomainMessageIndex": 10389,
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
-        "pendingQueueIndex": 9219,
+        "pendingQueueIndex": 10378,
         "ROLLUP_CONTRACT": "0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
         "whitelistChecker": "0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
@@ -492,15 +493,7 @@
     {
       "address": "0x61F2945d4bc9E40B66a6376d1094a50438f613e2",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0x6aB0E960911b50f6d14f249782ac12EC3E7584A0",
@@ -681,8 +674,8 @@
         "finalizationPeriodSeconds": 172800,
         "inChallenge": false,
         "l1StakingContract": "0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-        "lastCommittedBatchIndex": 20242,
-        "lastFinalizedBatchIndex": 20098,
+        "lastCommittedBatchIndex": 23201,
+        "lastFinalizedBatchIndex": 23127,
         "LAYER_2_CHAIN_ID": 1,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
@@ -773,15 +766,7 @@
     {
       "address": "0xa59B26DB10C5Ca26a97AA2Fd2E74CB8DA9D1EB65",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "address": "0xa79fEE4418338B59B8C6c93b87777A89F57c0Fd3",
@@ -808,15 +793,7 @@
     {
       "address": "0xb6cF39ee72e0127E6Ea6059e38B8C197227a6ac7",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Morph Multisig 2",
@@ -1063,7 +1040,7 @@
         "counterpart": "0x5300000000000000000000000000000000000007",
         "feeVault": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "maxReplayTimes": 3,
-        "messageNonce": 9369,
+        "messageNonce": 10389,
         "messageQueue": "0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
         "owner": "0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "paused": false,
@@ -1275,15 +1252,7 @@
     {
       "address": "0xf834ffbeb6bB3F4841afc6b5FB40B94cd580fa23",
       "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "sequence",
-          "from": "ethereum:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
-          "description": "Actors allowed to commit transaction batches and propose state roots",
-          "role": ".getActiveStakers"
-        }
-      ]
+      "proxyType": "EOA"
     },
     {
       "name": "Whitelist",
@@ -1789,5 +1758,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xc0dabbae9c2863b34af31edcb543c251e8a97126e2833677ae99c81b95f5e385"
+  "permissionsConfigHash": "0xff801d3c4dda54751297824dc4a17dc96abc486ee58b973cad53a1c445247565"
 }

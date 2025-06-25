@@ -7,6 +7,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const PROJECT_ID = ProjectId('hyperlane')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -33,7 +34,7 @@ export const hyperlane: Bridge = {
     category: 'Token Bridge',
     links: {
       websites: ['https://hyperlane.xyz/'],
-      apps: ['https://usenexus.org/'],
+      bridges: ['https://usenexus.org/'],
       repositories: ['https://github.com/hyperlane-xyz'],
       documentation: ['https://docs.hyperlane.xyz/'],
       socialMedia: [
@@ -260,4 +261,5 @@ export const hyperlane: Bridge = {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

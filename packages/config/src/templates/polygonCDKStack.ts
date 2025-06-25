@@ -55,6 +55,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
@@ -156,6 +157,7 @@ export function polygonCDKStack(
   const finalizationPeriod =
     templateVars.display.finality?.finalizationPeriod ?? 0
 
+  const discoveries = [templateVars.discovery, shared]
   return {
     type: 'layer2',
     addedAt: templateVars.addedAt,
@@ -353,7 +355,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046',
+              url: safeGetImplementation(rollupManagerContract),
             },
           ],
         },
@@ -441,6 +443,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(discoveries),
   }
 }
 

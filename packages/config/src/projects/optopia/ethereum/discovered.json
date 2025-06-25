@@ -2,7 +2,7 @@
   "name": "optopia",
   "chain": "ethereum",
   "blockNumber": 22581193,
-  "configHash": "0x05a98cebf6849b7cc2c759d6dd5236beef72df6423b684b4346808e7b422eafc",
+  "configHash": "0xfc3940272b17346b6e6d88e1cf3a7f2fbd3d81ae412499c4563dd93b763b680c",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -45,6 +45,7 @@
       "sinceTimestamp": 1715334971,
       "sinceBlock": 19838879,
       "values": {
+        "$admin": "0x161aF05fA6BdA1c6E7Ee12839d470931bA796948",
         "$immutable": false,
         "$implementation": "0xD09C8E2C6D124bCE71235046B95ab676bE1d5601",
         "$pastUpgrades": [
@@ -95,6 +96,11 @@
           "from": "ethereum:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C",
           "description": "set and change address mappings.",
           "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3",
+          "role": "admin"
         },
         {
           "permission": "upgrade",
@@ -189,6 +195,14 @@
           "from": "ethereum:0x039A3B4AF85A91626f428b8B881603b6DD1f6C4C",
           "description": "set and change address mappings.",
           "role": ".owner",
+          "via": [
+            { "address": "ethereum:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x03D5bc58E7b7E13ba785F67AFA2d2fC49cB2BdF3",
+          "role": "admin",
           "via": [
             { "address": "ethereum:0x161aF05fA6BdA1c6E7Ee12839d470931bA796948" }
           ]
@@ -1011,5 +1025,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x178be063dafd4607b9ee6ca25f05efa4de432a046ec50a68bac80d80781fcf96"
+  "permissionsConfigHash": "0x75a0f07e3488127f5bfeb289d8fd44c47c72e6deee268fb9e72ff10b94c56193"
 }

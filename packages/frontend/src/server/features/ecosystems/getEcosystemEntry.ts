@@ -1,12 +1,10 @@
-import { existsSync } from 'fs'
-import path from 'path'
 import type {
   Milestone,
   Project,
   ProjectColors,
   ProjectEcosystemInfo,
 } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, type ProjectId } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectLink } from '~/components/projects/links/types'
 import { getCollection } from '~/content/getCollection'
@@ -25,6 +23,7 @@ import { get7dTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 import { compareStageAndTvs } from '../scaling/utils/compareStageAndTvs'
 import { getStaticAsset } from '../utils/getProjectIcon'
 import { type BlobsData, getBlobsData } from './getBlobsData'
+import { getEcosystemLogo } from './getEcosystemLogo'
 import type { EcosystemProjectsCountData } from './getEcosystemProjectsChartData'
 import { getEcosystemProjectsChartData } from './getEcosystemProjectsChartData'
 import type { EcosystemToken } from './getEcosystemToken'
@@ -38,7 +37,11 @@ import { getProjectsByRaas } from './getProjectsByRaas'
 import { type TvsByStage, getTvsByStage } from './getTvsByStage'
 import type { TvsByTokenType } from './getTvsByTokenType'
 import { getTvsByTokenType } from './getTvsByTokenType'
+
+const EXCLUDED_FILTERS = ['stack', 'infrastructure', 'vm']
+
 export interface EcosystemEntry {
+  id: ProjectId
   slug: string
   name: string
   logo: {
@@ -76,6 +79,7 @@ export interface EcosystemEntry {
 
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
   ecosystemInfo: ProjectEcosystemInfo
+  gasTokens?: string[]
 }
 
 export async function getEcosystemEntry(
@@ -161,42 +165,28 @@ export async function getEcosystemEntry(
     ),
     projects: ecosystemProjects
       .filter((p) => !p.archivedAt)
-      .map((project) => ({
-        ...getScalingSummaryEntry(
+      .map((project) => {
+        const entry = getScalingSummaryEntry(
           project,
           projectsChangeReport.getChanges(project.id),
           tvs.projects[project.id.toString()],
           projectsActivity[project.id.toString()],
-        ),
-        ecosystemInfo: project.ecosystemInfo,
-      }))
+        )
+        return {
+          ...entry,
+          gasTokens: project.chainConfig?.gasTokens,
+          ecosystemInfo: project.ecosystemInfo,
+          filterable: entry.filterable?.filter(
+            (f) => !EXCLUDED_FILTERS.includes(f.id),
+          ),
+        }
+      })
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
     images: {
-      buildOn: getStaticAsset(`/ecosystems/${slug}/build-on.png`),
-      topDelegates: getStaticAsset(`/ecosystems/governance-delegates.png`),
+      buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
+      topDelegates: getStaticAsset(`/partners/governance-delegates.png`),
     },
-  }
-}
-
-function getEcosystemLogo(slug: string) {
-  const light = getImageParams(`/ecosystems/${slug}/logo.png`)
-  assert(light, 'Ecosystem logo not found')
-  const hasDark = existsSync(
-    path.join(process.cwd(), 'static', `ecosystems/${slug}/logo.dark.png`),
-  )
-  const dark = hasDark
-    ? getImageParams(`/ecosystems/${slug}/logo.dark.png`)
-    : undefined
-  if (dark?.width !== light.width || dark?.height !== light.height) {
-    throw new Error('Ecosystem logo dimensions mismatch')
-  }
-
-  return {
-    width: light.width,
-    height: light.height,
-    light: light.src,
-    dark: dark?.src,
   }
 }
 
@@ -230,7 +220,7 @@ function getGovernanceLinks(
     .at(-1)
   assert(lastPublication, 'No last publication')
 
-  const bankImage = getImageParams('/ecosystems/governance-bank.png')
+  const bankImage = getImageParams('/partners/governance-bank.png')
   assert(bankImage, 'Bank image not found')
 
   return {

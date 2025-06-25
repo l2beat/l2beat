@@ -1,3 +1,444 @@
+Generated with discovered.json: 0xf500f09c9ba1b9f5ac5eb5956794c67797d85d23
+
+# Diff at Fri, 20 Jun 2025 07:00:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@70109db050355e01a50f54497c60fdd17bbdbc2d block: 22666256
+- current block number: 22744056
+
+## Description
+
+new scheduled txs:
+1) add new rollupType (pessimistic - 11): https://app.blocksec.com/explorer/tx/eth/0x30ff069118dfed9022dc41e72794a6cae005cf1417dbcc245208a00628785946
+2) upgrade all 5 pessimistic chains to the above new type: https://app.blocksec.com/explorer/tx/eth/0xd89ca61d7a6968ab0838ef03666ac5dfe4f8750ba4afdbc576c535108f8655b3
+3) upgrade rollupManager, globalExitRoot and sharedBridge to new implementations: https://app.blocksec.com/explorer/tx/eth/0x231cc96debfd57c50e0c9971b8efcd4cb2b58377e68bbb4523771046860ea835
+4) add new rollupType (aggchainFEP - 12): https://app.blocksec.com/explorer/tx/eth/0xd9d5644147ce2c17e4a53c0c9ebfc576d5be6713209354fb8949e010870783c8
+
+interesting consensus impl (op-succinct -> katana?): https://etherscan.io/address/0xe7fe45579d784dc83b0fed844a65f4ceefde5682#code
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.33:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","implementation":"0x2E38cD55163137483E30580Cb468C2dFf1d85077"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.32:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0xA33619940bceb9be7c9679Dd80FA2918C2476382","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.31:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","implementation":"0x0FeB850B183C57534b56b7d56520133C8f9BDB65"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.30:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.29:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.28:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","newRollupTypeID":3,"upgradeData":"0x1c8b9370"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.27:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.26:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","implementation":"0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.25:
++        {"target":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","value":"0","function":"updateDelay","inputs":{"newDelay":259200},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.24:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F","data":{"_versionString":"v2.0.0-RC1-fork.5"}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.23.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.23.inputs.implementation:
+-        "0x2E38cD55163137483E30580Cb468C2dFf1d85077"
++        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
+      values.scheduledTransactionsDecoded.23.inputs.data:
++        {}
+      values.scheduledTransactionsDecoded.22.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.22.function:
+-        "upgradeAndCall"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.22.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.22.inputs.implementation:
+-        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
+      values.scheduledTransactionsDecoded.22.inputs.data:
+-        {}
+      values.scheduledTransactionsDecoded.22.inputs.consensusImplementation:
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.scheduledTransactionsDecoded.22.inputs.verifier:
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.22.inputs.forkID:
++        8
+      values.scheduledTransactionsDecoded.22.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.22.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.22.inputs.description:
++        "Type: Validium, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.22.predecessor:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad"
+      values.scheduledTransactionsDecoded.21.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.21.inputs.proxy:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.21.inputs.implementation:
+-        "0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
++        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.scheduledTransactionsDecoded.21.inputs.data:
++        {"_versionString":"v3.0.0-incaberry"}
+      values.scheduledTransactionsDecoded.20.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.20.inputs.implementation:
+-        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
++        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+      values.scheduledTransactionsDecoded.20.inputs.data:
++        {"trustedAggregator":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","_pendingStateTimeout":432000,"_trustedAggregatorTimeout":432000,"admin":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","timelock":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","emergencyCouncil":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","polygonZkEVM":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987","zkEVMVerifier":"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8","zkEVMForkID":7,"zkEVMChainID":1101}
+      values.scheduledTransactionsDecoded.19.function:
+-        "updateRollup"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.19.inputs.rollupContract:
+-        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+      values.scheduledTransactionsDecoded.19.inputs.newRollupTypeID:
+-        3
+      values.scheduledTransactionsDecoded.19.inputs.upgradeData:
+-        "0x1c8b9370"
+      values.scheduledTransactionsDecoded.19.inputs.consensusImplementation:
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.19.inputs.verifier:
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.scheduledTransactionsDecoded.19.inputs.forkID:
++        13
+      values.scheduledTransactionsDecoded.19.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.19.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.19.inputs.description:
++        "Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.18.function:
+-        "addNewRollupType"
++        "0xf34eb8eb"
+      values.scheduledTransactionsDecoded.18.inputs.consensusImplementation:
+-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.scheduledTransactionsDecoded.18.inputs.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.18.inputs.forkID:
+-        12
+      values.scheduledTransactionsDecoded.18.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.18.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.18.inputs.description:
+-        "Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.18.inputs.calldata:
++        "0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000"
+      values.scheduledTransactionsDecoded.17.target:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      values.scheduledTransactionsDecoded.17.function:
+-        "updateDelay"
++        "upgrade"
+      values.scheduledTransactionsDecoded.17.inputs.newDelay:
+-        259200
+      values.scheduledTransactionsDecoded.17.inputs.proxy:
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.scheduledTransactionsDecoded.17.inputs.implementation:
++        "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+      values.scheduledTransactionsDecoded.17.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.16.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.16.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.16.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.16.inputs.implementation:
+-        "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"
+      values.scheduledTransactionsDecoded.16.inputs.data:
+-        {"_versionString":"v2.0.0-RC1-fork.5"}
+      values.scheduledTransactionsDecoded.16.inputs.rollupContract:
++        "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
+      values.scheduledTransactionsDecoded.16.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.16.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.16.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.15.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.15.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.15.inputs.proxy:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.scheduledTransactionsDecoded.15.inputs.implementation:
+-        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
+      values.scheduledTransactionsDecoded.15.inputs.data:
+-        {}
+      values.scheduledTransactionsDecoded.15.inputs.rollupContract:
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
+      values.scheduledTransactionsDecoded.15.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.15.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.15.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.14.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.14.inputs.consensusImplementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.scheduledTransactionsDecoded.14.inputs.verifier:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.14.inputs.forkID:
+-        8
+      values.scheduledTransactionsDecoded.14.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.14.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.14.inputs.description:
+-        "Type: Validium, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.14.inputs.rollupContract:
++        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
+      values.scheduledTransactionsDecoded.14.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.14.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.14.predecessor:
+-        "0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.14.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.13.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.13.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.13.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.13.inputs.implementation:
+-        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.scheduledTransactionsDecoded.13.inputs.data:
+-        {"_versionString":"v3.0.0-incaberry"}
+      values.scheduledTransactionsDecoded.13.inputs.rollupContract:
++        "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec"
+      values.scheduledTransactionsDecoded.13.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.13.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.13.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.12.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.12.function:
+-        "upgradeAndCall"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.12.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.12.inputs.implementation:
+-        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+      values.scheduledTransactionsDecoded.12.inputs.data:
+-        {"trustedAggregator":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","_pendingStateTimeout":432000,"_trustedAggregatorTimeout":432000,"admin":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","timelock":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","emergencyCouncil":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","polygonZkEVM":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987","zkEVMVerifier":"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8","zkEVMForkID":7,"zkEVMChainID":1101}
+      values.scheduledTransactionsDecoded.12.inputs.consensusImplementation:
++        "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
+      values.scheduledTransactionsDecoded.12.inputs.verifier:
++        "0x0000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.inputs.forkID:
++        0
+      values.scheduledTransactionsDecoded.12.inputs.rollupVerifierType:
++        2
+      values.scheduledTransactionsDecoded.12.inputs.genesis:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.inputs.description:
++        "Type: aggchainFEP"
+      values.scheduledTransactionsDecoded.12.inputs.programVKey:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.11.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.11.inputs.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.11.inputs.verifier:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.scheduledTransactionsDecoded.11.inputs.forkID:
+-        13
+      values.scheduledTransactionsDecoded.11.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.11.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.11.inputs.description:
+-        "Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.11.inputs.rollupContract:
++        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
+      values.scheduledTransactionsDecoded.11.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.11.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.11.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.10.function:
+-        "0xf34eb8eb"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.10.inputs.calldata:
+-        "0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000"
+      values.scheduledTransactionsDecoded.10.inputs.consensusImplementation:
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.10.inputs.verifier:
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.10.inputs.forkID:
++        12
+      values.scheduledTransactionsDecoded.10.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.10.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.10.inputs.description:
++        "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.9.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.9.inputs.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.9.inputs.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.9.inputs.forkID:
+-        12
+      values.scheduledTransactionsDecoded.9.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.9.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.9.inputs.description:
+-        "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.9.inputs.rollupContract:
++        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.scheduledTransactionsDecoded.9.inputs.newRollupTypeID:
++        2
+      values.scheduledTransactionsDecoded.9.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.8.function:
+-        "updateRollup"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.8.inputs.rollupContract:
+-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.scheduledTransactionsDecoded.8.inputs.newRollupTypeID:
+-        2
+      values.scheduledTransactionsDecoded.8.inputs.upgradeData:
+-        "0x"
+      values.scheduledTransactionsDecoded.8.inputs.consensusImplementation:
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.scheduledTransactionsDecoded.8.inputs.verifier:
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      values.scheduledTransactionsDecoded.8.inputs.forkID:
++        11
+      values.scheduledTransactionsDecoded.8.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.8.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.8.inputs.description:
++        "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.7.inputs.verifier:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.7.inputs.forkID:
+-        11
++        8
+      values.scheduledTransactionsDecoded.7.inputs.description:
+-        "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
++        "Type: zkEVM, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.6.inputs.consensusImplementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.scheduledTransactionsDecoded.6.inputs.verifier:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.scheduledTransactionsDecoded.6.inputs.forkID:
+-        8
++        12
+      values.scheduledTransactionsDecoded.6.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.6.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.6.inputs.description:
+-        "Type: zkEVM, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
++        "Type: Pessimistic, Version: v0.3.3, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.6.inputs.rollupVerifierType:
++        1
+      values.scheduledTransactionsDecoded.6.inputs.programVKey:
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.scheduledTransactionsDecoded.6.delay:
+-        "864000"
++        "259200"
+    }
+```
+
+Generated with discovered.json: 0x219a78007d80727ed1ba3e3313b8a254d573274b
+
+# Diff at Mon, 09 Jun 2025 09:55:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22536886
+- current block number: 22666256
+
+## Description
+
+PolygonAdminMultisig adds members: 2/3 --> 5/12.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.11:
++        "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da"
+      values.$members.10:
++        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+      values.$members.9:
++        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
+      values.$members.8:
++        "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
+      values.$members.7:
++        "0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.6:
++        "0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.$members.5:
++        "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238"
+      values.$members.4:
++        "0x21618593F7147235aC8D511d68A547C935F9d417"
+      values.$members.3:
++        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
+      values.$members.2:
+-        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+      values.$members.1:
+-        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
+      values.$members.0:
+-        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
++        "0xAb3506507449bF1880f3337825efd19ac89E235E"
+      values.$threshold:
+-        2
++        5
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "5 of 12 (42%)"
+    }
+```
+
 Generated with discovered.json: 0x604bed436391fbb83141f0f1f0f85418469719f7
 
 # Diff at Fri, 23 May 2025 09:41:04 GMT:
@@ -3470,7 +3911,7 @@ Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
 
 ## Description
 
-xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the verifier differs.
 
 ## Watched changes
 

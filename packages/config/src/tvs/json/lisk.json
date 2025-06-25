@@ -103,7 +103,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Tunnel)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -140,7 +147,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

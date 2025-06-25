@@ -27,7 +27,7 @@ export const game7: ScalingProject = orbitStackL3({
     links: {
       websites: ['https://game7.io/'],
       documentation: ['https://docs.game7.io/'],
-      apps: ['https://build.game7.io/bridge'],
+      bridges: ['https://build.game7.io/bridge'],
       explorers: ['https://mainnet.game7.io'],
       repositories: ['https://github.com/G7DAO'],
       socialMedia: [

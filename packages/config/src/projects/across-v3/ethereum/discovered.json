@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22648158,
-  "configHash": "0x6a77a072ca5aec0d62e66c62cbb4aab84346f23dfbf716d6eb8d6975e3184aa0",
+  "blockNumber": 22665827,
+  "configHash": "0x71370af50eb2dab4175f0d0fd10c95c6537989ac19ff648f368bf537709ad8f6",
   "entries": [
     {
       "name": "VotingV2",
@@ -236,7 +236,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "124848874064400062208501378",
+        "totalSupply": "124860406982455347135404262",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -915,7 +915,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1749457703,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -1116,11 +1116,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1749457703,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2688547,
+        "numberOfDeposits": 2698317,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -1310,7 +1310,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1749457703,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1485,45 +1485,6 @@
       }
     },
     {
-      "name": "Voting",
-      "address": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xfb1fcd6317076fdbef15223fd2648c0717bce848ba28e8a422255da156151c8a"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1613597552,
-      "sinceBlock": 11876839,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "gatPercentage": "50000000000000000",
-        "getCurrentRoundId": 10122,
-        "getCurrentTime": 1749244439,
-        "getPendingRequests": [],
-        "getVotePhase": 1,
-        "inflationRate": 500000000000000,
-        "migratedAddress": "0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-        "rewardsExpirationTimeout": 31536000000,
-        "rounds": [
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0],
-          [0, [0], [0], 0]
-        ],
-        "snapshotMessageHash": "0x38b5b145f0c2d3cca373598867950f7f33fe7f7f5dab3f239e2b31966f761859",
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "voteTiming": 86400,
-        "votingToken": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
-      },
-      "errors": { "rounds": "Processing error occurred." },
-      "implementationNames": {
-        "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": "Voting"
-      }
-    },
-    {
       "name": "WorldChain_Adapter",
       "address": "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
       "type": "Contract",
@@ -1568,7 +1529,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1749244439,
+        "getCurrentTime": 1749457703,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1891,13 +1852,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x956d401bd5661675a20169d8184539401883b70a14c36ac1db7583a7a8ccd803",
-          "relayerRefundRoot": "0x7a6ca984bf7abeb417bd38ca86c5867fa82c753eb05b43882a962ea939be1e0e",
+          "poolRebalanceRoot": "0x17dcc821b3ff34b939d9dc1a60bf8e55f2b6e60885c60072117e2aab9c950ae6",
+          "relayerRefundRoot": "0x1c6ef633d656d8fd5f3146f8e9fecd6a0168a8d2c1541a844318379250e231cd",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "claimedBitMap": 0,
+          "claimedBitMap": 524287,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 19,
-          "challengePeriodEndTimestamp": 1749244211
+          "unclaimedPoolRebalanceLeafCount": 0,
+          "challengePeriodEndTimestamp": 1749457139
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -3947,59 +3908,6 @@
       "function target() view returns (address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0x8B1631ab830d11531aE83725fDa4D86012eCCd77": [
-      "constructor(uint256 _phaseLength, tuple(uint256 rawValue) _gatPercentage, tuple(uint256 rawValue) _inflationRate, uint256 _rewardsExpirationTimeout, address _votingToken, address _finder, address _timerAddress)",
-      "event EncryptedVote(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, bytes encryptedVote)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event PriceRequestAdded(uint256 indexed roundId, bytes32 indexed identifier, uint256 time)",
-      "event PriceResolved(uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData)",
-      "event RewardsRetrieved(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData, uint256 numTokens)",
-      "event VoteCommitted(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, bytes ancillaryData)",
-      "event VoteRevealed(address indexed voter, uint256 indexed roundId, bytes32 indexed identifier, uint256 time, int256 price, bytes ancillaryData, uint256 numTokens)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchCommit(tuple(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)[] commits)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, int256 salt)[] reveals)",
-      "function batchReveal(tuple(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)[] reveals)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash, bytes encryptedVote)",
-      "function commitAndEmitEncryptedVote(bytes32 identifier, uint256 time, bytes32 hash, bytes encryptedVote)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes ancillaryData, bytes32 hash)",
-      "function commitVote(bytes32 identifier, uint256 time, bytes32 hash)",
-      "function gatPercentage() view returns (uint256 rawValue)",
-      "function getCurrentRoundId() view returns (uint256)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getPendingRequests() view returns (tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[])",
-      "function getPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (int256)",
-      "function getPrice(bytes32 identifier, uint256 time) view returns (int256)",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getPriceRequestStatuses(tuple(bytes32 identifier, uint256 time)[] requests) view returns (tuple(uint8 status, uint256 lastVotingRound)[])",
-      "function getVotePhase() view returns (uint8)",
-      "function hasPrice(bytes32 identifier, uint256 time) view returns (bool)",
-      "function hasPrice(bytes32 identifier, uint256 time, bytes ancillaryData) view returns (bool)",
-      "function inflationRate() view returns (uint256 rawValue)",
-      "function migratedAddress() view returns (address)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function requestPrice(bytes32 identifier, uint256 time, bytes ancillaryData)",
-      "function requestPrice(bytes32 identifier, uint256 time)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time, bytes ancillaryData)[] toRetrieve) returns (tuple(uint256 rawValue) totalRewardToIssue)",
-      "function retrieveRewards(address voterAddress, uint256 roundId, tuple(bytes32 identifier, uint256 time)[] toRetrieve) returns (tuple(uint256 rawValue))",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, int256 salt)",
-      "function revealVote(bytes32 identifier, uint256 time, int256 price, bytes ancillaryData, int256 salt)",
-      "function rewardsExpirationTimeout() view returns (uint256)",
-      "function rounds(uint256) view returns (uint256 snapshotId, tuple(uint256 rawValue) inflationRate, tuple(uint256 rawValue) gatPercentage, uint256 rewardsExpirationTime)",
-      "function setCurrentTime(uint256 time)",
-      "function setGatPercentage(tuple(uint256 rawValue) newGatPercentage)",
-      "function setInflationRate(tuple(uint256 rawValue) newInflationRate)",
-      "function setMigrated(address newVotingAddress)",
-      "function setRewardsExpirationTimeout(uint256 NewRewardsExpirationTimeout)",
-      "function snapshotCurrentRound(bytes signature)",
-      "function snapshotMessageHash() view returns (bytes32)",
-      "function timerAddress() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function voteTiming() view returns (uint256 phaseLength)",
-      "function votingToken() view returns (address)"
-    ],
     "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1": [
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
       "event MessageRelayed(address target, bytes message)",
@@ -4606,5 +4514,5 @@
     "acrossv3/Registry": "0xb4e746d4370da3da1b38b8385b75e0b9c1ece346ddce15d86f4deff355726b4a",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x810c1fbed346d7c3e4b955d29cf61ef293dedc9bc7b36603d30d7d42dfedc1de"
+  "permissionsConfigHash": "0x5bf12d17b4c924d241c971392788f1c346ec05a4aff53476b18cfb66eb4e7511"
 }

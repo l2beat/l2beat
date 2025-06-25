@@ -4,5 +4,11 @@
     "address": "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3",
     "chain": "ethereum",
     "blockNumber": 22517869
+  },
+  "DisputeGameFactory_Metis_2": {
+    "hash": "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119",
+    "address": "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45",
+    "chain": "ethereum",
+    "blockNumber": 22738323
   }
 }

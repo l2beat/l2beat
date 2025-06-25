@@ -4,6 +4,7 @@ import { CONTRACTS } from '../../common'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('ronin')
 
@@ -42,7 +43,7 @@ export const ronin: Bridge = {
       'A migration to a new messaging infrastructure and new escrows [has been completed](https://x.com/Ronin_Network/status/1915743172673622494). Ronin is now using the Chainlink CCIP messaging protocol.',
     links: {
       websites: ['https://bridge.roninchain.com/'],
-      apps: ['https://bridge.roninchain.com/'],
+      bridges: ['https://bridge.roninchain.com/'],
       documentation: ['https://docs.roninchain.com/get-started'],
       explorers: ['https://explorer.roninchain.com/'],
       socialMedia: [
@@ -246,4 +247,5 @@ export const ronin: Bridge = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

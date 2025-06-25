@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 export const train: Bridge = {
   type: 'bridge',
@@ -37,4 +38,5 @@ export const train: Bridge = {
   technology: {
     destination: ['Ethereum', 'Base', 'Optimism', 'Starknet', 'Arbitrum'],
   },
+  discoveryInfo: getDiscoveryInfo([]),
 }

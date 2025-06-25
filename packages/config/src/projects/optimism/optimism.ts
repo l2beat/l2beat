@@ -27,7 +27,7 @@ export const optimism: ScalingProject = opStackL2({
       'OP Mainnet is an EVM-equivalent Optimistic Rollup. It aims to be fast, simple, and secure.',
     links: {
       websites: ['https://optimism.io/'],
-      apps: ['https://app.optimism.io'],
+      bridges: ['https://app.optimism.io'],
       documentation: ['https://community.optimism.io'],
       explorers: [
         'https://optimistic.etherscan.io',

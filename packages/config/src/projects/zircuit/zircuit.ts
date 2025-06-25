@@ -1,8 +1,14 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
+import {
+  ESCROW,
+  OPERATOR,
+  REASON_FOR_BEING_OTHER,
+  RISK_VIEW,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { opStackL2 } from '../../templates/opStack'
+import { safeGetImplementation } from '../../templates/utils'
 import type { ProjectScalingStateValidationCategory } from '../../types'
 
 const discovery = new ProjectDiscovery('zircuit')
@@ -18,6 +24,8 @@ const withdrawalKeepalivePeriodSecondsFmt: number =
     'L2OutputOracle',
     'withdrawalKeepalivePeriodSecondsFmt',
   )
+
+const verifierV2 = discovery.getContract('VerifierV2')
 
 // the opstack template automatically applies the correct risk rosette slices, so we do not override them
 // as soon as this is not the case anymore (backdoor removed, permissionless proposing etc.),
@@ -41,7 +49,7 @@ const ZIRCUIT_STATE_VALIDATION: ProjectScalingStateValidationCategory = {
     },
     {
       title: 'VerifierV2.sol - Etherscan source code',
-      url: 'https://etherscan.io/address/0xd5b424ac36928e2da7da9eca9807938a56988f5a#code',
+      url: safeGetImplementation(verifierV2),
     },
   ],
 }
@@ -68,7 +76,7 @@ export const zircuit: ScalingProject = opStackL2({
       'Zircuit is a universal ZK Rollup. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     links: {
       websites: ['https://zircuit.com/'],
-      apps: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
+      bridges: ['https://bridge.zircuit.com/', 'https://app.zircuit.com/'],
       documentation: ['https://docs.zircuit.com/'],
       explorers: ['https://explorer.zircuit.com/'],
       repositories: ['https://github.com/zircuit-labs'],
@@ -113,6 +121,10 @@ export const zircuit: ScalingProject = opStackL2({
         url: 'https://zircuit-mainnet.drpc.org/',
         callsPerMinute: 1500,
       },
+      {
+        type: 'sourcify',
+        chainId: 48900,
+      },
     ],
   },
   nonTemplateExcludedTokens: ['rswETH', 'rsETH'],
@@ -127,6 +139,14 @@ export const zircuit: ScalingProject = opStackL2({
         'custom wstETH Vault controlled by Lido governance, using the canonical bridge for messaging.',
     }),
   ],
+  nonTemplateRiskView: {
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_NO_MECHANISM(),
+      description:
+        RISK_VIEW.SEQUENCER_NO_MECHANISM().description +
+        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+    },
+  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -171,6 +191,20 @@ export const zircuit: ScalingProject = opStackL2({
       },
     },
   ],
+  nonTemplateTechnology: {
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      description:
+        OPERATOR.CENTRALIZED_OPERATOR.description +
+        ' The L2 code has been modified to allow the sequencer to explicitly censor selected L1->L2 transactions.',
+      references: [
+        {
+          title: 'L1Block.sol - Sourcify explorer source code',
+          url: 'https://repo.sourcify.dev/48900/0xFf256497D61dcd71a9e9Ff43967C13fdE1F72D12',
+        },
+      ],
+    },
+  },
   milestones: [
     {
       title: 'Mainnet Launch',

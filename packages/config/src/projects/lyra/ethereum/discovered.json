@@ -2,7 +2,7 @@
   "name": "lyra",
   "chain": "ethereum",
   "blockNumber": 22615668,
-  "configHash": "0x2904e971b9be2fe6ccfba97c5df5b35b893d9580a94d3d9222f61be74cfca5e5",
+  "configHash": "0x12f91af0a63156e576960864005d784dbd0bdb5607586ba4271f4c92d52d0807",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -221,6 +221,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x5456f02c08e9A018E42C39b351328E5AA864174A",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x61E44dC0dae6888B5a301887732217d5725B0bFf",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
@@ -298,6 +303,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x5456f02c08e9A018E42C39b351328E5AA864174A",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x35d5D43271548c984662d4879FBc8e041Bc1Ff93" }
@@ -398,6 +411,7 @@
       "sinceTimestamp": 1700021675,
       "sinceBlock": 18574846,
       "values": {
+        "$admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
         "$immutable": false,
         "$implementation": "0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13",
         "$pastUpgrades": [
@@ -990,5 +1004,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x388acabd047031c756b21cce369400c28fad67f0eb8fd817d53b1b27e429ef1a"
+  "permissionsConfigHash": "0xdb81677bfbb107d29a7be50e00f827fbd1a62530e4467ef0140266e4b951521e"
 }

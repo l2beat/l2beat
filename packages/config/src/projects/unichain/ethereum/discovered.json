@@ -2,7 +2,7 @@
   "name": "unichain",
   "chain": "ethereum",
   "blockNumber": 22645524,
-  "configHash": "0x989aa49b5b74467577c02419c345a9ac2fbe07315bf78a7451a940e550fdda52",
+  "configHash": "0xadd64239789f8855a1eb305b695681f24087a12f5ce04da1804ee526d5cdd929",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -441,6 +441,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x84B268A4101A8c8e3CcB33004F81eD08202bA124",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
           "role": "admin"
         },
         {
@@ -934,6 +939,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x9A3D64E386C18Cb1d6d5179a9596A4B5736e98A6",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xA2B597EaeAcb6F627e088cbEaD319e934ED5edad",
           "role": "admin",
           "via": [
@@ -1416,6 +1429,7 @@
       "sinceTimestamp": 1730748239,
       "sinceBlock": 21116353,
       "values": {
+        "$admin": "0x3B73Fa8d82f511A3caE17B5a26E4E1a2d5E2f2A4",
         "$immutable": false,
         "$implementation": "0x5D5a095665886119693F0B41d8DFeE78da033e8B",
         "$pastUpgrades": [
@@ -3174,5 +3188,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xf9fd169eae4c18f41c16f04308aff535d699c0d1851de987cece3b48426002c7"
+  "permissionsConfigHash": "0x6bcf19ca69412372fdb630ac4002abf51af29a7af60af8a1ab1a205080f387b4"
 }

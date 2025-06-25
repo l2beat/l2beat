@@ -163,7 +163,7 @@ export function useFilterState() {
   const [state, dispatch] = useReducer(
     (state: FilterState, action: FilterAction) =>
       filterReducer(state, action, track),
-    JSON.parse(filters),
+    safeParse(filters),
   )
 
   useEffect(() => {
@@ -173,5 +173,13 @@ export function useFilterState() {
   return {
     state,
     dispatch,
+  }
+}
+
+function safeParse(filters: string) {
+  try {
+    return JSON.parse(filters)
+  } catch (_) {
+    return {}
   }
 }

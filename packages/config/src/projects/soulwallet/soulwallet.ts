@@ -21,7 +21,7 @@ export const soulwallet: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description:

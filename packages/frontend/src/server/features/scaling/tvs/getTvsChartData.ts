@@ -19,7 +19,6 @@ export const TvsChartDataParams = z.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
   excludeAssociatedTokens: z.boolean(),
-  previewRecategorisation: z.boolean(),
 })
 
 export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
@@ -46,25 +45,17 @@ export async function getTvsChart({
   range,
   excludeAssociatedTokens,
   filter,
-  previewRecategorisation,
 }: TvsChartDataParams): Promise<TvsChartData> {
   if (env.MOCK) {
     return getMockTvsChartData({
       range,
       excludeAssociatedTokens,
       filter,
-      previewRecategorisation,
     })
   }
 
-  const projectsFilter = createTvsProjectsFilter(
-    filter,
-    previewRecategorisation,
-  )
-  const tvsProjects = await getTvsProjects(
-    projectsFilter,
-    previewRecategorisation,
-  )
+  const projectsFilter = createTvsProjectsFilter(filter)
+  const tvsProjects = await getTvsProjects(projectsFilter)
   if (tvsProjects.length === 0) {
     return []
   }

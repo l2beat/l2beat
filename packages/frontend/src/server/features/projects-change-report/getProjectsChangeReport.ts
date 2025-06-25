@@ -1,8 +1,9 @@
 import type { UpdateDiffRecord } from '@l2beat/database'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
@@ -10,6 +11,7 @@ export type ProjectsChangeReport = Awaited<
 
 export interface ProjectChanges {
   impactfulChange: boolean
+  becameVerifiedContracts: Record<string, EthereumAddress[]>
 }
 
 type ProjectChangeReport = Record<
@@ -18,6 +20,7 @@ type ProjectChangeReport = Record<
     implementationChange: EthereumAddress[]
     highSeverityFieldChange: EthereumAddress[]
     ultimateUpgraderChange: EthereumAddress[]
+    becameVerified: EthereumAddress[]
   }
 >
 
@@ -37,7 +40,24 @@ async function getProjectsChangeReportWithFns() {
 
   const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
   for (const [projectId, diffs] of Object.entries(byProject)) {
-    const byChain = groupBy(diffs, (diff) => diff.chain)
+    const project = await ps.getProject({
+      id: ProjectId(projectId),
+      select: ['discoveryInfo'],
+      where: ['discoveryInfo'],
+    })
+
+    // NOTE(radomski): We're optimistically saying that diffs are only active
+    // if all inputs used to create them are older than the block number we
+    // used to build the project information.
+    const activeDiffs = diffs.filter((diff) => {
+      const baseBlockNumber =
+        project?.discoveryInfo.blockNumberPerChain[diff.chain]
+      if (baseBlockNumber === undefined) return true
+      const isDiffActive = baseBlockNumber <= diff.diffBaseBlockNumber
+      return isDiffActive
+    })
+
+    const byChain = groupBy(activeDiffs, (diff) => diff.chain)
     for (const [chain, changes] of Object.entries(byChain)) {
       const changesByType = groupByType(changes)
 
@@ -52,6 +72,9 @@ async function getProjectsChangeReportWithFns() {
         ultimateUpgraderChange: changesByType.ultimateUpgraderChange.map((c) =>
           EthereumAddress(c.address),
         ),
+        becameVerified: changesByType.becameVerified.map((c) =>
+          EthereumAddress(c.address),
+        ),
       }
     }
   }
@@ -64,6 +87,7 @@ async function getProjectsChangeReportWithFns() {
           this.hasImplementationChanged(projectId) ||
           this.hasHighSeverityFieldChanged(projectId) ||
           this.hasUltimateUpgraderChanged(projectId),
+        becameVerifiedContracts: this.getBecameVerifiedContracts(projectId),
       }
     },
     hasImplementationChanged: function (projectId: string) {
@@ -87,6 +111,13 @@ async function getProjectsChangeReportWithFns() {
         !!ethereumChanges && ethereumChanges.ultimateUpgraderChange.length > 0
       )
     },
+    getBecameVerifiedContracts: function (projectId: string) {
+      return Object.fromEntries(
+        Object.entries(this.projects[projectId] ?? {}).map(
+          ([chain, changes]) => [chain, changes.becameVerified],
+        ),
+      )
+    },
   }
 }
 
@@ -95,7 +126,7 @@ function groupByType(changes: UpdateDiffRecord[]) {
     implementationChange: [],
     highSeverityFieldChange: [],
     ultimateUpgraderChange: [],
-    verificationChange: [],
+    becameVerified: [],
   }
   for (const change of changes) {
     result[change.type].push(change)
@@ -105,12 +136,33 @@ function groupByType(changes: UpdateDiffRecord[]) {
 
 function getProjectsChangeReportMock(): ProjectsChangeReport {
   return {
-    projects: {},
+    projects: {
+      geist: {
+        base: {
+          implementationChange: [],
+          highSeverityFieldChange: [],
+          ultimateUpgraderChange: [],
+          becameVerified: [
+            EthereumAddress(
+              '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
+            ),
+          ],
+        },
+      },
+    },
     getChanges: () => ({
       impactfulChange: false,
+      becameVerifiedContracts: {
+        base: [
+          EthereumAddress(
+            '0x9F904Fea0efF79708B37B99960e05900fE310A8E'.toLowerCase(),
+          ),
+        ],
+      },
     }),
     hasImplementationChanged: () => false,
     hasHighSeverityFieldChanged: () => false,
     hasUltimateUpgraderChanged: () => false,
+    getBecameVerifiedContracts: () => ({}),
   }
 }

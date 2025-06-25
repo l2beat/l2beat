@@ -64,6 +64,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 type DAProvider = ProjectScalingDa & {
@@ -689,6 +690,7 @@ function orbitStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 
@@ -1133,6 +1135,20 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
+        selector: '0x37501551',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
         sinceTimestamp: UnixTime(genesisTimestamp),
       },
     },

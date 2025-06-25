@@ -185,6 +185,25 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-BCAP",
+      "priceId": "blockchain-capital",
+      "symbol": "BCAP",
+      "name": "Blockchain Capital Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56040/large/bcap_logo_200.png?1748088291",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "blockchain-capital",
+        "decimals": 2,
+        "sinceTimestamp": 1748476800,
+        "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
+        "chain": "zksync2"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-BEL-1",
       "priceId": "bella-protocol",
       "symbol": "BEL",
@@ -505,7 +524,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -523,7 +550,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -541,27 +576,15 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
-    },
-    {
-      "mode": "auto",
-      "id": "zksync2-FRAX-2",
-      "priceId": "frax-share",
-      "symbol": "FRAX",
-      "name": "Frax (prev. FXS)",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/13423/large/frax.png?1745921071",
-      "amount": {
-        "type": "balanceOfEscrow",
-        "address": "0x3432B6A60D23Ca0dFCa7761B7ab56459D9C964D0",
-        "chain": "ethereum",
-        "escrowAddress": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-        "decimals": 18,
-        "sinceTimestamp": 1676367083,
-        "untilTimestamp": 1749103200
-      },
-      "category": "other",
-      "source": "canonical",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -597,7 +620,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -633,7 +664,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1089,6 +1128,25 @@
     },
     {
       "mode": "auto",
+      "id": "zksync2-PC0000031",
+      "priceId": "tradable-na-rent-financing-platform-sstn",
+      "symbol": "PC0000031",
+      "name": "Private Credit Direct Deal0000031",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "tradable-na-rent-financing-platform-sstn",
+        "decimals": 6,
+        "sinceTimestamp": 1748476800,
+        "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+        "chain": "zksync2"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "zksync2-PEPE-1",
       "priceId": "pepe",
       "symbol": "PEPE",
@@ -1247,7 +1305,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1301,7 +1367,15 @@
       },
       "category": "ether",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1589,7 +1663,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

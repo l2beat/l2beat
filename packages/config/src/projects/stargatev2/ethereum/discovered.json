@@ -1,8 +1,8 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 22593859,
-  "configHash": "0x380c8a62c27b7384ab930cfac807d7756d89c8249c370b524759d993b80238dd",
+  "blockNumber": 22666357,
+  "configHash": "0x934615ce72fd0e5d4628ed1386e2a4d6e32f38900cef2eaca615c1b9cfcee7a4",
   "entries": [
     {
       "name": "Treasurer",
@@ -174,12 +174,12 @@
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": "22524576783109262",
-        "poolBalance": "65537656000000000000",
+        "poolBalance": "65610252000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 556131,
+        "treasuryFee": 556127,
         "tvl": "1972071455000000000000"
       },
       "implementationNames": {
@@ -266,7 +266,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 955,
+        "nonce": 956,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -357,6 +357,26 @@
       }
     },
     {
+      "name": "FeeLibV1",
+      "address": "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xba43ed9e8ba96eba77ff0968eb3d527fd8a672fc60df9ec702e723ce18ce86bd"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1716837419,
+      "sinceBlock": 19963236,
+      "values": {
+        "$immutable": true,
+        "owner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+        "stargate": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+        "stargateType": 0
+      },
+      "implementationNames": {
+        "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3": "FeeLibV1"
+      }
+    },
+    {
       "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
       "type": "EOA",
       "proxyType": "EOA"
@@ -399,6 +419,7 @@
       "name": "StargatePoolNative",
       "address": "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
       "type": "Contract",
+      "template": "stargate/StargatePoolNative",
       "sourceHashes": [
         "0x63ac97930921267a1251904351ae2409e0d62d3d3c3fcb2ed7bc1fc4775321f7"
       ],
@@ -408,14 +429,15 @@
         "poolBalance",
         "treasuryFee",
         "tvl",
-        "getTransferGasLimit"
+        "getTransferGasLimit",
+        "deficitOffset"
       ],
       "sinceTimestamp": 1716837299,
       "sinceBlock": 19963227,
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "deficitOffset": 0,
+        "deficitOffset": "20000000000000000000000",
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
           "feeLib": "0x3E368B6C95c6fEfB7A16dCc0D756389F3c658a06",
@@ -430,14 +452,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "258148337386231183",
-        "poolBalance": "6215603722000000000000",
+        "plannerFee": "270572617652197011",
+        "poolBalance": "7942218075000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 3279777,
-        "tvl": "19791867830000000000000"
+        "treasuryFee": 2193126,
+        "tvl": "8928166699000000000000"
       },
       "implementationNames": {
         "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -483,6 +505,7 @@
       "name": "StargatePoolMigratable",
       "address": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
       "type": "Contract",
+      "template": "stargate/StargatePoolMigratable",
       "sourceHashes": [
         "0xad746913c310c0ee643e98f0a0f4bc6095877e7c82e0779cb5d5e852e0e12c8d"
       ],
@@ -492,7 +515,8 @@
         "poolBalance",
         "treasuryFee",
         "tvl",
-        "getTransferGasLimit"
+        "getTransferGasLimit",
+        "deficitOffset"
       ],
       "sinceTimestamp": 1716837359,
       "sinceBlock": 19963231,
@@ -516,14 +540,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "130528526648762305",
-        "poolBalance": 7840423302354,
+        "plannerFee": "133059985755044678",
+        "poolBalance": 1084545034067,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 169419653214,
-        "tvl": 7264772558649
+        "treasuryFee": 175630078394,
+        "tvl": 2982685425362
       },
       "implementationNames": {
         "0x933597a323Eb81cAe705C5bC29985172fd5A3973": "StargatePoolMigratable"
@@ -547,6 +571,30 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5": ""
+      }
+    },
+    {
+      "name": "Metis Token",
+      "address": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
+      "type": "Contract",
+      "template": "metis/METISToken",
+      "sourceHashes": [
+        "0xd0f9d9680beb2766f32df8f35302771cde6d0ccb5c3e7f32fdacd13bf5c58203"
+      ],
+      "proxyType": "immutable",
+      "description": "Metis token contract.",
+      "sinceTimestamp": 1607734167,
+      "sinceBlock": 11434969,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "name": "Metis Token",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "symbol": "Metis",
+        "totalSupply": "10000000000000000000000000"
+      },
+      "implementationNames": {
+        "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": "MToken"
       }
     },
     {
@@ -645,6 +693,7 @@
       "name": "StargatePoolUSDC",
       "address": "0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
       "type": "Contract",
+      "template": "stargate/StargatePoolUSDC",
       "sourceHashes": [
         "0x0ef9b0bca6f74cd24daa9d50e734dfec2ecbc71cef5b209fa0c0f93561ad2640"
       ],
@@ -654,7 +703,8 @@
         "poolBalance",
         "treasuryFee",
         "tvl",
-        "getTransferGasLimit"
+        "getTransferGasLimit",
+        "deficitOffset"
       ],
       "sinceTimestamp": 1716837347,
       "sinceBlock": 19963230,
@@ -678,14 +728,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "187437202931415840",
-        "poolBalance": 15424442288654,
+        "plannerFee": "191086636908809767",
+        "poolBalance": 18644730361334,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 192453096814,
-        "tvl": 23569186983421
+        "treasuryFee": 203681767834,
+        "tvl": 7889376749768
       },
       "implementationNames": {
         "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": "StargatePoolUSDC"
@@ -791,7 +841,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 264,
+        "nonce": 269,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -807,13 +857,6 @@
         "0xf0d2f0cd5f3481632b35bc976e24b16d77ccdeefeb7307139a3f3d2adf485094"
       ],
       "proxyType": "immutable",
-      "ignoreInWatchMode": [
-        "plannerFee",
-        "poolBalance",
-        "treasuryFee",
-        "tvl",
-        "getTransferGasLimit"
-      ],
       "sinceTimestamp": 1716837335,
       "sinceBlock": 19963229,
       "values": {
@@ -869,6 +912,38 @@
       "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "LPToken",
+      "address": "0xF14EEe033D8b00101aB147F87cB238a2d3E74940",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xcc77d9eb726752ebdb78eb8b70601d6a55ccf1fcc37063078f083b587409a6fb"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1716837335,
+      "sinceBlock": 19963229,
+      "values": {
+        "$immutable": true,
+        "decimals": 18,
+        "DOMAIN_SEPARATOR": "0xe5ed130a4c4e37563a40812c7467476b2dcd4364bba760fba24bc0acd7909693",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "METIS-LP",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xF14EEe033D8b00101aB147F87cB238a2d3E74940",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "METIS-LP",
+        "stargate": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
+        "symbol": "S*METIS",
+        "totalSupply": 1105000000000000
+      },
+      "implementationNames": {
+        "0xF14EEe033D8b00101aB147F87cB238a2d3E74940": "LPToken"
+      }
     }
   ],
   "abis": {
@@ -1313,6 +1388,25 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ],
+    "0x6Dd69717B1194B81A92105B7e0F94cb40f68A3e3": [
+      "constructor(address _stargate)",
+      "error FeeLib_InvalidFeeConfiguration()",
+      "error FeeLib_Paused()",
+      "error FeeLib_Unauthorized()",
+      "event FeeConfigSet(uint32 eid, tuple(bool paused, uint64 zone1UpperBound, uint64 zone2UpperBound, uint24 zone1FeeMillionth, uint24 zone2FeeMillionth, uint24 zone3FeeMillionth, uint24 rewardMillionth) config)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event PausedSet(uint32 eid, bool isPaused)",
+      "function applyFee(tuple(address sender, uint32 dstEid, uint64 amountInSD, uint64 deficitSD, bool toOFT, bool isTaxi) _params) view returns (uint64 amountOutSD)",
+      "function applyFeeView(tuple(address sender, uint32 dstEid, uint64 amountInSD, uint64 deficitSD, bool toOFT, bool isTaxi) _params) view returns (uint64 amountOutSD)",
+      "function feeConfigs(uint32 eid) view returns (bool paused, uint64 zone1UpperBound, uint64 zone2UpperBound, uint24 zone1FeeMillionth, uint24 zone2FeeMillionth, uint24 zone3FeeMillionth, uint24 rewardMillionth)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function setFeeConfig(uint32 _dstEid, uint64 _zone1UpperBound, uint64 _zone2UpperBound, uint24 _zone1FeeMillionth, uint24 _zone2FeeMillionth, uint24 _zone3FeeMillionth, uint24 _rewardMillionth)",
+      "function setPaused(uint32 _dstEid, bool _isPaused)",
+      "function stargate() view returns (address)",
+      "function stargateType() view returns (uint8)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D": [
       "constructor(address _endpoint, uint256 _treasuryGasLimit, uint256 _treasuryGasForFeeCap)",
       "error DVN_InvalidDVNIdx()",
@@ -1621,6 +1715,31 @@
       "function unreceivedTokens(bytes32 guid, uint8 index) view returns (bytes32 hash)",
       "function withdrawPlannerFee()",
       "function withdrawTreasuryFee(address _to, uint64 _amountSD)"
+    ],
+    "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e": [
+      "constructor(address[] minters, uint256 maxSupply)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function addMinter(address minter)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address target, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function isOwner() view returns (bool)",
+      "function mint(address target, uint256 amount)",
+      "function name() view returns (string)",
+      "function owner() view returns (address)",
+      "function removeMinter(address minter)",
+      "function renounceOwnership()",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address recipient, uint256 amount) returns (bool)",
+      "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)",
+      "function transferOwnership(address newOwner)"
     ],
     "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3": [
       "constructor(address initialOwner)",
@@ -2040,10 +2159,41 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xF14EEe033D8b00101aB147F87cB238a2d3E74940": [
+      "constructor(string _name, string _symbol, uint8 _decimals)",
+      "error InvalidShortString()",
+      "error LPToken_Unauthorized()",
+      "error StringTooLong(string str)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 amount) returns (bool)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burnFrom(address _from, uint256 _amount)",
+      "function decimals() view returns (uint8)",
+      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
+      "function mint(address _to, uint256 _amount)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function stargate() view returns (address)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 amount) returns (bool)",
+      "function transferFrom(address from, address to, uint256 amount) returns (bool)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "metis/METISToken": "0xe4c7c8a93327a313a78b8443c90b3cfe44501c5ddc41bab647f77de5ff00152f",
+    "stargate/StargatePoolMigratable": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
+    "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
+    "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0xd38320abb805b84929ad340f84666a03eb03986e23d6460d992347433098b593"
+  "permissionsConfigHash": "0xe196bd73ed03a687a9bc1c7e0216d6d52eecb7c7eecaf7e52492a3abb125d1ed"
 }

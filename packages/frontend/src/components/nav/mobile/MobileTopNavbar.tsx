@@ -1,7 +1,5 @@
 import { cn } from '~/utils/cn'
 import { Logo } from '../../Logo'
-import { useRecategorisationPreviewContext } from '../../recategorisation-preview/RecategorisationPreviewProvider'
-import { RecategorisationPreviewSwitch } from '../../recategorisation-preview/RecategorisationPreviewSwitch'
 import { SmallSearchBarButton } from '../../search-bar/SearchBarButton'
 import type { NavGroup } from '../types'
 import { MobileNavTabs } from './MobileNavTabs'
@@ -16,7 +14,6 @@ export function MobileTopNavbar({
   logoLink,
   className,
 }: { groups: NavGroup[]; logoLink: string; className?: string }) {
-  const { isScalingMainPage } = useRecategorisationPreviewContext()
   return (
     <div className={cn('z-10 lg:hidden', className)}>
       <div className="relative flex h-16 flex-row items-stretch justify-between gap-8 border-divider border-b bg-header-primary px-3.5">
@@ -31,19 +28,11 @@ export function MobileTopNavbar({
         </div>
         {/* Right side */}
         <div className="flex flex-row items-center gap-4">
-          {isScalingMainPage && (
-            <RecategorisationPreviewSwitch className="max-md:hidden lg:hidden" />
-          )}
           <SmallSearchBarButton />
           <MobileNavTriggerOpen />
         </div>
       </div>
       <MobileNavTabs groups={groups} />
-      {isScalingMainPage && (
-        <div className="flex h-10 items-center border-divider border-b bg-header-primary px-4 py-1 md:hidden">
-          <RecategorisationPreviewSwitch className="w-full justify-between font-medium" />
-        </div>
-      )}
     </div>
   )
 }

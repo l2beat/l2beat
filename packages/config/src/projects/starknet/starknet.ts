@@ -30,6 +30,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -200,7 +201,7 @@ export const starknet: ScalingProject = {
     category: 'ZK Rollup',
 
     links: {
-      apps: ['https://starkgate.starknet.io/'],
+      bridges: ['https://starkgate.starknet.io/'],
       websites: [
         'https://starknet.io/',
         'https://starkware.co/starknet/',
@@ -1064,4 +1065,5 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

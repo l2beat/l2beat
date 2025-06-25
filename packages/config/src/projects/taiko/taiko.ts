@@ -23,6 +23,7 @@ import { formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('taiko')
 
@@ -111,7 +112,7 @@ export const taiko: ScalingProject = {
     category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
-      apps: ['https://bridge.taiko.xyz/'],
+      bridges: ['https://bridge.taiko.xyz/'],
       documentation: ['https://docs.taiko.xyz/'],
       explorers: ['https://taikoscan.io', 'https://taikoscan.network/'],
       repositories: ['https://github.com/taikoxyz'],
@@ -461,4 +462,5 @@ export const taiko: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

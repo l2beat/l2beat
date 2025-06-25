@@ -65,6 +65,19 @@ async function getImplementation(
   return implementation
 }
 
+async function getOwner(
+  provider: IProvider,
+  addressManager: EthereumAddress,
+): Promise<EthereumAddress> {
+  const owner = await provider.callMethod<EthereumAddress>(
+    addressManager,
+    'function owner() view returns(address)',
+    [],
+  )
+  assert(owner, 'missing owner')
+  return owner
+}
+
 export async function detectResolvedDelegateProxy(
   provider: IProvider,
   address: EthereumAddress,
@@ -82,6 +95,8 @@ export async function detectResolvedDelegateProxy(
     addressManager,
     implementationName,
   )
+
+  const admin = await getOwner(provider, addressManager)
 
   const pastUpgrades = await getPastUpgradesSingleEvent(
     provider,
@@ -103,6 +118,7 @@ export async function detectResolvedDelegateProxy(
     values: {
       $immutable: false,
       $implementation: implementation.toString(),
+      $admin: admin.toString(),
       $pastUpgrades: pastUpgrades as ContractValue,
       $upgradeCount: pastUpgrades.length,
       ResolvedDelegateProxy_addressManager: addressManager.toString(),
