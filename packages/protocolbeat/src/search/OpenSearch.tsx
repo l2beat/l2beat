@@ -75,8 +75,8 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
   }
 
   return (
-    <>
-      <div className="flex min-w-[20rem] rounded border bg-coffee-700 p-1">
+    <div className="relative w-[20rem]">
+      <div className="flex w-full rounded border bg-coffee-700 p-1">
         <div className="flex w-full items-center gap-2">
           <IconSearch />
           <input
@@ -157,7 +157,7 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
 
       <div
         ref={resultsRef}
-        className="scrollbar-thin absolute top-full right-0 left-0 z-50 mt-1 max-h-[300px] overflow-y-auto rounded border border-coffee-600 bg-coffee-800 shadow-lg"
+        className="scrollbar-thin -translate-x-1/2 absolute top-full left-1/2 z-50 mt-1 max-h-[300px] w-max min-w-full max-w-[40rem] overflow-y-auto text-wrap break-all rounded border border-coffee-600 bg-coffee-800 shadow-lg"
       >
         {data.entryCount > 0 ? (
           searchTerm.startsWith('%') ? (
@@ -179,6 +179,6 @@ export function OpenSearch({ inputRef, project, select }: OpenSearchProps) {
           <div className="p-3 text-center text-gray-400">No results found</div>
         )}
       </div>
-    </>
+    </div>
   )
 }
