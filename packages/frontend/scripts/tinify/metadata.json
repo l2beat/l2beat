@@ -1386,5 +1386,7 @@
   "static/images/architecture/cartesi-prt-honeypot.png": "d3cfeee940c8b40c89bc593b475cc235",
   "static/meta-images/governance/publications/governance-review-56.png": "892c0818b45735e83ee6607c917576ef",
   "static/meta-images/governance/publications/governance-review-57.png": "5e7fe513304594a955f4d04af95bc82e",
-  "static/partners/the-elastic-network/alternative-logo.png": "c0eda147138cc784fca244781fb2437a"
+  "static/partners/the-elastic-network/alternative-logo.png": "c0eda147138cc784fca244781fb2437a",
+  "static/icons/namechain.png": "c5363aadef772854308a934717c22118",
+  "static/meta-images/scaling/projects/namechain/opengraph-image.png": "a4cba131615b3b341f8842d32e868b63"
 }
