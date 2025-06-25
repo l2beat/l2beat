@@ -5,7 +5,6 @@ import {
   TemplateService,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
 import { v as z } from '@l2beat/validate'
 import express from 'express'
 import { DiffoveryController } from './diffovery/DiffoveryController'
@@ -62,20 +61,16 @@ const matchFlatQuerySchema = z.object({
   against: z.enum(['templates', 'projects']),
 })
 
-export function runDiscoveryUi({
-  readonly,
-  etherscanApiKey,
-}: { readonly: boolean; etherscanApiKey: string | undefined }) {
+export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const app = express()
   const port = process.env.PORT ?? 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
-  assert(etherscanApiKey, 'explorerApiKey is required')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
-  const diffoveryController = new DiffoveryController(etherscanApiKey)
+  const diffoveryController = new DiffoveryController()
 
   app.use(express.json())
 
