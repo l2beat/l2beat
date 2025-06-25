@@ -255,6 +255,7 @@ function toBackendTrackedTxsConfig(
               address: config.query.address,
               selector: config.query.selector,
               signature: config.query.functionSignature,
+              topics: config.query.topics,
             },
           }
         }

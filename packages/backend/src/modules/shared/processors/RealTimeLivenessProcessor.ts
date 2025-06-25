@@ -110,61 +110,30 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     }
 
     for (const log of logs) {
-      const selector = log.data.slice(0, 10)
-
+      // for now we only support function calls in logs
       const matchingCalls = this.functionCalls.filter(
         (c) =>
-          c.params.selector === selector &&
-          c.params.address.toLowerCase() === log.address.toLowerCase(),
+          c.params.address.toLowerCase() === log.address.toLowerCase() &&
+          c.params.topics?.some((topic) => log.topics.includes(topic)),
       )
 
-      const matchingSubmissions = this.sharpSubmissions.filter(
-        (c) =>
-          c.params.selector === selector &&
-          c.params.address.toLowerCase() === log.address.toLowerCase(),
-      )
+      const results = matchingCalls
+        .map((config) => ({
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: log.transactionHash as string,
+          configurationId: config.id,
+        }))
+        .filter(
+          (result) =>
+            !records.some(
+              (r) =>
+                r.txHash === result.txHash &&
+                r.configurationId === result.configurationId,
+            ),
+        )
 
-      const matchingSharedBridgeCalls = this.sharedBridges.filter(
-        (c) =>
-          c.params.selector === selector &&
-          c.params.address.toLowerCase() === log.address.toLowerCase(),
-      )
-
-      const filteredSubmissions = matchingSubmissions.filter((c) =>
-        isProgramHashProven(
-          { input: log.data as string },
-          c.params.programHashes,
-        ),
-      )
-
-      const filteredSharedBridgeCalls = matchingSharedBridgeCalls.filter((c) =>
-        isChainIdMatching(log.data as string, c.params),
-      )
-
-      const results = [
-        ...matchingCalls,
-        ...filteredSubmissions,
-        ...filteredSharedBridgeCalls,
-      ].map((config) => ({
-        timestamp: block.timestamp,
-        blockNumber: block.number,
-        txHash: log.transactionHash as string,
-        configurationId: config.id,
-      }))
-
-      for (const result of results) {
-        if (
-          records.some(
-            (r) =>
-              r.txHash === result.txHash &&
-              r.configurationId === result.configurationId,
-          )
-        ) {
-          continue
-        }
-
-        records.push(result)
-      }
+      records.push(...results)
     }
 
     this.logger.info(

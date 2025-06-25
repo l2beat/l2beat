@@ -62,6 +62,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const from = EthereumAddress.random()
       const to = EthereumAddress.random()
       const selector = '0x12345678'
+      const topic = '0xabcdef12'
 
       const configurations: TrackedTxConfigEntry[] = [
         {
@@ -87,6 +88,7 @@ describe(RealTimeLivenessProcessor.name, () => {
             address: to,
             selector,
             signature: `function transfer(address,uint256)`,
+            topics: [topic],
           },
         },
       ]
@@ -112,15 +114,15 @@ describe(RealTimeLivenessProcessor.name, () => {
       const logs: Log[] = [
         {
           address: to,
-          topics: [],
-          data: `${selector}000123`,
+          topics: [topic],
+          data: '0xdata',
           transactionHash: txHash1,
           blockNumber: block.number,
         },
         {
           address: to,
-          topics: [],
-          data: `${selector}000123`,
+          topics: [topic],
+          data: '0xdata',
           transactionHash: txHash2,
           blockNumber: block.number,
         },

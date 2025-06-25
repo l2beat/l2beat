@@ -201,6 +201,7 @@ interface FunctionCall {
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: `function ${string}`
+  topics?: string[]
   /** Inclusive */
   sinceTimestamp: UnixTime
   /** Inclusive */

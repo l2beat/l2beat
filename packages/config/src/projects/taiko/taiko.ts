@@ -222,6 +222,9 @@ export const taiko: ScalingProject = {
           selector: '0x47faad14',
           functionSignature:
             'function proposeBatch(bytes _params, bytes _txList) returns (tuple(bytes32 txsHash, tuple(uint16 numTransactions, uint8 timeShift, bytes32[] signalSlots)[] blocks, bytes32[] blobHashes, bytes32 extraData, address coinbase, uint64 proposedIn, uint64 blobCreatedIn, uint32 blobByteOffset, uint32 blobByteSize, uint32 gasLimit, uint64 lastBlockId, uint64 lastBlockTimestamp, uint64 anchorBlockId, bytes32 anchorBlockHash, tuple(uint8 adjustmentQuotient, uint8 sharingPctg, uint32 gasIssuancePerSecond, uint64 minGasExcess, uint32 maxGasIssuancePerBlock) baseFeeConfig) info_, tuple(bytes32 infoHash, address proposer, uint64 batchId, uint64 proposedAt) meta_)',
+          topics: [
+            '0x9eb7fc80523943f28950bbb71ed6d584effe3e1e02ca4ddc8c86e5ee1558c096', //BatchProposed
+          ],
           sinceTimestamp: UnixTime(1747823664),
         },
       },
@@ -266,6 +269,9 @@ export const taiko: ScalingProject = {
           selector: '0xc9cc2843',
           functionSignature:
             'function proveBatches(bytes _params, bytes _proof)',
+          topics: [
+            '0xc99f03c7db71a9e8c78654b1d2f77378b413cc979a02fa22dc9d39702afa92bc', //BatchesProved
+          ],
           sinceTimestamp: UnixTime(1747815696),
         },
       },
