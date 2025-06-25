@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -47,9 +47,7 @@ export function createBridgesRouter(
   router.get(
     '/bridges/projects/:slug',
     validateRoute({
-      params: z.object({
-        slug: z.string(),
-      }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(

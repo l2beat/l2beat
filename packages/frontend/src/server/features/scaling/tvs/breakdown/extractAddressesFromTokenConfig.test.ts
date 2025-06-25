@@ -147,8 +147,8 @@ function mockCalculationFormula(args: Formula[]): CalculationFormula {
   })
 }
 
-function mockToken(amount?: Formula): TvsToken {
-  return mockObject({
+function mockToken(amount?: CalculationFormula | AmountFormula): TvsToken {
+  return mockObject<TvsToken>({
     mode: 'auto',
     id: TokenId('1'),
     priceId: '1',

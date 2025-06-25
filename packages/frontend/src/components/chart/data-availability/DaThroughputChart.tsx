@@ -2,7 +2,10 @@ import { useMemo, useState } from 'react'
 import { Checkbox } from '~/components/core/Checkbox'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { useIncludeScalingOnly } from '~/pages/data-availability/throughput/components/DaThroughputContext'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
+import {
+  type DaThroughputTimeRange,
+  DaThroughputTimeRangeValues,
+} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '../../core/chart/ChartTimeRangeControls'
@@ -77,7 +80,7 @@ export function DaThroughputChart() {
           name="Range"
           value={range}
           setValue={setRange}
-          options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+          options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
             value: v,
             label: v.toUpperCase(),
           }))}

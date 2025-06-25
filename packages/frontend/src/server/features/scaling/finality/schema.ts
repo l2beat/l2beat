@@ -1,25 +1,26 @@
-import z from 'zod'
+import { v } from '@l2beat/validate'
 
-export const FinalityDataPoint = z.object({
-  minimumInSeconds: z.number().nonnegative().int().optional(),
-  averageInSeconds: z.number().nonnegative().int(),
-  maximumInSeconds: z.number().nonnegative().int(),
+export const FinalityDataPoint = v.object({
+  minimumInSeconds: v
+    .number()
+    .check((v) => Number.isInteger(v) && v >= 0)
+    .optional(),
+  averageInSeconds: v.number().check((v) => Number.isInteger(v) && v >= 0),
+  maximumInSeconds: v.number().check((v) => Number.isInteger(v) && v >= 0),
 })
-export type FinalityDataPoint = z.infer<typeof FinalityDataPoint>
+export type FinalityDataPoint = v.infer<typeof FinalityDataPoint>
 
-export const FinalityProjectData = z.object({
+export const FinalityProjectData = v.object({
   timeToInclusion: FinalityDataPoint,
-  stateUpdateDelays: z
-    .object({
-      averageInSeconds: z.number().nonnegative().int(),
-    })
-    .nullable(),
-  syncedUntil: z.number(),
+  stateUpdateDelays: v.union([
+    v.object({
+      averageInSeconds: v.number().check((v) => Number.isInteger(v) && v >= 0),
+    }),
+    v.null(),
+  ]),
+  syncedUntil: v.number(),
 })
-export type FinalityProjectData = z.infer<typeof FinalityProjectData>
+export type FinalityProjectData = v.infer<typeof FinalityProjectData>
 
-export const FinalityData = z.record(
-  z.string(),
-  z.optional(FinalityProjectData),
-)
-export type FinalityData = z.infer<typeof FinalityData>
+export const FinalityData = v.record(v.string(), FinalityProjectData.optional())
+export type FinalityData = v.infer<typeof FinalityData>

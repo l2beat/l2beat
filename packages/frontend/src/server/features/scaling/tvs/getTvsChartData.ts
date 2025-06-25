@@ -1,6 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,13 +15,13 @@ import {
 } from './utils/projectFilterUtils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
 
-export const TvsChartDataParams = z.object({
+export const TvsChartDataParams = v.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  excludeAssociatedTokens: z.boolean(),
+  excludeAssociatedTokens: v.boolean(),
 })
 
-export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
+export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
 type TvsChartDataPoint = readonly [
   timestamp: number,

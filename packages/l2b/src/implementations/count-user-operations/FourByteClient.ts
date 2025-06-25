@@ -1,12 +1,7 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-const Response = z.object({
-  results: z.array(
-    z.object({
-      id: z.number(),
-      text_signature: z.string(),
-    }),
-  ),
+const Response = v.object({
+  results: v.array(v.object({ id: v.number(), text_signature: v.string() })),
 })
 
 export class FourByteClient {

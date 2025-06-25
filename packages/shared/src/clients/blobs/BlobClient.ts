@@ -1,7 +1,7 @@
 import { utils } from 'ethers'
 
 import { assert, type json } from '@l2beat/shared-pure'
-import type { z } from 'zod'
+import type { v as z } from '@l2beat/validate'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import type { RpcClient } from '../rpc/RpcClient'
 import {

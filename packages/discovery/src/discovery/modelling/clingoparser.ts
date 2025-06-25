@@ -1,5 +1,5 @@
+import { type Parser, v } from '@l2beat/validate'
 import { type Node, grammar } from 'ohm-js'
-import * as z from 'zod'
 
 // In Ohm grammar, uppercase ids are for syntactic rules
 // which allow spaces in-between tokens.
@@ -64,14 +64,15 @@ export type ClingoValue =
   | undefined
   | ClingoFact
   | ClingoValue[]
-export const ClingoValue: z.ZodType<ClingoValue> = z.lazy(() =>
-  z.union([
-    z.string(),
-    z.number(),
-    z.null().transform(() => undefined),
-    z.undefined(),
+
+export const ClingoValue: Parser<ClingoValue> = v.lazy(() =>
+  v.union([
+    v.string(),
+    v.number(),
+    v.null().transform(() => undefined),
+    v.undefined(),
     ClingoFact,
-    z.array(ClingoValue),
+    v.array(ClingoValue),
   ]),
 )
 
@@ -80,9 +81,9 @@ export type ClingoFact = {
   params: ClingoValue[]
 }
 
-export const ClingoFact: z.ZodType<ClingoFact> = z.object({
-  atom: z.string(),
-  params: z.array(ClingoValue),
+export const ClingoFact: Parser<ClingoFact> = v.object({
+  atom: v.string(),
+  params: v.array(ClingoValue),
 })
 
 export function parseClingoFact(fact: string): ClingoFact {

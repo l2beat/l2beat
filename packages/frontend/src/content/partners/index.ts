@@ -1,30 +1,28 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
-const ecosystemPartner = z.object({
-  slug: z.string(),
-  tier: z.literal('ecosystem'),
+const ecosystemPartner = v.object({
+  slug: v.string(),
+  tier: v.literal('ecosystem'),
 })
 
-const innovatorPartner = z.object({
-  slug: z.string(),
-  tier: z.literal('innovator'),
-  link: z.string().optional(),
+const innovatorPartner = v.object({
+  slug: v.string(),
+  tier: v.literal('innovator'),
+  link: v.string().optional(),
 })
 
-const supporterPartner = z.object({
-  slug: z.string(),
-  name: z.string(),
-  tier: z.literal('supporter'),
-  link: z.string().optional(),
+const supporterPartner = v.object({
+  slug: v.string(),
+  name: v.string(),
+  tier: v.literal('supporter'),
+  link: v.string().optional(),
 })
 
 export const partnersCollection = defineCollection({
   type: 'data',
-  schema: z.discriminatedUnion('tier', [
-    ecosystemPartner,
-    innovatorPartner,
-    supporterPartner,
-  ]),
+  // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+  // support it yet. It's a performance issue.
+  schema: v.union([ecosystemPartner, innovatorPartner, supporterPartner]),
 })

@@ -1,6 +1,6 @@
 import { assert, EthereumAddress, unique } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
@@ -10,11 +10,11 @@ import type { Handler, HandlerResult } from '../Handler'
 import { getSighash } from '../getSighash'
 import { toContractValue } from '../utils/toContractValue'
 
-export type PolygonCDKScheduledTransactionsHandlerDefinition = z.infer<
+export type PolygonCDKScheduledTransactionsHandlerDefinition = v.infer<
   typeof PolygonCDKScheduledTransactionsHandlerDefinition
 >
-export const PolygonCDKScheduledTransactionsHandlerDefinition = z.strictObject({
-  type: z.literal('polygoncdkScheduledTransactions'),
+export const PolygonCDKScheduledTransactionsHandlerDefinition = v.strictObject({
+  type: v.literal('polygoncdkScheduledTransactions'),
 })
 
 const abi = new utils.Interface([

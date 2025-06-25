@@ -1,7 +1,7 @@
 import type { ProjectValueRecord } from '@l2beat/database'
+import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,12 +15,12 @@ import {
 } from './utils/projectFilterUtils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
 
-export const RecategorisedTvsChartDataParams = z.object({
+export const RecategorisedTvsChartDataParams = v.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
 })
 
-export type RecategorisedTvsChartDataParams = z.infer<
+export type RecategorisedTvsChartDataParams = v.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
