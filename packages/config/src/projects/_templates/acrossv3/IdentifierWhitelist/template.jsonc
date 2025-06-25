@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol.",
+  "description": "Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.",
   "types": {
     "IdentifierToName": {
       "typeCaster": "Mapping",
@@ -290,13 +290,7 @@
           "event": "SupportedIdentifierRemoved"
         }
       },
-      "edit": [
-        "map",
-        [
-          "format",
-          "IdentifierToName"
-        ]
-      ]
+      "edit": ["map", ["format", "IdentifierToName"]]
     }
   }
 }

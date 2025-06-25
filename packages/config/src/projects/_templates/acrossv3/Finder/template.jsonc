@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Maps interface names to contract addresses.",
+  "description": "Maps interface names to contract addresses (UMA protocol contracts).",
   "types": {
     "Bytes32ToName": {
       "typeCaster": "Mapping",
@@ -31,23 +31,8 @@
       },
       "edit": [
         "pipe",
-        [
-          "to_entries"
-        ],
-        [
-          "map",
-          [
-            "shape",
-            [
-              "name",
-              [
-                "format",
-                "Bytes32ToName"
-              ]
-            ],
-            "address"
-          ]
-        ]
+        ["to_entries"],
+        ["map", ["shape", ["name", ["format", "Bytes32ToName"]], "address"]]
       ]
     }
   }

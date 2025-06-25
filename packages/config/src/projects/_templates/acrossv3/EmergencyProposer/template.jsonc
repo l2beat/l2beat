@@ -1,0 +1,40 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of {{bondFmt}} UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after {{delayFmt}} by the {{executor}}.",
+  "ignoreInWatchMode": ["getCurrentTime"],
+  "ignoreRelatives": ["token"],
+  "fields": {
+    "bondFmt": {
+      "handler": {
+        "type": "call",
+        "method": "quorum",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address."
+        }
+      ]
+    },
+    "executor": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "remove proposals, execute emergency proposals."
+        }
+      ]
+    },
+    "delayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "minimumWaitTime",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    }
+  }
+}
