@@ -70,7 +70,7 @@ export function DaThroughputChart() {
             <span className="max-lg:hidden">
               Include only projects scaling Ethereum
             </span>
-            <span className="lg:hidden">Scaling projects only</span>
+            <span className="lg:hidden">Ethereum scaling projects only</span>
           </Checkbox>
         </div>
         <ChartTimeRangeControls
