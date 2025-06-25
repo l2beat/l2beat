@@ -1,13 +1,13 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
 export const glossaryCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    term: z.string(),
-    match: z.array(z.string()).optional(),
-    definition: z.string(),
-    isSpicy: z.boolean(),
+  schema: v.object({
+    term: v.string(),
+    match: v.array(v.string()).optional(),
+    definition: v.string(),
+    isSpicy: v.boolean(),
   }),
 })

@@ -12,8 +12,8 @@ import {
   Retries,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import type { providers } from 'ethers'
-import { z } from 'zod'
 import type { IEtherscanClient } from '../../utils/IEtherscanClient'
 import type { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
@@ -332,20 +332,20 @@ function isServerError(e: unknown): boolean {
   return false
 }
 
-const ethersRPCError = z.object({
-  message: z.string().optional(),
+const ethersRPCError = v.object({
+  message: v.string().optional(),
 })
 
-const ethersLoggerError = z.object({
-  code: z.string(),
-  status: z.number().default(200),
+const ethersLoggerError = v.object({
+  code: v.string(),
+  status: v.number().default(200),
   error: ethersRPCError.optional(),
-  message: z.string().optional(),
+  message: v.string().optional(),
 })
 
-const topLevelEthersError = z.object({
-  code: z.string(),
-  status: z.number().default(200),
-  error: z.union([ethersLoggerError, ethersRPCError]).optional(),
-  message: z.string().optional(),
+const topLevelEthersError = v.object({
+  code: v.string(),
+  status: v.number().default(200),
+  error: v.union([ethersLoggerError, ethersRPCError]).optional(),
+  message: v.string().optional(),
 })

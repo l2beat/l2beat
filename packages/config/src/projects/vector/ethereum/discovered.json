@@ -1,7 +1,7 @@
 {
   "name": "vector",
   "chain": "ethereum",
-  "blockNumber": 22631743,
+  "blockNumber": 22780010,
   "configHash": "0x21b45ea1c4ed4198da63aadbc750d202b98c407d76a74273ae72f27b677cda0f",
   "entries": [
     {
@@ -60,8 +60,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 369,
-        "latestBlock": 1447680,
+        "latestAuthoritySetId": 393,
+        "latestBlock": 1537200,
         "relayers": ["0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -140,7 +140,7 @@
         "feePerByte": 0,
         "feeRecipient": "0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1425,
+        "messageId": 1508,
         "owner": "0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -253,10 +253,6 @@
       "values": {
         "$immutable": true,
         "activeVerifiers": [
-          {
-            "selector": "0x1b34fe11",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
-          },
           {
             "selector": "0xd4e8ecd2",
             "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
@@ -588,7 +584,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -600,27 +596,6 @@
       "address": "0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v4.0.0-rc.3).",
-      "sinceTimestamp": 1735949699,
-      "sinceBlock": 21547470,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      },
-      "implementationNames": {
-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
-      }
     },
     {
       "address": "0xE458b870F2F59a49915591282f1Bb688901767AD",
@@ -948,15 +923,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ]
   },
   "usedTemplates": {
@@ -968,5 +934,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x04aac1f5002933dfe7ff5a10634ef7376c6e30787c035b938021c3ce83a2bbf0"
+  "permissionsConfigHash": "0xfdb66a810ba7b110563a6abbb3c2d1fb8299f001b26581a9840256b097456cc6"
 }

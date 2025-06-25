@@ -1,6 +1,6 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type BigNumber, utils } from 'ethers'
-import { z } from 'zod'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
@@ -10,9 +10,9 @@ type RawCommittedBlock = {
   blockNumber: BigNumber
 }
 
-const CommittedBlock = z.object({
-  blockNumber: z.number(),
-  timestamp: z.number(),
+const CommittedBlock = v.object({
+  blockNumber: v.number(),
+  timestamp: v.number(),
 })
 
 export class ZkSyncLiteT2IAnalyzer extends BaseAnalyzer {

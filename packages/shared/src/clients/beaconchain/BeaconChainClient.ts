@@ -1,5 +1,5 @@
 import type { json } from '@l2beat/shared-pure'
-import type { z } from 'zod'
+import type { v } from '@l2beat/validate'
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   BeaconChainError,
@@ -7,7 +7,7 @@ import {
   BlockSidecarSchema,
 } from './types'
 
-export type BeaconChainBlob = z.infer<typeof BlobSchema>
+export type BeaconChainBlob = v.infer<typeof BlobSchema>
 
 interface Dependencies extends ClientCoreDependencies {
   beaconApiUrl: string

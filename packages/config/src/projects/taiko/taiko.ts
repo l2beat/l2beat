@@ -109,7 +109,7 @@ export const taiko: ScalingProject = {
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],
-    category: 'ZK Rollup', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
+    category: 'Other', // NOTE: will be moved to Others if they keep the ability not to use ZK proofs
     links: {
       websites: ['https://taiko.xyz'],
       bridges: ['https://bridge.taiko.xyz/'],
@@ -333,11 +333,11 @@ export const taiko: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,

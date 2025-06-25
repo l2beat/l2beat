@@ -1,6 +1,6 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { getCostsChart } from './getCostsChart'
@@ -8,10 +8,10 @@ import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
-export type ProjectCostsChartParams = z.infer<typeof ProjectCostsChartParams>
-export const ProjectCostsChartParams = z.object({
+export type ProjectCostsChartParams = v.infer<typeof ProjectCostsChartParams>
+export const ProjectCostsChartParams = v.object({
   range: CostsTimeRange,
-  projectId: z.string(),
+  projectId: v.string(),
 })
 
 type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {

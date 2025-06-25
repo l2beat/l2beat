@@ -1,5 +1,5 @@
 import { HEX_REGEX } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export interface StarknetCallParameters {
   contract_address: string
@@ -7,51 +7,53 @@ export interface StarknetCallParameters {
   calldata: string[]
 }
 
-export type StarknetGetBlockResponse = z.infer<typeof StarknetGetBlockResponse>
-export const StarknetGetBlockResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
-  result: z.object({
-    block_number: z.number().int(),
-    timestamp: z.number().int(),
-    transactions: z.array(z.string()),
+export type StarknetGetBlockResponse = v.infer<typeof StarknetGetBlockResponse>
+export const StarknetGetBlockResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check(Number.isInteger),
+  result: v.object({
+    block_number: v.number().check(Number.isInteger),
+    timestamp: v.number().check(Number.isInteger),
+    transactions: v.array(v.string()),
   }),
 })
 
-export type StarknetTransaction = z.infer<typeof StarknetTransaction>
-const StarknetTransaction = z.object({
-  type: z.string(),
-  calldata: z.array(z.string()).optional(),
-  transaction_hash: z.string(),
-  sender_address: z.string().optional(),
+export type StarknetTransaction = v.infer<typeof StarknetTransaction>
+const StarknetTransaction = v.object({
+  type: v.string(),
+  calldata: v.array(v.string()).optional(),
+  transaction_hash: v.string(),
+  sender_address: v.string().optional(),
 })
 
-export type StarknetGetBlockWithTxsResponse = z.infer<
+export type StarknetGetBlockWithTxsResponse = v.infer<
   typeof StarknetGetBlockWithTxsResponse
 >
-export const StarknetGetBlockWithTxsResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
-  result: z.object({
-    block_number: z.number().int(),
-    timestamp: z.number().int(),
-    block_hash: z.string(),
-    transactions: z.array(StarknetTransaction),
+export const StarknetGetBlockWithTxsResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check(Number.isInteger),
+  result: v.object({
+    block_number: v.number().check(Number.isInteger),
+    timestamp: v.number().check(Number.isInteger),
+    block_hash: v.string(),
+    transactions: v.array(StarknetTransaction),
   }),
 })
 
-export type StarknetCallResponse = z.infer<typeof StarknetCallResponse>
-export const StarknetCallResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
-  result: z.array(z.string().regex(HEX_REGEX, 'Invalid hex string')),
+export type StarknetCallResponse = v.infer<typeof StarknetCallResponse>
+export const StarknetCallResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check(Number.isInteger),
+  result: v.array(
+    v.string().check((v) => HEX_REGEX.test(v), 'Invalid hex string'),
+  ),
 })
 
-export type StarknetErrorResponse = z.infer<typeof StarknetErrorResponse>
-export const StarknetErrorResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  error: z.object({
-    code: z.number().int(),
-    message: z.string(),
+export type StarknetErrorResponse = v.infer<typeof StarknetErrorResponse>
+export const StarknetErrorResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  error: v.object({
+    code: v.number().check(Number.isInteger),
+    message: v.string(),
   }),
 })

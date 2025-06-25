@@ -3,20 +3,23 @@ import {
   type ProjectId,
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { BigNumber, utils } from 'ethers'
-import { z } from 'zod'
 
 import type { Database } from '@l2beat/database'
 import type { RpcClient, StarknetClient } from '@l2beat/shared'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
-const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
+const ZBigNumber = v
+  .unknown()
+  .check((v) => v instanceof BigNumber)
+  .transform((n) => n.toBigInt())
 
-const StarknetStateUpdate = z.object({
-  programOutput: z.array(ZBigNumber),
+const StarknetStateUpdate = v.object({
+  programOutput: v.array(ZBigNumber),
 })
-type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
+type StarknetStateUpdate = v.infer<typeof StarknetStateUpdate>
 
 export class StarknetT2IAnalyzer extends BaseAnalyzer {
   constructor(

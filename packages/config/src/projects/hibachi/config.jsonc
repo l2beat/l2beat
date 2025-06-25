@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "hibachi",
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": ["0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400"]
+    }
+  }
+}

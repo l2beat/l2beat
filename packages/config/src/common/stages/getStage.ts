@@ -35,6 +35,15 @@ const getBlueprint = (opts?: GetStageOptions) =>
     stage0: {
       name: 'Stage 0',
       items: {
+        stateVerificationOnL1: {
+          positive: 'A complete and functional proof system is deployed.',
+          negative: 'The proof system is still under development.',
+        },
+        fraudProofSystemAtLeast5Outsiders: {
+          positive:
+            'There are at least 5 external actors who can submit fraud proofs.',
+          negative: 'Fraud proof submission is not sufficiently decentralized.',
+        },
         callsItselfRollup: {
           positive: 'The project calls itself a rollup.',
           negative: "The project doesn't call itself a rollup.",
@@ -73,15 +82,6 @@ const getBlueprint = (opts?: GetStageOptions) =>
           'Compromising ≥75% of the Security Council should be the only way (other than bugs) for a rollup to indefinitely block an L2→L1 message (e.g. a withdrawal) or push an invalid L2→L1 message (e.g. an invalid withdrawal).',
       },
       items: {
-        stateVerificationOnL1: {
-          positive: 'A complete and functional proof system is deployed.',
-          negative: 'The proof system is still under development.',
-        },
-        fraudProofSystemAtLeast5Outsiders: {
-          positive:
-            'There are at least 5 external actors who can submit fraud proofs.',
-          negative: 'Fraud proof submission is not sufficiently decentralized.',
-        },
         usersCanExitWithoutCooperation: {
           positive: `Users are able to exit without the help of the permissioned operators.`,
           negative: `Users' withdrawals can be censored by the permissioned operators.`,

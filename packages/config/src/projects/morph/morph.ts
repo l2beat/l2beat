@@ -63,7 +63,7 @@ export const morph: ScalingProject = {
     description:
       'Morph is an EVM compatible rollup. It operates as an optimistic rollup with ZK fault proofs and has plans for decentralizing the Sequencer. Their mission is to build the first blockchain for consumers, where user-friendly applications integrate seamlessly into everyday life, becoming indispensable utilities.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
     links: {
       websites: ['https://morphl2.io'],
       bridges: ['https://bridge.morphl2.io/'],
@@ -86,11 +86,11 @@ export const morph: ScalingProject = {
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
       rollupNodeSourceAvailable: 'UnderReview',
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: false,
     },
     stage1: {
       principle: false,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: false,
       usersHave7DaysToExit: false,
       usersCanExitWithoutCooperation: false,
       securityCouncilProperlySetUp: false,

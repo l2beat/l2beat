@@ -35,6 +35,7 @@
     "@elastic/elasticsearch": "^8.13.1",
     "@google-cloud/bigquery": "^7.3.0",
     "@koa/router": "^12.0.0",
+    "@l2beat/validate": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -62,8 +63,7 @@
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "uuid": "^9.0.1",
-    "ws": "^8.18.2",
-    "zod": "^3.22.2"
+    "ws": "^8.18.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

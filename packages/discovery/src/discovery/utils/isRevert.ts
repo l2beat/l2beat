@@ -1,11 +1,11 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export function isRevert(e: unknown): boolean {
   if (!(e instanceof Error)) {
     return false
   }
   if ('error' in e) {
-    const parsed = ethersError.parse(e.error)
+    const parsed = ethersError.validate(e.error)
     if (parsed.reason === 'bad response' && parsed.status !== undefined) {
       return false
     }
@@ -18,7 +18,7 @@ export function isRevert(e: unknown): boolean {
   )
 }
 
-const ethersError = z.object({
-  reason: z.string(),
-  status: z.number().optional(),
+const ethersError = v.object({
+  reason: v.string(),
+  status: v.number().optional(),
 })

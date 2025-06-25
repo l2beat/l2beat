@@ -67,7 +67,7 @@ export const deversifi: ScalingProject = {
     description: 'rhino.fi is a Validium based on the StarkEx technology.',
     purposes: ['Exchange'],
     stack: 'StarkEx',
-    category: 'Validium',
+    category: 'Other',
     links: {
       websites: ['https://rhino.fi/'],
       bridges: ['https://app.rhino.fi/'],

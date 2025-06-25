@@ -17,9 +17,6 @@
         "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock2"
       },
       "overrides": {
-        "0xc29d04A93F893700015138E3E334eB828dAC3cef": {
-          "extends": "shared-zk-stack/v26/Diamond"
-        },
         "0x5C03468829A26981c410a7930bD4853622F0B2E5": {
           "ignoreRelatives": ["stateTransitionManager"],
           "fields": {

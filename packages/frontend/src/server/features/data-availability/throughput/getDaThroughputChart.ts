@@ -3,7 +3,7 @@ import type {
   ProjectsSummedDataAvailabilityRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -19,11 +19,11 @@ export type DaThroughputDataPoint = [
   eigenda: number,
 ]
 
-export const DaThroughputChartParams = z.object({
+export const DaThroughputChartParams = v.object({
   range: DaThroughputTimeRange,
-  includeScalingOnly: z.boolean(),
+  includeScalingOnly: v.boolean(),
 })
-export type DaThroughputChartParams = z.infer<typeof DaThroughputChartParams>
+export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>
 
 export async function getDaThroughputChart({
   range,

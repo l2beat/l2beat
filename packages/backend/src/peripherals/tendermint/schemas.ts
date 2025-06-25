@@ -1,8 +1,8 @@
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 export const TendermintValidatorsResponseBodySchema = z.object({
   jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
+  id: z.number().check(Number.isInteger),
   result: z
     .object({
       block_height: z.string().transform((x) => parseInt(x)),

@@ -16,7 +16,7 @@ interface IncludeScalingOnlyProviderProps {
 export function IncludeScalingOnlyProvider({
   children,
 }: IncludeScalingOnlyProviderProps) {
-  const [includeScalingOnly, setIncludeScalingOnly] = useState(false)
+  const [includeScalingOnly, setIncludeScalingOnly] = useState(true)
 
   return (
     <IncludeScalingOnlyContext.Provider

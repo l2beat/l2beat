@@ -2,7 +2,7 @@ import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { CoingeckoClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { DaBeatConfig } from '../../config/Config'
 import type { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
@@ -36,13 +36,8 @@ export class DaBeatPricesRefresher {
 
   private async refresh() {
     assert(this.config.coingeckoIds.length <= 100, 'Too many ids')
-    const result = z
-      .array(
-        z.object({
-          id: z.string(),
-          current_price: z.number(),
-        }),
-      )
+    const result = v
+      .array(v.object({ id: v.string(), current_price: v.number() }))
       .parse(
         await this.coingeckoClient.query('/coins/markets', {
           vs_currency: 'usd',

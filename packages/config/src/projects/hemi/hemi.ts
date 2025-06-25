@@ -19,7 +19,6 @@ export const hemi: ScalingProject = opStackL2({
     slug: 'hemi',
     description:
       'Hemi is an OP Stack based L2 on Ethereum focusing on interoperability with the Bitcoin blockchain. In addition to the EVM, Hemi uses Hemi Virtual Machine (hVM), an EVM upgraded to have awareness of the Bitcoin state.',
-    category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
       websites: ['https://hemi.xyz'],

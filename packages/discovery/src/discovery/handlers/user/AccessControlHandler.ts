@@ -1,21 +1,24 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type AccessControlHandlerDefinition = z.infer<
+export type AccessControlHandlerDefinition = v.infer<
   typeof AccessControlHandlerDefinition
 >
-export const AccessControlHandlerDefinition = z.strictObject({
-  type: z.literal('accessControl'),
-  roleNames: z.optional(
-    z.record(z.string().regex(/^0x[a-f\d]{64}$/i), z.string()),
-  ),
-  pickRoleMembers: z.optional(z.string()),
-  ignoreRelative: z.optional(z.boolean()),
+export const AccessControlHandlerDefinition = v.strictObject({
+  type: v.literal('accessControl'),
+  roleNames: v
+    .record(
+      v.string().check((v) => /^0x[a-f\d]{64}$/i.test(v)),
+      v.string(),
+    )
+    .optional(),
+  pickRoleMembers: v.string().optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 const abi = new utils.Interface([
