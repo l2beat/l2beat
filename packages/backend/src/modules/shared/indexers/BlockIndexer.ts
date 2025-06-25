@@ -48,10 +48,17 @@ export class BlockIndexer extends ManagedChildIndexer {
     this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
 
     for (let blockNumber = adjustedFrom; blockNumber <= to; blockNumber++) {
-      this.logger.info('Fetching block', { blockNumber })
+      this.logger.info('Fetching block and logs', { blockNumber })
+      const start = Date.now()
       const block =
         await this.$.blockProvider.getBlockWithTransactions(blockNumber)
       const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
+      const duration = Date.now() - start
+      this.logger.info('Fetched', {
+        duration,
+        transactionsCount: block.transactions.length,
+        logsCount: logs.length,
+      })
 
       for (const processor of this.$.processors) {
         try {
