@@ -1,30 +1,30 @@
-import { UnixTime, stringAs } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
-export const ZksyncLiteBlocksResult = z.object({
-  result: z.object({
-    blockNumber: z.number(),
+export const ZksyncLiteBlocksResult = v.object({
+  result: v.object({
+    blockNumber: v.number(),
   }),
 })
 
-export const ZksyncLiteTransactionResult = z.object({
-  result: z.object({
-    list: z.array(
-      z.object({
-        txHash: z.string(),
-        blockIndex: z.nullable(z.number()),
-        createdAt: stringAs((s) => UnixTime.fromDate(new Date(s))),
+export const ZksyncLiteTransactionResult = v.object({
+  result: v.object({
+    list: v.array(
+      v.object({
+        txHash: v.string(),
+        blockIndex: v.union([v.number(), v.null()]),
+        createdAt: v.string().transform((s) => UnixTime.fromDate(new Date(s))),
       }),
     ),
-    pagination: z.object({ count: z.number() }),
+    pagination: v.object({ count: v.number() }),
   }),
 })
 
-export const ZksyncLiteError = z.object({
-  status: z.literal('error'),
-  error: z.object({
-    errorType: z.string(),
-    code: z.number(),
-    message: z.string(),
+export const ZksyncLiteError = v.object({
+  status: v.literal('error'),
+  error: v.object({
+    errorType: v.string(),
+    code: v.number(),
+    message: v.string(),
   }),
 })
