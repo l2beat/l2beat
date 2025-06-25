@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
@@ -58,15 +58,18 @@ export function DiffView(props: DiffViewProps) {
     editor?.resize()
   }, [editor])
 
-  useEffect(() => {
-    const [splitLeft, splitRight] = splitCode(
+  const [splitLeft, splitRight] = useMemo(() => {
+    return splitCode(
       props.leftCode,
       props.rightCode,
       removeUnchanged,
       removeComments,
     )
+  }, [props.leftCode, props.rightCode, removeUnchanged, removeComments])
+
+  useEffect(() => {
     editor?.setDiff(splitLeft, splitRight)
-  }, [editor, props.leftCode, props.rightCode, removeUnchanged, removeComments])
+  }, [editor, splitLeft, splitRight])
 
   editor?.onComputedDiff(setDiff)
 
