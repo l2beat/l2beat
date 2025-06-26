@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "opcm16",
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "chains": {
+    "ethereum": {
+      "maxDepth": 1,
+      "initialAddresses": [
+        "0x56EbC5c4870F5367B836081610592241Ad3e0734"
+      ],
+      "overrides": {
+        "0x56EbC5c4870F5367B836081610592241Ad3e0734": {
+          "ignoreMethods": [
+            "blueprints"
+          ]
+        }
+      }
+    }
+  }
+}
