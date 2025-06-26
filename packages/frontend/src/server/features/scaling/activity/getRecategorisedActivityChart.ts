@@ -4,7 +4,6 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { isProjectOther } from '../utils/isProjectOther'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -44,17 +43,14 @@ export async function getRecategorisedActivityChart(
   const rollups = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'ZK Rollup' ||
-          p.scalingInfo.type === 'Optimistic Rollup') &&
-        !isProjectOther(p.scalingInfo),
+        p.scalingInfo.type === 'ZK Rollup' ||
+        p.scalingInfo.type === 'Optimistic Rollup',
     )
     .map((p) => p.id)
   const validiumsAndOptimiums = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'Validium' ||
-          p.scalingInfo.type === 'Optimium') &&
-        !isProjectOther(p.scalingInfo),
+        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium',
     )
     .map((p) => p.id)
 

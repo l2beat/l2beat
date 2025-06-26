@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
+    "@l2beat/validate": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/config": "workspace:*",
     "@l2beat/database": "workspace:*",
@@ -78,8 +79,7 @@
     "tailwind-merge": "^2.3.0",
     "uuid": "^11.1.0",
     "vaul": "^0.9.1",
-    "ws": "^8.18.2",
-    "zod": "^3.23.8"
+    "ws": "^8.18.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

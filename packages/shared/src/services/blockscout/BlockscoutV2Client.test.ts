@@ -117,9 +117,7 @@ describe(BlockscoutV2Client.name, () => {
 
       await expect(() =>
         blockscoutClient.getInternalTransactions(address),
-      ).toBeRejectedWith(
-        '[\n  {\n    "code": "invalid_type",\n    "expected": "array",\n    "received": "undefined",\n    "path": [\n      "items"\n    ],\n    "message": "Required"\n  },\n  {\n    "code": "invalid_type",\n    "expected": "object",\n    "received": "undefined",\n    "path": [\n      "next_page_params"\n    ],\n    "message": "Required"\n  }\n]',
-      )
+      ).toBeRejectedWith('At .items: Expected array, got undefined.')
     })
   })
 })

@@ -3,14 +3,14 @@ import { utils } from 'ethers'
 
 import type { Database } from '@l2beat/database'
 import type { RpcClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
 type zkSyncEraDecoded = [number, number, number, string]
 
-const BatchRangeResponse = z.object({
-  result: z.array(z.string()).length(2),
+const BatchRangeResponse = v.object({
+  result: v.array(v.string()).check((v) => v.length === 2),
 })
 
 export class zkSyncEraT2IAnalyzer extends BaseAnalyzer {

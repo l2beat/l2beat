@@ -1,12 +1,12 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
 export const delegatedProjectsCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    name: z.string(),
-    slug: z.string(),
-    delegateTokensUrl: z.string().url(),
+  schema: v.object({
+    name: v.string(),
+    slug: v.string(),
+    delegateTokensUrl: v.string().check((v) => !!new URL(v)),
   }),
 })

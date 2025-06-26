@@ -33,6 +33,22 @@ describe('layer3s', () => {
     })
   })
 
+  describe('others', () => {
+    for (const layer3 of layer3s) {
+      it(`every project with reasonsForBeingOther has Other category: ${layer3.display.name}`, () => {
+        if (layer3.reasonsForBeingOther) {
+          expect(layer3.display.category === 'Other').toEqual(true)
+        }
+      })
+
+      it(`every Other project has reasonsForBeingOther configured: ${layer3.display.name}`, () => {
+        if (layer3.display.category === 'Other') {
+          expect(!!layer3.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
   it('every layer3 has a valid config', () => {
     for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()

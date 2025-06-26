@@ -1,7 +1,7 @@
 import type { TemplateService } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { v as z } from '@l2beat/validate'
 import type { Express } from 'express'
-import { z } from 'zod'
 import { createShape } from './create-shape'
 import { listDirectories } from './list-directories'
 
@@ -9,10 +9,12 @@ const templateIdRegex = new RegExp(
   '^(?!\\/)(?!.*\\/\\/)(?!.*\\s)(?!.*\\\\)(?:[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/)*[a-zA-Z0-9]+([-_][a-zA-Z0-9]+)*\\/?$',
 )
 
-const safeTemplateIdSchema = z.string().regex(templateIdRegex, {
-  message:
+const safeTemplateIdSchema = z
+  .string()
+  .check(
+    (v) => templateIdRegex.test(v),
     'Template ID must be alphanumeric and can contain underscores or hyphens.',
-})
+  )
 
 export const listTemplateFilesSchema = z.object({
   templateId: safeTemplateIdSchema,
@@ -26,7 +28,7 @@ const writeTemplateFileSchema = z.object({
 const createTemplateSchema = z.object({
   chain: z.string(),
   addresses: z.array(
-    z.string().refine((address) => EthereumAddress.check(address)),
+    z.string().check((address) => EthereumAddress.check(address)),
   ),
   templateId: safeTemplateIdSchema,
   fileName: z.string(),
@@ -46,8 +48,8 @@ export function attachTemplateRouter(
     const data = createTemplateSchema.safeParse(req.body)
 
     if (!data.success) {
-      console.error(data.error)
-      res.status(400).json({ errors: data.error.flatten() })
+      console.error(data.message)
+      res.status(400).json({ errors: data.message })
       return
     }
 
@@ -71,7 +73,7 @@ export function attachTemplateRouter(
     const data = writeTemplateFileSchema.safeParse(req.body)
 
     if (!data.success) {
-      res.status(400).json({ errors: data.error.flatten() })
+      res.status(400).json({ errors: data.message })
       return
     }
 

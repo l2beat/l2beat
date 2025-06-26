@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import type { KnownCookieName, KnownCookieValue } from '~/consts/cookies'
 import { getCookie, setCookie } from '~/utils/cookies/client'
 
-type CookieEvent = {
-  name: KnownCookieName
-  value: KnownCookieValue<KnownCookieName>
+type CookieEvent<Name extends KnownCookieName = KnownCookieName> = {
+  name: Name
+  value: KnownCookieValue<Name>
 }
 
 /**
@@ -23,8 +23,7 @@ export function useCookieState<Name extends KnownCookieName>(
     const listener = (event: Event) => {
       if (!(event instanceof CustomEvent)) return
 
-      const cookieEvent = event as CustomEvent<CookieEvent>
-
+      const cookieEvent = event as CustomEvent<CookieEvent<Name>>
       if (cookieEvent.detail.name === name) {
         setState(cookieEvent.detail.value)
       }

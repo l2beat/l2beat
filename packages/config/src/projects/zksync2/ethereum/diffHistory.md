@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x677238fc200ee4101cba8b63302866195a8eace4
+
+# Diff at Wed, 25 Jun 2025 07:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22775246
+- current block number: 22779919
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22775246 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
 Generated with discovered.json: 0xbbfa1081ae6cf52ef71abb62b90b79c7afd0c7ee
 
 # Diff at Tue, 24 Jun 2025 15:55:56 GMT:

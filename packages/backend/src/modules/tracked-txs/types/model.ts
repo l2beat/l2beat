@@ -5,31 +5,33 @@ import {
   type TrackedTxsConfigSubtype,
   type TrackedTxsConfigType,
   UnixTime,
-  branded,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export type TrackedTxResult =
   | TrackedTxTransferResult
   | TrackedTxFunctionCallResult
 
-export type BigQueryFunctionCallResult = z.infer<
+export type BigQueryFunctionCallResult = v.infer<
   typeof BigQueryFunctionCallResult
 >
-export const BigQueryFunctionCallResult = z.object({
-  hash: z.string(),
-  block_number: z.number(),
-  block_timestamp: z
-    .object({ value: z.string() })
+export const BigQueryFunctionCallResult = v.object({
+  hash: v.string(),
+  block_number: v.number(),
+  block_timestamp: v
+    .object({ value: v.string() })
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
-  to_address: branded(z.string(), EthereumAddress),
-  input: z.string(),
-  receipt_gas_used: z.number(),
-  gas_price: z.coerce.bigint(),
-  data_length: z.number(),
-  non_zero_bytes: z.number(),
-  receipt_blob_gas_used: z.number().nullable(),
-  receipt_blob_gas_price: z.coerce.bigint().nullable(),
+  to_address: v.string().transform(EthereumAddress),
+  input: v.string(),
+  receipt_gas_used: v.number(),
+  gas_price: v.unknown().transform((v) => BigInt(v as string)),
+  data_length: v.number(),
+  non_zero_bytes: v.number(),
+  receipt_blob_gas_used: v.union([v.number(), v.null()]),
+  receipt_blob_gas_price: v.union([
+    v.unknown().transform((v) => BigInt(v as string)),
+    v.null(),
+  ]),
 })
 
 export type TrackedTxFunctionCallResult = {
@@ -51,21 +53,24 @@ export type TrackedTxFunctionCallResult = {
   receiptBlobGasPrice: bigint | null
 }
 
-export type BigQueryTransferResult = z.infer<typeof BigQueryTransferResult>
-export const BigQueryTransferResult = z.object({
-  hash: z.string(),
-  block_number: z.number(),
-  block_timestamp: z
-    .object({ value: z.string() })
+export type BigQueryTransferResult = v.infer<typeof BigQueryTransferResult>
+export const BigQueryTransferResult = v.object({
+  hash: v.string(),
+  block_number: v.number(),
+  block_timestamp: v
+    .object({ value: v.string() })
     .transform((v) => UnixTime.fromDate(new Date(v.value))),
-  from_address: branded(z.string(), EthereumAddress),
-  to_address: branded(z.string(), EthereumAddress),
-  receipt_gas_used: z.number(),
-  gas_price: z.coerce.bigint(),
-  data_length: z.number(),
-  non_zero_bytes: z.number(),
-  receipt_blob_gas_used: z.number().nullable(),
-  receipt_blob_gas_price: z.coerce.bigint().nullable(),
+  from_address: v.string().transform(EthereumAddress),
+  to_address: v.string().transform(EthereumAddress),
+  receipt_gas_used: v.number(),
+  gas_price: v.unknown().transform((v) => BigInt(v as string)),
+  data_length: v.number(),
+  non_zero_bytes: v.number(),
+  receipt_blob_gas_used: v.union([v.number(), v.null()]),
+  receipt_blob_gas_price: v.union([
+    v.unknown().transform((v) => BigInt(v as string)),
+    v.null(),
+  ]),
 })
 
 export type TrackedTxTransferResult = {

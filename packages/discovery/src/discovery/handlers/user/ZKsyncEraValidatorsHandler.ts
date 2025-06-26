@@ -1,14 +1,14 @@
 import type { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 import type { IProvider } from '../../provider/IProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ZKsyncEraValidatorsHandlerDefinition = z.infer<
+export type ZKsyncEraValidatorsHandlerDefinition = v.infer<
   typeof ZKsyncEraValidatorsHandlerDefinition
 >
-export const ZKsyncEraValidatorsHandlerDefinition = z.strictObject({
-  type: z.literal('zksynceraValidators'),
+export const ZKsyncEraValidatorsHandlerDefinition = v.strictObject({
+  type: v.literal('zksynceraValidators'),
 })
 
 const upgradeCompleteSignature1 =

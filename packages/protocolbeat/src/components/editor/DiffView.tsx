@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
+import { IconComment } from '../../icons/IconComment'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
@@ -29,6 +30,7 @@ export function DiffView(props: DiffViewProps) {
   const [removeUnchanged, setRemoveUnchanged] = useState(
     !codeIsTheSame(props.leftCode, props.rightCode),
   )
+  const [removeComments, setRemoveComments] = useState(false)
   const [diff, setDiff] = useState<Diff | undefined>(undefined)
 
   const [leftAddress, rightAddress] = swapped
@@ -56,14 +58,18 @@ export function DiffView(props: DiffViewProps) {
     editor?.resize()
   }, [editor])
 
-  useEffect(() => {
-    const [splitLeft, splitRight] = splitCode(
+  const [splitLeft, splitRight] = useMemo(() => {
+    return splitCode(
       props.leftCode,
       props.rightCode,
       removeUnchanged,
+      removeComments,
     )
+  }, [props.leftCode, props.rightCode, removeUnchanged, removeComments])
+
+  useEffect(() => {
     editor?.setDiff(splitLeft, splitRight)
-  }, [editor, props.leftCode, props.rightCode, removeUnchanged])
+  }, [editor, splitLeft, splitRight])
 
   editor?.onComputedDiff(setDiff)
 
@@ -109,6 +115,18 @@ export function DiffView(props: DiffViewProps) {
             title="Toggle unchanged sections"
           >
             <IconSplit className="size-4" />
+          </button>
+          <button
+            className={clsx(
+              'rounded p-1.5 transition-colors',
+              removeComments
+                ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
+                : 'hover:bg-coffee-700',
+            )}
+            title="Toggle comments"
+            onClick={() => setRemoveComments(!removeComments)}
+          >
+            <IconComment className="size-4" />
           </button>
           <button
             className={clsx(
@@ -165,6 +183,6 @@ function codeIsTheSame(
   left: Record<string, string>,
   right: Record<string, string>,
 ): boolean {
-  const [leftCode, rightCode] = splitCode(left, right, false)
+  const [leftCode, rightCode] = splitCode(left, right)
   return leftCode === rightCode
 }

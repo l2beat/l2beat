@@ -1,8 +1,16 @@
 export function splitCode(
-  left: Record<string, string>,
-  right: Record<string, string>,
-  removeSameDeclarations: boolean,
+  incomingLeft: Record<string, string>,
+  incomingRight: Record<string, string>,
+  removeSameDeclarations: boolean = false,
+  removeComments: boolean = false,
 ): [string, string] {
+  const left = removeComments
+    ? removeCommentsFromCode(incomingLeft)
+    : incomingLeft
+  const right = removeComments
+    ? removeCommentsFromCode(incomingRight)
+    : incomingRight
+
   const matched = matchUp(left, right, removeSameDeclarations)
 
   let smallerLeft = ''
@@ -26,6 +34,79 @@ export function splitCode(
   return [smallerLeft.trim(), smallerRight.trim()]
 }
 
+function removeCommentsFromCode(
+  code: Record<string, string>,
+): Record<string, string> {
+  const result: Record<string, string> = {}
+  for (const [key, value] of Object.entries(code)) {
+    result[key] = removeComments(value)
+  }
+  return result
+}
+
+function removeComments(source: string): string {
+  let result = ''
+  let i = 0
+
+  while (i < source.length - 1) {
+    let lineContent = ''
+    let hasNonWhitespace = false
+    let hasComment = false
+
+    while (i < source.length - 1 && source[i] !== '\n') {
+      if (source[i] === '/' && source[i + 1] === '/') {
+        hasComment = true
+        while (i < source.length && source[i] !== '\n') {
+          i++
+        }
+        break
+      } else if (source[i] === '/' && source[i + 1] === '*') {
+        hasComment = true
+        i += 2
+        while (i < source.length - 1) {
+          if (source[i] === '*' && source[i + 1] === '/') {
+            i += 2
+            break
+          }
+          if (source[i] === '\n') {
+            if (hasNonWhitespace) {
+              result += lineContent + '\n'
+            }
+            i++
+            lineContent = ''
+            hasNonWhitespace = false
+            hasComment = true
+            continue
+          }
+          i++
+        }
+        if (i >= source.length) {
+          break
+        }
+      } else {
+        if (source[i] !== ' ' && source[i] !== '\t') {
+          hasNonWhitespace = true
+        }
+        lineContent += source[i]
+        i++
+      }
+    }
+
+    if (hasNonWhitespace || !hasComment) {
+      result += lineContent
+    }
+
+    if (i < source.length && source[i] === '\n') {
+      if (hasNonWhitespace || !hasComment) {
+        result += '\n'
+      }
+      i++
+    }
+  }
+
+  return result
+}
+
 function wrapRegion(name: string, content: string): string {
   return `\n// #region ${name}\n${content}// #endregion ${name}\n`
 }
@@ -46,20 +127,26 @@ function matchUp(
   const leftKeys = Object.keys(left)
   const rightKeys = Object.keys(right)
 
+  const sameKeys = and(leftKeys, rightKeys)
+  const differentLeftKeys = leftKeys.filter((key) => !sameKeys.includes(key))
+  const differentRightKeys = rightKeys.filter((key) => !sameKeys.includes(key))
+
   const matrix = calculateSimilarities(
-    Object.values(left),
-    Object.values(right),
+    differentLeftKeys.map((k) => left[k] as string),
+    differentRightKeys.map((k) => right[k] as string),
   )
 
   const usedRight = new Set<number>()
-  const diff: Pair[] = []
+  const diff: Pair[] = sameKeys
+    .filter((k) => !removeSameDeclarations || left[k] !== right[k])
+    .map((k) => [k, k])
   const removed: Pair[] = []
 
-  leftKeys.forEach((lk, i) => {
+  differentLeftKeys.forEach((lk, i) => {
     let best = -1
     let bestScore = 0
 
-    for (let j = 0; j < rightKeys.length; j++) {
+    for (let j = 0; j < differentRightKeys.length; j++) {
       if (usedRight.has(j)) continue
       const s = matrix[i]?.[j] ?? 0
       if (s > bestScore) {
@@ -71,7 +158,7 @@ function matchUp(
     if (bestScore === 1 && removeSameDeclarations) {
       usedRight.add(best)
     } else if (bestScore >= threshold && best !== -1) {
-      const r = rightKeys[best]
+      const r = differentRightKeys[best]
       if (r !== undefined) {
         diff.push([lk, r])
         usedRight.add(best)
@@ -82,7 +169,7 @@ function matchUp(
   })
 
   const created: Pair[] = []
-  rightKeys.forEach((rk, j) => {
+  differentRightKeys.forEach((rk, j) => {
     if (!usedRight.has(j)) created.push(['', rk])
   })
 
@@ -235,4 +322,14 @@ function buildSimilarityHashmap(input: string): HashedChunks[] {
   chunks.sort((lhs, rhs) => lhs.content.localeCompare(rhs.content))
 
   return chunks
+}
+
+function and(left: string[], right: string[]): string[] {
+  const result: string[] = []
+  for (const entry of left) {
+    if (right.includes(entry)) {
+      result.push(entry)
+    }
+  }
+  return result
 }

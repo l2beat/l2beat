@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync } from 'fs'
 import path from 'path'
 import { assertUnreachable } from '@l2beat/shared-pure'
+import type { v } from '@l2beat/validate'
 import matter from 'gray-matter'
-import type { z } from 'zod'
 
 import { startsWithLetterOrNumber } from '~/utils/startsWithLetterOrNumber'
 import { collections } from './collections'
@@ -19,11 +19,11 @@ type ContentCollectionKey = {
 
 interface DataCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<Collection[T]['schema']>
+  data: v.infer<Collection[T]['schema']>
 }
 interface ContentCollectionEntry<T extends CollectionKey> {
   id: string
-  data: z.infer<Collection[T]['schema']>
+  data: v.infer<Collection[T]['schema']>
   content: string
   excerpt: string
   readTimeInMinutes: number
@@ -92,9 +92,9 @@ export function getCollectionEntry<T extends CollectionKey>(
   }
 }
 
-function getContentCollection<T extends ContentCollectionKey>(
-  key: T,
-): ContentCollectionEntry<T>[] {
+function getContentCollection(
+  key: ContentCollectionKey,
+): ContentCollectionEntry<ContentCollectionKey>[] {
   const contentEntry = collections[key]
   const fileNames = readdirSync(path.join(process.cwd(), DIR_PATH, key))
   const parsedFiles = fileNames
@@ -105,10 +105,10 @@ function getContentCollection<T extends ContentCollectionKey>(
   return parsedFiles
 }
 
-function getDataCollectionEntry<T extends DataCollectionKey>(
-  key: T,
+function getDataCollectionEntry(
+  key: DataCollectionKey,
   id: string,
-): DataCollectionEntry<T> {
+): DataCollectionEntry<DataCollectionKey> {
   const contentEntry = collections[key]
   const base = path.join(process.cwd(), DIR_PATH, key)
   const filePath = path.join(base, `${id}.${contentEntry.extension}`)
@@ -126,10 +126,10 @@ function getDataCollectionEntry<T extends DataCollectionKey>(
   }
 }
 
-function getContentCollectionEntry<T extends ContentCollectionKey>(
-  key: T,
+function getContentCollectionEntry(
+  key: ContentCollectionKey,
   id: string,
-): ContentCollectionEntry<T> {
+): ContentCollectionEntry<ContentCollectionKey> {
   const contentEntry = collections[key]
   const base = path.join(process.cwd(), DIR_PATH, key)
   const filePath = path.join(base, `${id}.${contentEntry.extension}`)

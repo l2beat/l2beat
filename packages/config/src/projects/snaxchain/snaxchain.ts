@@ -18,7 +18,6 @@ export const snaxchain: ScalingProject = opStackL2({
     slug: 'snaxchain',
     description:
       "SNAXchain, developed by Synthetix, is a Rollup built on the OP Stack. It aims to enhance Synthetix V3's decentralized governance and streamline operations.",
-    category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
       websites: ['https://governance.synthetix.io/'],

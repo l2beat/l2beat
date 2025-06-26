@@ -1,11 +1,14 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import type { Express } from 'express'
-import { z } from 'zod'
 import type { DiffoveryController } from './DiffoveryController'
 
-const ethereumAddressSchema = z.string().regex(/^[\w\d]+:0x[a-fA-F0-9]{40}$/, {
-  message: 'Invalid address format. Must be chainId:0x...',
-})
+const ethereumAddressSchema = v
+  .string()
+  .check(
+    (v) => /^[\w\d]+:0x[a-fA-F0-9]{40}$/.test(v),
+    'Invalid address format. Must be chainId:0x...',
+  )
 
 export function attachDiffoveryRouter(
   app: Express,
@@ -14,7 +17,7 @@ export function attachDiffoveryRouter(
   app.get('/api/flat-sources/:address', async (req, res) => {
     const encodedAddress = ethereumAddressSchema.safeParse(req.params.address)
     if (!encodedAddress.success) {
-      res.status(400).json({ errors: encodedAddress.error.flatten() })
+      res.status(400).json({ errors: encodedAddress.message })
       return
     }
 

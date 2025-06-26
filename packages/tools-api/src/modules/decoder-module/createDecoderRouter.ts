@@ -1,5 +1,5 @@
+import { v as z } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { ApiController, ApiQuery } from './domain/ApiController'
 
 export function createDecoderRouter(controller: ApiController): express.Router {
@@ -27,15 +27,15 @@ export function createDecoderRouter(controller: ApiController): express.Router {
 const DecodeQuery = z.object({
   hash: z
     .string()
-    .regex(/^0x[a-f\d]{64}$/)
+    .check((v) => /^0x[a-f\d]{64}$/.test(v))
     .optional(),
   data: z
     .string()
-    .regex(/^0x([a-f\d]{2})*$/)
+    .check((v) => /^0x([a-f\d]{2})*$/.test(v))
     .optional(),
   to: z
     .string()
-    .regex(/^0x[a-f\d]{40}$/)
+    .check((v) => /^0x[a-f\d]{40}$/.test(v))
     .optional(),
   chainId: z.string().optional(),
 })

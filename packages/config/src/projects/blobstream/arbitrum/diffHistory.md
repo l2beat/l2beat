@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x6e2d453d59ab1b3e859f5745dac4dc5da3942180
+
+# Diff at Wed, 25 Jun 2025 07:41:06 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 343837105
+- current block number: 350984309
+
+## Description
+
+selector 0x1b34fe11 and respective verifier frozen.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
+-        {"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs (v4.0.0-rc.3).
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1432 --------------------
+ .../SP1Verifier.sol}                               |    0
+ 2 files changed, 1432 deletions(-)
+```
+
 Generated with discovered.json: 0x6576e88c1677d495e1b17865a0b23472b63b5368
 
 # Diff at Fri, 06 Jun 2025 07:24:48 GMT:

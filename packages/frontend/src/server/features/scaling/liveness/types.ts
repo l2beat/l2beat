@@ -1,40 +1,39 @@
 import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import z from 'zod'
+import { v } from '@l2beat/validate'
 
-export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
-export type LivenessTimeRange = z.infer<typeof LivenessTimeRange>
+export const LivenessTimeRange = v.enum(['30d', '90d', 'max'])
+export type LivenessTimeRange = v.infer<typeof LivenessTimeRange>
 
-export const LivenessDataPoint = z.object({
-  averageInSeconds: z.number().positive().int(),
-  minimumInSeconds: z.number().positive().int(),
-  maximumInSeconds: z.number().positive().int(),
+export const LivenessDataPoint = v.object({
+  averageInSeconds: v.number().check((v) => Number.isInteger(v) && v > 0),
+  minimumInSeconds: v.number().check((v) => Number.isInteger(v) && v > 0),
+  maximumInSeconds: v.number().check((v) => Number.isInteger(v) && v > 0),
 })
-export type LivenessDataPoint = z.infer<typeof LivenessDataPoint>
+export type LivenessDataPoint = v.infer<typeof LivenessDataPoint>
 
-export const LivenessAnomaly = z.object({
-  timestamp: z.number(),
-  durationInSeconds: z.number().positive().int(),
+export const LivenessAnomaly = v.object({
+  timestamp: v.number(),
+  durationInSeconds: v.number().check((v) => Number.isInteger(v) && v > 0),
   type: TrackedTxsConfigSubtype,
 })
-export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
+export type LivenessAnomaly = v.infer<typeof LivenessAnomaly>
 
-const LivenessDetails = z
-  .record(LivenessTimeRange, LivenessDataPoint.optional())
-  .and(
-    z.object({
-      syncedUntil: z.number(),
-    }),
-  )
+const LivenessDetails = v.object({
+  '30d': LivenessDataPoint.optional(),
+  '90d': LivenessDataPoint.optional(),
+  max: LivenessDataPoint.optional(),
+  syncedUntil: v.number(),
+})
 
-export type LivenessDetails = z.infer<typeof LivenessDetails>
+export type LivenessDetails = v.infer<typeof LivenessDetails>
 
-export const LivenessProject = z.object({
+export const LivenessProject = v.object({
   batchSubmissions: LivenessDetails.optional(),
   stateUpdates: LivenessDetails.optional(),
   proofSubmissions: LivenessDetails.optional(),
-  anomalies: z.array(LivenessAnomaly),
+  anomalies: v.array(LivenessAnomaly),
 })
-export type LivenessProject = z.infer<typeof LivenessProject>
+export type LivenessProject = v.infer<typeof LivenessProject>
 
-export const LivenessResponse = z.record(z.string(), LivenessProject)
-export type LivenessResponse = z.infer<typeof LivenessResponse>
+export const LivenessResponse = v.record(v.string(), LivenessProject)
+export type LivenessResponse = v.infer<typeof LivenessResponse>
