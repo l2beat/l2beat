@@ -141,7 +141,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       { blockNumber: block.number, count: records.length },
     )
 
-    await this.db.realTimeLiveness.insertMany(records)
+    await this.db.realTimeLiveness.upsertMany(records)
   }
 
   async checkForAnomalies(block: Block) {

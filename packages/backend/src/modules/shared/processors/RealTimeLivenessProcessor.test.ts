@@ -55,7 +55,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        insertMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const projectId = ProjectId('project-id')
@@ -137,7 +137,7 @@ describe(RealTimeLivenessProcessor.name, () => {
 
       await processor.matchLivenessTransactions(block, logs)
 
-      expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
+      expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
         {
           configurationId: configurations[0].id,
           txHash: txHash1,

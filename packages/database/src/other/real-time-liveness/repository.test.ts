@@ -44,10 +44,10 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     this.timeout(10000)
 
     await repository.deleteAll()
-    await repository.insertMany(DATA)
+    await repository.upsertMany(DATA)
   })
 
-  describe(RealTimeLivenessRepository.prototype.insertMany.name, () => {
+  describe(RealTimeLivenessRepository.prototype.upsertMany.name, () => {
     it('only new rows', async () => {
       const newRows = [
         {
@@ -63,7 +63,7 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
           configurationId: txIdA,
         },
       ]
-      await repository.insertMany(newRows)
+      await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -74,8 +74,29 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       ])
     })
 
+    it('update on conflict', async () => {
+      const newRows = [
+        {
+          timestamp: START - 4 * UnixTime.HOUR,
+          blockNumber: 12348,
+          txHash: '0xabcdef1234567890',
+          configurationId: txIdB,
+        },
+        {
+          timestamp: START - 4 * UnixTime.HOUR,
+          blockNumber: 12349,
+          txHash: '0x12345678901abcdef',
+          configurationId: txIdC,
+        },
+      ]
+      await repository.upsertMany(newRows)
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!, ...newRows])
+    })
+
     it('empty array', async () => {
-      await expect(repository.insertMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).not.toBeRejected()
     })
   })
 
