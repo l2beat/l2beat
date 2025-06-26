@@ -1,10 +1,30 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of {{finalizationDelayFmt}}.",
+  "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of {{finalizationDelayFmt}} and a bond amount of {{bondAmountFmt}} ABT.",
   "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
   "ignoreRelatives": ["weth", "lpTokenFactory"],
   "ignoreInWatchMode": ["rootBundleProposal"],
   "fields": {
+    "bondAmountFmt": {
+      "handler": {
+        "type": "call",
+        "method": "function bondAmount() view returns (uint256)",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds)."
+        }
+      ]
+    },
+    "paused": {
+      "severity": "HIGH"
+    },
     "finalizationDelayFmt": {
       "handler": {
         "type": "call",

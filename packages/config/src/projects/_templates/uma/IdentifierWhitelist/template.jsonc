@@ -291,6 +291,14 @@
         }
       },
       "edit": ["map", ["format", "IdentifierToName"]]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage the whitelist."
+        }
+      ]
     }
   }
 }

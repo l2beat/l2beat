@@ -36,6 +36,7 @@ export const RolePermissionEntries = [
   'stateDeleterMetis',
   'hotValidatorHyperliquid',
   'coldValidatorHyperliquid',
+  'acrossPropose',
 ] as const
 
 export type Permission = z.infer<typeof Permission>

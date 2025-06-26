@@ -20,5 +20,15 @@
     "getCurrentRoundId",
     "currentActiveRequests",
     "cumulativeStake"
-  ]
+  ],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical administrative parameters like migrating to a new contract and requesting governancce actions (`requestPrice()`) directly."
+        }
+      ]
+    }
+  }
 }

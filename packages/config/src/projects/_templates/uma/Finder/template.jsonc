@@ -20,6 +20,14 @@
     }
   },
   "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage address mappings."
+        }
+      ]
+    },
     "namedAddresses": {
       "handler": {
         "type": "event",

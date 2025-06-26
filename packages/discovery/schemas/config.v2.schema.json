@@ -597,7 +597,8 @@
         "member",
         "act",
         "interact",
-        "upgrade"
+        "upgrade",
+        "acrossPropose"
       ]
     },
     "RawPermissionConfiguration": {

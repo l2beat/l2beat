@@ -524,6 +524,7 @@
         "stateDeleterMetis",
         "hotValidatorHyperliquid",
         "coldValidatorHyperliquid",
+        "acrossPropose",
         "member",
         "act",
         "interact",
