@@ -148,12 +148,7 @@ function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
 }
 
 function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
-  if (
-    p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
-    p.config.trackedTxs !== undefined
-  ) {
+  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
     return {
       warning: p.display.costsWarning,
     }
@@ -165,8 +160,6 @@ function getFinality(
 ): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
   if (
     p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
     p.config.trackedTxs !== undefined &&
     p.config.finality !== undefined
   ) {
