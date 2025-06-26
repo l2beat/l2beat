@@ -2,6 +2,7 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "amarok",
   "import": ["../globalConfig.jsonc"],
+  "archived": true,
   "chains": {
     "ethereum": {
       "maxAddresses": 150,
@@ -52,6 +53,9 @@
         "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": "Relayer11"
       },
       "overrides": {
+        "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": {
+          "ignoreDiscovery": true
+        },
         "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": {
           "ignoreInWatchMode": ["nonce"]
         },
@@ -245,9 +249,6 @@
         },
         "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48": {
           "ignoreDiscovery": true
-        },
-        "0x172fB6b07D6aB708dd67392a09e1c40d16dA0460": {
-          "ignoreMethods": ["getCurrentTime"]
         },
         "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748": {
           "ignoreMethods": ["getCurrentTime"]

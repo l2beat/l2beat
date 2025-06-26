@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x72c5dcb07beabc586510999f1796d4890e9b3d60
+
+# Diff at Thu, 26 Jun 2025 06:28:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 21629064
+- current block number: 21629064
+
+## Description
+
+ignore optimistic governor and archive.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21629064 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract UMA Voting Token v1 (0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x837fe7986f62259fea8e0078e6b562d014501866
 
 # Diff at Wed, 28 May 2025 13:55:58 GMT:
