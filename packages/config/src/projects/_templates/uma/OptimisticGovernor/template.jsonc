@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Optimistic Governance module allowing for proposals by anyone with a bond of {{bondFmt}} WETH. They become executable if not challenged within {{delayFmt}} seconds.",
+  "description": "Optimistic Governance module allowing for proposals by anyone with a bond of {{bondFmt}} WETH. They become executable if not challenged within {{delayFmt}}. The rules for proposals can be read directly from the contract values.",
   "ignoreMethods": ["getCurrentTime"],
   "ignoreRelatives": ["collateral"],
   "fields": {

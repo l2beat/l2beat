@@ -1,14 +1,480 @@
-Generated with discovered.json: 0x72c5dcb07beabc586510999f1796d4890e9b3d60
+Generated with discovered.json: 0xe8507fa052a9981f0e2736ab73b0559e4ce6362c
 
-# Diff at Thu, 26 Jun 2025 06:28:57 GMT:
+# Diff at Thu, 26 Jun 2025 06:47:10 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 21629064
-- current block number: 21629064
+- current block number: 22786874
 
 ## Description
 
-ignore optimistic governor and archive.
+templatize UMA.
+
+## Watched changes
+
+```diff
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE) {
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+      values.getAllRegisteredContracts.146:
++        "0xD50fbace72352C2e15E0986b8Ad2599627B5c340"
+      values.getAllRegisteredContracts.145:
+-        "0xD50fbace72352C2e15E0986b8Ad2599627B5c340"
++        "0xf215778F3a5e7Ab6A832e71d87267Dd9a9aB0037"
+      values.getAllRegisteredContracts.144:
+-        "0xf215778F3a5e7Ab6A832e71d87267Dd9a9aB0037"
++        "0x964Be01cCe200e168c4ba960a764cBEBa8C01200"
+      values.getAllRegisteredContracts.143:
+-        "0x964Be01cCe200e168c4ba960a764cBEBa8C01200"
++        "0x0f4e2a456aAfc0068a0718E3107B88d2e8f2bfEF"
+      values.getAllRegisteredContracts.142:
+-        "0x0f4e2a456aAfc0068a0718E3107B88d2e8f2bfEF"
++        "0xCA44D9e1eB0b27A0B56CdbebF4198DE5C2e6F7D0"
+      values.getAllRegisteredContracts.141:
+-        "0xCA44D9e1eB0b27A0B56CdbebF4198DE5C2e6F7D0"
++        "0xC843538d70ee5d28C5A80A75bb94C28925bB1cf2"
+      values.getAllRegisteredContracts.140:
+-        "0xC843538d70ee5d28C5A80A75bb94C28925bB1cf2"
++        "0xb40BA94747c59d076B3c189E3A031547492013da"
+      values.getAllRegisteredContracts.139:
+-        "0xb40BA94747c59d076B3c189E3A031547492013da"
++        "0xEAA081a9fad4607CdF046fEA7D4BF3DfEf533282"
+      values.getAllRegisteredContracts.138:
+-        "0xEAA081a9fad4607CdF046fEA7D4BF3DfEf533282"
++        "0xECFE06574B4A23A6476AD1f2568166BD1857E7c5"
+      values.getAllRegisteredContracts.137:
+-        "0xECFE06574B4A23A6476AD1f2568166BD1857E7c5"
++        "0xaB3Aa2768Ba6c5876B2552a6F9b70E54aa256175"
+      values.getAllRegisteredContracts.136:
+-        "0xaB3Aa2768Ba6c5876B2552a6F9b70E54aa256175"
++        "0x4E8d60A785c2636A63c5Bd47C7050d21266c8B43"
+      values.getAllRegisteredContracts.135:
+-        "0x4E8d60A785c2636A63c5Bd47C7050d21266c8B43"
++        "0x12d21cb3E544de60Edb434A43ae7ef0715bee6cc"
+      values.getAllRegisteredContracts.134:
+-        "0x12d21cb3E544de60Edb434A43ae7ef0715bee6cc"
++        "0xeAddB6AD65dcA45aC3bB32f88324897270DA0387"
+      values.getAllRegisteredContracts.133:
+-        "0xeAddB6AD65dcA45aC3bB32f88324897270DA0387"
++        "0x7bc1476eeD521c083Ec84D2894a7B7f738c93b3b"
+      values.getAllRegisteredContracts.132:
+-        "0x7bc1476eeD521c083Ec84D2894a7B7f738c93b3b"
++        "0xFEc7C6AA64fDD17f456028e0B411f5c3877ADa5e"
+      values.getAllRegisteredContracts.131:
+-        "0xFEc7C6AA64fDD17f456028e0B411f5c3877ADa5e"
++        "0xb33E3b8f5a172776730B0945206D6f75a2491307"
+      values.getAllRegisteredContracts.130:
+-        "0xb33E3b8f5a172776730B0945206D6f75a2491307"
++        "0xa24Ba528Be99024f7F7C227b55cBb265ecf0C078"
+      values.getAllRegisteredContracts.129:
+-        "0xa24Ba528Be99024f7F7C227b55cBb265ecf0C078"
++        "0xCef85b352CCD7a446d94AEeeA02dD11622289954"
+      values.getAllRegisteredContracts.128:
+-        "0xCef85b352CCD7a446d94AEeeA02dD11622289954"
++        "0xDB2E7F6655de37822c3020a8988351CC76caDAD5"
+      values.getAllRegisteredContracts.127:
+-        "0xDB2E7F6655de37822c3020a8988351CC76caDAD5"
++        "0x6DA66C15823cFf681DaD6963fBD325a520362958"
+      values.getAllRegisteredContracts.126:
+-        "0x6DA66C15823cFf681DaD6963fBD325a520362958"
++        "0xeFA41F506EAA5c24666d4eE40888bA18FA60a1c7"
+      values.getAllRegisteredContracts.125:
+-        "0xeFA41F506EAA5c24666d4eE40888bA18FA60a1c7"
++        "0x1C7a921808a8054C7ac2a3A3112823803eC97Ce4"
+      values.getAllRegisteredContracts.124:
+-        "0x1C7a921808a8054C7ac2a3A3112823803eC97Ce4"
++        "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759"
+      values.getAllRegisteredContracts.123:
+-        "0x39450EB4f7DE57f2a25EeE548Ff392532cFB8759"
++        "0x4E3168Ea1082f3dda1694646B5EACdeb572009F1"
+      values.getAllRegisteredContracts.122:
+-        "0x4E3168Ea1082f3dda1694646B5EACdeb572009F1"
++        "0xCdf99b9acE35e6414d802E97ed75ecfEe99A6f62"
+      values.getAllRegisteredContracts.121:
+-        "0xCdf99b9acE35e6414d802E97ed75ecfEe99A6f62"
++        "0xc07dE54Aa905A644Ab67F6E3b0d40150Bf825Ca3"
+      values.getAllRegisteredContracts.120:
+-        "0xc07dE54Aa905A644Ab67F6E3b0d40150Bf825Ca3"
++        "0x32F0405834C4b50be53199628C45603Cea3A28aA"
+      values.getAllRegisteredContracts.119:
+-        "0x32F0405834C4b50be53199628C45603Cea3A28aA"
++        "0x9c9Ee67586FaF80aFE147306FB858AF4Ec2212a4"
+      values.getAllRegisteredContracts.118:
+-        "0x9c9Ee67586FaF80aFE147306FB858AF4Ec2212a4"
++        "0x772665dce7b347A867F42bcA93587b5400Ae2576"
+      values.getAllRegisteredContracts.117:
+-        "0x772665dce7b347A867F42bcA93587b5400Ae2576"
++        "0xcA9C3d3fA9419C49465e04C49dD38C054fD94712"
+      values.getAllRegisteredContracts.116:
+-        "0xcA9C3d3fA9419C49465e04C49dD38C054fD94712"
++        "0x5A7f8F8B0E912BBF8525bc3fb2ae46E70Db9516B"
+      values.getAllRegisteredContracts.115:
+-        "0x5A7f8F8B0E912BBF8525bc3fb2ae46E70Db9516B"
++        "0x77482A8488a1cA8EdFAc67277b0eB99591106f05"
+      values.getAllRegisteredContracts.114:
+-        "0x77482A8488a1cA8EdFAc67277b0eB99591106f05"
++        "0x161fa1ac2D93832C3F77c8b5879Cb4dC56d958a7"
+      values.getAllRegisteredContracts.113:
+-        "0x161fa1ac2D93832C3F77c8b5879Cb4dC56d958a7"
++        "0x885c5fCB4D3B574A39f6750F962a3b52600ad728"
+      values.getAllRegisteredContracts.112:
+-        "0x885c5fCB4D3B574A39f6750F962a3b52600ad728"
++        "0x5917C41a355D16D3950FE12299Ce6DFc1b54cD54"
+      values.getAllRegisteredContracts.111:
+-        "0x5917C41a355D16D3950FE12299Ce6DFc1b54cD54"
++        "0x4F8d7bFFe8a2428A313b737001311Ad302a60dF4"
+      values.getAllRegisteredContracts.110:
+-        "0x4F8d7bFFe8a2428A313b737001311Ad302a60dF4"
++        "0x48546bDD57D34Cb110f011Cdd1CcaaE75Ee17a70"
+      values.getAllRegisteredContracts.109:
+-        "0x48546bDD57D34Cb110f011Cdd1CcaaE75Ee17a70"
++        "0x45c4DBD73294c5d8DDF6E5F949BE4C505E6E9495"
+      values.getAllRegisteredContracts.108:
+-        "0x45c4DBD73294c5d8DDF6E5F949BE4C505E6E9495"
++        "0xdd0acE85FcdC46d6430C7F24d56A0A80277AD8D2"
+      values.getAllRegisteredContracts.107:
+-        "0xdd0acE85FcdC46d6430C7F24d56A0A80277AD8D2"
++        "0xB1a3E5a8d642534840bFC50c6417F9566E716cc7"
+      values.getAllRegisteredContracts.106:
+-        "0xB1a3E5a8d642534840bFC50c6417F9566E716cc7"
++        "0x3a93E863cb3adc5910E6cea4d51f132E8666654F"
+      values.getAllRegisteredContracts.105:
+-        "0x3a93E863cb3adc5910E6cea4d51f132E8666654F"
++        "0x56BaBEcb3dCaC063697fE38AB745c10181c56fA6"
+      values.getAllRegisteredContracts.104:
+-        "0x56BaBEcb3dCaC063697fE38AB745c10181c56fA6"
++        "0xfA3AA7EE08399A4cE0B4921c85AB7D645Ccac669"
+      values.getAllRegisteredContracts.103:
+-        "0xfA3AA7EE08399A4cE0B4921c85AB7D645Ccac669"
++        "0x45788a369f3083c02b942aEa02DBa25C466a773F"
+      values.getAllRegisteredContracts.102:
+-        "0x45788a369f3083c02b942aEa02DBa25C466a773F"
++        "0xdF68acF496Db55f4A882a0371c489D739173fbEc"
+      values.getAllRegisteredContracts.101:
+-        "0xdF68acF496Db55f4A882a0371c489D739173fbEc"
++        "0xC75dd1b2A04d5aFF1E2779Ccc5624174a2c8cb7f"
+      values.getAllRegisteredContracts.100:
+-        "0xC75dd1b2A04d5aFF1E2779Ccc5624174a2c8cb7f"
++        "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
+      values.getAllRegisteredContracts.99:
+-        "0x226726Ac52e6e948D1B7eA9168F9Ff2E27DbcbB5"
++        "0x4F1424Cef6AcE40c0ae4fc64d74B734f1eAF153C"
+      values.getAllRegisteredContracts.98:
+-        "0x4F1424Cef6AcE40c0ae4fc64d74B734f1eAF153C"
++        "0xc0b19570370478EDE5F2e922c5D31FAf1D5f90EA"
+      values.getAllRegisteredContracts.97:
+-        "0xc0b19570370478EDE5F2e922c5D31FAf1D5f90EA"
++        "0xd6fc1A7327210b7Fe33Ef2514B44979719424A1d"
+      values.getAllRegisteredContracts.96:
+-        "0xd6fc1A7327210b7Fe33Ef2514B44979719424A1d"
++        "0x67F4deC415Ce95F8e66d63C926605d16f8d1b4e4"
+      values.getAllRegisteredContracts.95:
+-        "0x67F4deC415Ce95F8e66d63C926605d16f8d1b4e4"
++        "0xee7f8088d2e67C5b10EB94732F4bB6E26968AC82"
+      values.getAllRegisteredContracts.94:
+-        "0xee7f8088d2e67C5b10EB94732F4bB6E26968AC82"
++        "0x14A415Dd90B63c791C5dc544594605c8bC13Bc8D"
+      values.getAllRegisteredContracts.93:
+-        "0x14A415Dd90B63c791C5dc544594605c8bC13Bc8D"
++        "0x182d5993106573A95a182AB3A77c892713fFDA56"
+      values.getAllRegisteredContracts.92:
+-        "0x182d5993106573A95a182AB3A77c892713fFDA56"
++        "0x2862A798B3DeFc1C24b9c0d241BEaF044C45E585"
+      values.getAllRegisteredContracts.91:
+-        "0x2862A798B3DeFc1C24b9c0d241BEaF044C45E585"
++        "0xE4256C47a3b27a969F25de8BEf44eCA5F2552bD5"
+      values.getAllRegisteredContracts.90:
+-        "0xE4256C47a3b27a969F25de8BEf44eCA5F2552bD5"
++        "0x9E929a85282fB0555C19Ed70942B952827Ca4B0B"
+      values.getAllRegisteredContracts.89:
+-        "0x9E929a85282fB0555C19Ed70942B952827Ca4B0B"
++        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.getAllRegisteredContracts.88:
+-        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "0x287a1bA52e030459F163f48b2Ae468a085003A07"
+      values.getAllRegisteredContracts.87:
+-        "0x287a1bA52e030459F163f48b2Ae468a085003A07"
++        "0xa1Da681EA4b03ab826D33B7a9774222Ae175322F"
+      values.getAllRegisteredContracts.86:
+-        "0xa1Da681EA4b03ab826D33B7a9774222Ae175322F"
++        "0xa1005DB6516A097E562ad7506CF90ebb511f5604"
+      values.getAllRegisteredContracts.85:
+-        "0xa1005DB6516A097E562ad7506CF90ebb511f5604"
++        "0x312Ecf2854f73a3Ff616e3CDBC05E2Ff6A98d1f0"
+      values.getAllRegisteredContracts.84:
+-        "0x312Ecf2854f73a3Ff616e3CDBC05E2Ff6A98d1f0"
++        "0xb9942AA8983d41e53b68209BeA596A6004321E77"
+      values.getAllRegisteredContracts.83:
+-        "0xb9942AA8983d41e53b68209BeA596A6004321E77"
++        "0xd9af2d7E4cF86aAfBCf688a47Bd6b95Da9F7c838"
+      values.getAllRegisteredContracts.82:
+-        "0xd9af2d7E4cF86aAfBCf688a47Bd6b95Da9F7c838"
++        "0xF8eF02C10C473CA5E48b10c62ba4d46115dd2288"
+      values.getAllRegisteredContracts.81:
+-        "0xF8eF02C10C473CA5E48b10c62ba4d46115dd2288"
++        "0xbc044745F137D4693c2Aa823C760f855254faD42"
+      values.getAllRegisteredContracts.80:
+-        "0xbc044745F137D4693c2Aa823C760f855254faD42"
++        "0x1066E9D2E372d01A0F57bB6f231D34Ce4CEd228e"
+      values.getAllRegisteredContracts.79:
+-        "0x1066E9D2E372d01A0F57bB6f231D34Ce4CEd228e"
++        "0x9bB1f39b6DB45BD087046385a43EAb7b60C52e7D"
+      values.getAllRegisteredContracts.78:
+-        "0x9bB1f39b6DB45BD087046385a43EAb7b60C52e7D"
++        "0x8E51Ad4EeB19693751a9A3E36b8F098D891Ddc7f"
+      values.getAllRegisteredContracts.77:
+-        "0x8E51Ad4EeB19693751a9A3E36b8F098D891Ddc7f"
++        "0x1c3f1A342c8D9591D9759220d114C685FD1cF6b8"
+      values.getAllRegisteredContracts.76:
+-        "0x1c3f1A342c8D9591D9759220d114C685FD1cF6b8"
++        "0x267D46e71764ABaa5a0dD45260f95D9c8d5b8195"
+      values.getAllRegisteredContracts.75:
+-        "0x267D46e71764ABaa5a0dD45260f95D9c8d5b8195"
++        "0x5fbD22d64A1bD27b77e0f9d6e8831510439e947A"
+      values.getAllRegisteredContracts.74:
+-        "0x5fbD22d64A1bD27b77e0f9d6e8831510439e947A"
++        "0x3605Ec11BA7bD208501cbb24cd890bC58D2dbA56"
+      values.getAllRegisteredContracts.73:
+-        "0x3605Ec11BA7bD208501cbb24cd890bC58D2dbA56"
++        "0xbD1463F02f61676d53fd183C2B19282BFF93D099"
+      values.getAllRegisteredContracts.72:
+-        "0xbD1463F02f61676d53fd183C2B19282BFF93D099"
++        "0xbCA5D4BF2bE2f18a964334A378219CAaB192F0BF"
+      values.getAllRegisteredContracts.71:
+-        "0xbCA5D4BF2bE2f18a964334A378219CAaB192F0BF"
++        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      values.getAllRegisteredContracts.70:
+-        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "0x496B179D5821d1a8B6C875677e3B89a9229AAB77"
+      values.getAllRegisteredContracts.69:
+-        "0x496B179D5821d1a8B6C875677e3B89a9229AAB77"
++        "0x52B21a720D5eBeFc7EFA802c7DEAB7c08Eb10F39"
+      values.getAllRegisteredContracts.68:
+-        "0x52B21a720D5eBeFc7EFA802c7DEAB7c08Eb10F39"
++        "0x0D1bA751BaDe6d7BB54CF4F05D2dC0A9f45605e5"
+      values.getAllRegisteredContracts.67:
+-        "0x0D1bA751BaDe6d7BB54CF4F05D2dC0A9f45605e5"
++        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
+      values.getAllRegisteredContracts.66:
+-        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"
++        "0x4AA79c00240a2094Ff3fa6CF7c67f521f32D84a2"
+      values.getAllRegisteredContracts.65:
+-        "0x4AA79c00240a2094Ff3fa6CF7c67f521f32D84a2"
++        "0xf35a80E4705C56Fd345E735387c3377baCcd8189"
+      values.getAllRegisteredContracts.64:
+-        "0xf35a80E4705C56Fd345E735387c3377baCcd8189"
++        "0x8fE658AeB8d55fd1F3E157Ff8B316E232ffFF372"
+      values.getAllRegisteredContracts.63:
+-        "0x8fE658AeB8d55fd1F3E157Ff8B316E232ffFF372"
++        "0xeCFe987D8C103a3EC2041774E4514ED0614fB42C"
+      values.getAllRegisteredContracts.62:
+-        "0xeCFe987D8C103a3EC2041774E4514ED0614fB42C"
++        "0xC73a3831B4A91Ab05f9171c0ef0BEc9545cDeCf5"
+      values.getAllRegisteredContracts.61:
+-        "0xC73a3831B4A91Ab05f9171c0ef0BEc9545cDeCf5"
++        "0xaD3cceebeFfCdC3576dE56811d0A6D164BF9A5A1"
+      values.getAllRegisteredContracts.60:
+-        "0xaD3cceebeFfCdC3576dE56811d0A6D164BF9A5A1"
++        "0x7c4090170aeADD54B1a0DbAC2C8D08719220A435"
+      values.getAllRegisteredContracts.59:
+-        "0x7c4090170aeADD54B1a0DbAC2C8D08719220A435"
++        "0x10E018C01792705BefB7A757628C2947E38B9426"
+      values.getAllRegisteredContracts.58:
+-        "0x10E018C01792705BefB7A757628C2947E38B9426"
++        "0xeF4Db4AF6189aae295a680345e07E00d25ECBAAb"
+      values.getAllRegisteredContracts.57:
+-        "0xeF4Db4AF6189aae295a680345e07E00d25ECBAAb"
++        "0x34dF79AB1F3Cb70445834e71D725f83A6d3e03eb"
+      values.getAllRegisteredContracts.56:
+-        "0x34dF79AB1F3Cb70445834e71D725f83A6d3e03eb"
++        "0x0759883acF042A54fAb083378b0395F773A79767"
+      values.getAllRegisteredContracts.55:
+-        "0x0759883acF042A54fAb083378b0395F773A79767"
++        "0x4E2697b3deEc9Cac270Be97e254EC1a791588770"
+      values.getAllRegisteredContracts.54:
+-        "0x4E2697b3deEc9Cac270Be97e254EC1a791588770"
++        "0x6618Ff5a7dcea49F1AADA3BaFde3e87fe28D1303"
+      values.getAllRegisteredContracts.53:
+-        "0x6618Ff5a7dcea49F1AADA3BaFde3e87fe28D1303"
++        "0x6F4DD6F2dD3aCb85e4903c3307e18A35D59537c0"
+      values.getAllRegisteredContracts.52:
+-        "0x6F4DD6F2dD3aCb85e4903c3307e18A35D59537c0"
++        "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"
+      values.getAllRegisteredContracts.51:
+-        "0xb56C5f1fB93b1Fbd7c473926c87B6B9c4d0e21d5"
++        "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1"
+      values.getAllRegisteredContracts.50:
+-        "0x67DD35EaD67FcD184C8Ff6D0251DF4241F309ce1"
++        "0x306B19502c833C1522Fbc36C9dd7531Eda35862B"
+      values.getAllRegisteredContracts.49:
+-        "0x306B19502c833C1522Fbc36C9dd7531Eda35862B"
++        "0xC9E6C106C65eDD67C83CC6e3bCd18bf8d2Ebf182"
+      values.getAllRegisteredContracts.48:
+-        "0xC9E6C106C65eDD67C83CC6e3bCd18bf8d2Ebf182"
++        "0x799c9518Ea434bBdA03d4C0EAa58d644b768d3aB"
+      values.getAllRegisteredContracts.47:
+-        "0x799c9518Ea434bBdA03d4C0EAa58d644b768d3aB"
++        "0x60E5db98d156B68bC079795096D8599d12F2DcA6"
+      values.getAllRegisteredContracts.46:
+-        "0x60E5db98d156B68bC079795096D8599d12F2DcA6"
++        "0x02bD62088A02668F29102B06E4925791Cd0fe4C5"
+      values.getAllRegisteredContracts.45:
+-        "0x02bD62088A02668F29102B06E4925791Cd0fe4C5"
++        "0xd81028a6fbAAaf604316F330b20D24bFbFd14478"
+      values.getAllRegisteredContracts.44:
+-        "0xd81028a6fbAAaf604316F330b20D24bFbFd14478"
++        "0x8F92465991e1111F012F24A55AE2B0742F82dd7b"
+      values.getAllRegisteredContracts.43:
+-        "0x8F92465991e1111F012F24A55AE2B0742F82dd7b"
++        "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944"
+      values.getAllRegisteredContracts.42:
+-        "0x3f2D9eDd9702909Cf1F8C4237B7c4c5931F9C944"
++        "0x516f595978D87B67401DaB7AfD8555c3d28a3Af4"
+      values.getAllRegisteredContracts.41:
+-        "0x516f595978D87B67401DaB7AfD8555c3d28a3Af4"
++        "0x4060dBA72344DA74EDaEEAe51a71a57F7E96b6b4"
+      values.getAllRegisteredContracts.40:
+-        "0x4060dBA72344DA74EDaEEAe51a71a57F7E96b6b4"
++        "0xdf739f0219fA1A9288fc4c790304c8a3E928544C"
+      values.getAllRegisteredContracts.39:
+-        "0xdf739f0219fA1A9288fc4c790304c8a3E928544C"
++        "0x7C62e5c39b7b296f4f2244e7EB51bea57ed26e4B"
+      values.getAllRegisteredContracts.38:
+-        "0x7C62e5c39b7b296f4f2244e7EB51bea57ed26e4B"
++        "0x2dE7A5157693a895ae8E55b1e935e23451a77cB3"
+      values.getAllRegisteredContracts.37:
+-        "0x2dE7A5157693a895ae8E55b1e935e23451a77cB3"
++        "0x767058F11800FBA6A682E73A6e79ec5eB74Fac8c"
+      values.getAllRegisteredContracts.36:
+-        "0x767058F11800FBA6A682E73A6e79ec5eB74Fac8c"
++        "0xeE3Afe347D5C74317041E2618C49534dAf887c24"
+      values.getAllRegisteredContracts.35:
+-        "0xeE3Afe347D5C74317041E2618C49534dAf887c24"
++        "0x86838871562B82C071ec57F7CA50879532678F42"
+      values.getAllRegisteredContracts.34:
+-        "0x86838871562B82C071ec57F7CA50879532678F42"
++        "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
+      values.getAllRegisteredContracts.33:
+-        "0x592349F7DeDB2b75f9d4F194d4b7C16D82E507Dc"
++        "0xaBBee9fC7a882499162323EEB7BF6614193312e3"
+      values.getAllRegisteredContracts.32:
+-        "0xaBBee9fC7a882499162323EEB7BF6614193312e3"
++        "0x91436EB8038ecc12c60EE79Dfe011EdBe0e6C777"
+      values.getAllRegisteredContracts.31:
+-        "0x91436EB8038ecc12c60EE79Dfe011EdBe0e6C777"
++        "0xd60139B287De1408f8388f5f57fC114Fb4B03328"
+      values.getAllRegisteredContracts.30:
+-        "0xd60139B287De1408f8388f5f57fC114Fb4B03328"
++        "0x0Ee5Bb3dEAe8a44FbDeB269941f735793F8312Ef"
+      values.getAllRegisteredContracts.29:
+-        "0x0Ee5Bb3dEAe8a44FbDeB269941f735793F8312Ef"
++        "0xf32219331A03D99C98Adf96D43cc312353003531"
+      values.getAllRegisteredContracts.28:
+-        "0xf32219331A03D99C98Adf96D43cc312353003531"
++        "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
+      values.getAllRegisteredContracts.27:
+-        "0x4e3Decbb3645551B8A19f0eA1678079FCB33fB4c"
++        "0xb2AEa0DE92Acff7e1146333F776db42E5d004128"
+      values.getAllRegisteredContracts.26:
+-        "0xb2AEa0DE92Acff7e1146333F776db42E5d004128"
++        "0x1477C532A5054e0879EaFBD6004208c2065Bc21f"
+      values.getAllRegisteredContracts.25:
+-        "0x1477C532A5054e0879EaFBD6004208c2065Bc21f"
++        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+      values.getAllRegisteredContracts.24:
+-        "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "0x144A3290C9Db859939F085E3EC9A5C321FC713aF"
+      values.getAllRegisteredContracts.23:
+-        "0x144A3290C9Db859939F085E3EC9A5C321FC713aF"
++        "0x89477Dd602f69c59Eb6B8e5C059F041a32ae4017"
+      values.getAllRegisteredContracts.22:
+-        "0x89477Dd602f69c59Eb6B8e5C059F041a32ae4017"
++        "0x14a046c066266da6b8b8C4D2de4AfBEeCd53a262"
+      values.getAllRegisteredContracts.21:
+-        "0x14a046c066266da6b8b8C4D2de4AfBEeCd53a262"
++        "0xE1Ee8D4C5dBA1c221840c08f6Cf42154435B9D52"
+      values.getAllRegisteredContracts.20:
+-        "0xE1Ee8D4C5dBA1c221840c08f6Cf42154435B9D52"
++        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
+      values.getAllRegisteredContracts.19:
+-        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"
++        "0xcA2531b9CD04daf0c9114D853e7A83D8528f20bD"
+      values.getAllRegisteredContracts.18:
+-        "0xcA2531b9CD04daf0c9114D853e7A83D8528f20bD"
++        "0x46f5E363e69798a74c8422BFb9EDB63e3FB0f08a"
+      values.getAllRegisteredContracts.17:
+-        "0x46f5E363e69798a74c8422BFb9EDB63e3FB0f08a"
++        "0x73220345bD37C6897dA959AE6205254be5da4dD8"
+      values.getAllRegisteredContracts.16:
+-        "0x73220345bD37C6897dA959AE6205254be5da4dD8"
++        "0xCbbA8c0645ffb8aA6ec868f6F5858F2b0eAe34DA"
+      values.getAllRegisteredContracts.15:
+-        "0xCbbA8c0645ffb8aA6ec868f6F5858F2b0eAe34DA"
++        "0x52f83ACA94904b3590669E3525d25ec75cDFf798"
+      values.getAllRegisteredContracts.14:
+-        "0x52f83ACA94904b3590669E3525d25ec75cDFf798"
++        "0x2E918f0F18A69CFda3333C146A81e8100C85D8B0"
+      values.getAllRegisteredContracts.13:
+-        "0x2E918f0F18A69CFda3333C146A81e8100C85D8B0"
++        "0xda0943251079eB9f517668fdB372fC6AE299D898"
+      values.getAllRegisteredContracts.12:
+-        "0xda0943251079eB9f517668fdB372fC6AE299D898"
++        "0x8484381906425E3AFe30CDD48bFc4ed7CC1499D4"
+      values.getAllRegisteredContracts.11:
+-        "0x8484381906425E3AFe30CDD48bFc4ed7CC1499D4"
++        "0x0388f65C185a7E7D857BB142185381d97a4bc747"
+      values.getAllRegisteredContracts.10:
+-        "0x0388f65C185a7E7D857BB142185381d97a4bc747"
++        "0x10D00f5788C39a2Bf248ADfa2863Fa55d83dcE36"
+      values.getAllRegisteredContracts.9:
+-        "0x10D00f5788C39a2Bf248ADfa2863Fa55d83dcE36"
++        "0x384e239a2B225865558774b005C3d6eC29f8cE70"
+      values.getAllRegisteredContracts.8:
+-        "0x384e239a2B225865558774b005C3d6eC29f8cE70"
++        "0x94C7cab26c04B76D9Ab6277a0960781b90f74294"
+      values.getAllRegisteredContracts.7:
+-        "0x94C7cab26c04B76D9Ab6277a0960781b90f74294"
++        "0x7FBE19088B011A9dE0e3a327D7C681028F065616"
+      values.getAllRegisteredContracts.6:
+-        "0x7FBE19088B011A9dE0e3a327D7C681028F065616"
++        "0xeE44aE0cff6E9E62F26add74784E573bD671F144"
+      values.getAllRegisteredContracts.5:
+-        "0xeE44aE0cff6E9E62F26add74784E573bD671F144"
++        "0xe7B0D6A9943bB8CD8cd323368450AD74474bB1b7"
+      values.getAllRegisteredContracts.4:
+-        "0xe7B0D6A9943bB8CD8cd323368450AD74474bB1b7"
++        "0xF796059731942aB6317E1bD5a8E98eF1f6D345b1"
+      values.getAllRegisteredContracts.3:
+-        "0xF796059731942aB6317E1bD5a8E98eF1f6D345b1"
++        "0xe79dd3BDfb7868DedD00108FecaF12F94eB113B8"
+      values.getAllRegisteredContracts.2:
+-        "0xe79dd3BDfb7868DedD00108FecaF12F94eB113B8"
++        "0xb82756f9853A148A2390a08AaD30BabCDc22f068"
+      values.getAllRegisteredContracts.1:
+-        "0xb82756f9853A148A2390a08AaD30BabCDc22f068"
++        "0xfDF90C4104c1dE34979235e6AE080528266a14a3"
+      values.getAllRegisteredContracts.0:
+-        "0xfDF90C4104c1dE34979235e6AE080528266a14a3"
++        "0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d"
+    }
+```
+
+```diff
+    contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe) {
+    +++ description: None
+      values.getCurrentTime:
+-        1736934215
++        1750919915
+    }
+```
+
+```diff
+    contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6) {
+    +++ description: None
+      values.getCurrentTime:
+-        1736934215
++        1750919915
+    }
+```
 
 ## Config/verification related changes
 
@@ -23,45 +489,155 @@ discovery. Values are for block 21629064 (main branch discovery), not current.
 ```
 
 ```diff
--   Status: DELETED
-    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460)
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 3d. The rules for proposals can be read directly from the contract values.
+      values.bondFmt:
++        "2"
+      values.delayFmt:
++        "3d"
+      template:
++        "uma/OptimisticGovernor"
+      description:
++        "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 3d. The rules for proposals can be read directly from the contract values."
+      fieldMeta:
++        {"rules":{"description":"string of rules that a proposer is accepting when posting a proposal with a bond."}}
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460","description":"set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.","role":".owner","via":[{"address":"ethereum:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"}]}]
+    }
+```
+
+```diff
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3) {
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+      values.namedAddresses:
++        [{"name":"OptimisticOracleV3","address":"0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"},{"name":"OptimisticOracleV2","address":"0xA0Ae6609447e57a42c51B50EAe921D701823FFAe"},{"name":"Registry","address":"0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"},{"name":"FinancialContractsAdmin","address":"0x4E6CCB1dA3C7844887F9A5aF4e8450d9fd90317A"},{"name":"SkinnyOptimisticOracle","address":"0xeE3Afe347D5C74317041E2618C49534dAf887c24"},{"name":"OptimisticAsserter","address":"0x0000000000000000000000000000000000000000"},{"name":"Store","address":"0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"},{"name":"OptimisticOracle","address":"0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6"},{"name":"IdentifierWhitelist","address":"0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"},{"name":"CollateralWhitelist","address":"0xdBF90434dF0B98219f87d112F37d74B1D90758c7"},{"name":"Oracle","address":"0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"}]
+      template:
++        "uma/Finder"
+      description:
++        "Maps interface names to contract addresses (UMA protocol contracts)."
+      usedTypes:
++        [{"typeCaster":"Mapping","arg":{"0x4f7261636c650000000000000000000000000000000000000000000000000000":"Oracle","0x5265676973747279000000000000000000000000000000000000000000000000":"Registry","0x46696e616e6369616c436f6e74726163747341646d696e000000000000000000":"FinancialContractsAdmin","0x53746f7265000000000000000000000000000000000000000000000000000000":"Store","0x4964656e74696669657257686974656c69737400000000000000000000000000":"IdentifierWhitelist","0x436f6c6c61746572616c57686974656c69737400000000000000000000000000":"CollateralWhitelist","0x4f7074696d69737469634f7261636c6500000000000000000000000000000000":"OptimisticOracle","0x536b696e6e794f7074696d69737469634f7261636c6500000000000000000000":"SkinnyOptimisticOracle","0x4f7074696d69737469634f7261636c6556320000000000000000000000000000":"OptimisticOracleV2","0x4f7074696d697374696341737365727465720000000000000000000000000000":"OptimisticAsserter","0x4f7074696d69737469634f7261636c6556330000000000000000000000000000":"OptimisticOracleV3"}}]
+    }
+```
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460","description":"set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.","role":".owner"}]
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+      template:
++        "uma/ProposerV2"
+      description:
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens."
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"propose governance actions.","role":".proposer"}]
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+      values.emergencyProposer:
++        "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      values.owner:
++        "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      values.proposer:
++        "0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      template:
++        "uma/GovernorV2"
+      description:
++        "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes."
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF","description":"set fees for disputes and manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570","description":"manage the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE","description":"manage registered contracts.","role":".owner"},{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove and slash proposals, set the bond amount and the expiry time, manage the executor address.","role":".owner"},{"permission":"interact","from":"ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7","description":"manage the addresses on the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3","description":"manage address mappings.","role":".owner"},{"permission":"interact","from":"ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC","description":"set the bond amount.","role":".owner"},{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE","description":"set critical administrative parameters like default bonds, bond token, fees.","role":".owner"}]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove proposals, execute emergency proposals.","role":".executor"}]
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+      values.bondFmt:
++        "5,000,000"
+      values.delayFmt:
++        "10d"
+      template:
++        "uma/EmergencyProposer"
+      description:
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
+      usedTypes:
++        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"can bypass the voting system and execute proposals immediately.","role":".emergencyProposer"}]
+    }
+```
+
+```diff
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE) {
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+      template:
++        "uma/OptimisticOracleV3"
+      description:
++        "Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes."
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+```
+
+```diff
++   Status: CREATED
+    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF)
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe)
     +++ description: None
 ```
 
 ```diff
--   Status: DELETED
-    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
++   Status: CREATED
+    contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6)
     +++ description: None
 ```
 
 ```diff
--   Status: DELETED
-    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
-    +++ description: None
++   Status: CREATED
+    contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
 ```
 
 ```diff
--   Status: DELETED
-    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
-    +++ description: None
++   Status: CREATED
+    contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
 ```
 
 ```diff
--   Status: DELETED
-    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
-    +++ description: None
-```
-
-```diff
--   Status: DELETED
-    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
-    +++ description: None
++   Status: CREATED
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
 ```
 
 Generated with discovered.json: 0x837fe7986f62259fea8e0078e6b562d014501866

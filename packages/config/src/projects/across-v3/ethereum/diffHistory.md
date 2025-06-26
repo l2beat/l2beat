@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x0e5b839a9cc6c31ace6e7ccb449119d92c60e706
+Generated with discovered.json: 0x6135b90f6619e52d09a73ef821870b0ab8093d7c
 
-# Diff at Thu, 26 Jun 2025 06:21:57 GMT:
+# Diff at Thu, 26 Jun 2025 06:47:19 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 22665827
@@ -237,15 +237,15 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 
 ```diff
     contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
-    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds.
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.
       values.bondFmt:
 +        "2"
       values.delayFmt:
 +        "2d"
       template:
-+        "acrossv3/OptimisticGovernor"
++        "uma/OptimisticGovernor"
       description:
-+        "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds."
++        "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values."
       fieldMeta:
 +        {"rules":{"description":"string of rules that a proposer is accepting when posting a proposal with a bond."}}
       usedTypes:

@@ -1048,12 +1048,12 @@
       "name": "OptimisticGovernor",
       "address": "0x8692B776d1Ff0664177c90465038056Dc64f8991",
       "type": "Contract",
-      "template": "acrossv3/OptimisticGovernor",
+      "template": "uma/OptimisticGovernor",
       "sourceHashes": [
         "0xcecd27c998c8fd83d7532693da2bdff346a1dbedbaab4744f21d2bcf1986e9de"
       ],
       "proxyType": "gnosis safe zodiac module",
-      "description": "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d seconds.",
+      "description": "Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -3469,7 +3469,6 @@
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
     "acrossv3/HubPool": "0xea632530c79fee8c6b88c3b82cbfe50d6008c1161e7eeed13f206420bbb98986",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
-    "acrossv3/OptimisticGovernor": "0x3fff5c660f9919596c95429ee518caa6e3510031eb7fcec1945bd422b0e9f93e",
     "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "uma/AddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
@@ -3478,6 +3477,7 @@
     "uma/FixedSlashSlashingLibrary": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uma/GovernorV2": "0x81d6fd7585e7ab2e8891686228a91b2ee97c9d350f07d842951990154e995207",
     "uma/IdentifierWhitelist": "0xdb8a8c20a9aaf867216fa3a6ab093e400e6b60f94216573a8e53fec8d3e58cf1",
+    "uma/OptimisticGovernor": "0x3fff5c660f9919596c95429ee518caa6e3510031eb7fcec1945bd422b0e9f93e",
     "uma/OptimisticOracleV3": "0x5957a09c103880109a019903db4f13bd33cc479faa82ad2336d2247d912a3306",
     "uma/ProposerV2": "0x0253b13a0deb88312d07815f055d6a3a6bba0f9e9c38608d5ffa43f6aafecb26",
     "uma/Registry": "0x0949d0d2edf24347afc4eadf1fe083fd85363d16a445c16814e5ab50880bda8e",
