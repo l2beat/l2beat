@@ -42,7 +42,5 @@ const monthlyReport = v.object({
 
 export const monthlyReportsCollection = defineCollection({
   type: 'data',
-  // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
-  // support it yet. It's a performance issue.
   schema: monthlyReport,
 })
