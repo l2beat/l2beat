@@ -17,10 +17,11 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import type { Config } from '../../../config'
 import type { TrackedTxsConfig } from '../../../config/Config'
+import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { mockDatabase } from '../../../test/database'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
-describe(RealTimeLivenessProcessor.name, () => {
+describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
   describe(RealTimeLivenessProcessor.prototype.processBlock.name, () => {
     it('should match liveness txs and detect anomalies', async () => {
       const block = mockObject<Block>({
@@ -33,7 +34,8 @@ describe(RealTimeLivenessProcessor.name, () => {
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
-        mockDatabase({}),
+        mockDatabase(),
+        mockObject<DiscordWebhookClient>(),
       )
 
       const mockMatchLivenessTransactions = mockFn().resolvesTo(undefined)
@@ -133,6 +135,7 @@ describe(RealTimeLivenessProcessor.name, () => {
         config,
         Logger.SILENT,
         mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+        mockObject<DiscordWebhookClient>(),
       )
 
       await processor.matchLivenessTransactions(block, logs)
@@ -234,6 +237,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -242,6 +250,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -264,6 +273,8 @@ describe(RealTimeLivenessProcessor.name, () => {
           status: 'ongoing',
         },
       ])
+
+      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
     })
 
     it('should detect ongoing anomaly', async () => {
@@ -327,6 +338,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -335,6 +351,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -350,6 +367,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
+      expect(mockDiscordClient.sendMessage).not.toHaveBeenCalled()
     })
 
     it('should recover from anomaly', async () => {
@@ -414,6 +432,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -422,6 +445,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -445,6 +469,8 @@ describe(RealTimeLivenessProcessor.name, () => {
           end: lastTxTimestamp,
         },
       ])
+
+      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
     })
   })
 })
