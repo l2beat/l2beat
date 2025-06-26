@@ -150,8 +150,7 @@ function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
 function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
   if (
     p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
+    p.dataAvailability?.layer.projectId === 'ethereum' &&
     p.config.trackedTxs !== undefined
   ) {
     return {
@@ -165,8 +164,6 @@ function getFinality(
 ): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
   if (
     p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
     p.config.trackedTxs !== undefined &&
     p.config.finality !== undefined
   ) {
