@@ -1,6 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of {{bondFmt}} UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after {{delayFmt}} by the {{executor}}.",
+  "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of {{bondFmt}} UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after {{delayFmt}}, and only by {{executor}}.",
   "ignoreInWatchMode": ["getCurrentTime"],
   "ignoreRelatives": ["token"],
   "fields": {

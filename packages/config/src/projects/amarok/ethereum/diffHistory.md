@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xb13a5e1e3c65cd49547a4c9d6fe53b426b28cb5f
+Generated with discovered.json: 0x2c004217c6c3d74370364f368d24d7a729d84b02
 
-# Diff at Thu, 26 Jun 2025 07:14:01 GMT:
+# Diff at Thu, 26 Jun 2025 11:10:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 21629064
+- comparing to: main@972319be3b52318c4291f3c7ce823dfda470874c block: 21629064
 - current block number: 22786874
 
 ## Description
@@ -587,7 +587,7 @@ discovery. Values are for block 21629064 (main branch discovery), not current.
 
 ```diff
     contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
-    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
       values.bondFmt:
 +        "5,000,000"
       values.delayFmt:
@@ -595,7 +595,7 @@ discovery. Values are for block 21629064 (main branch discovery), not current.
       template:
 +        "uma/EmergencyProposer"
       description:
-+        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
       receivedPermissions:

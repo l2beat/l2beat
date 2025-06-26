@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x672fe65dd67bf309667ddd7e05530e43b15679fa
+Generated with discovered.json: 0xe39f9f2cf0d77bae4c6304dd84fd31222f83b000
 
-# Diff at Thu, 26 Jun 2025 07:06:46 GMT:
+# Diff at Thu, 26 Jun 2025 11:08:57 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 22665827
+- comparing to: main@972319be3b52318c4291f3c7ce823dfda470874c block: 22665827
 - current block number: 22786790
 
 ## Description
@@ -14,7 +14,7 @@ discodrive, add UMA disco config.
 
 ```diff
     contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac) {
-    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.
       values.rewardPerToken:
 -        "627473210166767069"
 +        "635249991590136217"
@@ -297,7 +297,7 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 
 ```diff
     contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
-    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
       values.bondFmt:
 +        "5,000,000"
       values.delayFmt:
@@ -305,7 +305,7 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
       template:
 +        "uma/EmergencyProposer"
       description:
-+        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
++        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a."
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
       receivedPermissions:
@@ -372,7 +372,7 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
       category:
 +        {"name":"Local Infrastructure","priority":5}
       directlyReceivedPermissions:
-+        [{"permission":"interact","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","description":"relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient.","role":".owner"},{"permission":"upgrade","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","role":"admin"}]
++        [{"permission":"interact","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","description":"relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).","role":".owner"},{"permission":"upgrade","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","role":"admin"}]
     }
 ```
 
@@ -485,7 +485,7 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 ```diff
 +   Status: CREATED
     contract VotingV2 (0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac)
-    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.
+    +++ description: Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.
 ```
 
 ```diff

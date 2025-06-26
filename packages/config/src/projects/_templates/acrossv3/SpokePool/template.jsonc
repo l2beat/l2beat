@@ -11,7 +11,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient."
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target)."
         }
       ]
     }

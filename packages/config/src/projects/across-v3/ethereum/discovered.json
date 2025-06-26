@@ -13,7 +13,7 @@
         "0xef18268ad698461591028993ca19fa3b717ace3ee3371f86e68c1d0a3658d87e"
       ],
       "proxyType": "immutable",
-      "description": "Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation.",
+      "description": "Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take 1d each.",
       "ignoreInWatchMode": [
         "nextPendingIndexToProcess",
         "lastUpdateTime",
@@ -31,6 +31,7 @@
         "ANCILLARY_BYTES_LIMIT": 8192,
         "cumulativeStake": "24583728847476285224345539",
         "currentActiveRequests": true,
+        "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
@@ -1193,7 +1194,7 @@
         "0x435ceb597bcf7bd820f593bdbc0e3ce4d223cc2203b368911d2b29fa6bc5e048"
       ],
       "proxyType": "immutable",
-      "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. They can only be 'executed' (propagate to the governor) or be removed after 10d by the 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.",
+      "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1394,7 +1395,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient.",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
           "role": ".owner"
         },
         {
@@ -3508,7 +3509,7 @@
     "uma/Registry": "0x0949d0d2edf24347afc4eadf1fe083fd85363d16a445c16814e5ab50880bda8e",
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
-    "uma/VotingV2": "0xe581834d51a363c9ecb78e60f712da729358fe24244d27c8410135feecd904d8"
+    "uma/VotingV2": "0x56925723054294aa9dbfb622f90bee80046f19b19af7743591ce42230a467676"
   },
-  "permissionsConfigHash": "0xb16616d1a491d75707667e344e58e79c06b4c92f7402921c61acbac6afb62979"
+  "permissionsConfigHash": "0x37dd8c37a3a76d54ba144b7c56d39f2b8ffaa7cd9d02bafec90e93151d559c02"
 }

@@ -22,6 +22,7 @@ const hubPoolBondAmt = discovery.getContractValue<number>(
   'HubPool',
   'bondAmountFmt',
 )
+const umaDelay = discovery.getContractValue<string>('VotingV2', 'delayFmt')
 
 export const acrossV3: Bridge = {
   type: 'bridge',
@@ -163,7 +164,9 @@ export const acrossV3: Bridge = {
       name: 'Principle of operation',
       description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed on a chain of their choosing and from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
 
-Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contrains a merkle root of all Relayer reimbursements. It is validated optimistically by the UMA Optimistic Oracle on Ethereum. Every assertion / proposal needs to be accompanied by a ${hubPoolBondAmt} ABT bond (ABT wraps ETH). The root bundle can be challenged by anyone providing an equal bond plus fees. If the root remains unchallenged for ${finalizationDelay}, it is optimistically finalized and the Relayer is reimbursed. On a successful dispute, the UMA optimistic oracle dictates who receives what amount.
+Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. The content is a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halt finalization of the root bundle and escalates the dispute to the UMA Optimistic Oracle.
+
+The UMA oracle settles disputes by UMA token voting, with a commit- and reveal phase of ${umaDelay} each. A settlement slashes the stake of the losing party and rewards the winning party with both bond amounts minus fees.
 
 Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters.`,
       references: [
