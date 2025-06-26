@@ -1,4 +1,4 @@
-import type { ProjectScalingStage, Stage } from '@l2beat/config'
+import type { ProjectScalingStage } from '@l2beat/config'
 
 import { StageBadge } from '~/components/badge/StageBadge'
 import {
@@ -7,10 +7,8 @@ import {
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { TableLink } from '~/components/table/TableLink'
-import { CircleQuestionMarkIcon } from '~/icons/CircleQuestionMark'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { StopwatchIcon } from '~/icons/Stopwatch'
-import { cn } from '~/utils/cn'
 import { StageTooltip } from './StageTooltip'
 
 export interface StageCellProps {
@@ -26,11 +24,6 @@ export function StageCell({
   href,
   emergencyWarning,
 }: StageCellProps) {
-  const hasNotice =
-    stageConfig.stage !== 'UnderReview' &&
-    stageConfig.stage !== 'NotApplicable' &&
-    !!stageConfig.additionalConsiderations
-
   const content = (
     <div className="flex gap-1">
       <StageBadge
@@ -38,15 +31,6 @@ export function StageCell({
         isAppchain={isAppchain}
         className="flex flex-col gap-px"
       />
-      {hasNotice && (
-        <CircleQuestionMarkIcon
-          className={cn(
-            '-mt-px size-5 fill-current md:mt-px',
-            getCircleQuestionMarkClassName(stageConfig.stage),
-          )}
-          questionMarkClassName={getQuestionMarkClassName(stageConfig.stage)}
-        />
-      )}
       {stageConfig.stage !== 'NotApplicable' &&
         stageConfig.stage !== 'UnderReview' &&
         stageConfig.downgradePending &&
@@ -73,34 +57,4 @@ export function StageCell({
       </TooltipContent>
     </Tooltip>
   )
-}
-
-function getQuestionMarkClassName(
-  stage: Stage | 'UnderReview' | 'NotApplicable',
-): string {
-  switch (stage) {
-    case 'Stage 2':
-      return 'fill-white'
-    case 'Stage 1':
-      return 'fill-yellow-900'
-    case 'Stage 0':
-      return 'text-white'
-    default:
-      return ''
-  }
-}
-
-function getCircleQuestionMarkClassName(
-  stage: Stage | 'UnderReview' | 'NotApplicable',
-): string {
-  switch (stage) {
-    case 'Stage 2':
-      return 'fill-green-900'
-    case 'Stage 1':
-      return 'fill-[#FFC61B]'
-    case 'Stage 0':
-      return 'fill-orange-600 dark:fill-[#E03109]'
-    default:
-      return ''
-  }
 }
