@@ -369,9 +369,6 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
-      deep-diff:
-        specifier: ^1.0.2
-        version: 1.0.2
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -406,9 +403,6 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@types/deep-diff':
-        specifier: ^1.0.2
-        version: 1.0.5
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.17.12
@@ -3376,9 +3370,6 @@ packages:
   '@types/debug@4.1.8':
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
 
-  '@types/deep-diff@1.0.5':
-    resolution: {integrity: sha512-PQyNSy1YMZU1hgZA5tTYfHPpUAo9Dorn1PZho2/budQLfqLu3JIP37JAavnwYpR1S2yFZTXa3hxaE4ifGW5jaA==}
-
   '@types/diff@7.0.2':
     resolution: {integrity: sha512-JSWRMozjFKsGlEjiiKajUjIJVKuKdE3oVy2DNtK+fUo8q82nhFZ2CPQwicAIkXrofahDXrWJ7mjelvZphMS98Q==}
 
@@ -4298,9 +4289,6 @@ packages:
   decompress-response@6.0.0:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
-
-  deep-diff@1.0.2:
-    resolution: {integrity: sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==}
 
   deep-equal@1.0.1:
     resolution: {integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==}
@@ -9875,8 +9863,6 @@ snapshots:
     dependencies:
       '@types/ms': 0.7.34
 
-  '@types/deep-diff@1.0.5': {}
-
   '@types/diff@7.0.2': {}
 
   '@types/emscripten@1.40.0': {}
@@ -10855,8 +10841,6 @@ snapshots:
   decompress-response@6.0.0:
     dependencies:
       mimic-response: 3.1.0
-
-  deep-diff@1.0.2: {}
 
   deep-equal@1.0.1: {}
 
