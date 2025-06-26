@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xe8507fa052a9981f0e2736ab73b0559e4ce6362c
+Generated with discovered.json: 0xb13a5e1e3c65cd49547a4c9d6fe53b426b28cb5f
 
-# Diff at Thu, 26 Jun 2025 06:47:10 GMT:
+# Diff at Thu, 26 Jun 2025 07:14:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 21629064
@@ -476,6 +476,14 @@ templatize UMA.
     }
 ```
 
+## Source code changes
+
+```diff
+.../GnosisSafe-0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a}/GnosisSafe.sol | 0
+ .../GnosisSafe-0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a}/Proxy.p.sol    | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+```
+
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
@@ -539,6 +547,8 @@ discovery. Values are for block 21629064 (main branch discovery), not current.
 +        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens."
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      category:
++        {"name":"Shared Infrastructure","priority":4}
       receivedPermissions:
 +        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"propose governance actions.","role":".proposer"}]
     }
@@ -557,14 +567,19 @@ discovery. Values are for block 21629064 (main branch discovery), not current.
 +        "uma/GovernorV2"
       description:
 +        "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes."
+      category:
++        {"name":"Shared Infrastructure","priority":4}
       receivedPermissions:
 +        [{"permission":"interact","from":"ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF","description":"set fees for disputes and manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570","description":"manage the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE","description":"manage registered contracts.","role":".owner"},{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove and slash proposals, set the bond amount and the expiry time, manage the executor address.","role":".owner"},{"permission":"interact","from":"ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7","description":"manage the addresses on the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3","description":"manage address mappings.","role":".owner"},{"permission":"interact","from":"ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC","description":"set the bond amount.","role":".owner"},{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE","description":"set critical administrative parameters like default bonds, bond token, fees.","role":".owner"}]
     }
 ```
 
 ```diff
-    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
     +++ description: None
+      name:
+-        "GnosisSafe"
++        "UMA Multisig"
       receivedPermissions:
 +        [{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove proposals, execute emergency proposals.","role":".executor"}]
     }

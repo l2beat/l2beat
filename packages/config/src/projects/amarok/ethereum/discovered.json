@@ -676,7 +676,8 @@
       "implementationNames": {
         "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "RootManager",
@@ -1149,7 +1150,8 @@
       },
       "implementationNames": {
         "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "ModeHubConnector",
@@ -1271,7 +1273,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GnosisSafe",
+      "name": "UMA Multisig",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -5249,5 +5251,5 @@
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b"
   },
-  "permissionsConfigHash": "0x564c7a1d58f9b35875d1acd1c9ffbb3ebf29dbe482da4394d640c8e4a60229c3"
+  "permissionsConfigHash": "0x2aab1553ec008a01acabd473879a28b4307ac01d7d5e275c2dc5c1842859498c"
 }
