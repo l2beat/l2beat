@@ -8,6 +8,7 @@ import {
   EigenApiClient,
   FuelClient,
   HttpClient,
+  type LogsClient,
   LoopringClient,
   MulticallV3Client,
   PolkadotRpcClient,
@@ -23,6 +24,7 @@ import type { Config } from '../config/Config'
 
 export interface Clients {
   block: BlockClient[]
+  logs: LogsClient[]
   svmBlock: SvmBlockClient[]
   indexer: BlockIndexerClient[]
   starkex: StarkexClient | undefined
@@ -53,6 +55,7 @@ export function initClients(config: Config, logger: Logger): Clients {
 
   const starknetClients: StarknetClient[] = []
   const blockClients: BlockClient[] = []
+  const logsClients: LogsClient[] = []
   const svmBlockClients: SvmBlockClient[] = []
   const indexerClients: BlockIndexerClient[] = []
   const rpcClients: RpcClient[] = []
@@ -90,6 +93,7 @@ export function initClients(config: Config, logger: Logger): Clients {
             multicallClient,
           })
           blockClients.push(rpcClient)
+          logsClients.push(rpcClient)
           rpcClients.push(rpcClient)
           if (chain.name === 'ethereum' && ethereumClient === undefined) {
             ethereumClient = rpcClient
@@ -267,6 +271,7 @@ export function initClients(config: Config, logger: Logger): Clients {
 
   return {
     block: blockClients,
+    logs: logsClients,
     svmBlock: svmBlockClients,
     indexer: indexerClients,
     starkex: starkexClient,

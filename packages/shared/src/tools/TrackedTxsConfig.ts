@@ -41,6 +41,7 @@ export interface TrackedTxFunctionCallConfig {
   address: EthereumAddress
   selector: string
   signature: `function ${string}`
+  topics?: string[]
 }
 
 export interface TrackedTxTransferConfig {

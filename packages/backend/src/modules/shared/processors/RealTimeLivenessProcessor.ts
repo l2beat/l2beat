@@ -11,6 +11,7 @@ import type {
 import {
   assert,
   type Block,
+  type Log,
   type ProjectId,
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
@@ -46,12 +47,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     this.mapConfigurations(config.trackedTxsConfig)
   }
 
-  async processBlock(block: Block): Promise<void> {
-    await this.matchLivenessTransactions(block)
+  async processBlock(block: Block, logs: Log[]): Promise<void> {
+    await this.matchLivenessTransactions(block, logs)
     await this.checkForAnomalies(block)
   }
 
-  async matchLivenessTransactions(block: Block) {
+  async matchLivenessTransactions(block: Block, logs: Log[]) {
     const records: RealTimeLivenessRecord[] = []
 
     for (const tx of block.transactions) {
@@ -104,6 +105,33 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         txHash: tx.hash as string,
         configurationId: config.id,
       }))
+
+      records.push(...results)
+    }
+
+    for (const log of logs) {
+      // for now we only support function calls in logs
+      const matchingCalls = this.functionCalls.filter(
+        (c) =>
+          c.params.address.toLowerCase() === log.address.toLowerCase() &&
+          c.params.topics?.some((topic) => log.topics.includes(topic)),
+      )
+
+      const results = matchingCalls
+        .map((config) => ({
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: log.transactionHash as string,
+          configurationId: config.id,
+        }))
+        .filter(
+          (result) =>
+            !records.some(
+              (r) =>
+                r.txHash === result.txHash &&
+                r.configurationId === result.configurationId,
+            ),
+        )
 
       records.push(...results)
     }
