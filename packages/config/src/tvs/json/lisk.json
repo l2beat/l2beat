@@ -114,6 +114,32 @@
     },
     {
       "mode": "auto",
+      "id": "lisk-oUSDT",
+      "priceId": "openusdt",
+      "symbol": "oUSDT",
+      "name": "OpenUSDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+        "chain": "lisk",
+        "decimals": 6,
+        "sinceTimestamp": 1741824000
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "lisk-TRB",
       "priceId": "tellor",
       "symbol": "TRB",

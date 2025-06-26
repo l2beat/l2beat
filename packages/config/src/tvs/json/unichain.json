@@ -4,6 +4,25 @@
   "tokens": [
     {
       "mode": "auto",
+      "id": "unichain-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-COMP",
       "priceId": "compound-governance-token",
       "symbol": "COMP",
@@ -139,6 +158,25 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-GRT",
+      "priceId": "the-graph",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/13397/large/Graph_Token.png?1696513159",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc944E90C64B2c07662A292be6244BDf05Cda44a7",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "unichain-kBTC",
       "priceId": "kraken-wrapped-btc",
       "symbol": "kBTC",
@@ -202,6 +240,51 @@
     },
     {
       "mode": "auto",
+      "id": "unichain-OCEAN",
+      "priceId": "ocean-protocol",
+      "symbol": "OCEAN",
+      "name": "Ocean Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/3687/large/ocean-protocol-logo.jpg?1696504363",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x967da4048cD07aB37855c090aAF366e4ce1b9F48",
+        "chain": "ethereum",
+        "escrowAddress": "0x81014F44b0a345033bB2b3B21C7a1A308B35fEeA",
+        "decimals": 18,
+        "sinceTimestamp": 1730748227
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "unichain-oUSDT",
+      "priceId": "openusdt",
+      "symbol": "oUSDT",
+      "name": "OpenUSDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+        "chain": "unichain",
+        "decimals": 6,
+        "sinceTimestamp": 1741824000
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "unichain-pzETH-1",
       "priceId": "renzo-restaked-lst",
       "symbol": "pzETH",
@@ -253,7 +336,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "unichain-sUSDS-2",
       "priceId": "susds",
       "symbol": "sUSDS",
@@ -418,7 +501,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "unichain-USDS-2",
       "priceId": "usds",
       "symbol": "USDS",
