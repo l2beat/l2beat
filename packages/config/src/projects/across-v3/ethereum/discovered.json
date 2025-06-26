@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22780541,
+  "blockNumber": 22786790,
   "configHash": "0x0b7fa96fe04ab217e12ea897c8ac004783f4afe3bde3af0d173e240bb36bc73f",
   "entries": [
     {
@@ -29,27 +29,27 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "24591382338331765125177516",
+        "cumulativeStake": "24583728847476285224345539",
         "currentActiveRequests": true,
         "emissionRate": "130000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
         "getCurrentRoundId": 10132,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 9,
+          "numberPendingPriceRequests": 20,
           "numberResolvedPriceRequests": 1063
         },
-        "getVotePhase": 0,
+        "getVotePhase": 1,
         "lastRoundIdProcessed": 10132,
-        "lastUpdateTime": 1750843331,
+        "lastUpdateTime": 1750912847,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 9,
+        "nextPendingIndexToProcess": 20,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "634851369349248344",
-        "rewardPerTokenStored": "634850544670109897",
+        "rewardPerToken": "635249991590136217",
+        "rewardPerTokenStored": "635218009460619657",
         "slashingLibrary": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -70,6 +70,7 @@
         "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -99,6 +100,7 @@
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -129,6 +131,7 @@
         "0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -163,6 +166,7 @@
         "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -217,6 +221,7 @@
         "0x45811d7c7fb7a921f66322f37a63fe336a5df0b31563d9ad40192b65a612b905"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -257,6 +262,7 @@
         "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -284,6 +290,7 @@
         "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -489,7 +496,8 @@
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x9B40E25dDd4518F36c50ce8AEf53Ee527419D55d"
         ],
-        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"]
+        "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
+        "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
       },
       "implementationNames": {
         "0x3e532e6222afe9Bcf02DCB87216802c75D5113aE": "Registry"
@@ -606,7 +614,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
+        "getCurrentTime": 1750918895,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -625,6 +633,7 @@
         "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -674,6 +683,7 @@
         "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -765,11 +775,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1750843487,
+        "getCurrentTime": 1750918895,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2762379,
+        "numberOfDeposits": 2765623,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -778,6 +788,7 @@
         "withdrawalRecipient": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "wrappedNativeToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "ERC1967Proxy",
         "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a": "Ethereum_SpokePool"
@@ -792,6 +803,7 @@
         "0x949e41ae655aafeb048cfa1c491186b6582bd4f6028227ed0ce17a012456e675"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -827,6 +839,7 @@
         "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -867,6 +880,24 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "ethereum:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
+          "description": "set critical administrative parameters like migrating to a new contract and requesting governancce actions (`requestPrice()`) directly.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
+          "description": "manage registered contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+          "description": "manage address mappings.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
           "from": "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "description": "set the bond amount.",
           "role": ".owner"
@@ -888,6 +919,24 @@
           "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
           "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
+          "description": "manage the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
+          "description": "manage the addresses on the whitelist.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+          "description": "set critical administrative parameters like default bonds, bond token, fees.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
@@ -897,7 +946,7 @@
         "$immutable": true,
         "emergencyProposer": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750843487,
+        "getCurrentTime": 1750918895,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -920,6 +969,7 @@
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -1022,6 +1072,24 @@
           "via": [
             { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
           ]
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
+          "role": ".owner",
+          "via": [
+            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "manage the proposer role.",
+          "role": ".owner",
+          "via": [
+            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+          ]
         }
       ],
       "directlyReceivedPermissions": [
@@ -1078,6 +1146,7 @@
         "0x1cb72676cfb98558060e29bb95cd793731c85797f35025b1f2dfb383499f55a3"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -1126,7 +1195,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1750843487,
+        "getCurrentTime": 1750918895,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1178,6 +1247,7 @@
         "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -1207,6 +1277,7 @@
         "0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -1251,6 +1322,18 @@
           "from": "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "description": "manage the proposer role.",
+          "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
@@ -1288,8 +1371,14 @@
         "0x3afa0a01f4cde6c678d6ec12443078407e69293b9a4519105445f694671b2dec"
       ],
       "proxyType": "immutable",
-      "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h.",
+      "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient.",
+          "role": ".owner"
+        },
         {
           "permission": "upgrade",
           "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
@@ -1325,6 +1414,7 @@
           "7777777": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
         },
         "bondAmount": "450000000000000000",
+        "bondAmountFmt": "0.45",
         "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
         "CrossChainContracts": {
           "1": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
@@ -1360,21 +1450,26 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xa12b82c76e94ba4b33d789fa4839aa468922640ce20a97516a990ef25c014590",
-          "relayerRefundRoot": "0x731009c711f16faf0795ba38fe62af9109fc8bfbfe711a13882b20f545ca9a56",
+          "poolRebalanceRoot": "0x63191663b451938d73af704ef2138363bbfd292fcee0f8ec5dddd1c0122674e2",
+          "relayerRefundRoot": "0x1fabfc5473497cf3462bca5af2772932e3f035789041b464334db5a321e29cb6",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 19,
-          "challengePeriodEndTimestamp": 1750845431
+          "unclaimedPoolRebalanceLeafCount": 18,
+          "challengePeriodEndTimestamp": 1750921523
         },
         "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "paused": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool"
-      }
+      },
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
     },
     {
       "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -2088,6 +2183,7 @@
         "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -2117,6 +2213,7 @@
         "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -2201,6 +2298,7 @@
         "0x9c8e20215aa548a11ed98c8333dbfbaa36143263b4de43d8f73a57b19ec7cea6"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -2232,6 +2330,7 @@
         "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -2261,6 +2360,7 @@
         "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -2289,9 +2389,14 @@
       "proxyType": "EOA",
       "receivedPermissions": [
         {
+          "permission": "acrossPropose",
+          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "role": ".proposers"
+        },
+        {
           "permission": "interact",
           "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
-          "description": "use ABT as a bond in the HubPool contract for root bundle proposals.",
+          "description": "use ABT as a bond to the HubPool contract for root bundle proposals.",
           "role": ".proposers"
         }
       ]
@@ -2305,6 +2410,7 @@
         "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14"
       ],
       "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
       "ignoreInWatchMode": [
         "L2_MESSAGE_RELAY_GAS_LIMIT",
         "L2_TOKEN_RELAY_GAS_LIMIT"
@@ -3360,24 +3466,24 @@
   "usedTemplates": {
     "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/adapter": "0xb4255921436c1b241e151988fe5443ec28852daad474c31507370e6006903dbe",
-    "acrossv3/BondToken": "0x2fd02d300bd8cc6a3b615569c5fdc4aaf8af87cfc90a9f6647ddc86e28046bf8",
-    "acrossv3/HubPool": "0x28abeeb395df3da5703d1c7d6f4a1470bd9a7a748cea7e8d1e2edcacf38351da",
+    "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
+    "acrossv3/HubPool": "0xea632530c79fee8c6b88c3b82cbfe50d6008c1161e7eeed13f206420bbb98986",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
     "acrossv3/OptimisticGovernor": "0x3fff5c660f9919596c95429ee518caa6e3510031eb7fcec1945bd422b0e9f93e",
-    "acrossv3/SpokePool": "0x1b92e45d04388d3e6acb41a355f3b4d7e3dd17e0212095dd91a12c1dd1d006f0",
+    "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "uma/AddressWhitelist": "0xe8bb64107fe8545119ad8d71ddd5de3a84aac2a3e7f886f8391a35ef9dfd6b69",
+    "uma/AddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
     "uma/EmergencyProposer": "0x2cf4d5496e11daf1a1ea3a68bde77a515235544c5b17addbedd4d2be5b04091a",
-    "uma/Finder": "0xda74fa90b61bba763f4b2666a821b9b581d6a60c72fb58a97c98350118ddb4c0",
+    "uma/Finder": "0xc1cfa8a8f0115f996b5cdc909e96963a198e202aae06ef575a94e1f6ea8468c1",
     "uma/FixedSlashSlashingLibrary": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "uma/GovernorV2": "0x81d6fd7585e7ab2e8891686228a91b2ee97c9d350f07d842951990154e995207",
-    "uma/IdentifierWhitelist": "0x9d9f013353e3df01a2ad3645fe57e0c5773340336afe9aefdce794cc8325ec0d",
-    "uma/OptimisticOracleV3": "0xa6f40ff1fbcf96dc80abe888e0b897303ac393cb09eaf16d46c2cbeec7d676b7",
+    "uma/IdentifierWhitelist": "0xdb8a8c20a9aaf867216fa3a6ab093e400e6b60f94216573a8e53fec8d3e58cf1",
+    "uma/OptimisticOracleV3": "0x5957a09c103880109a019903db4f13bd33cc479faa82ad2336d2247d912a3306",
     "uma/ProposerV2": "0x0253b13a0deb88312d07815f055d6a3a6bba0f9e9c38608d5ffa43f6aafecb26",
-    "uma/Registry": "0x3e3d5d3acd3a374bce36c8575b7187cf89816c7f51e4b933aecb5d6a94537c6f",
+    "uma/Registry": "0x0949d0d2edf24347afc4eadf1fe083fd85363d16a445c16814e5ab50880bda8e",
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
-    "uma/VotingV2": "0x8add69177c3542bdb4513ea7c6716148c77e33d5c7f4cba05368a35876ce50ec"
+    "uma/VotingV2": "0xe581834d51a363c9ecb78e60f712da729358fe24244d27c8410135feecd904d8"
   },
-  "permissionsConfigHash": "0x16df5eee28f678c40fc23fc775f2aed28148f9571ed3e667865f566fb011512d"
+  "permissionsConfigHash": "0x7aae4dba5ebe744a1f4a1fbf7756c2fd5c2b4724fe082a374023179443f6a6d1"
 }
