@@ -148,7 +148,11 @@ function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
 }
 
 function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
-  if (p.type === 'layer2' && p.config.trackedTxs !== undefined) {
+  if (
+    p.type === 'layer2' &&
+    p.dataAvailability?.layer.projectId === 'ethereum' &&
+    p.config.trackedTxs !== undefined
+  ) {
     return {
       warning: p.display.costsWarning,
     }
