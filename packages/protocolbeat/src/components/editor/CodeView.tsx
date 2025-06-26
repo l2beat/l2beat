@@ -4,18 +4,15 @@ import { useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
 import { Editor } from './editor'
 import { useCodeStore } from './store'
-import type { Range } from './store'
 
 export function CodeView({
-  range,
   editorKey = 'default',
 }: {
-  range: Range | undefined
   editorKey?: string
   readOnly?: boolean
 }) {
   const monacoEl = useRef(null)
-  const { setEditor, getEditor, showRange, removeEditor } = useCodeStore()
+  const { setEditor, getEditor, removeEditor } = useCodeStore()
   const editor = getEditor(editorKey)
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
@@ -49,14 +46,6 @@ export function CodeView({
   useEffect(() => {
     editor?.resize()
   }, [editor, panels, pickedUp, fullScreen])
-
-  useEffect(() => {
-    if (range !== undefined) {
-      showRange(undefined)
-      const { startOffset, length } = range
-      editor?.showRange(startOffset, length)
-    }
-  }, [editor, range])
 
   return <div className="h-full w-full" ref={monacoEl} />
 }
