@@ -16,6 +16,7 @@ import {
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../../config/Config'
+import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -39,6 +40,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     config: Config,
     logger: Logger,
     private readonly db: Database,
+    private readonly discordClient?: DiscordWebhookClient,
   ) {
     this.logger = logger.for(this)
 
@@ -194,6 +196,17 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
         })
 
+        const message =
+          `New anomaly detected\n` +
+          `- project: \`${group.projectId}\`\n` +
+          `- type: \`${group.subtype}\`\n` +
+          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
+          `- detected at time: \`${block.timestamp}\`\n` +
+          `- detected at block: \`${block.number}\`\n` +
+          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n`
+
+        await this.sendDiscordNotification(message)
+
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
           projectId: group.projectId,
@@ -212,6 +225,17 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           subtype: group.subtype,
           blockNumber: block.number,
         })
+
+        const message =
+          `Recovered from anomaly\n` +
+          `- project: \`${group.projectId}\`\n` +
+          `- type: \`${group.subtype}\`\n` +
+          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
+          `- recovered on time: \`${block.timestamp}\`\n` +
+          `- recovered on block: \`${block.number}\`\n` +
+          `- duration: \`${latestRecord.timestamp - ongoingAnomaly.start} seconds\``
+
+        await this.sendDiscordNotification(message)
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
@@ -306,5 +330,19 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         params: TrackedTxSharedBridgeConfig
       } => c.params.formula === 'sharedBridge',
     )
+  }
+
+  private async sendDiscordNotification(message: string) {
+    if (!this.discordClient) {
+      return
+    }
+
+    try {
+      await this.discordClient.sendMessage(message)
+    } catch (error) {
+      this.logger.error('Failed to send Discord notification', {
+        error,
+      })
+    }
   }
 }
