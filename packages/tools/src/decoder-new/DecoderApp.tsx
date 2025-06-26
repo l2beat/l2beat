@@ -19,6 +19,10 @@ function DecodedWrapper({ search }: { search: URLSearchParams }) {
   const result = useQuery({
     queryFn: () => callDecode(search.toString()),
     queryKey: [search.toString()],
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
   const [condensed, setCondensed] = useState(
     localStorage.getItem('condensed') === 'true',
