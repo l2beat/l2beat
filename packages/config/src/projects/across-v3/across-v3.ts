@@ -162,7 +162,10 @@ export const acrossV3: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed on a chain of their choosing and from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
-Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contrains a merkle root of all Relayer reimbursements. It is validated optimistically by the UMA Optimistic Oracle on Ethereum. Every assertion / proposal needs to be accompanied by a ${hubPoolBondAmt} ABT bond (ABT wraps ETH). The root bundle can be challenged by anyone providing an equal bond plus fees. If the root remains unchallenged for ${finalizationDelay}, it is optimistically finalized and the Relayer is reimbursed. On a successful dispute, the UMA optimistic oracle dictates who receives what amount. Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters.`,
+
+Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contrains a merkle root of all Relayer reimbursements. It is validated optimistically by the UMA Optimistic Oracle on Ethereum. Every assertion / proposal needs to be accompanied by a ${hubPoolBondAmt} ABT bond (ABT wraps ETH). The root bundle can be challenged by anyone providing an equal bond plus fees. If the root remains unchallenged for ${finalizationDelay}, it is optimistically finalized and the Relayer is reimbursed. On a successful dispute, the UMA optimistic oracle dictates who receives what amount.
+
+Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters.`,
       references: [
         {
           title: 'Across V3 Architecture',
@@ -186,7 +189,7 @@ Specifically, when a user deposits funds into a dedicated pool on the origin cha
     },
     validation: {
       name: 'Validation via Optimistic Oracle',
-      description: `Money from the liquidity pool is used to reimburse Relayers based on a proof of deposit on a destination chain that is provided to an Optimistic Oracle on Ethereum (UMA DVM). The proof can be disputed for ${finalizationDelay}.`,
+      description: `Money from the liquidity pool is used to reimburse Relayers based on a claim of deposit on a destination chain that is provided to an Optimistic Oracle on Ethereum (UMA DVM). The assertion can be disputed for ${finalizationDelay}.`,
       risks: [
         {
           category: 'Funds can be stolen if',

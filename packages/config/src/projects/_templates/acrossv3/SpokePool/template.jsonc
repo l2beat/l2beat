@@ -4,6 +4,7 @@
   "ignoreMethods": ["rootBundles", "proxiableUUID"],
   "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
   "ignoreRelatives": ["wrappedNativeToken"],
+  "category": "core",
   "fields": {
     "owner": {
       "severity": "HIGH",

@@ -4,6 +4,8 @@
   "ignoreMethods": ["crossChainContracts", "getCurrentTime"],
   "ignoreRelatives": ["weth", "lpTokenFactory"],
   "ignoreInWatchMode": ["rootBundleProposal"],
+  "category": "core",
+  "canActIndependently": false,
   "fields": {
     "bondAmountFmt": {
       "handler": {

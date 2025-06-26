@@ -89,7 +89,8 @@
       },
       "implementationNames": {
         "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b": "Zora_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Soneium_Adapter",
@@ -120,7 +121,8 @@
       },
       "implementationNames": {
         "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2": "OP_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Arbitrum_Adapter",
@@ -155,7 +157,8 @@
       },
       "implementationNames": {
         "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210": "Arbitrum_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Redstone_Adapter",
@@ -185,7 +188,8 @@
       },
       "implementationNames": {
         "0x188F8C95B7cfB7993B53a4F643efa687916f73fA": "Redstone_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "HubPoolStore",
@@ -238,7 +242,8 @@
       },
       "implementationNames": {
         "0x22001f37B586792F25Ef9d19d99537C6446e0833": "Universal_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x2bAaA41d155ad8a4126184950B31F50A1513cE25",
@@ -279,7 +284,8 @@
       },
       "implementationNames": {
         "0x2DA799c2223c6ffB595e578903AE6b95839160d8": "Scroll_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Boba_Adapter",
@@ -306,7 +312,8 @@
       },
       "implementationNames": {
         "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
@@ -622,7 +629,8 @@
       "implementationNames": {
         "0x50efaC9619225d7fB4703C5872da978849B6E7cC": "ProposerV2"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Ethereum_Adapter",
@@ -643,7 +651,8 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084": "Ethereum_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Store",
@@ -702,7 +711,8 @@
       },
       "implementationNames": {
         "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787": "Linea_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Ethereum_SpokePool",
@@ -792,7 +802,8 @@
       "implementationNames": {
         "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5": "ERC1967Proxy",
         "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a": "Ethereum_SpokePool"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "name": "ZkStack_CustomGasToken_Adapter",
@@ -828,7 +839,8 @@
       },
       "implementationNames": {
         "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf": "ZkStack_CustomGasToken_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Alephzero_Adapter",
@@ -865,7 +877,8 @@
       },
       "implementationNames": {
         "0x6F4083304C2cA99B077ACE06a5DcF670615915Af": "Arbitrum_CustomGasToken_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "GovernorV2",
@@ -958,7 +971,8 @@
       },
       "implementationNames": {
         "0x7b292034084A41B9D441B71b6E3557Edd0463fa8": "GovernorV2"
-      }
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "name": "Ink_Adapter",
@@ -989,7 +1003,8 @@
       },
       "implementationNames": {
         "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2": "OP_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "UMA Multisig",
@@ -1166,7 +1181,8 @@
       },
       "implementationNames": {
         "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1": "WorldChain_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "EmergencyProposer",
@@ -1266,7 +1282,8 @@
       },
       "implementationNames": {
         "0xA374585E6062517Ee367ee5044946A6fBe17724f": "ZkStack_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Polygon_Adapter",
@@ -1298,7 +1315,8 @@
       },
       "implementationNames": {
         "0xb4AeF0178f5725392A26eE18684C2aB62adc912e": "Polygon_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Across Multisig",
@@ -1372,7 +1390,7 @@
       ],
       "proxyType": "immutable",
       "description": "The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "interact",
           "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
@@ -1469,7 +1487,8 @@
       "implementationNames": {
         "0xc186fA914353c44b2E33eBE05f21846F1048bEda": "HubPool"
       },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }]
+      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
@@ -2202,7 +2221,8 @@
       },
       "implementationNames": {
         "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": "Base_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Optimism_Adapter",
@@ -2236,7 +2256,8 @@
       },
       "implementationNames": {
         "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": "Optimism_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "AcrossBondToken (ABT)",
@@ -2319,7 +2340,8 @@
       },
       "implementationNames": {
         "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b": "OP_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Mode_Adapter",
@@ -2349,7 +2371,8 @@
       },
       "implementationNames": {
         "0xf1B59868697f3925b72889ede818B9E7ba0316d0": "Mode_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "Blast_Adapter",
@@ -2381,7 +2404,8 @@
       },
       "implementationNames": {
         "0xF2bEf5E905AAE0295003ab14872F811E914EdD81": "Blast_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
@@ -2429,7 +2453,8 @@
       },
       "implementationNames": {
         "0xFADcC43096756e1527306FD92982FEbBe3c629Fa": "DoctorWho_Adapter"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "OptimisticOracleV3",
@@ -3467,7 +3492,7 @@
     "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "acrossv3/adapter": "0xb4255921436c1b241e151988fe5443ec28852daad474c31507370e6006903dbe",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
-    "acrossv3/HubPool": "0xea632530c79fee8c6b88c3b82cbfe50d6008c1161e7eeed13f206420bbb98986",
+    "acrossv3/HubPool": "0x88041cb87c7b8bfa14c528c9c6a13530bd02686140611aff8e1ccb544fa88872",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
     "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
@@ -3485,5 +3510,5 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0xe581834d51a363c9ecb78e60f712da729358fe24244d27c8410135feecd904d8"
   },
-  "permissionsConfigHash": "0x7aae4dba5ebe744a1f4a1fbf7756c2fd5c2b4724fe082a374023179443f6a6d1"
+  "permissionsConfigHash": "0xb16616d1a491d75707667e344e58e79c06b4c92f7402921c61acbac6afb62979"
 }

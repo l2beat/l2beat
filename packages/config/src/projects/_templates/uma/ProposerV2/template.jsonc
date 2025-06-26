@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of {{bondFmt}} UMA tokens.",
+  "category": "shared",
   "ignoreMethods": ["bondedProposals"],
   "ignoreInWatchMode": ["bond", "getCurrentTime"],
   "ignoreRelatives": ["token"],

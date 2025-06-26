@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6135b90f6619e52d09a73ef821870b0ab8093d7c
+Generated with discovered.json: 0x672fe65dd67bf309667ddd7e05530e43b15679fa
 
-# Diff at Thu, 26 Jun 2025 06:47:19 GMT:
+# Diff at Thu, 26 Jun 2025 07:06:46 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@b2f29d2f5dca5ee4f45038915b0367613fdcb11d block: 22665827
@@ -35,6 +35,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -49,6 +51,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -57,6 +61,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -65,6 +71,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -83,6 +91,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -91,6 +101,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -99,6 +111,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -141,6 +155,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 +        "Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens."
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      category:
++        {"name":"Shared Infrastructure","priority":4}
       receivedPermissions:
 +        [{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"propose governance actions.","role":".proposer"}]
     }
@@ -151,6 +167,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -159,6 +177,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -173,6 +193,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 +        "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers."
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+      category:
++        {"name":"Local Infrastructure","priority":5}
     }
 ```
 
@@ -181,6 +203,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -189,6 +213,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -205,6 +231,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 +        "uma/GovernorV2"
       description:
 +        "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes."
+      category:
++        {"name":"Shared Infrastructure","priority":4}
       receivedPermissions:
 +        [{"permission":"interact","from":"ethereum:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac","description":"set critical administrative parameters like migrating to a new contract and requesting governancce actions (`requestPrice()`) directly.","role":".owner"},{"permission":"interact","from":"ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF","description":"set fees for disputes and manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570","description":"manage the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE","description":"manage registered contracts.","role":".owner"},{"permission":"interact","from":"ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748","description":"remove and slash proposals, set the bond amount and the expiry time, manage the executor address.","role":".owner"},{"permission":"interact","from":"ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7","description":"manage the addresses on the whitelist.","role":".owner"},{"permission":"interact","from":"ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3","description":"manage address mappings.","role":".owner"},{"permission":"interact","from":"ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC","description":"set the bond amount.","role":".owner"},{"permission":"interact","from":"ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8","description":"manage all roles in the contract.","role":".owner"},{"permission":"interact","from":"ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE","description":"set critical administrative parameters like default bonds, bond token, fees.","role":".owner"}]
     }
@@ -221,6 +249,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -260,6 +290,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -286,6 +318,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -294,6 +328,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -317,16 +353,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 ```diff
     contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
     +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
-      receivedPermissions.1:
-+        {"permission":"upgrade","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","role":"admin"}
-      receivedPermissions.0.permission:
--        "upgrade"
-+        "interact"
-      receivedPermissions.0.role:
--        "admin"
-+        ".owner"
-      receivedPermissions.0.description:
-+        "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient."
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","role":"admin"}]
       values.bondAmountFmt:
 +        "0.45"
       values.finalizationDelayFmt:
@@ -341,6 +369,10 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
 +        {"owner":{"severity":"HIGH"},"paused":{"severity":"HIGH"}}
       usedTypes:
 +        [{"typeCaster":"Undecimal","arg":{"decimals":18}}]
+      category:
++        {"name":"Local Infrastructure","priority":5}
+      directlyReceivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","description":"relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient.","role":".owner"},{"permission":"upgrade","from":"ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5","role":"admin"}]
     }
 ```
 
@@ -349,6 +381,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -357,6 +391,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -393,6 +429,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -401,6 +439,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -409,6 +449,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -425,6 +467,8 @@ discovery. Values are for block 22665827 (main branch discovery), not current.
     +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
       description:
 +        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
+      category:
++        {"name":"External Bridges","priority":1}
     }
 ```
 
