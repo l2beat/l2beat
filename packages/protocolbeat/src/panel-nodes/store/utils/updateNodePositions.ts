@@ -1,5 +1,10 @@
 import type { Box, Connection, State } from '../State'
-import { BOTTOM_PADDING, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
+import {
+  BOTTOM_PADDING,
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  HIDDEN_FIELDS_FOOTER_HEIGHT,
+} from './constants'
 
 export function updateNodePositions(state: State): State {
   let dx = state.input.mouseX - state.input.mouseStartX
@@ -15,12 +20,15 @@ export function updateNodePositions(state: State): State {
   const nodeDimensions: Record<string, Box> = {}
   for (const node of state.nodes) {
     const start = state.positionsBeforeMove[node.id]
+    const hiddenFieldsHeight =
+      node.hiddenFields.length > 0 ? HIDDEN_FIELDS_FOOTER_HEIGHT : 0
     nodeDimensions[node.id] = {
       width: node.box.width,
       height:
         HEADER_HEIGHT +
         (node.fields.length - node.hiddenFields.length) * FIELD_HEIGHT +
-        BOTTOM_PADDING,
+        BOTTOM_PADDING +
+        hiddenFieldsHeight,
       x: start ? start.x + dx : node.box.x,
       y: start ? start.y + dy : node.box.y,
     }
