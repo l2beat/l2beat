@@ -13,7 +13,7 @@ import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { IconTick } from '../../icons/IconTick'
 import { type Diff, DiffEditor } from './diffEditor'
-import { LineSelection } from './line-selector'
+import { type LineSelection, LineSelector } from './line-selector'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
 import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
@@ -50,14 +50,14 @@ function useDiffEditorSettings(props: DiffViewProps) {
   useEffect(() => {
     const encoded = useQueryParam('lines')
     if (encoded) {
-      const selection = LineSelection.decode(encoded)
+      const selection = LineSelector.decode(encoded)
       setSelection(selection)
       setInitialSelection(selection)
     }
   }, [])
 
   useEffect(() => {
-    const encoded = selection ? LineSelection.encode(selection) : null
+    const encoded = selection ? LineSelector.encode(selection) : null
     const url = new URL(window.location.href)
 
     if (!encoded) {

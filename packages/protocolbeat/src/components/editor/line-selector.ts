@@ -17,6 +17,29 @@ export class LineSelector {
     (selection: LineSelection | null) => void
   > = []
 
+  static encode(selection: LineSelection): string {
+    const prefix = selection.side === 'left' ? 'L' : 'R'
+    if (selection.startLine === selection.endLine) {
+      return `${prefix}${selection.startLine}`
+    }
+    return `${prefix}${selection.startLine}-${selection.endLine}`
+  }
+
+  static decode(encoded: string): LineSelection | null {
+    const match = encoded.match(/^([LR])(\d+)(?:-(\d+))?$/)
+    if (!match) {
+      return null
+    }
+
+    const side = match[1] === 'L' ? 'left' : 'right'
+    // biome-ignore lint/style/noNonNullAssertion: we checked match[2] exists
+    const startLine = parseInt(match[2]!, 10)
+    // biome-ignore lint/style/noNonNullAssertion: we checked match[3] exists
+    const endLine = match[3] ? parseInt(match[3]!, 10) : startLine
+
+    return { side, startLine, endLine, anchorLine: endLine }
+  }
+
   constructor(editor: monaco.editor.IStandaloneDiffEditor) {
     this.editor = editor
   }
@@ -191,32 +214,4 @@ export class LineSelector {
     this.rightDecorationIds = []
     this.selectionChangeListeners = []
   }
-}
-
-function encodeSelection(selection: LineSelection): string {
-  const prefix = selection.side === 'left' ? 'L' : 'R'
-  if (selection.startLine === selection.endLine) {
-    return `${prefix}${selection.startLine}`
-  }
-  return `${prefix}${selection.startLine}-${selection.endLine}`
-}
-
-function decodeSelection(encoded: string): LineSelection | null {
-  const match = encoded.match(/^([LR])(\d+)(?:-(\d+))?$/)
-  if (!match) {
-    return null
-  }
-
-  const side = match[1] === 'L' ? 'left' : 'right'
-  // biome-ignore lint/style/noNonNullAssertion: we checked match[2] exists
-  const startLine = parseInt(match[2]!, 10)
-  // biome-ignore lint/style/noNonNullAssertion: we checked match[3] exists
-  const endLine = match[3] ? parseInt(match[3]!, 10) : startLine
-
-  return { side, startLine, endLine, anchorLine: endLine }
-}
-
-export const LineSelection = {
-  decode: decodeSelection,
-  encode: encodeSelection,
 }
