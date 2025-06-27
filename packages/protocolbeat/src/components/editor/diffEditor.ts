@@ -64,91 +64,11 @@ export class DiffEditor {
       model: null, // Prevent Monaco from creating a default model
     })
 
-    this.addCustomStyling()
     this.setupLineSelectionHandlers()
     knownElements.set(element, this)
   }
 
-  private addCustomStyling() {
-    // Add custom CSS for line number cursor styling and line highlighting
-    const style = document.createElement('style')
-    style.textContent = `
-      .monaco-editor .margin-view-overlays .line-numbers:hover {
-        cursor: pointer !important;
-      }
-      .monaco-diff-editor .monaco-editor .margin-view-overlays .line-numbers:hover {
-        cursor: pointer !important;
-      }
-      
-      /* Line selection highlighting - light mode */
-      .monaco-editor .view-overlays .selected-line-highlight {
-        background-color: #fff7ed !important;
-        border-left: 4px solid #ea580c !important;
-        border-right: 1px solid #ea580c !important;
-      }
-      
-      .monaco-editor .view-overlays .selected-line-highlight-first {
-        background-color: #fff7ed !important;
-        border-left: 4px solid #ea580c !important;
-        border-right: 1px solid #ea580c !important;
-        border-top: 1px solid #ea580c !important;
-      }
-      
-      .monaco-editor .view-overlays .selected-line-highlight-last {
-        background-color: #fff7ed !important;
-        border-left: 4px solid #ea580c !important;
-        border-right: 1px solid #ea580c !important;
-        border-bottom: 1px solid #ea580c !important;
-      }
-      
-      .monaco-editor .view-overlays .selected-line-highlight-single {
-        background-color: #fff7ed !important;
-        border: 1px solid #ea580c !important;
-        border-left: 4px solid #ea580c !important;
-      }
-      
-      .monaco-editor .margin .selected-line-margin {
-        background-color: #fed7aa !important;
-      }
-      
-      /* Line selection highlighting - dark mode */
-      @media (prefers-color-scheme: dark) {
-        .monaco-editor .view-overlays .selected-line-highlight {
-          background-color: rgba(154, 52, 18, 0.2) !important;
-          border-left: 4px solid #f97316 !important;
-          border-right: 1px solid #f97316 !important;
-        }
-        
-        .monaco-editor .view-overlays .selected-line-highlight-first {
-          background-color: rgba(154, 52, 18, 0.2) !important;
-          border-left: 4px solid #f97316 !important;
-          border-right: 1px solid #f97316 !important;
-          border-top: 1px solid #f97316 !important;
-        }
-        
-        .monaco-editor .view-overlays .selected-line-highlight-last {
-          background-color: rgba(154, 52, 18, 0.2) !important;
-          border-left: 4px solid #f97316 !important;
-          border-right: 1px solid #f97316 !important;
-          border-bottom: 1px solid #f97316 !important;
-        }
-        
-        .monaco-editor .view-overlays .selected-line-highlight-single {
-          background-color: rgba(154, 52, 18, 0.2) !important;
-          border: 1px solid #f97316 !important;
-          border-left: 4px solid #f97316 !important;
-        }
-        
-        .monaco-editor .margin .selected-line-margin {
-          background-color: rgba(154, 52, 18, 0.3) !important;
-        }
-      }
-    `
-    document.head.appendChild(style)
-  }
-
   private setupLineSelectionHandlers() {
-    // Handle clicks on line numbers for selection
     this.editor.getOriginalEditor().onMouseDown((e) => {
       if (e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
         this.handleLineClick(
@@ -157,7 +77,6 @@ export class DiffEditor {
           e.event.shiftKey,
         )
       } else {
-        // Clear selection when clicking elsewhere in the editor
         this.clearSelection()
       }
     })
@@ -170,7 +89,6 @@ export class DiffEditor {
           e.event.shiftKey,
         )
       } else {
-        // Clear selection when clicking elsewhere in the editor
         this.clearSelection()
       }
     })
@@ -209,7 +127,6 @@ export class DiffEditor {
     if (!lineNumber) return
 
     if (!this.selectedLines || !shiftKey || this.selectedLines.side !== side) {
-      // Start new selection
       this.selectedLines = {
         side,
         startLine: lineNumber,
@@ -217,12 +134,11 @@ export class DiffEditor {
         anchorLine: lineNumber,
       }
     } else {
-      // Extend selection using the anchor line as the base
       this.selectedLines = {
         side,
         startLine: Math.min(this.selectedLines.anchorLine, lineNumber),
         endLine: Math.max(this.selectedLines.anchorLine, lineNumber),
-        anchorLine: lineNumber, // Update anchor to the newly clicked line
+        anchorLine: lineNumber,
       }
     }
 
@@ -237,7 +153,6 @@ export class DiffEditor {
   }
 
   private updateLineDecorations() {
-    // Clear existing decorations from both editors
     this.leftDecorationIds = this.editor
       .getOriginalEditor()
       .deltaDecorations(this.leftDecorationIds, [])
@@ -259,13 +174,10 @@ export class DiffEditor {
       let className = 'selected-line-highlight'
 
       if (!isMultiLine) {
-        // Single line selection
         className = 'selected-line-highlight-single'
       } else if (line === this.selectedLines.startLine) {
-        // First line of multi-line selection
         className = 'selected-line-highlight-first'
       } else if (line === this.selectedLines.endLine) {
-        // Last line of multi-line selection
         className = 'selected-line-highlight-last'
       }
 
@@ -279,7 +191,6 @@ export class DiffEditor {
       })
     }
 
-    // Apply decorations to the correct editor
     if (this.selectedLines.side === 'left') {
       this.leftDecorationIds = this.editor
         .getOriginalEditor()
@@ -410,7 +321,6 @@ export class DiffEditor {
     this.models = {}
     this.viewStates = {}
 
-    // Clear any remaining decorations
     this.leftDecorationIds = []
     this.rightDecorationIds = []
     this.selectionChangeListeners = []
