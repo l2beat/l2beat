@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
@@ -12,11 +12,10 @@ import { IconShare } from '../../icons/IconShare'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { IconTick } from '../../icons/IconTick'
-import { type Diff, DiffEditor } from './diffEditor'
-import { type LineSelection, LineSelector } from './line-selector'
+import { DiffEditor } from './diffEditor'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
-import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
+import { useDiffEditorSettings } from './use-diff-editor-settings'
 
 export interface DiffViewProps {
   leftAddress: string
@@ -24,79 +23,6 @@ export interface DiffViewProps {
   rightAddress: string
   rightCode: Record<string, string>
   editorKey?: string
-}
-
-function useDiffEditorSettings(props: DiffViewProps) {
-  const foldFromQueryParam = useFlagFromQueryParam('fold')
-  const swappedFromQueryParam = useFlagFromQueryParam('swapped')
-  const removeUnchangedFromQueryParam = useFlagFromQueryParam('removeUnchanged')
-  const removeCommentsFromQueryParam = useFlagFromQueryParam('removeComments')
-  const [url, setUrl] = useState<string | null>(null)
-  const [selection, setSelection] = useState<LineSelection | null>(null)
-  const [initialSelection, setInitialSelection] =
-    useState<LineSelection | null>(null)
-
-  const [fold, setFold] = useState(foldFromQueryParam)
-  const [swapped, setSwapped] = useState(swappedFromQueryParam)
-  const [removeUnchanged, setRemoveUnchanged] = useState(
-    removeUnchangedFromQueryParam ??
-      !codeIsTheSame(props.leftCode, props.rightCode),
-  )
-  const [removeComments, setRemoveComments] = useState(
-    removeCommentsFromQueryParam,
-  )
-  const [diff, setDiff] = useState<Diff | undefined>(undefined)
-
-  useEffect(() => {
-    const encoded = useQueryParam('lines')
-    if (encoded) {
-      const selection = LineSelector.decode(encoded)
-      setSelection(selection)
-      setInitialSelection(selection)
-    }
-  }, [])
-
-  useEffect(() => {
-    const encoded = selection ? LineSelector.encode(selection) : null
-    const url = new URL(window.location.href)
-
-    if (!encoded) {
-      setUrl(null)
-      return
-    }
-
-    url.searchParams.set('lines', encoded)
-    if (fold) {
-      url.searchParams.set('fold', fold.toString())
-    }
-    if (swapped) {
-      url.searchParams.set('swapped', swapped.toString())
-    }
-    if (removeUnchanged) {
-      url.searchParams.set('removeUnchanged', removeUnchanged.toString())
-    }
-    if (removeComments) {
-      url.searchParams.set('removeComments', removeComments.toString())
-    }
-
-    setUrl(url.toString())
-  }, [selection])
-
-  return {
-    initialSelection,
-    fold,
-    swapped,
-    removeUnchanged,
-    removeComments,
-    diff,
-    url,
-    setSelection,
-    setFold,
-    setSwapped,
-    setRemoveUnchanged,
-    setRemoveComments,
-    setDiff,
-  }
 }
 
 export function DiffView(props: DiffViewProps) {
@@ -115,6 +41,7 @@ export function DiffView(props: DiffViewProps) {
     setRemoveComments,
     setDiff,
   } = useDiffEditorSettings(props)
+
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
@@ -298,12 +225,4 @@ export function DiffView(props: DiffViewProps) {
       <div className="h-full w-full" ref={monacoEl} />
     </div>
   )
-}
-
-function codeIsTheSame(
-  left: Record<string, string>,
-  right: Record<string, string>,
-): boolean {
-  const [leftCode, rightCode] = splitCode(left, right)
-  return leftCode === rightCode
 }
