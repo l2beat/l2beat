@@ -3,14 +3,13 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { CssVariables } from '~/components/CssVariables'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { TableFilterContextProvider } from '~/components/table/filters/TableFilterContext'
-import { TableFilters } from '~/components/table/filters/TableFilters'
 import type { AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { cn } from '~/utils/cn'
 import { EcosystemPageHeader } from './components/EcosystemPageHeader'
-import { EcosystemProjectsTable } from './components/EcosystemProjectsTable'
+import { EcosystemProjectsTableWithFilters } from './components/EcosystemProjectsTableWithFilters'
 import { EcosystemsActivityChart } from './components/charts/EcosystemsActivityChart'
 import { EcosystemsProjectsChart } from './components/charts/EcosystemsProjectsChart'
 import { EcosystemsTvsChart } from './components/charts/EcosystemsTvsChart'
@@ -139,12 +138,9 @@ export function EcosystemProjectPage({
               </main>
               <HorizontalSeparator className="my-4 max-md:hidden" />
               <TableFilterContextProvider>
-                <div className="mr-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-2 md:mr-0">
-                  <TableFilters entries={ecosystem.projects} />
-                </div>
-                <EcosystemProjectsTable
-                  entries={ecosystem.projects}
+                <EcosystemProjectsTableWithFilters
                   ecosystemId={ecosystem.id}
+                  entries={ecosystem.projects}
                 />
               </TableFilterContextProvider>
             </div>
