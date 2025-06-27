@@ -1,0 +1,48 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.",
+  "category": "shared",
+  "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
+  "ignoreMethods": ["getProposal", "proposals"],
+  "fields": {
+    "owner": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [0]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage all roles in the contract."
+        }
+      ]
+    },
+    "proposer": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [1]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "propose governance actions."
+        }
+      ]
+    },
+    "emergencyProposer": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [2]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "can bypass the voting system and execute proposals immediately."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.",
+  "ignoreMethods": ["rootBundles", "proxiableUUID"],
+  "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
+  "ignoreRelatives": ["wrappedNativeToken"],
+  "category": "core",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target)."
+        }
+      ]
+    }
+  }
+}

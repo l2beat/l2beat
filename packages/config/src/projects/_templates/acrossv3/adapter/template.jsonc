@@ -1,5 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+  "category": "bridge-external",
   "ignoreRelatives": [
     "L1_GATEWAY_ROUTER",
     "L1_SCROLL_MESSENGER",

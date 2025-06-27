@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Token governance contract allowing anyone to create a UMA governance proposal for a bond of {{bondFmt}} UMA tokens.",
+  "category": "shared",
+  "ignoreMethods": ["bondedProposals"],
+  "ignoreInWatchMode": ["bond", "getCurrentTime"],
+  "ignoreRelatives": ["token"],
+  "fields": {
+    "bondFmt": {
+      "handler": {
+        "type": "call",
+        "method": "bond",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the bond amount."
+        }
+      ]
+    }
+  }
+}

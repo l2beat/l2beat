@@ -1,0 +1,33 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.",
+  "ignoreMethods": ["getCurrentTime"],
+  "fields": {
+    "owner": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [0]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set fees for disputes and manage all roles in the contract."
+        }
+      ]
+    },
+    "withdrawer": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [1]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw fees."
+        }
+      ]
+    }
+  }
+}

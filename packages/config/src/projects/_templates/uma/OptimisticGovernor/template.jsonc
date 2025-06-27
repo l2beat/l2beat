@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Optimistic Governance module allowing for proposals by anyone with a bond of {{bondFmt}} WETH. They become executable if not challenged within {{delayFmt}}. The rules for proposals can be read directly from the contract values.",
+  "ignoreMethods": ["getCurrentTime"],
+  "ignoreRelatives": ["collateral"],
+  "fields": {
+    "bondFmt": {
+      "handler": {
+        "type": "call",
+        "method": "getProposalBond",
+        "args": []
+      },
+      "edit": ["format", "Undecimal18"]
+    },
+    "delayFmt": {
+      "handler": {
+        "type": "call",
+        "method": "liveness",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount."
+        }
+      ]
+    },
+    "rules": {
+      "description": "string of rules that a proposer is accepting when posting a proposal with a bond."
+    }
+  }
+}
