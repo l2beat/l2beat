@@ -57,11 +57,26 @@ function useDiffEditorSettings(props: DiffViewProps) {
   useEffect(() => {
     const encoded = selection ? LineSelection.encode(selection) : null
     const url = new URL(window.location.href)
-    url.searchParams.set('lines', encoded ?? '')
-    url.searchParams.set('fold', fold.toString())
-    url.searchParams.set('swapped', swapped.toString())
-    url.searchParams.set('removeUnchanged', removeUnchanged.toString())
-    url.searchParams.set('removeComments', removeComments.toString())
+
+    if (!encoded) {
+      setUrl(null)
+      return
+    }
+
+    url.searchParams.set('lines', encoded)
+    if (fold) {
+      url.searchParams.set('fold', fold.toString())
+    }
+    if (swapped) {
+      url.searchParams.set('swapped', swapped.toString())
+    }
+    if (removeUnchanged) {
+      url.searchParams.set('removeUnchanged', removeUnchanged.toString())
+    }
+    if (removeComments) {
+      url.searchParams.set('removeComments', removeComments.toString())
+    }
+
     setUrl(url.toString())
   }, [selection])
 
@@ -256,11 +271,16 @@ export function DiffView(props: DiffViewProps) {
             <IconArrowToDotUp className="size-4" />
           </button>
           <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
-            onClick={() => copy(url ?? '')}
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={() => {
+              if (url) {
+                copy(url)
+              }
+            }}
             title="Share"
+            disabled={!url}
           >
-            {!copied && <IconCopy className="block text-coffee-600" />}
+            {!copied && <IconCopy className="block text-coffee-200" />}
             {copied && <IconTick className="block text-aux-green" />}
           </button>
         </div>
