@@ -1,26 +1,17 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "name": "opcm16",
-  "import": [
-    "../globalConfig.jsonc"
-  ],
+  "import": ["../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
       "maxDepth": 2,
-      "initialAddresses": [
-        "0x56EbC5c4870F5367B836081610592241Ad3e0734"
-      ],
+      "initialAddresses": ["0x56EbC5c4870F5367B836081610592241Ad3e0734"],
       "overrides": {
         "0x56EbC5c4870F5367B836081610592241Ad3e0734": {
-          "ignoreMethods": [
-            "blueprints",
-            "chainIdToBatchInboxAddress"
-          ]
+          "ignoreMethods": ["blueprints", "chainIdToBatchInboxAddress"]
         },
         "0xCe28685EB204186b557133766eCA00334EB441E4": {
-          "ignoreMethods": [
-            "blueprints"
-          ],
+          "ignoreMethods": ["blueprints"],
           "fields": {
             "proxyAdmin": {
               "handler": {
@@ -41,10 +32,7 @@
           }
         },
         "0x4859c22632AC5Ad6506df5f996098b73A11Bba75": {
-          "ignoreMethods": [
-            "blueprints",
-            "chainIdToBatchInboxAddress"
-          ]
+          "ignoreMethods": ["blueprints", "chainIdToBatchInboxAddress"]
         },
         "0x784d2F03593A42A6E4676A012762F18775ecbBe6": {
           "fields": {
@@ -395,19 +383,13 @@
           }
         },
         "0x77BE751385562ec5F5074f1D3d80B9B7DF0aF77C": {
-          "ignoreMethods": [
-            "chainIdToBatchInboxAddress"
-          ]
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
         },
         "0x5b6820529748d5001C1A999176bFedaBbf5fA64D": {
-          "ignoreMethods": [
-            "chainIdToBatchInboxAddress"
-          ]
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
         },
         "0x01B2f6Aa2ADC77c9A4A91D09a6E806ad51B0290A": {
-          "ignoreMethods": [
-            "chainIdToBatchInboxAddress"
-          ]
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
         }
       }
     }
