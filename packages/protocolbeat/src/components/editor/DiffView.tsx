@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
+import { IconCopy } from '../../icons/IconCopy'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { type Diff, DiffEditor } from './diffEditor'
+import { getInlineDiff } from './getInlineDiff'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
 
@@ -162,6 +164,19 @@ export function DiffView(props: DiffViewProps) {
             title="Swap sides"
           >
             <IconSwap className="size-4" />
+          </button>
+          <button
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            onClick={() => {
+              if (diff === undefined) {
+                return
+              }
+
+              const inlineDiff = getInlineDiff(diff, splitLeft, splitRight)
+              navigator.clipboard.writeText(inlineDiff)
+            }}
+          >
+            <IconCopy className="size-4" />
           </button>
           <div className="w-px bg-coffee-700" />
           <button
