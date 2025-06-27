@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb3ebc1562bdf94963aedddd3799066185e0d1384
+
+# Diff at Fri, 27 Jun 2025 14:33:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 21394291
+- current block number: 22796394
+
+## Description
+
+exchange shutdown, added headerwarn and milestone:
+
+A system **shutdown** [was triggered](https://etherscan.io/tx/0xa3a340cfebbdbf9999e61cc3838f67d21610944704f9b2546e2fe95435134d5c#eventlog) on 2025-06-27. This irreversible action freezes the L2 state and allows users to withdraw their funds with the help of the operator. Degate announced that they [will withdraw all funds automatically](https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51). If the operator does not cooperate, a withdrawal mode can still be activated, allowing users to withdraw their funds on their own by providing merkle proofs.
+
+## Watched changes
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      values.isShutdown:
+-        false
++        true
+      values.shutdownTriggered.0:
++        1750935659
+    }
+```
+
 Generated with discovered.json: 0x5761dd4b68fa462199c4ee8ee54884af117403f4
 
 # Diff at Fri, 23 May 2025 09:40:55 GMT:

@@ -116,7 +116,8 @@ export const degate3: ScalingProject = {
     purposes: ['Exchange', 'NFT'],
     stack: 'Loopring',
     category: 'ZK Rollup',
-
+    headerWarning:
+      'A system **shutdown** [was triggered](https://etherscan.io/tx/0xa3a340cfebbdbf9999e61cc3838f67d21610944704f9b2546e2fe95435134d5c#eventlog) on 2025-06-27. This irreversible action freezes the L2 state and allows users to withdraw their funds with the help of the operator. Degate announced that they [will withdraw all funds automatically](https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51). If the operator does not cooperate, a withdrawal mode can still be activated, allowing users to withdraw their funds on their own by providing merkle proofs.',
     links: {
       websites: ['https://degate.com/'],
       bridges: ['https://app.degate.com/'],
@@ -472,6 +473,14 @@ export const degate3: ScalingProject = {
     risks: [],
   },
   milestones: [
+    {
+      title: 'Shutdown mode activated',
+      url: 'https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51',
+      date: '2025-06-26T00:00:00Z',
+      description:
+        'Shutdown mode prevents further state updates and allows users to withdraw their funds.',
+      type: 'general',
+    },
     {
       title: 'DeGate Mainnet Beta Redeploy',
       url: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',
