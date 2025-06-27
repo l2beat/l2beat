@@ -1,13 +1,13 @@
-Generated with discovered.json: 0xad03a3b5d7ec980dad4bde00c7d4819787a5140c
+Generated with discovered.json: 0x9b2a9929dfd615d870ecf182333a66747f06d800
 
-# Diff at Thu, 26 Jun 2025 13:53:18 GMT:
+# Diff at Fri, 27 Jun 2025 14:09:47 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 22789038
+- current block number: 22796150
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery.
 
 ## Initial discovery
 
@@ -19,7 +19,37 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0x065E5D14a280701C054D5a6A67f31F228233B823)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x1DE15df33bca415B7d5F108D6F7e69386D8FAE62)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x2538DA6A2862914Fd87CE8E88FF133f81c289F80)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract L1ERC721Bridge (0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x2Fa0D0f6d92061344Db35132379dB419bD1c56f7)
     +++ description: None
 ```
 
@@ -43,7 +73,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0x3EfB68b95a4b148B7dc0a1f4d44c20E61D224ce7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract L1StandardBridge (0x44AfB7722AF276A601D524F429016A18B6923df0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x47Ab4081Ae9e68dEd575100D7AbC024d60A6b04d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x481f6FfbbBa2F205BB04Fc584D5cE940658D41e4)
     +++ description: None
 ```
 
@@ -85,6 +133,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0x7096758bDD076a4cC42255c278F2Cb216D6D8ce3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x765c6637a370595845F637739279C353484a26A6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract OPContractsManagerGameTypeAdder (0x77BE751385562ec5F5074f1D3d80B9B7DF0aF77C)
     +++ description: None
 ```
@@ -103,6 +163,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract OPContractsManagerContractsContainer (0x83971e7B9561B2b27A2C186cdFFa754D2eff8a1d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
     +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
@@ -115,6 +187,30 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract  (0xA5d36DEaf2267B267278a4a1458deFe0d65620eb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xA643EA8ee60D92f615eC70AF0248c449bBCEcF4d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xB8d4EA750956C54B394F4A9d270CaF2EDA627013)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SuperchainConfig (0xCe28685EB204186b557133766eCA00334EB441E4)
     +++ description: None
 ```
@@ -122,6 +218,18 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1CrossDomainMessenger (0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract  (0xe6d25D68252e0D9cA9e16B554FA5D7C48EDe150C)
     +++ description: None
 ```
 
