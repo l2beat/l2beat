@@ -6,8 +6,8 @@ import { useCopy } from '../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
-import { IconCopy } from '../../icons/IconCopy'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
+import { IconShare } from '../../icons/IconShare'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { IconTick } from '../../icons/IconTick'
@@ -270,6 +270,7 @@ export function DiffView(props: DiffViewProps) {
           >
             <IconArrowToDotUp className="size-4" />
           </button>
+          <div className="w-px bg-coffee-700" />
           <button
             className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => {
@@ -280,7 +281,7 @@ export function DiffView(props: DiffViewProps) {
             title="Share"
             disabled={!url}
           >
-            {!copied && <IconCopy className="block text-coffee-200" />}
+            {!copied && <IconShare className="block text-coffee-200" />}
             {copied && <IconTick className="block text-aux-green" />}
           </button>
         </div>
