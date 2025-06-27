@@ -1,0 +1,397 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "opcm16",
+  "import": ["../globalConfig.jsonc"],
+  "chains": {
+    "ethereum": {
+      "maxDepth": 2,
+      "initialAddresses": ["0x56EbC5c4870F5367B836081610592241Ad3e0734"],
+      "overrides": {
+        "0x56EbC5c4870F5367B836081610592241Ad3e0734": {
+          "ignoreMethods": ["blueprints", "chainIdToBatchInboxAddress"]
+        },
+        "0xCe28685EB204186b557133766eCA00334EB441E4": {
+          "ignoreMethods": ["blueprints"],
+          "fields": {
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x4859c22632AC5Ad6506df5f996098b73A11Bba75": {
+          "ignoreMethods": ["blueprints", "chainIdToBatchInboxAddress"]
+        },
+        "0x784d2F03593A42A6E4676A012762F18775ecbBe6": {
+          "fields": {
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0xFaA660bf783CBAa55e1B7F3475C20Db74a53b9Fa": {
+          "fields": {
+            "disputeGameFactory": {
+              "handler": {
+                "type": "call",
+                "method": "disputeGameFactory",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "guardian": {
+              "handler": {
+                "type": "call",
+                "method": "guardian",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0xEFEd7F38BB9BE74bBa583a1A5B7D0fe7C9D5787a": {
+          "fields": {
+            "disputeGameFactory": {
+              "handler": {
+                "type": "call",
+                "method": "disputeGameFactory",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "disputeGameFinalityDelaySeconds": {
+              "handler": {
+                "type": "call",
+                "method": "disputeGameFinalityDelaySeconds",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "guardian": {
+              "handler": {
+                "type": "call",
+                "method": "guardian",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "respectedGameType": {
+              "handler": {
+                "type": "call",
+                "method": "respectedGameType",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "respectedGameTypeUpdatedAt": {
+              "handler": {
+                "type": "call",
+                "method": "respectedGameTypeUpdatedAt",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0xD26bB3aaAa4cB5638A8581A4c4b1d937D8E05c54": {
+          "fields": {
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x25d6CeDEB277Ad7ebEe71226eD7877768E0B7A2F": {
+          "fields": {
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x33Dadc2d1aA9BB613A7AE6B28425eA00D44c6998": {
+          "fields": {
+            "config": {
+              "handler": {
+                "type": "call",
+                "method": "config",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x44AfB7722AF276A601D524F429016A18B6923df0": {
+          "fields": {
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0xeb69cC681E8D4a557b30DFFBAd85aFfD47a2CF2E": {
+          "fields": {
+            "paused": {
+              "handler": {
+                "type": "call",
+                "method": "paused",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "superchainConfig": {
+              "handler": {
+                "type": "call",
+                "method": "superchainConfig",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x33D1e8571a85a538ed3D5A4d88f46C112383439D": {
+          "fields": {
+            "proxyAdmin": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdmin",
+                "args": [],
+                "expectRevert": true
+              }
+            },
+            "proxyAdminOwner": {
+              "handler": {
+                "type": "call",
+                "method": "proxyAdminOwner",
+                "args": [],
+                "expectRevert": true
+              }
+            }
+          }
+        },
+        "0x77BE751385562ec5F5074f1D3d80B9B7DF0aF77C": {
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
+        },
+        "0x5b6820529748d5001C1A999176bFedaBbf5fA64D": {
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
+        },
+        "0x01B2f6Aa2ADC77c9A4A91D09a6E806ad51B0290A": {
+          "ignoreMethods": ["chainIdToBatchInboxAddress"]
+        }
+      }
+    }
+  }
+}

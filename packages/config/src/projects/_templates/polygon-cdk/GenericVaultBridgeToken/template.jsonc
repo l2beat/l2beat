@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["asset", "underlyingToken", "yieldVault"],
+  "ignoreInWatchMode": [
+    "backingDifference",
+    "stakedAssets",
+    "totalAssets",
+    "totalSupply",
+    "yield"
+  ],
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    }
+  }
+}
