@@ -29,7 +29,8 @@
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
-    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts"
+    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
+    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
