@@ -1,6 +1,6 @@
+import { RateLimiter } from '@l2beat/backend-tools'
 import { v } from '@l2beat/validate'
 import { formatAbi } from 'abitype'
-import { RateLimiter } from './RateLimiter'
 
 export interface ContractInfo {
   verified: boolean
@@ -10,16 +10,18 @@ export interface ContractInfo {
 }
 
 export class EtherscanClient {
-  private rateLimiter = new RateLimiter({ requestsPerSecond: 4 })
+  private rateLimiter = new RateLimiter({ callsPerMinute: 240 })
 
-  constructor(private apikey: string) {}
+  constructor(private apikey: string) {
+    this.getContractInfo = this.rateLimiter.wrap(
+      this.getContractInfo.bind(this),
+    )
+  }
 
   async getContractInfo(
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractInfo> {
-    await this.rateLimiter.wait()
-
     const source = await this.getContractSource(chainId, address)
     const verified = !source.ABI.includes('not verified')
     return {
@@ -36,8 +38,6 @@ export class EtherscanClient {
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractSource> {
-    await this.rateLimiter.wait()
-
     const base = 'https://api.etherscan.io/v2/api'
     const query = new URLSearchParams({
       chainid: chainId.toString(),
