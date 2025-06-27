@@ -104,7 +104,16 @@ function removeComments(source: string): string {
     }
   }
 
+  const lastChar = source[source.length - 1]
+  if (lastChar !== undefined && !isWhitespace(lastChar)) {
+    result += lastChar
+  }
+
   return result
+}
+
+function isWhitespace(char: string): boolean {
+  return char === ' ' || char === '\n' || char === '\t'
 }
 
 function wrapRegion(name: string, content: string): string {
