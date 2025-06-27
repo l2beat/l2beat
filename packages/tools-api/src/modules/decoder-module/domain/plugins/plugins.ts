@@ -2,6 +2,7 @@ import type { DecodedCall, Value } from '../DecodedResult'
 import { erc20Plugin } from './erc20Plugin'
 import { multiSendPlugin } from './multiSendPlugin'
 import { scheduleBatchPlugin } from './scheduleBatchPlugin'
+import { sendTxToL1Plugin } from './sendTxToL1Plugin'
 import type { NestedCall, Plugin } from './types'
 import { whitebitBatchPlugin } from './whitebitBatchPlugin'
 import { zkSyncUpgradePlugin } from './zkSyncUpgradePlugin'
@@ -12,6 +13,7 @@ export const plugins: Plugin[] = [
   whitebitBatchPlugin,
   zkSyncUpgradePlugin,
   scheduleBatchPlugin,
+  sendTxToL1Plugin,
   defaultPlugin,
 ]
 
