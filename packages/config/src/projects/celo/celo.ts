@@ -41,9 +41,6 @@ export const celo: ScalingProject = opStackL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['CELO'],
   chainConfig: {
