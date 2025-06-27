@@ -6,7 +6,6 @@ import {
   ProjectId,
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
-import Table from 'cli-table'
 import {
   boolean,
   command,
@@ -94,22 +93,12 @@ const cmd = command({
       ongoingAnomalies.sort((a, b) => {
         return b.start - a.start
       })
-
-      const table = new Table({
-        head: ['Project', 'Subtype', 'Start', 'Status'],
-        colWidths: [20, 20, 30, 20],
-      })
-
-      for (const anomaly of ongoingAnomalies) {
-        table.push([
-          anomaly.projectId,
-          anomaly.subtype,
-          new Date(anomaly.start * 1000).toISOString(),
-          anomaly.status,
-        ])
-      }
-
-      console.log(table.toString())
+      console.table(ongoingAnomalies, [
+        'start',
+        'projectId',
+        'subtype',
+        'status',
+      ])
     } else if (args.approve) {
       const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()
       const toApprove = ongoingAnomalies.find(
