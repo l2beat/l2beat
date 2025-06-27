@@ -12,6 +12,8 @@ found the opstack part of katana and some middleware between yearn, morpho and a
 
 katana is using an OptiPortal2 that [denies all L1->L2 messages.](https://disco.l2beat.com/diff/eth:0x3Da872782f9fB696fD72Af2ec9313a56bDA6f06d/eth:0x9a6C2Dcc7e523f87716e17Ba36D10CCfFA0A60bb) It also does not have any state updates yet. The rest of the system is 'standard' opstack **with** custom gas token support (ETH is set atm, could only be changed with a major upgrade) and standard PermissionedDisputeGame without any games created. Notably this deployment also does not use the latest 7702 protections that the superchain does use.
 
+behind its yearn vaults, katana seems to use a system of smart contracts written by polygon called vaultBridge. For each yielding asset, a vaultBridge contract (erc20 and vault standards) exists and a MigrationManager allows to migrate these derivative vbTokens to the lxly bridge (agglayer shared bridge), which has not happened yet. All user yields are currently accruing to three different Multisigs that have signers from Katana, Agglayer and Yearn (not sure abt morpho).
+
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
