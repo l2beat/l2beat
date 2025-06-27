@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22774522,
+  "blockNumber": 22796580,
   "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
@@ -374,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 81,
+        "nonce": 83,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -422,7 +422,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0x87934c8344301b6b9e6c9229766c8c73d01885134eba5b0009e1b7f621a22027",
+        "getRoot": "0x896c4789f26d2f5cb04275f80578962919fae201216397ac18b33057681a721f",
         "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -653,10 +653,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x823f8e9eb0e35b41bc431bba85b8b18ba9d047f2590b8f40ff84fc3782b84e9e",
+        "getRollupExitRoot": "0xd6f987bcdf560a6611b4317e11b4a568d1ccbfc2a9f066cbfd4cb01dea9e33ce",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1750770779,
+        "lastAggregationTimestamp": 1751036327,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -837,14 +837,14 @@
           {
             "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
             "chainID": 747474,
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-            "forkID": 12,
-            "rollupTypeID": 11,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            "verifier": "0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 12,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "rollupTypeCount": 11,
+        "rollupTypeCount": 12,
         "rollupTypes": [
           {
             "consensusImplementation": "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -933,10 +933,18 @@
             "rollupVerifierType": 1,
             "obsolete": false,
             "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "consensusImplementation": "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+            "verifier": "0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 761798,
-        "totalVerifiedBatches": 761315,
+        "totalSequencedBatches": 763736,
+        "totalVerifiedBatches": 763235,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -1016,9 +1024,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59740,
+        "depositCount": 59898,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0x8eecad9b3fb3145fd36f919d72a3bda497eac208f5c6c407dc91cdf5688dfac4",
+        "getRoot": "0x0b77f29bc5f979edb6cb30c88f55d4fa14c3e11b632332da39500a5347cc3431",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
