@@ -8,7 +8,7 @@ import { IconComment } from '../../icons/IconComment'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
-import { type Diff, DiffEditor } from './diffEditor'
+import { type Diff, DiffEditor, LineSelection } from './diffEditor'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
 
@@ -20,7 +20,35 @@ export interface DiffViewProps {
   editorKey?: string
 }
 
+function useLineSelection() {
+  const [url, setUrl] = useState<string | null>(null)
+  const [selection, setSelection] = useState<LineSelection | null>(null)
+  const [initialSelection, setInitialSelection] =
+    useState<LineSelection | null>(null)
+
+  useEffect(() => {
+    const url = new URL(window.location.href)
+    const encoded = url.searchParams.get('lines')
+    if (encoded) {
+      const selection = LineSelection.decode(encoded)
+      setSelection(selection)
+      setInitialSelection(selection)
+    }
+  }, [])
+
+  useEffect(() => {
+    const encoded = selection ? LineSelection.encode(selection) : null
+    const url = new URL(window.location.href)
+    url.searchParams.set('lines', encoded ?? '')
+    console.log('URL', url.toString())
+    setUrl(url.toString())
+  }, [selection])
+
+  return [initialSelection, url, setSelection] as const
+}
+
 export function DiffView(props: DiffViewProps) {
+  const [initialSelection, _, setSelection] = useLineSelection()
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
@@ -32,7 +60,6 @@ export function DiffView(props: DiffViewProps) {
   )
   const [removeComments, setRemoveComments] = useState(false)
   const [diff, setDiff] = useState<Diff | undefined>(undefined)
-
   const [leftAddress, rightAddress] = swapped
     ? [props.rightAddress, props.leftAddress]
     : [props.leftAddress, props.rightAddress]
@@ -58,6 +85,12 @@ export function DiffView(props: DiffViewProps) {
     editor?.resize()
   }, [editor])
 
+  useEffect(() => {
+    return editor?.onSelectionChange((selection) => {
+      setSelection(selection)
+    })
+  }, [editor])
+
   const [splitLeft, splitRight] = useMemo(() => {
     return splitCode(
       props.leftCode,
@@ -71,7 +104,14 @@ export function DiffView(props: DiffViewProps) {
     editor?.setDiff(splitLeft, splitRight)
   }, [editor, splitLeft, splitRight])
 
+  useEffect(() => {
+    editor?.setSelection(initialSelection)
+  }, [initialSelection, editor])
+
   editor?.onComputedDiff(setDiff)
+  editor?.onComputedDiff(() => {
+    editor?.scrollToSelection()
+  })
 
   return (
     <div className="flex h-full w-full flex-col">
