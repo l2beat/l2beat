@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* Line number hover cursor */
 .monaco-editor .margin-view-overlays .line-numbers:hover,
 .monaco-diff-editor .monaco-editor .margin-view-overlays .line-numbers:hover {
@@ -38,7 +37,6 @@
 .monaco-editor .margin .selected-line-margin {
   background-color: rgba(154, 52, 18, 0.3) !important;
 }
-
 
 * {
   scrollbar-width: thin;
