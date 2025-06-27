@@ -178,29 +178,32 @@ export class DiffEditor {
   }
 
   private setupLineSelectionHandlers() {
-    this.editor.getOriginalEditor().onMouseDown((e) => {
-      if (e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
-        this.handleLineClick(
-          'left',
-          e.target.position?.lineNumber ?? 0,
-          e.event.shiftKey,
-        )
-      } else {
-        this.clearSelection()
-      }
-    })
+    const editors = [
+      {
+        key: 'left',
+        editor: this.editor.getOriginalEditor(),
+      },
+      {
+        key: 'right',
+        editor: this.editor.getModifiedEditor(),
+      },
+    ] as const
 
-    this.editor.getModifiedEditor().onMouseDown((e) => {
-      if (e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS) {
-        this.handleLineClick(
-          'right',
-          e.target.position?.lineNumber ?? 0,
-          e.event.shiftKey,
-        )
-      } else {
-        this.clearSelection()
-      }
-    })
+    for (const editor of editors) {
+      editor.editor.onMouseDown((e) => {
+        if (
+          e.target.type === monaco.editor.MouseTargetType.GUTTER_LINE_NUMBERS
+        ) {
+          this.handleLineClick(
+            editor.key,
+            e.target.position?.lineNumber ?? 0,
+            e.event.shiftKey,
+          )
+        } else {
+          this.clearSelection()
+        }
+      })
+    }
   }
 
   setSelection(selection: LineSelection | null) {
@@ -210,7 +213,9 @@ export class DiffEditor {
   }
 
   scrollToSelection() {
-    if (!this.selectedLines) return
+    if (!this.selectedLines) {
+      return
+    }
 
     const { side } = this.selectedLines
 
@@ -225,6 +230,7 @@ export class DiffEditor {
       this.selectedLines.endLine,
       1,
     )
+
     editor.revealRangeInCenter(range)
   }
 
@@ -233,7 +239,9 @@ export class DiffEditor {
     lineNumber: number,
     shiftKey: boolean,
   ) {
-    if (!lineNumber) return
+    if (!lineNumber) {
+      return
+    }
 
     if (!this.selectedLines || !shiftKey || this.selectedLines.side !== side) {
       this.selectedLines = {
@@ -269,7 +277,9 @@ export class DiffEditor {
       .getModifiedEditor()
       .deltaDecorations(this.rightDecorationIds, [])
 
-    if (!this.selectedLines) return
+    if (!this.selectedLines) {
+      return
+    }
 
     const decorations: editor.IModelDeltaDecoration[] = []
     const isMultiLine =

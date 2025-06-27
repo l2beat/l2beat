@@ -1,8 +1,7 @@
-@import './diff-editor.css';
+@import "./diff-editor.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 * {
   scrollbar-width: thin;
