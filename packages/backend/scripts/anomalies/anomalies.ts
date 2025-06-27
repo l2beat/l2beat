@@ -55,6 +55,13 @@ const args = {
     short: 'appr',
     description: 'Approve ongoing anomaly to be shown on website widget',
   }),
+  remove: option({
+    type: optional(AnomalyKey),
+    long: 'remove',
+    short: 'r',
+    description:
+      'Remove approval of ongoing anomaly to be hidden from website widget',
+  }),
 }
 
 const cmd = command({
@@ -120,6 +127,28 @@ const cmd = command({
       toApprove.status = 'approved'
 
       await db.realTimeAnomalies.upsertMany([toApprove])
+      console.log('Done')
+    } else if (args.remove) {
+      const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()
+      const toRemove = ongoingAnomalies.find(
+        (anomaly) =>
+          anomaly.projectId === args.remove?.projectId &&
+          anomaly.subtype === args.remove?.subtype,
+      )
+
+      if (!toRemove || toRemove.status !== 'approved') {
+        console.error(
+          `No approved anomaly found for project ${args.remove.projectId} and subtype ${args.remove.subtype}.`,
+        )
+        process.exit(1)
+      }
+
+      console.log(
+        `Removing approval of anomaly for project ${toRemove.projectId} and subtype ${toRemove.subtype}...`,
+      )
+      toRemove.status = 'ongoing'
+
+      await db.realTimeAnomalies.upsertMany([toRemove])
       console.log('Done')
     } else {
       console.log(
