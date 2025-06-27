@@ -12,7 +12,8 @@ import { IconShare } from '../../icons/IconShare'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { IconTick } from '../../icons/IconTick'
-import { type Diff, DiffEditor, LineSelection } from './diffEditor'
+import { type Diff, DiffEditor } from './diffEditor'
+import { LineSelection } from './line-selector'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
 import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
@@ -146,7 +147,7 @@ export function DiffView(props: DiffViewProps) {
   }, [editor])
 
   useEffect(() => {
-    return editor?.onSelectionChange((selection) => {
+    return editor?.lineSelector.onSelectionChange((selection) => {
       setSelection(selection)
     })
   }, [editor])
@@ -165,12 +166,12 @@ export function DiffView(props: DiffViewProps) {
   }, [editor, splitLeft, splitRight])
 
   useEffect(() => {
-    editor?.setSelection(initialSelection)
+    editor?.lineSelector.setSelection(initialSelection)
   }, [initialSelection, editor])
 
   editor?.onComputedDiff(setDiff)
   editor?.onComputedDiff(() => {
-    editor?.scrollToSelection()
+    editor?.lineSelector.scrollToSelection()
   })
 
   return (
