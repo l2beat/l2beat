@@ -65,7 +65,12 @@ export function underReviewL2(
         },
       ),
     },
-    ecosystemInfo: templateVars.ecosystemInfo,
+    ecosystemInfo:
+      templateVars.display.stack === 'OP Stack'
+        ? {
+            id: ProjectId('superchain'),
+          }
+        : templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
@@ -108,7 +113,12 @@ export function underReviewL3(
           ? 'UnderReview'
           : 'NotApplicable',
     },
-    ecosystemInfo: templateVars.ecosystemInfo,
+    ecosystemInfo:
+      templateVars.display.stack === 'OP Stack'
+        ? {
+            id: ProjectId('superchain'),
+          }
+        : templateVars.ecosystemInfo,
     riskView: UNDER_REVIEW_RISK_VIEW,
     stackedRiskView: UNDER_REVIEW_RISK_VIEW,
     technology: TECHNOLOGY.UNDER_REVIEW,

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
@@ -77,7 +78,13 @@ export function DiffView(props: DiffViewProps) {
     <div className="flex h-full w-full flex-col">
       <div className="relative z-10 flex w-full items-center bg-coffee-900 shadow-[0_2px_4px_0_black]">
         <div className="flex-1 px-4 py-3 text-left">
-          <div className="flex items-center gap-2 font-mono">
+          <div className="flex items-center gap-4 font-mono">
+            <Link to="/diff">
+              <img
+                className="-top-[3px] relative h-[20px]"
+                src="/diffovery-logo.svg"
+              ></img>
+            </Link>
             <span className="truncate" title={leftAddress}>
               {leftAddress}
             </span>

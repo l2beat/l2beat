@@ -14,7 +14,7 @@ export function PartnersSection({ partners }: Props) {
       <h2 className="font-bold text-xl">Partners</h2>
       <div>
         <h3 className="font-medium text-secondary text-xs">ECOSYSTEMS TIER</h3>
-        <div className="mt-3 grid gap-3 md:grid-cols-3">
+        <div className="mt-3 grid gap-3 md:grid-cols-2 [@media(min-width:1000px)]:grid-cols-4">
           {partners.ecosystem.map((partner) => (
             <EcosystemTierCard key={partner.slug} partner={partner} />
           ))}
