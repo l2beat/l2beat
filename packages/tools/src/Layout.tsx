@@ -84,9 +84,17 @@ export function Layout() {
               <li>
                 <Link
                   className="font-mono underline"
-                  to="https://protocolbeat.l2beat.com/"
+                  to="https://disco.l2beat.com/ui"
                 >
-                  /protocol-beat
+                  /disco-ui
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="font-mono underline"
+                  to="https://disco.l2beat.com/diff"
+                >
+                  /diffovery
                 </Link>
               </li>
               <li>

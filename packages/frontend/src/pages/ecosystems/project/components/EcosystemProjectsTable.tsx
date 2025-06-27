@@ -1,6 +1,8 @@
 import type { ProjectId } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useMemo } from 'react'
 import { RollupsTable } from '~/components/table/RollupsTable'
+import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { useTable } from '~/hooks/useTable'
 import type { EcosystemProjectEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { getEcosystemProjectsColumns } from './table/Columns'
@@ -12,8 +14,14 @@ interface Props {
 }
 
 export function EcosystemProjectsTable({ entries, ecosystemId }: Props) {
+  const filterEntries = useFilterEntries()
+  const filteredEntries = useMemo(
+    () => entries.filter(filterEntries),
+    [entries, filterEntries],
+  )
+
   const table = useTable({
-    data: entries,
+    data: filteredEntries,
     columns: getEcosystemProjectsColumns(ecosystemId),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

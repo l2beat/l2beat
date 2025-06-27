@@ -43,9 +43,6 @@ export const base: ScalingProject = opStackL2({
       rollupCodes: 'https://rollup.codes/base',
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

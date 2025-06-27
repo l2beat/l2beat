@@ -41,7 +41,6 @@ import type {
   ProjectActivityConfig,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -158,7 +157,6 @@ interface OpStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  ecosystemInfo?: ProjectEcosystemInfo
   hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
@@ -332,7 +330,9 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
-    ecosystemInfo: templateVars.ecosystemInfo,
+    ecosystemInfo: {
+      id: ProjectId('superchain'),
+    },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {

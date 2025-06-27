@@ -110,6 +110,9 @@ export const kroma: ScalingProject = {
       finalizationPeriod,
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
   chainConfig: {
     name: 'kroma',
     chainId,
