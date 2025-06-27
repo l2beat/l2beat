@@ -31,13 +31,11 @@ export function DiffPage() {
 
   const [leftCode, rightCode] = response.data
   return (
-    <>
-      <DiffView
-        leftAddress={address1}
-        leftCode={leftCode}
-        rightAddress={address2}
-        rightCode={rightCode}
-      />
-    </>
+    <DiffView
+      leftAddress={address1}
+      leftCode={leftCode}
+      rightAddress={address2}
+      rightCode={rightCode}
+    />
   )
 }
