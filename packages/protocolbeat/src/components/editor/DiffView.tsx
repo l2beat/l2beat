@@ -2,15 +2,19 @@ import { useEffect, useMemo, useState } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
+import { useCopy } from '../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
+import { IconCopy } from '../../icons/IconCopy'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
+import { IconTick } from '../../icons/IconTick'
 import { type Diff, DiffEditor, LineSelection } from './diffEditor'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
+import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
 
 export interface DiffViewProps {
   leftAddress: string
@@ -20,15 +24,29 @@ export interface DiffViewProps {
   editorKey?: string
 }
 
-function useLineSelection() {
+function useDiffEditorSettings(props: DiffViewProps) {
+  const foldFromQueryParam = useFlagFromQueryParam('fold')
+  const swappedFromQueryParam = useFlagFromQueryParam('swapped')
+  const removeUnchangedFromQueryParam = useFlagFromQueryParam('removeUnchanged')
+  const removeCommentsFromQueryParam = useFlagFromQueryParam('removeComments')
   const [url, setUrl] = useState<string | null>(null)
   const [selection, setSelection] = useState<LineSelection | null>(null)
   const [initialSelection, setInitialSelection] =
     useState<LineSelection | null>(null)
 
+  const [fold, setFold] = useState(foldFromQueryParam)
+  const [swapped, setSwapped] = useState(swappedFromQueryParam)
+  const [removeUnchanged, setRemoveUnchanged] = useState(
+    removeUnchangedFromQueryParam ??
+      !codeIsTheSame(props.leftCode, props.rightCode),
+  )
+  const [removeComments, setRemoveComments] = useState(
+    removeCommentsFromQueryParam,
+  )
+  const [diff, setDiff] = useState<Diff | undefined>(undefined)
+
   useEffect(() => {
-    const url = new URL(window.location.href)
-    const encoded = url.searchParams.get('lines')
+    const encoded = useQueryParam('lines')
     if (encoded) {
       const selection = LineSelection.decode(encoded)
       setSelection(selection)
@@ -40,29 +58,55 @@ function useLineSelection() {
     const encoded = selection ? LineSelection.encode(selection) : null
     const url = new URL(window.location.href)
     url.searchParams.set('lines', encoded ?? '')
-    console.log('URL', url.toString())
+    url.searchParams.set('fold', fold.toString())
+    url.searchParams.set('swapped', swapped.toString())
+    url.searchParams.set('removeUnchanged', removeUnchanged.toString())
+    url.searchParams.set('removeComments', removeComments.toString())
     setUrl(url.toString())
   }, [selection])
 
-  return [initialSelection, url, setSelection] as const
+  return {
+    initialSelection,
+    fold,
+    swapped,
+    removeUnchanged,
+    removeComments,
+    diff,
+    url,
+    setSelection,
+    setFold,
+    setSwapped,
+    setRemoveUnchanged,
+    setRemoveComments,
+    setDiff,
+  }
 }
 
 export function DiffView(props: DiffViewProps) {
-  const [initialSelection, _, setSelection] = useLineSelection()
+  const {
+    initialSelection,
+    fold,
+    swapped,
+    removeUnchanged,
+    removeComments,
+    diff,
+    url,
+    setSelection,
+    setFold,
+    setSwapped,
+    setRemoveUnchanged,
+    setRemoveComments,
+    setDiff,
+  } = useDiffEditorSettings(props)
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
   const editor = getDiffEditor(editorKey)
-  const [fold, setFold] = useState(false)
-  const [swapped, setSwapped] = useState(false)
-  const [removeUnchanged, setRemoveUnchanged] = useState(
-    !codeIsTheSame(props.leftCode, props.rightCode),
-  )
-  const [removeComments, setRemoveComments] = useState(false)
-  const [diff, setDiff] = useState<Diff | undefined>(undefined)
   const [leftAddress, rightAddress] = swapped
     ? [props.rightAddress, props.leftAddress]
     : [props.leftAddress, props.rightAddress]
+
+  const { copied, copy } = useCopy()
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -210,6 +254,14 @@ export function DiffView(props: DiffViewProps) {
             title="Previous difference"
           >
             <IconArrowToDotUp className="size-4" />
+          </button>
+          <button
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            onClick={() => copy(url ?? '')}
+            title="Share"
+          >
+            {!copied && <IconCopy className="block text-coffee-600" />}
+            {copied && <IconTick className="block text-aux-green" />}
           </button>
         </div>
       </div>

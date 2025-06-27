@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
 import type { AddressFieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
-import { IconCopy } from '../icons/IconCopy'
+import { Copy } from '../components/Copy'
 import { IconLink } from '../icons/IconLink'
-import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 import { EXPLORER_URLS } from './explorers'
 
@@ -15,36 +13,9 @@ export interface AddressDisplayProps {
 
 export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
   const select = usePanelStore((state) => state.select)
-  const [copied, setCopied] = useState(false)
-
   const [chain, address] = value.address.split(':')
 
-  useEffect(() => {
-    if (copied) {
-      if (address) {
-        void navigator.clipboard.writeText(address)
-      }
-      const timeout = setTimeout(() => setCopied(false), 1000)
-      return () => clearTimeout(timeout)
-    }
-  }, [value, copied, setCopied])
-
-  const copy = (
-    <button
-      className="block h-4 w-4"
-      onClick={(e) => {
-        e.preventDefault()
-        setCopied(true)
-      }}
-    >
-      {!copied && (
-        <IconCopy className="relative top-[3px] block text-coffee-600" />
-      )}
-      {copied && (
-        <IconTick className="relative top-[3px] block text-aux-green" />
-      )}
-    </button>
-  )
+  const copy = <Copy value={value.address} timeoutMs={1000} />
 
   const explorerUrl = EXPLORER_URLS[chain ?? '']
   const explore = explorerUrl && (
