@@ -21,7 +21,7 @@ export interface LineSelection {
   side: 'left' | 'right'
   startLine: number
   endLine: number
-  anchorLine: number // The line that was clicked last, used as anchor for extending selection
+  anchorLine: number
 }
 
 export class DiffEditor {
@@ -66,6 +66,115 @@ export class DiffEditor {
 
     this.setupLineSelectionHandlers()
     knownElements.set(element, this)
+  }
+
+  setDiff(codeLeft: string, codeRight: string) {
+    const currentModel = this.editor.getModel()
+
+    if (currentModel) {
+      this.models[this.currentCodeHash] = currentModel
+      this.viewStates[this.currentCodeHash] = this.editor.saveViewState()
+    }
+
+    const newCodeHash = cyrb64(cyrb64(codeLeft) + cyrb64(codeRight))
+    this.currentCodeHash = newCodeHash
+
+    if (this.models[newCodeHash] === undefined) {
+      const [originalCode, modifiedCode] = this.isSwapped
+        ? [codeRight, codeLeft]
+        : [codeLeft, codeRight]
+
+      this.models[newCodeHash] = {
+        original: monaco.editor.createModel(originalCode, 'solidity'),
+        modified: monaco.editor.createModel(modifiedCode, 'solidity'),
+      }
+    }
+
+    this.editor.setModel(this.models[newCodeHash] ?? null)
+    this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
+  }
+
+  onComputedDiff(listener: (diff: Diff) => void) {
+    this.editor.onDidUpdateDiff(() => {
+      const changes = this.editor.getLineChanges() ?? []
+      let deletions = 0
+      let additions = 0
+
+      for (const c of changes) {
+        if (c.originalEndLineNumber > 0) {
+          deletions += c.originalEndLineNumber - c.originalStartLineNumber + 1
+        }
+        if (c.modifiedEndLineNumber > 0) {
+          additions += c.modifiedEndLineNumber - c.modifiedStartLineNumber + 1
+        }
+      }
+
+      listener({ deletions, additions })
+    })
+  }
+
+  onSelectionChange(listener: (selection: LineSelection | null) => void) {
+    this.selectionChangeListeners.push(listener)
+
+    // Return a function to unsubscribe
+    return () => {
+      const index = this.selectionChangeListeners.indexOf(listener)
+      if (index > -1) {
+        this.selectionChangeListeners.splice(index, 1)
+      }
+    }
+  }
+
+  swapSides(): boolean {
+    const currentModel = this.editor.getModel()
+    if (!currentModel) return this.isSwapped
+
+    const viewState = this.editor.saveViewState()
+
+    this.editor.setModel({
+      original: currentModel.modified,
+      modified: currentModel.original,
+    })
+
+    if (viewState) {
+      this.editor.restoreViewState({
+        original: viewState.modified,
+        modified: viewState.original,
+      })
+    }
+
+    this.isSwapped = !this.isSwapped
+    return this.isSwapped
+  }
+
+  getIsSwapped(): boolean {
+    return this.isSwapped
+  }
+
+  resize() {
+    this.editor.layout()
+  }
+
+  setFolding(folding: boolean) {
+    this.editor.updateOptions({
+      hideUnchangedRegions: {
+        enabled: folding,
+      },
+    })
+  }
+
+  toNextDiff() {
+    this.editor.goToDiff('next')
+  }
+
+  toPreviousDiff() {
+    this.editor.goToDiff('previous')
+  }
+
+  clearSelection() {
+    this.selectedLines = null
+    this.updateLineDecorations()
+    this.notifySelectionChange()
   }
 
   private setupLineSelectionHandlers() {
@@ -200,115 +309,6 @@ export class DiffEditor {
         .getModifiedEditor()
         .deltaDecorations([], decorations)
     }
-  }
-
-  clearSelection() {
-    this.selectedLines = null
-    this.updateLineDecorations()
-    this.notifySelectionChange()
-  }
-
-  setDiff(codeLeft: string, codeRight: string) {
-    const currentModel = this.editor.getModel()
-
-    if (currentModel) {
-      this.models[this.currentCodeHash] = currentModel
-      this.viewStates[this.currentCodeHash] = this.editor.saveViewState()
-    }
-
-    const newCodeHash = cyrb64(cyrb64(codeLeft) + cyrb64(codeRight))
-    this.currentCodeHash = newCodeHash
-
-    if (this.models[newCodeHash] === undefined) {
-      const [originalCode, modifiedCode] = this.isSwapped
-        ? [codeRight, codeLeft]
-        : [codeLeft, codeRight]
-
-      this.models[newCodeHash] = {
-        original: monaco.editor.createModel(originalCode, 'solidity'),
-        modified: monaco.editor.createModel(modifiedCode, 'solidity'),
-      }
-    }
-
-    this.editor.setModel(this.models[newCodeHash] ?? null)
-    this.editor.restoreViewState(this.viewStates[newCodeHash] ?? null)
-  }
-
-  onComputedDiff(listener: (diff: Diff) => void) {
-    this.editor.onDidUpdateDiff(() => {
-      const changes = this.editor.getLineChanges() ?? []
-      let deletions = 0
-      let additions = 0
-
-      for (const c of changes) {
-        if (c.originalEndLineNumber > 0) {
-          deletions += c.originalEndLineNumber - c.originalStartLineNumber + 1
-        }
-        if (c.modifiedEndLineNumber > 0) {
-          additions += c.modifiedEndLineNumber - c.modifiedStartLineNumber + 1
-        }
-      }
-
-      listener({ deletions, additions })
-    })
-  }
-
-  onSelectionChange(listener: (selection: LineSelection | null) => void) {
-    this.selectionChangeListeners.push(listener)
-
-    // Return a function to unsubscribe
-    return () => {
-      const index = this.selectionChangeListeners.indexOf(listener)
-      if (index > -1) {
-        this.selectionChangeListeners.splice(index, 1)
-      }
-    }
-  }
-
-  swapSides(): boolean {
-    const currentModel = this.editor.getModel()
-    if (!currentModel) return this.isSwapped
-
-    const viewState = this.editor.saveViewState()
-
-    this.editor.setModel({
-      original: currentModel.modified,
-      modified: currentModel.original,
-    })
-
-    if (viewState) {
-      this.editor.restoreViewState({
-        original: viewState.modified,
-        modified: viewState.original,
-      })
-    }
-
-    this.isSwapped = !this.isSwapped
-    return this.isSwapped
-  }
-
-  getIsSwapped(): boolean {
-    return this.isSwapped
-  }
-
-  resize() {
-    this.editor.layout()
-  }
-
-  setFolding(folding: boolean) {
-    this.editor.updateOptions({
-      hideUnchangedRegions: {
-        enabled: folding,
-      },
-    })
-  }
-
-  toNextDiff() {
-    this.editor.goToDiff('next')
-  }
-
-  toPreviousDiff() {
-    this.editor.goToDiff('previous')
   }
 
   dispose() {
