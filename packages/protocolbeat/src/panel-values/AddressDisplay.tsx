@@ -1,8 +1,10 @@
 import type { AddressFieldValue } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
-import { Copy } from '../components/Copy'
+import { useCopy } from '../hooks/useCopy'
+import { IconCopy } from '../icons/IconCopy'
 import { IconLink } from '../icons/IconLink'
+import { IconTick } from '../icons/IconTick'
 import { usePanelStore } from '../store/store'
 import { EXPLORER_URLS } from './explorers'
 
@@ -15,7 +17,24 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
   const select = usePanelStore((state) => state.select)
   const [chain, address] = value.address.split(':')
 
-  const copy = <Copy value={value.address} timeoutMs={1000} />
+  const { copied, copy: copyToClipboard } = useCopy()
+
+  const copy = (
+    <button
+      className="block h-4 w-4"
+      onClick={(e) => {
+        e.preventDefault()
+        copyToClipboard(value.address)
+      }}
+    >
+      {!copied && (
+        <IconCopy className="relative top-[3px] block text-coffee-600" />
+      )}
+      {copied && (
+        <IconTick className="relative top-[3px] block text-aux-green" />
+      )}
+    </button>
+  )
 
   const explorerUrl = EXPLORER_URLS[chain ?? '']
   const explore = explorerUrl && (
