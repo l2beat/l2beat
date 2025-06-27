@@ -55,7 +55,7 @@ export function ThroughputSectionAbsoluteChart({
       <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
         <div className="flex flex-wrap items-center justify-between gap-x-1">
           <ProjectChartTimeRange range={chartRange} />
-          <EigenDataSourceInfo />
+          {daLayer === 'eigenda' && <EigenDataSourceInfo />}
         </div>
         <div className="flex justify-between gap-1">
           <Checkbox
