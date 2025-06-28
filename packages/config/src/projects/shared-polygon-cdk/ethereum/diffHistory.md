@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x8165cd01c31cc697e4be0373c503925d3da7977d
+
+# Diff at Fri, 27 Jun 2025 15:10:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22774522
+- current block number: 22796580
+
+## Description
+
+add new rollupType: AggChainFEP (prly katana).
+
+https://etherscan.io/address/0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682#code
+
+type not used by katana yet.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupsDataV2.19.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.19.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.19.rollupTypeID:
+-        11
++        12
+      values.rollupsDataV2.19.forkID:
+-        12
++        0
+      values.rollupsDataV2.19.verifier:
+-        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "0x0000000000000000000000000000000000000000"
+      values.rollupTypeCount:
+-        11
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.11:
++        {"consensusImplementation":"0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682","verifier":"0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
 Generated with discovered.json: 0x999e4a9ce02c16d8178c32b64eb3c72fac9f9e59
 
 # Diff at Tue, 24 Jun 2025 15:18:11 GMT:

@@ -1,3 +1,46 @@
+Generated with discovered.json: 0xdf4a33a6e1a9cc8fffe25fb846f0f83770a5b4e4
+
+# Diff at Fri, 27 Jun 2025 15:02:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22346547
+- current block number: 22796542
+
+## Description
+
+small upgrade: https://disco.l2beat.com/diff/eth:0x450032864C52Cb9210da8e30cE97CEaC8e215953/eth:0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69.
+allows to approveTransferForAll() NFTs from the bridge by a migrator role.
+
+## Watched changes
+
+```diff
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08) {
+    +++ description: None
+      sourceHashes.1:
+-        "0x05caa4ae4fc13e910efd2c6a0ae2a136990435283a1527cf1a5ccb577a91d52f"
++        "0x1ea2ab37dc26d77842ba453466e99a063069b27024d70703188763cc219ac268"
+      values.$implementation:
+-        "0x450032864C52Cb9210da8e30cE97CEaC8e215953"
++        "0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69"
+      values.$pastUpgrades.7:
++        ["2025-06-27T07:06:23.000Z","0x4befaa551b1c1300d7476e827cf84165dcf444b2815576ea5003554bdfac1416",["0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69"]]
+      values.$upgradeCount:
+-        7
++        8
+      implementationNames.0x450032864C52Cb9210da8e30cE97CEaC8e215953:
+-        "MainchainGatewayV3"
+      implementationNames.0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69:
++        "MainchainGatewayV3"
+    }
+```
+
+## Source code changes
+
+```diff
+.../MainchainGateway/MainchainGatewayV3.sol            | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+```
+
 Generated with discovered.json: 0x6707a9003139e114fcfee22db296941f28cd37c2
 
 # Diff at Fri, 23 May 2025 09:41:03 GMT:
