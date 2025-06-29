@@ -11,6 +11,7 @@ import {
   DaThroughputTimeRangeValues,
 } from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
+import { EigenDataSourceInfo } from './EigenDataSourceInfo'
 import type { ProjectChartDataWithConfiguredThroughput } from './ProjectDaAbsoluteThroughputChart'
 import { ProjectDaAbsoluteThroughputChart } from './ProjectDaAbsoluteThroughputChart'
 
@@ -52,7 +53,10 @@ export function ThroughputSectionAbsoluteChart({
   return (
     <div>
       <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
-        <ProjectChartTimeRange range={chartRange} />
+        <div className="flex flex-wrap items-center justify-between gap-x-1">
+          <ProjectChartTimeRange range={chartRange} />
+          {daLayer === 'eigenda' && <EigenDataSourceInfo />}
+        </div>
         <div className="flex justify-between gap-1">
           <Checkbox
             name="showMaximumThroughput"
