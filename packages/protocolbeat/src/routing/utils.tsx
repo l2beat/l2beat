@@ -3,9 +3,7 @@ import { NotFoundPage } from '../NotFoundPage'
 
 export interface AppModule {
   routes: RouteObject[]
-  root?: (
-    children: React.ReactNode | React.ReactNode[] | undefined,
-  ) => React.ReactNode
+
   name: string
 }
 

@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { Outlet } from 'react-router-dom'
 import type { AppModule } from '../routing/utils'
 import { AddressSelectionPage } from './AddressSelectionPage'
 import { DiffPage } from './DiffPage'
@@ -10,16 +11,21 @@ export const DiffoveryAppModule: AppModule = {
   routes: [
     {
       path: '/diff',
-      element: <AddressSelectionPage />,
-    },
-    {
-      path: '/diff/:address1/:address2',
-      element: <DiffPage />,
+      element: (
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
+      ),
+      children: [
+        {
+          index: true,
+          element: <AddressSelectionPage />,
+        },
+        {
+          path: ':address1/:address2',
+          element: <DiffPage />,
+        },
+      ],
     },
   ],
-  root: (children) => {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    )
-  },
 }

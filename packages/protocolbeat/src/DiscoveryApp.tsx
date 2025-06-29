@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom'
 import { HomePage } from './HomePage'
 import { ProjectPage } from './ProjectPage'
 import type { AppModule } from './routing/utils'
@@ -15,16 +15,21 @@ export const DiscoveryAppModule: AppModule = {
     },
     {
       path: '/ui',
-      element: <HomePage />,
-    },
-    {
-      path: '/ui/p/:project',
-      element: <ProjectPage />,
+      element: (
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
+      ),
+      children: [
+        {
+          index: true,
+          element: <HomePage />,
+        },
+        {
+          path: 'p/:project',
+          element: <ProjectPage />,
+        },
+      ],
     },
   ],
-  root: (children) => {
-    return (
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    )
-  },
 }
