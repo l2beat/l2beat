@@ -1,17 +1,21 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useCopy } from '../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
+import { IconShare } from '../../icons/IconShare'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
-import { type Diff, DiffEditor } from './diffEditor'
+import { IconTick } from '../../icons/IconTick'
+import { DiffEditor } from './diffEditor'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
+import { useDiffEditorSettings } from './use-diff-editor-settings'
 
 export interface DiffViewProps {
   leftAddress: string
@@ -22,21 +26,31 @@ export interface DiffViewProps {
 }
 
 export function DiffView(props: DiffViewProps) {
+  const {
+    initialSelection,
+    fold,
+    swapped,
+    removeUnchanged,
+    removeComments,
+    diff,
+    url,
+    setSelection,
+    setFold,
+    setSwapped,
+    setRemoveUnchanged,
+    setRemoveComments,
+    setDiff,
+  } = useDiffEditorSettings(props)
+
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
   const editor = getDiffEditor(editorKey)
-  const [fold, setFold] = useState(false)
-  const [swapped, setSwapped] = useState(false)
-  const [removeUnchanged, setRemoveUnchanged] = useState(
-    !codeIsTheSame(props.leftCode, props.rightCode),
-  )
-  const [removeComments, setRemoveComments] = useState(false)
-  const [diff, setDiff] = useState<Diff | undefined>(undefined)
-
   const [leftAddress, rightAddress] = swapped
     ? [props.rightAddress, props.leftAddress]
     : [props.leftAddress, props.rightAddress]
+
+  const { copied, copy } = useCopy()
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -59,6 +73,12 @@ export function DiffView(props: DiffViewProps) {
     editor?.resize()
   }, [editor])
 
+  useEffect(() => {
+    return editor?.lineSelector.onSelectionChange((selection) => {
+      setSelection(selection)
+    })
+  }, [editor])
+
   const [splitLeft, splitRight] = useMemo(() => {
     return splitCode(
       props.leftCode,
@@ -72,7 +92,14 @@ export function DiffView(props: DiffViewProps) {
     editor?.setDiff(splitLeft, splitRight)
   }, [editor, splitLeft, splitRight])
 
+  useEffect(() => {
+    editor?.lineSelector.setSelection(initialSelection)
+  }, [initialSelection, editor])
+
   editor?.onComputedDiff(setDiff)
+  editor?.onComputedDiff(() => {
+    editor?.lineSelector.scrollToSelection()
+  })
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -178,18 +205,24 @@ export function DiffView(props: DiffViewProps) {
           >
             <IconArrowToDotUp className="size-4" />
           </button>
+          <div className="w-px bg-coffee-700" />
+          <button
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
+            onClick={() => {
+              if (url) {
+                copy(url)
+              }
+            }}
+            title="Share"
+            disabled={!url}
+          >
+            {!copied && <IconShare className="block text-coffee-200" />}
+            {copied && <IconTick className="block text-aux-green" />}
+          </button>
         </div>
       </div>
       <div className="h-1 bg-coffee-900" />
       <div className="h-full w-full" ref={monacoEl} />
     </div>
   )
-}
-
-function codeIsTheSame(
-  left: Record<string, string>,
-  right: Record<string, string>,
-): boolean {
-  const [leftCode, rightCode] = splitCode(left, right)
-  return leftCode === rightCode
 }

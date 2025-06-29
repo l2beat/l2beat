@@ -7,6 +7,7 @@ import * as solidity from './languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { cyrb64 } from './cyrb-hash'
+import { LineSelector } from './line-selector'
 import { theme } from './theme'
 
 let monacoInitialized = false
@@ -24,6 +25,8 @@ export class DiffEditor {
   private currentCodeHash: string = ''
   private readonly element: HTMLElement
   private isSwapped: boolean = false
+
+  public lineSelector: LineSelector
 
   constructor(element: HTMLElement) {
     this.element = element
@@ -50,6 +53,9 @@ export class DiffEditor {
       'bracketPairColorization.enabled': false,
       model: null, // Prevent Monaco from creating a default model
     })
+
+    this.lineSelector = new LineSelector(this.editor)
+    this.lineSelector.init()
 
     knownElements.set(element, this)
   }
@@ -157,6 +163,7 @@ export class DiffEditor {
 
     knownElements.delete(this.element)
 
+    this.lineSelector?.dispose()
     this.editor.dispose()
   }
 }

@@ -1,0 +1,35 @@
+/* Monaco has hard time working with tailwind */
+.monaco-editor .margin-view-overlays .line-numbers:hover,
+.monaco-diff-editor .monaco-editor .margin-view-overlays .line-numbers:hover {
+  cursor: pointer !important;
+}
+
+.monaco-editor .view-overlays .selected-line-highlight {
+  background-color: rgba(154, 52, 18, 0.2) !important;
+  border-left: 4px solid #f97316 !important;
+  border-right: 1px solid #f97316 !important;
+}
+
+.monaco-editor .view-overlays .selected-line-highlight-first {
+  background-color: rgba(154, 52, 18, 0.2) !important;
+  border-left: 4px solid #f97316 !important;
+  border-right: 1px solid #f97316 !important;
+  border-top: 1px solid #f97316 !important;
+}
+
+.monaco-editor .view-overlays .selected-line-highlight-last {
+  background-color: rgba(154, 52, 18, 0.2) !important;
+  border-left: 4px solid #f97316 !important;
+  border-right: 1px solid #f97316 !important;
+  border-bottom: 1px solid #f97316 !important;
+}
+
+.monaco-editor .view-overlays .selected-line-highlight-single {
+  background-color: rgba(154, 52, 18, 0.2) !important;
+  border: 1px solid #f97316 !important;
+  border-left: 4px solid #f97316 !important;
+}
+
+.monaco-editor .margin .selected-line-margin {
+  background-color: rgba(154, 52, 18, 0.3) !important;
+}
