@@ -56,7 +56,7 @@ export function CodeSearchResultEntry({
                     select(result.address)
                     setOpen(false)
                     setSourceIndex(result.address, loc.index)
-                    showRange({
+                    showRange(result.address, {
                       startOffset: loc.offset,
                       length: codeSearchTerm.length,
                     })

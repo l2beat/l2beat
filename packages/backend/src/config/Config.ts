@@ -52,6 +52,7 @@ export interface Config {
   }
   readonly da: DataAvailabilityTrackingConfig | false
   readonly shared: SharedModuleConfig | false
+  readonly discord: DiscordWebhookConfig
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -205,6 +206,10 @@ export interface DiscordConfig {
   readonly publicChannelId?: string
   readonly internalChannelId: string
   readonly callsPerMinute: number
+}
+
+export interface DiscordWebhookConfig {
+  readonly anomaliesWebhookUrl?: string
 }
 
 export interface DaBeatConfig {

@@ -1,4 +1,6 @@
+import { assert } from '@l2beat/shared-pure'
 import { toFunctionSelector } from 'viem'
+import { decodeAddress } from '../../../config/address'
 import type { Address, Chain, DiscoveredConfig } from '../../../config/types'
 import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type {
@@ -26,7 +28,7 @@ export interface AddressInfo {
 }
 
 export interface IAddressService {
-  lookup(address: Address, chain: Chain): Promise<AddressInfo>
+  lookup(address: Address): Promise<AddressInfo>
 }
 
 export class AddressService implements IAddressService {
@@ -35,11 +37,15 @@ export class AddressService implements IAddressService {
     private etherscanClient: EtherscanClient,
     private discovered: DiscoveredConfig,
     private tokens: Record<Address, { name: string; decimals: number }>,
+    private chains: Chain[],
   ) {}
 
-  async lookup(address: Address, chain: Chain): Promise<AddressInfo> {
+  async lookup(address: Address): Promise<AddressInfo> {
     const token = this.tokens[address]
-    const noprefix = address.split(':')[1] as `0x${string}`
+    const [shortChainName, noprefix] = decodeAddress(address)
+
+    const chain = this.chains.find((x) => x.shortName === shortChainName)
+    assert(chain, `No chain found for ${shortChainName}`)
 
     const [isEoa, contractInfo] = await Promise.all([
       this.alchemyClient.hasNoCode(noprefix, chain),

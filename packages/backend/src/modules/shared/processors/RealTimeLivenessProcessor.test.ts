@@ -9,6 +9,7 @@ import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   type Block,
   EthereumAddress,
+  type Log,
   ProjectId,
   type Transaction,
   UnixTime,
@@ -16,10 +17,11 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import type { Config } from '../../../config'
 import type { TrackedTxsConfig } from '../../../config/Config'
+import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { mockDatabase } from '../../../test/database'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
-describe(RealTimeLivenessProcessor.name, () => {
+describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
   describe(RealTimeLivenessProcessor.prototype.processBlock.name, () => {
     it('should match liveness txs and detect anomalies', async () => {
       const block = mockObject<Block>({
@@ -32,7 +34,8 @@ describe(RealTimeLivenessProcessor.name, () => {
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
-        mockDatabase({}),
+        mockDatabase(),
+        mockObject<DiscordWebhookClient>(),
       )
 
       const mockMatchLivenessTransactions = mockFn().resolvesTo(undefined)
@@ -41,9 +44,9 @@ describe(RealTimeLivenessProcessor.name, () => {
       const mockCheckForAnomalies = mockFn().resolvesTo(undefined)
       processor.checkForAnomalies = mockCheckForAnomalies
 
-      await processor.processBlock(block)
+      await processor.processBlock(block, [])
 
-      expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block)
+      expect(mockMatchLivenessTransactions).toHaveBeenCalledWith(block, [])
       expect(mockCheckForAnomalies).toHaveBeenCalledWith(block)
     })
   })
@@ -54,13 +57,14 @@ describe(RealTimeLivenessProcessor.name, () => {
       const realTimeLivenessRepository = mockObject<
         Database['realTimeLiveness']
       >({
-        insertMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const projectId = ProjectId('project-id')
       const from = EthereumAddress.random()
       const to = EthereumAddress.random()
       const selector = '0x12345678'
+      const topic = '0xabcdef12'
 
       const configurations: TrackedTxConfigEntry[] = [
         {
@@ -86,13 +90,17 @@ describe(RealTimeLivenessProcessor.name, () => {
             address: to,
             selector,
             signature: `function transfer(address,uint256)`,
+            topics: [topic],
           },
         },
       ]
 
+      const txHash1 = '0x123'
+      const txHash2 = '0x124'
+
       const transactions: Transaction[] = [
         {
-          hash: '0x123',
+          hash: txHash1,
           from,
           to,
           data: `${selector}000123`,
@@ -105,25 +113,49 @@ describe(RealTimeLivenessProcessor.name, () => {
         transactions,
       })
 
+      const logs: Log[] = [
+        {
+          address: to,
+          topics: [topic],
+          data: '0xdata',
+          transactionHash: txHash1,
+          blockNumber: block.number,
+        },
+        {
+          address: to,
+          topics: [topic],
+          data: '0xdata',
+          transactionHash: txHash2,
+          blockNumber: block.number,
+        },
+      ]
+
       const config = createMockConfig(projectId, configurations)
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
         mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
+        mockObject<DiscordWebhookClient>(),
       )
 
-      await processor.matchLivenessTransactions(block)
+      await processor.matchLivenessTransactions(block, logs)
 
-      expect(realTimeLivenessRepository.insertMany).toHaveBeenCalledWith([
+      expect(realTimeLivenessRepository.upsertMany).toHaveBeenCalledWith([
         {
           configurationId: configurations[0].id,
-          txHash: transactions[0].hash!,
+          txHash: txHash1,
           blockNumber: block.number,
           timestamp: block.timestamp,
         },
         {
           configurationId: configurations[1].id,
-          txHash: transactions[0].hash!,
+          txHash: txHash1,
+          blockNumber: block.number,
+          timestamp: block.timestamp,
+        },
+        {
+          configurationId: configurations[1].id,
+          txHash: txHash2,
           blockNumber: block.number,
           timestamp: block.timestamp,
         },
@@ -205,6 +237,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -213,6 +250,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -235,6 +273,8 @@ describe(RealTimeLivenessProcessor.name, () => {
           status: 'ongoing',
         },
       ])
+
+      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
     })
 
     it('should detect ongoing anomaly', async () => {
@@ -298,6 +338,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -306,6 +351,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -321,6 +367,7 @@ describe(RealTimeLivenessProcessor.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
+      expect(mockDiscordClient.sendMessage).not.toHaveBeenCalled()
     })
 
     it('should recover from anomaly', async () => {
@@ -385,6 +432,11 @@ describe(RealTimeLivenessProcessor.name, () => {
       ]
 
       const config = createMockConfig(projectId, configurations)
+
+      const mockDiscordClient = mockObject<DiscordWebhookClient>({
+        sendMessage: mockFn().resolvesTo(undefined),
+      })
+
       const processor = new RealTimeLivenessProcessor(
         config,
         Logger.SILENT,
@@ -393,6 +445,7 @@ describe(RealTimeLivenessProcessor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
+        mockDiscordClient,
       )
 
       const block = mockObject<Block>({
@@ -416,6 +469,8 @@ describe(RealTimeLivenessProcessor.name, () => {
           end: lastTxTimestamp,
         },
       ])
+
+      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
     })
   })
 })

@@ -390,6 +390,7 @@
         "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
 
         "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
+        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052": "Polygon Multisig 2",
 
         "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto Security Council",
         "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "Kinto Multisig",
@@ -466,6 +467,11 @@
 
         "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": "UMA Multisig",
         "0xB524735356985D2f267FA010D681f061DfF03715": "Across Multisig",
+
+        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": "Katana Multisig",
+
+        "0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7": "Yearn Strategist Multisig",
+        "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52": "Yearn Treasury Multisig",
 
         // Taiko SC
         "0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",

@@ -3461,6 +3461,21 @@
   ],
   "base": [
     {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "wOETH",
       "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
       "coingeckoId": "wrapped-oeth",
@@ -3868,6 +3883,21 @@
     }
   ],
   "fraxtal": [
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "ezETH",
       "category": "ether",
@@ -4673,6 +4703,21 @@
     }
   ],
   "mode": [
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "SolvBTC",
       "address": "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77",
@@ -6184,6 +6229,21 @@
   ],
   "soneium": [
     {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "USD₮0",
       "address": "0x102d758f688a4C1C5a80b116bD945d4455460282",
       "coingeckoId": "usdt0",
@@ -6432,6 +6492,21 @@
     }
   ],
   "unichain": [
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "WBTC",
       "address": "0x0555E30da8f98308EdB960aa94C0Db47230d2B9c",
@@ -6868,6 +6943,21 @@
     }
   ],
   "lisk": [
+    {
+      "symbol": "oUSDT",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
     {
       "symbol": "M-BTC",
       "address": "0x9BFA177621119e64CecbEabE184ab9993E2ef727",

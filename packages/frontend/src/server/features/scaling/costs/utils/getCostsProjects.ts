@@ -24,12 +24,7 @@ export async function getCostsProjects(
   })
 
   const condition = filterToCondition(filter)
-  return projects.filter(
-    (p) =>
-      condition(p) &&
-      (p.scalingInfo.type === 'Optimistic Rollup' ||
-        p.scalingInfo.type === 'ZK Rollup'),
-  )
+  return projects.filter((p) => condition(p))
 }
 
 function filterToCondition(

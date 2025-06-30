@@ -17,7 +17,7 @@ export type EditorFile = {
 
 interface CodeState {
   sourceIndex: Record<string, number>
-  range: Range | undefined
+  ranges: Record<string, Range>
   editors: Record<string, Editor>
   diffEditors: Record<string, DiffEditor>
 
@@ -28,12 +28,14 @@ interface CodeState {
   getDiffEditor: (key: string) => DiffEditor | undefined
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
-  showRange: (range: Range | undefined) => void
+  showRange: (address: string, range: Range | undefined) => void
+  resetRange: () => void
+  getRange: (address: string) => Range | undefined
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   sourceIndex: {},
-  range: undefined,
+  ranges: {},
   editors: {},
   diffEditors: {},
 
@@ -63,5 +65,16 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getSourceIndex: (address: string) => {
     return get().sourceIndex[address]
   },
-  showRange: (range: Range | undefined) => set({ range }),
+  showRange: (address: string, range: Range | undefined) =>
+    set((state) => {
+      if (range === undefined) {
+        const { [address]: removed, ...restRanges } = state.ranges
+        return { ranges: restRanges }
+      }
+      return { ranges: { ...state.ranges, [address]: range } }
+    }),
+  resetRange: () => set({ ranges: {} }),
+  getRange: (address: string) => {
+    return get().ranges[address]
+  },
 }))

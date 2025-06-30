@@ -36,7 +36,7 @@ export function CodePanel() {
     retry: 1,
   })
 
-  const { range } = useCodeStore()
+  const { getRange, getSourceIndex } = useCodeStore()
 
   const hasProxy = useMemo(() => {
     const sources = codeResponse.data?.sources
@@ -55,6 +55,8 @@ export function CodePanel() {
 
   const showRediscoverInfo = codeResponse.isError && !isReadOnly
 
+  const range = selectedAddress ? getRange(selectedAddress) : undefined
+
   if (projectResponse.isError) {
     return <ErrorState />
   }
@@ -67,13 +69,21 @@ export function CodePanel() {
     return <ActionNeededState message="Select a contract" />
   }
 
+  const rangeInfo =
+    codeResponse.isPending || !selectedAddress
+      ? undefined
+      : {
+          index: getSourceIndex(selectedAddress),
+          data: range,
+        }
+
   return (
     <div className="flex h-full w-full select-none flex-col">
       {showRediscoverInfo && <RediscoverPrompt chain={selected.chain} />}
       <EditorView
         editorId="code-panel"
         files={files}
-        range={codeResponse.isPending ? undefined : range}
+        range={rangeInfo}
         initialFileIndex={hasProxy ? 1 : 0}
       />
     </div>

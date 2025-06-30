@@ -56,10 +56,10 @@ describe(EthereumDaProvider.name, () => {
       const result = await provider.getBlobs(1, 1, mockLogFilters)
 
       expect(mockRpcClient.getLogs).toHaveBeenCalledWith(
+        1,
+        1,
         ['inbox1', 'inbox2'],
         ['topic1-1', 'topic1-2', 'topic2-1', 'topic2-2'],
-        1,
-        1,
       )
 
       expect(result).toEqual([

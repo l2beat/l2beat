@@ -10,12 +10,21 @@ export class RealTimeLivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async insertMany(records: RealTimeLivenessRecord[]): Promise<number> {
+  async upsertMany(records: RealTimeLivenessRecord[]): Promise<number> {
     if (records.length === 0) return 0
 
     const rows = records.map(toRow)
     await this.batch(rows, 10_000, async (batch) => {
-      await this.db.insertInto('RealTimeLiveness').values(batch).execute()
+      await this.db
+        .insertInto('RealTimeLiveness')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['configurationId', 'txHash']).doUpdateSet((eb) => ({
+            timestamp: eb.ref('excluded.timestamp'),
+            blockNumber: eb.ref('excluded.blockNumber'),
+          })),
+        )
+        .execute()
     })
     return rows.length
   }

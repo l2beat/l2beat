@@ -158,16 +158,16 @@ export class RpcClient extends ClientCore implements BlockClient {
   }
 
   async getLogs(
-    addresses: string[],
-    topics: string[],
     from: number,
     to: number,
+    addresses?: string[],
+    topics?: string[],
   ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
-        address: addresses,
-        topics: [topics],
+        address: addresses ?? [],
+        topics: topics ? [topics] : [],
         fromBlock: Quantity.encode(BigInt(from)),
         toBlock: Quantity.encode(BigInt(to)),
       },
