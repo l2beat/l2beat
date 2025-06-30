@@ -66,8 +66,12 @@ export async function combinePermissionsIntoDiscovery(
     }
   }
 
-  // TODO: remove self from dependent discoveries
-  discovery.dependentDiscoveries = discoveries.getBlockNumbers()
+  discovery.dependentDiscoveries = discoveries.getBlockNumbers({
+    skip: {
+      project: discovery.name,
+      chain: discovery.chain,
+    },
+  })
 }
 
 // Temporary reversal of via for backwards compatibility
