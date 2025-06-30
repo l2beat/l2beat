@@ -139,6 +139,6 @@ export type PermissionsOutput = {
     }[]
     isFinal: boolean
     role?: string
-  }[],
-  dependentDiscoveries: DiscoveryBlockNumbers,
+  }[]
+  dependentDiscoveries: DiscoveryBlockNumbers
 }
