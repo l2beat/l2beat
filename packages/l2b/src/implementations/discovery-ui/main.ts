@@ -107,7 +107,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.redirect('/ui')
   })
 
-  app.get(['/ui', '/ui/*', '/diff', '/diff/*', '/address/*'], (_req, res) => {
+  app.get(['/ui', '/ui/*', '/diff', '/diff/*', '/address', '/address/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
   })
 
