@@ -857,6 +857,20 @@
       "supply": "zero"
     },
     {
+      "name": "BTRST",
+      "coingeckoId": "braintrust",
+      "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824",
+      "symbol": "BTRST",
+      "decimals": 18,
+      "deploymentTimestamp": 1628607475,
+      "coingeckoListingTimestamp": 1631664000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18100/large/braintrust.PNG?1696517605",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BUSD",
       "coingeckoId": "binance-usd",
       "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
@@ -10100,6 +10114,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "AWE Network",
+      "coingeckoId": "stp-network",
+      "address": "0x1B4617734C43F6159F3a70b7E06d883647512778",
+      "symbol": "AWE",
+      "decimals": 18,
+      "deploymentTimestamp": 1739509151,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8713/large/awe-network.jpg?1747816016",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "B3",
       "coingeckoId": "b3",
       "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
@@ -10123,6 +10151,20 @@
       "coingeckoListingTimestamp": 1705363200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34563/large/tybg.png?1705400778",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "BIM",
+      "coingeckoId": "bim-2",
+      "address": "0x555FFF48549C1A25a723Bd8e7eD10870D82E8379",
+      "symbol": "BIM",
+      "decimals": 18,
+      "deploymentTimestamp": 1741882223,
+      "coingeckoListingTimestamp": 1742169600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54860/large/bim-fi.jpg?1742179842",
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
@@ -10154,6 +10196,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Cookie",
+      "coingeckoId": "cookie",
+      "address": "0xC0041EF357B183448B235a8Ea73Ce4E4eC8c265F",
+      "symbol": "COOKIE",
+      "decimals": 18,
+      "deploymentTimestamp": 1717417289,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38450/large/cookie_token_logo_200x200.png?1733194528",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Dai Stablecoin",

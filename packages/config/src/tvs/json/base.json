@@ -193,6 +193,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-AWE",
+      "priceId": "stp-network",
+      "symbol": "AWE",
+      "name": "AWE Network",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8713/large/awe-network.jpg?1747816016",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "stp-network",
+        "decimals": 18,
+        "sinceTimestamp": 1739509151,
+        "address": "0x1B4617734C43F6159F3a70b7E06d883647512778",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-AXGT",
       "priceId": "axondao-governance-token",
       "symbol": "AXGT",
@@ -269,6 +288,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-BIM",
+      "priceId": "bim-2",
+      "symbol": "BIM",
+      "name": "BIM",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54860/large/bim-fi.jpg?1742179842",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "bim-2",
+        "decimals": 18,
+        "sinceTimestamp": 1742169600,
+        "address": "0x555FFF48549C1A25a723Bd8e7eD10870D82E8379",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-BITCOIN",
       "priceId": "harrypotterobamasonic10in",
       "symbol": "BITCOIN",
@@ -303,6 +341,25 @@
       },
       "category": "other",
       "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-BTRST",
+      "priceId": "braintrust",
+      "symbol": "BTRST",
+      "name": "BTRST",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18100/large/braintrust.PNG?1696517605",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824",
+        "chain": "ethereum",
+        "escrowAddress": "0x3154Cf16ccdb4C6d922629664174b904d80F2C35",
+        "decimals": 18,
+        "sinceTimestamp": 1686793895
+      },
+      "category": "other",
+      "source": "canonical",
       "isAssociated": false
     },
     {
@@ -442,6 +499,32 @@
       "category": "other",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-COOKIE",
+      "priceId": "cookie",
+      "symbol": "COOKIE",
+      "name": "Cookie",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38450/large/cookie_token_logo_200x200.png?1733194528",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xC0041EF357B183448B235a8Ea73Ce4E4eC8c265F",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1718236800
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

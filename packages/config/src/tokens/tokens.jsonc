@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "BTRST",
+      "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824"
+    },
+    {
       "symbol": "SQD",
       "coingeckoId": "subsquid",
       "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1"
@@ -3584,6 +3588,32 @@
     }
   ],
   "base": [
+    {
+      "symbol": "COOKIE",
+      "address": "0xC0041EF357B183448B235a8Ea73Ce4E4eC8c265F",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BIM",
+      "address": "0x555FFF48549C1A25a723Bd8e7eD10870D82E8379",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "AWE",
+      "address": "0x1B4617734C43F6159F3a70b7E06d883647512778",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "W",
       "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
