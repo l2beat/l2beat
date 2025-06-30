@@ -49,16 +49,13 @@ const getDaThroughputChartByProjectData = async (
   if (throughput.length === 0) {
     return []
   }
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     allProjects,
     resolution,
   )
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
-    resolution,
-  )
+  const timestamps = generateTimestamps([minTimestamp, to], resolution)
   return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
 }
 
@@ -68,7 +65,6 @@ function groupByTimestampAndProjectId(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
   const result: Record<number, Record<string, number>> = {}
   const [daLayerRecords, projectRecords] = partition(
     records,
@@ -89,7 +85,6 @@ function groupByTimestampAndProjectId(
       [project.name]: Number(value),
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   // Add the difference between the total size and the sum of the other projects as 'Unknown'
@@ -110,7 +105,6 @@ function groupByTimestampAndProjectId(
       ['Unknown']: Number(value) - restSummed,
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
 
   return {
@@ -125,7 +119,6 @@ function groupByTimestampAndProjectId(
       ]),
     ),
     minTimestamp: UnixTime(minTimestamp),
-    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 

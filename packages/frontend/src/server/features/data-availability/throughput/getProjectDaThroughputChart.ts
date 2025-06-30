@@ -42,20 +42,17 @@ export async function getProjectDaThroughputChart(
   if (throughput.length === 0) {
     return undefined
   }
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     resolution,
   )
 
-  const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
-    resolution,
-  )
+  const timestamps = generateTimestamps([minTimestamp, to], resolution)
   return {
     chart: timestamps.map((timestamp) => {
       return [timestamp, grouped[timestamp] ?? 0]
     }),
-    range: [minTimestamp, maxTimestamp],
+    range: [minTimestamp, to],
   }
 }
 
@@ -64,7 +61,6 @@ function groupByTimestampAndProjectId(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(
@@ -82,12 +78,10 @@ function groupByTimestampAndProjectId(
       result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
   return {
     grouped: result,
     minTimestamp: UnixTime(minTimestamp),
-    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
