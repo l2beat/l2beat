@@ -13,6 +13,7 @@ type Props = {
     data?: Range
     index?: number
   }
+  disableTabs?: boolean
 }
 
 export function EditorView(props: Props) {
@@ -72,14 +73,16 @@ export function EditorView(props: Props) {
 
   return (
     <div className="flex h-full w-full select-none flex-col">
-      <EditorFileTabs
-        files={props.files.map((file, index) => ({
-          ...file,
-          isDirty: dirtyFiles[file.id] ?? false,
-          isActive: index === activeFileIndex,
-          onClick: () => setActiveFileIndex(index),
-        }))}
-      />
+      {props.disableTabs ? null : (
+        <EditorFileTabs
+          files={props.files.map((file, index) => ({
+            ...file,
+            isDirty: dirtyFiles[file.id] ?? false,
+            isActive: index === activeFileIndex,
+            onClick: () => setActiveFileIndex(index),
+          }))}
+        />
+      )}
       <CodeView editorKey={props.editorId} />
     </div>
   )
