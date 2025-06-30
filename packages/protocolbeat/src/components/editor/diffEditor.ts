@@ -7,7 +7,7 @@ import * as solidity from './languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
 import { cyrb64 } from './cyrb-hash'
-import { LineSelector } from './line-selector'
+import { LineSelector } from './lineSelector'
 import { theme } from './theme'
 
 let monacoInitialized = false

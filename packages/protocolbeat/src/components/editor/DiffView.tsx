@@ -15,7 +15,7 @@ import { IconTick } from '../../icons/IconTick'
 import { DiffEditor } from './diffEditor'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
-import { useDiffEditorSettings } from './use-diff-editor-settings'
+import { useDiffEditorSettings } from './useDiffEditorSettings'
 
 export interface DiffViewProps {
   leftAddress: string
@@ -29,26 +29,23 @@ export function DiffView(props: DiffViewProps) {
   const {
     initialSelection,
     fold,
-    swapped,
     removeUnchanged,
     removeComments,
     diff,
     url,
     setSelection,
     setFold,
-    setSwapped,
     setRemoveUnchanged,
     setRemoveComments,
     setDiff,
+    swapSides,
   } = useDiffEditorSettings(props)
 
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
   const editor = getDiffEditor(editorKey)
-  const [leftAddress, rightAddress] = swapped
-    ? [props.rightAddress, props.leftAddress]
-    : [props.leftAddress, props.rightAddress]
+  const [leftAddress, rightAddress] = [props.leftAddress, props.rightAddress]
 
   const { copied, copy } = useCopy()
 
@@ -180,12 +177,9 @@ export function DiffView(props: DiffViewProps) {
           <button
             className={clsx(
               'rounded p-1.5 transition-colors',
-              swapped
-                ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
-                : 'hover:bg-coffee-700',
+              'hover:bg-coffee-700',
             )}
-            // TODO(radomski): On swap change the URL, don't style the button
-            onClick={() => setSwapped(editor?.swapSides() ?? false)}
+            onClick={swapSides}
             title="Swap sides"
           >
             <IconSwap className="size-4" />

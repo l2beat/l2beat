@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { DiffViewProps } from './DiffView'
 import type { Diff } from './diffEditor'
-import { type LineSelection, LineSelector } from './line-selector'
+import { type LineSelection, LineSelector } from './lineSelector'
 import { splitCode } from './soliditySplitter'
 import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
 
@@ -22,6 +23,7 @@ function useQueryParams() {
 }
 
 export function useDiffEditorSettings(props: DiffViewProps) {
+  const navigate = useNavigate()
   const queryParams = useQueryParams()
 
   const [url, setUrl] = useState<string | null>(null)
@@ -30,7 +32,6 @@ export function useDiffEditorSettings(props: DiffViewProps) {
     useState<LineSelection | null>(null)
 
   const [fold, setFold] = useState(queryParams.fold)
-  const [swapped, setSwapped] = useState(queryParams.swapped)
   const [removeUnchanged, setRemoveUnchanged] = useState(
     queryParams.removeUnchanged ??
       !codeIsTheSame(props.leftCode, props.rightCode),
@@ -62,9 +63,6 @@ export function useDiffEditorSettings(props: DiffViewProps) {
     if (fold) {
       url.searchParams.set('fold', fold.toString())
     }
-    if (swapped) {
-      url.searchParams.set('swapped', swapped.toString())
-    }
     if (removeUnchanged) {
       url.searchParams.set('removeUnchanged', removeUnchanged.toString())
     }
@@ -75,20 +73,28 @@ export function useDiffEditorSettings(props: DiffViewProps) {
     setUrl(url.toString())
   }, [selection])
 
+  const swapSides = useCallback(() => {
+    const currentUrl = new URL(window.location.href)
+    const queryParams = currentUrl.searchParams.toString()
+    const newPath = `/diff/${props.rightAddress}/${props.leftAddress}`
+    const newUrl = queryParams ? `${newPath}?${queryParams}` : newPath
+    setSelection(null)
+    navigate(newUrl)
+  }, [navigate, props.rightAddress, props.leftAddress])
+
   return {
     initialSelection,
     fold,
-    swapped,
     removeUnchanged,
     removeComments,
     diff,
     url,
     setSelection,
     setFold,
-    setSwapped,
     setRemoveUnchanged,
     setRemoveComments,
     setDiff,
+    swapSides,
   }
 }
 
