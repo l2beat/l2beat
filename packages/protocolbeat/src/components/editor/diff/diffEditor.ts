@@ -117,32 +117,6 @@ export class DiffEditor {
     })
   }
 
-  swapSides(): boolean {
-    const currentModel = this.editor.getModel()
-    if (!currentModel) return this.isSwapped
-
-    const viewState = this.editor.saveViewState()
-
-    this.editor.setModel({
-      original: currentModel.modified,
-      modified: currentModel.original,
-    })
-
-    if (viewState) {
-      this.editor.restoreViewState({
-        original: viewState.modified,
-        modified: viewState.original,
-      })
-    }
-
-    this.isSwapped = !this.isSwapped
-    return this.isSwapped
-  }
-
-  getIsSwapped(): boolean {
-    return this.isSwapped
-  }
-
   resize() {
     this.editor.layout()
   }
