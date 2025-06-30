@@ -36,11 +36,9 @@ export async function getDaThroughputSection(
 
   if (!projectData || !lastTimestamp) return undefined
 
-  const notSyncedStatus = projectData.syncedUntil
-    ? getThroughputSyncWarning(UnixTime(lastTimestamp), {
-        shorter: true,
-      })
-    : undefined
+  const notSyncedStatus = getThroughputSyncWarning(UnixTime(lastTimestamp), {
+    shorter: true,
+  })
 
   return {
     projectId: project.id,
