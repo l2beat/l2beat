@@ -65,6 +65,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
+          const lastDaLayerTimestamp = daLayerValues.findLast(
+            (v) => v.daLayer === daLayer.id,
+          )?.timestamp
           const lastRecord = values[daLayer.id]?.at(-1)
 
           const latestThroughput = daLayer.daLayer.throughput
@@ -85,7 +88,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           return [
             daLayer.id,
             {
-              syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
+              syncedUntil: lastDaLayerTimestamp,
               pastDayData: lastRecord
                 ? getPastDayData(
                     lastRecord,
