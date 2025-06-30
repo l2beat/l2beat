@@ -1,4 +1,4 @@
-import type { Diff } from './diffEditor'
+import type { Diff } from '../diffEditor'
 
 export function getInlineDiff(diff: Diff, left: string, right: string): string {
   const result: string[] = []

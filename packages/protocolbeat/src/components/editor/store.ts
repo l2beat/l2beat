@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { DiffEditor } from './diffEditor'
+import type { DiffEditor } from './diff/diffEditor'
 import type { Editor, EditorSupportedLanguage } from './editor'
 
 export interface Range {
@@ -31,6 +31,21 @@ interface CodeState {
   showRange: (address: string, range: Range | undefined) => void
   resetRange: () => void
   getRange: (address: string) => Range | undefined
+}
+
+interface DiffSettings {
+  fold: boolean
+  removeUnchanged: boolean
+  removeComments: boolean
+  swapped: boolean
+}
+
+interface DiffSettingsStore extends DiffSettings {
+  toggleFold: () => void
+  toggleRemoveUnchanged: () => void
+  toggleRemoveComments: () => void
+  toggleSwapped: () => void
+  setSettings: (settings: Partial<DiffSettings>) => void
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
@@ -77,4 +92,20 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getRange: (address: string) => {
     return get().ranges[address]
   },
+}))
+
+export const useDiffSettingsStore = create<DiffSettingsStore>((set) => ({
+  fold: false,
+  removeUnchanged: false,
+  removeComments: false,
+  swapped: false,
+
+  toggleFold: () => set((state) => ({ fold: !state.fold })),
+  toggleRemoveUnchanged: () =>
+    set((state) => ({ removeUnchanged: !state.removeUnchanged })),
+  toggleRemoveComments: () =>
+    set((state) => ({ removeComments: !state.removeComments })),
+  toggleSwapped: () => set((state) => ({ swapped: !state.swapped })),
+
+  setSettings: (settings) => set((state) => ({ ...state, ...settings })),
 }))
