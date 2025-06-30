@@ -78,6 +78,7 @@ export function ThroughputSectionAbsoluteChart({
         isLoading={isLoading}
         showMax={showMax}
         milestones={milestones}
+        syncedUntil={data?.syncedUntil}
       />
     </div>
   )

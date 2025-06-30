@@ -55,7 +55,17 @@ const getDaThroughputChartByProjectData = async (
     resolution,
   )
 
-  const timestamps = generateTimestamps([minTimestamp, to], resolution)
+  const chartAdjustedTo =
+    resolution === 'hourly'
+      ? to - UnixTime.HOUR
+      : resolution === 'sixHourly'
+        ? to - UnixTime.HOUR * 6
+        : to - UnixTime.DAY
+
+  const timestamps = generateTimestamps(
+    [minTimestamp, chartAdjustedTo],
+    resolution,
+  )
   return timestamps.map((timestamp) => [timestamp, grouped[timestamp] ?? {}])
 }
 

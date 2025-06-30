@@ -12,6 +12,7 @@ import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 export type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputDataPoint[]
   range: [UnixTime | null, UnixTime]
+  syncedUntil: UnixTime
 }
 export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
@@ -42,17 +43,27 @@ export async function getProjectDaThroughputChart(
   if (throughput.length === 0) {
     return undefined
   }
-  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
     throughput,
     resolution,
   )
+  const chartAdjustedTo =
+    resolution === 'hourly'
+      ? to - UnixTime.HOUR
+      : resolution === 'sixHourly'
+        ? to - UnixTime.HOUR * 6
+        : to - UnixTime.DAY
 
-  const timestamps = generateTimestamps([minTimestamp, to], resolution)
+  const timestamps = generateTimestamps(
+    [minTimestamp, chartAdjustedTo],
+    resolution,
+  )
   return {
     chart: timestamps.map((timestamp) => {
       return [timestamp, grouped[timestamp] ?? 0]
     }),
-    range: [minTimestamp, to],
+    range: [minTimestamp, chartAdjustedTo],
+    syncedUntil: maxTimestamp,
   }
 }
 
@@ -61,6 +72,7 @@ function groupByTimestampAndProjectId(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
+  let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(
@@ -78,10 +90,12 @@ function groupByTimestampAndProjectId(
       result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
+    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
   return {
     grouped: result,
     minTimestamp: UnixTime(minTimestamp),
+    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
@@ -97,6 +111,7 @@ function getMockProjectDaThroughputChartData({
     return {
       chart: [],
       range: [from, to],
+      syncedUntil: UnixTime.now(),
     }
   }
 
@@ -108,5 +123,6 @@ function getMockProjectDaThroughputChartData({
       return [timestamp, Math.round(throughputValue)]
     }),
     range: [from, to],
+    syncedUntil: UnixTime.now(),
   }
 }

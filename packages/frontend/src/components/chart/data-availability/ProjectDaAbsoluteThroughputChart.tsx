@@ -1,4 +1,4 @@
-import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Area, AreaChart } from 'recharts'
@@ -37,6 +37,7 @@ interface Props {
   isLoading: boolean
   showMax: boolean
   milestones: Milestone[]
+  syncedUntil?: UnixTime
 }
 
 export function ProjectDaAbsoluteThroughputChart({
@@ -45,6 +46,7 @@ export function ProjectDaAbsoluteThroughputChart({
   projectId,
   showMax,
   milestones,
+  syncedUntil,
 }: Props) {
   const max = useMemo(() => {
     return dataWithConfiguredThroughputs
@@ -129,7 +131,9 @@ export function ProjectDaAbsoluteThroughputChart({
             dot={false}
           />
         )}
-        <ChartTooltip content={<CustomTooltip unit={unit} />} />
+        <ChartTooltip
+          content={<CustomTooltip unit={unit} syncedUntil={syncedUntil} />}
+        />
         {getCommonChartComponents({
           data: chartData,
           isLoading,
@@ -150,7 +154,8 @@ function CustomTooltip({
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: string }) {
+  syncedUntil,
+}: TooltipProps<number, string> & { unit: string; syncedUntil?: UnixTime }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
@@ -164,6 +169,8 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
+
+          const isSynced = syncedUntil && label <= syncedUntil
 
           return (
             <div
@@ -179,9 +186,15 @@ function CustomTooltip({
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
-                {(entry.value ?? 0).toFixed(2)} {unit}
-              </span>
+              {!isSynced && configEntry.label === 'Actual data size' ? (
+                <span className="label-value-15-medium text-primary tabular-nums">
+                  Not synced
+                </span>
+              ) : (
+                <span className="label-value-15-medium text-primary tabular-nums">
+                  {(entry.value ?? 0).toFixed(2)} {unit}
+                </span>
+              )}
             </div>
           )
         })}
