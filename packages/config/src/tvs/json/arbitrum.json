@@ -714,6 +714,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BUIDL",
+      "priceId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "symbol": "BUIDL",
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1739318400
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BUSD-1",
       "priceId": "binance-usd",
       "symbol": "BUSD",
@@ -3547,7 +3565,7 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1693872000,
-        "untilTimestamp": 1751277600
+        "untilTimestamp": 1751284800
       },
       "category": "other",
       "source": "canonical",
@@ -4741,6 +4759,61 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "arbitrum-SolvBTC-1",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1712448000
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1712448000
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "chain": "arbitrum",
+              "decimals": 8,
+              "escrowAddress": "0x032470abbb896b1255299d5165c1a5e9ef26bcd2",
+              "sinceTimestamp": 1712448000
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -6299,6 +6372,61 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "arbitrum-xSolvBTC",
+      "priceId": "solv-protocol-solvbtc-bbn",
+      "symbol": "xSolvBTC",
+      "name": "xSolvBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/xSolvBTC.png?1744170824",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1722556800
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-protocol-solvbtc-bbn",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1722556800
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "escrowAddress": "0x541C21b50e75fb347e01a49Bac69755dE723789B",
+              "sinceTimestamp": 1722556800
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

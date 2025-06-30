@@ -6626,6 +6626,20 @@
       "supply": "zero"
     },
     {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729615,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 10,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Cartesi Token",
       "coingeckoId": "cartesi",
       "address": "0xEc6adef5E1006bb305bB1975333e8fc4071295bf",
@@ -11246,6 +11260,20 @@
       }
     },
     {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729689,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Boop",
       "coingeckoId": "boop-2",
       "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
@@ -12066,8 +12094,16 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 42161,
-      "source": "native",
-      "supply": "zero"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "SPARTA",
@@ -12503,6 +12539,28 @@
           {
             "name": "Wormhole NTT",
             "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "xSolvBTC",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+      "symbol": "xSolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719476222,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/xSolvBTC.png?1744170824",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
           }
         ]
       }

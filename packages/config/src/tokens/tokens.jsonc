@@ -2270,6 +2270,40 @@
   ],
   "arbitrum": [
     {
+      "symbol": "xSolvBTC",
+      "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "BUIDL",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "source": "native",
+      "supply": "totalSupply" // minted by operators on each chain
+    },
+    {
       "symbol": "KIMA",
       "address": "0x94fcd9c18f99538c0f7c61c5500ca79f0d5c4dab",
       "source": "native",
@@ -2511,13 +2545,6 @@
           }
         ]
       }
-    },
-    {
-      "symbol": "SolvBTC",
-      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-      "supply": "zero", // the collateral is WBTC on arbitrum
-      "coingeckoId": "solv-btc",
-      "source": "native"
     },
     {
       "symbol": "ETHFI",
@@ -3083,6 +3110,12 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "BUIDL",
+      "address": "0xa1cdab15bba75a80df4089cafba013e376957cf5",
+      "source": "native",
+      "supply": "totalSupply" // minted by operators on each chain
+    },
     {
       "symbol": "weETH",
       "category": "ether",
