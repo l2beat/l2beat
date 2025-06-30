@@ -5,6 +5,7 @@ import type {
   Badge,
   ChainConfig,
   ProjectActivityConfig,
+  ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectScalingCapability,
@@ -22,6 +23,7 @@ interface UnderReviewConfigCommon {
   chainConfig?: ChainConfig
   badges?: Badge[]
   archivedAt?: UnixTime
+  discoveryInfo?: ProjectDiscoveryInfo
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -76,7 +78,7 @@ export function underReviewL2(
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
-    discoveryInfo: getDiscoveryInfo([]),
+    discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
   }
 }
 
@@ -125,6 +127,6 @@ export function underReviewL3(
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
     badges: templateVars.badges,
-    discoveryInfo: getDiscoveryInfo([]),
+    discoveryInfo: templateVars.discoveryInfo ?? getDiscoveryInfo([]),
   }
 }
