@@ -1,7 +1,7 @@
 import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
-  Discoveries,
+  DiscoveryRegistry,
   TemplateService,
   colorize,
   combineStructureAndColor,
@@ -243,7 +243,7 @@ describe('discovery config.jsonc', () => {
         c.name,
         configReader,
       )
-      const discoveries = new Discoveries()
+      const discoveries = new DiscoveryRegistry()
       for (const dependency of dependencies) {
         const discovery = configReader.readDiscovery(
           dependency.project,

@@ -1,14 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { TemplateService } from '../discovery/analysis/TemplateService'
 import { ConfigReader } from '../discovery/config/ConfigReader'
-import type { PermissionsConfig } from '../discovery/config/PermissionConfig'
 import {
   type DiscoveryPaths,
   getDiscoveryPaths,
 } from '../discovery/config/getDiscoveryPaths'
 import { combinePermissionsIntoDiscovery } from '../discovery/modelling/combinePermissionsIntoDiscovery'
 import {
-  Discoveries,
+  DiscoveryRegistry,
   getDependenciesToDiscoverForProject,
   modelPermissions,
 } from '../discovery/modelling/modelPermissions'
@@ -35,7 +34,7 @@ export async function modelPermissionsCommand(
     project,
     configReader,
   )
-  const discoveries = new Discoveries()
+  const discoveries = new DiscoveryRegistry()
   for (const dependency of dependencies) {
     const discovery = configReader.readDiscovery(
       dependency.project,

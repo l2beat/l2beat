@@ -9,9 +9,9 @@ import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
 import {
   ConfigReader,
-  Discoveries,
   type DiscoveryDiff,
   type DiscoveryOutput,
+  DiscoveryRegistry,
   TemplateService,
   combinePermissionsIntoDiscovery,
   diffDiscovery,
@@ -19,7 +19,6 @@ import {
   getDiscoveryPaths,
   modelPermissions,
 } from '@l2beat/discovery'
-import type { PermissionsConfig } from '@l2beat/discovery/dist/discovery/config/PermissionConfig'
 import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
   assert,
@@ -204,7 +203,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
-  const discoveries = new Discoveries()
+  const discoveries = new DiscoveryRegistry()
   // We rediscover on the past block number, but with current configs and dependencies
   const rawConfig = configReader.readRawConfig(projectName)
   const dependencies: { project: string; chain: string }[] =

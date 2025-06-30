@@ -27,7 +27,7 @@ export type DiscoveryBlockNumbers = {
   }
 }
 
-export class Discoveries {
+export class DiscoveryRegistry {
   discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
 
   get(project: string, chain: string): DiscoveryOutput | undefined {
@@ -81,7 +81,7 @@ export async function modelPermissions(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
-  discoveries: Discoveries,
+  discoveries: DiscoveryRegistry,
   options: {
     ignoreMissingDependencies?: boolean
   } = {},
@@ -118,7 +118,7 @@ export function getDependenciesToDiscoverForProject(
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
-  discoveries: Discoveries,
+  discoveries: DiscoveryRegistry,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -160,7 +160,7 @@ export async function modelPermissionFactsUsingClingo(
   templateService: TemplateService,
   paths: DiscoveryPaths,
   debug: boolean,
-  discoveries: Discoveries,
+  discoveries: DiscoveryRegistry,
   options: {
     ignoreMissingDependencies?: boolean
   },
@@ -208,7 +208,7 @@ export function generatePermissionConfigHash(clingoInput: string) {
 }
 
 export function generateClingoForDiscoveries(
-  discoveries: Discoveries,
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
   options: {
@@ -287,7 +287,7 @@ export async function modelPermissionsForIsolatedDiscovery(
   templateService: TemplateService,
   paths: DiscoveryPaths,
 ) {
-  const discoveries = new Discoveries()
+  const discoveries = new DiscoveryRegistry()
   discoveries.set(discovery.name, discovery.chain, discovery)
   const clingoForProject = generateClingoForProjectOnChain(
     permissionConfig,
