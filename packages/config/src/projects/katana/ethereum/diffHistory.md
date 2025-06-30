@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xb8798013ac6ee9c416ee1272bb9e516c63475f37
+
+# Diff at Mon, 30 Jun 2025 11:04:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8f38be1dac1da945211896720e26a33675aff71a block: 22794595
+- current block number: 22816814
+
+## Description
+
+New owner / admin for the opstack contracts: tagged it katana multisig 2.
+
+move project under review with activity, TVS.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832) {
+    +++ description: None
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: [PAUSED] The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits.
+      values.guardian:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: None
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
++        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    contract VbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: None
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
++        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      values.$pastUpgrades.1:
++        ["2025-06-30T10:33:47.000Z","0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]]
+      values.$pastUpgrades.2:
++        ["2025-06-30T10:33:47.000Z","0x56f6765801bec01f9aa2a5c9750daada809b1f7a3f5343800c0b76c6308b4558",["0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A"]]
+      values.$upgradeCount:
+-        1
++        3
+      values.guardian:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: None
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
++        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"guard","from":"ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":".guardian"},{"permission":"interact","from":"ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","description":"can pull funds from the contract in case of emergency.","role":".owner"},{"permission":"interact","from":"ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","description":"it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.","role":".owner"},{"permission":"interact","from":"ethereum:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65","description":"set and change address mappings.","role":".owner","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":"admin","via":[{"address":"ethereum:0x6d0ff67fb427422AfF35EEa8596949B374b09a52"}]},{"permission":"upgrade","from":"ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0x98906C3f90A06B5484DD67bf32938815d2993dBC","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]},{"permission":"upgrade","from":"ethereum:0xe06278351d120288eDfCB963F934113Ca3C21AFe","role":"admin","via":[{"address":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832"}]}]
+      directlyReceivedPermissions:
+-        [{"permission":"act","from":"ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832","role":".owner"},{"permission":"act","from":"ethereum:0x6d0ff67fb427422AfF35EEa8596949B374b09a52","role":".owner"}]
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: None
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
++        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d0ff67fb427422AfF35EEa8596949B374b09a52) {
+    +++ description: None
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: None
+      values.accessControl.YIELD_COLLECTOR_ROLE.members.1:
++        "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645"
+    }
+```
+
+```diff
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract Polygon Multisig 2 (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) {
+    +++ description: None
+      values.$threshold:
+-        3
++        2
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Katana Multisig 2 (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat/Katana Multisig 2/GnosisSafeL2.sol       | 1032 ++++++++++++++++++++
+ .../.flat/Katana Multisig 2/GnosisSafeProxy.p.sol  |   35 +
+ 2 files changed, 1067 insertions(+)
+```
+
 Generated with discovered.json: 0x5d44d99b24dc098733acb03285b80b369e9280f8
 
 # Diff at Fri, 27 Jun 2025 10:25:59 GMT:
