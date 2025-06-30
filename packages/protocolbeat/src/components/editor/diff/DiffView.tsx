@@ -89,6 +89,10 @@ export function DiffView(props: DiffViewProps) {
     editor?.lineSelector.setSelection(initialSelection)
   }, [initialSelection, editor])
 
+  useEffect(() => {
+    editor?.setFolding(fold)
+  }, [fold, editor])
+
   editor?.onComputedDiff(setDiff)
   editor?.onComputedDiff(() => {
     editor?.lineSelector.scrollToSelection()
