@@ -1,8 +1,8 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
-import { underReviewL2 } from '../../templates/underReview'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
+import { underReviewL2 } from '../../templates/underReview'
 
 const discovery = new ProjectDiscovery('katana')
 
@@ -64,5 +64,5 @@ export const katana: ScalingProject = underReviewL2({
       tokens: ['WETH.pdkatana'],
     }),
   ],
-  discoveryInfo: getDiscoveryInfo([discovery])
+  discoveryInfo: getDiscoveryInfo([discovery]),
 })
