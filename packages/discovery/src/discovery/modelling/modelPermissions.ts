@@ -39,6 +39,17 @@ export class Discoveries {
     this.discoveries[project][chain] = discovery
   }
 
+  getProjects(): { project: string; chain: string }[] {
+    const result = []
+    for (const project of Object.keys(this.discoveries)) {
+      const chains = Object.keys(this.discoveries[project] ?? {})
+      for (const chain of chains) {
+        result.push({ project, chain })
+      }
+    }
+    return result
+  }
+
   getBlockNumbers(
     options: {
       skip?: { project: string; chain: string }
@@ -123,7 +134,7 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
-    dependentDiscoveries: discoveries.getBlockNumbers(),
+    dependentBlockNumbers: discoveries.getBlockNumbers(),
   }
 }
 
@@ -153,11 +164,10 @@ export async function modelPermissionFactsUsingClingo(
     ignoreMissingDependencies?: boolean
   },
 ) {
-  const clingoForProject = generateClingoForProject(
-    project,
+  const clingoForProject = generateClingoForDiscoveries(
+    discoveries,
     configReader,
     templateService,
-    discoveries,
     options,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
@@ -196,23 +206,17 @@ export function generatePermissionConfigHash(clingoInput: string) {
   return Hash256('0x' + hash)
 }
 
-export function generateClingoForProject(
-  project: string,
+export function generateClingoForDiscoveries(
+  discoveries: Discoveries,
   configReader: ConfigReader,
   templateService: TemplateService,
-  discoveries: Discoveries,
   options: {
     ignoreMissingDependencies?: boolean
   } = {},
 ): string {
   const generatedClingo: string[] = []
 
-  const dependenciesToDiscover = getDependenciesToDiscoverForProject(
-    project,
-    configReader,
-  )
-
-  for (const { project, chain } of dependenciesToDiscover) {
+  for (const { project, chain } of discoveries.getProjects()) {
     const discovery = discoveries.get(project, chain)
     if (!discovery) {
       if (options.ignoreMissingDependencies) {

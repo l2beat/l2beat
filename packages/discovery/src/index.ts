@@ -6,7 +6,7 @@ export {
   getDependenciesToDiscoverForProject,
   modelPermissions,
   modelPermissionsForIsolatedDiscovery,
-  generateClingoForProject,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'

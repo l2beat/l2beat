@@ -19,6 +19,7 @@ import {
   getDiscoveryPaths,
   modelPermissions,
 } from '@l2beat/discovery'
+import type { PermissionsConfig } from '@l2beat/discovery/dist/discovery/config/PermissionConfig'
 import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
   assert,
@@ -205,10 +206,11 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
 
   const discoveries = new Discoveries()
   // We rediscover on the past block number, but with current configs and dependencies
-  const dependencies = getDependenciesToDiscoverForProject(
-    projectName,
-    configReader,
-  )
+  const rawConfig = configReader.readRawConfig(projectName) as PermissionsConfig
+  const dependencies: { project: string; chain: string }[] =
+    rawConfig.modelCrossChainPermissions
+      ? getDependenciesToDiscoverForProject(projectName, configReader)
+      : [{ project: projectName, chain }]
 
   for (const dependency of dependencies) {
     let blockNumber =
@@ -255,11 +257,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   if (targetDiscovery === undefined) {
     throw new Error(`Target discovery not found for ${projectName} on ${chain}`)
   }
-  combinePermissionsIntoDiscovery(
-    targetDiscovery,
-    permissionsOutput,
-    discoveries,
-  )
+  combinePermissionsIntoDiscovery(targetDiscovery, permissionsOutput)
   const prevDiscovery = withoutUndefinedKeys(targetDiscovery)
 
   // get code diff with main branch

@@ -5,7 +5,7 @@ import {
   TemplateService,
   colorize,
   combineStructureAndColor,
-  generateClingoForProject,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
@@ -238,38 +238,35 @@ describe('discovery config.jsonc', () => {
   })
 
   it('model-permissions is up to date', () => {
-    for (const configs of chainConfigs ?? []) {
-      for (const c of configs) {
-        const dependencies = getDependenciesToDiscoverForProject(
-          c.name,
-          configReader,
+    for (const c of chainConfigs) {
+      const dependencies = getDependenciesToDiscoverForProject(
+        c.name,
+        configReader,
+      )
+      const discoveries = new Discoveries()
+      for (const dependency of dependencies) {
+        const discovery = configReader.readDiscovery(
+          dependency.project,
+          dependency.chain,
         )
-        const discoveries = new Discoveries()
-        for (const dependency of dependencies) {
-          const discovery = configReader.readDiscovery(
-            dependency.project,
-            dependency.chain,
-          )
-          discoveries.set(dependency.project, dependency.chain, discovery)
-        }
-        const clingoInput = generateClingoForProject(
-          c.name,
-          configReader,
-          templateService,
-          discoveries,
-        )
-        const hash = generatePermissionConfigHash(clingoInput)
-        assert(
-          hash === discoveries.get(c.name, c.chain)?.permissionsConfigHash,
-          [
-            '',
-            `Permissions model of "${c.name}" is not up to date.`,
-            `Run \`l2b model-permissions ${c.name}\`.`,
-            `or to refresh all projects: \`l2b model-permissions all\`.`,
-            '',
-          ].join('\n\n'),
-        )
+        discoveries.set(dependency.project, dependency.chain, discovery)
       }
+      const clingoInput = generateClingoForDiscoveries(
+        discoveries,
+        configReader,
+        templateService,
+      )
+      const hash = generatePermissionConfigHash(clingoInput)
+      assert(
+        hash === discoveries.get(c.name, c.chain)?.permissionsConfigHash,
+        [
+          '',
+          `Permissions model of "${c.name}" is not up to date.`,
+          `Run \`l2b model-permissions ${c.name}\`.`,
+          `or to refresh all projects: \`l2b model-permissions all\`.`,
+          '',
+        ].join('\n\n'),
+      )
     }
   }).timeout(10000)
 })
