@@ -1,10 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Core smart contract for UMA's Data Verification Mechanism (DVM), serving as source of truth for disputed claims. UMA token holders collectively resolve price requests and earn rewards for correct participation. Commit- and reveal phases for the voting take {{delayFmt}} each.",
-  "ignoreRelatives": [
-    "previousVotingContract",
-    "votingToken"
-  ],
+  "ignoreRelatives": ["previousVotingContract", "votingToken"],
   "ignoreMethods": [
     "rounds",
     "getPendingRequests",
@@ -39,10 +36,7 @@
         "method": "voteTiming",
         "args": []
       },
-      "edit": [
-        "format",
-        "FormatSeconds"
-      ]
+      "edit": ["format", "FormatSeconds"]
     }
   }
 }
