@@ -7,12 +7,14 @@ import { useCopy } from '../../hooks/useCopy'
 import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
 import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
 import { IconComment } from '../../icons/IconComment'
+import { IconCopy } from '../../icons/IconCopy'
 import { IconFoldVertical } from '../../icons/IconFoldVertical'
 import { IconShare } from '../../icons/IconShare'
 import { IconSplit } from '../../icons/IconSplit'
 import { IconSwap } from '../../icons/IconSwap'
 import { IconTick } from '../../icons/IconTick'
 import { DiffEditor } from './diffEditor'
+import { getInlineDiff } from './getInlineDiff'
 import { splitCode } from './soliditySplitter'
 import { useCodeStore } from './store'
 import { useDiffEditorSettings } from './useDiffEditorSettings'
@@ -47,7 +49,8 @@ export function DiffView(props: DiffViewProps) {
   const editor = getDiffEditor(editorKey)
   const [leftAddress, rightAddress] = [props.leftAddress, props.rightAddress]
 
-  const { copied, copy } = useCopy()
+  const { copied: urlCopied, copy: copyUrl } = useCopy()
+  const { copied: inlineDiffCopied, copy: copyInlineDiff } = useCopy()
 
   useEffect(() => {
     if (!monacoEl.current) {
@@ -184,6 +187,20 @@ export function DiffView(props: DiffViewProps) {
           >
             <IconSwap className="size-4" />
           </button>
+          <button
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            onClick={() => {
+              if (diff === undefined) {
+                return
+              }
+
+              const inlineDiff = getInlineDiff(diff, splitLeft, splitRight)
+              copyInlineDiff(inlineDiff)
+            }}
+          >
+            {!inlineDiffCopied && <IconCopy className="size-4" />}
+            {inlineDiffCopied && <IconTick className="block text-aux-green" />}
+          </button>
           <div className="w-px bg-coffee-700" />
           <button
             className="rounded p-1.5 transition-colors hover:bg-coffee-700"
@@ -204,14 +221,14 @@ export function DiffView(props: DiffViewProps) {
             className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => {
               if (url) {
-                copy(url)
+                copyUrl(url)
               }
             }}
             title="Share"
             disabled={!url}
           >
-            {!copied && <IconShare className="block text-coffee-200" />}
-            {copied && <IconTick className="block text-aux-green" />}
+            {!urlCopied && <IconShare className="block text-coffee-200" />}
+            {urlCopied && <IconTick className="block text-aux-green" />}
           </button>
         </div>
       </div>

@@ -1,7 +1,9 @@
 import { assert } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 import { toFunctionSelector } from 'viem'
+import { getShortChainName } from '../../../config/address'
 import chainList from '../../../config/chains.json'
 import { type Address, Chain } from '../../../config/types'
 import type {
@@ -13,11 +15,13 @@ import { Decoder } from './Decoder'
 import type { ISignatureService } from './SignatureService'
 
 const ethereum = Chain.parse(chainList[0])
+const chains = v.array(Chain).parse(chainList)
 
 class TestAddressService implements IAddressService {
   private names = new Map<Address, string>()
   private abis = new Map<Address, FunctionAbi[]>()
   private tokens = new Map<Address, { name: string; decimals: number }>()
+  private chains = chains
 
   clear() {
     this.names.clear()
@@ -51,7 +55,10 @@ class TestAddressService implements IAddressService {
     return this
   }
 
-  lookup(address: Address, chain: Chain): Promise<AddressInfo> {
+  lookup(address: Address): Promise<AddressInfo> {
+    const shortChainName = getShortChainName(address)
+    const chain = this.chains.find((x) => x.shortName === shortChainName)
+    assert(chain, `No chain found for ${shortChainName}`)
     return Promise.resolve({
       address,
       name: this.names.get(address),
@@ -93,7 +100,7 @@ class TestSignatureService implements ISignatureService {
 describe(Decoder.name, () => {
   const addressService = new TestAddressService()
   const signatureService = new TestSignatureService()
-  const decoder = new Decoder(addressService, signatureService, {}, {})
+  const decoder = new Decoder(addressService, signatureService, {}, {}, chains)
 
   beforeEach(() => {
     addressService.clear()
