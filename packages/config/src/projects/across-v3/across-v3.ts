@@ -145,7 +145,7 @@ export const acrossV3: Bridge = {
   riskView: {
     validatedBy: {
       value: 'Optimistically',
-      description: `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout for disputes is ${finalizationDelay}.`,
+      description: `Optimistic Oracle on Ethereum is used to assert that an action happened on the destination chain. The timeout for disputes is ${finalizationDelay}. A dispute escalates to the UMA DVM.`,
       sentiment: 'warning',
     },
     destinationToken: BRIDGE_RISK_VIEW.CANONICAL,
@@ -164,7 +164,7 @@ export const acrossV3: Bridge = {
       name: 'Principle of operation',
       description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed on a chain of their choosing and from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
 
-Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. The content is a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halt finalization of the root bundle and escalates the dispute to the UMA Optimistic Oracle.
+Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. The content is a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halts finalization of the root bundle and escalates the dispute to the UMA Optimistic Oracle.
 
 The UMA oracle settles disputes by UMA token voting, with a commit- and reveal phase of ${umaDelay} each. A settlement slashes the stake of the losing party and rewards the winning party with both bond amounts minus fees.
 
@@ -191,8 +191,8 @@ Liquidity used for reimbursements is rebalanced between a main pool on Ethereum 
       ],
     },
     validation: {
-      name: 'Validation via Optimistic Oracle',
-      description: `Money from the liquidity pool is used to reimburse Relayers based on a claim of deposit on a destination chain that is provided to an Optimistic Oracle on Ethereum (UMA DVM). The assertion can be disputed for ${finalizationDelay}.`,
+      name: 'Validation via Optimistic Oracle and UMA DVM',
+      description: `Money from the liquidity pool is used to reimburse Relayers based on a claim of deposit on a destination chain that is provided to an Optimistic Oracle on Ethereum (can be escalated to the UMA DVM). The assertion can be disputed for ${finalizationDelay}.`,
       risks: [
         {
           category: 'Funds can be stolen if',
