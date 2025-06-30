@@ -77,23 +77,22 @@ export class DiscoveryRegistry {
 
 export async function modelPermissions(
   project: string,
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
-  debug: boolean,
-  discoveries: DiscoveryRegistry,
   options: {
+    debug: boolean
     ignoreMissingDependencies?: boolean
-  } = {},
+  },
 ): Promise<PermissionsOutput> {
   const { permissionFacts, permissionsConfigHash } =
     await modelPermissionFactsUsingClingo(
       project,
+      discoveries,
       configReader,
       templateService,
       paths,
-      debug,
-      discoveries,
       options,
     )
   return buildPermissionsOutput(
@@ -156,12 +155,12 @@ export async function runClingoForSingleModel(clingoInput: string) {
 
 export async function modelPermissionFactsUsingClingo(
   project: string,
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
-  debug: boolean,
-  discoveries: DiscoveryRegistry,
   options: {
+    debug: boolean
     ignoreMissingDependencies?: boolean
   },
 ) {
@@ -185,7 +184,7 @@ export async function modelPermissionFactsUsingClingo(
 
   const result = facts.map(parseClingoFact)
 
-  if (!debug) {
+  if (!options.debug) {
     unlinkSync(inputFilePath)
     unlinkSync(outputFilePath)
   }

@@ -239,12 +239,12 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   const templateService = new TemplateService(discoveryPaths.discovery)
   const permissionsOutput = await modelPermissions(
     projectName,
+    discoveries,
     configReader,
     templateService,
     discoveryPaths,
-    false,
-    discoveries,
     {
+      debug: false,
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".

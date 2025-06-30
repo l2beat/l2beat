@@ -46,11 +46,11 @@ export async function modelPermissionsCommand(
 
   const ultimatePermissions = await modelPermissions(
     project,
+    discoveries,
     configReader,
     templateService,
     paths,
-    debug,
-    discoveries,
+    { debug },
   )
 
   await writePermissionsIntoDiscovery(
