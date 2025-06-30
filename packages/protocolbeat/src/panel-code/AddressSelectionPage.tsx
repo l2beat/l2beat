@@ -39,7 +39,7 @@ export function AddressSelectionPage() {
         <img
           className="w-[200px] md:w-[400px]"
           src="/logo.svg"
-          alt="DIFFOVERY"
+          alt="CODE"
         />
       </h1>
 
