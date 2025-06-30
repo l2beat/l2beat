@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.",
+  "ignoreMethods": ["getCurrentTime"],
+  "ignoreRelatives": ["defaultCurrency"],
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical administrative parameters like default bonds, bond token, fees."
+        }
+      ]
+    }
+  }
+}

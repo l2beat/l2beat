@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Simple data store used by the Universal_Adapter to store message calldata hashes.",
+  "ignoreMethods": ["relayMessageCallData"]
+}

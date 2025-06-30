@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).",
+  "ignoreRelatives": ["getAllRegisteredContracts"],
+  "ignoreMethods": ["registeredContracts"],
+  "fields": {
+    "owner": {
+      "handler": {
+        "type": "call",
+        "method": "getMember",
+        "args": [0]
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage registered contracts."
+        }
+      ]
+    }
+  }
+}
