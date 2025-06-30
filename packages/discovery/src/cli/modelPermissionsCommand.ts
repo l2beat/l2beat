@@ -74,7 +74,6 @@ export async function writePermissionsIntoDiscovery(
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
     combinePermissionsIntoDiscovery(discovery, permissionsOutput, {
-      // @ts-expect-error heere
       skipDependentDiscoveries: !rawConfig.modelCrossChainPermissions,
     })
 
