@@ -12,9 +12,15 @@ import { theme } from './theme'
 let monacoInitialized = false
 const knownElements: Map<HTMLElement, DiffEditor> = new Map()
 
+export interface Change {
+  readonly left: [number, number]
+  readonly right: [number, number]
+}
+
 export interface Diff {
   deletions: number
   additions: number
+  changes: Change[]
 }
 
 export class DiffEditor {
@@ -82,11 +88,17 @@ export class DiffEditor {
 
   onComputedDiff(listener: (diff: Diff) => void) {
     this.editor.onDidUpdateDiff(() => {
-      const changes = this.editor.getLineChanges() ?? []
+      const lineChanges = this.editor.getLineChanges() ?? []
       let deletions = 0
       let additions = 0
 
-      for (const c of changes) {
+      const changes: Change[] = []
+      for (const c of lineChanges) {
+        changes.push({
+          left: [c.originalStartLineNumber, c.originalEndLineNumber],
+          right: [c.modifiedStartLineNumber, c.modifiedEndLineNumber],
+        })
+
         if (c.originalEndLineNumber > 0) {
           deletions += c.originalEndLineNumber - c.originalStartLineNumber + 1
         }
@@ -95,7 +107,7 @@ export class DiffEditor {
         }
       }
 
-      listener({ deletions, additions })
+      listener({ deletions, additions, changes })
     })
   }
 
