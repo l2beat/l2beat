@@ -6,6 +6,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '~/components/core/Drawer'
+import { InfoIcon } from '~/icons/Info'
 
 export function EigenDataSourceInfo() {
   return (
@@ -16,7 +17,7 @@ export function EigenDataSourceInfo() {
       <Drawer>
         <DrawerTrigger className="flex items-center gap-1 font-medium text-[13px] text-secondary sm:hidden">
           Data source
-          <div className="size-3 rounded-full bg-secondary" />
+          <InfoIcon className="size-4" />
         </DrawerTrigger>
         <DrawerContent className="px-1 pb-8">
           <DrawerHeader>
