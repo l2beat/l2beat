@@ -3,11 +3,22 @@ import type { LineSelection } from '../extensions/lineSelector'
 import { LineSelector } from '../extensions/lineSelector'
 import { useFlagFromQueryParam, useQueryParam } from './useFlagFromQueryParam'
 
+const SEARCH_PARAMS = {
+  lines: 'lines',
+  removeUnchanged: 'removeUnchanged',
+  removeComments: 'removeComments',
+  fold: 'fold',
+}
+
 export function useUrlState() {
-  const foldParam = useFlagFromQueryParam('fold')
-  const removeUnchangedParam = useFlagFromQueryParam('removeUnchanged')
-  const removeCommentsParam = useFlagFromQueryParam('removeComments')
-  const linesParam = useQueryParam('lines')
+  const foldParam = useFlagFromQueryParam(SEARCH_PARAMS.fold)
+  const removeUnchangedParam = useFlagFromQueryParam(
+    SEARCH_PARAMS.removeUnchanged,
+  )
+  const removeCommentsParam = useFlagFromQueryParam(
+    SEARCH_PARAMS.removeComments,
+  )
+  const linesParam = useQueryParam(SEARCH_PARAMS.lines)
 
   const [shareableUrl, setShareableUrl] = useState<string | null>(null)
 
@@ -24,18 +35,23 @@ export function useUrlState() {
       }
 
       const url = new URL(window.location.href)
-      url.searchParams.set('lines', LineSelector.encode(selection))
+
+      for (const param of Object.values(SEARCH_PARAMS)) {
+        url.searchParams.delete(param)
+      }
+
+      url.searchParams.set(SEARCH_PARAMS.lines, LineSelector.encode(selection))
 
       if (removeUnchanged) {
-        url.searchParams.set('removeUnchanged', 'true')
+        url.searchParams.set(SEARCH_PARAMS.removeUnchanged, 'true')
       }
 
       if (removeComments) {
-        url.searchParams.set('removeComments', 'true')
+        url.searchParams.set(SEARCH_PARAMS.removeComments, 'true')
       }
 
       if (fold) {
-        url.searchParams.set('fold', 'true')
+        url.searchParams.set(SEARCH_PARAMS.fold, 'true')
       }
 
       setShareableUrl(url.toString())

@@ -166,10 +166,7 @@ export function DiffView(props: DiffViewProps) {
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
-            onClick={() => {
-              editor?.setFolding(!fold)
-              toggleFold()
-            }}
+            onClick={toggleFold}
             title="Toggle folding"
           >
             <IconFoldVertical className="size-4" />
