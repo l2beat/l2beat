@@ -41,7 +41,6 @@ import type {
   ProjectActivityConfig,
   ProjectCustomDa,
   ProjectDaTrackingConfig,
-  ProjectEcosystemInfo,
   ProjectEscrow,
   ProjectFinalityConfig,
   ProjectFinalityInfo,
@@ -67,6 +66,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
@@ -157,7 +157,6 @@ interface OpStackConfigCommon {
   nonTemplateRiskView?: Partial<ProjectScalingRiskView>
   usingAltVm?: boolean
   reasonsForBeingOther?: ReasonForBeingInOther[]
-  ecosystemInfo?: ProjectEcosystemInfo
   hasSuperchainScUpgrades?: boolean
   display: Omit<ProjectScalingDisplay, 'provider' | 'category' | 'purposes'> & {
     category?: ProjectScalingCategory
@@ -281,7 +280,11 @@ function opStackCommon(
       stack: 'OP Stack',
       category:
         templateVars.display.category ??
-        (postsToEthereum(templateVars) ? 'Optimistic Rollup' : 'Optimium'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToEthereum(templateVars)
+            ? 'Optimistic Rollup'
+            : 'Optimium'),
       warning:
         templateVars.display.warning === undefined
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
@@ -327,7 +330,9 @@ function opStackCommon(
       ],
       daTracking: getDaTracking(templateVars),
     },
-    ecosystemInfo: templateVars.ecosystemInfo,
+    ecosystemInfo: {
+      id: ProjectId('superchain'),
+    },
     technology: getTechnology(templateVars, explorerUrl, daProvider),
     permissions: generateDiscoveryDrivenPermissions(allDiscoveries),
     contracts: {
@@ -346,6 +351,7 @@ function opStackCommon(
       computedStage(templateVars, postsToEthereum(templateVars)),
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 
@@ -427,6 +433,7 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
     templateVars,
     EXPLORER_URLS['ethereum'],
   )
+
   return {
     type: 'layer2',
     ...common,
@@ -817,11 +824,11 @@ function computedStage(
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: templateVars.isNodeAvailable,
+        stateVerificationOnL1: fraudProofType !== 'None',
+        fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: fraudProofType !== 'None',
-        fraudProofSystemAtLeast5Outsiders: fraudProofMapping[fraudProofType],
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp:

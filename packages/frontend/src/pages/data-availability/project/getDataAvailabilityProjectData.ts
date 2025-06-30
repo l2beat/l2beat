@@ -9,8 +9,8 @@ import type { Manifest } from '~/utils/Manifest'
 
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
-import type { ExpressHelpers } from '~/trpc/server'
-import { getExpressHelpers } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 
 export async function getDataAvailabilityProjectData(
   manifest: Manifest,
@@ -20,7 +20,7 @@ export async function getDataAvailabilityProjectData(
   },
   url: string,
 ): Promise<RenderData | undefined> {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [appLayoutProps, projectEntry] = await Promise.all([
     getAppLayoutProps(),
     getProjectEntry(params, helpers),
@@ -52,7 +52,7 @@ export async function getDataAvailabilityProjectData(
 
 async function getProjectEntry(
   params: { layer: string; bridge: string },
-  helpers: ExpressHelpers,
+  helpers: SsrHelpers,
 ) {
   const layer = await ps.getProject({
     slug: params.layer,
@@ -61,11 +61,6 @@ async function getProjectEntry(
   })
 
   if (!layer) return
-
-  const prefetch = helpers.da.projectChart.prefetch({
-    range: '1y',
-    projectId: layer.id,
-  })
 
   if (layer.id === ProjectId.ETHEREUM) {
     const bridge = await ps.getProject({
@@ -77,18 +72,12 @@ async function getProjectEntry(
       return
     }
 
-    const [entry] = await Promise.all([
-      getEthereumDaProjectEntry(layer, bridge),
-      prefetch,
-    ])
+    const entry = await getEthereumDaProjectEntry(helpers, layer, bridge)
 
     return entry
   }
 
-  const [entry] = await Promise.all([
-    getDaProjectEntry(layer, params.bridge),
-    prefetch,
-  ])
+  const entry = await getDaProjectEntry(helpers, layer, params.bridge)
   if (!entry) return
 
   return entry

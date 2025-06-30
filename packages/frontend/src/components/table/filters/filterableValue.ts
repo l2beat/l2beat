@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export interface FilterableEntry {
   filterable: FilterableValue[] | undefined
@@ -7,8 +7,8 @@ export type FilterableValue = {
   id: FilterableValueId
   value: string
 }
-export type FilterableValueId = z.infer<typeof FilterableValueId>
-export const FilterableValueId = z.enum([
+export type FilterableValueId = v.infer<typeof FilterableValueId>
+export const FilterableValueId = v.enum([
   'type',
   'stack',
   'stage',
@@ -19,6 +19,7 @@ export const FilterableValueId = z.enum([
   'validatedBy',
   'infrastructure',
   'vm',
+  'other',
 ])
 
 export const filterIdToLabel: Record<FilterableValueId, string> = {
@@ -32,6 +33,7 @@ export const filterIdToLabel: Record<FilterableValueId, string> = {
   validatedBy: 'Validated by',
   infrastructure: 'Infrastructure',
   vm: 'VM',
+  other: 'Other properties',
 }
 
 export const filterIdToValues: Record<FilterableValueId, string> = {
@@ -45,6 +47,7 @@ export const filterIdToValues: Record<FilterableValueId, string> = {
   validatedBy: 'validators',
   infrastructure: 'infras',
   vm: 'VMs',
+  other: 'other',
 }
 
 export const emptyStateLabel = (filterId: FilterableValueId | undefined) => {

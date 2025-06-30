@@ -26,6 +26,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -115,10 +116,11 @@ export const degate3: ScalingProject = {
     purposes: ['Exchange', 'NFT'],
     stack: 'Loopring',
     category: 'ZK Rollup',
-
+    headerWarning:
+      'A system **shutdown** [was triggered](https://etherscan.io/tx/0xa3a340cfebbdbf9999e61cc3838f67d21610944704f9b2546e2fe95435134d5c#eventlog) on 2025-06-27. This irreversible action freezes the L2 state and allows users to withdraw their funds with the help of the operator. Degate announced that they [will withdraw all funds automatically](https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51). If the operator does not cooperate, a withdrawal mode can still be activated, allowing users to withdraw their funds on their own by providing merkle proofs.',
     links: {
       websites: ['https://degate.com/'],
-      apps: ['https://app.degate.com/'],
+      bridges: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
@@ -231,11 +233,11 @@ export const degate3: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -472,6 +474,14 @@ export const degate3: ScalingProject = {
   },
   milestones: [
     {
+      title: 'Shutdown mode activated',
+      url: 'https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51',
+      date: '2025-06-26T00:00:00Z',
+      description:
+        'Shutdown mode prevents further state updates and allows users to withdraw their funds.',
+      type: 'general',
+    },
+    {
       title: 'DeGate Mainnet Beta Redeploy',
       url: 'https://medium.com/degate/degate-mainnet-beta-redeployment-oct-2023-e07c8eeaec4c',
       date: '2023-11-13T00:00:00Z',
@@ -480,4 +490,5 @@ export const degate3: ScalingProject = {
       type: 'incident',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

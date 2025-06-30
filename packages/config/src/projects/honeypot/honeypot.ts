@@ -16,6 +16,7 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('honeypot')
 
@@ -32,18 +33,18 @@ export const honeypot: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    name: 'Honeypot (Cartesi)',
-    shortName: 'Honeypot',
+    name: 'Cartesi Authority Honeypot',
+    shortName: 'Honeypot Authority',
     slug: 'cartesi-honeypot',
     stack: 'Cartesi Rollups',
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
 
     links: {
       websites: ['https://cartesi.io/'],
-      apps: ['https://explorer.cartesi.io/stake'],
+      bridges: ['https://explorer.cartesi.io/stake'],
       documentation: ['https://docs.cartesi.io/cartesi-rollups/'],
       explorers: ['https://cartesiscan.io/', 'https://explorer.cartesi.io/'],
       repositories: ['https://github.com/cartesi/honeypot'],
@@ -72,15 +73,15 @@ export const honeypot: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
         stateVerificationOnL1: {
           satisfied: false,
           message: 'There is no onchain fraud proof system.',
           mode: 'replace',
         },
         fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: null,
@@ -243,4 +244,5 @@ export const honeypot: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

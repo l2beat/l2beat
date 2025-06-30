@@ -22,7 +22,7 @@ export const apechain: ScalingProject = orbitStackL3({
       'ApeChain is an Optimium on Arbitrum, built on the Orbit stack. It is built to support the ApeCoin ecosystem. Powered by $APE as gas token it aims to host assets and games of the ApeCoin ecosystem with development and growth led by Horizen Labs.',
     links: {
       websites: ['https://apechain.com/'],
-      apps: ['https://apechain.com/portal'],
+      bridges: ['https://apechain.com/portal'],
       documentation: ['https://docs.apechain.com/'],
       explorers: ['https://apescan.io/'],
       socialMedia: [

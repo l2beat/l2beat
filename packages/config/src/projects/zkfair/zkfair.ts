@@ -21,6 +21,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { PolygoncdkDAC } from '../../templates/polygoncdk-template'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -124,15 +125,15 @@ export const zkfair: ScalingProject = {
     slug: 'zkfair',
     purposes: ['Universal'],
     redWarning:
-      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/address/0x4ea1f0f05e7484ee85a97303dc88c2df4288df3e). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
+      'The canonical bridge escrow was upgraded to an unverified implementation and user funds were moved to [an EOA, then deposited to AAVE](https://etherscan.io/tx/0x0f1ca15e92757dc08e1ac62ef5cfc45a37735c589c655f521f0fd99fb0d5a5d2). They were subsequently withdrawn and [moved to a new contract](https://etherscan.io/tx/0x59304b6420a556c303b4fbcc0608c14d57d06b7aa13366f3851b3be3d6e167ed). Related [tweet by the ZKFair team](https://x.com/ZKFCommunity/status/1910329561105252694).',
     warning:
       'The forced transaction mechanism is currently disabled. The project claims to use CelestiaDA but smart contracts on L1 use DAC. Arbitrary messaging passing is removed from the bridge.',
     description: 'ZKFair is a Validium based on Polygon CDK and Celestia DA.',
-    category: 'Validium',
+    category: 'Other',
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://zkfair.io/'],
-      apps: ['https://wallet.zkfair.io/'],
+      bridges: ['https://wallet.zkfair.io/'],
       documentation: ['https://docs.zkfair.io/'],
       explorers: ['https://scan.zkfair.io/'],
       repositories: ['https://github.com/ZKFair'],
@@ -386,4 +387,5 @@ export const zkfair: ScalingProject = {
       membersCount: membersCountDAC,
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

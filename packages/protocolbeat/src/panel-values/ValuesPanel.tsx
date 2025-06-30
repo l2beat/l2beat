@@ -4,6 +4,9 @@ import { getProject } from '../api/api'
 import type { ApiAddressEntry, ApiProjectContract } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { findSelected } from '../common/findSelected'
+import { ActionNeededState } from '../components/ActionNeededState'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { isReadOnly } from '../config'
 import { usePanelStore } from '../store/store'
 import { AbiDisplay } from './AbiDisplay'
@@ -24,17 +27,17 @@ export function ValuesPanel() {
   const selectedAddress = usePanelStore((state) => state.selected)
 
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   const selected = findSelected(response.data.entries, selectedAddress)
 
   return (
     <div className="h-full w-full overflow-x-auto">
-      {!selected && <div>Select a contract</div>}
+      {!selected && <ActionNeededState message="Select a contract" />}
       {selected && (
         <Display
           selected={selected}
@@ -76,7 +79,7 @@ function Display({
   return (
     <>
       <div id={selected.address} className="mb-2 px-5 text-lg">
-        <div className="flex items-center">
+        <div className="flex flex-wrap items-center">
           <div className="flex items-center gap-1 font-bold">
             <AddressIcon type={selected.type} />
             {selected.name ?? 'Unknown'}
@@ -145,7 +148,7 @@ function Display({
       </div>
       {'implementationNames' in selected && selected.implementationNames && (
         <Folder title="Implementation names" collapsed={true}>
-          <div className="bg-coffee-900 px-5 py-2 font-mono text-sm">
+          <div className="overflow-x-auto bg-coffee-900 px-5 py-2 font-mono text-sm">
             {Object.entries(selected.implementationNames).map(
               ([key, value]) => (
                 <div key={key} className="mb-1 flex items-center gap-2">
@@ -160,7 +163,7 @@ function Display({
 
       {selected.referencedBy.length > 0 && (
         <Folder title="Referenced by">
-          <ol className="bg-coffee-900 py-0.5 pl-5">
+          <ol className="overflow-x-auto bg-coffee-900 py-0.5 pl-5">
             {selected.referencedBy.map((value) => (
               <li key={value.address}>
                 <AddressDisplay value={value} />
@@ -261,7 +264,7 @@ function WithHeadline(props: {
   children: React.ReactNode
 }) {
   return (
-    <div className="mb-1 flex flex-col font-mono text-xs">
+    <div className="mb-1 flex flex-col overflow-x-auto font-mono text-xs">
       <span className="text-coffee-400">{props.headline}</span>
       {props.children}
     </div>

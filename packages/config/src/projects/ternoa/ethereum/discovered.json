@@ -1,8 +1,8 @@
 {
   "name": "ternoa",
   "chain": "ethereum",
-  "blockNumber": 22208591,
-  "configHash": "0xf879cf6288c8d9297ba29c56adfa3cac07869a2d6966d391d16d5dbf5a6eef29",
+  "blockNumber": 22774947,
+  "configHash": "0x44a99720b40bd534dcc5ac935254bdd66c22df6013973fbc1088528645e6d1cf",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -107,7 +107,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xf26602fe5f0d1170faf995b0e5711551d1177f7addb180fc7b60b954db66cae3",
+        "lastAccInputHash": "0xc9f73b70afccd6f6f76a040f097e467bee3ee45c6dbfebc8da935ae246b4b523",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",

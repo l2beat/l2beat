@@ -58,15 +58,6 @@ model AggregatedL2Cost {
 }
 
 model DataAvailability {
-  timestamp DateTime @db.Timestamp(6)
-  daLayer   String   @db.VarChar(255)
-  projectId String   @db.VarChar(255)
-  totalSize BigInt
-
-  @@id([timestamp, daLayer, projectId])
-}
-
-model DataAvailability2 {
   timestamp       DateTime @db.Timestamp(6)
   daLayer         String   @db.VarChar(255)
   projectId       String   @db.VarChar(255)
@@ -140,6 +131,16 @@ model Liveness {
   @@index([configurationId, timestamp])
 }
 
+model RealTimeLiveness {
+  configurationId String   @db.VarChar(12)
+  txHash          String   @db.VarChar(255)
+  timestamp       DateTime @db.Timestamp(6)
+  blockNumber     Int
+
+  @@id([configurationId, txHash])
+  @@index([configurationId, timestamp])
+}
+
 model UpdateMonitor {
   projectId         String    @db.VarChar(255)
   blockNumber       Int
@@ -203,6 +204,16 @@ model Anomaly {
   duration  Int
 
   @@id([timestamp, projectId, subtype])
+}
+
+model RealTimeAnomaly {
+  start     DateTime  @db.Timestamp(6)
+  projectId String    @db.VarChar(255)
+  subtype   String    @db.VarChar(255)
+  status    String    @db.VarChar(255)
+  end       DateTime? @db.Timestamp(6)
+
+  @@id([start, projectId, subtype])
 }
 
 model AnomalyStats {
@@ -287,11 +298,13 @@ model ProjectValue {
 }
 
 model UpdateDiff {
-  projectId String   @db.VarChar(255)
-  chain     String   @db.VarChar(255)
-  address   String   @db.VarChar(255)
-  type      String   @db.VarChar(255)
-  timestamp DateTime @db.Timestamp(6)
+  projectId           String   @db.VarChar(255)
+  chain               String   @db.VarChar(255)
+  address             String   @db.VarChar(255)
+  type                String   @db.VarChar(255)
+  timestamp           DateTime @db.Timestamp(6)
+  diffBaseBlockNumber Int      @default(2147483647)
+  diffHeadBlockNumber Int      @default(2147483647)
 
   @@unique([projectId, address, type, chain])
 }

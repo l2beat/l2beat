@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "ethereum",
   "blockNumber": 22567749,
-  "configHash": "0xcf77d40dbb555557b70c100c1b8df67982eb1d59eb70ccb063ab9f372490e506",
+  "configHash": "0xa4bc6c9ecb4b4b8bdc0e98f047f65dd779f4d5aba496839d222decd004b89602",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -446,7 +446,7 @@
       "values": {
         "$immutable": true,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
-        "timeSinceLastL2beatInteraction": "14d 17h",
+        "timeSinceLastL2beatInteraction": "33d 22h",
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -468,6 +468,7 @@
       "sinceTimestamp": 1624400997,
       "sinceBlock": 12686757,
       "values": {
+        "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$immutable": false,
         "$implementation": "0x5D5a095665886119693F0B41d8DFeE78da033e8B",
         "$pastUpgrades": [
@@ -764,6 +765,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x323dFC63c9B83CB83f40325AaB74b245937cbdF0",
           "role": "admin"
         },
@@ -862,6 +868,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
@@ -1665,21 +1679,23 @@
       "address": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
       "type": "Contract",
       "sourceHashes": [
+        "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101",
         "0xa58ba822ad1db27a90c11078dd6ececa7d90a2f12794716b21e0ffaa038ff101"
       ],
-      "proxyType": "immutable",
+      "proxyType": "EIP1167 proxy",
       "description": "Collecting sequencer, base- and L1 fees from L2.",
       "ignoreInWatchMode": ["getNextSequenceId"],
       "sinceTimestamp": 1672938575,
       "sinceBlock": 16341988,
       "values": {
-        "$immutable": true,
+        "$implementation": "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E",
         "getNextSequenceId": 125,
         "initialized": true,
         "safeMode": false
       },
       "implementationNames": {
-        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "WalletSimple"
+        "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa": "WalletSimple",
+        "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E": "WalletSimple"
       }
     },
     {
@@ -3034,6 +3050,24 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ],
+    "0xE8E847cf573Fc8ed75621660A36AffD18c543d7E": [
+      "event BatchTransacted(address msgSender, address otherSigner, bytes32 operation)",
+      "event BatchTransfer(address sender, address recipient, uint256 value)",
+      "event Deposited(address from, uint256 value, bytes data)",
+      "event SafeModeActivated(address msgSender)",
+      "event Transacted(address msgSender, address otherSigner, bytes32 operation, address toAddress, uint256 value, bytes data)",
+      "function activateSafeMode()",
+      "function flushForwarderTokens(address forwarderAddress, address tokenContractAddress)",
+      "function getNextSequenceId() view returns (uint256)",
+      "function init(address[] allowedSigners)",
+      "function initialized() view returns (bool)",
+      "function isSigner(address signer) view returns (bool)",
+      "function safeMode() view returns (bool)",
+      "function sendMultiSig(address toAddress, uint256 value, bytes data, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function sendMultiSigBatch(address[] recipients, uint256[] values, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function sendMultiSigToken(address toAddress, uint256 value, address tokenContractAddress, uint256 expireTime, uint256 sequenceId, bytes signature)",
+      "function signers(address) view returns (bool)"
+    ],
     "0xF027F4A985560fb13324e943edf55ad6F1d15Dc1": [
       "constructor(address _oracle)",
       "error InvalidExitedValue()",
@@ -3070,5 +3104,5 @@
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x4a8d1882412b23121a8139c5a95ea51ce7e9ab86a3460f114ec05817a0732a7b"
+  "permissionsConfigHash": "0xf0e8e8accede9a0855017ab16e6a5d7795709bfd2f0fe74b02ab1dc0271c74af"
 }

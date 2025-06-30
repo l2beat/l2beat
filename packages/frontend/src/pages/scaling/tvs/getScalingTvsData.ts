@@ -5,11 +5,16 @@ import type { ICache } from '~/server/cache/ICache'
 import { getScalingTvsEntries } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getScalingTvsData(
-  req: Request,
+  req: Request<
+    unknown,
+    unknown,
+    unknown,
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview' }
+  >,
   manifest: Manifest,
   cache: ICache,
 ): Promise<RenderData> {
@@ -21,7 +26,7 @@ export async function getScalingTvsData(
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },
-      getCachedData,
+      () => getCachedData(cache, req.query.tab),
     ),
   ])
 
@@ -46,22 +51,44 @@ export async function getScalingTvsData(
   }
 }
 
-async function getCachedData() {
-  const helpers = getExpressHelpers()
-  const [entries] = await Promise.all([
+async function getCachedData(
+  cache: ICache,
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview',
+) {
+  const [entries, queryState] = await Promise.all([
     getScalingTvsEntries(),
-    helpers.tvs.chart.prefetch({
-      filter: {
-        type: 'rollups',
+    cache.get(
+      {
+        key: ['scaling', 'tvs', 'data', 'query-state', tab],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
       },
-      range: '1y',
-      excludeAssociatedTokens: false,
-      previewRecategorisation: false,
-    }),
+      () => getQueryState(tab),
+    ),
   ])
 
   return {
     entries,
-    queryState: helpers.dehydrate(),
+    queryState,
   }
+}
+
+async function getQueryState(
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview',
+) {
+  const helpers = getSsrHelpers()
+
+  // Skip prefetching for underReview tab as it doesn't have chart data
+  if (tab === 'underReview') {
+    return helpers.dehydrate()
+  }
+
+  await helpers.tvs.chart.prefetch({
+    filter: {
+      type: tab,
+    },
+    range: '1y',
+    excludeAssociatedTokens: false,
+  })
+  return helpers.dehydrate()
 }

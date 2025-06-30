@@ -1,46 +1,45 @@
-import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
 import type { BlipSexp } from '../../blip/type'
 import { validateBlip } from '../../blip/validateBlip'
 import { UserHandlerDefinition } from '../handlers/user'
 
-export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
+export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = v.enum(['HIGH', 'LOW'])
 
-export type StructureContractField = z.infer<typeof StructureContractField>
-export const StructureContractField = z
+export type StructureContractField = v.infer<typeof StructureContractField>
+export const _StructureContractField = {
+  handler: UserHandlerDefinition.optional(),
+  template: v.string().optional(),
+  copy: v.string().optional(),
+  edit: v
+    .unknown()
+    .check((v): v is BlipSexp => validateBlip(v))
+    .optional(),
+}
+export const StructureContractField = v
+  .object(_StructureContractField)
+  .check(
+    (data) => data.handler === undefined || data.copy === undefined,
+    'handler and copy cannot both be defined at the same time. They are mutually exclusive.',
+  )
+
+export type DiscoveryCustomType = v.infer<typeof DiscoveryCustomType>
+export const DiscoveryCustomType = v
   .object({
-    handler: z.optional(UserHandlerDefinition),
-    template: z.string().optional(),
-    copy: z.string().optional(),
-    edit: z
-      .unknown()
-      .refine(validateBlip)
-      .transform((v): BlipSexp => v as BlipSexp)
-      .optional(),
+    typeCaster: v.string().optional(),
+    arg: v.record(v.string(), v.union([v.string(), v.number()])).optional(),
+    description: v.string().optional(),
+    severity: ContractFieldSeverity.optional(),
   })
-  .refine((data) => data.handler === undefined || data.copy === undefined, {
-    message:
-      'handler and copy cannot both be defined at the same time. They are mutually exclusive.',
-    path: ['handler', 'copy'],
-  })
+  .check(
+    (d) => !(d.arg !== undefined && d.typeCaster === undefined),
+    'typeCaster must be defined if arg is defined',
+  )
 
-export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
-export const DiscoveryCustomType = z
-  .object({
-    typeCaster: z.optional(z.string()),
-    arg: z.optional(z.record(z.string(), z.union([z.string(), z.number()]))),
-    description: z.optional(z.string()),
-    severity: z.optional(ContractFieldSeverity),
-  })
-  .refine((d) => !(d.arg !== undefined && d.typeCaster === undefined), {
-    message: 'typeCaster must be defined if arg is defined',
-    path: ['typeCaster'],
-  })
-
-export type ManualProxyType = z.infer<typeof ManualProxyType>
-export const ManualProxyType = z.enum([
+export type ManualProxyType = v.infer<typeof ManualProxyType>
+export const ManualProxyType = v.enum([
   'new Arbitrum proxy',
   'call implementation proxy',
   'zkSync Lite proxy',
@@ -55,37 +54,44 @@ export const ManualProxyType = z.enum([
   'immutable',
 ])
 
-export type StructureContract = z.infer<typeof StructureContract>
-export const StructureContract = z.object({
-  extends: z.optional(z.string()),
-  canActIndependently: z.optional(z.boolean()),
-  ignoreDiscovery: z.boolean().default(false),
-  proxyType: z.optional(ManualProxyType),
-  ignoreInWatchMode: z.optional(z.array(z.string())),
-  ignoreMethods: z.array(z.string()).default([]),
-  ignoreRelatives: z.array(z.string()).default([]),
-  fields: z.record(z.string(), StructureContractField).default({}),
-  methods: z.record(z.string(), z.string()).default({}),
-  manualSourcePaths: z.record(z.string()).default({}),
-  types: z.record(z.string(), DiscoveryCustomType).default({}),
-})
+export type StructureContract = v.infer<typeof StructureContract>
+export const _StructureContract = {
+  extends: v.string().optional(),
+  canActIndependently: v.boolean().optional(),
+  ignoreDiscovery: v.boolean().default(false),
+  proxyType: ManualProxyType.optional(),
+  ignoreInWatchMode: v.array(v.string()).optional(),
+  ignoreMethods: v.array(v.string()).default([]),
+  ignoreRelatives: v.array(v.string()).default([]),
+  fields: v.record(v.string(), StructureContractField).default({}),
+  methods: v.record(v.string(), v.string()).default({}),
+  manualSourcePaths: v.record(v.string(), v.string()).default({}),
+  types: v.record(v.string(), DiscoveryCustomType).default({}),
+}
+export const StructureContract = v.object(_StructureContract)
 
-export type StructureConfig = z.infer<typeof StructureConfig>
-export const StructureConfig = z.object({
-  name: z.string().min(1),
-  chain: z.string().min(1),
-  initialAddresses: z.array(stringAs(EthereumAddress)),
-  import: z.optional(z.array(z.string())),
-  maxAddresses: z.number().positive().default(100),
-  maxDepth: z.number().default(Infinity),
-  overrides: z.optional(
-    z.record(
-      z.string().refine((key) => EthereumAddress.check(key), {
-        message: 'Invalid Ethereum address',
-      }),
+export type StructureConfig = v.infer<typeof StructureConfig>
+export const _StructureConfig = {
+  initialAddresses: v.array(v.string().transform(EthereumAddress)),
+  maxAddresses: v
+    .number()
+    .check((x) => x >= 0)
+    .default(100),
+  maxDepth: v.number().default(Infinity),
+  overrides: v
+    .record(
+      v.string().transform((v) => EthereumAddress(v).toString()),
       StructureContract,
-    ),
-  ),
-  sharedModules: z.array(z.string()).default([]),
-  types: z.optional(z.record(z.string(), DiscoveryCustomType)),
+    )
+    .optional(),
+  sharedModules: v.array(v.string()).default([]),
+  types: v.record(v.string(), DiscoveryCustomType).optional(),
+}
+// NOTE(radomsk): Big hack, shouldn't be like this
+export const StructureConfig = v.object({
+  name: v.string().check((v) => v.length >= 1),
+  chain: v.string().check((v) => v.length >= 1),
+  archived: v.boolean().optional(),
+  import: v.array(v.string()).optional(),
+  ..._StructureConfig,
 })

@@ -27,7 +27,7 @@ export const ebichain: ScalingProject = orbitStackL2({
       'Ebi Chain is a Layer-2 hosting the Ebi.xyz platform, a limit order book decentralised platform for trading perpetual futures.',
     links: {
       websites: ['https://ebi.xyz/en/home/'],
-      apps: ['https://ebi.xyz/en/trade/contract/'],
+      bridges: ['https://ebi.xyz/en/trade/contract/'],
       documentation: ['https://docs.ebi.xyz/ebi.xyz-overview'],
       explorers: ['https://explorer.ebi.xyz/'],
       socialMedia: [

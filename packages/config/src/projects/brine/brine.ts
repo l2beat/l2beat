@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('brine')
@@ -65,11 +66,11 @@ export const brine: ScalingProject = {
     slug: 'tanx',
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
-    category: 'Validium',
+    category: 'Other',
     stack: 'StarkEx',
     links: {
       websites: ['https://tanx.fi/'],
-      apps: ['https://trade.tanx.fi/'],
+      bridges: ['https://trade.tanx.fi/'],
       documentation: ['https://docs.tanx.fi/'],
       socialMedia: [
         'https://twitter.com/tanXfinance',
@@ -154,4 +155,5 @@ export const brine: ScalingProject = {
     },
   ],
   customDa: StarkexDAC({ discovery }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

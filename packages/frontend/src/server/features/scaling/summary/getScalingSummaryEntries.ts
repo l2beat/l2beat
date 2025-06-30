@@ -119,7 +119,7 @@ export function getScalingSummaryEntry(
       syncWarning: activitySyncWarning,
     }),
     stage:
-      project.scalingInfo.isOther || !project.scalingStage
+      project.scalingInfo.type === 'Other' || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     capability: project.scalingInfo.capability,

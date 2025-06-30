@@ -15,7 +15,7 @@ export const payy: ScalingProject = upcomingL2({
     category: 'ZK Rollup',
     links: {
       websites: ['https://payy.network/'],
-      apps: ['https://payy.link/download'],
+      bridges: ['https://payy.link/download'],
       documentation: ['https://payy.network/docs'],
       explorers: ['https://payy.network/explorer'],
       repositories: ['https://github.com/polybase/payy'],

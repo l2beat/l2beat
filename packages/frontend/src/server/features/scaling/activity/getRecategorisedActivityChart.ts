@@ -4,7 +4,6 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { isProjectOther } from '../utils/isProjectOther'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -18,7 +17,6 @@ export type RecategorisedActivityChartData = {
     timestamp: number,
     rollupsCount: number,
     validiumsAndOptimiumsCount: number,
-    othersCount: number,
     ethereumCount: number,
   ][]
   syncWarning: string | undefined
@@ -32,59 +30,43 @@ export type RecategorisedActivityChartData = {
 export async function getRecategorisedActivityChart(
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: boolean,
 ): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
-    return getMockRecategorisedActivityChart(
-      filter,
-      range,
-      previewRecategorisation,
-    )
+    return getMockRecategorisedActivityChart(filter, range)
   }
 
   const db = getDb()
   const projects = (await getActivityProjects()).filter(
-    createActivityProjectsFilter(filter, previewRecategorisation),
+    createActivityProjectsFilter(filter),
   )
 
   const rollups = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'ZK Rollup' ||
-          p.scalingInfo.type === 'Optimistic Rollup') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        p.scalingInfo.type === 'ZK Rollup' ||
+        p.scalingInfo.type === 'Optimistic Rollup',
     )
     .map((p) => p.id)
   const validiumsAndOptimiums = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'Validium' ||
-          p.scalingInfo.type === 'Optimium') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium',
     )
-    .map((p) => p.id)
-  const others = projects
-    .filter((p) => isProjectOther(p.scalingInfo, previewRecategorisation))
     .map((p) => p.id)
 
   const adjustedRange = getFullySyncedActivityRange(range)
-  const [
-    rollupsEntries,
-    validiumsAndOptimiumsEntries,
-    othersEntires,
-    ethereumEntries,
-  ] = await Promise.all([
-    await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      validiumsAndOptimiums,
-      adjustedRange,
-    ),
-    await db.activity.getByProjectsAndTimeRange(others, adjustedRange),
-    await db.activity.getByProjectsAndTimeRange(
-      [ProjectId.ETHEREUM],
-      adjustedRange,
-    ),
-  ])
+  const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
+    await Promise.all([
+      await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
+      await db.activity.getByProjectsAndTimeRange(
+        validiumsAndOptimiums,
+        adjustedRange,
+      ),
+      await db.activity.getByProjectsAndTimeRange(
+        [ProjectId.ETHEREUM],
+        adjustedRange,
+      ),
+    ])
 
   const syncedUntil = adjustedRange[1]
   const syncWarning = getActivitySyncWarning(syncedUntil)
@@ -93,14 +75,12 @@ export async function getRecategorisedActivityChart(
     aggregateActivityRecords(rollupsEntries) ?? {}
   const aggregatedValidiumsAndOptimiumsEntries =
     aggregateActivityRecords(validiumsAndOptimiumsEntries) ?? {}
-  const aggregatedOthersEntries = aggregateActivityRecords(othersEntires) ?? {}
   const aggregatedEthereumEntries =
     aggregateActivityRecords(ethereumEntries, true) ?? {}
 
   if (
     Object.values(aggregatedRollupsEntries).length === 0 &&
     Object.values(aggregatedValidiumsAndOptimiumsEntries).length === 0 &&
-    Object.values(aggregatedOthersEntries).length === 0 &&
     Object.values(aggregatedEthereumEntries).length === 0
   ) {
     return { data: [], syncWarning, syncedUntil: syncedUntil }
@@ -109,7 +89,6 @@ export async function getRecategorisedActivityChart(
   const startTimestamp = Math.min(
     ...Object.keys(aggregatedRollupsEntries).map(Number),
     ...Object.keys(aggregatedValidiumsAndOptimiumsEntries).map(Number),
-    ...Object.keys(aggregatedOthersEntries).map(Number),
     ...Object.keys(aggregatedEthereumEntries).map(Number),
   )
   const timestamps = generateTimestamps(
@@ -117,25 +96,22 @@ export async function getRecategorisedActivityChart(
     'daily',
   )
 
-  const data: [number, number, number, number, number][] = timestamps.map(
+  const data: [number, number, number, number][] = timestamps.map(
     (timestamp) => {
       const rollupsEntry = aggregatedRollupsEntries[timestamp]
       const validiumsAndOptimiumsEntry =
         aggregatedValidiumsAndOptimiumsEntries[timestamp]
-      const othersEntry = aggregatedOthersEntries[timestamp]
       const ethereumEntry = aggregatedEthereumEntries[timestamp]
 
       const rollupsCount = rollupsEntry?.uopsCount ?? 0
       const validiumsAndOptimiumsCount =
         validiumsAndOptimiumsEntry?.uopsCount ?? 0
-      const othersCount = othersEntry?.uopsCount ?? 0
       const ethereumCount = ethereumEntry?.ethereumUopsCount ?? 0
 
       return [
         +timestamp,
         rollupsCount,
         validiumsAndOptimiumsCount,
-        othersCount,
         ethereumCount,
       ]
     },
@@ -150,7 +126,6 @@ export async function getRecategorisedActivityChart(
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
-  __: boolean,
 ): RecategorisedActivityChartData {
   const [from, to] = getRangeWithMax(timeRange, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
@@ -160,13 +135,7 @@ function getMockRecategorisedActivityChart(
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
   return {
-    data: timestamps.map((timestamp) => [
-      +timestamp,
-      15000,
-      11000,
-      9000,
-      12000,
-    ]),
+    data: timestamps.map((timestamp) => [+timestamp, 15000, 11000, 12000]),
     syncWarning: getActivitySyncWarning(adjustedRange[1]),
     syncedUntil: adjustedRange[1],
   }

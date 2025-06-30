@@ -1,15 +1,15 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { rangeToDays } from '~/utils/range/rangeToDays'
 
-export const LivenessChartTimeRange = z.union([
-  z.literal('7d'),
-  z.literal('30d'),
-  z.literal('90d'),
-  z.literal('180d'),
-  z.literal('1y'),
-  z.literal('max'),
-])
-export type LivenessChartTimeRange = z.infer<typeof LivenessChartTimeRange>
+export const LivenessChartTimeRange = v.union([
+  v.literal('7d'),
+  v.literal('30d'),
+  v.literal('90d'),
+  v.literal('180d'),
+  v.literal('1y'),
+  v.literal('max'),
+] as const)
+export type LivenessChartTimeRange = v.infer<typeof LivenessChartTimeRange>
 
 export function rangeToResolution(range: LivenessChartTimeRange) {
   const days = rangeToDays(range)

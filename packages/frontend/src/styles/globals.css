@@ -43,13 +43,14 @@
     --chart-cyan: 180deg 50.2% 42.5%;
     --chart-yellow: 44.9deg 100% 33.5%;
     --chart-emerald: 151deg 90% 48%;
+    --chart-fuchsia: 284deg 86.6% 67.8%;
+    --chart-lime: 97.7deg 78.8% 61.2%;
+    --chart-sky: 200deg 91.1% 64.9%;
 
     --chart-stacked-pink: 320deg 100% 63.7%;
     --chart-stacked-yellow: 45deg 100% 51.4%;
     --chart-stacked-purple: 266deg 57.7% 52.7%;
     --chart-stacked-blue: 220deg 100% 57.5%;
-
-    --chart-da-celestia: 284deg 100% 78%;
 
     /* Chart gradients */
 
@@ -70,6 +71,9 @@
     --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
 
     --chart-emerald-fill-gradient: 151deg 90.2% 64.1%;
+    --chart-lime-fill-gradient: 98.1deg 100% 44.5%;
+    --chart-fuchsia-fill-gradient: 302deg 100% 68.6%;
+    --chart-sky-fill-gradient: 200deg 91.1% 64.9%;
   }
 
   .dark {
@@ -98,19 +102,20 @@
     --row-highlight-no-opacity: 281deg 51.6% 25.1%;
 
     /* Chart colors */
-    --chart-ethereum: 212deg 100% 66.3%;
+    --chart-ethereum: 212deg 100% 56.1%;
     --chart-ethereum-secondary: 223deg 69% 50.6%;
     --chart-pink: 284deg 87.1% 75.7%;
     --chart-cyan: 190deg 73.6% 55.5%;
     --chart-yellow: 54.2deg 70.9% 56.9%;
     --chart-emerald: 151deg 90.2% 48%;
+    --chart-fuchsia: 285deg 62.7% 52.7%;
+    --chart-lime: 111deg 100% 37.8%;
+    --chart-sky: 200deg 91.6% 72%;
 
     --chart-stacked-pink: 320deg 100% 63.7%;
     --chart-stacked-yellow: 45deg 100% 51.4%;
     --chart-stacked-purple: 266deg 57.7% 52.7%;
     --chart-stacked-blue: 220deg 100% 57.5%;
-
-    --chart-da-celestia: 285deg 62.7% 52.7%;
 
     /* Chart gradients */
 
@@ -131,6 +136,9 @@
     --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
 
     --chart-emerald-fill-gradient: 163deg 93.5% 24.3%;
+    --chart-lime-fill-gradient: 97.8deg 96.7% 64.3%;
+    --chart-fuchsia-fill-gradient: 313deg 40.1% 38.6%;
+    --chart-sky-fill-gradient: 200deg 91.6% 72%;
   }
 }
 
@@ -226,6 +234,10 @@
   .scrollbar-hide {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+
+  .word-break-word {
+    word-break: break-word;
   }
 }
 

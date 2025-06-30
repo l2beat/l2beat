@@ -39,7 +39,7 @@ export async function updateDiffHistory(
 ) {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
-  const chains = configReader.readAllChainsForProject(projectName)
+  const chains = configReader.readAllDiscoveredChainsForProject(projectName)
   for (const chain of chains) {
     await updateDiffHistoryForChain(
       configReader,

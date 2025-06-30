@@ -2,7 +2,7 @@
   "name": "treasure",
   "chain": "ethereum",
   "blockNumber": 22593197,
-  "configHash": "0x1346e863c60841daee416e66eda39fc8431f1910dcca062702cdeb04070c4b66",
+  "configHash": "0x75d082b6aff7aef62346afe12cd803f308fdb240ea1688dae5896a19466dcef5",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -156,7 +156,7 @@
       "name": "TreasureZkEvm",
       "address": "0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/Diamond",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0xbceaa498ea422a98ec91f01d7b76774610e543c9efd855141de933065f32b308"
@@ -468,7 +468,7 @@
       "name": "ValidiumL1DAValidator",
       "address": "0x907b30407249949521Bf0c89A43558dae200146A",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "template": "shared-zk-stack/ValidiumL1DAValidator",
       "sourceHashes": [
         "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
       ],
@@ -530,7 +530,7 @@
       "name": "Verifier",
       "address": "0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5",
       "type": "Contract",
-      "template": "shared-zk-stack/Verifier",
+      "template": "shared-zk-stack/old/Verifier",
       "sourceHashes": [
         "0xac062c888d75a5e5685f3daea3d381ad10133a719da8fe05d01ec88eca972104"
       ],
@@ -960,10 +960,10 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
+    "shared-zk-stack/old/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
-    "shared-zk-stack/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0x2ae4f32d85a544f19540fbbb5f9b1a9db4a215e13f7304dd34f49ed25da43c18"
 }

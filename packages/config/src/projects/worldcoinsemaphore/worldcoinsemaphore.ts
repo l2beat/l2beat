@@ -21,7 +21,7 @@ export const worldcoinsemaphore: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'Anonymity set inclusion checker for the Worldcoin network.',

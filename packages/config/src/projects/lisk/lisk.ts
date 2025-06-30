@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -14,9 +14,6 @@ export const lisk: ScalingProject = opStackL2({
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -24,7 +21,10 @@ export const lisk: ScalingProject = opStackL2({
       'Lisk is an OP stack rollup on Ethereum that migrated from the L1 blockchain of the same name.',
     links: {
       websites: ['https://lisk.com/'],
-      apps: ['https://bridge.lisk.com/bridge/lisk', 'https://portal.lisk.com/'],
+      bridges: [
+        'https://bridge.lisk.com/bridge/lisk',
+        'https://portal.lisk.com/',
+      ],
       documentation: ['https://docs.lisk.com/'],
       explorers: ['https://blockscout.lisk.com/'],
       repositories: ['https://github.com/LiskHQ/lisk-node'],

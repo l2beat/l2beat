@@ -1,39 +1,39 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type FuelLatestBlockNumberResponse = z.infer<
+export type FuelLatestBlockNumberResponse = v.infer<
   typeof FuelLatestBlockNumberResponse
 >
-export const FuelLatestBlockNumberResponse = z.object({
-  data: z.object({
-    blocks: z.object({
-      nodes: z.array(
-        z.object({
-          height: z.string(),
+export const FuelLatestBlockNumberResponse = v.object({
+  data: v.object({
+    blocks: v.object({
+      nodes: v.array(
+        v.object({
+          height: v.string(),
         }),
       ),
     }),
   }),
 })
 
-export type FuelBlockResponse = z.infer<typeof FuelBlockResponse>
-export const FuelBlockResponse = z.object({
-  data: z.object({
-    block: z.object({
-      id: z.string(),
-      height: z.string(),
-      header: z.object({
-        time: z.string(),
+export type FuelBlockResponse = v.infer<typeof FuelBlockResponse>
+export const FuelBlockResponse = v.object({
+  data: v.object({
+    block: v.object({
+      id: v.string(),
+      height: v.string(),
+      header: v.object({
+        time: v.string(),
       }),
-      transactionIds: z.array(z.string()),
+      transactionIds: v.array(v.string()),
     }),
   }),
 })
 
-export type FuelError = z.infer<typeof FuelError>
-export const FuelError = z.object({
-  errors: z.array(
-    z.object({
-      message: z.string(),
+export type FuelError = v.infer<typeof FuelError>
+export const FuelError = v.object({
+  errors: v.array(
+    v.object({
+      message: v.string(),
     }),
   ),
 })

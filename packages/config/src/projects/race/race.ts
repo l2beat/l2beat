@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -12,18 +12,14 @@ export const race: ScalingProject = opStackL2({
   addedAt: UnixTime(1726563843), // 2024-09-17T09:04:03Z
   genesisTimestamp: UnixTime(1720421591),
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Race Network',
     slug: 'race',
     description:
       'Race Network is a Layer-2 designed for the tokenization and distribution of real-world assets (RWA).',
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://raceecosystem.com/'],
-      apps: [
+      bridges: [
         'https://bridge.race.foundation/',
         'https://raceecosystem.com/onboarding',
       ],

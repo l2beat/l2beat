@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { groupByTimestampAndDaLayerId } from './getDaThroughputChart'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 
 export async function getDaThroughputSummary() {
   if (env.MOCK) {
@@ -17,8 +18,8 @@ const getDaThroughputSummaryData = async () => {
   const db = getDb()
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - 7 * UnixTime.DAY
-  const throughput = await db.dataAvailability2.getByProjectIdsAndTimeRange(
-    ['ethereum', 'celestia', 'avail'],
+  const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
+    THROUGHPUT_ENABLED_DA_LAYERS,
     [from, to],
   )
   if (throughput.length === 0) {
@@ -34,11 +35,13 @@ const getDaThroughputSummaryData = async () => {
       ethereum: grouped[maxTimestamp]?.ethereum ?? 0,
       celestia: grouped[maxTimestamp]?.celestia ?? 0,
       avail: grouped[maxTimestamp]?.avail ?? 0,
+      eigenda: grouped[maxTimestamp]?.eigenda ?? 0,
     },
     data7dAgo: {
       ethereum: grouped[minTimestamp]?.ethereum ?? 0,
       celestia: grouped[minTimestamp]?.celestia ?? 0,
       avail: grouped[minTimestamp]?.avail ?? 0,
+      eigenda: grouped[minTimestamp]?.eigenda ?? 0,
     },
   }
 }
@@ -49,11 +52,13 @@ function getMockDaThroughputSummaryData(): ThroughputSummaryData {
       ethereum: 200000,
       celestia: 200000,
       avail: 200000,
+      eigenda: 200000,
     },
     data7dAgo: {
       ethereum: 100000,
       celestia: 100000,
       avail: 100000,
+      eigenda: 100000,
     },
   }
 }

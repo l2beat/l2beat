@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Diamond implementation code to initialize new ZK chains. Used to set their chainID.",
+  "category": "spam",
+  "ignoreMethods": [
+    "chainIndex",
+    "chainIndexToId",
+    "chainRegistered",
+    "l2BridgeAddress"
+  ],
+  "ignoreInWatchMode": ["sharedTree"]
+}

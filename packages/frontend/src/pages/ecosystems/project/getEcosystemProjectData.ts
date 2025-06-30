@@ -2,7 +2,7 @@ import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getEcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import { getExpressHelpers } from '~/trpc/server'
+import { getSsrHelpers } from '~/trpc/server'
 import type { Manifest } from '~/utils/Manifest'
 
 export async function getEcosystemProjectData(
@@ -10,7 +10,7 @@ export async function getEcosystemProjectData(
   slug: string,
   url: string,
 ): Promise<RenderData | undefined> {
-  const helpers = getExpressHelpers()
+  const helpers = getSsrHelpers()
   const [appLayoutProps, ecosystem] = await Promise.all([
     getAppLayoutProps(),
     getEcosystemEntry(slug),
@@ -28,7 +28,6 @@ export async function getEcosystemProjectData(
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
-      previewRecategorisation: false,
     }),
     helpers.activity.chart.prefetch({
       range: '1y',
@@ -36,7 +35,6 @@ export async function getEcosystemProjectData(
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),
       },
-      previewRecategorisation: false,
     }),
   ])
 

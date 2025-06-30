@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -12,7 +12,7 @@ export const mode: ScalingProject = opStackL2({
   addedAt: UnixTime(1706659200), // 2024-01-31T00:00:00Z
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Mode Network',
     shortName: 'Mode',
@@ -21,7 +21,7 @@ export const mode: ScalingProject = opStackL2({
       'Mode is an OP stack Optimistic Rollup building the AIFi economy. Their mission is to scale DeFi to billions of users through onchain agents and AI powered financial applications to build a more open, efficient, and inclusive financial future.',
     links: {
       websites: ['https://mode.network/'],
-      apps: ['https://app.mode.network/'],
+      bridges: ['https://app.mode.network/'],
       documentation: ['https://docs.mode.network/'],
       explorers: ['https://modescan.io'],
       socialMedia: [
@@ -31,9 +31,6 @@ export const mode: ScalingProject = opStackL2({
         'https://t.me/ModeNetworkOfficial',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   associatedTokens: ['MODE'],
@@ -77,7 +74,7 @@ export const mode: ScalingProject = opStackL2({
     minTimestamp: UnixTime(1710386375),
     genesisTimestamp: UnixTime(1700167583),
     lag: 0,
-    stateUpdate: 'analyze',
+    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'mode',

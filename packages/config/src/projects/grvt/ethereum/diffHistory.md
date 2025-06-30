@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x9fe4a2760fde78b7c7a51132877eb9031460e0b0
+Generated with discovered.json: 0xe09ef25bd8c07a30e61ee64128e2ae9afa7ad763
+
+# Diff at Wed, 25 Jun 2025 07:14:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593196
+- current block number: 22593196
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593196 (main branch discovery), not current.
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/ValidiumL1DAValidator"
++        "shared-zk-stack/ValidiumL1DAValidator"
+    }
+```
+
+```diff
+    contract GrvtZkEvm (0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0xe7ee278c07e1610e7f6a07ec3a2d33d887d0f348
 
 # Diff at Tue, 27 May 2025 08:30:34 GMT:
 

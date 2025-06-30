@@ -4315,6 +4315,34 @@
       "supply": "zero"
     },
     {
+      "name": "Plume",
+      "coingeckoId": "plume",
+      "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1",
+      "symbol": "PLUME",
+      "decimals": 18,
+      "deploymentTimestamp": 1723045703,
+      "coingeckoListingTimestamp": 1737417600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53623/large/plume-token.png?1736896935",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "name": "Plume USD",
+      "coingeckoId": "plume-usd",
+      "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "symbol": "pUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1733807339,
+      "coingeckoListingTimestamp": 1746662400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55542/large/pUSD-token.png?1746610746",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "pNetwork Token",
       "coingeckoId": "pnetwork",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
@@ -4896,7 +4924,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1725455483,
       "coingeckoListingTimestamp": 1734048000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/52721/large/sUSDS_Coin.png?1734086971",
       "chainId": 1,
       "source": "canonical",
@@ -7281,6 +7309,28 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991708,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -7656,6 +7706,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739992037,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 252,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -7798,6 +7870,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "Blockchain Capital Token",
+      "coingeckoId": "blockchain-capital",
+      "address": "0x57fD71a86522Dc06D6255537521886057c1772A3",
+      "symbol": "BCAP",
+      "decimals": 2,
+      "deploymentTimestamp": 1736864101,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/56040/large/bcap_logo_200.png?1748088291",
+      "chainId": 324,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Bridged USDC (zkSync)",
@@ -8013,6 +8099,20 @@
       "chainId": 324,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Private Credit Direct Deal0000031",
+      "coingeckoId": "tradable-na-rent-financing-platform-sstn",
+      "address": "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164",
+      "symbol": "PC0000031",
+      "decimals": 6,
+      "deploymentTimestamp": 1731618722,
+      "coingeckoListingTimestamp": 1748476800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66150/large/tradable.jpg?1748488921",
+      "chainId": 324,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Staked Frax Ether",
@@ -8473,6 +8573,28 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739992219,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 1135,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Stargate USD₮0 (Bridged)",
       "coingeckoId": "usdt0",
       "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
@@ -8708,6 +8830,28 @@
       "chainId": 1868,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991845,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "name": "Pipo",
@@ -10223,6 +10367,28 @@
       "supply": "zero"
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991629,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
       "coingeckoId": "prefrontal-cortex-convo-agent-by-virtuals",
       "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
@@ -10771,6 +10937,28 @@
         "bridges": [
           {
             "name": "XSwap.link"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991941,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
           }
         ]
       }
@@ -13206,6 +13394,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Bridged USDC (BOB)",
+      "coingeckoId": "usd-coin",
+      "address": "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0",
+      "symbol": "USDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1714403103,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 60808,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Fire Bitcoin",
       "coingeckoId": "ignition-fbtc",
       "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
@@ -13531,6 +13741,50 @@
         "bridges": [
           {
             "name": "Stargate v2 (Hydra mode)",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Bridged USDC (Stargate)",
+      "coingeckoId": "stargate-bridged-usdc-plume",
+      "address": "0x78adD880A697070c1e765Ac44D65323a0DcCE913",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1743091242,
+      "coingeckoListingTimestamp": 1749427200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/66243/large/USDC_Token.png?1748919033",
+      "chainId": 98866,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Plume USD",
+      "coingeckoId": "plume-usd",
+      "address": "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F",
+      "symbol": "pUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1741402843,
+      "coingeckoListingTimestamp": 1746662400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55542/large/pUSD-token.png?1746610746",
+      "chainId": 98866,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate v2",
             "slug": "stargatev2"
           }
         ]

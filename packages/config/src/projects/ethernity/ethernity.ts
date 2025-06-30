@@ -18,10 +18,9 @@ export const ethernity: ScalingProject = opStackL2({
     slug: 'epicchain',
     description:
       'Epic chain, previously Ehternity, is a low-cost Layer 2 solution on the Superchain, designed to bring global entertainment franchises onto the blockchain.',
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://epicchain.io/'],
-      apps: [
+      bridges: [
         'https://swap.epicchain.io/',
         'https://bridge.gelato.network/bridge/ethernity-mainnet',
       ],

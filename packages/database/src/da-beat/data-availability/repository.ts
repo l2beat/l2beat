@@ -20,7 +20,7 @@ export class DataAvailabilityRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb
-            .columns(['timestamp', 'daLayer', 'projectId'])
+            .columns(['timestamp', 'daLayer', 'projectId', 'configurationId'])
             .doUpdateSet((eb) => ({
               totalSize: eb.ref('excluded.totalSize'),
             })),
@@ -40,7 +40,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .select(selectDataAvailability)
       .where('daLayer', '=', daLayer)
       .where('timestamp', '>=', UnixTime.toDate(from))
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .execute()
     return rows.map(toRecord)
   }
@@ -68,7 +68,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('projectId', 'in', projectIds)
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
@@ -96,7 +96,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       // Exclude the daLayer itself because we only want to sum the projects
       .whereRef('projectId', '!=', 'daLayer')
       .groupBy(['timestamp', 'daLayer'])
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
@@ -122,7 +122,7 @@ export class DataAvailabilityRepository extends BaseRepository {
       .selectFrom('DataAvailability')
       .select(selectDataAvailability)
       .where('daLayer', 'in', daLayers)
-      .where('timestamp', '<=', UnixTime.toDate(to))
+      .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
 
     if (from !== null) {
@@ -134,11 +134,10 @@ export class DataAvailabilityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async deleteByProject(projectId: string, daLayer: string): Promise<number> {
+  async deleteByConfigurationId(configurationId: string): Promise<number> {
     const result = await this.db
       .deleteFrom('DataAvailability')
-      .where('projectId', '=', projectId)
-      .where('daLayer', '=', daLayer)
+      .where('configurationId', '=', configurationId)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

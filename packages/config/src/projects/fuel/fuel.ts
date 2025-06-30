@@ -21,6 +21,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('fuel')
 const depositLimitGlobal = formatEther(
@@ -56,10 +57,10 @@ export const fuel: ScalingProject = {
     description:
       'Fuel Ignition is a high-performance Ethereum L2 built on FuelVM and the Sway language.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
     links: {
       websites: ['https://fuel.network/'],
-      apps: [
+      bridges: [
         'https://app.fuel.network/ecosystem',
         'https://app.fuel.network/bridge',
       ],
@@ -166,11 +167,11 @@ export const fuel: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersCanExitWithoutCooperation: false,
         usersHave7DaysToExit: false,
         securityCouncilProperlySetUp: false,
@@ -348,4 +349,5 @@ export const fuel: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

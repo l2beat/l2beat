@@ -6,6 +6,8 @@ import { getProject } from '../api/api'
 import type { ApiAddressEntry, ApiProjectChain } from '../api/types'
 import { AddressIcon } from '../common/AddressIcon'
 import { toShortenedAddress } from '../common/toShortenedAddress'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { IconChevronDown } from '../icons/IconChevronDown'
 import { IconChevronRight } from '../icons/IconChevronRight'
 import { IconFolder } from '../icons/IconFolder'
@@ -22,10 +24,10 @@ export function ListPanel() {
     queryFn: () => getProject(project),
   })
   if (response.isPending) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
   return (
     <div className="h-full w-full overflow-x-hidden">
@@ -47,7 +49,7 @@ function ListItemChain(props: { entry: ApiProjectChain; first: boolean }) {
 
   return (
     <li className={clsx(!props.first && 'border-t border-t-coffee-600')}>
-      <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-autumn-600">
+      <div className="group flex min-h-[22px] items-center justify-between pr-1 hover:bg-aux-brown">
         <button
           onClick={() => setOpen((open) => !open)}
           className="flex w-full cursor-pointer select-none items-center gap-1 font-bold text-xs uppercase"
@@ -110,7 +112,7 @@ function ListItemContracts(props: {
     <>
       <button
         onClick={() => setOpen((open) => !open)}
-        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-autumn-600 hover:text-coffee-200"
+        className="flex min-h-[22px] w-full cursor-pointer select-none items-center gap-1 pl-2 font-medium text-coffee-400 text-sm hover:bg-aux-brown hover:text-coffee-200"
       >
         {open && (
           <>
@@ -147,7 +149,7 @@ function AddressEntry({ entry }: { entry: ApiAddressEntry }) {
       className={clsx(
         'flex min-h-[22px] cursor-pointer select-none items-center gap-1 whitespace-pre pl-4 text-sm',
         isSelected && 'bg-autumn-300 text-black',
-        !isSelected && 'bg-coffee-800 hover:bg-autumn-600',
+        !isSelected && 'bg-coffee-800 hover:bg-aux-brown',
       )}
       onClick={() => select(entry.address)}
     >

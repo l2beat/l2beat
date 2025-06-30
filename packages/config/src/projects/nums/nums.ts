@@ -18,7 +18,7 @@ export const nums: ScalingProject = upcomingL3({
     category: 'ZK Rollup',
     links: {
       websites: ['https://nums.gg/'],
-      apps: [],
+      bridges: [],
       documentation: [],
       explorers: [],
       repositories: [],

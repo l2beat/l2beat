@@ -15,6 +15,7 @@ export type { AggregatedL2CostRecord } from './other/aggregated-l2-cost/entity'
 export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entity'
 export type { AnomalyRecord } from './other/anomalies/entity'
 export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
+export type { RealTimeAnomalyRecord } from './other/real-time-anomalies/entity'
 export type {
   FinalityRecord,
   ProjectFinalityRecord,
@@ -25,9 +26,10 @@ export type { LivenessRecord } from './other/liveness/entity'
 export type { VerifierStatusRecord } from './other/verifier-status/entity'
 export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
 export type { IndexerStateRecord } from './uif/indexer-state/entity'
-export type { DataAvailabilityRecord } from './da-beat/data-availability/entity'
-export type { DataAvailabilityRecord2 } from './da-beat/data-availability-2/entity'
-export { DataAvailabilityRepository } from './da-beat/data-availability/repository'
+export type {
+  DataAvailabilityRecord,
+  ProjectsSummedDataAvailabilityRecord,
+} from './da-beat/data-availability/entity'
 export type { TokenValueRecord } from './tvs/token-value/entity'
 export type { ProjectValueRecord } from './tvs/project-value/entity'
 export type { UpdateDiffRecord } from './discovery/update-diff/entity'

@@ -18,7 +18,7 @@ describe(UpdateDiffer.name, () => {
     it('runs for all projects', async () => {
       const chain = 'ethereum'
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: mockFn().returns([
+        readAllDiscoveredConfigsForChain: mockFn().returns([
           { name: PROJECT_A, chain },
           { name: PROJECT_B, chain },
         ]),
@@ -35,7 +35,9 @@ describe(UpdateDiffer.name, () => {
 
       await updateDiffer.runForChain(chain, UnixTime.now())
 
-      expect(configReader.readAllConfigsForChain).toHaveBeenCalledWith(chain)
+      expect(
+        configReader.readAllDiscoveredConfigsForChain,
+      ).toHaveBeenCalledWith(chain)
       expect(runForProjectMockFn).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
@@ -53,7 +55,7 @@ describe(UpdateDiffer.name, () => {
     it('throws if projectConfig chain mismatch', async () => {
       const chain = 'ethereum'
       const configReader = mockObject<ConfigReader>({
-        readAllConfigsForChain: mockFn().returns([
+        readAllDiscoveredConfigsForChain: mockFn().returns([
           { name: PROJECT_A, chain: 'arbitrum' },
         ]),
       })
@@ -99,6 +101,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -106,6 +110,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
         {
           address: EthereumAddress.random(),
@@ -113,6 +119,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp: UnixTime.now(),
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ]
       updateDiffer.getUpdateDiffs = mockFn().returns(updateDiffs)
@@ -223,6 +231,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -232,6 +242,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -265,6 +277,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -274,6 +288,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })
@@ -322,6 +338,8 @@ describe(UpdateDiffer.name, () => {
         PROJECT_A,
         'ethereum',
         timestamp,
+        123,
+        456,
       )
 
       expect(result).toEqual([
@@ -331,6 +349,8 @@ describe(UpdateDiffer.name, () => {
           chain: 'ethereum',
           projectId: PROJECT_A,
           timestamp,
+          diffBaseBlockNumber: 123,
+          diffHeadBlockNumber: 456,
         },
       ])
     })

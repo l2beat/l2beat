@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@l2beat/backend-tools": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@mradomski/fast-solidity-parser": "0.1.1",
@@ -28,7 +29,6 @@
     "chalk": "^4.1.2",
     "clingo-wasm": "0.3.2",
     "cmd-ts": "^0.13.0",
-    "deep-diff": "^1.0.2",
     "ethers": "^5.7.2",
     "jsonc-parser": "^3.2.0",
     "lodash": "^4.17.21",
@@ -38,16 +38,13 @@
     "ohm-js": "^17.1.0",
     "prettier": "^3.0.3",
     "rimraf": "^5.0.0",
-    "sqlite3": "5.1.7",
-    "zod": "^3.22.2"
+    "sqlite3": "5.1.7"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@types/deep-diff": "^1.0.2",
     "@types/lodash": "^4.14.198",
     "@types/mock-fs": "^4.13.4",
     "@types/node-fetch": "^2.6.4",
-    "zod-to-json-schema": "^3.24.4",
     "mock-fs": "^5.2.0"
   }
 }

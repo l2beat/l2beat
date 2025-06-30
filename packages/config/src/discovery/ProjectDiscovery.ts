@@ -71,6 +71,10 @@ export class ProjectDiscovery {
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
 
+  get blockNumber(): number {
+    return this.discoveries.reduce((min, d) => Math.max(min, d.blockNumber), 0)
+  }
+
   getName(address: EthereumAddress): string {
     return (
       this.getEntryByAddress(address)?.name ??
@@ -670,6 +674,17 @@ export class ProjectDiscovery {
 
   getContractsAndEoas(): EntryParameters[] {
     return [...this.getContracts(), ...this.getEoas()]
+  }
+
+  getTopLevelAddresses(): EthereumAddress[] {
+    const contracts = this.getContracts()
+    const implementations = contracts.flatMap((contract) =>
+      get$Implementations(contract.values),
+    )
+
+    const contractsAddresses = contracts.map((e) => e.address)
+    const eoasAddresses = this.getEoas().map((e) => e.address)
+    return [...contractsAddresses, ...implementations, ...eoasAddresses]
   }
 
   getPermissionsByRole(

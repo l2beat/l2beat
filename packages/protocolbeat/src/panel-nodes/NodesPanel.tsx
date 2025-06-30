@@ -7,6 +7,8 @@ import type {
   ApiProjectResponse,
   FieldValue,
 } from '../api/types'
+import { ErrorState } from '../components/ErrorState'
+import { LoadingState } from '../components/LoadingState'
 import { usePanelStore } from '../store/store'
 import { NodesApp } from './NodesApp'
 import type { Field, Node } from './store/State'
@@ -27,15 +29,15 @@ export function NodesPanel() {
   useLoadNodes(response.data, project)
 
   if (response.isLoading) {
-    return <div>Loading</div>
+    return <LoadingState />
   }
   if (response.isError) {
-    return <div>Error</div>
+    return <ErrorState />
   }
 
   return (
     <div className="h-full w-full overflow-x-hidden">
-      <NodesApp panelMode />
+      <NodesApp />
     </div>
   )
 }
@@ -43,6 +45,7 @@ export function NodesPanel() {
 function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
   const clear = useNodeStore((state) => state.clear)
   const loadNodes = useNodeStore((state) => state.loadNodes)
+  const preferences = useNodeStore((state) => state.userPreferences)
 
   useEffect(() => {
     clear()
@@ -63,6 +66,10 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           string,
         ]
         const fallback = `${prefix}:${address.slice(0, 6)}…${address.slice(-4)}`
+        const keysToHideOnLoad = preferences.hideLargeArrays
+          ? getKeysToHideOnLoad(contract.fields)
+          : []
+
         const node: Node = {
           id: contract.address,
           isInitial: initialAddresses.includes(contract.address),
@@ -75,7 +82,7 @@ function useLoadNodes(data: ApiProjectResponse | undefined, project: string) {
           hueShift,
           data: null,
           fields: toNodeFields(contract.fields),
-          hiddenFields: [],
+          hiddenFields: keysToHideOnLoad,
         }
         nodes.push(node)
       }
@@ -121,7 +128,7 @@ function useSynchronizeSelection() {
       selectGlobal(selectedNodes[0])
     } else if (selectedGlobal && !lastSelection.includes(selectedGlobal)) {
       rememberSelection([selectedGlobal])
-      selectNodes([selectedGlobal])
+      selectNodes(selectedGlobal)
     }
   }, [
     lastSelection,
@@ -206,4 +213,16 @@ function getAddresses(value: FieldValue | undefined): string[] {
     return [value.address]
   }
   return []
+}
+
+const LARGE_ARRAY_THRESHOLD = 10
+
+function getKeysToHideOnLoad(fields: ApiField[]): string[] {
+  const largeArrays = fields.filter(
+    (field) =>
+      field.value.type === 'array' &&
+      field.value.values.length > LARGE_ARRAY_THRESHOLD,
+  )
+
+  return toNodeFields(largeArrays).map((field) => field.name)
 }

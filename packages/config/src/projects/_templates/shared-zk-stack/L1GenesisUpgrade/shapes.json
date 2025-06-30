@@ -1,0 +1,20 @@
+{
+  "L1GenesisUpgrade": {
+    "hash": "0x50ee4004563b12b9636ff48384e6053aa1e8505ff7d5c63166b342d4eb69f6aa",
+    "address": "0x107e92E7360e595d8129B522ABD458361f32f66C",
+    "chain": "ethereum",
+    "blockNumber": 22188285
+  },
+  "L1GenesisUpgrade_v27": {
+    "hash": "0xb026196cfab337e1604a0cb6f378b0598841b3bf3e05d8d82403801eff55a3b6",
+    "address": "0xC5bBb8bA0302215Da343D47EC617649E59c7d61C",
+    "chain": "ethereum",
+    "blockNumber": 22374168
+  },
+  "L1GenesisUpgrade_v28": {
+    "hash": "0xc75c7be9ac7357405aa86630f69e44a24c26a15d36cb11f64fa4e3c1f9de257e",
+    "address": "0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E",
+    "chain": "ethereum",
+    "blockNumber": 22744143
+  }
+}

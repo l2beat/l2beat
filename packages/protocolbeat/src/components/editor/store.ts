@@ -1,34 +1,62 @@
 import { create } from 'zustand'
-import type { Editor } from './editor'
+import type { DiffEditor } from './diffEditor'
+import type { Editor, EditorSupportedLanguage } from './editor'
 
 export interface Range {
   startOffset: number
   length: number
 }
 
+export type EditorFile = {
+  id: string
+  name: string
+  content: string
+  readOnly: boolean
+  language?: EditorSupportedLanguage
+}
+
 interface CodeState {
   sourceIndex: Record<string, number>
-  range: Range | undefined
+  ranges: Record<string, Range>
   editors: Record<string, Editor>
+  diffEditors: Record<string, DiffEditor>
 
   setEditor: (key: string, editor: Editor) => void
   getEditor: (key: string) => Editor | undefined
+  removeEditor: (key: string) => void
+  setDiffEditor: (key: string, editor: DiffEditor) => void
+  getDiffEditor: (key: string) => DiffEditor | undefined
   setSourceIndex: (address: string, sourceIndex: number) => void
   getSourceIndex: (address: string) => number | undefined
-  showRange: (range: Range | undefined) => void
+  showRange: (address: string, range: Range | undefined) => void
+  resetRange: () => void
+  getRange: (address: string) => Range | undefined
 }
 
 export const useCodeStore = create<CodeState>((set, get) => ({
   sourceIndex: {},
-  range: undefined,
+  ranges: {},
   editors: {},
+  diffEditors: {},
 
-  setEditor: (key: string, editor: Editor) =>
+  setEditor: (editorId: string, editor: Editor) =>
     set((state) => ({
-      editors: { ...state.editors, [key]: editor },
+      editors: { ...state.editors, [editorId]: editor },
     })),
-  getEditor: (key: string) => {
-    return get().editors[key]
+  getEditor: (editorId: string) => {
+    return get().editors[editorId]
+  },
+  removeEditor: (editorId: string) =>
+    set((state) => {
+      const { [editorId]: removed, ...editors } = state.editors
+      return { editors }
+    }),
+  setDiffEditor: (editorId: string, editor: DiffEditor) =>
+    set((state) => ({
+      diffEditors: { ...state.diffEditors, [editorId]: editor },
+    })),
+  getDiffEditor: (editorId: string) => {
+    return get().diffEditors[editorId]
   },
   setSourceIndex: (address: string, sourceIndex: number) =>
     set((state) => ({
@@ -37,5 +65,16 @@ export const useCodeStore = create<CodeState>((set, get) => ({
   getSourceIndex: (address: string) => {
     return get().sourceIndex[address]
   },
-  showRange: (range: Range | undefined) => set({ range }),
+  showRange: (address: string, range: Range | undefined) =>
+    set((state) => {
+      if (range === undefined) {
+        const { [address]: removed, ...restRanges } = state.ranges
+        return { ranges: restRanges }
+      }
+      return { ranges: { ...state.ranges, [address]: range } }
+    }),
+  resetRange: () => set({ ranges: {} }),
+  getRange: (address: string) => {
+    return get().ranges[address]
+  },
 }))

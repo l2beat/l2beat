@@ -68,7 +68,7 @@ export const rss3: ScalingProject = opStackL2({
       'The RSS3 Value Sublayer (VSL) as part of the RSS3 Network, is an Ethereum ScalingProject built with OP Stack, handling the value and ownership of AI and Open Information.',
     links: {
       websites: ['https://rss3.io'],
-      apps: [
+      bridges: [
         'https://explorer.rss3.io/bridge',
         'https://explorer.rss3.io/nodes',
         'https://explorer.rss3.io/epochs',

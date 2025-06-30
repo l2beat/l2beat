@@ -37,7 +37,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -55,7 +62,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XLink bridge"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -182,7 +196,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -219,7 +241,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -256,7 +285,14 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "XSwap.link"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -279,6 +315,32 @@
     },
     {
       "mode": "auto",
+      "id": "mode-oUSDT",
+      "priceId": "openusdt",
+      "symbol": "oUSDT",
+      "name": "OpenUSDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+        "chain": "mode",
+        "decimals": 6,
+        "sinceTimestamp": 1741824000
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "mode-rsETH",
       "priceId": "kelp-dao-restaked-eth",
       "symbol": "rsETH",
@@ -293,7 +355,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -311,7 +381,14 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech Bridge (Meson)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -329,7 +406,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Stargate",
+            "slug": "stargate"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -347,7 +432,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -403,7 +496,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -478,7 +579,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     }
   ]
 }

@@ -7,9 +7,8 @@ import {
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
-  stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { type Parser, v } from '@l2beat/validate'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -61,6 +60,11 @@ export type ProjectRiskCategory =
 // #endregion
 
 export type ProjectReviewStatus = 'initialReview' | 'inReview'
+
+export interface ProjectUnverifiedContract {
+  chain: string
+  address: EthereumAddress
+}
 
 export interface BaseProject {
   id: ProjectId
@@ -138,13 +142,7 @@ export interface ProjectStatuses {
   redWarning: string | undefined
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
-  isUnverified: boolean
-  // countdowns
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ProjectScalingCategory
-    reasons: ReasonForBeingInOther[]
-  }
+  unverifiedContracts: ProjectUnverifiedContract[]
 }
 
 export interface ProjectDisplay {
@@ -156,8 +154,8 @@ export interface ProjectDisplay {
 export interface ProjectLinks {
   /** Links to marketing landing pages. */
   websites?: string[]
-  /** Links to web apps. */
-  apps?: string[]
+  /** Links to bridges. */
+  bridges?: string[]
   documentation?: string[]
   explorers?: string[]
   repositories?: string[]
@@ -209,6 +207,7 @@ export type BadgeFilterId =
   | 'raas'
   | 'infrastructure'
   | 'vm'
+  | 'other'
 
 export interface Milestone {
   title: string
@@ -260,6 +259,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
+  | SourcifyApi
   | StarkexApi
   | EtherscanApi
 
@@ -285,6 +285,11 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+}
+
+export interface SourcifyApi {
+  type: 'sourcify'
+  chainId: number
 }
 
 // #endregion
@@ -330,8 +335,6 @@ export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ProjectScalingCategory
   capability: ProjectScalingCapability
-  /** In the future this will be reflected as `type === 'Other'` */
-  isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
     id: ProjectId
@@ -871,9 +874,15 @@ export type ProjectFinalityConfig =
 export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
+  | BlockDaTrackingConfig
+  | TimestampDaTrackingConfig
+
+export type BlockDaTrackingConfig =
   | EthereumDaTrackingConfig
   | CelestiaDaTrackingConfig
   | AvailDaTrackingConfig
+
+export type TimestampDaTrackingConfig = EigenDaTrackingConfig
 
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
@@ -899,6 +908,14 @@ export interface AvailDaTrackingConfig {
   appId: string
   sinceBlock: number
   untilBlock?: number
+}
+
+export interface EigenDaTrackingConfig {
+  type: 'eigen-da'
+  daLayer: ProjectId
+  customerId: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
 }
 
 export interface ProjectEcosystemInfo {
@@ -1052,105 +1069,116 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
+  blockNumberPerChain: Record<string, number>
 }
 // #endregion
 
 // #region TVS
-export const BaseCalculationFormulaSchema = z.object({
-  type: z.literal('calculation'),
-  operator: z.enum(['sum', 'diff', 'max', 'min']),
-})
+const CalculationOperator = ['sum', 'diff', 'max', 'min'] as const
+const _BaseCalculationFormulaSchema = {
+  type: v.literal('calculation'),
+  operator: v.enum(CalculationOperator),
+}
+export const BaseCalculationFormulaSchema = v.object(
+  _BaseCalculationFormulaSchema,
+)
 
-// type hint needed due to zod limitations on recursive types
-export type CalculationFormula = z.infer<
-  typeof BaseCalculationFormulaSchema
-> & {
+export type CalculationFormula = {
+  type: 'calculation'
+  operator: (typeof CalculationOperator)[number]
   arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: zod limitations on recursive types
-export const CalculationFormulaSchema: any =
-  BaseCalculationFormulaSchema.extend({
-    arguments: z.array(
-      z.union([
-        z.lazy(() => CalculationFormulaSchema),
-        z.lazy(() => ValueFormulaSchema),
-        z.lazy(() => AmountFormulaSchema),
-      ]),
-    ),
-  })
-
-export type ValueFormula = z.infer<typeof ValueFormulaSchema>
-export const ValueFormulaSchema = z.object({
-  type: z.literal('value'),
-  amount: z.union([
-    z.lazy(() => AmountFormulaSchema),
-    z.lazy(() => CalculationFormulaSchema),
-  ]),
-  priceId: z.string(),
+export const CalculationFormulaSchema: Parser<CalculationFormula> = v.object({
+  ..._BaseCalculationFormulaSchema,
+  arguments: v.array(
+    v.union([
+      v.lazy(() => CalculationFormulaSchema),
+      v.lazy(() => ValueFormulaSchema),
+      v.lazy(() => AmountFormulaSchema),
+    ]),
+  ),
 })
 
-export type BalanceOfEscrowAmountFormula = z.infer<
+export type ValueFormula = {
+  type: 'value'
+  amount: AmountFormula | CalculationFormula
+  priceId: string
+}
+
+export const ValueFormulaSchema: Parser<ValueFormula> = v.object({
+  type: v.literal('value'),
+  amount: v.union([
+    v.lazy(() => AmountFormulaSchema),
+    v.lazy(() => CalculationFormulaSchema),
+  ]),
+  priceId: v.string(),
+})
+
+export type BalanceOfEscrowAmountFormula = v.infer<
   typeof BalanceOfEscrowAmountFormulaSchema
 >
-export const BalanceOfEscrowAmountFormulaSchema = z.object({
-  type: z.literal('balanceOfEscrow'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: z.union([stringAs(EthereumAddress), z.literal('native')]),
-  decimals: z.number(),
-  escrowAddress: stringAs(EthereumAddress),
+export const BalanceOfEscrowAmountFormulaSchema = v.object({
+  type: v.literal('balanceOfEscrow'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.union([
+    v.string().transform(EthereumAddress),
+    v.literal('native'),
+  ]),
+  decimals: v.number(),
+  escrowAddress: v.string().transform(EthereumAddress),
 })
 
-export type TotalSupplyAmountFormula = z.infer<
+export type TotalSupplyAmountFormula = v.infer<
   typeof TotalSupplyAmountFormulaSchema
 >
-export const TotalSupplyAmountFormulaSchema = z.object({
-  type: z.literal('totalSupply'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: stringAs(EthereumAddress),
-  decimals: z.number(),
+export const TotalSupplyAmountFormulaSchema = v.object({
+  type: v.literal('totalSupply'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string().transform(EthereumAddress),
+  decimals: v.number(),
 })
 
-export type StarknetTotalSupplyAmountFormula = z.infer<
+export type StarknetTotalSupplyAmountFormula = v.infer<
   typeof StarknetTotalSupplyAmountFormulaSchema
 >
-export const StarknetTotalSupplyAmountFormulaSchema = z.object({
-  type: z.literal('starknetTotalSupply'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: z.string(),
-  decimals: z.number(),
+export const StarknetTotalSupplyAmountFormulaSchema = v.object({
+  type: v.literal('starknetTotalSupply'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string(),
+  decimals: v.number(),
 })
 
-export type CirculatingSupplyAmountFormula = z.infer<
+export type CirculatingSupplyAmountFormula = v.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
-export const CirculatingSupplyAmountFormulaSchema = z.object({
-  type: z.literal('circulatingSupply'),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  apiId: z.string(),
-  decimals: z.number(),
-  address: stringAs(EthereumAddress), // for frontend only
-  chain: z.string(), // for frontend only
+export const CirculatingSupplyAmountFormulaSchema = v.object({
+  type: v.literal('circulatingSupply'),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  apiId: v.string(),
+  decimals: v.number(),
+  address: v.string().transform(EthereumAddress), // for frontend only
+  chain: v.string(), // for frontend only
 })
 
-export type ConstAmountFormula = z.infer<typeof ConstAmountFormulaSchema>
-export const ConstAmountFormulaSchema = z.object({
-  type: z.literal('const'),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  value: z.string(),
-  decimals: z.number(),
+export type ConstAmountFormula = v.infer<typeof ConstAmountFormulaSchema>
+export const ConstAmountFormulaSchema = v.object({
+  type: v.literal('const'),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  value: v.string(),
+  decimals: v.number(),
 })
 
-export type AmountFormula = z.infer<typeof AmountFormulaSchema>
-export const AmountFormulaSchema = z.union([
+export type AmountFormula = v.infer<typeof AmountFormulaSchema>
+export const AmountFormulaSchema = v.union([
   BalanceOfEscrowAmountFormulaSchema,
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
@@ -1179,28 +1207,39 @@ export function isOnchainAmountFormula(
 }
 
 // token deployed to single chain
-export type TvsToken = z.infer<typeof TvsTokenSchema>
-export const TvsTokenSchema = z.object({
-  mode: z.enum(['auto', 'custom']),
-  id: stringAs(TokenId),
-  priceId: z.string(),
-  symbol: z.string(),
-  displaySymbol: z.string().optional(),
-  name: z.string(),
-  iconUrl: z.string().optional(),
-  amount: z.union([CalculationFormulaSchema, AmountFormulaSchema]),
-  valueForProject: z
+export type TvsToken = v.infer<typeof TvsTokenSchema>
+export const TvsTokenSchema = v.object({
+  mode: v.enum(['auto', 'custom']),
+  id: v.string().transform(TokenId),
+  priceId: v.string(),
+  symbol: v.string(),
+  displaySymbol: v.string().optional(),
+  name: v.string(),
+  iconUrl: v.string().optional(),
+  amount: v.union([CalculationFormulaSchema, AmountFormulaSchema]),
+  valueForProject: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  valueForSummary: z
+  valueForSummary: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  category: z.enum(['ether', 'stablecoin', 'other']),
-  source: z.enum(['canonical', 'external', 'native']),
-  isAssociated: z.boolean(),
+  category: v.enum(['ether', 'stablecoin', 'other']),
+  source: v.enum(['canonical', 'external', 'native']),
+  isAssociated: v.boolean(),
+  bridgedUsing: v
+    .object({
+      bridges: v.array(
+        v.object({
+          name: v.string(),
+          slug: v.string().optional(),
+        }),
+      ),
+      warning: v.string().optional(),
+    })
+    .optional(),
 })
 
-export const ProjectTvsConfigSchema = z.object({
-  projectId: z.string(),
-  tokens: z.array(TvsTokenSchema),
+export const ProjectTvsConfigSchema = v.object({
+  projectId: v.string(),
+  tokens: v.array(TvsTokenSchema),
 })

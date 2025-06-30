@@ -21,6 +21,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('canvasconnect')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -120,4 +121,5 @@ export const canvasconnect: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

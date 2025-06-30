@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -31,7 +31,7 @@ export const swell = opStackL2({
       'Swellchain operates as a restaking-focused Layer 2 network built on the OP Stack. The network aims to extend Ethereum security through EigenLayer restaking while leveraging OP stack proven infrastructure for transaction processing and scalability.',
     links: {
       websites: ['https://swellnetwork.io/'],
-      apps: ['https://app.swellnetwork.io/layer2/swell-l2'],
+      bridges: ['https://app.swellnetwork.io/layer2/swell-l2'],
       documentation: ['https://build.swellnetwork.io/docs'],
       explorers: ['https://explorer.swellnetwork.io/'],
       repositories: ['https://github.com/SwellNetwork'],
@@ -41,9 +41,6 @@ export const swell = opStackL2({
         'https://swellnetwork.io/blog',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   finality: {
     type: 'OPStack',

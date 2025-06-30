@@ -1,5 +1,5 @@
 import type { HttpClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { AbstractStakeAnalyzer } from './AbstractStakeAnalyzer'
 
 export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
@@ -40,12 +40,8 @@ export class NearStakeAnalyzer extends AbstractStakeAnalyzer {
   }
 }
 
-const ValidatorsList = z.object({
-  result: z.object({
-    current_validators: z.array(
-      z.object({
-        stake: z.string(),
-      }),
-    ),
+const ValidatorsList = v.object({
+  result: v.object({
+    current_validators: v.array(v.object({ stake: v.string() })),
   }),
 })

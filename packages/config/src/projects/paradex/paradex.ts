@@ -28,6 +28,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('paradex')
 
@@ -81,7 +82,7 @@ export const paradex: ScalingProject = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://paradex.trade/'],
-      apps: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
+      bridges: ['https://app.paradex.trade', 'https://paradex.trade/stats'],
       documentation: ['https://docs.paradex.trade/'],
       repositories: ['https://github.com/tradeparadex'],
       socialMedia: [
@@ -306,11 +307,11 @@ export const paradex: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: null,
@@ -395,4 +396,5 @@ export const paradex: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

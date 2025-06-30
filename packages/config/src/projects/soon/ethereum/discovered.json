@@ -2,7 +2,7 @@
   "name": "soon",
   "chain": "ethereum",
   "blockNumber": 22593538,
-  "configHash": "0x6c1c2b8a84e4b03977aeda854f6f98463926393e1077a0ec067c432214460e6e",
+  "configHash": "0xc1e00249426deea5949c891a4255c65c4a131751ffc5ce124af6896d9d87efd5",
   "entries": [
     {
       "name": "L2OutputOracle",
@@ -373,6 +373,11 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0xD02631b334FfDCD5674217e57fe524c44B341DD4",
           "role": "admin"
         },
@@ -443,6 +448,7 @@
       "sinceTimestamp": 1735877339,
       "sinceBlock": 21541470,
       "values": {
+        "$admin": "0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d",
         "$immutable": false,
         "$implementation": "0x6846B4E0b9992E154fE7d315667B1e385445C503",
         "$pastUpgrades": [
@@ -594,6 +600,14 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x7d34832fc0cc6ed718a993CAAb4c6CAdaE9763A2",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
+          ]
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0xbB138cE37870443d5b2B02a36619D3478738E0f6",
           "role": "admin",
           "via": [
             { "address": "ethereum:0x90b2Da5f99C0ca658067D621E3694C2Ec49C233d" }
@@ -1088,5 +1102,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x7582ba9b1c605a57691fa290b00c6bb187eb52cb1da8bdb69125d8143dca5288"
+  "permissionsConfigHash": "0x18ab61ce5cdda90eeb10122b0d196bbac7a443a7609682d7a99307f8a8e08405"
 }

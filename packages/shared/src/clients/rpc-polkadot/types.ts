@@ -1,49 +1,49 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const PolkadotGetBlockHashResponse = z.object({
-  result: z.string(),
+export const PolkadotGetBlockHashResponse = v.object({
+  result: v.string(),
 })
 
-export type PolkadotBlock = z.infer<typeof PolkadotBlock>
-const PolkadotBlock = z.object({
-  header: z.object({
-    parentHash: z.string(),
-    number: z.string(),
-    stateRoot: z.string(),
-    extrinsicsRoot: z.string(),
-    extension: z.object({
-      V3: z.object({
-        appLookup: z.object({
-          size: z.number(),
-          index: z.array(
-            z.object({
-              appId: z.number(),
-              start: z.number(),
+export type PolkadotBlock = v.infer<typeof PolkadotBlock>
+const PolkadotBlock = v.object({
+  header: v.object({
+    parentHash: v.string(),
+    number: v.string(),
+    stateRoot: v.string(),
+    extrinsicsRoot: v.string(),
+    extension: v.object({
+      V3: v.object({
+        appLookup: v.object({
+          size: v.number(),
+          index: v.array(
+            v.object({
+              appId: v.number(),
+              start: v.number(),
             }),
           ),
         }),
-        commitment: z.object({
-          rows: z.number(),
-          cols: z.number(),
-          commitment: z.array(z.number()),
-          dataRoot: z.string(),
+        commitment: v.object({
+          rows: v.number(),
+          cols: v.number(),
+          commitment: v.array(v.number()),
+          dataRoot: v.string(),
         }),
       }),
     }),
   }),
-  extrinsics: z.array(z.string()),
+  extrinsics: v.array(v.string()),
 })
 
-export const PolkadotGetBlockResponse = z.object({
-  result: z.object({
+export const PolkadotGetBlockResponse = v.object({
+  result: v.object({
     block: PolkadotBlock,
   }),
 })
 
-export const PolkadotErrorResponse = z.object({
-  error: z.object({
-    code: z.number(),
-    message: z.string(),
-    data: z.string(),
+export const PolkadotErrorResponse = v.object({
+  error: v.object({
+    code: v.number(),
+    message: v.string(),
+    data: v.string(),
   }),
 })

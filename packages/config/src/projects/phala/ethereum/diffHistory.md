@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xcbc08cc0b9c20f2a9f73dc37c019d33fd0196c0d
+
+# Diff at Wed, 25 Jun 2025 07:40:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22631701
+- current block number: 22780010
+
+## Description
+
+selector 0x1b34fe11 and respective verifier frozen.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
+-        {"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs (v4.0.0-rc.3).
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1432 --------------------
+ .../SP1Verifier.sol}                               |    0
+ 2 files changed, 1432 deletions(-)
+```
+
+Generated with discovered.json: 0xd7902b2b1534b9ffe11c92fb9bad17121bffd8d9
+
+# Diff at Mon, 16 Jun 2025 08:42:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22631701
+- current block number: 22631701
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22631701 (main branch discovery), not current.
+
+```diff
+    contract L1CrossDomainMessenger (0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A"
++        "ethereum:0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"
++        "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A","role":"admin","via":[{"address":"ethereum:0x198A8e0c220f29d8aF956e4c8A9E8b552096Ab2E"}]}
+      receivedPermissions.9.from:
+-        "ethereum:0x96B124841Eff4Ab1b3C1F654D60402a1405fF51A"
++        "ethereum:0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"
+      receivedPermissions.8.from:
+-        "ethereum:0xF8e8E783fa7A5CCDB77EddC3335cDb00066B515e"
++        "ethereum:0x1549Dd6f86f5bBf0b1Bc691407DE64e8104c1544"
+    }
+```
+
 Generated with discovered.json: 0x397052ba1f83fc04025ef74395457f9c0f60ce62
 
 # Diff at Fri, 06 Jun 2025 07:24:45 GMT:

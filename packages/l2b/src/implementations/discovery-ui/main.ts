@@ -5,8 +5,10 @@ import {
   TemplateService,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
+import { v as z } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
+import { DiffoveryController } from './diffovery/DiffoveryController'
+import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
 import { getCode, getCodePaths } from './getCode'
 import { getPreview } from './getPreview'
@@ -20,15 +22,17 @@ import {
 
 const safeStringSchema = z
   .string()
-  .min(1, { message: 'Input cannot be empty.' })
-  .regex(/^[a-zA-Z0-9_-]+$/, {
-    message:
-      'Input must be alphanumeric and can contain underscores or hyphens.',
-  })
+  .check(
+    (v) => v.length > 0 && /^[a-zA-Z0-9_-]+$/.test(v),
+    'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
+  )
 
-const ethereumAddressSchema = z.string().regex(/^[\w\d]+:0x[a-fA-F0-9]{40}$/, {
-  message: 'Invalid address format. Must be chainId:0x...',
-})
+const ethereumAddressSchema = z
+  .string()
+  .check(
+    (v) => /^[\w\d]+:0x[a-fA-F0-9]{40}$/.test(v),
+    'Invalid address format. Must be chainId:0x...',
+  )
 
 const projectParamsSchema = z.object({
   project: safeStringSchema,
@@ -48,19 +52,13 @@ const projectSearchTermParamsSchema = z.object({
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
   chain: safeStringSchema,
-  devMode: z
-    .enum(['true', 'false'], {
-      errorMap: () => ({ message: "devMode must be 'true' or 'false'." }),
-    })
-    .transform((val) => val === 'true'),
+  devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
 })
 
 const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
-  against: z.enum(['templates', 'projects'], {
-    errorMap: () => ({ message: "against must be 'templates' or 'projects'." }),
-  }),
+  against: z.enum(['templates', 'projects']),
 })
 
 export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
@@ -72,6 +70,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
+  const diffoveryController = new DiffoveryController()
 
   app.use(express.json())
 
@@ -83,7 +82,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.get('/api/projects/:project', (req, res) => {
     const paramsValidation = projectParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project } = paramsValidation.data
@@ -95,7 +94,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   app.get('/api/projects/:project/preview', (req, res) => {
     const paramsValidation = projectParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project } = paramsValidation.data
@@ -108,14 +107,14 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.redirect('/ui')
   })
 
-  app.get(['/ui', '/ui/*'], (_req, res) => {
+  app.get(['/ui', '/ui/*', '/diff', '/diff/*'], (_req, res) => {
     res.sendFile(join(STATIC_ROOT, 'index.html'))
   })
 
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project, address } = paramsValidation.data
@@ -128,7 +127,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     const query = listTemplateFilesSchema.safeParse(req.query)
 
     if (!query.success) {
-      res.status(400).json({ errors: query.error.flatten() })
+      res.status(400).json({ errors: query.message })
       return
     }
 
@@ -151,6 +150,8 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
 
   app.use(express.static(STATIC_ROOT))
 
+  attachDiffoveryRouter(app, diffoveryController)
+
   if (!readonly) {
     attachTemplateRouter(app, templateService)
 
@@ -162,7 +163,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
       })
 
       if (!paramsValidation.success) {
-        res.status(400).json({ errors: paramsValidation.error.flatten() })
+        res.status(400).json({ errors: paramsValidation.message })
         return
       }
       const { project, searchTerm, address } = paramsValidation.data
@@ -180,7 +181,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     app.get('/api/terminal/discover', (req, res) => {
       const queryValidation = discoverQuerySchema.safeParse(req.query)
       if (!queryValidation.success) {
-        res.status(400).json({ errors: queryValidation.error.flatten() })
+        res.status(400).json({ errors: queryValidation.message })
         return
       }
       const { project, chain, devMode } = queryValidation.data
@@ -194,7 +195,7 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     app.get('/api/terminal/match-flat', (req, res) => {
       const queryValidation = matchFlatQuerySchema.safeParse(req.query)
       if (!queryValidation.success) {
-        res.status(400).json({ errors: queryValidation.error.flatten() })
+        res.status(400).json({ errors: queryValidation.message })
         return
       }
       const { project, address, against } = queryValidation.data

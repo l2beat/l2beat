@@ -173,6 +173,24 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "starknet-rUSDC-stark",
+      "priceId": "relend-network-usdc-starknet",
+      "symbol": "rUSDC-stark",
+      "name": "Relend Network USDC - Starknet",
+      "iconUrl": "https://assets.coingecko.com/coins/images/55061/large/rUSDC-_200x200.png?1743524727",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x02019e47a0bc54ea6b4853c6123ffc8158ea3ae2af4166928b0de6e89f06de6c",
+        "chain": "starknet",
+        "decimals": 6,
+        "sinceTimestamp": 1739893482
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "starknet-sfrxETH",
       "priceId": "staked-frax-ether",
@@ -209,6 +227,24 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": true
+    },
+    {
+      "mode": "custom",
+      "id": "starknet-tBTC",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "Starknet tBTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "starknetTotalSupply",
+        "address": "0x04daa17763b286d1e59b97c283C0b8C949994C361e426A28F743c67bDfE9a32f",
+        "chain": "starknet",
+        "decimals": 18,
+        "sinceTimestamp": 1746086680
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
     },
     {
       "mode": "auto",
@@ -336,7 +372,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb",
         "decimals": 18,
-        "sinceTimestamp": 1710460800
+        "sinceTimestamp": 1710460800,
+        "untilTimestamp": 1750942800
       },
       "category": "other",
       "source": "canonical",

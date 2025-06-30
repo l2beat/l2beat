@@ -23,7 +23,7 @@ export function getDiscoveryEngine(
   const config = chainConfigs.find((c) => c.name === chain)
   assert(config !== undefined, `Unknown chain: ${chain}`)
 
-  const allProviders = new AllProviders(chainConfigs, http, cache)
+  const allProviders = new AllProviders(chainConfigs, http, cache, logger)
 
   const proxyDetector = new ProxyDetector()
   const sourceCodeService = new SourceCodeService()

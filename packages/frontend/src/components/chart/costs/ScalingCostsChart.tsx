@@ -2,7 +2,6 @@ import type { Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import {
   type CostsMetric,
@@ -14,8 +13,6 @@ import { useCostsUnitContext } from '~/pages/scaling/costs/components/CostsUnitC
 import type { ScalingCostsEntry } from '~/server/features/scaling/costs/getScalingCostsEntries'
 import type { CostsUnit } from '~/server/features/scaling/costs/types'
 import type { CostsProjectsFilter } from '~/server/features/scaling/costs/utils/getCostsProjects'
-import type { CostsResolution } from '~/server/features/scaling/costs/utils/range'
-import { rangeToResolution } from '~/server/features/scaling/costs/utils/range'
 import { api } from '~/trpc/React'
 import { ChartControlsWrapper } from '../../core/chart/ChartControlsWrapper'
 import { ChartTimeRange } from '../../core/chart/ChartTimeRange'
@@ -31,7 +28,6 @@ interface Props {
 
 export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { range, setRange } = useCostsTimeRangeContext()
-  const { checked } = useRecategorisationPreviewContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { metric, setMetric } = useCostsMetricContext()
   const { state: filters } = useTableFilterContext()
@@ -42,8 +38,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
       setRange('30d')
     }
   }
-
-  const resolution = rangeToResolution(range)
 
   const filter = useMemo<CostsProjectsFilter>(() => {
     if (Object.keys(filters).length === 0) {
@@ -61,7 +55,6 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   const { data, isLoading } = api.costs.chart.useQuery({
     range,
     filter,
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(() => {
@@ -112,7 +105,7 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
 
   return (
     <section>
-      <Header resolution={resolution} chartRange={chartRange} />
+      <Header chartRange={chartRange} />
       <CostsChart
         data={chartData}
         unit={unit}
@@ -137,14 +130,11 @@ export function ScalingCostsChart({ tab, milestones, entries }: Props) {
   )
 }
 
-function Header({
-  resolution,
-  chartRange,
-}: { resolution: CostsResolution; chartRange: [number, number] | undefined }) {
+function Header({ chartRange }: { chartRange: [number, number] | undefined }) {
   return (
     <header>
-      <h1 className="font-bold text-xl first-letter:capitalize md:text-2xl">
-        {resolution} onchain costs
+      <h1 className="font-bold text-xl md:text-2xl">
+        Onchain costs
         <span className="max-md:hidden"> stacked by type</span>
       </h1>
       <ChartTimeRange range={chartRange} />

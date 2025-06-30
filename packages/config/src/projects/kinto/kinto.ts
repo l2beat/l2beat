@@ -64,7 +64,7 @@ export const kinto: ScalingProject = orbitStackL2({
       'Kinto is an Orbit stack L2 with account abstraction and KYC enabled for all users, supporting both modern financial institutions and decentralized protocols.',
     links: {
       websites: ['https://kinto.xyz'],
-      apps: ['https://engen.kinto.xyz'],
+      bridges: ['https://engen.kinto.xyz'],
       documentation: ['https://docs.kinto.xyz'],
       explorers: ['https://explorer.kinto.xyz/', 'https://kintoscan.io/'],
       repositories: ['https://github.com/kintoxyz'],
@@ -139,11 +139,11 @@ export const kinto: ScalingProject = orbitStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

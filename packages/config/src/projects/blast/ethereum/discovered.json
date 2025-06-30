@@ -2,7 +2,7 @@
   "name": "blast",
   "chain": "ethereum",
   "blockNumber": 21084957,
-  "configHash": "0x38204658ad3dd69e6e79b53d32fe1bfbdfb41a070301d4e7c2c49776acd79d4c",
+  "configHash": "0x5a246360aaf37cadda78b78d0710cbd85c7fbba34246dd3070bcd3b26af3274a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -147,6 +147,11 @@
         {
           "permission": "upgrade",
           "from": "ethereum:0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
           "role": "admin"
         },
         {
@@ -356,6 +361,14 @@
         },
         {
           "permission": "upgrade",
+          "from": "ethereum:0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
+          "role": "admin",
+          "via": [
+            { "address": "ethereum:0x364289230b8cc7d9120eF962AF37ebCFe23cE883" }
+          ]
+        },
+        {
+          "permission": "upgrade",
           "from": "ethereum:0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
@@ -532,6 +545,7 @@
       "sinceTimestamp": 1708812983,
       "sinceBlock": 19300366,
       "values": {
+        "$admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
         "$immutable": false,
         "$implementation": "0x84efcFCE2dEe08072d5D57BF232D379b6E92A836",
         "$pastUpgrades": [
@@ -1728,5 +1742,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x72c207f7ca314d01093887653d996ce5c15937812d69208db821ed49bd753af1"
+  "permissionsConfigHash": "0xa7d006895797c7c3bd1195543dd34eac52320970396eb7109a2f8d21b8f8b25d"
 }

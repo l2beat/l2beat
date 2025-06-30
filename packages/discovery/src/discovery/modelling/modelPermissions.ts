@@ -91,7 +91,7 @@ export function getDependenciesToDiscoverForProject(
   // In the future, we might want to return referenced shared-modules
   // and recursively dependencies of those.
   return configReader
-    .readAllChainsForProject(project)
+    .readAllDiscoveredChainsForProject(project)
     .map((chain) => ({ project, chain }))
 }
 

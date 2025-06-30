@@ -273,6 +273,7 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
@@ -359,7 +360,8 @@
         "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05": "BlastMultisig 1",
         "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C": "BlastMultisig 2",
 
-        "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "Linea Multisig",
+        "0x892bb7EeD71efB060ab90140e7825d8127991DD3": "Linea Multisig 1",
+        "0xB8F5524D73f549Cf14A0587a3C7810723f9c0051": "Linea Multisig 2",
 
         "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E": "Bob Multisig 1",
         "0xC73b6E6ec346f9f1A07D2e7A4380858D7BEa0194": "Bob Multisig 2",
@@ -388,6 +390,7 @@
         "0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063": "Abstract Multisig",
 
         "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": "Polygon zkEVM Multisig",
+        "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052": "Polygon Multisig 2",
 
         "0x17Eb10e12a78f986C78F973Fc70eD88072B33B7d": "Kinto Security Council",
         "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "Kinto Multisig",
@@ -461,6 +464,11 @@
         "0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7": "Hyperlane Multisig",
 
         "0x4665ad531c35b02dE090E21FC57B69946434bf2b": "Wonder Multisig",
+
+        "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": "Katana Multisig",
+
+        "0x16388463d60FFE0661Cf7F1f31a7D658aC790ff7": "Yearn Strategist Multisig",
+        "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52": "Yearn Treasury Multisig",
 
         // Taiko SC
         "0xb47fe76ac588101bfbda9e68f66433ba51e8029a": "Daniel Wang",

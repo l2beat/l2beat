@@ -27,11 +27,10 @@ export const form: ScalingProject = opStackL2({
     slug: 'form',
     description:
       'Form is an Optimium utilizing the OP Stack. The Form L2 is focused on bringing mass adoption and interoperability to the SocialFi category.',
-    category: 'Optimium',
     stack: 'OP Stack',
     links: {
       websites: ['https://form.network'],
-      apps: ['https://bridge.form.network'],
+      bridges: ['https://bridge.form.network'],
       documentation: ['https://docs.form.network'],
       explorers: ['https://explorer.form.network'],
       socialMedia: [

@@ -10,6 +10,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('omgnetwork')
 
@@ -130,4 +131,5 @@ export const omgnetwork: ScalingProject = {
     },
     risks: [],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

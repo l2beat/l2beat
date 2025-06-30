@@ -1,3 +1,94 @@
+Generated with discovered.json: 0xb54647908d450ebc861e9f65dbb37295c06a669b
+
+# Diff at Mon, 16 Jun 2025 08:42:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 20914730
+- current block number: 20914730
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20914730 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) {
+    +++ description: None
+      directlyReceivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0xae809d42f861A6381b0DFCf7216556e95362a7a8","role":"admin"}
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0xae809d42f861A6381b0DFCf7216556e95362a7a8"
++        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "ethereum:0x8334f9A70294556101527bfB9bdEdeF7EB382D94"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x8334f9A70294556101527bfB9bdEdeF7EB382D94"
++        "ethereum:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
++        "ethereum:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
++        "ethereum:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x78B5818884929d7A930edADD03a0fCD9Dd068EB7) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"
+    }
+```
+
+```diff
+    EOA  (0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0xae809d42f861A6381b0DFCf7216556e95362a7a8","role":"admin","via":[{"address":"ethereum:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"ethereum:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]}
+      receivedPermissions.11.from:
+-        "ethereum:0xae809d42f861A6381b0DFCf7216556e95362a7a8"
++        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      receivedPermissions.10.from:
+-        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "ethereum:0x8334f9A70294556101527bfB9bdEdeF7EB382D94"
+      receivedPermissions.9.from:
+-        "ethereum:0x8334f9A70294556101527bfB9bdEdeF7EB382D94"
++        "ethereum:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
+      receivedPermissions.8.from:
+-        "ethereum:0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
++        "ethereum:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "guard"
+      receivedPermissions.7.from:
+-        "ethereum:0x2297eB8DC91f532C91c57b3fb33C06b782e9594A"
++        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+      receivedPermissions.7.role:
+-        "admin"
++        ".guardian"
+      receivedPermissions.7.via:
+-        [{"address":"ethereum:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"ethereum:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+      receivedPermissions.6.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.6.from:
+-        "ethereum:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "ethereum:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7"
+      receivedPermissions.6.role:
+-        ".guardian"
++        "admin"
+      receivedPermissions.6.via:
++        [{"address":"ethereum:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"},{"address":"ethereum:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"}]
+    }
+```
+
 Generated with discovered.json: 0x8a8e14e39092337229df9be440503a172e7ce7b5
 
 # Diff at Fri, 30 May 2025 07:06:43 GMT:

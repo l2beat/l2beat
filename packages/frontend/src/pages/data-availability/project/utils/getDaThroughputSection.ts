@@ -2,15 +2,25 @@ import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/getDaThroughputTable'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
 import { ps } from '~/server/projects'
-import { api } from '~/trpc/server'
+import type { SsrHelpers } from '~/trpc/server'
 
 export async function getDaThroughputSection(
+  helpers: SsrHelpers,
   project: Project<'daLayer' | 'statuses' | 'display', 'milestones'>,
 ) {
+  const configuredThroughput = project.daLayer.throughput
+  if (
+    !configuredThroughput ||
+    configuredThroughput.length === 0 ||
+    !THROUGHPUT_ENABLED_DA_LAYERS.includes(project.id)
+  )
+    return undefined
+
   const [throughputChart, throughputData, projectsWithColors] =
     await Promise.all([
-      api.da.projectChart({
+      helpers.da.projectChart.fetch({
         range: '1y',
         projectId: project.id,
       }),
@@ -23,18 +33,21 @@ export async function getDaThroughputSection(
 
   if (!projectData) return undefined
 
-  const notSyncedStatus = getThroughputSyncWarning(
-    UnixTime(projectData.syncedUntil),
-    { shorter: true },
-  )
+  const notSyncedStatus = projectData.syncedUntil
+    ? getThroughputSyncWarning(UnixTime(projectData.syncedUntil), {
+        shorter: true,
+      })
+    : undefined
 
   return {
     projectId: project.id,
     throughput: project.daLayer.throughput ?? [],
-    pastDayAvgCapacityUtilization: projectData.pastDayAvgCapacityUtilization,
-    pastDayAvgThroughputPerSecond: projectData.pastDayAvgThroughputPerSecond,
-    largestPoster: projectData.largestPoster,
-    totalPosted: projectData.totalPosted,
+    pastDayAvgCapacityUtilization:
+      projectData.pastDayData?.avgCapacityUtilization,
+    pastDayAvgThroughputPerSecond:
+      projectData.pastDayData?.avgThroughputPerSecond,
+    largestPoster: projectData.pastDayData?.largestPoster,
+    totalPosted: projectData.pastDayData?.totalPosted,
     syncStatus: {
       warning: notSyncedStatus,
       isSynced: !notSyncedStatus,

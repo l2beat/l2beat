@@ -15,8 +15,8 @@ export function getPreview(
   configReader: ConfigReader,
   projectId: string,
 ): ApiPreviewResponse {
-  const projectChains: string[] =
-    configReader.readAllChainsForProject(projectId)
+  const discoveries = getAllProjectDiscoveries(configReader, projectId)
+  const projectChains: string[] = discoveries.map((d) => d.chain)
 
   // sort chains, keeping the host chain first
   const hostChain = 'ethereum'
@@ -35,7 +35,6 @@ export function getPreview(
     contracts: ProjectContract[]
   }[] = []
 
-  const discoveries = getAllProjectDiscoveries(configReader, projectId)
   const meta = getMeta(discoveries)
   projectChains.forEach((chain) => {
     const processor = new ProjectDiscovery(projectId, chain)

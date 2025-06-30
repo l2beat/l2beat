@@ -21,6 +21,7 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('degate')
 
@@ -80,7 +81,7 @@ export const degate: ScalingProject = {
 
     links: {
       websites: ['https://degate.com/'],
-      apps: ['https://app.degate.com/'],
+      bridges: ['https://app.degate.com/'],
       documentation: ['https://docs.degate.com/'],
       repositories: ['https://github.com/degatedev/protocols'],
       socialMedia: [
@@ -144,11 +145,11 @@ export const degate: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -325,4 +326,5 @@ export const degate: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

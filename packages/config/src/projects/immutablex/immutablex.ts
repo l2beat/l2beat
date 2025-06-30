@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -70,10 +71,10 @@ export const immutablex: ScalingProject = {
       'Immutable X is a NFT-focused Validium providing zero gas fees, instant trades and scalability for applications.',
     purposes: ['NFT', 'Exchange'],
     stack: 'StarkEx',
-    category: 'Validium',
+    category: 'Other',
     links: {
       websites: ['https://immutable.com/'],
-      apps: ['https://market.immutable.com/'],
+      bridges: ['https://market.immutable.com/'],
       documentation: [
         'https://docs.starkware.co/starkex/perpetual/perpetual_overview.html',
       ],
@@ -224,4 +225,5 @@ export const immutablex: ScalingProject = {
         ),
     },
   }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

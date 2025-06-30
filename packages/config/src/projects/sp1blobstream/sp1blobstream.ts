@@ -21,7 +21,7 @@ export const sp1blobstream: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: 'Celestia ZK light client implementation.',

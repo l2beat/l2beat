@@ -107,7 +107,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
     description: `Arbitrum One is a general-purpose Optimistic Rollup built by Offchain Labs and governed by the Arbitrum DAO.`,
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
-      apps: ['https://bridge.arbitrum.io'],
+      bridges: ['https://bridge.arbitrum.io'],
       documentation: [
         'https://docs.arbitrum.io',
         'https://docs.arbitrum.foundation/',
@@ -222,10 +222,10 @@ export const arbitrum: ScalingProject = orbitStackL2({
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0xA10c7CE4b876998858b1a9E12b10092229539400'),
-      tokens: ['DAI'],
+      tokens: ['DAI', 'USDS', 'sUSDS'],
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
-        'DAI Vault for custom DAI Gateway. Fully controlled by MakerDAO governance.',
+        'Maker/Sky-controlled vault for DAI, USDS and sUSDS bridged with canonical messaging.',
     }),
     discovery.getEscrowDetails({
       address: EthereumAddress('0x0F25c1DC2a9922304f2eac71DCa9B07E310e8E5a'),
@@ -279,11 +279,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

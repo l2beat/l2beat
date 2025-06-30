@@ -1,8 +1,8 @@
 {
   "name": "omni",
   "chain": "gnosis",
-  "blockNumber": 40407938,
-  "configHash": "0x038bb702c930415486685c73629df5cb476fa396948485ca464d7b8d7621598d",
+  "blockNumber": 40494132,
+  "configHash": "0x731c6787867e7590a41cd8a07a3e341f5c578faaa849743ed9966e50ec70521a",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -525,9 +525,9 @@
         "$immutable": true,
         "GENESIS_TIME": 1606824023,
         "GENESIS_VALIDATORS_ROOT": "0x4b363db94e286120d76eb905340fdd4e54bfe9f06bf33ff6cf5ad27f511bfe95",
-        "getCurrentEpoch": 370268,
+        "getCurrentEpoch": 371455,
         "guardian": "0x4f34c5F8e9F07a409a59dbbb8e80Ab6D5f43bd72",
-        "head": 11848576,
+        "head": 11886560,
         "heliosProgramVkey": "0x00cd47e188eeeab95c3c666088b928ff8243f8dd8d6e94f49795013bcd6231f0",
         "SECONDS_PER_SLOT": 12,
         "SLOTS_PER_EPOCH": 32,
@@ -976,7 +976,7 @@
         "gasLimitManager": "0x68A3674028a785A8BCE19bA81B9ab7c9942BA3ED",
         "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
-        "getCurrentDay": 20243,
+        "getCurrentDay": 20248,
         "implementation": "0x2dbdCC6CAd1a5a11FD6337244407bC06162aAf92",
         "isInitialized": true,
         "mediatorContractOnOtherSide": "0x88ad09518695c6c3712AC10a214bE5109a655671",

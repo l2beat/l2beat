@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -19,7 +19,7 @@ export const soneium = opStackL2({
       'Soneium is an Optimistic rollup based on the OP Stack. It is built by Sony Block Solutions Labs and planned to stand as a versatile, general-purpose blockchain.',
     links: {
       websites: ['https://soneium.org/en/'],
-      apps: ['https://bridge.soneium.org/'],
+      bridges: ['https://bridge.soneium.org/'],
       documentation: ['https://docs.soneium.org/docs/builders/overview'],
       explorers: ['https://soneium.blockscout.com/'],
       repositories: ['https://github.com/Soneium'],
@@ -31,9 +31,6 @@ export const soneium = opStackL2({
     },
   },
   hasSuperchainScUpgrades: true,
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   finality: {
     type: 'OPStack',
     minTimestamp: UnixTime(1733134753),

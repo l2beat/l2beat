@@ -1,8 +1,8 @@
 {
   "name": "lens",
   "chain": "ethereum",
-  "blockNumber": 22593196,
-  "configHash": "0x83223b63c4ba22dc09056a7f36a8c7c4e17afbca0114facca1acf469f5dd6e3a",
+  "blockNumber": 22738142,
+  "configHash": "0xedb2c75df7fb1489e33f8ac48c33fab29a16e68e2e42ef9b70c0875ad56f73e5",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -127,6 +127,10 @@
         "$immutable": false,
         "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "0x71910321A1d3b3f743ca52569f5Aa82f09538A2e",
+          "0xfbDF62F0a73DED0BF5A264867cFD022E192B5526",
+          "0x5dc301EcD8Bd7694BB1074B3E58Aa0916EE7887d",
+          "0x62Ae8d9B6d0D9817bd9D41b9AfEAc301dBa713B8",
           "0x2eD1df8F475b1f9c7493fC0eb0BFD4D1FD17f27b",
           "0x2a80091816D7872850D500F6Ade835354238Af17",
           "0x5063b3D23C3640d51c9E2aef41063B1d482C70ff",
@@ -136,8 +140,8 @@
         "domainSeparator": "0xc8eba3256d1b3a1156a0fa016d04ef569baf7b7390eb0618ebe7bdc8dec4b253",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "multisigThreshold": "2 of 8 (25%)",
+        "nonce": 10,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -229,6 +233,16 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
+      "address": "0x5dc301EcD8Bd7694BB1074B3E58Aa0916EE7887d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x62Ae8d9B6d0D9817bd9D41b9AfEAc301dBa713B8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "LensZkEvmAdmin",
       "address": "0x6bd8d33551077Ed281Cb047835a2aE4033eEc433",
       "type": "Contract",
@@ -268,6 +282,11 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
+      "address": "0x71910321A1d3b3f743ca52569f5Aa82f09538A2e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ValidatorTimelock",
       "address": "0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
       "type": "Contract",
@@ -297,8 +316,6 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "validatorsVTL": [
-          "0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374",
-          "0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9",
           "0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67",
           "0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484"
         ]
@@ -309,20 +326,24 @@
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
-      "name": "ValidiumL1DAValidator",
-      "address": "0x907b30407249949521Bf0c89A43558dae200146A",
+      "name": "AvailL1DAValidator",
+      "address": "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "template": "shared-zk-stack/AvailL1DAValidator",
       "sourceHashes": [
-        "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
+        "0x847b975672b29f42aba32df162121ea5330f0bb48ac2ec11c61a07ad004c10c1"
       ],
       "proxyType": "immutable",
-      "description": "Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.",
-      "sinceTimestamp": 1739108927,
-      "sinceBlock": 21809358,
-      "values": { "$immutable": true },
+      "description": "Contract that verifies that the validiums data was made available on Avail by querying the 0x054fd961708D8E2B9c10a63F6157c74458889F0a on Ethereum for a merkle proof of inclusion.",
+      "sinceTimestamp": 1743696419,
+      "sinceBlock": 22189472,
+      "values": {
+        "$immutable": true,
+        "bridge": "0x054fd961708D8E2B9c10a63F6157c74458889F0a",
+        "vectorx": "0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      },
       "implementationNames": {
-        "0x907b30407249949521Bf0c89A43558dae200146A": "ValidiumL1DAValidator"
+        "0x8f50d93B9955B285f787043B30B5F51D09bE0120": "AvailL1DAValidator"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -339,11 +360,6 @@
         {
           "permission": "validateZkStack",
           "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-          "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -388,11 +404,6 @@
           "permission": "validateZkStack",
           "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
-        },
-        {
-          "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
-          "role": ".validatorsVTL"
         }
       ]
     },
@@ -400,7 +411,7 @@
       "name": "LensZkEvm",
       "address": "0xc29d04A93F893700015138E3E334eB828dAC3cef",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/Diamond",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xc18e3ec7d4fda7be44236a2bff585089b85466b00d09a1c3a2529c604f99143b",
         "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
@@ -594,10 +605,10 @@
         "getChainId": 232,
         "getChainTypeManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
         "getDAValidatorPair": [
-          "0x907b30407249949521Bf0c89A43558dae200146A",
-          "0xFa30EAe30351A83809657299F6Cad9557c232e8C"
+          "0x8f50d93B9955B285f787043B30B5F51D09bE0120",
+          "0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
         ],
-        "getFirstUnprocessedPriorityTx": 1353,
+        "getFirstUnprocessedPriorityTx": 1722,
         "getL2BootloaderBytecodeHash": "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd",
         "getL2DefaultAccountBytecodeHash": "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67",
         "getL2EvmEmulatorBytecodeHash": "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba",
@@ -605,21 +616,21 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 4,
-        "getPriorityTreeRoot": "0xd78d3acc58fd12fcfa08b54e3832dc2be017bf28598d7c54f4aacfe5c0ffa6d1",
+        "getPriorityQueueSize": 2,
+        "getPriorityTreeRoot": "0x86033fd4e9db164625cc3afb40fb0081f0a868d20857eb8577c755328e5f77ce",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 115964116992,
         "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 27, 0],
         "getSettlementLayer": "0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 6452,
-        "getTotalBatchesExecuted": 6450,
-        "getTotalBatchesVerified": 6451,
-        "getTotalBlocksCommitted": 6452,
-        "getTotalBlocksExecuted": 6450,
-        "getTotalBlocksVerified": 6451,
-        "getTotalPriorityTxs": 1357,
+        "getTotalBatchesCommitted": 6753,
+        "getTotalBatchesExecuted": 6750,
+        "getTotalBatchesVerified": 6753,
+        "getTotalBlocksCommitted": 6753,
+        "getTotalBlocksExecuted": 6750,
+        "getTotalBlocksVerified": 6753,
+        "getTotalPriorityTxs": 1724,
         "getTransactionFilterer": "0x0000000000000000000000000000000000000000",
         "getVerifier": "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0",
         "getVerifierParams": {
@@ -685,6 +696,11 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
+      "address": "0xdA6661Df15E79cFe1e679ccD138D813b955ba492",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xE0b3Ef5A61324acceE3798B6D9Da5B47b0312b7c",
       "type": "EOA",
       "proxyType": "EOA"
@@ -732,7 +748,7 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "address": "0xFa30EAe30351A83809657299F6Cad9557c232e8C",
+      "address": "0xfbDF62F0a73DED0BF5A264867cFD022E192B5526",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -1132,9 +1148,14 @@
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
     ],
-    "0x907b30407249949521Bf0c89A43558dae200146A": [
-      "error ValL1DAWrongInputLength(uint256 inputLength, uint256 expectedLength)",
-      "function checkDA(uint256, uint256, bytes32, bytes _operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)"
+    "0x8f50d93B9955B285f787043B30B5F51D09bE0120": [
+      "constructor(address _availBridge)",
+      "error InvalidAttestationProof()",
+      "error InvalidValidatorOutputHash()",
+      "function attestations(bytes32) view returns (address attester, uint32 blockNumber, uint128 leafIndex)",
+      "function bridge() view returns (address)",
+      "function checkDA(uint256, uint256, bytes32 l2DAValidatorOutputHash, bytes operatorDAInput, uint256 maxBlobsSupported) returns (tuple(bytes32 stateDiffHash, bytes32[] blobsLinearHashes, bytes32[] blobsOpeningCommitments) output)",
+      "function vectorx() view returns (address)"
     ],
     "0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
@@ -1248,14 +1269,14 @@
   },
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "shared-zk-stack/AvailL1DAValidator": "0xb0d552fff2582ff6cb7f9fad04a31ee03fa589ac2c852310fc3771f9367afc08",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
+    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1USDCBridge": "0x061dba0e24ed75235f2eb19caf0c4adfa7896c607bd4b2400c7af30c3bc614ae",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x2d48ba90c9577d500d7dd1885aa2ad564ac527c17cffe7d96096b6e7236f7c6b"
+  "permissionsConfigHash": "0x918c142507e2aa332ab174f6604bc2e2fb864da0caf6c2f429d465f5a251e8e5"
 }

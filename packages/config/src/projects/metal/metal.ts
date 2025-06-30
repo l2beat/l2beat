@@ -1,6 +1,6 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
-import { REASON_FOR_BEING_OTHER } from '../../common'
+import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -13,10 +13,7 @@ export const metal: ScalingProject = opStackL2({
   discovery,
   associatedTokens: ['MTL'],
   additionalBadges: [BADGES.RaaS.Conduit],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Metal',
     slug: 'metal',
@@ -24,7 +21,7 @@ export const metal: ScalingProject = opStackL2({
       'Metal L2 is a general-purpose OP stack rollup by Metallicus focused on banking and compliance.',
     links: {
       websites: ['https://metall2.com/'],
-      apps: [
+      bridges: [
         'https://bridge.metall2.com/',
         'https://dollar.metalx.com/',
         'https://metalpay.com/',
@@ -65,7 +62,8 @@ export const metal: ScalingProject = opStackL2({
 
   // Set explicitly since finality calculation returns weird results
   finality: undefined,
-  isNodeAvailable: 'UnderReview',
+  isNodeAvailable: true,
+  stateDerivation: DERIVATION.OPSTACK('METAL'),
   milestones: [
     {
       title: 'Mainnet Launch',

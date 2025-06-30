@@ -2,7 +2,7 @@
   "name": "grvt",
   "chain": "ethereum",
   "blockNumber": 22593196,
-  "configHash": "0x1f657dbc0ee875b958fcb2dd8d7960bb241fd1114fefd4d365d8f0e1e3809486",
+  "configHash": "0x8644498fffc2861dd0ed5fbbafe98b3fa21b3d156a6997da22d48240e4825a4f",
   "sharedModules": ["shared-zk-stack"],
   "entries": [
     {
@@ -372,7 +372,7 @@
       "name": "ValidiumL1DAValidator",
       "address": "0x907b30407249949521Bf0c89A43558dae200146A",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/ValidiumL1DAValidator",
+      "template": "shared-zk-stack/ValidiumL1DAValidator",
       "sourceHashes": [
         "0x9268ac939681805a58626cebbcf26606bf71106922be33c48712e455381762c8"
       ],
@@ -472,7 +472,7 @@
       "name": "GrvtZkEvm",
       "address": "0xe3e310cd8EE0C808794810AB50FE4BcCC5c7D89E",
       "type": "Contract",
-      "template": "shared-zk-stack/v26/Diamond",
+      "template": "shared-zk-stack/Diamond",
       "sourceHashes": [
         "0xcd2dee9d49d75aa37138514c1f32d29c60222002963e0c0a7e1a815dff00444f",
         "0xbc2380479529743c27e6ab96cdf08210319fadcbca0856cf50c6b1b54bf8437f"
@@ -1325,12 +1325,12 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
+    "shared-zk-stack/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
     "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/v26/Diamond": "0xef3e05942848c1858400f0ce5ef0d9f3c4c7ef7aeade3b0ceaa604de56313624",
-    "shared-zk-stack/v26/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
+    "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f",
+    "shared-zk-stack/ValidiumL1DAValidator": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "permissionsConfigHash": "0xdcbb260deb3bbe33e399624d76e53e4bb8eaa24b4abbc4bcacb89c1481bbb91c"
 }

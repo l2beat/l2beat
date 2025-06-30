@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x9a4b53328e0deb57e1ce8d12874b36f03aefc19d
+Generated with discovered.json: 0xfb2d229efd9023636796c7565ae633e3869ca3e6
 
 # Diff at Tue, 04 Mar 2025 10:39:06 GMT:
 
@@ -402,7 +402,7 @@ Generated with discovered.json: 0xf6bf5966c73218d06e07d411dec3c09220a1b4b8
 
 ## Description
 
-Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum persepective).
+Threshold of the AuthorityMultisig raised to 2. As long as there are no withdrawals, the AuthorityMultisig is essentially a pauser only since upgrades do not change the withdrawals and can only affect a 'virtual' state on the L2 (from ethereum perspective).
 
 ## Watched changes
 

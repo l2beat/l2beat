@@ -309,6 +309,8 @@
         "0x93ED3FBe21207Ec2E8f2d3c3de6e058Cb73Bc04d": "Pinakion Token",
         "0x04C154b66CB340F3Ae24111CC767e0184Ed00Cc6": "Pirex Ether Token",
         "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430": "PlayDapp Token",
+        "0x4C1746A800D224393fE2470C70A35717eD4eA5F1": "Plume Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token",
         "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD": "pNetwork Token",
         "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2": "Polkamon Token",
         "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6": "Polygon Ecosystem Token",
@@ -516,6 +518,7 @@
       "names": {
         "0xc3eACf0612346366Db554C991D7858716db09f58": "KelpDao Restaked ETH Token",
         "0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98": "Kraken Wrapped Bitcoin Token",
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0x2416092f143378750bb29b79eD961ab195CcEea5": "Renzo Restaked ETH Token",
         "0x9cb41CD74D01ae4b4f640EC40f7A60cA1bCF83E7": "Renzo Restaked LST Token",
         "0x9151434b16b9763660705744891fA906F660EcC5": "USD₮0 Token",
@@ -547,6 +550,7 @@
     },
     "fraxtal": {
       "names": {
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0x2416092f143378750bb29b79eD961ab195CcEea5": "Renzo Restaked ETH Token",
         "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": "Staked USDe Token",
         "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34": "USDe Token"
@@ -566,6 +570,7 @@
     },
     "zksync2": {
       "names": {
+        "0x57fD71a86522Dc06D6255537521886057c1772A3": "Blockchain Capital Token",
         "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4": "Bridged USDC (zkSync) Token",
         "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656": "Dai Stablecoin Token",
         "0x2AB105A3eAd22731082B790CA9A00D9A3A7627F9": "Fidelity ILF USD Fund Class G Acc Token",
@@ -577,6 +582,7 @@
         "0xed4040fD47629e7c8FBB7DA76bb50B3e7695F0f2": "Holdstation Token",
         "0x6bE2425C381eb034045b527780D2Bf4E21AB7236": "KelpDao Restaked ETH Token",
         "0x7715c206A14Ac93Cb1A6c0316A6E5f8aD7c9Dc31": "Mountain Protocol USD Token",
+        "0xAc4DE1E9A9e83524F24af77972Dd39D588De8164": "Private Credit Direct Deal0000031 Token",
         "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32": "Staked Frax Ether Token",
         "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C": "Tether USD Token",
         "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4": "USDC Token",
@@ -625,6 +631,7 @@
     "lisk": {
       "names": {
         "0x9BFA177621119e64CecbEabE184ab9993E2ef727": "Merlin BTC Token",
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08": "Stargate USD₮0 (Bridged) Token"
       }
     },
@@ -648,6 +655,7 @@
         "0x2CAE934a1e84F693fbb78CA5ED3B0A6893259441": "Astar Token",
         "0x60336f9296C79dA4294A19153eC87F8E52158e5F": "Bifrost Voucher ASTR Token",
         "0xc67476893C166c537afd9bc6bc87b3f228b44337": "Neemo Staked Astar Token",
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0x8CD846c404C7267350a2920576816603Cd5C6539": "Pipo Token",
         "0x6c460b2c6D6719562D5dA43E5152B375e79B9A8B": "pufETH Token",
         "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77": "Solv BTC Token",
@@ -767,6 +775,7 @@
         "0xB1a03EdA10342529bBF8EB700a06C60441fEf25d": "Mister Miggles Token",
         "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50": "Mochi Token",
         "0x9c632E6Aaa3eA73f91554f8A3cB2ED2F29605e0C": "Onyxcoin Token",
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D": "Prefrontal Cortex Convo Agent by Virtuals Token",
         "0x2416092f143378750bb29b79eD961ab195CcEea5": "Renzo Restaked ETH Token",
         "0x35E5dB674D8e93a03d814FA0ADa70731efe8a4b9": "Resolv USD Token",
@@ -810,6 +819,7 @@
         "0x59889b7021243dB5B1e065385F918316cD90D46c": "Merlin BTC Token",
         "0xDfc7C877a950e49D2610114102175A06C2e3167a": "Mode Token",
         "0x3f51c6c5927B88CDEc4b61e2787F9BD0f5249138": "Mode Savings Dai Token",
+        "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189": "OpenUSDT Token",
         "0x2416092f143378750bb29b79eD961ab195CcEea5": "Renzo Restaked ETH Token",
         "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77": "Solv BTC Token",
         "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2": "Staked USDe Token",
@@ -978,6 +988,7 @@
     },
     "bob": {
       "names": {
+        "0xe75D0fB2C24A55cA1e3F96781a2bCC7bdba058F0": "Bridged USDC (BOB) Token",
         "0xC96dE26018A54D51c097160568752c4E3BD6C364": "Fire Bitcoin Token",
         "0x541FD749419CA806a8bc7da8ac23D346f2dF8B77": "Solv BTC Token",
         "0xCC0966D8418d412c599A6421b760a847eB169A8c": "SolvBTC Babylon Token",
@@ -1002,6 +1013,12 @@
     "xchain": {
       "names": {
         "0xFbDa5F676cB37624f28265A144A48B0d6e87d3b6": "Bridged USDC (Stargate) Token"
+      }
+    },
+    "plumenetwork": {
+      "names": {
+        "0x78adD880A697070c1e765Ac44D65323a0DcCE913": "Bridged USDC (Stargate) Token",
+        "0xdddD73F5Df1F0DC31373357beAC77545dC5A6f3F": "Plume USD Token"
       }
     },
     "real": {

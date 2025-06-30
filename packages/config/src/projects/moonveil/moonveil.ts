@@ -15,7 +15,7 @@ export const moonveil: ScalingProject = upcomingL2({
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://moonveil.gg/'],
-      apps: ['https://moonveil.gg/AstrArk/'],
+      bridges: ['https://moonveil.gg/AstrArk/'],
       repositories: ['https://github.com/SwellNetwork'],
       socialMedia: [
         'https://x.com/Moonveil_Studio',

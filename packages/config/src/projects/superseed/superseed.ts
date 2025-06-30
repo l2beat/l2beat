@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,19 +13,15 @@ export const superseed: ScalingProject = opStackL2({
   addedAt: UnixTime(1743379200), // 2025-03-31T00:00:00Z
   additionalBadges: [BADGES.RaaS.Conduit],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Superseed',
     slug: 'superseed',
     description:
       'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol and redistribution of Layer 2 fees to its users.',
-    category: 'Optimistic Rollup',
     stack: 'OP Stack',
     links: {
       websites: ['https://superseed.xyz/'],
-      apps: ['https://bridge.superseed.xyz/'],
+      bridges: ['https://bridge.superseed.xyz/'],
       documentation: ['https://docs.superseed.xyz/'],
       explorers: ['https://explorer.superseed.xyz/'],
       repositories: ['https://github.com/superseed-xyz'],

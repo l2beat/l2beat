@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x53c38060dd1e9098da1db642196eb56974b64ffe
+
+# Diff at Mon, 16 Jun 2025 08:42:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 20920155
+- current block number: 20920155
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20920155 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      directlyReceivedPermissions.7:
++        {"permission":"upgrade","from":"ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","role":"admin"}
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "ethereum:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d"
+    }
+```
+
+```diff
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"guard","from":"ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","role":".GUARDIAN"}
+      receivedPermissions.11.permission:
+-        "guard"
++        "upgrade"
+      receivedPermissions.11.role:
+-        ".GUARDIAN"
++        "admin"
+      receivedPermissions.11.via:
++        [{"address":"ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"}]
+      receivedPermissions.10.from:
+-        "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "ethereum:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d"
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"
+    }
+```
+
 Generated with discovered.json: 0x1aa9a13f15fa381c57c6fb79e7953fd3b9626db1
 
 # Diff at Fri, 30 May 2025 07:00:39 GMT:

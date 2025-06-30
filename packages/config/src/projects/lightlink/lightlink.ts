@@ -12,6 +12,7 @@ import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('lightlink')
 
@@ -68,11 +69,11 @@ export const lightlink: ScalingProject = {
     slug: 'lightlink',
     description:
       'LightLink is a project that lets dApps and enterprises offer users instant, gasless transactions.',
-    category: 'Optimium',
+    category: 'Other',
     purposes: ['Universal'],
     links: {
       websites: ['https://lightlink.io'],
-      apps: ['https://phoenix.lightlink.io/apps'],
+      bridges: ['https://phoenix.lightlink.io/apps'],
       documentation: ['https://docs.lightlink.io'],
       explorers: ['https://phoenix.lightlink.io'],
       repositories: ['https://github.com/lightlink-network'],
@@ -201,6 +202,7 @@ export const lightlink: ScalingProject = {
     },
   },
   technology: {},
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }
 
 function getMinValidatorsForConsensus(

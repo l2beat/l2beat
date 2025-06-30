@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,16 +13,13 @@ export const mint: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Mint',
     slug: 'mint',
     description: 'Mint Blockchain is a Layer 2 network for NFTs.',
     links: {
       websites: ['https://mintchain.io/'],
-      apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
+      bridges: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
       documentation: ['https://docs.mintchain.io/'],
       explorers: ['https://explorer.mintchain.io'],
       repositories: ['https://github.com/Mint-Blockchain'],

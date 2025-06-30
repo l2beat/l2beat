@@ -18,7 +18,7 @@ export const mindchain: ScalingProject = upcomingL3({
       websites: ['https://mindnetwork.xyz/'],
       documentation: ['https://docs.mindnetwork.xyz/minddocs'],
       repositories: ['https://github.com/mind-network'],
-      apps: ['https://fhebridge.mindnetwork.xyz/connectWallct'],
+      bridges: ['https://fhebridge.mindnetwork.xyz/connectWallct'],
       socialMedia: [
         'https://twitter.com/mindnetwork_xyz',
         'https://discord.com/invite/UYj94MJdGJ',

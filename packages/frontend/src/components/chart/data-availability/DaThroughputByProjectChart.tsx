@@ -22,6 +22,7 @@ import { generateAccessibleColors } from '~/utils/generateColors'
 import { getDaDataParams } from './getDaDataParams'
 
 interface Props {
+  daLayer: string
   data: DaThroughputChartDataByChart | undefined
   isLoading: boolean
   projectsToShow: string[]
@@ -30,6 +31,7 @@ interface Props {
 }
 
 export function DaThroughputByProjectChart({
+  daLayer,
   data,
   isLoading,
   projectsToShow,
@@ -82,10 +84,26 @@ export function DaThroughputByProjectChart({
       return []
     }
 
+    const lastProjectsDataTimestamp = data?.findLast(([_, values]) => {
+      return Object.entries(values).some(
+        ([name, value]) => name !== 'Unknown' && value > 0,
+      )
+    })?.[0]
+
     return (
       data?.map(([timestamp, values]) => {
+        // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to cut the chart to the last project data timestamp
+        if (
+          daLayer === 'eigenda' &&
+          lastProjectsDataTimestamp &&
+          timestamp > lastProjectsDataTimestamp
+        ) {
+          return {
+            timestamp,
+          }
+        }
         return {
-          timestamp: timestamp,
+          timestamp,
           ...Object.fromEntries(
             Object.entries(values)
               .map(([key, value]) => {
@@ -97,7 +115,7 @@ export function DaThroughputByProjectChart({
         }
       }) ?? []
     )
-  }, [data, projectsToShow, denominator])
+  }, [data, projectsToShow, denominator, daLayer])
 
   return (
     <ChartContainer

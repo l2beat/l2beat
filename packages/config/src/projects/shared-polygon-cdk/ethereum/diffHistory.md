@@ -1,3 +1,1203 @@
+Generated with discovered.json: 0x8165cd01c31cc697e4be0373c503925d3da7977d
+
+# Diff at Fri, 27 Jun 2025 15:10:51 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22774522
+- current block number: 22796580
+
+## Description
+
+add new rollupType: AggChainFEP (prly katana).
+
+https://etherscan.io/address/0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682#code
+
+type not used by katana yet.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      values.rollupsDataV2.19.programVKey:
+-        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.19.rollupVerifierType:
+-        1
++        2
+      values.rollupsDataV2.19.rollupTypeID:
+-        11
++        12
+      values.rollupsDataV2.19.forkID:
+-        12
++        0
+      values.rollupsDataV2.19.verifier:
+-        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
++        "0x0000000000000000000000000000000000000000"
+      values.rollupTypeCount:
+-        11
++        12
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.11:
++        {"consensusImplementation":"0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682","verifier":"0x0000000000000000000000000000000000000000","forkID":0,"rollupVerifierType":2,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+    }
+```
+
+Generated with discovered.json: 0x999e4a9ce02c16d8178c32b64eb3c72fac9f9e59
+
+# Diff at Tue, 24 Jun 2025 15:18:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@165a3574e7a5112b92cf5b6d87a202235001fcdf block: 22744056
+- current block number: 22774522
+
+## Description
+
+agglayer v0.3.0 upgrade.
+- pessimistic proofs router: 'algateway', manages a selector -> (verifier,vkey) mapping used for `verifyPessimisticProof()` and a yet unused aggchainselector -> vkey mapping
+- new 'factory' for wrapped tokens in the bridge: a wrapped token contract gets deployed when `PolygonRollupManager.claimAsset()` is called for an asset that does not exist on this chain. previously these token contracts were not upgradeable, now they are (most likely by the `PolygonZkEVMBridgeV2.proxiedTokensManager()`, pinged polygon team to verify the proxy bytecode).
+
+## Watched changes
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      directlyReceivedPermissions.3:
++        {"permission":"upgrade","from":"ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin"}
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.10:
++        {"permission":"interact","from":"ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3","description":"add or update default aggchain verification keys.","role":".aggchainDefaultVKeyAC"}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","role":"admin","via":[{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]}
+      receivedPermissions.7.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.7.role:
+-        "admin"
++        ".proxiedTokensManager"
+      receivedPermissions.7.via.1:
+-        {"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.7.via.0.delay:
++        259200
+      receivedPermissions.7.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.7.description:
++        "upgrade the implementation of wrapped tokens deployed by the bridge."
+      receivedPermissions.6.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.6.from:
+-        "ethereum:0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.6.role:
+-        "admin"
++        ".timelockAdminAC"
+      receivedPermissions.6.via.1:
+-        {"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.6.via.0.delay:
++        259200
+      receivedPermissions.6.via.0.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.6.delay:
++        259200
+      receivedPermissions.6.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.6.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      receivedPermissions.5.role:
+-        "admin"
++        ".timelockAdminAC"
+      receivedPermissions.5.via:
+-        [{"address":"ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"},{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.5.delay:
++        259200
+      receivedPermissions.5.description:
++        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      receivedPermissions.5.condition:
++        "(no delay if in emergency state)"
+      receivedPermissions.4.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      receivedPermissions.4.delay:
+-        259200
+      receivedPermissions.4.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "freeze routes from proof selector to verifier / vKey for pessimistic proofs."
+      receivedPermissions.4.role:
+-        ".timelockAdminAC"
++        ".freezePpRouteAC"
+      receivedPermissions.4.condition:
+-        "(no delay if in emergency state)"
+      receivedPermissions.4.via:
+-        [{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.3.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      receivedPermissions.3.delay:
+-        259200
+      receivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
++        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
+      receivedPermissions.3.role:
+-        ".timelockAdminAC"
++        ".tweakParametersAC"
+      receivedPermissions.3.condition:
+-        "(no delay if in emergency state)"
+      receivedPermissions.2.description:
+-        "manage parameters like fees for all connected projects, set the trusted aggregator, stop the emergency state, update projects and obsolete rollup types."
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      receivedPermissions.2.role:
+-        ".tweakParametersAC"
++        ".defaultAdminAC"
+      receivedPermissions.2.via:
++        [{"address":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"condition":"(no delay if in emergency state)"}]
+      receivedPermissions.1.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      receivedPermissions.1.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
+      receivedPermissions.1.role:
+-        ".defaultAdminAC"
++        ".addPpRouteAC"
+      receivedPermissions.0.description:
+-        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
++        "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract PolygonSharedBridge (0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe) {
+    +++ description: The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.
+      template:
+-        "polygon-cdk/PolygonSharedBridge"
++        "polygon-cdk/PolygonSharedBridge_al030"
+      sourceHashes.0:
+-        "0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2"
++        "0xf77e37156ee166ea86bbe304138c8d57dd299347f411e731fa2086e15153a780"
+      description:
+-        "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages."
++        "The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages."
+      values.$implementation:
+-        "0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
++        "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"
+      values.$pastUpgrades.2:
++        ["2023-03-24T10:18:47.000Z","0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c",["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]]
+      values.$pastUpgrades.1.2:
+-        "0x28f93532243dd8a8cc92ce630ef1920f40de15af7db2903efbf42f21fdf8152c"
++        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
+      values.$pastUpgrades.1.1:
+-        "2023-03-24T10:18:47.000Z"
++        ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
+      values.$pastUpgrades.1.0:
+-        ["0x5ac4182A1dd41AeEf465E40B82fd326BF66AB82C"]
++        "2024-02-13T11:00:59.000Z"
+      values.$pastUpgrades.0.2:
+-        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
++        ["0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
+      values.$pastUpgrades.0.1:
+-        ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
++        "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3"
+      values.$pastUpgrades.0.0:
+-        "2024-02-13T11:00:59.000Z"
++        "2025-06-23T14:46:23.000Z"
+      values.$upgradeCount:
+-        2
++        3
+      values.BASE_INIT_BYTECODE_WRAPPED_TOKEN:
+-        "0x6101006040523480156200001257600080fd5b5060405162001b6638038062001b6683398101604081905262000035916200028d565b82826003620000458382620003a1565b506004620000548282620003a1565b50503360c0525060ff811660e052466080819052620000739062000080565b60a052506200046d915050565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f620000ad6200012e565b805160209182012060408051808201825260018152603160f81b90840152805192830193909352918101919091527fc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc66060820152608081018390523060a082015260c001604051602081830303815290604052805190602001209050919050565b6060600380546200013f9062000312565b80601f01602080910402602001604051908101604052809291908181526020018280546200016d9062000312565b8015620001be5780601f106200019257610100808354040283529160200191620001be565b820191906000526020600020905b815481529060010190602001808311620001a057829003601f168201915b5050505050905090565b634e487b7160e01b600052604160045260246000fd5b600082601f830112620001f057600080fd5b81516001600160401b03808211156200020d576200020d620001c8565b604051601f8301601f19908116603f01168101908282118183101715620002385762000238620001c8565b816040528381526020925086838588010111156200025557600080fd5b600091505b838210156200027957858201830151818301840152908201906200025a565b600093810190920192909252949350505050565b600080600060608486031215620002a357600080fd5b83516001600160401b0380821115620002bb57600080fd5b620002c987838801620001de565b94506020860151915080821115620002e057600080fd5b50620002ef86828701620001de565b925050604084015160ff811681146200030757600080fd5b809150509250925092565b600181811c908216806200032757607f821691505b6020821081036200034857634e487b7160e01b600052602260045260246000fd5b50919050565b601f8211156200039c57600081815260208120601f850160051c81016020861015620003775750805b601f850160051c820191505b81811015620003985782815560010162000383565b5050505b505050565b81516001600160401b03811115620003bd57620003bd620001c8565b620003d581620003ce845462000312565b846200034e565b602080601f8311600181146200040d5760008415620003f45750858301515b600019600386901b1c1916600185901b17855562000398565b600085815260208120601f198616915b828110156200043e578886015182559484019460019091019084016200041d565b50858210156200045d5787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b60805160a05160c05160e0516116aa620004bc6000396000610237015260008181610307015281816105c001526106a70152600061053a015260008181610379015261050401526116aa6000f3fe608060405234801561001057600080fd5b50600436106101775760003560e01c806370a08231116100d8578063a457c2d71161008c578063d505accf11610066578063d505accf1461039b578063dd62ed3e146103ae578063ffa1ad74146103f457600080fd5b8063a457c2d71461034e578063a9059cbb14610361578063cd0d00961461037457600080fd5b806395d89b41116100bd57806395d89b41146102e75780639dc29fac146102ef578063a3c573eb1461030257600080fd5b806370a08231146102915780637ecebe00146102c757600080fd5b806330adf81f1161012f5780633644e515116101145780633644e51514610261578063395093511461026957806340c10f191461027c57600080fd5b806330adf81f14610209578063313ce5671461023057600080fd5b806318160ddd1161016057806318160ddd146101bd57806320606b70146101cf57806323b872dd146101f657600080fd5b806306fdde031461017c578063095ea7b31461019a575b600080fd5b610184610430565b60405161019191906113e4565b60405180910390f35b6101ad6101a8366004611479565b6104c2565b6040519015158152602001610191565b6002545b604051908152602001610191565b6101c17f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f81565b6101ad6102043660046114a3565b6104dc565b6101c17f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c981565b60405160ff7f0000000000000000000000000000000000000000000000000000000000000000168152602001610191565b6101c1610500565b6101ad610277366004611479565b61055c565b61028f61028a366004611479565b6105a8565b005b6101c161029f3660046114df565b73ffffffffffffffffffffffffffffffffffffffff1660009081526020819052604090205490565b6101c16102d53660046114df565b60056020526000908152604090205481565b610184610680565b61028f6102fd366004611479565b61068f565b6103297f000000000000000000000000000000000000000000000000000000000000000081565b60405173ffffffffffffffffffffffffffffffffffffffff9091168152602001610191565b6101ad61035c366004611479565b61075e565b6101ad61036f366004611479565b61082f565b6101c17f000000000000000000000000000000000000000000000000000000000000000081565b61028f6103a9366004611501565b61083d565b6101c16103bc366004611574565b73ffffffffffffffffffffffffffffffffffffffff918216600090815260016020908152604080832093909416825291909152205490565b6101846040518060400160405280600181526020017f310000000000000000000000000000000000000000000000000000000000000081525081565b60606003805461043f906115a7565b80601f016020809104026020016040519081016040528092919081815260200182805461046b906115a7565b80156104b85780601f1061048d576101008083540402835291602001916104b8565b820191906000526020600020905b81548152906001019060200180831161049b57829003601f168201915b5050505050905090565b6000336104d0818585610b73565b60019150505b92915050565b6000336104ea858285610d27565b6104f5858585610dfe565b506001949350505050565b60007f00000000000000000000000000000000000000000000000000000000000000004614610537576105324661106d565b905090565b507f000000000000000000000000000000000000000000000000000000000000000090565b33600081815260016020908152604080832073ffffffffffffffffffffffffffffffffffffffff871684529091528120549091906104d090829086906105a3908790611629565b610b73565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610672576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152603060248201527f546f6b656e577261707065643a3a6f6e6c794272696467653a204e6f7420506f60448201527f6c79676f6e5a6b45564d4272696467650000000000000000000000000000000060648201526084015b60405180910390fd5b61067c8282611135565b5050565b60606004805461043f906115a7565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610754576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152603060248201527f546f6b656e577261707065643a3a6f6e6c794272696467653a204e6f7420506f60448201527f6c79676f6e5a6b45564d427269646765000000000000000000000000000000006064820152608401610669565b61067c8282611228565b33600081815260016020908152604080832073ffffffffffffffffffffffffffffffffffffffff8716845290915281205490919083811015610822576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602560248201527f45524332303a2064656372656173656420616c6c6f77616e63652062656c6f7760448201527f207a65726f0000000000000000000000000000000000000000000000000000006064820152608401610669565b6104f58286868403610b73565b6000336104d0818585610dfe565b834211156108cc576040517f08c379a0000000000000000000000000000000000000000000000000000000008152602060048201526024808201527f546f6b656e577261707065643a3a7065726d69743a204578706972656420706560448201527f726d6974000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8716600090815260056020526040812080547f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9918a918a918a9190866109268361163c565b9091555060408051602081019690965273ffffffffffffffffffffffffffffffffffffffff94851690860152929091166060840152608083015260a082015260c0810186905260e0016040516020818303038152906040528051906020012090506000610991610500565b6040517f19010000000000000000000000000000000000000000000000000000000000006020820152602281019190915260428101839052606201604080517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe08184030181528282528051602091820120600080855291840180845281905260ff89169284019290925260608301879052608083018690529092509060019060a0016020604051602081039080840390855afa158015610a55573d6000803e3d6000fd5b50506040517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0015191505073ffffffffffffffffffffffffffffffffffffffff811615801590610ad057508973ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16145b610b5c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602760248201527f546f6b656e577261707065643a3a7065726d69743a20496e76616c696420736960448201527f676e6174757265000000000000000000000000000000000000000000000000006064820152608401610669565b610b678a8a8a610b73565b50505050505050505050565b73ffffffffffffffffffffffffffffffffffffffff8316610c15576040517f08c379a0000000000000000000000000000000000000000000000000000000008152602060048201526024808201527f45524332303a20617070726f76652066726f6d20746865207a65726f2061646460448201527f72657373000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8216610cb8576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602260248201527f45524332303a20617070726f766520746f20746865207a65726f20616464726560448201527f73730000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff83811660008181526001602090815260408083209487168084529482529182902085905590518481527f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92591015b60405180910390a3505050565b73ffffffffffffffffffffffffffffffffffffffff8381166000908152600160209081526040808320938616835292905220547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8114610df85781811015610deb576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601d60248201527f45524332303a20696e73756666696369656e7420616c6c6f77616e63650000006044820152606401610669565b610df88484848403610b73565b50505050565b73ffffffffffffffffffffffffffffffffffffffff8316610ea1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602560248201527f45524332303a207472616e736665722066726f6d20746865207a65726f20616460448201527f64726573730000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8216610f44576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602360248201527f45524332303a207472616e7366657220746f20746865207a65726f206164647260448201527f65737300000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff831660009081526020819052604090205481811015610ffa576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602660248201527f45524332303a207472616e7366657220616d6f756e742065786365656473206260448201527f616c616e636500000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff848116600081815260208181526040808320878703905593871680835291849020805487019055925185815290927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a3610df8565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f611098610430565b8051602091820120604080518082018252600181527f310000000000000000000000000000000000000000000000000000000000000090840152805192830193909352918101919091527fc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc66060820152608081018390523060a082015260c001604051602081830303815290604052805190602001209050919050565b73ffffffffffffffffffffffffffffffffffffffff82166111b2576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601f60248201527f45524332303a206d696e7420746f20746865207a65726f2061646472657373006044820152606401610669565b80600260008282546111c49190611629565b909155505073ffffffffffffffffffffffffffffffffffffffff8216600081815260208181526040808320805486019055518481527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a35050565b73ffffffffffffffffffffffffffffffffffffffff82166112cb576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602160248201527f45524332303a206275726e2066726f6d20746865207a65726f2061646472657360448201527f73000000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff821660009081526020819052604090205481811015611381576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602260248201527f45524332303a206275726e20616d6f756e7420657863656564732062616c616e60448201527f63650000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff83166000818152602081815260408083208686039055600280548790039055518581529192917fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9101610d1a565b600060208083528351808285015260005b81811015611411578581018301518582016040015282016113f5565b5060006040828601015260407fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f8301168501019250505092915050565b803573ffffffffffffffffffffffffffffffffffffffff8116811461147457600080fd5b919050565b6000806040838503121561148c57600080fd5b61149583611450565b946020939093013593505050565b6000806000606084860312156114b857600080fd5b6114c184611450565b92506114cf60208501611450565b9150604084013590509250925092565b6000602082840312156114f157600080fd5b6114fa82611450565b9392505050565b600080600080600080600060e0888a03121561151c57600080fd5b61152588611450565b965061153360208901611450565b95506040880135945060608801359350608088013560ff8116811461155757600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561158757600080fd5b61159083611450565b915061159e60208401611450565b90509250929050565b600181811c908216806115bb57607f821691505b6020821081036115f4577f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b808201808211156104d6576104d66115fa565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361166d5761166d6115fa565b506001019056fea26469706673582212208d88fee561cff7120d381c345cfc534cef8229a272dc5809d4bbb685ad67141164736f6c63430008110033"
+      values.BRIDGE_VERSION:
++        "al-v0.3.0"
+      values.getProxiedTokensManager:
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      values.getWrappedTokenBridgeImplementation:
++        "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d"
+      values.pendingProxiedTokensManager:
++        "0x0000000000000000000000000000000000000000"
++++ description: is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer.
++++ severity: HIGH
+      values.proxiedTokensManager:
++        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
+      values.wrappedTokenBytecodeStorer:
++        "0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
+      fieldMeta.proxiedTokensManager:
++        {"severity":"HIGH","description":"is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer."}
+      implementationNames.0x0FeB850B183C57534b56b7d56520133C8f9BDB65:
+-        "PolygonZkEVMBridgeV2"
+      implementationNames.0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b:
++        "PolygonZkEVMBridgeV2"
+    }
+```
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.
+      template:
+-        "polygon-cdk/PolygonRollupManager_pessimistic"
++        "polygon-cdk/PolygonRollupManager_al030"
+      sourceHashes.1:
+-        "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
++        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a"
+      sourceHashes.0:
+-        "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a"
++        "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
+      description:
+-        "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
++        "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers."
+      values.$implementation:
+-        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
++        "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"
+      values.$pastUpgrades.6:
++        ["2024-02-13T11:00:59.000Z","0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",["0x3b82Da772c825283d85d5d6717A77C6Ff582053b"]]
+      values.$pastUpgrades.5.2:
+-        "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24"
++        "2023-03-24T10:19:23.000Z"
+      values.$pastUpgrades.5.1:
+-        "2024-02-13T11:00:59.000Z"
++        "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb"
+      values.$pastUpgrades.5.0.0:
+-        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
++        "0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"
+      values.$pastUpgrades.4.2:
+-        "2023-03-24T10:19:23.000Z"
++        "2023-11-09T09:22:59.000Z"
+      values.$pastUpgrades.4.1:
+-        "0xe34243804e1f7257acb09c97d0d6f023663200c39ee85a1e6927b0b391710bbb"
++        "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31"
+      values.$pastUpgrades.4.0.0:
+-        "0xe262Ea2782e2e8dbFe354048c3B5d6DE9603EfEF"
++        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.$pastUpgrades.3.2:
+-        "2023-11-09T09:22:59.000Z"
++        ["0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"]
+      values.$pastUpgrades.3.1:
+-        "0x1db1400138d6778d303b9a13e816432d11f8dfca00ef6ec6ffcb6698cb447a31"
++        "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac"
+      values.$pastUpgrades.3.0:
+-        ["0xb1585916487AcEdD99952086f2950763D253b923"]
++        "2023-09-20T08:30:35.000Z"
+      values.$pastUpgrades.2.2.0:
+-        "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"
++        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
+      values.$pastUpgrades.2.1:
+-        "0x25c342d7c5b4137b5439c16fd5fa1577c116277859202b2c68fcd9f73b3fc2ac"
++        "2024-10-30T11:11:59.000Z"
+      values.$pastUpgrades.2.0:
+-        "2023-09-20T08:30:35.000Z"
++        "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403"
+      values.$pastUpgrades.1.2:
+-        ["0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"]
++        "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e"
+      values.$pastUpgrades.1.1:
+-        "2024-10-30T11:11:59.000Z"
++        "2025-02-03T14:55:59.000Z"
+      values.$pastUpgrades.1.0:
+-        "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403"
++        ["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
+      values.$pastUpgrades.0.2:
+-        "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e"
++        ["0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"]
+      values.$pastUpgrades.0.1:
+-        "2025-02-03T14:55:59.000Z"
++        "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3"
+      values.$pastUpgrades.0.0:
+-        ["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
++        "2025-06-23T14:46:23.000Z"
+      values.$upgradeCount:
+-        6
++        7
+      values.ROLLUP_MANAGER_VERSION:
+-        "pessimistic"
++        "al-v0.3.0"
+      values.rollupsDataV2.14.rollupContract:
+-        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
++        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
+      values.rollupsDataV2.14.chainID:
+-        801
++        999
+      values.rollupsDataV2.14.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.14.forkID:
+-        12
++        9
+      values.rollupsDataV2.14.rollupTypeID:
+-        10
++        4
+      values.rollupsDataV2.14.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.14.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.13.rollupContract:
+-        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
++        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
+      values.rollupsDataV2.13.chainID:
+-        9369
++        1511670449
+      values.rollupsDataV2.13.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.13.forkID:
+-        12
++        9
+      values.rollupsDataV2.13.rollupTypeID:
+-        10
++        4
+      values.rollupsDataV2.13.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.13.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.12.rollupContract:
+-        "0xB234F18738d9531CAD6ae6d9A587d09fe200272C"
++        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
+      values.rollupsDataV2.12.chainID:
+-        999
++        2355
+      values.rollupsDataV2.12.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.12.forkID:
+-        9
++        12
+      values.rollupsDataV2.12.rollupTypeID:
+-        4
++        7
+      values.rollupsDataV2.11.rollupContract:
+-        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
++        "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
+      values.rollupsDataV2.11.chainID:
+-        45056
++        31415
+      values.rollupsDataV2.11.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupsDataV2.11.forkID:
+-        12
++        9
+      values.rollupsDataV2.11.rollupTypeID:
+-        10
++        4
+      values.rollupsDataV2.11.rollupVerifierType:
+-        1
++        0
+      values.rollupsDataV2.11.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupsDataV2.10.rollupContract:
+-        "0xC4E903D3Af4c3d2e437492d602adcC9d9b536858"
++        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
+      values.rollupsDataV2.10.chainID:
+-        1511670449
++        196
+      values.rollupsDataV2.10.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupsDataV2.10.forkID:
+-        9
++        13
+      values.rollupsDataV2.10.rollupTypeID:
+-        4
++        8
+      values.rollupsDataV2.9.rollupContract:
+-        "0x419dcD0f72ebAFd3524b65a97ac96699C7fBebdB"
++        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.rollupsDataV2.9.chainID:
+-        2355
++        1101
+      values.rollupsDataV2.9.rollupTypeID:
+-        7
++        6
+      values.rollupsDataV2.8.rollupContract:
+-        "0x78253E2E6120164bd826668A4C96Db20f78A94c9"
++        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
+      values.rollupsDataV2.8.chainID:
+-        31415
++        801
+      values.rollupsDataV2.8.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupsDataV2.8.forkID:
+-        9
++        12
+      values.rollupsDataV2.8.rollupTypeID:
+-        4
++        11
+      values.rollupsDataV2.8.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.8.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.7.rollupContract:
+-        "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507"
++        "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
+      values.rollupsDataV2.7.chainID:
+-        196
++        994873017
+      values.rollupsDataV2.7.verifier:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupsDataV2.7.forkID:
+-        13
++        12
+      values.rollupsDataV2.7.rollupTypeID:
+-        8
++        7
+      values.rollupsDataV2.6.rollupContract:
+-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
++        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
+      values.rollupsDataV2.6.chainID:
+-        1101
++        752025
+      values.rollupsDataV2.6.rollupTypeID:
+-        6
++        7
+      values.rollupsDataV2.5.rollupContract:
+-        "0x92726F7dE49300DBdb60930066bc1d0803c0740B"
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
+      values.rollupsDataV2.5.chainID:
+-        994873017
++        9369
+      values.rollupsDataV2.5.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupsDataV2.5.rollupTypeID:
+-        7
++        11
+      values.rollupsDataV2.5.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.5.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.4.rollupContract:
+-        "0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789"
++        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
+      values.rollupsDataV2.4.chainID:
+-        752025
++        3344
+      values.rollupsDataV2.3.rollupContract:
+-        "0xb1714954bBc0162A36FB44934F3216aCE81C40d7"
++        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
+      values.rollupsDataV2.3.chainID:
+-        3344
++        45056
+      values.rollupsDataV2.3.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupsDataV2.3.rollupTypeID:
+-        7
++        11
+      values.rollupsDataV2.3.rollupVerifierType:
+-        0
++        1
+      values.rollupsDataV2.3.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.1.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupsDataV2.1.rollupTypeID:
+-        10
++        11
+      values.rollupsDataV2.1.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupsDataV2.0.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupsDataV2.0.rollupTypeID:
+-        10
++        11
+      values.rollupsDataV2.0.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.rollupTypeCount:
+-        10
++        11
++++ description: struct consensusImplementation, verifier, forkID, rollupVerifierType, obsolete, programVKey
+      values.rollupTypes.10:
++        {"consensusImplementation":"0x2650a9a4fC64f63F573EF0F405064EF54BC46f71","verifier":"0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be","forkID":8,"rollupVerifierType":0,"obsolete":false,"programVKey":"0x0000000000000000000000000000000000000000000000000000000000000000"}
+      values.rollupTypes.9.verifier:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
+      values.rollupTypes.9.forkID:
+-        8
++        9
+      values.rollupTypes.8.consensusImplementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.rollupTypes.7.consensusImplementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.rollupTypes.7.verifier:
+-        "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      values.rollupTypes.7.forkID:
+-        9
++        11
+      values.rollupTypes.6.consensusImplementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.rollupTypes.6.verifier:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupTypes.6.forkID:
+-        11
++        12
+      values.rollupTypes.5.consensusImplementation:
+-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.rollupTypes.5.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupTypes.5.rollupVerifierType:
+-        0
++        1
+      values.rollupTypes.5.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
+      values.rollupTypes.4.consensusImplementation:
+-        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
+      values.rollupTypes.4.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
+      values.rollupTypes.4.forkID:
+-        12
++        7
+      values.rollupTypes.4.rollupVerifierType:
+-        1
++        0
+      values.rollupTypes.4.programVKey:
+-        "0x0062c685702e0582d900f3a19521270c92a58e2588230c4a5cf3b45103f4a512"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupTypes.3.consensusImplementation:
+-        "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.rollupTypes.3.verifier:
+-        "0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8"
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.rollupTypes.3.forkID:
+-        7
++        12
+      values.rollupTypes.2.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.rollupTypes.2.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
++        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
+      values.rollupTypes.2.rollupVerifierType:
+-        0
++        1
+      values.rollupTypes.2.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+      values.rollupTypes.1.consensusImplementation:
+-        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.rollupTypes.1.verifier:
+-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.rollupTypes.1.forkID:
+-        12
++        13
+      values.rollupTypes.1.rollupVerifierType:
+-        1
++        0
+      values.rollupTypes.1.programVKey:
+-        "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.rollupTypes.0.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.rollupTypes.0.verifier:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.rollupTypes.0.forkID:
+-        13
++        12
+      values.rollupTypes.0.rollupVerifierType:
+-        0
++        1
+      values.rollupTypes.0.programVKey:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.aggLayerGateway:
++        "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      implementationNames.0xA33619940bceb9be7c9679Dd80FA2918C2476382:
+-        "PolygonRollupManager"
+      implementationNames.0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab:
++        "PolygonRollupManager"
+    }
+```
+
+```diff
+    contract PolygonGlobalExitRootV2 (0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb) {
+    +++ description: A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.
+      sourceHashes.1:
+-        "0x5cd6999aa568aa00dc997f5d179426b88bf3797f4618bc4cce28b6cf5f8e76d6"
++        "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067"
+      values.$implementation:
+-        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
++        "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+      values.$pastUpgrades.3:
++        ["2025-06-23T14:46:23.000Z","0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",["0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]]
+      values.$upgradeCount:
+-        3
++        4
+      values.GER_VERSION:
++        "al-v0.3.0"
+      implementationNames.0x9Bdda421219900454E94e01d641fE64c60D8f4C8:
+-        "PolygonZkEVMGlobalExitRootV2"
+      implementationNames.0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48:
++        "PolygonZkEVMGlobalExitRootV2"
+    }
+```
+
+```diff
+    contract PolygonCreateRollupMultisig (0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager."
++        "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager."
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.5:
++        {"permission":"interact","from":"ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","description":"upgrade the implementation of wrapped tokens deployed by the bridge.","role":".proxiedTokensManager"}
+      directlyReceivedPermissions.4:
++        {"permission":"interact","from":"ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","delay":259200,"description":"propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.","role":".timelockAdminAC","condition":"(no delay if in emergency state)"}
+      directlyReceivedPermissions.3.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.3.description:
+-        "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay."
+      directlyReceivedPermissions.2.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      directlyReceivedPermissions.2.delay:
+-        259200
+      directlyReceivedPermissions.2.role:
+-        ".timelockAdminAC"
++        ".defaultAdminAC"
+      directlyReceivedPermissions.2.condition:
+-        "(no delay if in emergency state)"
+      directlyReceivedPermissions.2.description:
++        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3"
+      directlyReceivedPermissions.1.description:
+-        "manage all access control roles, add new rollup types (which are implementation contracts that can then be upgraded to by connected projects), update any connected projects to new rollup types and rollback batches, connect existing rollups to the PolygonRollupManager."
++        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
+      directlyReceivedPermissions.1.role:
+-        ".defaultAdminAC"
++        ".addPpRouteAC"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
++   Status: CREATED
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3)
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+```
+
+## Source code changes
+
+```diff
+.../.flat/AggLayerGateway/AggLayerGateway.sol      |  942 +++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  695 ++++++++++
+ .../PolygonZkEVMGlobalExitRootV2.sol               |   93 +-
+ .../PolygonRollupManager/PolygonRollupManager.sol  |  829 ++++++++++--
+ .../PolygonSharedBridge/PolygonZkEVMBridgeV2.sol   | 1295 ++++++++++++++----
+ .../ethereum/.flat/SP1Verifier.sol                 | 1396 ++++++++++++++++++++
+ 6 files changed, 4832 insertions(+), 418 deletions(-)
+```
+
+Generated with discovered.json: 0xf500f09c9ba1b9f5ac5eb5956794c67797d85d23
+
+# Diff at Fri, 20 Jun 2025 07:00:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@70109db050355e01a50f54497c60fdd17bbdbc2d block: 22666256
+- current block number: 22744056
+
+## Description
+
+new scheduled txs:
+1) add new rollupType (pessimistic - 11): https://app.blocksec.com/explorer/tx/eth/0x30ff069118dfed9022dc41e72794a6cae005cf1417dbcc245208a00628785946
+2) upgrade all 5 pessimistic chains to the above new type: https://app.blocksec.com/explorer/tx/eth/0xd89ca61d7a6968ab0838ef03666ac5dfe4f8750ba4afdbc576c535108f8655b3
+3) upgrade rollupManager, globalExitRoot and sharedBridge to new implementations: https://app.blocksec.com/explorer/tx/eth/0x231cc96debfd57c50e0c9971b8efcd4cb2b58377e68bbb4523771046860ea835
+4) add new rollupType (aggchainFEP - 12): https://app.blocksec.com/explorer/tx/eth/0xd9d5644147ce2c17e4a53c0c9ebfc576d5be6713209354fb8949e010870783c8
+
+interesting consensus impl (op-succinct -> katana?): https://etherscan.io/address/0xe7fe45579d784dc83b0fed844a65f4ceefde5682#code
+
+## Watched changes
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      values.scheduledTransactionsDecoded.33:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","implementation":"0x2E38cD55163137483E30580Cb468C2dFf1d85077"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.32:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0xA33619940bceb9be7c9679Dd80FA2918C2476382","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.31:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","implementation":"0x0FeB850B183C57534b56b7d56520133C8f9BDB65"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.30:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgrade","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.29:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.28:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"updateRollup","inputs":{"rollupContract":"0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80","newRollupTypeID":3,"upgradeData":"0x1c8b9370"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.27:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"addNewRollupType","inputs":{"consensusImplementation":"0x7253F329302b1b5E774Ac641EA3743E9E3244f2E","verifier":"0x9B9671dB83CfcB4508bF361942488C5cA2b1286D","forkID":12,"rollupCompatibilityID":0,"genesis":"0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272","description":"Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.26:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","implementation":"0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b","data":{}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"259200"}
+      values.scheduledTransactionsDecoded.25:
++        {"target":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","value":"0","function":"updateDelay","inputs":{"newDelay":259200},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.24:
++        {"target":"0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A","value":"0","function":"upgradeAndCall","inputs":{"proxy":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","implementation":"0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F","data":{"_versionString":"v2.0.0-RC1-fork.5"}},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+      values.scheduledTransactionsDecoded.23.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.23.inputs.implementation:
+-        "0x2E38cD55163137483E30580Cb468C2dFf1d85077"
++        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
+      values.scheduledTransactionsDecoded.23.inputs.data:
++        {}
+      values.scheduledTransactionsDecoded.22.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.22.function:
+-        "upgradeAndCall"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.22.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.22.inputs.implementation:
+-        "0xA33619940bceb9be7c9679Dd80FA2918C2476382"
+      values.scheduledTransactionsDecoded.22.inputs.data:
+-        {}
+      values.scheduledTransactionsDecoded.22.inputs.consensusImplementation:
++        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.scheduledTransactionsDecoded.22.inputs.verifier:
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.22.inputs.forkID:
++        8
+      values.scheduledTransactionsDecoded.22.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.22.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.22.inputs.description:
++        "Type: Validium, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.22.predecessor:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad"
+      values.scheduledTransactionsDecoded.21.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.21.inputs.proxy:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.21.inputs.implementation:
+-        "0x0FeB850B183C57534b56b7d56520133C8f9BDB65"
++        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.scheduledTransactionsDecoded.21.inputs.data:
++        {"_versionString":"v3.0.0-incaberry"}
+      values.scheduledTransactionsDecoded.20.function:
+-        "upgrade"
++        "upgradeAndCall"
+      values.scheduledTransactionsDecoded.20.inputs.implementation:
+-        "0x103388f5661d224F4aFb555C7E4a8FB52d0b752d"
++        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+      values.scheduledTransactionsDecoded.20.inputs.data:
++        {"trustedAggregator":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","_pendingStateTimeout":432000,"_trustedAggregatorTimeout":432000,"admin":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","timelock":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","emergencyCouncil":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","polygonZkEVM":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987","zkEVMVerifier":"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8","zkEVMForkID":7,"zkEVMChainID":1101}
+      values.scheduledTransactionsDecoded.19.function:
+-        "updateRollup"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.19.inputs.rollupContract:
+-        "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80"
+      values.scheduledTransactionsDecoded.19.inputs.newRollupTypeID:
+-        3
+      values.scheduledTransactionsDecoded.19.inputs.upgradeData:
+-        "0x1c8b9370"
+      values.scheduledTransactionsDecoded.19.inputs.consensusImplementation:
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.19.inputs.verifier:
++        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.scheduledTransactionsDecoded.19.inputs.forkID:
++        13
+      values.scheduledTransactionsDecoded.19.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.19.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.19.inputs.description:
++        "Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.18.function:
+-        "addNewRollupType"
++        "0xf34eb8eb"
+      values.scheduledTransactionsDecoded.18.inputs.consensusImplementation:
+-        "0x7253F329302b1b5E774Ac641EA3743E9E3244f2E"
+      values.scheduledTransactionsDecoded.18.inputs.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.18.inputs.forkID:
+-        12
+      values.scheduledTransactionsDecoded.18.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.18.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.18.inputs.description:
+-        "Type: zkEVM, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.18.inputs.calldata:
++        "0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000"
+      values.scheduledTransactionsDecoded.17.target:
+-        "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
++        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+      values.scheduledTransactionsDecoded.17.function:
+-        "updateDelay"
++        "upgrade"
+      values.scheduledTransactionsDecoded.17.inputs.newDelay:
+-        259200
+      values.scheduledTransactionsDecoded.17.inputs.proxy:
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.scheduledTransactionsDecoded.17.inputs.implementation:
++        "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+      values.scheduledTransactionsDecoded.17.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.16.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.16.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.16.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.16.inputs.implementation:
+-        "0x301442aA888701c8B86727d42F3C55Fb0dd9eF7F"
+      values.scheduledTransactionsDecoded.16.inputs.data:
+-        {"_versionString":"v2.0.0-RC1-fork.5"}
+      values.scheduledTransactionsDecoded.16.inputs.rollupContract:
++        "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
+      values.scheduledTransactionsDecoded.16.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.16.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.16.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.15.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.15.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.15.inputs.proxy:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      values.scheduledTransactionsDecoded.15.inputs.implementation:
+-        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8"
+      values.scheduledTransactionsDecoded.15.inputs.data:
+-        {}
+      values.scheduledTransactionsDecoded.15.inputs.rollupContract:
++        "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7"
+      values.scheduledTransactionsDecoded.15.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.15.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.15.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.14.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.14.inputs.consensusImplementation:
+-        "0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C"
+      values.scheduledTransactionsDecoded.14.inputs.verifier:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.14.inputs.forkID:
+-        8
+      values.scheduledTransactionsDecoded.14.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.14.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.14.inputs.description:
+-        "Type: Validium, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.14.inputs.rollupContract:
++        "0x88404dD30A96AD25A765d733429Cf83138c7f8f4"
+      values.scheduledTransactionsDecoded.14.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.14.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.14.predecessor:
+-        "0x8bae5e2a8aaf4501e263b917591e7fcf9b1d28c85962a8847a845aff916b50ad"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.14.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.13.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.13.function:
+-        "upgradeAndCall"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.13.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.13.inputs.implementation:
+-        "0xb1585916487AcEdD99952086f2950763D253b923"
+      values.scheduledTransactionsDecoded.13.inputs.data:
+-        {"_versionString":"v3.0.0-incaberry"}
+      values.scheduledTransactionsDecoded.13.inputs.rollupContract:
++        "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec"
+      values.scheduledTransactionsDecoded.13.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.13.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.13.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.12.target:
+-        "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.12.function:
+-        "upgradeAndCall"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.12.inputs.proxy:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      values.scheduledTransactionsDecoded.12.inputs.implementation:
+-        "0x3b82Da772c825283d85d5d6717A77C6Ff582053b"
+      values.scheduledTransactionsDecoded.12.inputs.data:
+-        {"trustedAggregator":"0x6329Fe417621925C81c16F9F9a18c203C21Af7ab","_pendingStateTimeout":432000,"_trustedAggregatorTimeout":432000,"admin":"0x242daE44F5d8fb54B198D03a94dA45B5a4413e21","timelock":"0xEf1462451C30Ea7aD8555386226059Fe837CA4EF","emergencyCouncil":"0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6","polygonZkEVM":"0x519E42c24163192Dca44CD3fBDCEBF6be9130987","zkEVMVerifier":"0x1C3A3da552b8662CD69538356b1E7c2E9CC1EBD8","zkEVMForkID":7,"zkEVMChainID":1101}
+      values.scheduledTransactionsDecoded.12.inputs.consensusImplementation:
++        "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682"
+      values.scheduledTransactionsDecoded.12.inputs.verifier:
++        "0x0000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.inputs.forkID:
++        0
+      values.scheduledTransactionsDecoded.12.inputs.rollupVerifierType:
++        2
+      values.scheduledTransactionsDecoded.12.inputs.genesis:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.inputs.description:
++        "Type: aggchainFEP"
+      values.scheduledTransactionsDecoded.12.inputs.programVKey:
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.12.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.11.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.11.inputs.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.11.inputs.verifier:
+-        "0x455ac63E96e6a64EA59C6Da0D8F90FCa3F1535aB"
+      values.scheduledTransactionsDecoded.11.inputs.forkID:
+-        13
+      values.scheduledTransactionsDecoded.11.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.11.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.11.inputs.description:
+-        "Type: Validium, Version: fork.13 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.11.inputs.rollupContract:
++        "0x7449449460b5B732A9754CA3d9A7916122A9190d"
+      values.scheduledTransactionsDecoded.11.inputs.newRollupTypeID:
++        11
+      values.scheduledTransactionsDecoded.11.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.11.delay:
+-        "864000"
++        "259200"
+      values.scheduledTransactionsDecoded.10.function:
+-        "0xf34eb8eb"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.10.inputs.calldata:
+-        "0000000000000000000000009cf80f7eb1c76ec5ae7a88b417e373449b73ac300000000000000000000000001c3a3da552b8662cd69538356b1e7c2e9cc1ebd800000000000000000000000000000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000e3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f27200000000000000000000000000000000000000000000000000000000000000c0000000000000000000000000000000000000000000000000000000000000005d547970653a2056616c696469756d2c2056657273696f6e3a206574726f672c2067656e657369733a202f697066732f516d55586e526f5062556d5a75455a43477969486a45736f4e6346567533684c74537668706e664253326d415955000000"
+      values.scheduledTransactionsDecoded.10.inputs.consensusImplementation:
++        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.10.inputs.verifier:
++        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.10.inputs.forkID:
++        12
+      values.scheduledTransactionsDecoded.10.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.10.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.10.inputs.description:
++        "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.9.function:
+-        "addNewRollupType"
++        "updateRollup"
+      values.scheduledTransactionsDecoded.9.inputs.consensusImplementation:
+-        "0x427113ae6F319BfFb4459bfF96eb8B6BDe1A127F"
+      values.scheduledTransactionsDecoded.9.inputs.verifier:
+-        "0x9B9671dB83CfcB4508bF361942488C5cA2b1286D"
+      values.scheduledTransactionsDecoded.9.inputs.forkID:
+-        12
+      values.scheduledTransactionsDecoded.9.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.9.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.9.inputs.description:
+-        "Type: Validium, Version: Banana , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.9.inputs.rollupContract:
++        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.scheduledTransactionsDecoded.9.inputs.newRollupTypeID:
++        2
+      values.scheduledTransactionsDecoded.9.inputs.upgradeData:
++        "0x"
+      values.scheduledTransactionsDecoded.8.function:
+-        "updateRollup"
++        "addNewRollupType"
+      values.scheduledTransactionsDecoded.8.inputs.rollupContract:
+-        "0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+      values.scheduledTransactionsDecoded.8.inputs.newRollupTypeID:
+-        2
+      values.scheduledTransactionsDecoded.8.inputs.upgradeData:
+-        "0x"
+      values.scheduledTransactionsDecoded.8.inputs.consensusImplementation:
++        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
+      values.scheduledTransactionsDecoded.8.inputs.verifier:
++        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
+      values.scheduledTransactionsDecoded.8.inputs.forkID:
++        11
+      values.scheduledTransactionsDecoded.8.inputs.rollupCompatibilityID:
++        0
+      values.scheduledTransactionsDecoded.8.inputs.genesis:
++        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
+      values.scheduledTransactionsDecoded.8.inputs.description:
++        "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.7.inputs.verifier:
+-        "0xc521580cd8586Cc688A7430F9DcE0f6A803F2883"
++        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
+      values.scheduledTransactionsDecoded.7.inputs.forkID:
+-        11
++        8
+      values.scheduledTransactionsDecoded.7.inputs.description:
+-        "Type: zkEVM, Version: eggfruit N=25 , genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
++        "Type: zkEVM, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.6.inputs.consensusImplementation:
+-        "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"
++        "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B"
+      values.scheduledTransactionsDecoded.6.inputs.verifier:
+-        "0x4AaBBA26EA9E7A7fbD052d17a167e6aE3F8eC7Be"
++        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+      values.scheduledTransactionsDecoded.6.inputs.forkID:
+-        8
++        12
+      values.scheduledTransactionsDecoded.6.inputs.rollupCompatibilityID:
+-        0
+      values.scheduledTransactionsDecoded.6.inputs.genesis:
+-        "0xe3a7d8bae497945ba8ddc51c69564f60ad4c1a990b9c7bdbd27f7929bfa8f272"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      values.scheduledTransactionsDecoded.6.inputs.description:
+-        "Type: zkEVM, Version: incaberry, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
++        "Type: Pessimistic, Version: v0.3.3, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU"
+      values.scheduledTransactionsDecoded.6.inputs.rollupVerifierType:
++        1
+      values.scheduledTransactionsDecoded.6.inputs.programVKey:
++        "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+      values.scheduledTransactionsDecoded.6.delay:
+-        "864000"
++        "259200"
+    }
+```
+
+Generated with discovered.json: 0x219a78007d80727ed1ba3e3313b8a254d573274b
+
+# Diff at Mon, 09 Jun 2025 09:55:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7cc006dadcc55e6cce3be3eb03d491835943fb43 block: 22536886
+- current block number: 22666256
+
+## Description
+
+PolygonAdminMultisig adds members: 2/3 --> 5/12.
+
+## Watched changes
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$members.11:
++        "0xdFEd8373695a7b3DaF268CF91e71f6a7024A56Da"
+      values.$members.10:
++        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
+      values.$members.9:
++        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
+      values.$members.8:
++        "0xcAB31b6A7b4d2eCd562A09e2BfA46535a18862f9"
+      values.$members.7:
++        "0x54c401eD03D086fE13221E5422165f3b024265d9"
+      values.$members.6:
++        "0xED7cC82235A7757702475c8f77c7830c095FB5a2"
+      values.$members.5:
++        "0xffbfc0c8331C5fc912DDA3C6D4A86eEB80203238"
+      values.$members.4:
++        "0x21618593F7147235aC8D511d68A547C935F9d417"
+      values.$members.3:
++        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
+      values.$members.2:
+-        "0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"
++        "0xeD44D1CFfB91e163CB7126bdEeA83959f175dB37"
+      values.$members.1:
+-        "0xA0B02B28920812324f1cC3255bd8840867d3f227"
++        "0x516eEcfb38aA308c5f1878497108c7d054fd46B7"
+      values.$members.0:
+-        "0x4c1665d6651ecEfa59B9B3041951608468b18891"
++        "0xAb3506507449bF1880f3337825efd19ac89E235E"
+      values.$threshold:
+-        2
++        5
+      values.multisigThreshold:
+-        "2 of 3 (67%)"
++        "5 of 12 (42%)"
+    }
+```
+
 Generated with discovered.json: 0x604bed436391fbb83141f0f1f0f85418469719f7
 
 # Diff at Fri, 23 May 2025 09:41:04 GMT:
@@ -3470,7 +4670,7 @@ Generated with discovered.json: 0x85284e06ab48b8f6616195c93ae7fe0699bb3b2b
 
 ## Description
 
-xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the varifier differs.
+xlayer is upgraded to the new type 8 validium, which was freshly added and has minimal diff to the type 7 from the [servicing upgrade](https://polygon.technology/blog/polygon-zkevm-servicing-update-coming-to-mainnet-beta). The Validium implementation is the same while the verifier differs.
 
 ## Watched changes
 

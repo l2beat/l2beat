@@ -8,6 +8,7 @@ import { utils } from 'ethers'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const PROJECT_ID = ProjectId('across-v3')
 const discovery = new ProjectDiscovery(PROJECT_ID.toString())
@@ -31,7 +32,7 @@ export const acrossV3: Bridge = {
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
-      apps: ['https://app.across.to/bridge'],
+      bridges: ['https://app.across.to/bridge'],
       repositories: ['https://github.com/across-protocol/contracts-v2'],
       documentation: ['https://docs.across.to/'],
       socialMedia: [
@@ -296,4 +297,5 @@ export const acrossV3: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

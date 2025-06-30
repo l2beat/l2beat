@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -25,7 +25,7 @@ export const unichain: ScalingProject = opStackL2({
     stack: 'OP Stack',
     links: {
       websites: ['https://unichain.org/'],
-      apps: ['https://unichain.org/bridge'],
+      bridges: ['https://unichain.org/bridge'],
       documentation: ['https://docs.unichain.org/docs'],
       explorers: ['https://uniscan.xyz/'],
       socialMedia: [
@@ -33,9 +33,6 @@ export const unichain: ScalingProject = opStackL2({
         'https://discord.com/invite/uniswap',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   scopeOfAssessment: {
@@ -55,11 +52,11 @@ export const unichain: ScalingProject = opStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -95,6 +92,13 @@ export const unichain: ScalingProject = opStackL2({
       ...ESCROW.CANONICAL_EXTERNAL,
       description:
         'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x1196F688C585D3E5C895Ef8954FFB0dCDAfc566A'),
+      tokens: ['USDS', 'sUSDS'],
+      ...ESCROW.CANONICAL_EXTERNAL,
+      description:
+        'Maker/Sky-controlled vault for USDS and sUSDS bridged with canonical messaging.',
     }),
   ],
   chainConfig: {

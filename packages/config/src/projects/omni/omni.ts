@@ -8,6 +8,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('omni')
 
@@ -27,7 +28,7 @@ export const omni: Bridge = {
     warning: warningText,
     category: 'Single-chain',
     links: {
-      apps: ['https://bridge.gnosischain.com'],
+      bridges: ['https://bridge.gnosischain.com'],
       websites: ['https://bridge.gnosischain.com/bridge-explorer/bridges'],
       documentation: ['https://docs.gnosischain.com/bridges/'],
       explorers: [
@@ -177,4 +178,5 @@ export const omni: Bridge = {
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -25,7 +25,7 @@ const getCachedBlobsData = async (
   const now = UnixTime.toStartOf(UnixTime.now(), 'day')
 
   const db = getDb()
-  const records = await db.dataAvailability2.getForDaLayerInTimeRange(
+  const records = await db.dataAvailability.getForDaLayerInTimeRange(
     ProjectId.ETHEREUM,
     now - UnixTime.DAY,
     now,

@@ -3,6 +3,7 @@ import unionBy from 'lodash/unionBy'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('cbridge')
 
@@ -21,7 +22,7 @@ export const cBridge: Bridge = {
     category: 'Hybrid',
     links: {
       websites: ['https://celer.network/'],
-      apps: ['https://cbridge.celer.network/'],
+      bridges: ['https://cbridge.celer.network/'],
       explorers: [
         'https://cbridge-analytics.celer.network/',
         'https://celerscan.com/',
@@ -262,4 +263,5 @@ export const cBridge: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

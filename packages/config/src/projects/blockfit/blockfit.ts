@@ -22,7 +22,7 @@ export const blockfit: ScalingProject = underReviewL3({
       explorers: ['https://blockfitscan.io/'],
       documentation: [],
       repositories: [],
-      apps: [
+      bridges: [
         'https://bridge.blockfitscan.io/?destinationChain=BlockFit-Mainnet&sourceChain=arbitrum-nova',
       ],
       socialMedia: ['https://x.com/Fit24updates', 'https://t.me/fit24updates'],

@@ -1,9 +1,10 @@
 import type {
+  BlockDaTrackingConfig,
   ChainConfig,
   OnchainVerifier,
   ProjectActivityConfig,
-  ProjectDaTrackingConfig,
   ProjectFinalityConfig,
+  TimestampDaTrackingConfig,
 } from '@l2beat/config'
 import type {
   ConfigReader,
@@ -50,7 +51,8 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
-  readonly da2: DataAvailabilityTrackingConfig2 | false
+  readonly shared: SharedModuleConfig | false
+  readonly discord: DiscordWebhookConfig
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -206,6 +208,10 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
+export interface DiscordWebhookConfig {
+  readonly anomaliesWebhookUrl?: string
+}
+
 export interface DaBeatConfig {
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
@@ -219,53 +225,39 @@ export interface DaBeatConfig {
   readonly availWsUrl: string
 }
 
-type BaseLayerConfig = {
-  type: 'baseLayer'
-  daLayer: string
-  projectId: ProjectId
-  sinceBlock: number
-  untilBlock?: number
-}
-
-export type DaTrackingConfig =
-  | (ProjectDaTrackingConfig & { projectId: ProjectId })
-  | BaseLayerConfig
-
-export interface DataAvailabilityTrackingConfig {
-  readonly layers: {
-    type: 'ethereum' | 'celestia' | 'avail'
-    name: string
-    url: string
-    callsPerMinute: number
-    batchSize: number
-    startingBlock: number
-  }[]
-
-  readonly projects: {
-    /** Hash computed automatically based on fields */
-    configurationId: string
-    config: DaTrackingConfig
-  }[]
-}
-
-// DataAvailability2
-type LayerAsProjectDaTrackingConfig = {
+type BlockLayerAsProjectDaTrackingConfig = {
   type: 'baseLayer'
   daLayer: string
   sinceBlock: number
   untilBlock?: number
 }
 
-export type DaIndexedConfig = (
-  | ProjectDaTrackingConfig
-  | LayerAsProjectDaTrackingConfig
+type TimestampLayerAsProjectDaTrackingConfig = {
+  type: 'baseLayer'
+  daLayer: string
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+}
+
+export type BlockDaIndexedConfig = (
+  | BlockDaTrackingConfig
+  | BlockLayerAsProjectDaTrackingConfig
 ) & {
   /** Hash computed automatically based on fields */
   configurationId: string
   projectId: ProjectId
 }
 
-export type LayerDaTrackingConfig = {
+export type TimestampDaIndexedConfig = (
+  | TimestampDaTrackingConfig
+  | TimestampLayerAsProjectDaTrackingConfig
+) & {
+  /** Hash computed automatically based on fields */
+  configurationId: string
+  projectId: ProjectId
+}
+
+export type BlockLayerDaTrackingConfig = {
   type: 'ethereum' | 'celestia' | 'avail'
   name: string
   url: string
@@ -274,7 +266,22 @@ export type LayerDaTrackingConfig = {
   startingBlock: number
 }
 
-export interface DataAvailabilityTrackingConfig2 {
-  readonly layers: LayerDaTrackingConfig[]
-  readonly projects: DaIndexedConfig[]
+export type TimestampLayerDaTrackingConfig = {
+  type: 'eigen-da'
+  name: string
+  url: string
+  callsPerMinute: number
+  startingTimestamp: UnixTime
+  perProjectUrl?: string
+}
+
+export interface DataAvailabilityTrackingConfig {
+  readonly blockLayers: BlockLayerDaTrackingConfig[]
+  readonly timestampLayers: TimestampLayerDaTrackingConfig[]
+  readonly blockProjects: BlockDaIndexedConfig[]
+  readonly timestampProjects: TimestampDaIndexedConfig[]
+}
+
+export interface SharedModuleConfig {
+  ethereumWsUrl: string
 }

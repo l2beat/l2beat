@@ -3,6 +3,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('allbridge')
 
@@ -21,7 +22,7 @@ export const allbridge: Bridge = {
     category: 'Hybrid',
     links: {
       websites: ['https://allbridge.io/'],
-      apps: ['https://core.allbridge.io/', 'https://app.allbridge.io/'],
+      bridges: ['https://core.allbridge.io/', 'https://app.allbridge.io/'],
       documentation: [
         'https://docs.allbridge.io/',
         'https://docs-core.allbridge.io/',
@@ -281,4 +282,5 @@ export const allbridge: Bridge = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

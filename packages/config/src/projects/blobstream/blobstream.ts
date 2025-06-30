@@ -10,6 +10,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
@@ -28,7 +29,7 @@ export const blobstream: BaseProject = {
     redWarning: undefined,
     emergencyWarning: undefined,
     reviewStatus: undefined,
-    isUnverified: false,
+    unverifiedContracts: [],
   },
   display: {
     description: `The Blobstream bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and destination chains.`,
@@ -123,6 +124,11 @@ export const blobstream: BaseProject = {
     },
   ],
   permissions: generateDiscoveryDrivenPermissions([
+    ethereumDiscovery,
+    arbitrumDiscovery,
+    baseDiscovery,
+  ]),
+  discoveryInfo: getDiscoveryInfo([
     ethereumDiscovery,
     arbitrumDiscovery,
     baseDiscovery,

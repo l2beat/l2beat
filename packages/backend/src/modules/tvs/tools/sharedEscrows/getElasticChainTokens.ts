@@ -6,7 +6,13 @@ import type {
   TvsToken,
 } from '@l2beat/config'
 import { type RpcClient, encodeTotalSupply } from '@l2beat/shared'
-import { assert, Bytes, TokenId, notUndefined } from '@l2beat/shared-pure'
+import {
+  assert,
+  Bytes,
+  EthereumAddress,
+  TokenId,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { MulticallClient } from '../../../../peripherals/multicall/MulticallClient'
 import { toMulticallConfigEntry } from '../../../../peripherals/multicall/MulticallConfig'
@@ -43,7 +49,7 @@ export async function getElasticChainTokens(
       !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
   )
 
-  const resolved: { id: string; address: string }[] = []
+  const resolved: { id: string; address: EthereumAddress }[] = []
   const toResolve: { id: string; request: MulticallRequest }[] = []
   const toCheckTotalSupply: {
     id: string
@@ -57,7 +63,7 @@ export async function getElasticChainTokens(
     )
     if (cachedValue !== undefined) {
       logger.debug(`Cached value found for ${project.id}-${token.id}`)
-      resolved.push({ id: token.id, address: cachedValue })
+      resolved.push({ id: token.id, address: EthereumAddress(cachedValue) })
       continue
     }
 
@@ -123,7 +129,7 @@ export async function getElasticChainTokens(
         : '0x'
 
       await localStorage.writeAddress(`${project.id}-${id}`, address)
-      resolved.push({ id, address })
+      resolved.push({ id, address: EthereumAddress(address) })
     }
   }
 
@@ -158,7 +164,8 @@ export async function getElasticChainTokens(
         sinceTimestamp,
         ...(untilTimestamp ? { untilTimestamp } : {}),
       },
-    }
+      bridgedUsing: token.bridgedUsing,
+    } satisfies TvsToken
   })
 
   const { sinceTimestamp, untilTimestamp } = getTimeRangeIntersection(
@@ -185,7 +192,7 @@ export async function getElasticChainTokens(
       ...(untilTimestamp ? { untilTimestamp } : {}),
     },
     isAssociated: false,
-  }
+  } satisfies TvsToken
 
   const tokensToAssignFromL1: TvsToken[] = []
 

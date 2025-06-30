@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,9 +13,6 @@ export const bob: ScalingProject = opStackL2({
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['Bitcoin DApps'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'BOB',
     slug: 'bob',
@@ -23,7 +20,7 @@ export const bob: ScalingProject = opStackL2({
       "BOB (Build on Bitcoin) is an OP Stack rollup that aims to natively support the Bitcoin stack. The current implementation supports a variety of canonical and external bridging for BTC-related assets and a tBTC-v2 LightRelay smart contract for verifying Bitcoin transaction proofs through their blocks' headers on the L2.",
     links: {
       websites: ['https://gobob.xyz'],
-      apps: ['https://app.gobob.xyz'],
+      bridges: ['https://app.gobob.xyz'],
       documentation: ['https://docs.gobob.xyz'],
       explorers: ['https://explorer.gobob.xyz?'],
       repositories: ['https://github.com/bob-collective'],
@@ -34,11 +31,6 @@ export const bob: ScalingProject = opStackL2({
     discovery.getEscrowDetails({
       address: EthereumAddress('0x091dF5E1284E49fA682407096aD34cfD42B95B72'),
       tokens: ['wstETH'],
-      ...ESCROW.CANONICAL_EXTERNAL,
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb'),
-      tokens: ['USDC'],
       ...ESCROW.CANONICAL_EXTERNAL,
     }),
   ],

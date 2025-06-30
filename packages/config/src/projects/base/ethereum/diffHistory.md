@@ -1,3 +1,253 @@
+Generated with discovered.json: 0xd098a354da45625a55e6a232868e4a4870ffeab9
+
+# Diff at Wed, 25 Jun 2025 07:27:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22744050
+- current block number: 22779924
+
+## Description
+
+Upgrade to new SystemConfig with single line change: maximumGasLimit = 500M (prev 200M, current 150M).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      sourceHashes.0:
+-        "0x921de6fc906d159fdcef862d2b9559063f5e7b9b7588fa5f33153360ddf296e7"
++        "0x44a79df61c4e5a48fa30bc46adf51d2a5ac4d98cdd6a6e9a38aef9f6dee96934"
+      values.$implementation:
+-        "0x340f923E5c7cbB2171146f64169EC9d5a9FfE647"
++        "0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e"
+      values.$pastUpgrades.10:
++        ["2024-12-11T23:00:59.000Z","0x1fdbb2443b479fedc7a6e43400a5f09c883aa00d3e7b40bc7238a08e43625294",["0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"]]
+      values.$pastUpgrades.9.2:
+-        "0x1fdbb2443b479fedc7a6e43400a5f09c883aa00d3e7b40bc7238a08e43625294"
++        "2025-02-04T20:28:47.000Z"
+      values.$pastUpgrades.9.1.0:
+-        "0x45C4e267aE21E90f72C8AbF43ddB5941c953482F"
++        "0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"
+      values.$pastUpgrades.9.0:
+-        "2024-12-11T23:00:59.000Z"
++        "0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b"
+      values.$pastUpgrades.8.2:
+-        "2025-02-04T20:28:47.000Z"
++        ["0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"]
+      values.$pastUpgrades.8.1:
+-        ["0xd81f43eDBCAcb4c29a9bA38a13Ee5d79278270cC"]
++        "2025-02-04T20:28:47.000Z"
+      values.$pastUpgrades.7.2.0:
+-        "0xAB9d6cB7A427c0765163A7f45BB91cAfe5f2D375"
++        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
+      values.$pastUpgrades.7.1:
+-        "2025-02-04T20:28:47.000Z"
++        "2023-06-15T01:51:47.000Z"
+      values.$pastUpgrades.7.0:
+-        "0x765a2eb3c7eecea5722b120037123eaec9e6ef4b6a53ba2bcfb88ef08fae074b"
++        "0x0a7442e325dac626d8c16a7a052e9a2ee8cd08a5b8c9796228b4d297e20ea3cc"
+      values.$pastUpgrades.6.2.0:
+-        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      values.$pastUpgrades.6.1:
+-        "2023-06-15T01:51:47.000Z"
++        "0xb690dad4829ca8b07b6944d7e937d7d36048ea29a9278cbae012ab4a66aac817"
+      values.$pastUpgrades.6.0:
+-        "0x0a7442e325dac626d8c16a7a052e9a2ee8cd08a5b8c9796228b4d297e20ea3cc"
++        "2024-06-28T16:32:47.000Z"
+      values.$pastUpgrades.5.2:
+-        ["0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"]
++        "0x289aeed24a156bbb3b03cbbe0ef4e5fc873436d41cf50c746cdd380ff26be89b"
+      values.$pastUpgrades.5.1:
+-        "0xb690dad4829ca8b07b6944d7e937d7d36048ea29a9278cbae012ab4a66aac817"
++        ["0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e"]
+      values.$pastUpgrades.5.0:
+-        "2024-06-28T16:32:47.000Z"
++        "2025-06-24T20:34:47.000Z"
+      values.$upgradeCount:
+-        10
++        11
+      values.maximumGasLimit:
+-        200000000
++        500000000
+      values.version:
+-        "2.5.0"
++        "2.5.0+max-gas-limit-500M"
+      implementationNames.0x340f923E5c7cbB2171146f64169EC9d5a9FfE647:
+-        "SystemConfig"
+      implementationNames.0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e:
++        "SystemConfig"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@22744050 => .flat}/SystemConfig/SystemConfig.sol         | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+```
+
+Generated with discovered.json: 0x5c5688c0fc1f37774dcc36991c8f73335f130f91
+
+# Diff at Fri, 20 Jun 2025 06:58:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@70109db050355e01a50f54497c60fdd17bbdbc2d block: 22631283
+- current block number: 22744050
+
+## Description
+
+elasticity +50%.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.eip1559Elasticity:
+-        2
++        3
+    }
+```
+
+Generated with discovered.json: 0x7c51dfb9be4110c40daae1719d6b0574cbfa5172
+
+# Diff at Mon, 16 Jun 2025 08:41:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@e1208475abce20cea1768d2e4878c03350c1b7c9 block: 22631283
+- current block number: 22631283
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22631283 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      directlyReceivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321","role":"admin"}
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
++        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
++        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+    }
+```
+
+```diff
+    contract Base Governance Multisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321","role":"admin","via":[{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]}
+      receivedPermissions.11.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
+      receivedPermissions.10.from:
+-        "ethereum:0x496286e5eE7758de84Dd17e6d2d97afC2ACE4cc7"
++        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      receivedPermissions.9.from:
+-        "ethereum:0x608d94945A64503E642E6370Ec598e519a2C1E53"
++        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+      receivedPermissions.8.from:
+-        "ethereum:0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
++        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      receivedPermissions.7.from:
+-        "ethereum:0x73a79Fab69143498Ed3712e519A88a918e1f4072"
++        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
+      receivedPermissions.6.from:
+-        "ethereum:0xa2f2aC6F5aF72e494A227d79Db20473Cf7A1FFE8"
++        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
+      receivedPermissions.5.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.5.from:
+-        "ethereum:0x43edB88C4B80fDD2AdFF2412A7BebF9dF42cB40e"
++        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
+      receivedPermissions.5.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.5.via:
+-        [{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+      receivedPermissions.5.description:
++        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.permission:
+-        "interact"
++        "upgrade"
+      receivedPermissions.4.from:
+-        "ethereum:0x3E8a0B63f57e975c268d610ece93da5f78c01321"
++        "ethereum:0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      receivedPermissions.4.description:
+-        "can pull funds from the contract in case of emergency."
+      receivedPermissions.4.role:
+-        ".owner"
++        "admin"
+      receivedPermissions.4.via:
++        [{"address":"ethereum:0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"}]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.$admin:
++        "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
+    }
+```
+
+Generated with discovered.json: 0x459fd1149f8160317e48b6c68f151414ba0a1be1
+
+# Diff at Fri, 06 Jun 2025 12:28:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@53e2933f99050c9e14880373922d3232f9074832 block: 22631283
+- current block number: 22631283
+
+## Description
+
+config: silent maker/sky escrow template added.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22631283 (main branch discovery), not current.
+
+```diff
+    contract Escrow (0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3) {
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+      values.wards:
++        ["0xBE8E3e3618f7474F8cB1d074A26afFef007E98FB"]
+      template:
++        "maker/L1Escrow"
+      description:
++        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
+    }
+```
+
 Generated with discovered.json: 0x2a2d62314698afd8359e9b7614d29b2b5ac58df5
 
 # Diff at Wed, 04 Jun 2025 12:31:49 GMT:

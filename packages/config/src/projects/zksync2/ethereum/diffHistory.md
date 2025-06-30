@@ -1,4 +1,380 @@
-Generated with discovered.json: 0x7b69155e84c7c35737df66d8dbe548350963f53d
+Generated with discovered.json: 0x677238fc200ee4101cba8b63302866195a8eace4
+
+# Diff at Wed, 25 Jun 2025 07:19:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22775246
+- current block number: 22779919
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22775246 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0xbbfa1081ae6cf52ef71abb62b90b79c7afd0c7ee
+
+# Diff at Tue, 24 Jun 2025 15:55:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@52df575e41f07b46b8355fb2b6766ef146c1af78 block: 22738078
+- current block number: 22775246
+
+## Description
+
+[protocol update v28](https://www.tally.xyz/gov/zksync/proposal/54063168049426383294336598998322383147338444177076559098597792110160570100155?govId=eip155:324:0x76705327e682F2d96943280D99464Ab61219e34f) for zksync era:
+- no changes on L1 except for the VKeys
+- adds precompiles for elliptic curve operations (ECAdd, ECMul, ECPairing) and modular exponentiation (ModExp) on L2 (see also shared-zk-stack diffHistory)
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0)
+    +++ description: A router contract for verifiers. Routes verification requests to 0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF or 0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.$implementation.3:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$implementation.2:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.1:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.0:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$pastUpgrades.21:
++        ["2023-09-22T17:22:47.000Z","0x5e3ce9e7d3920f293487a5581146f8333191a4068762db6fe4d1eec65a3fb805",["0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4","0x7444DE636699F080cA1C033528D2bB3705B391Ce","0x62aA95ac4740A367746A664C4C69034d52E968EF","0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b","0x2E64926BE35412f7710A3E097Ba076740bF97CC0"]]
+      values.$pastUpgrades.20.2.4:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.20.2.3:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
+      values.$pastUpgrades.20.2.2:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
+      values.$pastUpgrades.20.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
+      values.$pastUpgrades.20.2.0:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
+      values.$pastUpgrades.20.1:
+-        "2023-09-22T17:22:47.000Z"
++        "0xf20c9ac3a8c84e97d8403833810d9c2d38f29bb18f592b983e69e14da66b1d12"
+      values.$pastUpgrades.20.0:
+-        "0x5e3ce9e7d3920f293487a5581146f8333191a4068762db6fe4d1eec65a3fb805"
++        "2025-05-05T12:02:59.000Z"
+      values.$pastUpgrades.19.2.4:
++        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.19.2.3:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
+      values.$pastUpgrades.19.2.2:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.19.2.1:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.19.2.0:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
+      values.$pastUpgrades.19.1:
+-        "0xf20c9ac3a8c84e97d8403833810d9c2d38f29bb18f592b983e69e14da66b1d12"
++        "0x0de4556791139b205562b388f2ddc4a2d2ec1bf0996feea38158535cd7e1a5c6"
+      values.$pastUpgrades.19.0:
+-        "2025-05-05T12:02:59.000Z"
++        "2023-10-20T16:15:35.000Z"
+      values.$pastUpgrades.18.1:
+-        "0x0de4556791139b205562b388f2ddc4a2d2ec1bf0996feea38158535cd7e1a5c6"
++        "2023-09-07T10:53:11.000Z"
+      values.$pastUpgrades.18.0:
+-        "2023-10-20T16:15:35.000Z"
++        "0x72983cd25802230545bcb38b805638b0ffa17990ad51e8843e55519fe96d702c"
+      values.$pastUpgrades.17.2.4:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
+      values.$pastUpgrades.17.2.3:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89"
+      values.$pastUpgrades.17.2.2:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+      values.$pastUpgrades.17.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a"
+      values.$pastUpgrades.17.2.0:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C"
+      values.$pastUpgrades.17.1:
+-        "2023-09-07T10:53:11.000Z"
++        "0x2060aa785aeefa91a0b103accc9df689c7a2056aacfa70309492e729ddea4565"
+      values.$pastUpgrades.17.0:
+-        "0x72983cd25802230545bcb38b805638b0ffa17990ad51e8843e55519fe96d702c"
++        "2024-08-06T09:50:47.000Z"
+      values.$pastUpgrades.16.2:
+-        ["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]
++        "0x4f45a603cfe9fb680e13fc3ecb48aed0ba73e198e7be5f53e39f016384d262b0"
+      values.$pastUpgrades.16.1:
+-        "0x2060aa785aeefa91a0b103accc9df689c7a2056aacfa70309492e729ddea4565"
++        ["0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a","0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9","0x5575218cECd370E1d630d1AdB03c254B0B376821","0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"]
+      values.$pastUpgrades.16.0:
+-        "2024-08-06T09:50:47.000Z"
++        "2025-01-10T14:55:59.000Z"
+      values.$pastUpgrades.15.2:
+-        "0x4f45a603cfe9fb680e13fc3ecb48aed0ba73e198e7be5f53e39f016384d262b0"
++        ["0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb","0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1","0x36b026c39125964D99596CE302866B5A59E4dE27","0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"]
+      values.$pastUpgrades.15.1:
+-        ["0x90C0A0a63d7ff47BfAA1e9F8fa554dabc986504a","0x81754d2E48e3e553ba6Dfd193FC72B3A0c6076d9","0x5575218cECd370E1d630d1AdB03c254B0B376821","0xBB13642F795014E0EAC2b0d52ECD5162ECb66712"]
++        "0x2c6aa40efd0500a015b036cf03de961b6e2aa2c726d21b5b8cede9a91964c12f"
+      values.$pastUpgrades.15.0:
+-        "2025-01-10T14:55:59.000Z"
++        "2025-03-12T14:59:11.000Z"
+      values.$pastUpgrades.14.2.4:
++        "0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D"
+      values.$pastUpgrades.14.2.3:
+-        "0x53d0b421BB3e522632ABEB06BB2c4eB15eaD9800"
++        "0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD"
+      values.$pastUpgrades.14.2.2:
+-        "0x36b026c39125964D99596CE302866B5A59E4dE27"
++        "0xf002dFBc52C250a2E14C148041aDB8567a0B19BD"
+      values.$pastUpgrades.14.2.1:
+-        "0x95C45F931946C97D10D9d6e859Fe8D62785ed3C1"
++        "0x9B1A10bDC4A40219544C835263b2cA3f3e689693"
+      values.$pastUpgrades.14.2.0:
+-        "0xEaedCF01c0B01C1a10b74cB0A2cDeF78a9540cdb"
++        "0xA389bF185B301C8e20E79E3098e71399914035dF"
+      values.$pastUpgrades.14.1:
+-        "0x2c6aa40efd0500a015b036cf03de961b6e2aa2c726d21b5b8cede9a91964c12f"
++        "2023-08-16T10:15:11.000Z"
+      values.$pastUpgrades.14.0:
+-        "2025-03-12T14:59:11.000Z"
++        "0x83d729e260c7ac2cf439aa2b8e667454489e4fb8d4965aaa9dc8e2fb95a44f46"
+      values.$pastUpgrades.13.2:
+-        ["0x9B1A10bDC4A40219544C835263b2cA3f3e689693","0xA389bF185B301C8e20E79E3098e71399914035dF","0xf002dFBc52C250a2E14C148041aDB8567a0B19BD","0xab458aCbD8FF9B6cF7B8a029705A02F70DCDBf7D","0x8c0f38F13526fCB379a80B87F4DEbdBCC9CAEcbD"]
++        "2023-12-04T20:29:11.000Z"
+      values.$pastUpgrades.13.1:
+-        "2023-08-16T10:15:11.000Z"
++        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
+      values.$pastUpgrades.13.0:
+-        "0x83d729e260c7ac2cf439aa2b8e667454489e4fb8d4965aaa9dc8e2fb95a44f46"
++        ["0x409560DE546e057ce5bD5dB487EdF2bB5E785baB","0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4","0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08","0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"]
+      values.$pastUpgrades.12.2:
+-        "2023-12-04T20:29:11.000Z"
++        ["0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4","0x7444DE636699F080cA1C033528D2bB3705B391Ce","0x62aA95ac4740A367746A664C4C69034d52E968EF","0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b","0x2E64926BE35412f7710A3E097Ba076740bF97CC0"]
+      values.$pastUpgrades.12.1:
+-        "0x9f0e9ecd78b5c17ff95c130b183df452486a0f784705927e608fd90a00aa9bcd"
++        "2023-11-01T16:41:35.000Z"
+      values.$pastUpgrades.12.0:
+-        ["0x409560DE546e057ce5bD5dB487EdF2bB5E785baB","0xF3ACF6a03ea4a914B78Ec788624B25ceC37c14A4","0x63b5EC36B09384fFA7106A80Ec7cfdFCa521fD08","0x9e3Fa34a10619fEDd7aE40A3fb86FA515fcfd269"]
++        "0x4d3e09380ee604e75800fd61da0c1771987e1cbca7c5254e8c7479e3dd0e3b37"
+      values.$pastUpgrades.11.2.4:
+-        "0xdC7c3D03845EfE2c4a9E758A70a68BA6bba9FaC4"
++        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
+      values.$pastUpgrades.11.2.3:
+-        "0x62aA95ac4740A367746A664C4C69034d52E968EF"
++        "0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A"
+      values.$pastUpgrades.11.2.2:
+-        "0x2E64926BE35412f7710A3E097Ba076740bF97CC0"
++        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
+      values.$pastUpgrades.11.2.1:
+-        "0x7444DE636699F080cA1C033528D2bB3705B391Ce"
++        "0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0"
+      values.$pastUpgrades.11.2.0:
+-        "0x7Ed066718Dfb1b2B04D94780Eca92b67ECF3330b"
++        "0x5349E94435Cc9Cab9FfB40A492DA46935052733A"
+      values.$pastUpgrades.11.1:
+-        "2023-11-01T16:41:35.000Z"
++        "2023-08-29T08:28:11.000Z"
+      values.$pastUpgrades.11.0:
+-        "0x4d3e09380ee604e75800fd61da0c1771987e1cbca7c5254e8c7479e3dd0e3b37"
++        "0x8cdc268e23c0fa073ab3f1b75bd32a2cf05ea1e268a07c1aec44d5805f22fb12"
+      values.$pastUpgrades.10.2:
+-        ["0xc6f7e57C6e1e20468D869Fe33675524e243CD6a0","0x7444DE636699F080cA1C033528D2bB3705B391Ce","0x5349E94435Cc9Cab9FfB40A492DA46935052733A","0x16615a85B451edfb6FCBea0b34405D9C7ca1a22A","0x2E64926BE35412f7710A3E097Ba076740bF97CC0"]
++        "2024-02-05T14:30:47.000Z"
+      values.$pastUpgrades.10.1:
+-        "2023-08-29T08:28:11.000Z"
++        "0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab"
+      values.$pastUpgrades.10.0:
+-        "0x8cdc268e23c0fa073ab3f1b75bd32a2cf05ea1e268a07c1aec44d5805f22fb12"
++        ["0xE6426c725cB507168369c10284390E59d91eC821","0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B","0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB","0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"]
+      values.$pastUpgrades.9.2:
+-        "2024-02-05T14:30:47.000Z"
++        ["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]
+      values.$pastUpgrades.9.1:
+-        "0x937dd21a05142c02159170dafb1bbaaa145ae7bd2c29bf512534fbec9ff801ab"
++        "2024-06-06T11:55:23.000Z"
+      values.$pastUpgrades.9.0:
+-        ["0xE6426c725cB507168369c10284390E59d91eC821","0xc4a5e861df9DD9495f8Dba1c260913d1A9b8Ec2B","0x0f58Fd6c9Ed966e09C1dFFBc8E6FF600ec65f6eB","0x3a4ef67C6cAb51444E5d3861843F7f4a37F64F0a"]
++        "0x71a3b924989f551cbf3024fcd6b52aeb9a52902d95c0efb690e7340d667b6e21"
+      values.$pastUpgrades.8.2:
+-        ["0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","0xE60E94fCCb18a81D501a38959E532C0A85A1be89","0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","0xaD193aDe635576d8e9f7ada71Af2137b16c64075"]
++        "2023-12-21T11:51:35.000Z"
+      values.$pastUpgrades.8.1:
+-        "2024-06-06T11:55:23.000Z"
++        ["0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967","0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7","0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58","0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"]
+      values.$pastUpgrades.8.0:
+-        "0x71a3b924989f551cbf3024fcd6b52aeb9a52902d95c0efb690e7340d667b6e21"
++        "0x2200e7109d3abbb74cb03144fea37f7227188e1fcaba4538bd9dfa3fa17cca02"
+      values.$pastUpgrades.7.2:
+-        "2023-12-21T11:51:35.000Z"
++        "2024-03-11T14:32:11.000Z"
+      values.$pastUpgrades.7.1:
+-        ["0xAeA49FCEbe3A93ADaE67FF668C0ac87799537967","0x5edb1756c0A0F933EB87f9d69DfA1db3167547a7","0x2FbF76bAE617cE41AdB9021907F02e2bF187BB58","0xc40e5BE1a6D18DdB14268D32dc6075FCf72fF16d"]
++        "0xa5fd3584a815267a84a5686b386d911ed7e53d6c1863ff64a57ef0f7085bd4d7"
+      values.$pastUpgrades.7.0:
+-        "0x2200e7109d3abbb74cb03144fea37f7227188e1fcaba4538bd9dfa3fa17cca02"
++        ["0x230214F0224C7E0485f348a79512ad00514DB1F7","0x10113bB3a8e64f8eD67003126adC8CE74C34610c","0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7","0xfd3779e6214eBBd40f5F5890351298e123A46BA6"]
+      values.$pastUpgrades.6.2:
+-        "2024-03-11T14:32:11.000Z"
++        "2025-06-23T23:51:35.000Z"
+      values.$pastUpgrades.6.1:
+-        "0xa5fd3584a815267a84a5686b386d911ed7e53d6c1863ff64a57ef0f7085bd4d7"
++        "0x57b72110d70a2c2f9b7762a0069d3c61d6b58888a4ac6bec35adde7d3f664a57"
+      values.$pastUpgrades.6.0.3:
+-        "0xA57F9FFD65fC0F5792B5e958dF42399a114EC7e7"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.6.0.2:
+-        "0x230214F0224C7E0485f348a79512ad00514DB1F7"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$pastUpgrades.6.0.1:
+-        "0x10113bB3a8e64f8eD67003126adC8CE74C34610c"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$pastUpgrades.6.0.0:
+-        "0xfd3779e6214eBBd40f5F5890351298e123A46BA6"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$upgradeCount:
+-        21
++        22
+      values.facetAddresses.3:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facetAddresses.2:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.1:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.0:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facets.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.getL2BootloaderBytecodeHash:
+-        "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd"
++        "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67"
++        "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e"
+      values.getL2EvmEmulatorBytecodeHash:
+-        "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba"
++        "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da"
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        115964116992
++        120259084288
+      values.getSemverProtocolVersion.0:
+-        27
++        28
+      values.getVerifier:
+-        "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0"
++        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      implementationNames.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        "AdminFacet"
+      implementationNames.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        "GettersFacet"
+      implementationNames.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        "MailboxFacet"
+      implementationNames.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        "ExecutorFacet"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@22738078 => .flat}/DualVerifier.sol        |  2 +-
+ .../ethereum/{.flat@22738078 => .flat}/L1VerifierFflonk.sol    |  6 +++---
+ .../ethereum/{.flat@22738078 => .flat}/L1VerifierPlonk.sol     | 10 +++++-----
+ .../ethereum/{.flat@22738078 => .flat}/ZKsync/AdminFacet.1.sol |  2 +-
+ .../{.flat@22738078 => .flat}/ZKsync/ExecutorFacet.4.sol       |  2 +-
+ .../{.flat@22738078 => .flat}/ZKsync/GettersFacet.2.sol        |  2 +-
+ .../{.flat@22738078 => .flat}/ZKsync/MailboxFacet.3.sol        |  2 +-
+ 7 files changed, 13 insertions(+), 13 deletions(-)
+```
+
+Generated with discovered.json: 0x5fc5aae0107c1be6b524ef70385443640877cf9f
 
 # Diff at Tue, 27 May 2025 08:30:51 GMT:
 

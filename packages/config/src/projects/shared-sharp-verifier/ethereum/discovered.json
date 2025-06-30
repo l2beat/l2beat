@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 22472206,
-  "configHash": "0x3e5c38672899ec35b60913174dcb8e9dc12e0639f58ae098d5274e0199e2f245",
+  "configHash": "0x660e3353816a1a2b29758654d5ec931d7989845a60426ee77b1b8049d8f98eab",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",

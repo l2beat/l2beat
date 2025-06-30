@@ -1,5 +1,4 @@
-import type { ZodTypeAny } from 'zod'
-import { z } from 'zod'
+import { type Parser, type Validator, v as z } from '@l2beat/validate'
 
 /**
  * Known cookie definitions.
@@ -11,7 +10,7 @@ export const knownCookies = {
     z.boolean(),
     false,
   ),
-} satisfies Record<string, KnownCookie>
+} as const
 
 /**
  * Helper function to define a known cookie. `satisfies` can't be used because it doesn't enforce type between schema and inferred type of default value.
@@ -20,7 +19,7 @@ export const knownCookies = {
  * @param defaultValue default value (required!)
  * @returns an object that can be used in `knownCookies` object
  */
-function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
+function knownCookie<TT, T extends Parser<TT> | Validator<TT>>(
   key: string,
   schema: T,
   defaultValue: z.infer<T>,
@@ -28,11 +27,6 @@ function knownCookie<T extends ZodTypeAny = ZodTypeAny>(
   return { key, schema, defaultValue }
 }
 
-type KnownCookie<T extends ZodTypeAny = ZodTypeAny> = ReturnType<
-  typeof knownCookie<T>
->
-
 export type KnownCookieName = keyof typeof knownCookies
-export type KnownCookieValue<T extends KnownCookieName> = z.infer<
-  (typeof knownCookies)[T]['schema']
->
+export type KnownCookieValue<T extends KnownCookieName> =
+  (typeof knownCookies)[T]['defaultValue']

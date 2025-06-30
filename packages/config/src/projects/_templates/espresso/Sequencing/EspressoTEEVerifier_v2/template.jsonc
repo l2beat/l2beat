@@ -4,6 +4,7 @@
   "description": "The Espresso TEE verifier is used by the SequencerInbox contract to verify the batch attestations signed by the TEE.",
   "fields": {
     "mrEnclaves": {
+      "description": "Identifier of the TEE code used (hash of enclave's code and initial data).",
       "handler": {
         "type": "event",
         "select": "mrEnclave",
@@ -18,6 +19,7 @@
       }
     },
     "mrSigners": {
+      "description": "Hash of the signer's public key (who signed the code running on the TEE).",
       "handler": {
         "type": "event",
         "select": "mrSigner",

@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -13,7 +13,7 @@ export const zora: ScalingProject = opStackL2({
   discovery,
   additionalBadges: [BADGES.RaaS.Conduit],
   additionalPurposes: ['NFT'],
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Zora',
     slug: 'zora',
@@ -33,9 +33,6 @@ export const zora: ScalingProject = opStackL2({
         'https://zora.community',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   hasSuperchainScUpgrades: true,
   finality: {

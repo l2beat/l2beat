@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x7baaed7999d5b9a6106c213c1a8e468bbe1836a5
+Generated with discovered.json: 0xf7de585e97c60b9fe28ce372ab3a65d3c97a2a1f
+
+# Diff at Wed, 25 Jun 2025 07:14:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593196
+- current block number: 22593196
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593196 (main branch discovery), not current.
+
+```diff
+    contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0xf5b4a212f5b6993bdee4b437e72120cfe29ef431
 
 # Diff at Fri, 30 May 2025 04:38:38 GMT:
 

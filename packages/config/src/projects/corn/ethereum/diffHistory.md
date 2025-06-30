@@ -1,3 +1,66 @@
+Generated with discovered.json: 0x24eaa6dd7ae660ad694e26bffc2ecc83622af093
+
+# Diff at Fri, 27 Jun 2025 13:47:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22437609
+- current block number: 22796170
+
+## Description
+
+add new vali + sequencer.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.1:
++        "0xfFb9B41320a47FDE7c2939BA0c1f1d58E80648FB"
+      values.setIsBatchPosterCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract RollupProxy (0x828C71bc1D7A34F32FfA624240633b6B7272C3D6) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        1
++        2
+      values.validators.0:
++        "0xe2F1D1E0ACc476455044a9D053B5d667C0a2D61c"
+    }
+```
+
+Generated with discovered.json: 0xbf7c3b3fa0edc72dde928819104ff30b88b17d85
+
+# Diff at Wed, 18 Jun 2025 12:22:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22437609
+- current block number: 22437609
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22437609 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x828C71bc1D7A34F32FfA624240633b6B7272C3D6) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x7e76443499cd8d0a16f6a5be3b428d6eb0b485b2
 
 # Diff at Tue, 27 May 2025 08:26:42 GMT:

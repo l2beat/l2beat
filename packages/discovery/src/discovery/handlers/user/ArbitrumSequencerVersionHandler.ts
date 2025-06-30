@@ -4,18 +4,18 @@ import {
   type EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { IProvider } from '../../provider/IProvider'
 import { rpcWithRetries } from '../../provider/LowLevelProvider'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type ArbitrumSequencerVersionDefinition = z.infer<
+export type ArbitrumSequencerVersionDefinition = v.infer<
   typeof ArbitrumSequencerVersionDefinition
 >
-export const ArbitrumSequencerVersionDefinition = z.strictObject({
-  type: z.literal('arbitrumSequencerVersion'),
+export const ArbitrumSequencerVersionDefinition = v.strictObject({
+  type: v.literal('arbitrumSequencerVersion'),
 })
 
 const DATA_LOCATION_IN_TX = 0
@@ -169,19 +169,23 @@ export class ArbitrumSequencerVersionHandler implements Handler {
           0,
           currentBlockNumber - blockStep * multiplier,
         )}.${currentBlockNumber}`,
-        async ({ eventProvider }) => {
+        async ({ eventProvider }, logger) => {
           const fromBlock = Math.max(
             0,
             currentBlockNumber - blockStep * multiplier,
           )
-          return await rpcWithRetries(async () => {
-            return await eventProvider.getLogs({
-              address: address.toString(),
-              topics: [abi.getEventTopic('SequencerBatchDelivered')],
-              fromBlock,
-              toBlock: currentBlockNumber,
-            })
-          }, `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`)
+          return await rpcWithRetries(
+            async () => {
+              return await eventProvider.getLogs({
+                address: address.toString(),
+                topics: [abi.getEventTopic('SequencerBatchDelivered')],
+                fromBlock,
+                toBlock: currentBlockNumber,
+              })
+            },
+            logger,
+            `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
+          )
         },
       )
 

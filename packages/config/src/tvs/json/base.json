@@ -769,7 +769,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Connext (xERC20)",
+            "slug": "connext"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1436,6 +1444,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-oUSDT",
+      "priceId": "openusdt",
+      "symbol": "oUSDT",
+      "name": "OpenUSDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1741824000
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-OVR",
       "priceId": "ovr",
       "symbol": "OVR",
@@ -1640,7 +1674,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1752,7 +1794,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1883,7 +1933,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole Token Bridge",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1958,7 +2016,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1980,7 +2046,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "base-sUSDS-2",
       "priceId": "susds",
       "symbol": "sUSDS",
@@ -1994,7 +2060,49 @@
         "decimals": 18,
         "sinceTimestamp": 1734048000
       },
-      "category": "other",
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
+              "chain": "ethereum",
+              "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+              "decimals": 18,
+              "sinceTimestamp": 1734048000
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+              "chain": "base",
+              "escrowAddress": "0x1601843c5E9bC251A3272907010AFa41Fa18347E",
+              "decimals": 18,
+              "sinceTimestamp": 1738625028
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "susds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x5875eEE11Cf8398102FdAd704C9E96607675467a",
+              "chain": "base",
+              "escrowAddress": "0x2917956eFF0B5eaF030abDB4EF4296DF775009cA",
+              "decimals": 18,
+              "sinceTimestamp": 1738625028
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
       "source": "external",
       "isAssociated": false
     },
@@ -2014,7 +2122,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "omnichain"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2264,7 +2380,7 @@
       "isAssociated": false
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "base-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -2276,6 +2392,47 @@
         "chain": "base",
         "decimals": 6,
         "sinceTimestamp": 1692383789
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "chain": "base",
+              "decimals": 6,
+              "sinceTimestamp": 1692383789
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "chain": "base",
+              "escrowAddress": "0x1601843c5E9bC251A3272907010AFa41Fa18347E",
+              "decimals": 6,
+              "sinceTimestamp": 1738625028
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+              "chain": "base",
+              "escrowAddress": "0x2917956eFF0B5eaF030abDB4EF4296DF775009cA",
+              "decimals": 6,
+              "sinceTimestamp": 1738625028
+            }
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "native",
@@ -2316,10 +2473,18 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "base-USDS-2",
       "priceId": "usds",
       "symbol": "USDS",
@@ -2332,6 +2497,48 @@
         "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
         "decimals": 18,
         "sinceTimestamp": 1728571115
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
+              "chain": "ethereum",
+              "escrowAddress": "0x7F311a4D48377030bD810395f4CCfC03bdbe9Ef3",
+              "decimals": 18,
+              "sinceTimestamp": 1728571115
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+              "chain": "base",
+              "escrowAddress": "0x1601843c5E9bC251A3272907010AFa41Fa18347E",
+              "decimals": 18,
+              "sinceTimestamp": 1738625028
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x820C137fa70C8691f0e44Dc420a5e53c168921Dc",
+              "chain": "base",
+              "escrowAddress": "0x2917956eFF0B5eaF030abDB4EF4296DF775009cA",
+              "decimals": 18,
+              "sinceTimestamp": 1738625028
+            }
+          }
+        ]
       },
       "category": "stablecoin",
       "source": "external",
@@ -2372,7 +2579,15 @@
       },
       "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2",
+            "slug": "stargatev2"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2503,7 +2718,15 @@
       },
       "category": "ether",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero",
+            "slug": "stargate"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2559,7 +2782,15 @@
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2710,7 +2941,15 @@
       },
       "category": "other",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

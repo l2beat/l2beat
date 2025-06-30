@@ -98,7 +98,7 @@ export interface ScalingProject {
   /** Things we have or haven't checked while assesing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
-  discoveryInfo?: ProjectDiscoveryInfo
+  discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
 }
@@ -193,7 +193,7 @@ export interface Layer2TrackedTxUse {
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
 }
-
+/** This type is used to query GBQ and manual matching of transactions within a block */
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 
 interface FunctionCall {
@@ -201,6 +201,8 @@ interface FunctionCall {
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: `function ${string}`
+  /** Topics are used to filter logs and identify internal calls*/
+  topics?: string[]
   /** Inclusive */
   sinceTimestamp: UnixTime
   /** Inclusive */
@@ -254,8 +256,8 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
-  discoveryInfo?: ProjectDiscoveryInfo
   upgradesAndGovernance?: string
+  discoveryInfo: ProjectDiscoveryInfo
 }
 
 export interface BridgeDisplay {
