@@ -1,0 +1,47 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Maps interface names to contract addresses (UMA protocol contracts).",
+  "types": {
+    "Bytes32ToName": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "0x4f7261636c650000000000000000000000000000000000000000000000000000": "Oracle",
+        "0x5265676973747279000000000000000000000000000000000000000000000000": "Registry",
+        "0x46696e616e6369616c436f6e74726163747341646d696e000000000000000000": "FinancialContractsAdmin",
+        "0x53746f7265000000000000000000000000000000000000000000000000000000": "Store",
+        "0x4964656e74696669657257686974656c69737400000000000000000000000000": "IdentifierWhitelist",
+        "0x436f6c6c61746572616c57686974656c69737400000000000000000000000000": "CollateralWhitelist",
+        "0x4f7074696d69737469634f7261636c6500000000000000000000000000000000": "OptimisticOracle",
+        "0x536b696e6e794f7074696d69737469634f7261636c6500000000000000000000": "SkinnyOptimisticOracle",
+        "0x4f7074696d69737469634f7261636c6556320000000000000000000000000000": "OptimisticOracleV2",
+        "0x4f7074696d697374696341737365727465720000000000000000000000000000": "OptimisticAsserter",
+        "0x4f7074696d69737469634f7261636c6556330000000000000000000000000000": "OptimisticOracleV3"
+      }
+    }
+  },
+  "fields": {
+    "owner": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage address mappings."
+        }
+      ]
+    },
+    "namedAddresses": {
+      "handler": {
+        "type": "event",
+        "select": "newImplementationAddress",
+        "set": {
+          "event": "InterfaceImplementationChanged"
+        },
+        "groupBy": "interfaceName"
+      },
+      "edit": [
+        "pipe",
+        ["to_entries"],
+        ["map", ["shape", ["name", ["format", "Bytes32ToName"]], "address"]]
+      ]
+    }
+  }
+}
