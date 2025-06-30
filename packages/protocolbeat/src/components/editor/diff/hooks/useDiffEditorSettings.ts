@@ -23,13 +23,16 @@ export function useDiffEditorSettings(props: DiffViewProps) {
     useUrlState()
   const { selection, initialSelection, setSelection, clearSelection } =
     useLineSelection(queryParams.lines)
-  const { diff, setDiff, splitLeft, splitRight } = useDiffState(
-    props.leftCode,
-    props.rightCode,
-    removeUnchanged,
-    removeComments,
-    swapped,
-  )
+  const { diff, setDiff, splitLeft, splitRight, leftAddress, rightAddress } =
+    useDiffState(
+      props.leftCode,
+      props.rightCode,
+      props.leftAddress,
+      props.rightAddress,
+      removeUnchanged,
+      removeComments,
+      swapped,
+    )
 
   useEffect(() => {
     setSettings({
@@ -67,20 +70,10 @@ export function useDiffEditorSettings(props: DiffViewProps) {
   }, [toggleRemoveComments, clearSelection])
 
   const swapSides = useCallback(() => {
-    swapAddresses(props.leftAddress, props.rightAddress)
+    swapAddresses(leftAddress, rightAddress)
     toggleSwapped()
     clearSelection()
-  }, [
-    swapAddresses,
-    props.leftAddress,
-    props.rightAddress,
-    toggleSwapped,
-    clearSelection,
-  ])
-
-  const [leftAddress, rightAddress] = swapped
-    ? [props.rightAddress, props.leftAddress]
-    : [props.leftAddress, props.rightAddress]
+  }, [swapAddresses, leftAddress, rightAddress, toggleSwapped, clearSelection])
 
   return {
     initialSelection,

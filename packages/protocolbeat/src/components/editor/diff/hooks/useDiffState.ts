@@ -5,11 +5,17 @@ import { splitCode } from '../utils/soliditySplitter'
 export function useDiffState(
   leftCode: Record<string, string>,
   rightCode: Record<string, string>,
+  leftAddress: string,
+  rightAddress: string,
   removeUnchanged: boolean,
   removeComments: boolean,
   swapped: boolean,
 ) {
   const [diff, setDiff] = useState<Diff | undefined>(undefined)
+
+  const [actualLeftAddress, actualRightAddress] = swapped
+    ? [rightAddress, leftAddress]
+    : [leftAddress, rightAddress]
 
   const [actualLeftCode, actualRightCode] = swapped
     ? [rightCode, leftCode]
@@ -26,6 +32,8 @@ export function useDiffState(
 
   return {
     diff,
+    leftAddress: actualLeftAddress,
+    rightAddress: actualRightAddress,
     setDiff,
     splitLeft,
     splitRight,

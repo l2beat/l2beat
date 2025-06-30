@@ -175,7 +175,10 @@ export function DiffView(props: DiffViewProps) {
               'rounded p-1.5 transition-colors',
               'hover:bg-coffee-700',
             )}
-            onClick={swapSides}
+            onClick={() => {
+              editor?.swapSides()
+              swapSides()
+            }}
             title="Swap sides"
           >
             <IconSwap className="size-4" />
