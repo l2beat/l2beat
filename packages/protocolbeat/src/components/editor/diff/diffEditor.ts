@@ -30,7 +30,6 @@ export class DiffEditor {
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
   private currentCodeHash: string = ''
   private readonly element: HTMLElement
-  private isSwapped: boolean = false
 
   public lineSelector: LineSelector
 
@@ -78,13 +77,9 @@ export class DiffEditor {
     this.currentCodeHash = newCodeHash
 
     if (this.models[newCodeHash] === undefined) {
-      const [originalCode, modifiedCode] = this.isSwapped
-        ? [codeRight, codeLeft]
-        : [codeLeft, codeRight]
-
       this.models[newCodeHash] = {
-        original: monaco.editor.createModel(originalCode, 'solidity'),
-        modified: monaco.editor.createModel(modifiedCode, 'solidity'),
+        original: monaco.editor.createModel(codeLeft, 'solidity'),
+        modified: monaco.editor.createModel(codeRight, 'solidity'),
       }
     }
 
