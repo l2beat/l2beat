@@ -11,6 +11,12 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
+
+export type DaThroughputChart = {
+  data: DaThroughputDataPoint[]
+  syncStatus?: Record<string, number>
+}
+
 export type DaThroughputDataPoint = [
   timestamp: number,
   ethereum: number,
@@ -28,9 +34,9 @@ export type DaThroughputChartParams = v.infer<typeof DaThroughputChartParams>
 export async function getDaThroughputChart({
   range,
   includeScalingOnly,
-}: DaThroughputChartParams): Promise<DaThroughputDataPoint[]> {
+}: DaThroughputChartParams): Promise<DaThroughputChart> {
   if (env.MOCK) {
-    return getMockDaThroughputChartData({ range, includeScalingOnly })
+    return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
   }
   const db = getDb()
   const resolution = rangeToResolution(range)
@@ -48,42 +54,67 @@ export async function getDaThroughputChart({
       )
 
   if (throughput.length === 0) {
-    return []
+    return { data: [] }
   }
   const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndDaLayerId(
     throughput,
     resolution,
   )
 
-  const lastEigenDAData = Object.entries(grouped).findLast(([_, values]) => {
-    return values.eigenda && values.eigenda > 0
-  })
+  const lastDataForLayers: Record<
+    string,
+    { timestamp: number; value: number }
+  > = {}
+  for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+    const lastValue = Object.entries(grouped).findLast(
+      ([_, values]) => values[layer] && values[layer] > 0,
+    )
+    if (lastValue) {
+      lastDataForLayers[layer] = {
+        timestamp: Number(lastValue[0]),
+        value: lastValue[1][layer] ?? 0,
+      }
+    }
+  }
 
   const timestamps = generateTimestamps(
     [minTimestamp, maxTimestamp],
     resolution,
   )
-  return timestamps.map((timestamp) => {
-    const timestampValues = grouped[timestamp]
+  const data: DaThroughputDataPoint[] = timestamps.map((timestamp) => {
+    const timestampValues = grouped[timestamp] ?? {}
 
-    // For EigenDA we only have data for projects for past day, but for whole DA layer hourly, so we want to fill the gaps with the last known value for most recent data
-    let eigenda = timestampValues?.eigenda ?? 0
-    if (
-      includeScalingOnly &&
-      lastEigenDAData &&
-      timestamp > Number(lastEigenDAData[0])
-    ) {
-      eigenda = lastEigenDAData[1]['eigenda'] ?? 0
+    const layerValues: Record<string, number> = {}
+    for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
+      layerValues[layer] = timestampValues[layer] ?? 0
+
+      const lastData = lastDataForLayers[layer]
+      if (
+        lastData &&
+        timestamp > lastData.timestamp &&
+        layerValues[layer] === 0
+      ) {
+        layerValues[layer] = lastData.value
+      }
     }
 
     return [
       timestamp,
-      timestampValues?.ethereum ?? 0,
-      timestampValues?.celestia ?? 0,
-      timestampValues?.avail ?? 0,
-      eigenda,
+      layerValues.ethereum ?? 0,
+      layerValues.celestia ?? 0,
+      layerValues.avail ?? 0,
+      layerValues.eigenda ?? 0,
     ]
   })
+  return {
+    data,
+    syncStatus: Object.fromEntries(
+      Object.entries(lastDataForLayers).map(([layer, { timestamp }]) => [
+        layer,
+        timestamp,
+      ]),
+    ),
+  }
 }
 
 export function groupByTimestampAndDaLayerId(

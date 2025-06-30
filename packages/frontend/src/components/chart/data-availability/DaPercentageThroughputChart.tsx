@@ -23,11 +23,13 @@ interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }
 export function DaPercentageThroughputChart({
   data,
   isLoading,
   includeScalingOnly,
+  syncStatus,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
@@ -97,7 +99,12 @@ export function DaPercentageThroughputChart({
           },
         })}
         <ChartTooltip
-          content={<CustomTooltip includeScalingOnly={includeScalingOnly} />}
+          content={
+            <CustomTooltip
+              includeScalingOnly={includeScalingOnly}
+              syncStatus={syncStatus}
+            />
+          }
         />
       </BarChart>
     </ChartContainer>
@@ -109,8 +116,10 @@ function CustomTooltip({
   payload,
   label,
   includeScalingOnly,
+  syncStatus,
 }: TooltipProps<number, string> & {
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -128,9 +137,11 @@ function CustomTooltip({
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry) return null
 
-          // We don't have data for EigenDA projects for the past day, so we show estimated data for the current day
-          const isEstimated =
-            includeScalingOnly && isCurrentDay && entry.name === 'eigenda'
+          const projectSyncStatus = entry.name
+            ? syncStatus?.[entry.name]
+            : undefined
+
+          const isEstimated = projectSyncStatus && projectSyncStatus < label
 
           return (
             <div

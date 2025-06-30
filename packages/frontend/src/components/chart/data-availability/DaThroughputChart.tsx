@@ -18,14 +18,14 @@ export function DaThroughputChart() {
   const [metric, setMetric] = useState<'percentage' | 'absolute'>('percentage')
   const { includeScalingOnly, setIncludeScalingOnly } = useIncludeScalingOnly()
 
-  const { data, isLoading } = api.da.chart.useQuery({
+  const { data: chartData, isLoading } = api.da.chart.useQuery({
     range,
     includeScalingOnly,
   })
 
   const chartRange = useMemo(
-    () => getChartRange(data?.map(([timestamp]) => ({ timestamp }))),
-    [data],
+    () => getChartRange(chartData?.data.map(([timestamp]) => ({ timestamp }))),
+    [chartData],
   )
 
   return (
@@ -40,15 +40,17 @@ export function DaThroughputChart() {
       </div>
       {metric === 'percentage' ? (
         <DaPercentageThroughputChart
-          data={data}
+          data={chartData?.data}
           isLoading={isLoading}
           includeScalingOnly={includeScalingOnly}
+          syncStatus={chartData?.syncStatus}
         />
       ) : (
         <DaAbsoluteThroughputChart
-          data={data}
+          data={chartData?.data}
           isLoading={isLoading}
           includeScalingOnly={includeScalingOnly}
+          syncStatus={chartData?.syncStatus}
         />
       )}
       <div className="mt-2 flex justify-between gap-2">
