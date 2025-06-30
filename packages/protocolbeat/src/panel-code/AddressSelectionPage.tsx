@@ -1,9 +1,9 @@
-// biome-ignore lint/style/noNonNullAssertion: We know it's there
-const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
-
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { AVAILABLE_CHAINS } from '../panel-diff/AddressSelectionPage'
+import { AVAILABLE_CHAINS } from '../common/chains'
+
+// biome-ignore lint/style/noNonNullAssertion: We know it's there
+const DEFAULT_CHAIN_SHORT_NAME = AVAILABLE_CHAINS[0]!.shortName
 
 function isValidEthereumAddress(address: string) {
   const trimmed = address.trim()
@@ -36,11 +36,7 @@ export function AddressSelectionPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-coffee-900 p-4">
       <h1 className="my-8 flex justify-center">
-        <img
-          className="w-[200px] md:w-[400px]"
-          src="/logo.svg"
-          alt="CODE"
-        />
+        <img className="w-[200px] md:w-[400px]" src="/logo.svg" alt="CODE" />
       </h1>
 
       <div className="w-full max-w-2xl space-y-6 rounded-xl bg-coffee-800 p-6 text-coffee-200 shadow-lg">
