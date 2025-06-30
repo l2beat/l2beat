@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22786790,
+  "blockNumber": 22816998,
   "configHash": "0x0b7fa96fe04ab217e12ea897c8ac004783f4afe3bde3af0d173e240bb36bc73f",
   "entries": [
     {
@@ -29,28 +29,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "24583728847476285224345539",
+        "cumulativeStake": "24804617935433322585568120",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10132,
+        "getCurrentRoundId": 10134,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 20,
-          "numberResolvedPriceRequests": 1063
+          "numberPendingPriceRequests": 13,
+          "numberResolvedPriceRequests": 1090
         },
         "getVotePhase": 1,
-        "lastRoundIdProcessed": 10132,
-        "lastUpdateTime": 1750912847,
+        "lastRoundIdProcessed": 10134,
+        "lastUpdateTime": 1751278967,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 20,
+        "nextPendingIndexToProcess": 12,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "635249991590136217",
-        "rewardPerTokenStored": "635218009460619657",
+        "rewardPerToken": "637167053348045646",
+        "rewardPerTokenStored": "637142462765695709",
         "slashingLibrary": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -622,7 +622,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750918895,
+        "getCurrentTime": 1751283659,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -786,11 +786,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1750918895,
+        "getCurrentTime": 1751283659,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2765623,
+        "numberOfDeposits": 2780665,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -895,7 +895,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
-          "description": "set critical administrative parameters like migrating to a new contract and requesting governancce actions (`requestPrice()`) directly.",
+          "description": "set critical administrative parameters like migrating to a new contract and requesting governance actions (`requestPrice()`) directly.",
           "role": ".owner"
         },
         {
@@ -960,7 +960,7 @@
         "$immutable": true,
         "emergencyProposer": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750918895,
+        "getCurrentTime": 1751283659,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1042,7 +1042,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 839,
+        "nonce": 840,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1212,7 +1212,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1750918895,
+        "getCurrentTime": 1751283659,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1469,13 +1469,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x63191663b451938d73af704ef2138363bbfd292fcee0f8ec5dddd1c0122674e2",
-          "relayerRefundRoot": "0x1fabfc5473497cf3462bca5af2772932e3f035789041b464334db5a321e29cb6",
-          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "poolRebalanceRoot": "0xd5494336ecd0da6d61e7cf5d46fcd65f529517a6220e2a6c01fad953c41b4926",
+          "relayerRefundRoot": "0x81c508db030ff3c003fa069eca24b43378b8c9474efb190c792defcc64745dda",
+          "slowRelayRoot": "0x0e89668f3cf55a9561ebe6330ae1e58493cca526722b0d17f58c98412af59dc8",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 18,
-          "challengePeriodEndTimestamp": 1750921523
+          "unclaimedPoolRebalanceLeafCount": 19,
+          "challengePeriodEndTimestamp": 1751283779
         },
         "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "0x0000000000000000000000000000000000000000",
@@ -3511,5 +3511,5 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x56925723054294aa9dbfb622f90bee80046f19b19af7743591ce42230a467676"
   },
-  "permissionsConfigHash": "0x37dd8c37a3a76d54ba144b7c56d39f2b8ffaa7cd9d02bafec90e93151d559c02"
+  "permissionsConfigHash": "0xb0ef55036c514169bc596ef567bd7dcb949c18e8bb40e5390933c3d04d6a6d5f"
 }
