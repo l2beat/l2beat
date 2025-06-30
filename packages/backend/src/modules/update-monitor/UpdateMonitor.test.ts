@@ -98,6 +98,7 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
 
 const flatSourcesRepository = mockObject<Database['flatSources']>({
   upsert: async () => undefined,
+  get: async () => undefined,
 })
 
 describe(UpdateMonitor.name, () => {
@@ -627,6 +628,10 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('gets repository entry', async () => {
+      const committed = {
+        ...mockProject,
+        entries: DISCOVERY_RESULT.entries,
+      }
       const dbEntry = {
         ...mockRecord,
         discovery: { ...mockProject, entries: COMMITTED },
@@ -650,7 +655,7 @@ describe(UpdateMonitor.name, () => {
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
         mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>(),
+        mockObject<ConfigReader>({ readDiscovery: () => committed }),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
@@ -735,6 +740,10 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('with version mismatch runs discovery with previous block number', async () => {
+      const committed = {
+        ...mockProject,
+        entries: DISCOVERY_RESULT.entries,
+      }
       const dbEntry = COMMITTED
 
       const updateMonitorRepository = mockObject<Database['updateMonitor']>({
@@ -762,7 +771,7 @@ describe(UpdateMonitor.name, () => {
         [discoveryRunner],
         mockObject<UpdateNotifier>(),
         mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>(),
+        mockObject<ConfigReader>({ readDiscovery: () => committed }),
         mockObject<Database>({
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
@@ -783,7 +792,7 @@ describe(UpdateMonitor.name, () => {
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledTimes(1)
       expect(discoveryRunner.discoverWithRetry).toHaveBeenCalledWith(
         mockConfig(PROJECT_A),
-        BLOCK_NUMBER - 1,
+        committed.blockNumber,
         LOGGER,
       )
     })
@@ -1029,7 +1038,7 @@ const mockRecord: UpdateMonitorRecord = {
 const mockProject: DiscoveryOutput = {
   name: PROJECT_A,
   chain: 'ethereum',
-  blockNumber: BLOCK_NUMBER,
+  blockNumber: 1,
   configHash: Hash256.random(),
   entries: COMMITTED,
   abis: {},
