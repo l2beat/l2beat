@@ -15,7 +15,7 @@ export type ThroughputLastTimestamp = Awaited<
 const getDaThroughputLastTimestampData = async (daLayerId: string) => {
   const db = getDb()
   const lastHour = UnixTime.toStartOf(UnixTime.now(), 'hour')
-  const values = await db.dataAvailability.getByDaLayersAndTimeRange(
+  const values = await db.dataAvailability.getByProjectIdsAndTimeRange(
     [daLayerId],
     [lastHour - 7 * UnixTime.HOUR, lastHour],
   )
