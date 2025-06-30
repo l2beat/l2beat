@@ -5,7 +5,7 @@ import { CodePage } from './CodePage'
 const queryClient = new QueryClient()
 
 export const CodeAppModule: AppModule = {
-  name: 'diff',
+  name: 'code',
   routes: [{ path: '/address/:address', element: <CodePage /> }],
   root: (children) => {
     return (
