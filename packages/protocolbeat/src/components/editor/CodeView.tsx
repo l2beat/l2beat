@@ -2,23 +2,17 @@ import { useEffect } from 'react'
 
 import { useRef } from 'react'
 import { useMultiViewStore } from '../../multi-view/store'
-import { Editor, type EditorSupportedLanguage } from './editor'
+import { Editor } from './editor'
 import { useCodeStore } from './store'
-import type { Range } from './store'
 
 export function CodeView({
-  code,
-  range,
-  language,
   editorKey = 'default',
 }: {
-  code: string
-  range: Range | undefined
-  language?: EditorSupportedLanguage
   editorKey?: string
+  readOnly?: boolean
 }) {
   const monacoEl = useRef(null)
-  const { setEditor, getEditor, showRange } = useCodeStore()
+  const { setEditor, getEditor, removeEditor } = useCodeStore()
   const editor = getEditor(editorKey)
   const panels = useMultiViewStore((state) => state.panels)
   const pickedUp = useMultiViewStore((state) => state.pickedUp)
@@ -26,6 +20,11 @@ export function CodeView({
 
   useEffect(() => {
     if (!monacoEl.current) {
+      return
+    }
+
+    const existingEditor = getEditor(editorKey)
+    if (existingEditor) {
       return
     }
 
@@ -38,24 +37,15 @@ export function CodeView({
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
+      // Remove editor from store and dispose it when component unmounts
+      removeEditor(editorKey)
+      editor.dispose()
     }
-  }, [setEditor, editorKey])
-
-  useEffect(() => {
-    editor?.setCode(code, language ?? 'solidity')
-  }, [editor, code])
+  }, [setEditor, editorKey, removeEditor, getEditor])
 
   useEffect(() => {
     editor?.resize()
   }, [editor, panels, pickedUp, fullScreen])
-
-  useEffect(() => {
-    if (range !== undefined) {
-      showRange(undefined)
-      const { startOffset, length } = range
-      editor?.showRange(startOffset, length)
-    }
-  }, [editor, range])
 
   return <div className="h-full w-full" ref={monacoEl} />
 }

@@ -1,6 +1,6 @@
 import type { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import type { IProvider } from '../../provider/IProvider'
@@ -22,14 +22,14 @@ import { valueToBigInt } from '../utils/valueToBigInt'
 // statically sized arrays! This is because the first slot of a dynamic array
 // contains its length instead of actual data, also the place in storage where
 // the data is located is i = keccak256(slot) instead of i = slot.
-export type DynamicArrayHandlerDefinition = z.infer<
+export type DynamicArrayHandlerDefinition = v.infer<
   typeof DynamicArrayHandlerDefinition
 >
-export const DynamicArrayHandlerDefinition = z.strictObject({
-  type: z.literal('dynamicArray'),
+export const DynamicArrayHandlerDefinition = v.strictObject({
+  type: v.literal('dynamicArray'),
   slot: SingleSlot,
-  returnType: z.optional(z.enum(['address'])),
-  ignoreRelative: z.optional(z.boolean()),
+  returnType: v.enum(['address']).optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 export class DynamicArrayHandler implements Handler {

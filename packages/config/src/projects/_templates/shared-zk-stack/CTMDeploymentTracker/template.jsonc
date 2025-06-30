@@ -1,0 +1,12 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.",
+  "category": "shared",
+  "ignoreMethods": [
+    "chainIndex",
+    "chainIndexToId",
+    "chainRegistered",
+    "l2BridgeAddress"
+  ],
+  "ignoreInWatchMode": ["sharedTree"]
+}

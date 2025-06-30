@@ -193,7 +193,7 @@ export interface Layer2TrackedTxUse {
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
 }
-
+/** This type is used to query GBQ and manual matching of transactions within a block */
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 
 interface FunctionCall {
@@ -201,6 +201,8 @@ interface FunctionCall {
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: `function ${string}`
+  /** Topics are used to filter logs and identify internal calls*/
+  topics?: string[]
   /** Inclusive */
   sinceTimestamp: UnixTime
   /** Inclusive */

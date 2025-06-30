@@ -32,7 +32,6 @@ export async function getScalingTvsApiData({
           }
         : { type: type ?? 'layer2' },
     excludeAssociatedTokens,
-    previewRecategorisation: false,
   })
 
   const latestTvsData = data.at(-1)

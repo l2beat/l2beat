@@ -9,6 +9,7 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { v } from '@l2beat/validate'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
@@ -88,7 +89,7 @@ export class TrackedTxsClient {
     )
 
     const queryResult = await this.bigquery.query(query)
-    const parsedResult = BigQueryTransferResult.array().parse(queryResult)
+    const parsedResult = v.array(BigQueryTransferResult).parse(queryResult)
     return transformTransfersQueryResult(transfersConfig, parsedResult)
   }
 
@@ -126,7 +127,7 @@ export class TrackedTxsClient {
     const queryResult = await this.bigquery.query(query)
     // function calls and sharp submissions need the same fields for the later transform logic
     // this is why we parse all the results with the same parser
-    const parsedResult = BigQueryFunctionCallResult.array().parse(queryResult)
+    const parsedResult = v.array(BigQueryFunctionCallResult).parse(queryResult)
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens

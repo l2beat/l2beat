@@ -21,11 +21,13 @@ import type { Config } from '../config'
 import { BlockProviders } from './BlockProviders'
 import { type Clients, initClients } from './Clients'
 import { DayProviders } from './DayProviders'
+import { LogsProviders } from './LogsProviders'
 import { SvmBlockProviders } from './SvmBlockProviders'
 import { UopsAnalyzers } from './UopsAnalyzers'
 
 export class Providers {
   block: BlockProviders
+  logs: LogsProviders
   price: PriceProvider
   uops: UopsAnalyzers
   day: DayProviders
@@ -45,6 +47,7 @@ export class Providers {
   ) {
     this.clients = initClients(config, logger)
     this.block = new BlockProviders(this.clients.block)
+    this.logs = new LogsProviders(this.clients.logs)
     this.svmBlock = new SvmBlockProviders(this.clients.svmBlock)
     this.circulatingSupply = new CirculatingSupplyProvider(
       new CoingeckoQueryService(

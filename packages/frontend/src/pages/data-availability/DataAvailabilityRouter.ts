@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -76,10 +76,7 @@ export function createDataAvailabilityRouter(
   router.get(
     '/data-availability/projects/:layer/:bridge',
     validateRoute({
-      params: z.object({
-        layer: z.string(),
-        bridge: z.string(),
-      }),
+      params: v.object({ layer: v.string(), bridge: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(

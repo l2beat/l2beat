@@ -1,15 +1,15 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const GetMetricsSuccessSchema = z.object({
-  throughput: z.number(),
+export const GetMetricsSuccessSchema = v.object({
+  throughput: v.number(),
 })
 
-const ProjectDataSchema = z.object({
-  datetime: z
+const ProjectDataSchema = v.object({
+  datetime: v
     .string()
     .transform((val) => UnixTime.fromDate(new Date(val + 'Z'))),
-  customer_id: z.string(),
-  total_size_mb: z.number(),
+  customer_id: v.string(),
+  total_size_mb: v.number(),
 })
-export const GetByProjectDataSuccessSchema = z.array(ProjectDataSchema)
+export const GetByProjectDataSuccessSchema = v.array(ProjectDataSchema)

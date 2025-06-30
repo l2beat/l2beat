@@ -1,17 +1,16 @@
-import { stringAsInt } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v as v } from '@l2beat/validate'
 
-export const BlockTimestampResponse = z.union([
-  z
+export const BlockTimestampResponse = v.union([
+  v
     .object({
-      blockNumber: z.coerce.number(),
+      blockNumber: v.unknown().transform((b) => Number(b as string)),
     })
     .transform((b) => b.blockNumber),
-  stringAsInt(),
+  v.string().transform(Number).check(Number.isInteger),
 ])
 
-export type EtherscanResponse = z.infer<typeof EtherscanResponse>
-export const EtherscanResponse = z.object({
-  message: z.enum(['OK', 'NOTOK']),
-  result: z.unknown(),
+export type EtherscanResponse = v.infer<typeof EtherscanResponse>
+export const EtherscanResponse = v.object({
+  message: v.enum(['OK', 'NOTOK']),
+  result: v.unknown(),
 })

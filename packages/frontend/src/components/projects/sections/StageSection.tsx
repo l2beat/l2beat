@@ -1,4 +1,5 @@
 import type {
+  ProjectScalingCategory,
   ProjectScalingScopeOfAssessment,
   StageConfigured,
   StageUnderReview,
@@ -36,7 +37,7 @@ import type { ProjectSectionProps } from './types'
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string
   name: string
-  type: string
+  type: ProjectScalingCategory
   stageConfig: StageUnderReview | StageConfigured
   isAppchain: boolean
   emergencyWarning?: string
@@ -83,6 +84,10 @@ export function StageSection({
       ? RoundedWarningIcon
       : UnderReviewIcon
 
+  const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
+
+  console.log(stageConfig.summary[0]?.requirements)
+
   return (
     <ProjectSection {...sectionProps}>
       {emergencyWarning && (
@@ -101,7 +106,7 @@ export function StageSection({
           height={18}
           className="-top-0.5 relative mr-2 inline-block"
         />
-        {name} is a{' '}
+        {name} is {notEvenAStage0 ? 'not even a' : 'a'}{' '}
         <StageBadge
           stage={stageConfig.stage}
           className="-top-px relative inline-flex"
@@ -109,7 +114,7 @@ export function StageSection({
           appchainClassName="text-base md:text-lg inline"
           inline
         />
-        <span> {type}</span>.
+        <span> {notEvenAStage0 ? 'project' : type}</span>.
       </span>
       {scopeOfAssessment && (
         <ScopeOfAssessment
@@ -200,11 +205,7 @@ export function StageSection({
                     </div>
                   ) : (
                     <div className="flex items-center gap-2 font-bold">
-                      {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
-                      ) : (
-                        <MissingIcon className="size-4 shrink-0 fill-negative" />
-                      )}
+                      <MissingIcon className="size-4 shrink-0 fill-negative" />
                       <span>{reqTextMissing(missingForLabel.length)}</span>
                     </div>
                   )}
@@ -276,11 +277,7 @@ export function StageSection({
                   ))}
                   {missingRequirements.map((req, i) => (
                     <li key={i} className="flex">
-                      {stage.stage === 'Stage 0' ? (
-                        <RoundedWarningIcon className="size-4 shrink-0 fill-warning" />
-                      ) : (
-                        <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
-                      )}
+                      <MissingIcon className="relative top-0.5 size-4 shrink-0 fill-negative" />
                       <Markdown
                         className="ml-2 leading-none max-md:text-base"
                         inline

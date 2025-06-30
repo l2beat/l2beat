@@ -2,7 +2,6 @@ import type { Project } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { ps } from '~/server/projects'
-import { isProjectOther } from '../../utils/isProjectOther'
 
 export interface TvsProject {
   projectId: ProjectId
@@ -11,11 +10,16 @@ export interface TvsProject {
 
 export async function getTvsProjects(
   filter: (p: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean,
-  previewRecategorisation?: boolean,
+  options?: {
+    withoutArchivedAndUpcoming?: boolean
+  },
 ): Promise<TvsProject[]> {
   const projects = await ps.getProjects({
     select: ['statuses', 'tvsConfig'],
     optional: ['chainConfig', 'scalingInfo', 'isBridge'],
+    whereNot: options?.withoutArchivedAndUpcoming
+      ? ['isUpcoming', 'archivedAt']
+      : undefined,
   })
 
   const filteredProjects = projects
@@ -24,19 +28,18 @@ export async function getTvsProjects(
 
   return filteredProjects.map((project) => ({
     projectId: project.id,
-    category: getCategory(project, previewRecategorisation),
+    category: getCategory(project),
   }))
 }
 
 function getCategory(
   p: Project<never, 'scalingInfo'>,
-  previewRecategorisation?: boolean,
 ): 'rollups' | 'validiumsAndOptimiums' | 'others' | undefined {
   if (!p.scalingInfo) {
     return undefined
   }
 
-  if (isProjectOther(p.scalingInfo, previewRecategorisation)) {
+  if (p.scalingInfo.type === 'Other') {
     return 'others'
   }
 

@@ -15,7 +15,7 @@ interface DashboardPageProps {
 function DashboardPage(props: DashboardPageProps) {
   return (
     <Page title="Discovery">
-      <table style={{ width: '100%' }}>
+      <table style={{ width: '100%', wordBreak: 'break-word' }}>
         <tbody>
           {Object.entries(props.projects).map(([chainName, projects]) => (
             <>
@@ -86,7 +86,6 @@ function ChangedDetectedDropdown({
     project.changes.diff &&
     project.changes.diff.length > 0 && (
       <details
-        open
         key={project.name}
         style={{ marginTop: '0px', marginBottom: '0px', textWrap: 'wrap' }}
       >

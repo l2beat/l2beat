@@ -144,11 +144,11 @@ export const degate2: ScalingProject = {
       stateRootsPostedToL1: true,
       dataAvailabilityOnL1: true,
       rollupNodeSourceAvailable: 'UnderReview',
+      stateVerificationOnL1: true,
+      fraudProofSystemAtLeast5Outsiders: null,
     },
     stage1: {
       principle: true,
-      stateVerificationOnL1: true,
-      fraudProofSystemAtLeast5Outsiders: null,
       usersHave7DaysToExit: null,
       usersCanExitWithoutCooperation: true,
       securityCouncilProperlySetUp: null,

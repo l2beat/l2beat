@@ -25,7 +25,6 @@ import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import type { ProjectSevenDayTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
 import { compareStageAndTvs } from '../utils/compareStageAndTvs'
-import { isProjectOther } from '../utils/isProjectOther'
 
 export async function getScalingSummaryEntries() {
   const projects = await ps.getProjects({
@@ -120,7 +119,7 @@ export function getScalingSummaryEntry(
       syncWarning: activitySyncWarning,
     }),
     stage:
-      isProjectOther(project.scalingInfo) || !project.scalingStage
+      project.scalingInfo.type === 'Other' || !project.scalingStage
         ? { stage: 'NotApplicable' as const }
         : project.scalingStage,
     capability: project.scalingInfo.capability,

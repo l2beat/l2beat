@@ -1,46 +1,46 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-const GetBlobSuccessSchema = z.object({
-  result: z.object({
-    namespace: z.string(),
-    data: z.string(),
-    share_version: z.number(),
-    commitment: z.string(),
-    index: z.number(),
+const GetBlobSuccessSchema = v.object({
+  result: v.object({
+    namespace: v.string(),
+    data: v.string(),
+    share_version: v.number(),
+    commitment: v.string(),
+    index: v.number(),
   }),
 })
 
-const GetBlobErrorSchema = z.object({
-  error: z.object({
-    code: z.number(),
-    message: z.string(),
+const GetBlobErrorSchema = v.object({
+  error: v.object({
+    code: v.number(),
+    message: v.string(),
   }),
 })
 
 // partial - no jsonrpc preamble
-export const GetBlobResponseSchema = z.union([
+export const GetBlobResponseSchema = v.union([
   GetBlobSuccessSchema,
   GetBlobErrorSchema,
 ])
 
-export type GetBlobResponse = z.infer<typeof GetBlobResponseSchema>
+export type GetBlobResponse = v.infer<typeof GetBlobResponseSchema>
 
 // partial - no data and code
-export const CelestiaTransactionResultSchema = z.object({
-  log: z.string(),
+export const CelestiaTransactionResultSchema = v.object({
+  log: v.string(),
 })
 
-export type CelestiaTransactionResult = z.infer<
+export type CelestiaTransactionResult = v.infer<
   typeof CelestiaTransactionResultSchema
 >
 
 // partial - no jsonrpc preamble
-export const GetBlockResultsResponseSchema = z.object({
-  result: z.object({
-    txs_results: z.array(CelestiaTransactionResultSchema),
+export const GetBlockResultsResponseSchema = v.object({
+  result: v.object({
+    txs_results: v.array(CelestiaTransactionResultSchema),
   }),
 })
 
-export type GetBlockResultsResponse = z.infer<
+export type GetBlockResultsResponse = v.infer<
   typeof GetBlockResultsResponseSchema
 >

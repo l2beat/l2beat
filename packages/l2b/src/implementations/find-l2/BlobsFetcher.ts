@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { Column, FetchProjects, FetchResult } from './FetchInterface'
 
 const receiverMapping: Record<string, string> = {
@@ -70,30 +70,30 @@ const receiverMapping: Record<string, string> = {
   '0xff00000000000000000000000000000000420000': 'infinaeon.com',
 }
 
-const EnvioResponseSchema = z.object({
-  data: z.array(
-    z.object({
-      transactions: z.array(
-        z.object({
-          to: z.string(),
-          blob_versioned_hashes: z
+const EnvioResponseSchema = v.object({
+  data: v.array(
+    v.object({
+      transactions: v.array(
+        v.object({
+          to: v.string(),
+          blob_versioned_hashes: v
             .string()
             .transform((val) => ({ blobCount: (val.length - 2) / 64 })),
         }),
       ),
     }),
   ),
-  archive_height: z.number().positive(),
-  next_block: z.number().positive(),
-  total_execution_time: z.number().positive(),
-  rollback_guard: z.union([
-    z.null(),
-    z.object({
-      block_number: z.number(),
-      timestamp: z.number(),
-      hash: z.string(),
-      first_block_number: z.number(),
-      first_parent_hash: z.string(),
+  archive_height: v.number().check((v) => v > 0),
+  next_block: v.number().check((v) => v > 0),
+  total_execution_time: v.number().check((v) => v > 0),
+  rollback_guard: v.union([
+    v.null(),
+    v.object({
+      block_number: v.number(),
+      timestamp: v.number(),
+      hash: v.string(),
+      first_block_number: v.number(),
+      first_parent_hash: v.string(),
     }),
   ]),
 })

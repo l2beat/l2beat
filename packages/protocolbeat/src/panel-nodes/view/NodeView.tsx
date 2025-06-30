@@ -4,7 +4,11 @@ import { AddressIcon } from '../../common/AddressIcon'
 import { IconInitial } from '../../icons/IconInitial'
 import type { Field, Node } from '../store/State'
 import { useStore } from '../store/store'
-import { FIELD_HEIGHT, HEADER_HEIGHT } from '../store/utils/constants'
+import {
+  FIELD_HEIGHT,
+  HEADER_HEIGHT,
+  HIDDEN_FIELDS_FOOTER_HEIGHT,
+} from '../store/utils/constants'
 import { getColor } from './colors/colors'
 
 export interface NodeViewProps {
@@ -64,6 +68,15 @@ export function NodeView(props: NodeViewProps) {
             isDimmed={props.isDimmed}
           />
         ))}
+      {props.node.hiddenFields.length > 0 && (
+        <div
+          className="flex items-end justify-center text-center text-coffee-200/40 text-xs italic"
+          style={{ height: HIDDEN_FIELDS_FOOTER_HEIGHT }}
+        >
+          +{props.node.hiddenFields.length} hidden field
+          {props.node.hiddenFields.length > 1 ? 's' : ''}
+        </div>
+      )}
     </div>
   )
 }

@@ -1,43 +1,53 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
-const OneTimeEvent = z.object({
-  type: z.literal('one-time'),
-  highlighted: z.boolean().optional(),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  startDate: z.coerce.date(),
-  endDate: z.coerce.date().optional(),
-  location: z.string().optional(),
-  link: z.string().url(),
-  toBeAnnounced: z.boolean().optional(),
+const OneTimeEvent = v.object({
+  type: v.literal('one-time'),
+  highlighted: v.boolean().optional(),
+  title: v.string(),
+  subtitle: v.string().optional(),
+  startDate: v.unknown().transform((v) => new Date(v as string)),
+  endDate: v
+    .unknown()
+    .transform((v) => new Date(v as string))
+    .optional(),
+  location: v.string().optional(),
+  link: v.string().check((v) => !!new URL(v)),
+  toBeAnnounced: v.boolean().optional(),
 })
 
-const RecurringEvent = z.object({
-  type: z.literal('recurring'),
-  title: z.string(),
-  subtitle: z.string().optional(),
-  sinceDate: z.coerce.date(),
-  tillDate: z.coerce.date().optional(),
-  futureEventsCount: z.number().min(1),
-  dayOfWeek: z.number().min(0).max(6),
-  startDate: z.object({
-    hour: z.number().min(0).max(23),
-    minute: z.number().min(0).max(59),
+const RecurringEvent = v.object({
+  type: v.literal('recurring'),
+  title: v.string(),
+  subtitle: v.string().optional(),
+  sinceDate: v.unknown().transform((v) => new Date(v as string)),
+  tillDate: v
+    .unknown()
+    .transform((v) => new Date(v as string))
+    .optional(),
+  futureEventsCount: v.number().check((v) => v > 0),
+  dayOfWeek: v.number().check((v) => v >= 0 && v <= 6),
+  startDate: v.object({
+    hour: v.number().check((v) => v >= 0 && v <= 23),
+    minute: v.number().check((v) => v >= 0 && v <= 59),
   }),
-  endDate: z
+  endDate: v
     .object({
-      hour: z.number().min(0).max(23),
-      minute: z.number().min(0).max(59),
+      hour: v.number().check((v) => v >= 0 && v <= 23),
+      minute: v.number().check((v) => v >= 0 && v <= 59),
     })
     .optional(),
-  location: z.string().optional(),
-  link: z.string().url(),
-  cancelledAt: z.array(z.coerce.date()).optional(),
+  location: v.string().optional(),
+  link: v.string().check((v) => !!new URL(v)),
+  cancelledAt: v
+    .array(v.unknown().transform((v) => new Date(v as string)))
+    .optional(),
 })
 
 export const eventsCollection = defineCollection({
   type: 'data',
-  schema: z.discriminatedUnion('type', [OneTimeEvent, RecurringEvent]),
+  // NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+  // support it yet. It's a performance issue.
+  schema: v.union([OneTimeEvent, RecurringEvent]),
 })

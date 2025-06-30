@@ -5,6 +5,7 @@ import type { AmountConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
 
 describe(extractPricesAndAmounts.name, () => {
+  const ADDRESS = EthereumAddress.random()
   it('should map amount formulas to sync configs', async () => {
     const tokens = [
       mockObject<TvsToken>({
@@ -28,6 +29,8 @@ describe(extractPricesAndAmounts.name, () => {
       mockObject<TvsToken>({
         priceId: 'price-ARB',
         amount: {
+          chain: 'ethereum',
+          address: ADDRESS,
           type: 'circulatingSupply',
           apiId: 'price-ARB',
           decimals: 18,
@@ -83,6 +86,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         mockObject<AmountConfig>({
           id: '4ffda8b9b469',
+          chain: 'ethereum',
+          address: ADDRESS,
           apiId: 'price-ARB',
           type: 'circulatingSupply',
           decimals: 18,

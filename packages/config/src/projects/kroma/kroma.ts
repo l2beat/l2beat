@@ -69,7 +69,7 @@ export const kroma: ScalingProject = {
     description:
       'Kroma aims to develop a universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll and a zkVM based proven with SP1.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
     stack: 'OP Stack',
     links: {
       websites: ['https://kroma.network/'],
@@ -109,6 +109,9 @@ export const kroma: ScalingProject = {
       },
       finalizationPeriod,
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   chainConfig: {
     name: 'kroma',
@@ -232,11 +235,11 @@ export const kroma: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

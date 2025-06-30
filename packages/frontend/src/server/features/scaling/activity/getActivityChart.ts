@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -15,11 +15,10 @@ import {
 } from './utils/projectFilterUtils'
 import { ActivityTimeRange } from './utils/range'
 
-export type ActivityChartParams = z.infer<typeof ActivityChartParams>
-export const ActivityChartParams = z.object({
+export type ActivityChartParams = v.infer<typeof ActivityChartParams>
+export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: z.boolean(),
 })
 
 export type ActivityChartData = {
@@ -41,15 +40,14 @@ export type ActivityChartData = {
 export async function getActivityChart({
   filter,
   range,
-  previewRecategorisation,
 }: ActivityChartParams): Promise<ActivityChartData> {
   if (env.MOCK) {
-    return getMockActivityChart({ filter, range, previewRecategorisation })
+    return getMockActivityChart({ filter, range })
   }
 
   const db = getDb()
   const projects = (await getActivityProjects())
-    .filter(createActivityProjectsFilter(filter, previewRecategorisation))
+    .filter(createActivityProjectsFilter(filter))
     .map((p) => p.id)
     .concat(ProjectId.ETHEREUM)
   const isSingleProject = projects.length === 2 // Ethereum + 1 other project

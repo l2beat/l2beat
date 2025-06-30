@@ -1,6 +1,6 @@
 import type { Chain } from '@/chains'
 import type { Block } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { BlockClient } from './BlockClient'
 
 // TODO: To be replaced by BlockProvider from @l2beat/shared
@@ -78,35 +78,35 @@ export class StarknetClient implements BlockClient {
   }
 }
 
-const StarknetGetBlockResponseBodySchema = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
-  result: z.object({
-    block_number: z.number().int(),
-    timestamp: z.number().int(),
-    transactions: z.array(z.string()),
+const StarknetGetBlockResponseBodySchema = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check((v) => Number.isInteger(v)),
+  result: v.object({
+    block_number: v.number().check((v) => Number.isInteger(v)),
+    timestamp: v.number().check((v) => Number.isInteger(v)),
+    transactions: v.array(v.string()),
   }),
 })
 
-const StarknetTransaction = z.object({
-  type: z.string(),
-  calldata: z.array(z.string()).optional(),
-  transaction_hash: z.string(),
-  sender_address: z.string().optional(),
+const StarknetTransaction = v.object({
+  type: v.string(),
+  calldata: v.array(v.string()).optional(),
+  transaction_hash: v.string(),
+  sender_address: v.string().optional(),
 })
 
-type StarknetApiTransaction = z.infer<typeof StarknetTransaction>
+type StarknetApiTransaction = v.infer<typeof StarknetTransaction>
 
-const StarknetBlock = z.object({
-  block_hash: z.string(),
-  block_number: z.number().int(),
-  status: z.string(),
-  timestamp: z.number().int(),
-  transactions: z.array(StarknetTransaction),
+const StarknetBlock = v.object({
+  block_hash: v.string(),
+  block_number: v.number().check((v) => Number.isInteger(v)),
+  status: v.string(),
+  timestamp: v.number().check((v) => Number.isInteger(v)),
+  transactions: v.array(StarknetTransaction),
 })
 
-const StarknetGetBlockWithTxsResponseBodySchema = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number().int(),
+const StarknetGetBlockWithTxsResponseBodySchema = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number().check((v) => Number.isInteger(v)),
   result: StarknetBlock,
 })

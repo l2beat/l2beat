@@ -1,11 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
-import { isProjectOther } from '../../utils/isProjectOther'
+import { v } from '@l2beat/validate'
 
-export const TvsProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum([
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const TvsProjectFilter = v.union([
+  v.object({
+    type: v.enum([
       'layer2',
       'rollups',
       'validiumsAndOptimiums',
@@ -13,14 +14,14 @@ export const TvsProjectFilter = z.discriminatedUnion('type', [
       'bridge',
     ]),
   }),
-  z.object({
-    type: z.literal('projects'),
-    projectIds: z.array(z.string()),
+  v.object({
+    type: v.literal('projects'),
+    projectIds: v.array(v.string()),
   }),
 ])
-export type TvsProjectFilter = z.infer<typeof TvsProjectFilter>
+export type TvsProjectFilter = v.infer<typeof TvsProjectFilter>
 
-export const TvsProjectFilterType = z.enum([
+export const TvsProjectFilterType = v.enum([
   'layer2',
   'rollups',
   'validiumsAndOptimiums',
@@ -28,20 +29,16 @@ export const TvsProjectFilterType = z.enum([
   'bridge',
   'projects',
 ])
-export type TvsProjectFilterType = z.infer<typeof TvsProjectFilterType>
+export type TvsProjectFilterType = v.infer<typeof TvsProjectFilterType>
 
 export function createTvsProjectsFilter(
   filter: TvsProjectFilter,
-  previewRecategorisation?: boolean,
 ): (project: Project<'statuses', 'scalingInfo' | 'isBridge'>) => boolean {
   switch (filter.type) {
     case 'layer2':
       return (project) =>
         !!project.scalingInfo &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'bridge':
       return (project) => !!project.isBridge
     case 'projects':
@@ -49,32 +46,21 @@ export function createTvsProjectsFilter(
     case 'rollups':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) && // If previewRecategorisation is true, we exclude projects that are under initial review
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
         !!project.scalingInfo &&
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
         !!project.scalingInfo &&
-        isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        project.scalingInfo.type === 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)
   }

@@ -1,26 +1,27 @@
-import { assert } from '@l2beat/shared-pure'
+import type { Parser } from '@l2beat/validate'
 import type { RequestHandler } from 'express'
-import type { AnyZodObject, z } from 'zod'
 
-export function validateRoute<
-  TParams extends AnyZodObject,
-  TQuery extends AnyZodObject,
-  TBody extends AnyZodObject,
->(schema: {
-  params?: TParams
-  query?: TQuery
-  body?: TBody
-}): RequestHandler<z.infer<TParams>, unknown, z.infer<TBody>, z.infer<TQuery>> {
+const keys = ['params', 'query', 'body'] as const
+
+export function validateRoute<P, Q, B>(schema: {
+  params?: Parser<P>
+  query?: Parser<Q>
+  body?: Parser<B>
+}): RequestHandler<P, unknown, B, Q> {
   return (req, res, next) => {
-    for (const key in schema) {
-      assert(key === 'params' || key === 'query' || key === 'body')
-      // biome-ignore lint/style/noNonNullAssertion: we know it's there
-      const keySchema = schema[key]!
-      const result = keySchema.safeParse(req[key])
+    for (const key of keys) {
+      const result = schema[key]?.safeParse(req[key])
+      if (!result) {
+        continue
+      }
       if (!result.success) {
-        res.status(400).json({ error: result.error })
+        res
+          .status(400)
+          .json({ path: `.${key}${result.path}`, error: result.message })
         return
       }
+      // We need to do this, because the property might be read-only
+      Object.defineProperty(req, key, { value: result.data })
     }
 
     return next()

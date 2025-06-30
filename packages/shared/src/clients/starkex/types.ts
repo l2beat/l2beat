@@ -1,9 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const StarkexApiSuccessResponse = z.object({
-  count: z.number(),
-})
-
-export const StarkexApiErrorResponse = z.object({
-  message: z.string(),
-})
+export const StarkexApiSuccessResponse = v.object({ count: v.number() })
+export const StarkexApiErrorResponse = v.object({ message: v.string() })

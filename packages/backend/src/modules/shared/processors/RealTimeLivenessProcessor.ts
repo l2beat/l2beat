@@ -8,9 +8,15 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, type Block, UnixTime } from '@l2beat/shared-pure'
-import type { Config } from '../../../config'
-import type { TrackedTxsConfig } from '../../../config/Config'
+import {
+  assert,
+  type Block,
+  type Log,
+  type ProjectId,
+  type TrackedTxsConfigSubtype,
+} from '@l2beat/shared-pure'
+import type { Config, TrackedTxsConfig } from '../../../config/Config'
+import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
@@ -34,6 +40,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     config: Config,
     logger: Logger,
     private readonly db: Database,
+    private readonly discordClient?: DiscordWebhookClient,
   ) {
     this.logger = logger.for(this)
 
@@ -42,12 +49,12 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     this.mapConfigurations(config.trackedTxsConfig)
   }
 
-  async processBlock(block: Block): Promise<void> {
-    await this.matchLivenessTransactions(block)
-    await this.checkForAnomalies()
+  async processBlock(block: Block, logs: Log[]): Promise<void> {
+    await this.matchLivenessTransactions(block, logs)
+    await this.checkForAnomalies(block)
   }
 
-  async matchLivenessTransactions(block: Block) {
+  async matchLivenessTransactions(block: Block, logs: Log[]) {
     const records: RealTimeLivenessRecord[] = []
 
     for (const tx of block.transactions) {
@@ -104,76 +111,106 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
       records.push(...results)
     }
 
+    for (const log of logs) {
+      // for now we only support function calls in logs
+      const matchingCalls = this.functionCalls.filter(
+        (c) =>
+          c.params.address.toLowerCase() === log.address.toLowerCase() &&
+          c.params.topics?.some((topic) => log.topics.includes(topic)),
+      )
+
+      const results = matchingCalls
+        .map((config) => ({
+          timestamp: block.timestamp,
+          blockNumber: block.number,
+          txHash: log.transactionHash as string,
+          configurationId: config.id,
+        }))
+        .filter(
+          (result) =>
+            !records.some(
+              (r) =>
+                r.txHash === result.txHash &&
+                r.configurationId === result.configurationId,
+            ),
+        )
+
+      records.push(...results)
+    }
+
     this.logger.info(
       `Created ${records.length} liveness records for block ${block.number}`,
       { blockNumber: block.number, count: records.length },
     )
 
-    await this.db.realTimeLiveness.insertMany(records)
+    await this.db.realTimeLiveness.upsertMany(records)
   }
 
-  async checkForAnomalies() {
+  async checkForAnomalies(block: Block) {
     const latestStats = await this.db.anomalyStats.getLatestStats()
     const latestRecords = await this.db.realTimeLiveness.getLatestRecords()
     const ongoingAnomalies =
       await this.db.realTimeAnomalies.getOngoingAnomalies()
 
-    const configs: TrackedTxLivenessConfig[] = [
-      ...this.transfers,
-      ...this.functionCalls,
-      ...this.sharpSubmissions,
-      ...this.sharedBridges,
-    ]
-
     const records: RealTimeAnomalyRecord[] = []
+    const configGroups = this.groupConfigurations()
 
-    for (const config of configs) {
-      const latestRecord = latestRecords.find(
-        (r) => r.configurationId === config.id,
-      )
+    for (const group of configGroups.values()) {
+      const groupRecords = latestRecords
+        .filter((r) => group.configurationIds.includes(r.configurationId))
+        .sort((a, b) => b.timestamp - a.timestamp)
+      const latestRecord =
+        groupRecords.length === 0 ? undefined : groupRecords[0]
 
       const latestStat = latestStats.find(
-        (s) => s.projectId === config.projectId && s.subtype === config.subtype,
+        (s) => s.projectId === group.projectId && s.subtype === group.subtype,
       )
 
       const ongoingAnomaly = ongoingAnomalies.find(
-        (a) => a.projectId === config.projectId && a.subtype === config.subtype,
+        (a) => a.projectId === group.projectId && a.subtype === group.subtype,
       )
 
       if (!latestRecord || !latestStat) {
         continue
       }
 
-      const interval = UnixTime.now() - latestRecord.timestamp
+      const interval = block.timestamp - latestRecord.timestamp
       const z = (interval - latestStat.mean) / latestStat.stdDev
       const isAnomaly = z >= 15 && interval > latestStat.mean
 
       if (isAnomaly) {
         if (ongoingAnomaly) {
-          this.logger.info(
-            `Ongoing anomaly detected for configuration ${config.id}`,
-            {
-              projectId: config.projectId,
-              subtype: config.subtype,
-              duration: interval,
-            },
-          )
+          this.logger.info(`Ongoing anomaly detected`, {
+            projectId: group.projectId,
+            subtype: group.subtype,
+            duration: interval,
+            blockNumber: block.number,
+          })
           continue
         }
 
-        this.logger.info(
-          `New anomaly detected for configuration ${config.id}`,
-          {
-            projectId: config.projectId,
-            subtype: config.subtype,
-            duration: interval,
-          },
-        )
+        this.logger.info(`New anomaly detected`, {
+          projectId: group.projectId,
+          subtype: group.subtype,
+          duration: interval,
+          blockNumber: block.number,
+        })
+
+        const message =
+          `New anomaly detected\n` +
+          `- project: \`${group.projectId}\`\n` +
+          `- type: \`${group.subtype}\`\n` +
+          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
+          `- detected at time: \`${block.timestamp}\`\n` +
+          `- detected at block: \`${block.number}\`\n` +
+          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n`
+
+        await this.sendDiscordNotification(message)
 
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
-          projectId: config.projectId,
-          subtype: config.subtype,
+          projectId: group.projectId,
+          subtype: group.subtype,
           status: 'ongoing',
         }
 
@@ -183,13 +220,22 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           continue
         }
 
-        this.logger.info(
-          `Configuration ${config.id} has recovered from anomaly`,
-          {
-            projectId: config.projectId,
-            subtype: config.subtype,
-          },
-        )
+        this.logger.info(`Recovered from anomaly`, {
+          projectId: group.projectId,
+          subtype: group.subtype,
+          blockNumber: block.number,
+        })
+
+        const message =
+          `Recovered from anomaly\n` +
+          `- project: \`${group.projectId}\`\n` +
+          `- type: \`${group.subtype}\`\n` +
+          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
+          `- recovered on time: \`${block.timestamp}\`\n` +
+          `- recovered on block: \`${block.number}\`\n` +
+          `- duration: \`${latestRecord.timestamp - ongoingAnomaly.start} seconds\``
+
+        await this.sendDiscordNotification(message)
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
@@ -209,8 +255,48 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     await this.db.realTimeAnomalies.upsertMany(records)
   }
 
+  private groupConfigurations(): Map<
+    string,
+    {
+      projectId: ProjectId
+      subtype: TrackedTxsConfigSubtype
+      configurationIds: string[]
+    }
+  > {
+    const configs: TrackedTxLivenessConfig[] = [
+      ...this.transfers,
+      ...this.functionCalls,
+      ...this.sharpSubmissions,
+      ...this.sharedBridges,
+    ]
+
+    const configGroups = new Map<
+      string,
+      {
+        projectId: ProjectId
+        subtype: TrackedTxsConfigSubtype
+        configurationIds: string[]
+      }
+    >()
+
+    for (const config of configs) {
+      const key = `${config.projectId}-${config.subtype}`
+      if (!configGroups.has(key)) {
+        configGroups.set(key, {
+          projectId: config.projectId,
+          subtype: config.subtype,
+          configurationIds: [],
+        })
+      }
+      configGroups.get(key)?.configurationIds.push(config.id)
+    }
+
+    return configGroups
+  }
+
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
     const livenesConfigurations = trackedTxsConfig.projects
+      .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
       .filter((config) => config.type === 'liveness')
 
@@ -245,5 +331,19 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         params: TrackedTxSharedBridgeConfig
       } => c.params.formula === 'sharedBridge',
     )
+  }
+
+  private async sendDiscordNotification(message: string) {
+    if (!this.discordClient) {
+      return
+    }
+
+    try {
+      await this.discordClient.sendMessage(message)
+    } catch (error) {
+      this.logger.error('Failed to send Discord notification', {
+        error,
+      })
+    }
   }
 }

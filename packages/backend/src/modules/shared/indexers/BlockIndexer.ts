@@ -1,4 +1,4 @@
-import type { BlockProvider } from '@l2beat/shared'
+import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { Indexer } from '@l2beat/uif'
 import {
   ManagedChildIndexer,
@@ -13,6 +13,7 @@ export interface BlockIndexerDeps
   mode: BlockIndexerMode
   source: string
   blockProvider: BlockProvider
+  logsProvider: LogsProvider
   processors: BlockProcessor[]
 }
 
@@ -47,14 +48,22 @@ export class BlockIndexer extends ManagedChildIndexer {
     this.logger.info(`Delay from the tip: ${delay} blocks`, { delay })
 
     for (let blockNumber = adjustedFrom; blockNumber <= to; blockNumber++) {
-      this.logger.info('Fetching block', { blockNumber })
+      this.logger.info('Fetching block and logs', { blockNumber })
+      const start = Date.now()
       const block =
         await this.$.blockProvider.getBlockWithTransactions(blockNumber)
+      const logs = await this.$.logsProvider.getLogs(blockNumber, blockNumber)
+      const duration = Date.now() - start
+      this.logger.info('Fetched', {
+        duration,
+        transactionsCount: block.transactions.length,
+        logsCount: logs.length,
+      })
 
       for (const processor of this.$.processors) {
         try {
           const start = Date.now()
-          await processor.processBlock(block)
+          await processor.processBlock(block, logs)
           const duration = Date.now() - start
           this.logger.info(
             `${processor.constructor.name} finished in ${duration.toFixed(2)}ms`,

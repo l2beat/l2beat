@@ -1,15 +1,15 @@
 import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import { z } from 'zod'
 
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 import type { L2Block, Transaction } from './types/BaseAnalyzer'
 
-const ScrollBatchCommit = z.object({
-  version: z.number(),
-  parentBatchHeader: z.string(),
-  chunks: z.array(z.string()),
-  skippedL1MessageBitmap: z.string(),
+const ScrollBatchCommit = v.object({
+  version: v.number(),
+  parentBatchHeader: v.string(),
+  chunks: v.array(v.string()),
+  skippedL1MessageBitmap: v.string(),
 })
 
 export class ScrollT2IAnalyzer extends BaseAnalyzer {

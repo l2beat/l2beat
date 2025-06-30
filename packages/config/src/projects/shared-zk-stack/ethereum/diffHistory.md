@@ -1,3 +1,277 @@
+Generated with discovered.json: 0xd47c9eb9f58ac2317a1267b8085f54c51e783409
+
+# Diff at Wed, 25 Jun 2025 07:10:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22767970
+- current block number: 22779828
+
+## Description
+
+ML MS: single signer change.
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: None
+      values.$members.7:
+-        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
++        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+      values.$members.6:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "0xFAdb20191Ab38362C50f52909817B74214CA79AE"
+      values.$members.5:
+-        "0xFAdb20191Ab38362C50f52909817B74214CA79AE"
++        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
+      values.$members.4:
+-        "0x8A23548a640De1137e58e2D9600e1c5913E3D674"
++        "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
+      values.$members.3:
+-        "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
++        "0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
+      values.$members.2:
+-        "0x4A333c167Ce76C46149c6B0197977ae02aaeC929"
++        "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
+      values.$members.1:
+-        "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
++        "0x7408A268e5E6e8F08917c5b71015F4B9044970C7"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22767970 (main branch discovery), not current.
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+      template:
+-        "shared-zk-stack/v26/BridgeHub"
++        "shared-zk-stack/BridgeHub"
+    }
+```
+
+```diff
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD) {
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+      template:
+-        "shared-zk-stack/v26/MessageRoot"
++        "shared-zk-stack/MessageRoot"
+    }
+```
+
+```diff
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860) {
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+      template:
+-        "shared-zk-stack/v26/CTMDeploymentTracker"
++        "shared-zk-stack/CTMDeploymentTracker"
+    }
+```
+
+```diff
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119) {
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/RollupL1DAValidator"
++        "shared-zk-stack/RollupL1DAValidator"
+    }
+```
+
+```diff
+    contract L1GenesisUpgrade (0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E) {
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+      template:
+-        "shared-zk-stack/v26/L1GenesisUpgrade"
++        "shared-zk-stack/L1GenesisUpgrade"
+    }
+```
+
+```diff
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56) {
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+      template:
+-        "shared-zk-stack/v26/L1AssetRouter"
++        "shared-zk-stack/L1AssetRouter"
+    }
+```
+
+```diff
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6) {
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+      template:
+-        "shared-zk-stack/v26/L1NativeTokenVault"
++        "shared-zk-stack/L1NativeTokenVault"
+      description:
+-        "Part of the v26 upgrade: Canonical central asset escrow for all ZK stack chains."
++        "Canonical central asset escrow for all ZK stack chains."
+      category:
+-        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C) {
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0.
+      template:
+-        "shared-zk-stack/v26/ChainTypeManager"
++        "shared-zk-stack/ChainTypeManager"
+    }
+```
+
+```diff
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB) {
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+      template:
+-        "shared-zk-stack/v26/L1Nullifier"
++        "shared-zk-stack/L1Nullifier"
+    }
+```
+
+```diff
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3) {
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+      template:
+-        "shared-zk-stack/v26/ProtocolUpgradeHandler"
++        "shared-zk-stack/ProtocolUpgradeHandler"
+      directlyReceivedPermissions.6:
++        {"permission":"act","from":"ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e","role":".owner"}
+      directlyReceivedPermissions.5.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      directlyReceivedPermissions.5.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
+      directlyReceivedPermissions.4.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      directlyReceivedPermissions.3.permission:
+-        "interact"
++        "act"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      directlyReceivedPermissions.3.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      directlyReceivedPermissions.2.permission:
+-        "act"
++        "interact"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      directlyReceivedPermissions.2.description:
++        "pause / unpause the bridge."
+    }
+```
+
+```diff
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45) {
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+      template:
+-        "shared-zk-stack/v26/RollupDAManager"
++        "shared-zk-stack/RollupDAManager"
+    }
+```
+
+```diff
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6) {
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C","role":"admin","via":[{"address":"ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"},{"address":"ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}]}
+      receivedPermissions.11.from:
+-        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.10.from:
+-        "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
++        "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
+      receivedPermissions.10.via.1.address:
+-        "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
++        "ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
+      receivedPermissions.9.from:
+-        "ethereum:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
++        "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
+      receivedPermissions.9.via.1.address:
+-        "ethereum:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e"
++        "ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
+      receivedPermissions.8.from:
+-        "ethereum:0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
++        "ethereum:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
+      receivedPermissions.7.from:
+-        "ethereum:0x6078F6B379f103de1Aa912dc46bb8Df0c8809860"
++        "ethereum:0x8829AD80E425C646DAB305381ff105169FeEcE56"
+      receivedPermissions.6.from:
+-        "ethereum:0x8829AD80E425C646DAB305381ff105169FeEcE56"
++        "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
+      receivedPermissions.5.from:
+-        "ethereum:0x303a465B659cBB0ab36eE643eA362c509EEb5213"
++        "ethereum:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
+      receivedPermissions.4.permission:
+-        "upgrade"
++        "interact"
+      receivedPermissions.4.from:
+-        "ethereum:0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD"
++        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      receivedPermissions.4.role:
+-        "admin"
++        ".owner"
+      receivedPermissions.4.via.1:
+-        {"address":"ethereum:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"}
+      receivedPermissions.4.description:
++        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
+      receivedPermissions.3.from:
+-        "ethereum:0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
++        "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
+      receivedPermissions.3.description:
+-        "manage the shared ValidatorTimelock contract address and the admin role, register and execute upgrades (and set their deadlines), freeze, revert batches and set permissioned validators and fee params for all connected chains."
++        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
+      receivedPermissions.2.from:
+-        "ethereum:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45"
++        "ethereum:0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6"
+      receivedPermissions.2.description:
+-        "manage allowed rollup DA pairs (allowed to be used by rollups in permanent rollup mode)."
++        "pause / unpause the bridge."
+    }
+```
+
+Generated with discovered.json: 0x642afe96e73d7379237bef6bc51f476f1ffbdb14
+
+# Diff at Mon, 23 Jun 2025 15:18:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22744143
+- current block number: 22767970
+
+## Description
+
+v28 upgrade complete.
+
+## Watched changes
+
+```diff
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.4:
++        {"_protocolVersion":115964116992,"_upgradeTimestamp":1746435600}
+      values.upgradeTimestamps.3._protocolVersion:
+-        115964116992
++        120259084288
+      values.upgradeTimestamps.3._upgradeTimestamp:
+-        1746435600
++        1750042800
+    }
+```
+
 Generated with discovered.json: 0x34e56c064e3683bce438c2bcf4545c803f423735
 
 # Diff at Fri, 20 Jun 2025 07:28:00 GMT:

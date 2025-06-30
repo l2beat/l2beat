@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -37,10 +37,10 @@ export function createScalingRouter(
   router.get(
     '/scaling/activity',
     validateRoute({
-      query: z.object({
-        tab: z
-          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
-          .catch('rollups'),
+      query: v.object({
+        tab: v
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -59,10 +59,10 @@ export function createScalingRouter(
   router.get(
     '/scaling/tvs',
     validateRoute({
-      query: z.object({
-        tab: z
-          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
-          .catch('rollups'),
+      query: v.object({
+        tab: v
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -93,8 +93,8 @@ export function createScalingRouter(
   router.get(
     '/scaling/costs',
     validateRoute({
-      query: z.object({
-        tab: z.enum(['rollups', 'others']).catch('rollups'),
+      query: v.object({
+        tab: v.enum(['rollups', 'others']).default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -119,7 +119,7 @@ export function createScalingRouter(
   router.get(
     '/scaling/projects/:slug',
     validateRoute({
-      params: z.object({ slug: z.string() }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(
@@ -142,7 +142,7 @@ export function createScalingRouter(
   router.get(
     '/scaling/projects/:slug/tvs-breakdown',
     validateRoute({
-      params: z.object({ slug: z.string() }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(

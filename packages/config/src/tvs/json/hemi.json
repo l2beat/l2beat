@@ -1,0 +1,267 @@
+{
+  "$schema": "schema/tvs-config-schema.json",
+  "projectId": "hemi",
+  "tokens": [
+    {
+      "mode": "auto",
+      "id": "hemi-AAVE",
+      "priceId": "aave",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12645/large/AAVE.png?1696512452",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-COMP",
+      "priceId": "compound-governance-token",
+      "symbol": "COMP",
+      "name": "Compound",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10775/large/COMP.png?1696510737",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xc00e94Cb662C3520282E6f5717214004A7f26888",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-DAI",
+      "priceId": "dai",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "amount": {
+        "type": "calculation",
+        "operator": "sum",
+        "arguments": [
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x39a0005415256B9863aFE2d55Edcf75ECc3A4D7e",
+            "decimals": 18,
+            "sinceTimestamp": 1725868115
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "native",
+            "chain": "ethereum",
+            "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+            "decimals": 18,
+            "sinceTimestamp": 1725868115
+          }
+        ]
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-FRAX.legacy",
+      "priceId": "frax",
+      "symbol": "FRAX.legacy",
+      "name": "Legacy Frax Dollar",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/13422/large/frax-logo.png?1739780303",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x853d955aCEf822Db058eb8505911ED77F175b99e",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-LINK",
+      "priceId": "chainlink",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/877/large/chainlink-new-logo.png?1696502009",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-MKR",
+      "priceId": "maker",
+      "symbol": "MKR",
+      "name": "Maker",
+      "iconUrl": "https://assets.coingecko.com/coins/images/1364/large/Mark_Maker.png?1585191826",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x9f8F72aA9304c8B593d555F12eF6589cC3A579A2",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-rsETH",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-tBTC",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "tBTC v2",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x18084fbA666a33d37592fA2633fD49a74DD93a88",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-UNI",
+      "priceId": "uniswap",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12504/large/uni.jpg?1696512319",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 18,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 8,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "hemi-XAUt",
+      "priceId": "tether-gold",
+      "symbol": "XAUt",
+      "name": "Tether Gold",
+      "iconUrl": "https://assets.coingecko.com/coins/images/10481/large/Tether_Gold.png?1696510471",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+        "chain": "ethereum",
+        "escrowAddress": "0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+        "decimals": 6,
+        "sinceTimestamp": 1725868115
+      },
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false
+    }
+  ]
+}

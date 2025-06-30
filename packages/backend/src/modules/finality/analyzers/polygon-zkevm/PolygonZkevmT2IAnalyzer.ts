@@ -3,8 +3,8 @@ import {
   type ProjectId,
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { utils } from 'ethers'
-import { z } from 'zod'
 
 import type { Database } from '@l2beat/database'
 import type { RpcClient } from '@l2beat/shared'
@@ -77,12 +77,12 @@ export class PolygonZkEvmT2IAnalyzer extends BaseAnalyzer {
   }
 }
 
-const SingleBatch = z.object({
-  transactions: z.string(),
-  forcedGlobalExitRoot: z.string(),
-  forcedBlockHashL1: z.string(),
+const SingleBatch = v.object({
+  transactions: v.string(),
+  forcedGlobalExitRoot: v.string(),
+  forcedBlockHashL1: v.string(),
 })
-type SingleBatch = z.infer<typeof SingleBatch>
+type SingleBatch = v.infer<typeof SingleBatch>
 
 function extractTransactionData(data: string): string[] {
   const decodedInput = decodeData(data)

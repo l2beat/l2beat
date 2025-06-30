@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type TrackedTxsConfigType = z.infer<typeof TrackedTxsConfigType>
-export const TrackedTxsConfigType = z.union([
-  z.literal('liveness'),
-  z.literal('l2costs'),
+export type TrackedTxsConfigType = v.infer<typeof TrackedTxsConfigType>
+export const TrackedTxsConfigType = v.union([
+  v.literal('liveness'),
+  v.literal('l2costs'),
 ])

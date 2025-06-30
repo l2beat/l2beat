@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -13,15 +12,11 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import { ExcludeAssociatedTokensCheckbox } from '~/pages/scaling/components/ExcludeAssociatedTokensCheckbox'
-import { getRecategorisedEntries } from '~/pages/scaling/utils/GetRecategorisedEntries'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compareStageAndTvs'
 import type { TabbedScalingEntries } from '../../utils/groupByScalingTabs'
 import { ScalingSummaryOthersTable } from './table/ScalingSummaryOthersTable'
 import { ScalingSummaryRollupsTable } from './table/ScalingSummaryRollupsTable'
@@ -31,36 +26,13 @@ import { ScalingSummaryValidiumsAndOptimiumsTable } from './table/ScalingSummary
 type Props = TabbedScalingEntries<ScalingSummaryEntry>
 export function ScalingSummaryTables(props: Props) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
     underReview: props.underReview.filter(filterEntries),
   }
-
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
-  )
 
   const initialSort = {
     id: 'total',
@@ -119,10 +91,6 @@ export function ScalingSummaryTables(props: Props) {
           <DirectoryTabsContent value="others">
             <OthersInfo />
             <ScalingSummaryOthersTable entries={entries.others} />
-            <OtherMigrationTabNotice
-              projectsToBeMigrated={projectToBeMigratedToOthers}
-              className="mt-2"
-            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>

@@ -1,10 +1,10 @@
 import { readFileSync, writeFileSync } from 'fs'
 import path from 'path'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { hashPng } from './hashPng'
 
 const metadataFile = path.join(__dirname, '../metadata.json')
-const Metadata = z.record(z.string(), z.string())
+const Metadata = v.record(v.string(), v.string())
 const metadata = getTinifiyMetadata()
 
 export function getTinifiyMetadata() {

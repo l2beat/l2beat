@@ -4,22 +4,22 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import { env } from 'process'
-import { z } from 'zod'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
 
-export type ProjectLivenessChartParams = z.infer<
+export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
 >
-export const ProjectLivenessChartParams = z.object({
+export const ProjectLivenessChartParams = v.object({
   range: LivenessChartTimeRange,
   subtype: TrackedTxsConfigSubtype,
-  projectId: z.string(),
+  projectId: v.string(),
 })
 
 export type ProjectLivenessChartData = {

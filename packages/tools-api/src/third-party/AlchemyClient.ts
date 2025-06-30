@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import type { Address, Chain } from '../config/types'
 import { JsonRpcClient } from './JsonRpcClient'
 
@@ -32,7 +32,7 @@ export class AlchemyClient {
       return undefined
     }
     const response = TransactionResponse.safeParse(tx)
-    if (response.error) {
+    if (!response.success) {
       return undefined
     }
     return {
@@ -46,7 +46,7 @@ export class AlchemyClient {
   }
 }
 
-const TransactionResponse = z.object({
-  input: z.string().regex(/^0x[a-f\d]*$/i),
-  to: z.string().regex(/^0x[a-f\d]{40}$/i),
+const TransactionResponse = v.object({
+  input: v.string().check((v) => /^0x[a-f\d]*$/i.test(v)),
+  to: v.string().check((v) => /^0x[a-f\d]{40}$/i.test(v)),
 })

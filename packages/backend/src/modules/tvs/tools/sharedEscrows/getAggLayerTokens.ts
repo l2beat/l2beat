@@ -56,7 +56,7 @@ export async function getAggLayerTokens(
       !escrow.sharedEscrow.tokensToAssignFromL1?.includes(t.symbol),
   )
 
-  const resolved: { id: string; address: string }[] = []
+  const resolved: { id: string; address: EthereumAddress }[] = []
   const toResolve: { id: string; request: MulticallRequest }[] = []
 
   for (const token of l2Tokens) {
@@ -65,7 +65,7 @@ export async function getAggLayerTokens(
     )
     if (cachedValue !== undefined) {
       logger.debug(`Cached value found for ${project.id}-${token.id}`)
-      resolved.push({ id: token.id, address: cachedValue })
+      resolved.push({ id: token.id, address: EthereumAddress(cachedValue) })
       continue
     }
 
@@ -101,7 +101,7 @@ export async function getAggLayerTokens(
         response,
       )
       await localStorage.writeAddress(`${project.id}-${id}`, address)
-      resolved.push({ id, address })
+      resolved.push({ id, address: EthereumAddress(address) })
     }
   }
 
@@ -138,7 +138,7 @@ export async function getAggLayerTokens(
           ...(untilTimestamp ? { untilTimestamp } : {}),
         },
         bridgedUsing: token.bridgedUsing,
-      }
+      } satisfies TvsToken
     })
     .filter(notUndefined)
 
@@ -217,7 +217,7 @@ export async function getAggLayerTokens(
         ],
       },
       isAssociated: false,
-    }
+    } satisfies TvsToken
   }
 
   assert(etherOnL2)

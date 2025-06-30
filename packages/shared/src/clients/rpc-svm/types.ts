@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 export interface SvmBlock {
   number: number
@@ -11,7 +11,7 @@ export type SvmRpcGetBlockTimeResponse = z.infer<
   typeof SvmRpcGetBlockTimeResponse
 >
 export const SvmRpcGetBlockTimeResponse = z.object({
-  result: z.number().nullable(),
+  result: z.union([z.number(), z.null()]),
 })
 
 export type SvmRpcGetLatestBlockhashResponse = z.infer<
@@ -38,7 +38,7 @@ export const SvmRpcGetBlockResponse = z.object({
     blockhash: z.string(),
     parentSlot: z.number(),
     previousBlockhash: z.string(),
-    transactions: z.array(z.any()),
+    transactions: z.array(z.unknown()),
   }),
 })
 

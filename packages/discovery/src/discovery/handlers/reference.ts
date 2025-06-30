@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { v } from '@l2beat/validate'
 import type { ContractValue } from '../output/types'
 
 import type { EthereumAddress } from '@l2beat/shared-pure'
@@ -6,7 +6,7 @@ import type { IProvider } from '../provider/IProvider'
 import type { HandlerResult } from './Handler'
 
 const REFERENCE_REGEX = /^\{\{\s*[$a-z_][$.a-z\d_]*\s*\}\}$/i
-export const Reference = z.string().regex(REFERENCE_REGEX)
+export const Reference = v.string().check((v) => REFERENCE_REGEX.test(v))
 
 export function getReferencedName(value: unknown): string | undefined {
   if (typeof value === 'string' && REFERENCE_REGEX.test(value)) {
