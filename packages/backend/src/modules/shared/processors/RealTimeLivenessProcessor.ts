@@ -296,6 +296,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
     const livenesConfigurations = trackedTxsConfig.projects
+      .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
       .filter((config) => config.type === 'liveness')
 
