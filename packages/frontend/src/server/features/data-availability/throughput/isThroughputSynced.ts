@@ -1,17 +1,23 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { formatTimestamp } from '~/utils/dates'
 
-export function isThroughputSynced(syncedUntil: UnixTime): boolean {
+export function isThroughputSynced(
+  syncedUntil: UnixTime,
+  pastDaySynced: boolean,
+): boolean {
   return (
-    syncedUntil >= UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.HOUR
+    syncedUntil >=
+    (pastDaySynced
+      ? UnixTime.toStartOf(UnixTime.now(), 'day') - UnixTime.HOUR
+      : UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR)
   )
 }
 
 export function getThroughputSyncWarning(
   syncedUntil: UnixTime,
-  opts?: { shorter?: boolean },
+  opts?: { shorter?: boolean; pastDaySynced?: boolean },
 ): string | undefined {
-  if (isThroughputSynced(syncedUntil)) {
+  if (isThroughputSynced(syncedUntil, opts?.pastDaySynced ?? false)) {
     return undefined
   }
 
