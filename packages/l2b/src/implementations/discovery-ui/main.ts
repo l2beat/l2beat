@@ -103,17 +103,6 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.json(response)
   })
 
-  app.get('/', (_req, res) => {
-    res.redirect('/ui')
-  })
-
-  app.get(
-    ['/ui', '/ui/*', '/diff', '/diff/*', '/address', '/address/*'],
-    (_req, res) => {
-      res.sendFile(join(STATIC_ROOT, 'index.html'))
-    },
-  )
-
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
@@ -222,6 +211,10 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
         `cd ${path.dirname(paths.discovery)}/../ && l2b download-all-shapes`,
         res,
       )
+    })
+
+    app.get('*', (_req, res) => {
+      res.sendFile(join(STATIC_ROOT, 'index.html'))
     })
   }
 
