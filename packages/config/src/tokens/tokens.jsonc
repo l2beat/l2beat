@@ -1,6 +1,11 @@
 {
   "ethereum": [
     {
+      "symbol": "SQD",
+      "coingeckoId": "subsquid",
+      "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1"
+    },
+    {
       "symbol": "pUSD",
       "address": "0xdddd73f5df1f0dc31373357beac77545dc5a6f3f"
     },
@@ -2264,6 +2269,26 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "KIMA",
+      "address": "0x94fcd9c18f99538c0f7c61c5500ca79f0d5c4dab",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "tBTC",
+      "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
     {
       "symbol": "USR",
       "coingeckoId": "resolv-usr",

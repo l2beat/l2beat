@@ -5421,6 +5421,20 @@
       "supply": "zero"
     },
     {
+      "name": "Subsquid",
+      "coingeckoId": "subsquid",
+      "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+      "symbol": "SQD",
+      "decimals": 18,
+      "deploymentTimestamp": 1711385735,
+      "coingeckoListingTimestamp": 1715904000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37869/large/New_Logo_SQD_Icon.png?1720048443",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Sui",
       "coingeckoId": "sui",
       "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
@@ -11166,6 +11180,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Arbitrum tBTC v2",
+      "coingeckoId": "tbtc",
+      "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "symbol": "tBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1680261615,
+      "coingeckoListingTimestamp": 1600819200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "beefy.finance",
       "coingeckoId": "beefy-finance",
       "address": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
@@ -11722,6 +11758,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "KIMA",
+      "coingeckoId": "kima",
+      "address": "0x94fCD9c18f99538C0f7C61c5500cA79F0D5C4dab",
+      "symbol": "KIMA",
+      "decimals": 18,
+      "deploymentTimestamp": 1727889773,
+      "coingeckoListingTimestamp": 1732579200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50764/large/K-logo-01.png?1729053099",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "LayerZero",

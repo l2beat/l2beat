@@ -2802,6 +2802,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-KIMA",
+      "priceId": "kima",
+      "symbol": "KIMA",
+      "name": "KIMA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50764/large/K-logo-01.png?1729053099",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "kima",
+        "decimals": 18,
+        "sinceTimestamp": 1732579200,
+        "address": "0x94fCD9c18f99538C0f7C61c5500cA79F0D5C4dab",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-KNC-1",
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
@@ -3527,7 +3546,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1693872000
+        "sinceTimestamp": 1693872000,
+        "untilTimestamp": 1751277600
       },
       "category": "other",
       "source": "canonical",
@@ -4800,6 +4820,39 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-SQD-2",
+      "priceId": "subsquid",
+      "symbol": "SQD",
+      "name": "Subsquid",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37869/large/New_Logo_SQD_Icon.png?1720048443",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "subsquid",
+            "decimals": 18,
+            "sinceTimestamp": 1715904000,
+            "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1715904000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-SSV-1",
       "priceId": "ssv-network",
       "symbol": "SSV",
@@ -5178,6 +5231,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-tBTC-1",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "Arbitrum tBTC v2",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1680261615
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
