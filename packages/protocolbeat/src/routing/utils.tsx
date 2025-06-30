@@ -3,7 +3,6 @@ import { NotFoundPage } from '../NotFoundPage'
 
 export interface AppModule {
   routes: RouteObject[]
-
   name: string
 }
 
