@@ -39,11 +39,12 @@ export class Discoveries {
     this.discoveries[project][chain] = discovery
   }
 
-  getProjects(): { project: string; chain: string }[] {
+  getSortedProjects(): { project: string; chain: string }[] {
     const result = []
-    for (const project of Object.keys(this.discoveries)) {
-      const chains = Object.keys(this.discoveries[project] ?? {})
-      for (const chain of chains) {
+    const sortedProjects = Object.keys(this.discoveries).sort()
+    for (const project of sortedProjects) {
+      const sortedChains = Object.keys(this.discoveries[project] ?? {}).sort()
+      for (const chain of sortedChains) {
         result.push({ project, chain })
       }
     }
@@ -216,7 +217,7 @@ export function generateClingoForDiscoveries(
 ): string {
   const generatedClingo: string[] = []
 
-  for (const { project, chain } of discoveries.getProjects()) {
+  for (const { project, chain } of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project, chain)
     if (!discovery) {
       if (options.ignoreMissingDependencies) {

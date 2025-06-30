@@ -70,7 +70,6 @@ export const ContractPermission = v.object(_ContractPermission)
 
 export type PermissionsConfig = v.infer<typeof PermissionsConfig>
 export const _PermissionsConfig = {
-  modelCrossChainPermissions: v.boolean().optional().default(false),
   overrides: v
     .record(
       v.string().transform((v) => EthereumAddress(v).toString()),

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { TemplateService } from '../discovery/analysis/TemplateService'
 import { ConfigReader } from '../discovery/config/ConfigReader'
+import type { PermissionsConfig } from '../discovery/config/PermissionConfig'
 import {
   type DiscoveryPaths,
   getDiscoveryPaths,
@@ -65,13 +66,17 @@ export async function writePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   configReader: ConfigReader,
 ) {
+  const rawConfig = configReader.readRawConfig(project) as PermissionsConfig
   const chainConfigs = configReader
     .readAllDiscoveredChainsForProject(project)
     .flatMap((chain) => configReader.readConfig(project, chain))
 
   for (const config of chainConfigs) {
     const discovery = configReader.readDiscovery(config.name, config.chain)
-    combinePermissionsIntoDiscovery(discovery, permissionsOutput)
+    combinePermissionsIntoDiscovery(discovery, permissionsOutput, {
+      // @ts-expect-error heere
+      skipDependentDiscoveries: !rawConfig.modelCrossChainPermissions,
+    })
 
     const projectDiscoveryFolder = configReader.getProjectChainPath(
       config.name,

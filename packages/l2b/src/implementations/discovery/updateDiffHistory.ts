@@ -208,6 +208,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   // We rediscover on the past block number, but with current configs and dependencies
   const rawConfig = configReader.readRawConfig(projectName) as PermissionsConfig
   const dependencies: { project: string; chain: string }[] =
+    // @ts-expect-error heere
     rawConfig.modelCrossChainPermissions
       ? getDependenciesToDiscoverForProject(projectName, configReader)
       : [{ project: projectName, chain }]

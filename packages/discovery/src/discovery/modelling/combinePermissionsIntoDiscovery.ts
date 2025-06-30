@@ -15,6 +15,7 @@ import type { DiscoveryBlockNumbers } from './modelPermissions'
 export async function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  options: { skipDependentDiscoveries?: boolean } = {},
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -66,20 +67,22 @@ export async function combinePermissionsIntoDiscovery(
     }
   }
 
-  const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
-  for (const [project, chains] of Object.entries(
-    permissionsOutput.dependentBlockNumbers,
-  )) {
-    for (const [chain, blockNumber] of Object.entries(chains)) {
-      if (!(project === discovery.name && chain === discovery.chain)) {
-        blockNumbersWithoutCurProj[project] ??= {}
-        blockNumbersWithoutCurProj[project][chain] = blockNumber
+  if (!options.skipDependentDiscoveries) {
+    const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
+    for (const [project, chains] of Object.entries(
+      permissionsOutput.dependentBlockNumbers,
+    )) {
+      for (const [chain, blockNumber] of Object.entries(chains)) {
+        if (!(project === discovery.name && chain === discovery.chain)) {
+          blockNumbersWithoutCurProj[project] ??= {}
+          blockNumbersWithoutCurProj[project][chain] = blockNumber
+        }
       }
     }
+    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
+      ? undefined // remove entry if there are no dependent discoveries
+      : blockNumbersWithoutCurProj
   }
-  discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
-    ? undefined // remove entry if there are no dependent discoveries
-    : blockNumbersWithoutCurProj
 }
 
 // Temporary reversal of via for backwards compatibility
