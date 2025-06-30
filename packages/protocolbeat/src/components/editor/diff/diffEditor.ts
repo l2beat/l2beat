@@ -3,12 +3,12 @@ import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
-import * as solidity from './languages/solidity'
+import * as solidity from '../languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-import { cyrb64 } from './cyrb-hash'
-import { LineSelector } from './lineSelector'
-import { theme } from './theme'
+import { cyrb64 } from '../cyrb-hash'
+import { theme } from '../theme'
+import { LineSelector } from './extensions/lineSelector'
 
 let monacoInitialized = false
 const knownElements: Map<HTMLElement, DiffEditor> = new Map()

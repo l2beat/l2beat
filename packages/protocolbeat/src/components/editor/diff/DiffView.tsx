@@ -1,23 +1,22 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 
 import clsx from 'clsx'
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { useCopy } from '../../hooks/useCopy'
-import { IconArrowToDotDown } from '../../icons/IconArrowToDotDown'
-import { IconArrowToDotUp } from '../../icons/IconArrowToDotUp'
-import { IconComment } from '../../icons/IconComment'
-import { IconCopy } from '../../icons/IconCopy'
-import { IconFoldVertical } from '../../icons/IconFoldVertical'
-import { IconShare } from '../../icons/IconShare'
-import { IconSplit } from '../../icons/IconSplit'
-import { IconSwap } from '../../icons/IconSwap'
-import { IconTick } from '../../icons/IconTick'
+import { useCopy } from '../../../hooks/useCopy'
+import { IconArrowToDotDown } from '../../../icons/IconArrowToDotDown'
+import { IconArrowToDotUp } from '../../../icons/IconArrowToDotUp'
+import { IconComment } from '../../../icons/IconComment'
+import { IconCopy } from '../../../icons/IconCopy'
+import { IconFoldVertical } from '../../../icons/IconFoldVertical'
+import { IconShare } from '../../../icons/IconShare'
+import { IconSplit } from '../../../icons/IconSplit'
+import { IconSwap } from '../../../icons/IconSwap'
+import { IconTick } from '../../../icons/IconTick'
+import { useCodeStore } from '../store'
 import { DiffEditor } from './diffEditor'
-import { getInlineDiff } from './getInlineDiff'
-import { splitCode } from './soliditySplitter'
-import { useCodeStore } from './store'
-import { useDiffEditorSettings } from './useDiffEditorSettings'
+import { useDiffEditorSettings } from './hooks/useDiffEditorSettings'
+import { getInlineDiff } from './utils/getInlineDiff'
 
 export interface DiffViewProps {
   leftAddress: string
@@ -36,18 +35,21 @@ export function DiffView(props: DiffViewProps) {
     diff,
     url,
     setSelection,
-    setFold,
-    setRemoveUnchanged,
-    setRemoveComments,
+    toggleFold,
+    toggleRemoveUnchanged,
+    toggleRemoveComments,
     setDiff,
     swapSides,
+    leftAddress,
+    rightAddress,
+    splitLeft,
+    splitRight,
   } = useDiffEditorSettings(props)
 
   const monacoEl = useRef(null)
   const { setDiffEditor, getDiffEditor } = useCodeStore()
   const editorKey = props.editorKey ?? 'default'
   const editor = getDiffEditor(editorKey)
-  const [leftAddress, rightAddress] = [props.leftAddress, props.rightAddress]
 
   const { copied: urlCopied, copy: copyUrl } = useCopy()
   const { copied: inlineDiffCopied, copy: copyInlineDiff } = useCopy()
@@ -78,15 +80,6 @@ export function DiffView(props: DiffViewProps) {
       setSelection(selection)
     })
   }, [editor])
-
-  const [splitLeft, splitRight] = useMemo(() => {
-    return splitCode(
-      props.leftCode,
-      props.rightCode,
-      removeUnchanged,
-      removeComments,
-    )
-  }, [props.leftCode, props.rightCode, removeUnchanged, removeComments])
 
   useEffect(() => {
     editor?.setDiff(splitLeft, splitRight)
@@ -145,7 +138,7 @@ export function DiffView(props: DiffViewProps) {
                 ? 'bg-autumn-300 text-coffee-800 hover:bg-autumn-200'
                 : 'hover:bg-coffee-700',
             )}
-            onClick={() => setRemoveUnchanged(!removeUnchanged)}
+            onClick={toggleRemoveUnchanged}
             title="Toggle unchanged sections"
           >
             <IconSplit className="size-4" />
@@ -158,7 +151,7 @@ export function DiffView(props: DiffViewProps) {
                 : 'hover:bg-coffee-700',
             )}
             title="Toggle comments"
-            onClick={() => setRemoveComments(!removeComments)}
+            onClick={toggleRemoveComments}
           >
             <IconComment className="size-4" />
           </button>
@@ -171,7 +164,7 @@ export function DiffView(props: DiffViewProps) {
             )}
             onClick={() => {
               editor?.setFolding(!fold)
-              setFold(!fold)
+              toggleFold()
             }}
             title="Toggle folding"
           >
