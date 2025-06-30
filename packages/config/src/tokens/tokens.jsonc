@@ -2270,6 +2270,72 @@
   ],
   "arbitrum": [
     {
+      "symbol": "MLK",
+      "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "UXLINK",
+      "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "USTBL",
+      "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
+      "source": "native",
+      "supply": "totalSupply" // minted by EOA on different chains
+    },
+    {
+      "symbol": "EUTBL",
+      "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
+      "source": "native",
+      "supply": "totalSupply" // minted by EOA on different chains
+    },
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "USDY",
+      "address": "0x35e050d3c0ec2d29d269a8ecea763a183bdf9a9d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "CAKE",
+      "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "symbol": "xSolvBTC",
       "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
       "source": "external",
@@ -3518,6 +3584,34 @@
     }
   ],
   "base": [
+    {
+      "symbol": "W",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "CAKE",
+      "address": "0x3055913c90Fcc1A6CE9a358911721eEb942013A1",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
     {
       "symbol": "oUSDT",
       "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",

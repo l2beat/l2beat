@@ -10417,6 +10417,28 @@
       }
     },
     {
+      "name": "PancakeSwap Token",
+      "coingeckoId": "pancakeswap-token",
+      "address": "0x3055913c90Fcc1A6CE9a358911721eEb942013A1",
+      "symbol": "CAKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1692681477,
+      "coingeckoListingTimestamp": 1601337600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
       "coingeckoId": "prefrontal-cortex-convo-agent-by-virtuals",
       "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
@@ -10723,6 +10745,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221517,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped eETH",
@@ -11860,6 +11904,20 @@
       }
     },
     {
+      "name": "MiL.k",
+      "coingeckoId": "milk-alliance",
+      "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
+      "symbol": "MLK",
+      "decimals": 8,
+      "deploymentTimestamp": 1740829785,
+      "coingeckoListingTimestamp": 1617580800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11978/large/2.png?1696511836",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "Molten",
       "coingeckoId": "molten-2",
       "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
@@ -11958,6 +12016,50 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1723057357,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PancakeSwap Token",
+      "coingeckoId": "pancakeswap-token",
+      "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "symbol": "CAKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1686816267,
+      "coingeckoListingTimestamp": 1601337600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Pepe",
@@ -12118,6 +12220,34 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "coingeckoId": "eutbl",
+      "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
+      "symbol": "EUTBL",
+      "decimals": 5,
+      "deploymentTimestamp": 1729851160,
+      "coingeckoListingTimestamp": 1723680000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Spiko US T-Bills Money Market Fund",
+      "coingeckoId": "spiko-us-t-bills-money-market-fund",
+      "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
+      "symbol": "USTBL",
+      "decimals": 5,
+      "deploymentTimestamp": 1729851183,
+      "coingeckoListingTimestamp": 1724112000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Staked FRAX",
@@ -12366,6 +12496,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "UXLINK Token",
+      "coingeckoId": "uxlink",
+      "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+      "symbol": "UXLINK",
+      "decimals": 18,
+      "deploymentTimestamp": 1717814584,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39229/large/uxlink.jpg?1721201390",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "VelaToken",
       "coingeckoId": "vela-token",
       "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
@@ -12392,6 +12536,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221460,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped BTC",

@@ -751,6 +751,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-CAKE",
+      "priceId": "pancakeswap-token",
+      "symbol": "CAKE",
+      "name": "PancakeSwap Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1686816267
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-CATCH",
       "priceId": "spacecatch",
       "symbol": "CATCH",
@@ -1829,6 +1855,24 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-EUTBL",
+      "priceId": "eutbl",
+      "symbol": "EUTBL",
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
+        "chain": "arbitrum",
+        "decimals": 5,
+        "sinceTimestamp": 1729851160
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -3330,6 +3374,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-MLK",
+      "priceId": "milk-alliance",
+      "symbol": "MLK",
+      "name": "MiL.k",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11978/large/2.png?1696511836",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "milk-alliance",
+        "decimals": 8,
+        "sinceTimestamp": 1740829785,
+        "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MLN-1",
       "priceId": "melon",
       "symbol": "MLN",
@@ -3565,7 +3628,7 @@
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
         "sinceTimestamp": 1693872000,
-        "untilTimestamp": 1751284800
+        "untilTimestamp": 1751292000
       },
       "category": "other",
       "source": "canonical",
@@ -5865,6 +5928,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-USDY",
+      "priceId": "ondo-us-dollar-yield",
+      "symbol": "USDY",
+      "name": "Ondo U.S. Dollar Yield",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1723057357
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-USR",
       "priceId": "resolv-usr",
       "symbol": "USR",
@@ -5891,6 +5980,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-USTBL",
+      "priceId": "spiko-us-t-bills-money-market-fund",
+      "symbol": "USTBL",
+      "name": "Spiko US T-Bills Money Market Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
+        "chain": "arbitrum",
+        "decimals": 5,
+        "sinceTimestamp": 1729851183
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-USUAL-1",
       "priceId": "usual",
       "symbol": "USUAL",
@@ -5906,6 +6013,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-UXLINK",
+      "priceId": "uxlink",
+      "symbol": "UXLINK",
+      "name": "UXLINK Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39229/large/uxlink.jpg?1721201390",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "uxlink",
+        "decimals": 18,
+        "sinceTimestamp": 1721174400,
+        "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -6002,6 +6128,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-W",
+      "priceId": "wormhole",
+      "symbol": "W",
+      "name": "Wormhole Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1713221460
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
