@@ -17,7 +17,7 @@ export function AddressSelectionPage() {
   const [chain, setChain] = useState(DEFAULT_CHAIN_SHORT_NAME)
   const [errors, setErrors] = useState({ addressA: '' })
 
-  const handleDiff = () => {
+  const handleShow = () => {
     const trimmedA = address.trim()
 
     const newErrors = {
@@ -90,7 +90,7 @@ export function AddressSelectionPage() {
         </div>
 
         <button
-          onClick={handleDiff}
+          onClick={handleShow}
           className="w-full rounded-lg bg-aux-blue px-4 py-3 font-medium shadow-md transition hover:bg-aux-purple focus:outline-none focus:ring-2 focus:ring-autumn-300 focus:ring-offset-2"
         >
           SHOW
