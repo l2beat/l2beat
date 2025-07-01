@@ -244,15 +244,15 @@ function getAnomalies(
     })),
   ].sort((a, b) => {
     if (a.end === undefined && b.end === undefined) {
-      return a.start - b.start
+      return b.start - a.start
     }
     if (a.end === undefined) {
-      return 1
-    }
-    if (b.end === undefined) {
       return -1
     }
-    return a.end - b.end
+    if (b.end === undefined) {
+      return 1
+    }
+    return b.end - a.end
   })
 }
 
