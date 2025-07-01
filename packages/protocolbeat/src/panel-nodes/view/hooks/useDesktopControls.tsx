@@ -42,7 +42,9 @@ export function useDesktopControls({
 
   const rafIdRef = useRef<number | null>(null)
   const lastEventRef = useRef<MouseEvent | null>(null)
-  const lastOptsRef = useRef<{ disableSelection?: boolean } | undefined>()
+  const lastOptsRef = useRef<{ disableSelection?: boolean } | undefined>(
+    undefined,
+  )
 
   function processMouseMove(_: number) {
     if (!containerRef.current || !lastEventRef.current) {
