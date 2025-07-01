@@ -8,6 +8,7 @@ import type { EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
+import merge from 'lodash/merge'
 
 export function decodeHandlerResults(
   results: HandlerResult[],
@@ -36,7 +37,8 @@ export function decodeHandlerResults(
   }
 
   const runtime = new BlipRuntime(types)
-  const copyBatches = orderByCopyDependencies(fieldOverrides)
+  const fields = merge({}, values, fieldOverrides)
+  const copyBatches = orderByCopyDependencies(fields)
   for (const batch of copyBatches) {
     for (const fieldName of batch) {
       const copy = (fieldOverrides ?? {})[fieldName]?.copy
