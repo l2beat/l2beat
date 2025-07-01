@@ -1,0 +1,4 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Stores slashing parameters and calculates slashing amounts based on that (UMA protocol)."
+}
