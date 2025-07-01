@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemMonthlyUpdateEntry } from '../utils/getEcosystemEntries'
+import { MonthlyUpdateActivityChart } from './MonthlyUpdateActivityChart'
 import { MonthlyUpdateTvsChart } from './MonthlyUpdateTvsChart'
 import { News } from './News'
 
@@ -31,10 +32,10 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
           from={from}
           to={to}
         />
-        <MonthlyUpdateTvsChart
+        <MonthlyUpdateActivityChart
           name={ecosystem.name}
           entries={ecosystem.projects}
-          allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+          allScalingProjectsUops={ecosystem.allScalingProjects.uops}
           from={from}
           to={to}
         />

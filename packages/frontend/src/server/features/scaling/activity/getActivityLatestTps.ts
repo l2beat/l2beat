@@ -26,7 +26,7 @@ export async function getActivityLatestUops(
   const db = getDb()
   // Range here is 1y because we want to match the range of the
   // activity chart on summary page to show relevant data
-  const range = getFullySyncedActivityRange('1y')
+  const range = getFullySyncedActivityRange({ type: '1y' })
   const records = await db.activity.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
     range,

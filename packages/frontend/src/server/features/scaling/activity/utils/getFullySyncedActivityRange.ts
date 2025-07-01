@@ -10,10 +10,17 @@ import { rangeToDays } from '~/utils/range/rangeToDays'
  * Fully synced means that the day is synced to the midnight. Current day is not included.
  */
 export function getFullySyncedActivityRange(
-  range: StringWithAutocomplete<TimeRange>,
+  range:
+    | { type: StringWithAutocomplete<TimeRange> }
+    | { type: 'custom'; from: number; to: number },
 ): [UnixTime, UnixTime] {
+  if (range.type === 'custom') {
+    const { from, to } = range as { from: number; to: number }
+    return [from, to]
+  }
+
   const end = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const days = rangeToDays({ type: range })
+  const days = rangeToDays(range)
 
   const start =
     days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.activity
