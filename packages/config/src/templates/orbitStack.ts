@@ -619,7 +619,16 @@ function orbitStackCommon(
           ],
           risks: [],
         },
-        EXITS.AUTONOMOUS,
+        {
+          ...EXITS.AUTONOMOUS,
+          references: [
+            ...EXITS.AUTONOMOUS.references,
+            {
+              title: 'List of whitelisted Kinto validators',
+              url: 'https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/kinto-validators',
+            },
+          ],
+        },
       ],
       otherConsiderations:
         templateVars.nonTemplateTechnology?.otherConsiderations ??

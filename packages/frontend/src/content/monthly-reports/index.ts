@@ -2,33 +2,35 @@ import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
+const news = v.object({
+  title: v.string(),
+  content: v.string(),
+  tags: v
+    .array(v.union([v.literal('upcoming'), v.literal('governance')]))
+    .optional(),
+})
+
 const ecosystemReport = v.object({
   name: v.string(),
   type: v.literal('ecosystem'),
   ecosystemId: v.string(),
-  newProjects: v.array(v.string()).optional(),
-  upcoming: v.string().optional(),
-  news: v.string().optional(),
-  governance: v.string().optional(),
+  newProjectsIds: v.array(v.string()).optional(),
+  news: v.array(news).optional(),
 })
 
 const dataAvailabilityReport = v.object({
   name: v.string(),
   type: v.literal('data-availability'),
-  daLayer: v.string(),
-  newProjects: v.array(v.string()).optional(),
-  upcoming: v.string().optional(),
-  news: v.string().optional(),
-  governance: v.string().optional(),
+  daLayerId: v.string(),
+  newProjectsIds: v.array(v.string()).optional(),
+  news: v.array(news).optional(),
 })
 
-const scalingProjectReport = v.object({
+const upcomingProjectReport = v.object({
   name: v.string(),
-  type: v.literal('scaling-project'),
+  type: v.literal('upcoming-project'),
   projectId: v.string(),
-  upcoming: v.string().optional(),
-  news: v.string().optional(),
-  governance: v.string().optional(),
+  news: v.array(news).optional(),
 })
 
 const monthlyReport = v.object({
@@ -36,7 +38,7 @@ const monthlyReport = v.object({
   startDate: v.string(),
   endDate: v.string(),
   reports: v.array(
-    v.union([ecosystemReport, dataAvailabilityReport, scalingProjectReport]),
+    v.union([ecosystemReport, dataAvailabilityReport, upcomingProjectReport]),
   ),
 })
 

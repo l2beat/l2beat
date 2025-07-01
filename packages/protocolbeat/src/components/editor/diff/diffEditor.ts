@@ -3,11 +3,12 @@ import 'monaco-editor/esm/vs/editor/edcore.main'
 import 'monaco-editor/esm/vs/language/json/monaco.contribution'
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
-import * as solidity from './languages/solidity'
+import * as solidity from '../languages/solidity'
 
 import type { editor } from 'monaco-editor/esm/vs/editor/editor.api'
-import { cyrb64 } from './cyrb-hash'
-import { theme } from './theme'
+import { cyrb64 } from '../cyrb-hash'
+import { theme } from '../theme'
+import { LineSelector } from './extensions/lineSelector'
 
 let monacoInitialized = false
 const knownElements: Map<HTMLElement, DiffEditor> = new Map()
@@ -29,7 +30,8 @@ export class DiffEditor {
   private viewStates: Record<string, editor.IDiffEditorViewState | null> = {}
   private currentCodeHash: string = ''
   private readonly element: HTMLElement
-  private isSwapped: boolean = false
+
+  public lineSelector: LineSelector
 
   constructor(element: HTMLElement) {
     this.element = element
@@ -57,6 +59,9 @@ export class DiffEditor {
       model: null, // Prevent Monaco from creating a default model
     })
 
+    this.lineSelector = new LineSelector(this.editor)
+    this.lineSelector.init()
+
     knownElements.set(element, this)
   }
 
@@ -72,13 +77,9 @@ export class DiffEditor {
     this.currentCodeHash = newCodeHash
 
     if (this.models[newCodeHash] === undefined) {
-      const [originalCode, modifiedCode] = this.isSwapped
-        ? [codeRight, codeLeft]
-        : [codeLeft, codeRight]
-
       this.models[newCodeHash] = {
-        original: monaco.editor.createModel(originalCode, 'solidity'),
-        modified: monaco.editor.createModel(modifiedCode, 'solidity'),
+        original: monaco.editor.createModel(codeLeft, 'solidity'),
+        modified: monaco.editor.createModel(codeRight, 'solidity'),
       }
     }
 
@@ -109,32 +110,6 @@ export class DiffEditor {
 
       listener({ deletions, additions, changes })
     })
-  }
-
-  swapSides(): boolean {
-    const currentModel = this.editor.getModel()
-    if (!currentModel) return this.isSwapped
-
-    const viewState = this.editor.saveViewState()
-
-    this.editor.setModel({
-      original: currentModel.modified,
-      modified: currentModel.original,
-    })
-
-    if (viewState) {
-      this.editor.restoreViewState({
-        original: viewState.modified,
-        modified: viewState.original,
-      })
-    }
-
-    this.isSwapped = !this.isSwapped
-    return this.isSwapped
-  }
-
-  getIsSwapped(): boolean {
-    return this.isSwapped
   }
 
   resize() {
@@ -169,6 +144,7 @@ export class DiffEditor {
 
     knownElements.delete(this.element)
 
+    this.lineSelector?.dispose()
     this.editor.dispose()
   }
 }

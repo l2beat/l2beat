@@ -1,3 +1,4 @@
+@import "./diff-editor.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

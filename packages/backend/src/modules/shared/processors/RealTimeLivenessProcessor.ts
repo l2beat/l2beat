@@ -20,6 +20,7 @@ import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordW
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
 import type { BlockProcessor } from '../types'
+import { formatDuration, formatSubtype } from '../utils/format'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
   private logger: Logger
@@ -197,13 +198,13 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         })
 
         const message =
-          `New anomaly detected\n` +
-          `- project: \`${group.projectId}\`\n` +
-          `- type: \`${group.subtype}\`\n` +
+          `**${group.projectId}** stopped posting **${formatSubtype(group.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
           `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
           `- detected at time: \`${block.timestamp}\`\n` +
-          `- detected at block: \`${block.number}\`\n` +
-          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)\n`
+          `- detected on block: \`${block.number}\`\n` +
+          `- interval: \`${formatDuration(interval)}\`\n` +
+          `- avg interval: \`${formatDuration(latestStat.mean)}\`\n` +
+          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)`
 
         await this.sendDiscordNotification(message)
 
@@ -227,13 +228,11 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         })
 
         const message =
-          `Recovered from anomaly\n` +
-          `- project: \`${group.projectId}\`\n` +
-          `- type: \`${group.subtype}\`\n` +
+          `**${group.projectId}** recovered from **${formatSubtype(group.subtype)}** anomaly that lasted for **${formatDuration(latestRecord.timestamp - ongoingAnomaly.start)}**\n\n` +
           `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
-          `- recovered on time: \`${block.timestamp}\`\n` +
+          `- recovered at time: \`${block.timestamp}\`\n` +
           `- recovered on block: \`${block.number}\`\n` +
-          `- duration: \`${latestRecord.timestamp - ongoingAnomaly.start} seconds\``
+          `- duration: \`${formatDuration(latestRecord.timestamp - ongoingAnomaly.start)}\``
 
         await this.sendDiscordNotification(message)
 
@@ -296,6 +295,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
   private mapConfigurations(trackedTxsConfig: TrackedTxsConfig) {
     const livenesConfigurations = trackedTxsConfig.projects
+      .filter((project) => !project.isArchived)
       .flatMap((project) => project.configurations)
       .filter((config) => config.type === 'liveness')
 

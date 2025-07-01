@@ -8,6 +8,7 @@
       "initialAddresses": [
         "0xB01dADEC98308528ee57A17b24A473213c1704bb", // depositRelayer
         "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E", // l1crossdomainmessenger
+        // "0x100d3ca4f97776a40a7d93db4abf0fea34230666", // aggchainFEP crashes flattener
         // vaultbridge token contracts
         "0x53E82ABbb12638F09d9e624578ccB666217a765e",
         "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",

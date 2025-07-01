@@ -107,9 +107,12 @@ export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
     res.redirect('/ui')
   })
 
-  app.get(['/ui', '/ui/*', '/diff', '/diff/*'], (_req, res) => {
-    res.sendFile(join(STATIC_ROOT, 'index.html'))
-  })
+  app.get(
+    ['/ui', '/ui/*', '/diff', '/diff/*', '/address', '/address/*'],
+    (_req, res) => {
+      res.sendFile(join(STATIC_ROOT, 'index.html'))
+    },
+  )
 
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
