@@ -6,6 +6,7 @@ import type { Milestone } from '@l2beat/config'
 import { useEventListener } from '~/hooks/useEventListener'
 import { useIsClient } from '~/hooks/useIsClient'
 import { cn } from '~/utils/cn'
+import { OverflowWrapper } from '../OverflowWrapper'
 import { tooltipContentVariants } from '../tooltip/Tooltip'
 import {
   ChartDataIndicator,
@@ -193,6 +194,7 @@ function ChartLegendContent({
     nameKey?: string
     reverse?: boolean
   }) {
+  const contentRef = React.useRef<HTMLDivElement>(null)
   const { meta } = useChart()
 
   if (!payload?.length) {
@@ -201,13 +203,14 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <div className="overflow-x-auto pl-2">
+    <OverflowWrapper childrenRef={contentRef}>
       <div
         className={cn(
           'mx-auto flex w-fit items-center gap-2',
           verticalAlign === 'top' && 'pb-3',
           className,
         )}
+        ref={contentRef}
       >
         {actualPayload.map((item) => {
           const key = `${nameKey ?? item.dataKey ?? 'value'}`
@@ -231,7 +234,7 @@ function ChartLegendContent({
           )
         })}
       </div>
-    </div>
+    </OverflowWrapper>
   )
 }
 
