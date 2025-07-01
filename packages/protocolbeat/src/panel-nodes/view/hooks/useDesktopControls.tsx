@@ -1,7 +1,7 @@
+import { useRef } from 'react'
 import { useMultiViewStore } from '../../../multi-view/store'
 import { useSearchStore } from '../../../search/store'
 import { useStore } from '../../store/store'
-import { useRef } from 'react'
 
 type Props = {
   viewRef: React.RefObject<HTMLElement | null>

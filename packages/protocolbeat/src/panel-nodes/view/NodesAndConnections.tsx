@@ -1,9 +1,9 @@
+import { useMemo } from 'react'
+import React from 'react'
 import { useStore } from '../store/store'
 // import { Connection } from './Connection'
 import { ConnectionsCanvas } from './ConnectionsCanvas'
 import { NodeView } from './NodeView'
-import { useMemo } from 'react'
-import React from 'react'
 
 export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
