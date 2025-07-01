@@ -413,7 +413,6 @@ export const layer2s: ScalingProject[] = [
   sophon,
   sorare,
   sovrun,
-  specular,
   spire,
   starknet,
   status,
