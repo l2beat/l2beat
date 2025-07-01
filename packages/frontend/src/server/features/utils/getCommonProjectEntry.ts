@@ -17,6 +17,7 @@ export interface CommonProjectEntry {
         underReview?: UnderReviewStatus
         syncWarning?: string
         emergencyWarning?: string
+        ongoingAnomaly?: boolean
       }
     | undefined
   description?: string

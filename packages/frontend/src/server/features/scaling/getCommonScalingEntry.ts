@@ -19,10 +19,12 @@ export function getCommonScalingEntry({
   project,
   changes,
   syncWarning,
+  ongoingAnomaly,
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
+  ongoingAnomaly?: boolean
 }): CommonScalingEntry {
   return {
     id: project.id,
@@ -47,6 +49,7 @@ export function getCommonScalingEntry({
       }),
       syncWarning,
       emergencyWarning: project.statuses.emergencyWarning,
+      ongoingAnomaly,
     },
     tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
