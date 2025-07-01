@@ -71,6 +71,75 @@
           "content": "In its Q1 2025 report, Messari [highlights](https://messari.io/report/state-of-zksync-q1-2025) explosive growth across ZKsync’s Elastic Network, with daily transactions up 276%, driven by the addition of new chains such as Abstract, WonderFi, and Lens. While ZK’s token price dropped 64%, the network posted strong fundamentals, emerging as the second-largest blockchain for tokenized RWAs with over $2B in assets."
         }
       ]
+    },
+    {
+      "name": "Superchain",
+      "type": "ecosystem",
+      "ecosystemId": "superchain",
+      "news": [
+        {
+          "title": "Upgrade 16 proposal posted",
+          "content": "Interop-ready contracts, a higher 500M gas limit, and removal of a permissioned role are [now live for review](https://gov.optimism.io/t/upgrade-16-proposal-interop-contracts-stage-1-and-go-1-23-support-in-cannon/10037?utm_source=chatgpt.com) on the governance forum. Native Superchain-to-Superchain messaging will be switched on in a follow-up upgrade later this summer.",
+          "tags": ["upcoming"]
+        },
+        {
+          "title": "Bug-bounty pool now covers future upgrades",
+          "content": "OP Labs [has extended its $2 million program](https://blog.oplabs.co/optimism-extends-2-million-bug-bounty-program-to-protocol-upgrades-ahead-of-superchain-interop/?utm_source=chatgpt.com), allowing white-hats to audit Upgrade 16 (and all subsequent releases) before the code reaches the main-net, adding an extra safety layer ahead of the interop launch.",
+          "tags": ["upcoming"]
+        },
+        {
+          "title": "SuperStacks Incentive Program Running Until June 30",
+          "content": "Optimism [has launched SuperStacks](https://www.superchain.eco/programs/superstacks), a pilot points program designed to reward users for providing liquidity to designated pools that utilize interoperable assets, such as USDT0, across various OP Chains. Participants earn Experience Points (XP) based on the amount and duration of liquidity provided."
+        },
+        {
+          "title": "Kraken Ink Network to Launch INK Token with Airdrop",
+          "content": "Kraken Ink Network, built on Optimism Superchain, is [set to launch](https://x.com/inkfndhq/status/1934991629552656720) its native INK token. The token, with a fixed supply of 1 billion, will be distributed via a community airdrop on Aave."
+        },
+        {
+          "title": "Sky Protocol Launches $SKY on Optimism, Replaces MKR for DAO Governance",
+          "content": "Sky Protocol [has officially launched](https://x.com/SkyEcosystem/status/1937236854354366517?ref_src=twsrc^tfw|twcamp^tweetembed|twterm^1937236854354366517|twgr^0ffccebe09b7fc90bfb9e91a3c02b7d45dae9894|twcon^s1_&ref_url=https%3A%2F%2Fwww.crypto-news-flash.com%2Fsky-protocol-launches-sky-token-on-optimism%2F%3Futm_source%3Dchatgpt.com) its native $SKY token on Optimism, marking a significant leap in accessibility and adoption across the Superchain ecosystem."
+        },
+        {
+          "title": "Introduction of \"Optimistic Approval\" Process",
+          "content": "As part of the Season 8 governance revamp, Optimism [will introduce](https://optimism.mirror.xyz/JR5YEsK9-bM6At6c6iC5RiNNE4XXi0sMp3ytINq0wXw) an \"optimistic approval\" process, where proposals automatically pass unless a stakeholder vetoes them.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "Season 8 Intent Focused on Interoperability",
+          "content": "The [primary intent](https://gov.optimism.io/t/season-8-intent/10009) of Season 8 is to improve the interoperability within the Superchain.",
+          "tags": ["governance"]
+        },
+        {
+          "title": "“Guide to Season 8” & tooling docs published",
+          "content": "The Optimism Foundation has created documentation for Season 8 that [explains](https://gov.optimism.io/t/guide-to-season-8/10001?utm_source=chatgpt.com) delegate roles, the new Developer Advisory Board, and how to onboard under the purpose-built framework.",
+          "tags": ["governance"]
+        }
+      ]
+    },
+    {
+      "name": "Agglayer",
+      "type": "ecosystem",
+      "ecosystemId": "agglayer",
+      "newProjectsIds": ["katana"],
+      "news": [
+        {
+          "title": "AggLayer goes multistack - Agglayer v0.3",
+          "content": "Polygon’s ambitious Gigagas roadmap aims for 100,000 TPS, positioning the chain as a global settlement layer. [Polygon will integrate Agglayer](https://polygon.technology/blog/polygons-gigagas-roadmap-to-100k-tps-move-your-money-faster-across-the-globe), its cross-chain liquidity and interoperability layer."
+        },
+        {
+          "title": "Polygon Winds Down zkEVM to Prioritize Agglayer and Scalable Growth",
+          "content": "Polygon Labs [has announced](https://forum.polygon.technology/t/sunsetting-polygon-zkevm-mainnet-beta-in-2026/21020) it will sunset Polygon zkEVM Mainnet Beta in 2026 to prioritize Agglayer.",
+          "tags": ["upcoming"]
+        },
+        {
+          "title": "Polygon Doubles Down on Agglayer as Sandeep Nailwal Becomes Foundation CEO",
+          "content": "Polygon co-founder Sandeep Nailwal [has officially](https://x.com/sandeepnailwal/status/1932748558786310228) taken over as CEO of the Polygon Foundation, with Agglayer as the strategic focus."
+        },
+        {
+          "title": "Katana Launches High-Yield Blockchain for Institutional DeFi, Backed by Polygon",
+          "content": "The Katana Foundation [has launched](https://www.coindesk.com/tech/2025/05/28/polygon-gsr-release-katana-network-tackle-defi-fragmentation) the private mainnet of its new DeFi-optimized blockchain."
+        }
+      ]
     }
   ]
 }
