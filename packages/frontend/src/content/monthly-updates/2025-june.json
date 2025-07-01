@@ -163,6 +163,25 @@
           "content": "Eigen Labs [has launched](https://blog.eigencloud.xyz/vibescore/) VIBEscore, a gamified app that scores crypto Twitter posts using verifiable AI, built on EigenLayer."
         }
       ]
+    },
+    {
+      "name": "Nethermind",
+      "type": "upcoming-project",
+      "projectId": "nethermind",
+      "news": [
+        {
+          "title": "Nethermind’s April Feature: “Surge — A Based Rollup for Ethereum’s Future”",
+          "content": "Surge is a [new rollup template](https://www.nethermind.io/blog/surge-a-based-rollup-template-designed-for-ethereums-future?utm_source=chatgpt.com) built on the Taiko stack with Stage 2 security and no admin keys."
+        },
+        {
+          "title": "Nethermind Reveals Smarter Restaking Strategy for Symbiotic Vaults",
+          "content": "Nethermind’s [latest research](https://www.nethermind.io/blog/optimizing-restaking-yields-a-hybrid-quantitative-qualitative-model) proposes a hybrid model for optimizing restaking yields in Symbiotic."
+        },
+        {
+          "title": "Nethermind Secures Pimlico’s Cross-Chain Account Abstraction Infrastructure",
+          "content": "Pimlico [partnered](https://www.nethermind.io/blog/securing-pimlicos-account-abstraction-infrastructure?utm_source=chatgpt.com) with Nethermind Security to audit its ERC-4337 cross-chain infrastructure."
+        }
+      ]
     }
   ]
 }

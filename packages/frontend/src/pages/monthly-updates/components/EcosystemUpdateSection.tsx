@@ -14,6 +14,7 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
   return (
     <div
       id={ecosystem.name}
+      className="mt-12"
       style={
         {
           '--ecosystem-primary': ecosystem.colors.primary,

@@ -35,6 +35,7 @@ const upcomingProjectUpdate = v.object({
   projectId: v.string(),
   news: v.array(news).optional(),
 })
+export type UpcomingProjectUpdate = v.infer<typeof upcomingProjectUpdate>
 
 const monthlyUpdate = v.object({
   title: v.string(),
