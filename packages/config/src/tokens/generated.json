@@ -14745,6 +14745,132 @@
       }
     },
     {
+      "name": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1748541168,
+      "coingeckoListingTimestamp": 1722729600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/Circle_Agora_White_on_Olive_1080px.png?1722961274",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge ETH",
+      "coingeckoId": "ethereum",
+      "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
+      "symbol": "vbETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1748344157,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
+      "symbol": "vbUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1748343387,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDS",
+      "coingeckoId": "usds",
+      "address": "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3",
+      "symbol": "vbUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1748347232,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDT",
+      "coingeckoId": "tether",
+      "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+      "symbol": "vbUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1748354917,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
+      "symbol": "vbWBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1748346847,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
       "name": "Free Bridged SolvBTC",
       "coingeckoId": "solv-btc",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
