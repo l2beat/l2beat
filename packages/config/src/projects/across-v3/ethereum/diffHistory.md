@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x823833e03f6b9fd54c07f5c52ec01fcdeaa6d181
+
+# Diff at Tue, 01 Jul 2025 10:30:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22816998
+- current block number: 22823774
+
+## Description
+
+Spokepool upgrade: minor fixes and [7702 delegation detection](https://disco.l2beat.com/diff/eth:0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a/eth:0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80?lines=R5649).
+
+## Watched changes
+
+```diff
+    contract Ethereum_SpokePool (0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5) {
+    +++ description: The user-facing contract on each connected chain where funds are deposited to initiate a bridge transfer. It also receives settlement data from the HubPool to process refunds for the relayers who fulfilled those transfers.
+      sourceHashes.1:
+-        "0x10d81ccfd26fbcb9926942a46436a7bedd3946646911a43f3f0e13dc7eb81517"
++        "0x40060e8b2904995f3cb0149fcbf73924c9b1e2e164a823a7957d703a9f7c6fe5"
+      values.$implementation:
+-        "0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a"
++        "0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"
+      values.$pastUpgrades.9:
++        ["2025-06-30T17:21:23.000Z","0xa4cfc9525849a8a3052a587a29006303e9b16ce08fa096460bb6fe2017b1a3ef",["0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80"]]
+      values.$upgradeCount:
+-        9
++        10
+      values.UPDATE_ADDRESS_DEPOSIT_DETAILS_HASH:
+-        "0x9c6dfd61d811b9950a4f2b9adf46357b717c816d22c420d0bde8f2360148f7cd"
+      implementationNames.0x0190a2328e072Fc5a7fA00F6C9ae2a16c7F4E32a:
+-        "Ethereum_SpokePool"
+      implementationNames.0xFBc81a18EcDa8E6A91275cFDF5FC6d91A7C5AE80:
++        "Ethereum_SpokePool"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Ethereum_SpokePool/Ethereum_SpokePool.sol      | 65 ++++++++--------------
+ 1 file changed, 24 insertions(+), 41 deletions(-)
+```
+
 Generated with discovered.json: 0xa0b40952153894e314adca8c863e0d39a3eda492
 
 # Diff at Mon, 30 Jun 2025 11:41:15 GMT:
