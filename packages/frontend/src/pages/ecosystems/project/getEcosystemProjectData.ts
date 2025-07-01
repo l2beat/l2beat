@@ -30,7 +30,7 @@ export async function getEcosystemProjectData(
       },
     }),
     helpers.activity.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: {
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),

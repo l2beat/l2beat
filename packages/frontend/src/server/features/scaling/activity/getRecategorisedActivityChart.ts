@@ -54,7 +54,7 @@ export async function getRecategorisedActivityChart(
     )
     .map((p) => p.id)
 
-  const adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = getFullySyncedActivityRange({ type: range })
   const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
     await Promise.all([
       await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),

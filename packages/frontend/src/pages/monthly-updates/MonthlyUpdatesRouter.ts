@@ -3,7 +3,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
-import { getMonthlyUpdateData } from './GetMonthlyUpdateData'
+import { getMonthlyUpdateData } from './getMonthlyUpdateData'
 
 export function createMonthlyUpdatesRouter(
   manifest: Manifest,

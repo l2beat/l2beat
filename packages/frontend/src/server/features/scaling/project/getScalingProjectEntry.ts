@@ -147,7 +147,7 @@ export async function getScalingProjectEntry(
       excludeAssociatedTokens: false,
     }),
     helpers.activity.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     project.scalingInfo.layer === 'layer2'
