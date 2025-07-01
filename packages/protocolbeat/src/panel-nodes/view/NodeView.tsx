@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import React from 'react'
 
 import { AddressIcon } from '../../common/AddressIcon'
 import { IconInitial } from '../../icons/IconInitial'
@@ -17,7 +18,7 @@ export interface NodeViewProps {
   isDimmed?: boolean
 }
 
-export function NodeView(props: NodeViewProps) {
+function NodeViewComponent(props: NodeViewProps) {
   const { isDark } = getColor(props.node)
 
   const fullHeight =
@@ -144,3 +145,32 @@ function NodeField(props: {
     </div>
   )
 }
+
+function areEqual(prev: NodeViewProps, next: NodeViewProps) {
+  if (prev.selected !== next.selected) return false
+  if (prev.isDimmed !== next.isDimmed) return false
+
+  const a = prev.node.box
+  const b = next.node.box
+
+  if (
+    a.x !== b.x ||
+    a.y !== b.y ||
+    a.width !== b.width ||
+    a.height !== b.height
+  ) {
+    return false
+  }
+
+  if (prev.node.hiddenFields.length !== next.node.hiddenFields.length) {
+    return false
+  }
+
+  if (prev.node.fields.length !== next.node.fields.length) {
+    return false
+  }
+
+  return true
+}
+
+export const NodeView = React.memo(NodeViewComponent, areEqual)
