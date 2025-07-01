@@ -70,9 +70,10 @@ export async function getDaThroughputChart({
       ([_, values]) => values[layer] && values[layer] > 0,
     )
     if (lastValue) {
+      const [timestamp, value] = lastValue
       lastDataForLayers[layer] = {
-        timestamp: Number(lastValue[0]),
-        value: lastValue[1][layer] ?? 0,
+        timestamp: Number(timestamp),
+        value: value[layer] ?? 0,
       }
     }
   }
@@ -86,16 +87,14 @@ export async function getDaThroughputChart({
 
     const layerValues: Record<string, number> = {}
     for (const layer of THROUGHPUT_ENABLED_DA_LAYERS) {
-      layerValues[layer] = timestampValues[layer] ?? 0
-
       const lastData = lastDataForLayers[layer]
-      if (
-        lastData &&
-        timestamp > lastData.timestamp &&
-        layerValues[layer] === 0
-      ) {
+      const isSynced = lastData && timestamp <= lastData.timestamp
+      if (isSynced) {
         layerValues[layer] = lastData.value
+        continue
       }
+
+      layerValues[layer] = timestampValues[layer] ?? 0
     }
 
     return [
