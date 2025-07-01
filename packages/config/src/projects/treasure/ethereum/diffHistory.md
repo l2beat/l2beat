@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x2aa2795460e2ceaa79c53daa956fc0d581be9704
+Generated with discovered.json: 0x3f482d93f07132a52aebd9c106b011c6cbe37a9f
+
+# Diff at Wed, 25 Jun 2025 07:17:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593197
+- current block number: 22593197
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/ValidiumL1DAValidator"
++        "shared-zk-stack/ValidiumL1DAValidator"
+    }
+```
+
+```diff
+    contract Verifier (0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5) {
+    +++ description: Implements the ZK proof verification logic.
+      template:
+-        "shared-zk-stack/Verifier"
++        "shared-zk-stack/old/Verifier"
+    }
+```
+
+Generated with discovered.json: 0xfceecf6ccd5affa2ee8310a49cdcb06a02648dc8
 
 # Diff at Tue, 27 May 2025 08:30:47 GMT:
 

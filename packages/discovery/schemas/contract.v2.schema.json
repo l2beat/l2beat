@@ -1,59 +1,107 @@
 {
+  "$schema": "https://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
-    "$schema": { "type": "string" },
-    "extends": { "$ref": "#/definitions/DiscoveryContract/properties/extends" },
+    "extends": { "type": "string" },
     "canActIndependently": { "type": "boolean" },
-    "ignoreDiscovery": {
-      "$ref": "#/definitions/DiscoveryContract/properties/ignoreDiscovery"
-    },
+    "ignoreDiscovery": { "type": "boolean" },
     "proxyType": {
-      "$ref": "#/definitions/DiscoveryContract/properties/proxyType"
+      "enum": [
+        "new Arbitrum proxy",
+        "call implementation proxy",
+        "zkSync Lite proxy",
+        "zkSpace proxy",
+        "Eternal Storage proxy",
+        "Polygon Extension proxy",
+        "Optics Beacon proxy",
+        "Axelar proxy",
+        "LightLink proxy",
+        "Everclear proxy",
+        "TaikoFork proxy",
+        "immutable"
+      ]
     },
-    "ignoreInWatchMode": {
-      "$ref": "#/definitions/DiscoveryContract/properties/ignoreInWatchMode"
-    },
-    "ignoreMethods": {
-      "$ref": "#/definitions/DiscoveryContract/properties/ignoreMethods"
-    },
-    "ignoreRelatives": {
-      "$ref": "#/definitions/DiscoveryContract/properties/ignoreRelatives"
-    },
-    "methods": { "$ref": "#/definitions/DiscoveryContract/properties/methods" },
-    "manualSourcePaths": {
-      "$ref": "#/definitions/ColorContract/properties/manualSourcePaths"
-    },
-    "types": { "$ref": "#/definitions/DiscoveryContract/properties/types" },
-    "displayName": {
-      "$ref": "#/definitions/ColorContract/properties/displayName"
-    },
-    "categories": {
-      "$ref": "#/definitions/ColorContract/properties/categories"
-    },
-    "category": { "$ref": "#/definitions/ColorContract/properties/category" },
-    "description": {
-      "$ref": "#/definitions/ColorContract/properties/description"
-    },
-    "references": {
-      "$ref": "#/definitions/ColorContract/properties/references"
-    },
+    "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
+    "ignoreMethods": { "type": "array", "items": { "type": "string" } },
+    "ignoreRelatives": { "type": "array", "items": { "type": "string" } },
     "fields": {
       "type": "object",
+      "propertyNames": { "type": "string" },
       "additionalProperties": {
         "type": "object",
         "properties": {
           "permissions": {
             "type": "array",
-            "items": { "$ref": "#/definitions/RawPermissionConfiguration" }
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "enum": [
+                    "challenge",
+                    "guard",
+                    "propose",
+                    "sequence",
+                    "validate",
+                    "disperse",
+                    "relayDA",
+                    "operateLinea",
+                    "fastconfirm",
+                    "validateZkStack",
+                    "validateBridge",
+                    "validateBridge2",
+                    "validateBridge3",
+                    "relay",
+                    "aggregatePolygon",
+                    "operateStarknet",
+                    "operateStarkEx",
+                    "governStarknet",
+                    "metisGameCreator",
+                    "stateDeleterMetis",
+                    "hotValidatorHyperliquid",
+                    "coldValidatorHyperliquid",
+                    "acrossPropose",
+                    "member",
+                    "act",
+                    "interact",
+                    "upgrade"
+                  ]
+                },
+                "delay": {
+                  "anyOf": [{ "type": "number" }, { "type": "string" }]
+                },
+                "description": { "type": "string" },
+                "condition": { "type": "string" },
+                "role": { "type": "string" }
+              },
+              "required": ["type"]
+            }
           },
-          "description": {
-            "$ref": "#/definitions/ColorContractField/properties/description"
-          },
-          "severity": {
-            "$ref": "#/definitions/ColorContractField/properties/severity"
-          },
+          "description": { "type": "string" },
+          "severity": { "enum": ["HIGH", "LOW"] },
           "type": {
-            "$ref": "#/definitions/ColorContractField/properties/type"
+            "anyOf": [
+              {
+                "enum": [
+                  "CODE_CHANGE",
+                  "L2",
+                  "EXTERNAL",
+                  "RISK_PARAMETER",
+                  "PERMISSION"
+                ]
+              },
+              {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "CODE_CHANGE",
+                    "L2",
+                    "EXTERNAL",
+                    "RISK_PARAMETER",
+                    "PERMISSION"
+                  ]
+                }
+              }
+            ]
           },
           "handler": {
             "$ref": "#/definitions/DiscoveryContractField/properties/handler"
@@ -524,184 +572,67 @@
         "stateDeleterMetis",
         "hotValidatorHyperliquid",
         "coldValidatorHyperliquid",
+        "acrossPropose",
         "member",
         "act",
         "interact",
         "upgrade"
       ]
     },
-    "RawPermissionConfiguration": {
+    "methods": {
       "type": "object",
-      "properties": {
-        "type": { "$ref": "#/definitions/Permission" },
-        "delay": { "type": ["number", "string"], "default": 0 },
-        "description": { "type": "string" },
-        "condition": { "type": "string" },
-        "role": { "type": "string" }
-      },
-      "required": ["type"],
-      "additionalProperties": false
+      "propertyNames": { "type": "string" },
+      "additionalProperties": { "type": "string" }
     },
-    "ContractValueType": {
-      "type": "string",
-      "enum": ["CODE_CHANGE", "L2", "EXTERNAL", "RISK_PARAMETER", "PERMISSION"]
-    },
-    "ContractFieldSeverity": { "type": "string", "enum": ["HIGH", "LOW"] },
-    "DiscoveryContractField": {
+    "manualSourcePaths": {
       "type": "object",
-      "properties": {
-        "handler": { "$ref": "#/definitions/UserHandlerDefinition" },
-        "template": { "type": "string" },
-        "copy": { "type": "string" },
-        "edit": {}
-      },
-      "additionalProperties": false
+      "propertyNames": { "type": "string" },
+      "additionalProperties": { "type": "string" }
     },
-    "ColorContractField": {
+    "types": {
       "type": "object",
-      "properties": {
-        "description": { "type": "string" },
-        "severity": { "type": "string", "enum": ["HIGH", "LOW"] },
-        "type": {
-          "anyOf": [
-            { "$ref": "#/definitions/ContractValueType" },
-            {
-              "type": "array",
-              "items": { "$ref": "#/definitions/ContractValueType" }
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "typeCaster": { "type": "string" },
+          "arg": {
+            "type": "object",
+            "propertyNames": { "type": "string" },
+            "additionalProperties": {
+              "anyOf": [{ "type": "string" }, { "type": "number" }]
             }
-          ]
-        }
-      },
-      "additionalProperties": false
-    },
-    "DiscoveryCustomType": {
-      "type": "object",
-      "properties": {
-        "typeCaster": { "type": "string" },
-        "arg": {
-          "type": "object",
-          "additionalProperties": { "type": ["string", "number"] }
-        },
-        "description": { "type": "string" },
-        "severity": { "$ref": "#/definitions/ContractFieldSeverity" }
-      },
-      "additionalProperties": false
-    },
-    "ExternalReference": {
-      "type": "object",
-      "properties": {
-        "text": { "type": "string" },
-        "href": { "type": "string" }
-      },
-      "required": ["text", "href"],
-      "additionalProperties": false
-    },
-    "DiscoveryCategory": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "priority": { "type": "number" }
-      },
-      "required": ["name", "priority"],
-      "additionalProperties": false
-    },
-    "ManualProxyType": {
-      "type": "string",
-      "enum": [
-        "new Arbitrum proxy",
-        "call implementation proxy",
-        "zkSync Lite proxy",
-        "zkSpace proxy",
-        "Eternal Storage proxy",
-        "Polygon Extension proxy",
-        "Optics Beacon proxy",
-        "Axelar proxy",
-        "LightLink proxy",
-        "Everclear proxy",
-        "TaikoFork proxy",
-        "immutable"
-      ]
-    },
-    "DiscoveryContract": {
-      "type": "object",
-      "properties": {
-        "extends": { "type": "string" },
-        "canActIndependently": { "type": "boolean" },
-        "ignoreDiscovery": { "type": "boolean", "default": false },
-        "proxyType": { "$ref": "#/definitions/ManualProxyType" },
-        "ignoreInWatchMode": { "type": "array", "items": { "type": "string" } },
-        "ignoreMethods": {
-          "type": "array",
-          "items": { "type": "string" },
-          "default": []
-        },
-        "ignoreRelatives": {
-          "type": "array",
-          "items": { "type": "string" },
-          "default": []
-        },
-        "fields": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/DiscoveryContractField"
           },
-          "default": {}
-        },
-        "methods": {
-          "type": "object",
-          "additionalProperties": { "type": "string" },
-          "default": {}
-        },
-        "manualSourcePaths": {
-          "type": "object",
-          "additionalProperties": { "type": "string" },
-          "default": {}
-        },
-        "types": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/DiscoveryCustomType"
-          },
-          "default": {}
+          "description": { "type": "string" },
+          "severity": { "enum": ["HIGH", "LOW"] }
         }
-      },
-      "additionalProperties": false
+      }
     },
-    "ColorContract": {
+    "displayName": { "type": "string" },
+    "categories": {
       "type": "object",
-      "properties": {
-        "displayName": { "type": "string" },
-        "categories": {
-          "type": "object",
-          "additionalProperties": { "$ref": "#/definitions/DiscoveryCategory" }
+      "propertyNames": { "type": "string" },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "priority": { "type": "number" }
         },
-        "category": { "type": "string" },
-        "description": { "type": "string" },
-        "references": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/ExternalReference" }
-        },
-        "fields": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/ColorContractField"
-          },
-          "default": {}
-        },
-        "manualSourcePaths": {
-          "type": "object",
-          "additionalProperties": { "type": "string" },
-          "default": {}
-        }
-      },
-      "additionalProperties": false
+        "required": ["name", "priority"]
+      }
     },
-    "MergedContract": {
-      "anyOf": [
-        { "$ref": "#/definitions/DiscoveryContract" },
-        { "$ref": "#/definitions/ColorContract" }
-      ]
+    "category": { "type": "string" },
+    "description": { "type": "string" },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "href": { "type": "string" }
+        },
+        "required": ["text", "href"]
+      }
     }
-  },
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  }
 }

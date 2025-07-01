@@ -1,20 +1,23 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { type providers, utils } from 'ethers'
-import * as z from 'zod'
 
 import type { IProvider } from '../../provider/IProvider'
 import { FunctionSelectorDecoder } from '../../utils/FunctionSelectorDecoder'
 import type { Handler, HandlerResult } from '../Handler'
 
-export type KintoAccessControlHandlerDefinition = z.infer<
+export type KintoAccessControlHandlerDefinition = v.infer<
   typeof KintoAccessControlHandlerDefinition
 >
-export const KintoAccessControlHandlerDefinition = z.strictObject({
-  type: z.literal('kintoAccessControl'),
-  roleNames: z.optional(
-    z.record(z.string().regex(/^0x[a-f\d]*$/i), z.string()),
-  ),
-  ignoreRelative: z.optional(z.boolean()),
+export const KintoAccessControlHandlerDefinition = v.strictObject({
+  type: v.literal('kintoAccessControl'),
+  roleNames: v
+    .record(
+      v.string().check((v) => /^0x[a-f\d]*$/i.test(v)),
+      v.string(),
+    )
+    .optional(),
+  ignoreRelative: v.boolean().optional(),
 })
 
 const abi = new utils.Interface([

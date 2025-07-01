@@ -1,6 +1,6 @@
+import { RateLimiter } from '@l2beat/backend-tools'
+import { v } from '@l2beat/validate'
 import { formatAbi } from 'abitype'
-import { z } from 'zod'
-import { RateLimiter } from './RateLimiter'
 
 export interface ContractInfo {
   verified: boolean
@@ -10,16 +10,18 @@ export interface ContractInfo {
 }
 
 export class EtherscanClient {
-  private rateLimiter = new RateLimiter({ requestsPerSecond: 4 })
+  private rateLimiter = new RateLimiter({ callsPerMinute: 240 })
 
-  constructor(private apikey: string) {}
+  constructor(private apikey: string) {
+    this.getContractInfo = this.rateLimiter.wrap(
+      this.getContractInfo.bind(this),
+    )
+  }
 
   async getContractInfo(
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractInfo> {
-    await this.rateLimiter.wait()
-
     const source = await this.getContractSource(chainId, address)
     const verified = !source.ABI.includes('not verified')
     return {
@@ -36,8 +38,6 @@ export class EtherscanClient {
     chainId: number,
     address: `0x${string}`,
   ): Promise<ContractSource> {
-    await this.rateLimiter.wait()
-
     const base = 'https://api.etherscan.io/v2/api'
     const query = new URLSearchParams({
       chainid: chainId.toString(),
@@ -75,33 +75,33 @@ function toHumanAbi(abi: string): string[] {
   }
 }
 
-const ErrorSchema = z.object({
-  status: z.literal('0'),
-  message: z.string(),
-  result: z.unknown(),
+const ErrorSchema = v.object({
+  status: v.literal('0'),
+  message: v.string(),
+  result: v.unknown(),
 })
 
-export type ContractSource = z.infer<typeof ContractSource>
-const ContractSource = z.object({
-  SourceCode: z.string(),
-  ABI: z.string(),
-  ContractName: z.string(),
-  CompilerVersion: z.string(),
-  OptimizationUsed: z.string(),
-  Runs: z.string(),
-  ConstructorArguments: z.string(),
-  EVMVersion: z.string(),
-  Library: z.string(),
-  LicenseType: z.string(),
-  Proxy: z.string(),
-  Implementation: z.string(),
-  SwarmSource: z.string(),
+export type ContractSource = v.infer<typeof ContractSource>
+const ContractSource = v.object({
+  SourceCode: v.string(),
+  ABI: v.string(),
+  ContractName: v.string(),
+  CompilerVersion: v.string(),
+  OptimizationUsed: v.string(),
+  Runs: v.string(),
+  ConstructorArguments: v.string(),
+  EVMVersion: v.string(),
+  Library: v.string(),
+  LicenseType: v.string(),
+  Proxy: v.string(),
+  Implementation: v.string(),
+  SwarmSource: v.string(),
 })
 
-const SuccessSchema = z.object({
-  status: z.literal('1'),
-  message: z.string(),
-  result: z.tuple([ContractSource]),
+const SuccessSchema = v.object({
+  status: v.literal('1'),
+  message: v.string(),
+  result: v.tuple([ContractSource]),
 })
 
-const Schema = z.union([ErrorSchema, SuccessSchema])
+const Schema = v.union([ErrorSchema, SuccessSchema])

@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { TokenValueRecord } from '@l2beat/database'
-import { TokenId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import type { Database } from '@l2beat/database'
@@ -209,7 +209,9 @@ describe(TokenValueIndexer.name, () => {
         name: `Token`,
         amount: {
           type: 'totalSupply',
-          address: '0x1234567890123456789012345678901234567890',
+          address: EthereumAddress(
+            '0x1234567890123456789012345678901234567890',
+          ),
           sinceTimestamp: 0,
           decimals: 18,
           chain: 'chain',
@@ -223,7 +225,9 @@ describe(TokenValueIndexer.name, () => {
               priceId: 'token',
               amount: {
                 type: 'totalSupply',
-                address: '0x1234567890123456789012345678901234567890',
+                address: EthereumAddress(
+                  '0x1234567890123456789012345678901234567890',
+                ),
                 sinceTimestamp: 0,
                 decimals: 18,
                 chain: 'chain',
@@ -234,8 +238,12 @@ describe(TokenValueIndexer.name, () => {
               priceId: 'token-2',
               amount: {
                 type: 'balanceOfEscrow',
-                address: '0x1234567890123456789012345678901234567890',
-                escrowAddress: '0x1234567890123456789012345678901234567890',
+                address: EthereumAddress(
+                  '0x1234567890123456789012345678901234567890',
+                ),
+                escrowAddress: EthereumAddress(
+                  '0x1234567890123456789012345678901234567890',
+                ),
                 sinceTimestamp: 0,
                 decimals: 18,
                 chain: 'chain',
@@ -263,7 +271,7 @@ describe(TokenValueIndexer.name, () => {
       name: `Token ${id}`,
       amount: {
         type: 'totalSupply',
-        address: '0x1234567890123456789012345678901234567890',
+        address: EthereumAddress('0x1234567890123456789012345678901234567890'),
         sinceTimestamp: 0,
         decimals: 18,
         chain: 'chain',

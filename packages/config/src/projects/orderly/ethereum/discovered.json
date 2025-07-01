@@ -2,7 +2,7 @@
   "name": "orderly",
   "chain": "ethereum",
   "blockNumber": 22615672,
-  "configHash": "0x6fb49b937e2e4cb174c74c06ef1c1349dd4ccd34b2532ef6bc3a7e60e42d0ca6",
+  "configHash": "0xdb6c9df438a7b5213063f80314c8d3a51a547bb9498c0458a0ddbc054635d34a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

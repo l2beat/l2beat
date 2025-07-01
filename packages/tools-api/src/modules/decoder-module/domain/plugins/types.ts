@@ -11,4 +11,5 @@ export type Plugin = (
   chain: Chain,
   to: Address | undefined,
   tokens: TokenConfig,
+  chains: Chain[],
 ) => NestedCall[] | false

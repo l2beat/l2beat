@@ -1,3 +1,68 @@
+Generated with discovered.json: 0xf7e49816478e5740aad8ca8bfc4244cf7baa2d1c
+
+# Diff at Wed, 25 Jun 2025 07:17:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22731194
+- current block number: 22731194
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731194 (main branch discovery), not current.
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/ValidiumL1DAValidator"
++        "shared-zk-stack/ValidiumL1DAValidator"
+    }
+```
+
+```diff
+    contract zkCandyZkEvm (0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0x5bcc12c46dd8564f1146e2ae1789c936a36a9d31
+
+# Diff at Wed, 18 Jun 2025 12:24:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22593199
+- current block number: 22731194
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Watched changes
+
+```diff
+    contract zkCandyZkEvm (0xF2704433d11842d15aa76BBF0E00407267a99C92) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        3987
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        3987
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x7ead5e3e088ce4a6d739a729550f453bdc83ca10104b1916d9b0ee8722946d4a"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x2b3312e45d642e34f7d2395a66f5f4494f2239d2
 
 # Diff at Fri, 30 May 2025 04:34:40 GMT:

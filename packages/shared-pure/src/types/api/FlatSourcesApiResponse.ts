@@ -1,12 +1,12 @@
-import z from 'zod'
+import { v } from '@l2beat/validate'
 
-export const FlatSourcesApiResponse = z.array(
-  z.object({
-    projectId: z.string(),
-    chainName: z.string(),
-    blockNumber: z.number(),
-    contentHash: z.string(),
-    flat: z.record(z.string()),
+export const FlatSourcesApiResponse = v.array(
+  v.object({
+    projectId: v.string(),
+    chainName: v.string(),
+    blockNumber: v.number(),
+    contentHash: v.string(),
+    flat: v.record(v.string(), v.string()),
   }),
 )
-export type FlatSourcesApiResponse = z.infer<typeof FlatSourcesApiResponse>
+export type FlatSourcesApiResponse = v.infer<typeof FlatSourcesApiResponse>

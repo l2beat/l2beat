@@ -31,6 +31,8 @@ export const onChainProjects: string[] = [
   'dydx',
   'tokens',
   'gateway',
+  'hibachi',
+  'opcm16',
 ]
 
 describe('discovery config.jsonc', () => {

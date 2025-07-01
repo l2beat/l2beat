@@ -114,6 +114,14 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     })
   })
 
+  describe(AnomalyStatsRepository.prototype.getLatestStats.name, () => {
+    it('should return latest stats', async () => {
+      const result = await repository.getLatestStats()
+
+      expect(result).toEqual([DATA[0]!, DATA[1]!])
+    })
+  })
+
   describe(AnomalyStatsRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

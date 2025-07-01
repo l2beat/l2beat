@@ -5,7 +5,7 @@ import {
   type EthereumAddress,
   type json,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { generateId } from '../../tools/generateId'
 import {
   ClientCore,
@@ -158,16 +158,16 @@ export class RpcClient extends ClientCore implements BlockClient {
   }
 
   async getLogs(
-    addresses: string[],
-    topics: string[],
     from: number,
     to: number,
+    addresses?: string[],
+    topics?: string[],
   ): Promise<EVMLog[]> {
     const method = 'eth_getLogs'
     const response = await this.query(method, [
       {
-        address: addresses,
-        topics: [topics],
+        address: addresses ?? [],
+        topics: topics ? [topics] : [],
         fromBlock: Quantity.encode(BigInt(from)),
         toBlock: Quantity.encode(BigInt(to)),
       },
@@ -247,7 +247,7 @@ export class RpcClient extends ClientCore implements BlockClient {
     ])
 
     const callResponse = await this.batchQuery(method, params)
-    const callResult = z.array(EVMCallResponse).safeParse(callResponse)
+    const callResult = v.array(EVMCallResponse).safeParse(callResponse)
 
     if (!callResult.success) {
       this.$.logger.warn(
@@ -293,7 +293,7 @@ export class RpcClient extends ClientCore implements BlockClient {
     })
 
     const results = new Map(
-      z
+      v
         .array(RpcResponse)
         .parse(response)
         .map((p) => [p.id, p]),

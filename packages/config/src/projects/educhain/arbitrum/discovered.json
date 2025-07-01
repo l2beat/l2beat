@@ -1,8 +1,8 @@
 {
   "name": "educhain",
   "chain": "arbitrum",
-  "blockNumber": 319332430,
-  "configHash": "0xc721de5d792d1dc73bb7e829cfa4ea4dd41f7e90887efd5dc834afdadce1b4f4",
+  "blockNumber": 350981738,
+  "configHash": "0xeeaea6bbd8c2e82dbc2b0acb65a080b666b78bbf8eace0855f0beea2b93289d0",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -95,7 +95,7 @@
           "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
         ],
         "allowedOutboxList": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
-        "delayedMessageCount": 26194,
+        "delayedMessageCount": 26776,
         "inboxHistory": [
           "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
           "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251"
@@ -105,8 +105,8 @@
         "outboxHistory": ["0x6339965Cb3002f5c746895e4eD895bd775dbfdf9"],
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "sequencerMessageCount": 58272,
-        "sequencerReportedSubMessageCount": 11306417
+        "sequencerMessageCount": 61242,
+        "sequencerReportedSubMessageCount": 12783585
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -266,19 +266,6 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
       "name": "Outbox",
       "address": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
       "type": "Contract",
@@ -413,19 +400,6 @@
       }
     },
     {
-      "address": "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
       "address": "0x88De44422E1b1c30bc530c35aEdb9f5aD0e6fD52",
       "type": "EOA",
       "proxyType": "EOA"
@@ -537,7 +511,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 58272,
+        "batchCount": 61242,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xeA64C25e6Ea873D5cffb045b80BEc605ABE06647"],
         "bridge": "0x2F12c50b46adB01a4961AdDa5038c0974C7C78e8",
@@ -568,7 +542,7 @@
         "rollup": "0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 26193,
+        "totalDelayedMessagesRead": 26775,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -582,19 +556,6 @@
         "0x7be08B013de2b23a6329De51C4994f841dcE1a10": "SequencerInbox"
       },
       "category": { "name": "Local Infrastructure", "priority": 5 }
-    },
-    {
-      "address": "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
     },
     {
       "address": "0xA9f18587F6dE8B1c89a4AdD2c953AB66eD532015",
@@ -661,13 +622,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "10000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3128,
+        "firstUnresolvedNode": 5306,
         "inbox": "0x590044e628ea1B9C10a86738Cf7a7eeF52D031B8",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 22121851,
-        "latestConfirmed": 3127,
-        "latestNodeCreated": 3127,
+        "lastStakeBlock": 22775036,
+        "latestConfirmed": 5305,
+        "latestNodeCreated": 5305,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x6339965Cb3002f5c746895e4eD895bd775dbfdf9",
@@ -676,18 +637,14 @@
         "rollupDeploymentBlock": 20389981,
         "rollupEventInbox": "0xD36cd2624a7187ED41ec30FC1d6E6B7b3abAf251",
         "sequencerInbox": "0xA3464bf0ed52cFe6676D3e34ab1F4DF53f193631",
-        "setValidatorCount": 8,
+        "setValidatorCount": 9,
         "stakerCount": 6,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
         "validators": [
-          "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
-          "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
           "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
-          "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD",
-          "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635",
-          "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE"
+          "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"
         ],
         "validatorUtils": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "validatorWalletCreator": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
@@ -747,6 +704,7 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
@@ -921,7 +879,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -966,6 +924,24 @@
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
+        {
+          "permission": "fastconfirm",
+          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "arbitrum:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }
+          ]
+        },
+        {
+          "permission": "validate",
+          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators",
+          "via": [
+            { "address": "arbitrum:0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b" }
+          ]
+        },
         {
           "permission": "validate",
           "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
@@ -1101,19 +1077,6 @@
       ]
     },
     {
-      "address": "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
-      "type": "EOA",
-      "proxyType": "EOA",
-      "receivedPermissions": [
-        {
-          "permission": "validate",
-          "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
-          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
-          "role": ".validators"
-        }
-      ]
-    },
-    {
       "name": "EduFastConfirmerMultisig",
       "address": "0xF4620078b10CDfD0Dc8E4BCec4250642fa5B517b",
       "type": "Contract",
@@ -1123,7 +1086,7 @@
         "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
       ],
       "proxyType": "gnosis safe",
-      "receivedPermissions": [
+      "directlyReceivedPermissions": [
         {
           "permission": "fastconfirm",
           "from": "arbitrum:0xBaE3B462a2A7fb758F66D91170514C10B14Ce914",
@@ -1143,19 +1106,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$members": [
-          "0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635",
-          "0xedbFE5493367F8fBc340276503D3c18D2C02E9AE",
-          "0x834999E1D729Ead48Ae1Db1dAa11463102EccB77",
-          "0x62A5cE01D91fEe98678D4346890c8E7ABB4695A6",
-          "0xa7F450595Db1e14E70570a1AdFA15678fbC7bceD"
-        ],
-        "$threshold": 3,
+        "$members": ["0xd5950958024F46FcBe7C8D7Bb6815Ce35F654635"],
+        "$threshold": 1,
         "domainSeparator": "0xc5da9fa24d887e1f086e04427708cc783117ce5edc0ea93fe7409944680f8c43",
         "getChainId": 42161,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 3106,
+        "multisigThreshold": "1 of 1 (100%)",
+        "nonce": 5285,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1934,5 +1891,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xc805db8a50af20c1a870100d43e7752df0f5b51317e2f5bff850e46662c3f17f"
+  "permissionsConfigHash": "0x6142bc6d91f008b12bf41f34527af82fe4dfa823a91a2a5a9ba5a5f9eddfdb6e"
 }

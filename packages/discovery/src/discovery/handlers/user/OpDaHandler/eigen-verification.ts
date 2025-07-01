@@ -1,6 +1,6 @@
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import { RLP } from 'ethers/lib/utils'
-import { z } from 'zod'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
 import type { IProvider } from '../../../provider/IProvider'
 
@@ -160,47 +160,47 @@ function tryParsingEigenDaBlobInfo(
  * @see https://github.com/Layr-Labs/eigenda/blob/master/api/proto/disperser/disperser.proto
  * @commit 733bcbe
  */
-type EigenDaBlobInfo = z.infer<typeof EigenDaBlobInfo>
-const EigenDaBlobInfo = z.tuple([
+type EigenDaBlobInfo = v.infer<typeof EigenDaBlobInfo>
+const EigenDaBlobInfo = v.tuple([
   // Blob header
-  z.tuple([
+  v.tuple([
     // KZG commitment
-    z.tuple([
-      z.string(), // x
-      z.string(), // y
+    v.tuple([
+      v.string(), // x
+      v.string(), // y
     ]),
-    z.string(), // data length
+    v.string(), // data length
     // repeated BlobQuorumParams
-    z.array(
-      z.tuple([
-        z.string(), // quorum number
-        z.string(), // adversary threshold percentage
-        z.string(), // confirmation threshold percentage
-        z.string(), // chunk length
+    v.array(
+      v.tuple([
+        v.string(), // quorum number
+        v.string(), // adversary threshold percentage
+        v.string(), // confirmation threshold percentage
+        v.string(), // chunk length
       ]),
     ),
   ]),
   // Blob verification proof
-  z.tuple([
-    z.string(), // batch id
-    z.string(), // blob index
+  v.tuple([
+    v.string(), // batch id
+    v.string(), // blob index
     // Batch metadata
-    z.tuple([
+    v.tuple([
       // Batch header
-      z.tuple([
-        z.string(), // batch root
-        z.string(), // quorum numbers
-        z.string(), // quorum signed
-        z.string(), // reference block number
+      v.tuple([
+        v.string(), // batch root
+        v.string(), // quorum numbers
+        v.string(), // quorum signed
+        v.string(), // reference block number
       ]),
-      z.string(), // signatory record hash
-      z.string(), // fee
-      z.string(), // confirmation height
-      z
+      v.string(), // signatory record hash
+      v.string(), // fee
+      v.string(), // confirmation height
+      v
         .string()
-        .length(64 + 2), // batch header hash <---
+        .check((v) => v.length === 64 + 2), // batch header hash <---
     ]),
-    z.string(), // inclusion proof
-    z.string(), // quorum index
+    v.string(), // inclusion proof
+    v.string(), // quorum index
   ]),
 ])

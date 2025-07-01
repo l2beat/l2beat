@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export function parseEthersError(e: unknown): Error | undefined {
   const parsed = ethersError.safeParse(e)
@@ -10,11 +10,11 @@ export function parseEthersError(e: unknown): Error | undefined {
   return undefined
 }
 
-const ethersError = z.object({
-  error: z.object({
-    code: z.string().optional(),
-    reason: z.string().optional(),
-    requestMethod: z.string().optional(),
-    timeout: z.number().optional(),
+const ethersError = v.object({
+  error: v.object({
+    code: v.string().optional(),
+    reason: v.string().optional(),
+    requestMethod: v.string().optional(),
+    timeout: v.number().optional(),
   }),
 })

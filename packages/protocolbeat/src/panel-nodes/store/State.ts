@@ -8,6 +8,7 @@ export interface State {
   readonly userPreferences: {
     readonly hideUnknownOnLoad: boolean
     readonly enableDimming: boolean
+    readonly hideLargeArrays: boolean
   }
   readonly transform: {
     readonly offsetX: number

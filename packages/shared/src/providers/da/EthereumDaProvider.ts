@@ -35,7 +35,7 @@ export class EthereumDaProvider implements DaBlobProvider {
         topics.push(...filter.topics)
       }
 
-      logs = await this.rpcClient.getLogs(addresses, topics, from, to)
+      logs = await this.rpcClient.getLogs(from, to, addresses, topics)
     }
 
     const getBlobs = []

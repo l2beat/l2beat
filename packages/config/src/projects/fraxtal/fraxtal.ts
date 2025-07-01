@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { DA_BRIDGES, DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -49,9 +49,6 @@ export const fraxtal: ScalingProject = opStackL2({
     },
     bridge: DA_BRIDGES.NONE,
     badge: BADGES.DA.CustomDA,
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   associatedTokens: ['FRAX', 'FPIS'],
   discovery,

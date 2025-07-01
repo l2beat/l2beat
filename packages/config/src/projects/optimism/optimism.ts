@@ -199,9 +199,6 @@ export const optimism: ScalingProject = opStackL2({
       { type: 'blockscoutV2', url: 'https://optimism.blockscout.com/api/v2' },
     ],
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   scopeOfAssessment: {
     inScope: [
       SOA.l1Contracts,
@@ -224,11 +221,11 @@ export const optimism: ScalingProject = opStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

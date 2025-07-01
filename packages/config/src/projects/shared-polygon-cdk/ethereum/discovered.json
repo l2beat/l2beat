@@ -1,13 +1,118 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22666256,
-  "configHash": "0xe2225fc857f4414a47bb9d439b2846403467300cfc3c4653a26457f167929c7f",
+  "blockNumber": 22816820,
+  "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
       "address": "0x0185fb2F27f2Acda3e2a6B8530b342333e9f22A6",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "AggLayerGateway",
+      "address": "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "type": "Contract",
+      "template": "polygon-cdk/AgglayerGateway",
+      "sourceHashes": [
+        "0x36a2777510f3b20063560bdcb7f657da283bcfdc484a19b0a0f77d18f6a8b5e1",
+        "0xcff13dcdde38e51b46f4031f59890897a98923c5e1bc777cca891e310c188dba"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+      "sinceTimestamp": 1750087643,
+      "sinceBlock": 22717971,
+      "values": {
+        "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+        "$implementation": "0x7bB0e8f1950722694929dB392abA805AAc6e9346",
+        "$pastUpgrades": [
+          [
+            "2025-06-16T15:27:23.000Z",
+            "0xe7c64d567589723d0920e6104296a434fb24193d2ccd33814d0b3fd753be5db2",
+            ["0x7bB0e8f1950722694929dB392abA805AAc6e9346"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AGGCHAIN_DEFAULT_VKEY_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          },
+          "AL_ADD_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"]
+          },
+          "AL_FREEZE_PP_ROUTE_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"]
+          }
+        },
+        "addPpRouteAC": ["0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"],
+        "aggchainDefaultVKeyAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "aggchainVKeys": {
+          "0x00040001": [
+            {
+              "0": "0x00040001",
+              "1": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f",
+              "selector": "0x00040001",
+              "newVKey": "0x713f8a687452545141b6cd852472c67742a5c61474b97a136d0d107804affa1f"
+            }
+          ]
+        },
+        "aggchainVKeysUpdated": {},
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "freezePpRouteAC": ["0x242daE44F5d8fb54B198D03a94dA45B5a4413e21"],
+        "routes": {
+          "0x00000004": [
+            {
+              "0": "0x00000004",
+              "1": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "2": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30",
+              "selector": "0x00000004",
+              "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "pessimisticVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            }
+          ]
+        }
+      },
+      "fieldMeta": {
+        "aggchainVKeys": {
+          "description": "First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is not used in verifyPessimisticProof()."
+        },
+        "routes": {
+          "description": "This map is used for routing in verifyPessimisticProof()."
+        }
+      },
+      "implementationNames": {
+        "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": "TransparentUpgradeableProxy",
+        "0x7bB0e8f1950722694929dB392abA805AAc6e9346": "AggLayerGateway"
+      },
+      "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
     {
       "address": "0x0B84d2e66192448B680BBd06813efF9e5923Ca77",
@@ -24,6 +129,11 @@
       ],
       "proxyType": "immutable",
       "directlyReceivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin"
+        },
         {
           "permission": "upgrade",
           "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
@@ -85,8 +195,46 @@
       "receivedPermissions": [
         {
           "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".addPpRouteAC",
+          "via": [
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add or update default aggchain verification keys.",
+          "role": ".aggchainDefaultVKeyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "freeze routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".freezePpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager",
+          "via": [
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
+        },
+        {
+          "permission": "interact",
           "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         },
         {
@@ -130,6 +278,21 @@
           "description": "propose, cancel and execute transactions in the timelock, manage all access control roles and change the minimum delay.",
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "upgrade",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "role": "admin",
+          "via": [
+            {
+              "address": "ethereum:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A"
+            },
+            {
+              "address": "ethereum:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+              "delay": 259200,
+              "condition": "(no delay if in emergency state)"
+            }
+          ]
         },
         {
           "permission": "upgrade",
@@ -211,7 +374,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 12 (42%)",
-        "nonce": 73,
+        "nonce": 83,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -223,19 +386,19 @@
       "name": "PolygonSharedBridge",
       "address": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonSharedBridge",
+      "template": "polygon-cdk/PolygonSharedBridge_al030",
       "sourceHashes": [
         "0x3f8d1d2461c05779ca5de685fd391f6a4c07e91953373effd46d11f72b025dc3",
-        "0x058729592838a622eff2eb394278ff5d53065feeca04c216a67e973178ac1ac2"
+        "0xf77e37156ee166ea86bbe304138c8d57dd299347f411e731fa2086e15153a780"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The shared bridge contract, escrowing user funds sent to Layer 2s perticipating in the AggLayer. It is mirrored on each L2 and can be used to transfer both ERC20 assets and arbitrary messages.",
+      "description": "The shared bridge contract, escrowing user funds sent to AggLayer participants. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
       "ignoreInWatchMode": ["getRoot"],
       "sinceTimestamp": 1679653127,
       "sinceBlock": 16896718,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x0FeB850B183C57534b56b7d56520133C8f9BDB65",
+        "$implementation": "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
         "$pastUpgrades": [
           [
             "2023-03-24T10:18:47.000Z",
@@ -246,29 +409,43 @@
             "2024-02-13T11:00:59.000Z",
             "0xb83824c7eb1e87bd12222d98cf1cbff317b0853ba1e5beda1e3e3d8a4cfd1b24",
             ["0x0FeB850B183C57534b56b7d56520133C8f9BDB65"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b"]
           ]
         ],
-        "$upgradeCount": 2,
-        "BASE_INIT_BYTECODE_WRAPPED_TOKEN": "0x6101006040523480156200001257600080fd5b5060405162001b6638038062001b6683398101604081905262000035916200028d565b82826003620000458382620003a1565b506004620000548282620003a1565b50503360c0525060ff811660e052466080819052620000739062000080565b60a052506200046d915050565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f620000ad6200012e565b805160209182012060408051808201825260018152603160f81b90840152805192830193909352918101919091527fc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc66060820152608081018390523060a082015260c001604051602081830303815290604052805190602001209050919050565b6060600380546200013f9062000312565b80601f01602080910402602001604051908101604052809291908181526020018280546200016d9062000312565b8015620001be5780601f106200019257610100808354040283529160200191620001be565b820191906000526020600020905b815481529060010190602001808311620001a057829003601f168201915b5050505050905090565b634e487b7160e01b600052604160045260246000fd5b600082601f830112620001f057600080fd5b81516001600160401b03808211156200020d576200020d620001c8565b604051601f8301601f19908116603f01168101908282118183101715620002385762000238620001c8565b816040528381526020925086838588010111156200025557600080fd5b600091505b838210156200027957858201830151818301840152908201906200025a565b600093810190920192909252949350505050565b600080600060608486031215620002a357600080fd5b83516001600160401b0380821115620002bb57600080fd5b620002c987838801620001de565b94506020860151915080821115620002e057600080fd5b50620002ef86828701620001de565b925050604084015160ff811681146200030757600080fd5b809150509250925092565b600181811c908216806200032757607f821691505b6020821081036200034857634e487b7160e01b600052602260045260246000fd5b50919050565b601f8211156200039c57600081815260208120601f850160051c81016020861015620003775750805b601f850160051c820191505b81811015620003985782815560010162000383565b5050505b505050565b81516001600160401b03811115620003bd57620003bd620001c8565b620003d581620003ce845462000312565b846200034e565b602080601f8311600181146200040d5760008415620003f45750858301515b600019600386901b1c1916600185901b17855562000398565b600085815260208120601f198616915b828110156200043e578886015182559484019460019091019084016200041d565b50858210156200045d5787850151600019600388901b60f8161c191681555b5050505050600190811b01905550565b60805160a05160c05160e0516116aa620004bc6000396000610237015260008181610307015281816105c001526106a70152600061053a015260008181610379015261050401526116aa6000f3fe608060405234801561001057600080fd5b50600436106101775760003560e01c806370a08231116100d8578063a457c2d71161008c578063d505accf11610066578063d505accf1461039b578063dd62ed3e146103ae578063ffa1ad74146103f457600080fd5b8063a457c2d71461034e578063a9059cbb14610361578063cd0d00961461037457600080fd5b806395d89b41116100bd57806395d89b41146102e75780639dc29fac146102ef578063a3c573eb1461030257600080fd5b806370a08231146102915780637ecebe00146102c757600080fd5b806330adf81f1161012f5780633644e515116101145780633644e51514610261578063395093511461026957806340c10f191461027c57600080fd5b806330adf81f14610209578063313ce5671461023057600080fd5b806318160ddd1161016057806318160ddd146101bd57806320606b70146101cf57806323b872dd146101f657600080fd5b806306fdde031461017c578063095ea7b31461019a575b600080fd5b610184610430565b60405161019191906113e4565b60405180910390f35b6101ad6101a8366004611479565b6104c2565b6040519015158152602001610191565b6002545b604051908152602001610191565b6101c17f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f81565b6101ad6102043660046114a3565b6104dc565b6101c17f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c981565b60405160ff7f0000000000000000000000000000000000000000000000000000000000000000168152602001610191565b6101c1610500565b6101ad610277366004611479565b61055c565b61028f61028a366004611479565b6105a8565b005b6101c161029f3660046114df565b73ffffffffffffffffffffffffffffffffffffffff1660009081526020819052604090205490565b6101c16102d53660046114df565b60056020526000908152604090205481565b610184610680565b61028f6102fd366004611479565b61068f565b6103297f000000000000000000000000000000000000000000000000000000000000000081565b60405173ffffffffffffffffffffffffffffffffffffffff9091168152602001610191565b6101ad61035c366004611479565b61075e565b6101ad61036f366004611479565b61082f565b6101c17f000000000000000000000000000000000000000000000000000000000000000081565b61028f6103a9366004611501565b61083d565b6101c16103bc366004611574565b73ffffffffffffffffffffffffffffffffffffffff918216600090815260016020908152604080832093909416825291909152205490565b6101846040518060400160405280600181526020017f310000000000000000000000000000000000000000000000000000000000000081525081565b60606003805461043f906115a7565b80601f016020809104026020016040519081016040528092919081815260200182805461046b906115a7565b80156104b85780601f1061048d576101008083540402835291602001916104b8565b820191906000526020600020905b81548152906001019060200180831161049b57829003601f168201915b5050505050905090565b6000336104d0818585610b73565b60019150505b92915050565b6000336104ea858285610d27565b6104f5858585610dfe565b506001949350505050565b60007f00000000000000000000000000000000000000000000000000000000000000004614610537576105324661106d565b905090565b507f000000000000000000000000000000000000000000000000000000000000000090565b33600081815260016020908152604080832073ffffffffffffffffffffffffffffffffffffffff871684529091528120549091906104d090829086906105a3908790611629565b610b73565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610672576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152603060248201527f546f6b656e577261707065643a3a6f6e6c794272696467653a204e6f7420506f60448201527f6c79676f6e5a6b45564d4272696467650000000000000000000000000000000060648201526084015b60405180910390fd5b61067c8282611135565b5050565b60606004805461043f906115a7565b3373ffffffffffffffffffffffffffffffffffffffff7f00000000000000000000000000000000000000000000000000000000000000001614610754576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152603060248201527f546f6b656e577261707065643a3a6f6e6c794272696467653a204e6f7420506f60448201527f6c79676f6e5a6b45564d427269646765000000000000000000000000000000006064820152608401610669565b61067c8282611228565b33600081815260016020908152604080832073ffffffffffffffffffffffffffffffffffffffff8716845290915281205490919083811015610822576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602560248201527f45524332303a2064656372656173656420616c6c6f77616e63652062656c6f7760448201527f207a65726f0000000000000000000000000000000000000000000000000000006064820152608401610669565b6104f58286868403610b73565b6000336104d0818585610dfe565b834211156108cc576040517f08c379a0000000000000000000000000000000000000000000000000000000008152602060048201526024808201527f546f6b656e577261707065643a3a7065726d69743a204578706972656420706560448201527f726d6974000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8716600090815260056020526040812080547f6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9918a918a918a9190866109268361163c565b9091555060408051602081019690965273ffffffffffffffffffffffffffffffffffffffff94851690860152929091166060840152608083015260a082015260c0810186905260e0016040516020818303038152906040528051906020012090506000610991610500565b6040517f19010000000000000000000000000000000000000000000000000000000000006020820152602281019190915260428101839052606201604080517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe08184030181528282528051602091820120600080855291840180845281905260ff89169284019290925260608301879052608083018690529092509060019060a0016020604051602081039080840390855afa158015610a55573d6000803e3d6000fd5b50506040517fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0015191505073ffffffffffffffffffffffffffffffffffffffff811615801590610ad057508973ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff16145b610b5c576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602760248201527f546f6b656e577261707065643a3a7065726d69743a20496e76616c696420736960448201527f676e6174757265000000000000000000000000000000000000000000000000006064820152608401610669565b610b678a8a8a610b73565b50505050505050505050565b73ffffffffffffffffffffffffffffffffffffffff8316610c15576040517f08c379a0000000000000000000000000000000000000000000000000000000008152602060048201526024808201527f45524332303a20617070726f76652066726f6d20746865207a65726f2061646460448201527f72657373000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8216610cb8576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602260248201527f45524332303a20617070726f766520746f20746865207a65726f20616464726560448201527f73730000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff83811660008181526001602090815260408083209487168084529482529182902085905590518481527f8c5be1e5ebec7d5bd14f71427d1e84f3dd0314c0f7b2291e5b200ac8c7c3b92591015b60405180910390a3505050565b73ffffffffffffffffffffffffffffffffffffffff8381166000908152600160209081526040808320938616835292905220547fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff8114610df85781811015610deb576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601d60248201527f45524332303a20696e73756666696369656e7420616c6c6f77616e63650000006044820152606401610669565b610df88484848403610b73565b50505050565b73ffffffffffffffffffffffffffffffffffffffff8316610ea1576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602560248201527f45524332303a207472616e736665722066726f6d20746865207a65726f20616460448201527f64726573730000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff8216610f44576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602360248201527f45524332303a207472616e7366657220746f20746865207a65726f206164647260448201527f65737300000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff831660009081526020819052604090205481811015610ffa576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602660248201527f45524332303a207472616e7366657220616d6f756e742065786365656473206260448201527f616c616e636500000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff848116600081815260208181526040808320878703905593871680835291849020805487019055925185815290927fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a3610df8565b60007f8b73c3c69bb8fe3d512ecc4cf759cc79239f7b179b0ffacaa9a75d522b39400f611098610430565b8051602091820120604080518082018252600181527f310000000000000000000000000000000000000000000000000000000000000090840152805192830193909352918101919091527fc89efdaa54c0f20c7adf612882df0950f5a951637e0307cdcb4c672f298b8bc66060820152608081018390523060a082015260c001604051602081830303815290604052805190602001209050919050565b73ffffffffffffffffffffffffffffffffffffffff82166111b2576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152601f60248201527f45524332303a206d696e7420746f20746865207a65726f2061646472657373006044820152606401610669565b80600260008282546111c49190611629565b909155505073ffffffffffffffffffffffffffffffffffffffff8216600081815260208181526040808320805486019055518481527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef910160405180910390a35050565b73ffffffffffffffffffffffffffffffffffffffff82166112cb576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602160248201527f45524332303a206275726e2066726f6d20746865207a65726f2061646472657360448201527f73000000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff821660009081526020819052604090205481811015611381576040517f08c379a000000000000000000000000000000000000000000000000000000000815260206004820152602260248201527f45524332303a206275726e20616d6f756e7420657863656564732062616c616e60448201527f63650000000000000000000000000000000000000000000000000000000000006064820152608401610669565b73ffffffffffffffffffffffffffffffffffffffff83166000818152602081815260408083208686039055600280548790039055518581529192917fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9101610d1a565b600060208083528351808285015260005b81811015611411578581018301518582016040015282016113f5565b5060006040828601015260407fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe0601f8301168501019250505092915050565b803573ffffffffffffffffffffffffffffffffffffffff8116811461147457600080fd5b919050565b6000806040838503121561148c57600080fd5b61149583611450565b946020939093013593505050565b6000806000606084860312156114b857600080fd5b6114c184611450565b92506114cf60208501611450565b9150604084013590509250925092565b6000602082840312156114f157600080fd5b6114fa82611450565b9392505050565b600080600080600080600060e0888a03121561151c57600080fd5b61152588611450565b965061153360208901611450565b95506040880135945060608801359350608088013560ff8116811461155757600080fd5b9699959850939692959460a0840135945060c09093013592915050565b6000806040838503121561158757600080fd5b61159083611450565b915061159e60208401611450565b90509250929050565b600181811c908216806115bb57607f821691505b6020821081036115f4577f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052601160045260246000fd5b808201808211156104d6576104d66115fa565b60007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff820361166d5761166d6115fa565b506001019056fea26469706673582212208d88fee561cff7120d381c345cfc534cef8229a272dc5809d4bbb685ad67141164736f6c63430008110033",
+        "$upgradeCount": 3,
+        "BRIDGE_VERSION": "al-v0.3.0",
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x96d91dfd0cd0676bb49a520eaee78e8b005652fcdc4f371c86deee3b584cb57f",
+        "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "getRoot": "0xd949a253fe7d5dda5808420aa214b7b5359b50dc38a3a8d18e5899730524d805",
+        "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
+        "pendingProxiedTokensManager": "0x0000000000000000000000000000000000000000",
         "polygonRollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-        "WETHToken": "0x0000000000000000000000000000000000000000"
+        "proxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
+        "WETHToken": "0x0000000000000000000000000000000000000000",
+        "wrappedTokenBytecodeStorer": "0x6b0E6Cf8108BbC39A53AF11B65d6C47d06037f80"
       },
       "fieldMeta": {
         "isEmergencyState": {
           "severity": "HIGH",
           "description": "pauses the bridge, managed by the PolygonRollupManager."
+        },
+        "proxiedTokensManager": {
+          "severity": "HIGH",
+          "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer."
         }
       },
       "implementationNames": {
         "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
-        "0x0FeB850B183C57534b56b7d56520133C8f9BDB65": "PolygonZkEVMBridgeV2"
+        "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": "PolygonZkEVMBridgeV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -343,13 +520,13 @@
       "name": "PolygonRollupManager",
       "address": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
       "type": "Contract",
-      "template": "polygon-cdk/PolygonRollupManager_pessimistic",
+      "template": "polygon-cdk/PolygonRollupManager_al030",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x7e3c84e6c7073576082d9a34cfeb47653ec669528708f3a487faa1803a1b25eb"
+        "0x05a5fd7dbd65634dc3a3eea806b01583e307d843c5fa9c7e6e01ffda1b1acb47"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The central shared managing contract for Layer 2s on the Polygon AggLayer. This contract receives L2 state roots as well as ZK proofs. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
+      "description": "The central shared managing contract for Polygon AggLayer chains. This contract coordinates chain deployments and proof validation. All connected Layer 2s can be globally paused by activating the 'Emergency State'. This can be done by the 0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6 or by anyone after 1 week of inactive verifiers.",
       "ignoreInWatchMode": [
         "getRollupExitRoot",
         "lastAggregationTimestamp",
@@ -361,7 +538,7 @@
       "values": {
         "_HALT_AGGREGATION_TIMEOUT": "1 week",
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0xA33619940bceb9be7c9679Dd80FA2918C2476382",
+        "$implementation": "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:23.000Z",
@@ -392,9 +569,14 @@
             "2025-02-03T14:55:59.000Z",
             "0xb499c5a8f315d72886e44eabcbf6428fb9672f3ea8eb55adcbfda0ae0612233e",
             ["0xA33619940bceb9be7c9679Dd80FA2918C2476382"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab"]
           ]
         ],
-        "$upgradeCount": 6,
+        "$upgradeCount": 7,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -458,6 +640,7 @@
             "members": ["0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6"]
           }
         },
+        "aggLayerGateway": "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
         "createRollupAC": [
           "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21",
@@ -470,14 +653,14 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x82ff75251a61226352f677564bee18af62130a9ed7d432e2a045539ac5acb752",
+        "getRollupExitRoot": "0xfd25ec281d51573d752e44ea97f679637e9b73f98cc3797a9f83800f10e9eb24",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1749462719,
+        "lastAggregationTimestamp": 1751280659,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
-        "ROLLUP_MANAGER_VERSION": "pessimistic",
+        "ROLLUP_MANAGER_VERSION": "al-v0.3.0",
         "rollupCount": 20,
         "rollupsDataV2": [
           {
@@ -600,11 +783,11 @@
           {
             "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
             "chainID": 9369,
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
-            "rollupTypeID": 10,
+            "rollupTypeID": 11,
             "rollupVerifierType": 1,
-            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
             "rollupContract": "0xB4cEb70E8778a9928feD6ECBa1b03706a57b0ce8",
@@ -627,41 +810,41 @@
           {
             "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
             "chainID": 801,
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
-            "rollupTypeID": 10,
+            "rollupTypeID": 11,
             "rollupVerifierType": 1,
-            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
             "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
             "chainID": 45056,
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
-            "rollupTypeID": 10,
+            "rollupTypeID": 11,
             "rollupVerifierType": 1,
-            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
             "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
             "chainID": 8088,
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
             "forkID": 12,
-            "rollupTypeID": 10,
+            "rollupTypeID": 11,
             "rollupVerifierType": 1,
-            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
           },
           {
             "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
             "chainID": 747474,
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-            "forkID": 12,
-            "rollupTypeID": 10,
-            "rollupVerifierType": 1,
-            "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+            "verifier": "0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupTypeID": 12,
+            "rollupVerifierType": 2,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "rollupTypeCount": 10,
+        "rollupTypeCount": 12,
         "rollupTypes": [
           {
             "consensusImplementation": "0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30",
@@ -742,10 +925,26 @@
             "rollupVerifierType": 1,
             "obsolete": false,
             "programVKey": "0x00dc9aac973a839dc15373ccf3aa0b0d503c1142ceb7d99b0c4fcc4a5c3ad09f"
+          },
+          {
+            "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+            "forkID": 12,
+            "rollupVerifierType": 1,
+            "obsolete": false,
+            "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+          },
+          {
+            "consensusImplementation": "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+            "verifier": "0x0000000000000000000000000000000000000000",
+            "forkID": 0,
+            "rollupVerifierType": 2,
+            "obsolete": false,
+            "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 751432,
-        "totalVerifiedBatches": 750936,
+        "totalSequencedBatches": 765405,
+        "totalVerifiedBatches": 764913,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -770,7 +969,7 @@
       },
       "implementationNames": {
         "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2": "TransparentUpgradeableProxy",
-        "0xA33619940bceb9be7c9679Dd80FA2918C2476382": "PolygonRollupManager"
+        "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": "PolygonRollupManager"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -791,7 +990,7 @@
       "template": "polygon-cdk/PolygonGlobalExitRootV2",
       "sourceHashes": [
         "0x6d1bbfb1ed7d88848e594dc11366fbed3d53c5a507022c04dbeea72ef549cd6a",
-        "0x5cd6999aa568aa00dc997f5d179426b88bf3797f4618bc4cce28b6cf5f8e76d6"
+        "0xee95e594827e19497b882d82113115b70cb33dc53c346f5bf09b38891f560067"
       ],
       "proxyType": "EIP1967 proxy",
       "description": "A merkle tree storage contract aggregating state roots of each participating Layer 2, thus creating a single global merkle root representing the global state of the AggLayer, the 'global exit root'. The global exit root is synchronized to all connected Layer 2s to help with their interoperability.",
@@ -800,7 +999,7 @@
       "sinceBlock": 16896720,
       "values": {
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
-        "$implementation": "0x9Bdda421219900454E94e01d641fE64c60D8f4C8",
+        "$implementation": "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48",
         "$pastUpgrades": [
           [
             "2023-03-24T10:19:11.000Z",
@@ -816,17 +1015,23 @@
             "2024-10-30T11:11:59.000Z",
             "0x8c1be5b5d844d6e04b2c224cd810cda091d70e6d5c2e5e0464993f7df1ab8403",
             ["0x9Bdda421219900454E94e01d641fE64c60D8f4C8"]
+          ],
+          [
+            "2025-06-23T14:46:23.000Z",
+            "0xcdd772d0b4764da67b80a72af2da7230f4f70f8c810cb8c4fe3882b8c4506ff3",
+            ["0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"]
           ]
         ],
-        "$upgradeCount": 3,
+        "$upgradeCount": 4,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59157,
-        "getRoot": "0x07304e8d94db50d1a52a9d9bc98ed558e4db121195471151ee126e48e90dceec",
+        "depositCount": 59997,
+        "GER_VERSION": "al-v0.3.0",
+        "getRoot": "0xccffbb42f8fd461275b64ebc58828caaa14cdb706b687c6061c9f2699a5e2a6e",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {
         "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb": "TransparentUpgradeableProxy",
-        "0x9Bdda421219900454E94e01d641fE64c60D8f4C8": "PolygonZkEVMGlobalExitRootV2"
+        "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": "PolygonZkEVMGlobalExitRootV2"
       },
       "category": { "name": "Shared Infrastructure", "priority": 4 }
     },
@@ -891,7 +1096,7 @@
         {
           "permission": "interact",
           "from": "ethereum:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "description": "deploy new projects that use predefined rollup types (implementations) and connect them to the PolygonRollupManager.",
+          "description": "deploy new projects that use predefined rollup types (implementations) and connect them or other Agglayer chains to the PolygonRollupManager.",
           "role": ".createRollupAC"
         }
       ],
@@ -986,6 +1191,18 @@
           "delay": 259200,
           "role": ".timelockAdminAC",
           "condition": "(no delay if in emergency state)"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs.",
+          "role": ".addPpRouteAC"
+        },
+        {
+          "permission": "interact",
+          "from": "ethereum:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+          "description": "upgrade the implementation of wrapped tokens deployed by the bridge.",
+          "role": ".proxiedTokensManager"
         },
         {
           "permission": "interact",
@@ -1348,6 +1565,133 @@
             },
             "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
             "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "0x18C45DD422f6587357a6d3b23307E75D42b2bc5B",
+              "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+              "forkID": 12,
+              "rollupVerifierType": 1,
+              "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "description": "Type: Pessimistic, Version: v0.3.3, genesis: /ipfs/QmUXnRoPbUmZuEZCGyiHjEsoNcFVu3hLtSvhpnfBS2mAYU",
+              "programVKey": "0x00eff0b6998df46ec388bb305618089ae3dc74e513e7676b2e1909694f49cc30"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+              "implementation": "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgradeAndCall",
+            "inputs": {
+              "proxy": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+              "implementation": "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b",
+              "data": {}
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
+            "value": "0",
+            "function": "upgrade",
+            "inputs": {
+              "proxy": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
+              "implementation": "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "0xFE797cb13f7884FB9f0aE26fEB2a06ed8efccbe7",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "0x7449449460b5B732A9754CA3d9A7916122A9190d",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "0x88404dD30A96AD25A765d733429Cf83138c7f8f4",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "0xC427E3Edc8ae4BD2698cbef251E06b83175f9dec",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "updateRollup",
+            "inputs": {
+              "rollupContract": "0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+              "newRollupTypeID": 11,
+              "upgradeData": "0x"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
+          },
+          {
+            "target": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
+            "value": "0",
+            "function": "addNewRollupType",
+            "inputs": {
+              "consensusImplementation": "0xe7FE45579D784DC83B0feD844A65f4cEEFDe5682",
+              "verifier": "0x0000000000000000000000000000000000000000",
+              "forkID": 0,
+              "rollupVerifierType": 2,
+              "genesis": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "description": "Type: aggchainFEP",
+              "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            },
+            "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "delay": "259200"
           }
         ],
         "timelockAdminAC": [
@@ -1372,6 +1716,21 @@
     }
   ],
   "abis": {
+    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x046Bb8bb98Db4ceCbB2929542686B74b516274b3": [
+      "constructor(address _logic, address admin_, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
       "function changeProxyAdmin(address proxy, address newAdmin)",
@@ -1382,67 +1741,6 @@
       "function transferOwnership(address newOwner)",
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x0FeB850B183C57534b56b7d56520133C8f9BDB65": [
-      "constructor()",
-      "error AlreadyClaimed()",
-      "error AmountDoesNotMatchMsgValue()",
-      "error DestinationNetworkInvalid()",
-      "error EtherTransferFailed()",
-      "error FailedTokenWrappedDeployment()",
-      "error GasTokenNetworkMustBeZeroOnEther()",
-      "error GlobalExitRootInvalid()",
-      "error InvalidSmtProof()",
-      "error MerkleTreeFull()",
-      "error MessageFailed()",
-      "error MsgValueNotZero()",
-      "error NativeTokenIsEther()",
-      "error NoValueInMessagesOnGasTokenNetworks()",
-      "error NotValidAmount()",
-      "error NotValidOwner()",
-      "error NotValidSignature()",
-      "error NotValidSpender()",
-      "error OnlyEmergencyState()",
-      "error OnlyNotEmergencyState()",
-      "error OnlyRollupManager()",
-      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
-      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
-      "event EmergencyStateActivated()",
-      "event EmergencyStateDeactivated()",
-      "event Initialized(uint8 version)",
-      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
-      "function BASE_INIT_BYTECODE_WRAPPED_TOKEN() view returns (bytes)",
-      "function WETHToken() view returns (address)",
-      "function activateEmergencyState()",
-      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
-      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
-      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
-      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
-      "function calculateTokenWrapperAddress(uint32 originNetwork, address originTokenAddress, address token) view returns (address)",
-      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
-      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
-      "function claimedBitMap(uint256) view returns (uint256)",
-      "function deactivateEmergencyState()",
-      "function depositCount() view returns (uint256)",
-      "function gasTokenAddress() view returns (address)",
-      "function gasTokenMetadata() view returns (bytes)",
-      "function gasTokenNetwork() view returns (uint32)",
-      "function getLeafValue(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes32 metadataHash) pure returns (bytes32)",
-      "function getRoot() view returns (bytes32)",
-      "function getTokenMetadata(address token) view returns (bytes)",
-      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
-      "function globalExitRootManager() view returns (address)",
-      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata)",
-      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
-      "function isEmergencyState() view returns (bool)",
-      "function lastUpdatedDepositCount() view returns (uint32)",
-      "function networkID() view returns (uint32)",
-      "function polygonRollupManager() view returns (address)",
-      "function precalculatedWrapperAddress(uint32 originNetwork, address originTokenAddress, string name, string symbol, uint8 decimals) view returns (address)",
-      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
-      "function updateGlobalExitRoot()",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
-      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
     "0x242daE44F5d8fb54B198D03a94dA45B5a4413e21": [
       "constructor(address _singleton)"
@@ -1483,33 +1781,138 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
-    "0x9Bdda421219900454E94e01d641fE64c60D8f4C8": [
-      "constructor(address _rollupManager, address _bridgeAddress)",
+    "0x75D28BfDfF93B3e4f20184b442d2634DC01cA48b": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error AddressInsufficientBalance(address account)",
+      "error AlreadyClaimed()",
+      "error AmountDoesNotMatchMsgValue()",
+      "error BridgeAddressNotAllowed()",
+      "error DestinationNetworkInvalid()",
+      "error EtherTransferFailed()",
+      "error FailedInnerCall()",
+      "error FailedProxyDeployment()",
+      "error GasTokenNetworkMustBeZeroOnEther()",
+      "error GlobalExitRootInvalid()",
+      "error InvalidInitializeFunction()",
+      "error InvalidProxyAdmin(address proxyAdmin)",
+      "error InvalidSmtProof()",
+      "error InvalidZeroAddress()",
+      "error InvalidZeroProxyAdminOwner(address proxyAdmin)",
       "error MerkleTreeFull()",
-      "error OnlyAllowedContracts()",
-      "event InitL1InfoRootMap(uint32 leafCount, bytes32 currentL1InfoRoot)",
+      "error MessageFailed()",
+      "error MsgValueNotZero()",
+      "error NativeTokenIsEther()",
+      "error NoValueInMessagesOnGasTokenNetworks()",
+      "error NotValidAmount()",
+      "error NotValidOwner()",
+      "error NotValidSignature()",
+      "error NotValidSpender()",
+      "error OnlyEmergencyState()",
+      "error OnlyNotEmergencyState()",
+      "error OnlyPendingProxiedTokensManager()",
+      "error OnlyProxiedTokensManager()",
+      "error OnlyRollupManager()",
+      "error SafeERC20FailedOperation(address token)",
+      "event AcceptProxiedTokensManagerRole(address oldProxiedTokensManager, address newProxiedTokensManager)",
+      "event BridgeEvent(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata, uint32 depositCount)",
+      "event ClaimEvent(uint256 globalIndex, uint32 originNetwork, address originAddress, address destinationAddress, uint256 amount)",
+      "event EmergencyStateActivated()",
+      "event EmergencyStateDeactivated()",
       "event Initialized(uint8 version)",
-      "event UpdateL1InfoTree(bytes32 indexed mainnetExitRoot, bytes32 indexed rollupExitRoot)",
-      "event UpdateL1InfoTreeV2(bytes32 currentL1InfoRoot, uint32 indexed leafCount, uint256 blockhash, uint64 minTimestamp)",
-      "function bridgeAddress() view returns (address)",
+      "event NewWrappedToken(uint32 originNetwork, address originTokenAddress, address wrappedTokenAddress, bytes metadata)",
+      "event TransferProxiedTokensManagerRole(address currentProxiedTokensManager, address newProxiedTokensManager)",
+      "function BRIDGE_VERSION() view returns (string)",
+      "function INIT_BYTECODE_TRANSPARENT_PROXY() view returns (bytes)",
+      "function WETHToken() view returns (address)",
+      "function acceptProxiedTokensManagerRole()",
+      "function activateEmergencyState()",
+      "function bridgeAsset(uint32 destinationNetwork, address destinationAddress, uint256 amount, address token, bool forceUpdateGlobalExitRoot, bytes permitData) payable",
+      "function bridgeMessage(uint32 destinationNetwork, address destinationAddress, bool forceUpdateGlobalExitRoot, bytes metadata) payable",
+      "function bridgeMessageWETH(uint32 destinationNetwork, address destinationAddress, uint256 amountWETH, bool forceUpdateGlobalExitRoot, bytes metadata)",
       "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
+      "function claimAsset(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originTokenAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimMessage(bytes32[32] smtProofLocalExitRoot, bytes32[32] smtProofRollupExitRoot, uint256 globalIndex, bytes32 mainnetExitRoot, bytes32 rollupExitRoot, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes metadata)",
+      "function claimedBitMap(uint256) view returns (uint256)",
+      "function computeTokenProxyAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function deactivateEmergencyState()",
       "function depositCount() view returns (uint256)",
-      "function getLastGlobalExitRoot() view returns (bytes32)",
-      "function getLeafValue(bytes32 newGlobalExitRoot, uint256 lastBlockHash, uint64 timestamp) pure returns (bytes32)",
+      "function gasTokenAddress() view returns (address)",
+      "function gasTokenMetadata() view returns (bytes)",
+      "function gasTokenNetwork() view returns (uint32)",
+      "function getLeafValue(uint8 leafType, uint32 originNetwork, address originAddress, uint32 destinationNetwork, address destinationAddress, uint256 amount, bytes32 metadataHash) pure returns (bytes32)",
+      "function getProxiedTokensManager() view returns (address)",
       "function getRoot() view returns (bytes32)",
-      "function globalExitRootMap(bytes32) view returns (uint256)",
+      "function getTokenMetadata(address token) view returns (bytes)",
+      "function getTokenWrappedAddress(uint32 originNetwork, address originTokenAddress) view returns (address)",
+      "function getWrappedTokenBridgeImplementation() view returns (address)",
+      "function globalExitRootManager() view returns (address)",
       "function initialize()",
-      "function l1InfoRootMap(uint32 leafCount) view returns (bytes32 l1InfoRoot)",
-      "function lastMainnetExitRoot() view returns (bytes32)",
-      "function lastRollupExitRoot() view returns (bytes32)",
-      "function rollupManager() view returns (address)",
-      "function updateExitRoot(bytes32 newRoot)",
-      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
+      "function initialize(uint32 _networkID, address _gasTokenAddress, uint32 _gasTokenNetwork, address _globalExitRootManager, address _polygonRollupManager, bytes _gasTokenMetadata)",
+      "function isClaimed(uint32 leafIndex, uint32 sourceBridgeNetwork) view returns (bool)",
+      "function isEmergencyState() view returns (bool)",
+      "function lastUpdatedDepositCount() view returns (uint32)",
+      "function networkID() view returns (uint32)",
+      "function pendingProxiedTokensManager() view returns (address)",
+      "function polygonRollupManager() view returns (address)",
+      "function proxiedTokensManager() view returns (address)",
+      "function tokenInfoToWrappedToken(bytes32) view returns (address)",
+      "function transferProxiedTokensManagerRole(address newProxiedTokensManager)",
+      "function updateGlobalExitRoot()",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)",
+      "function wrappedTokenBytecodeStorer() view returns (address)",
+      "function wrappedTokenToTokenInfo(address) view returns (uint32 originNetwork, address originTokenAddress)"
     ],
-    "0xA33619940bceb9be7c9679Dd80FA2918C2476382": [
-      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress)",
+    "0x7bB0e8f1950722694929dB392abA805AAc6e9346": [
+      "constructor()",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error AggchainVKeyAlreadyExists()",
+      "error AggchainVKeyNotFound()",
+      "error InvalidInitialization()",
+      "error InvalidProofBytesLength()",
+      "error InvalidZeroAddress()",
+      "error NotInitializing()",
+      "error OnlyAggLayerAdmin()",
+      "error OnlyPendingAggLayerAdmin()",
+      "error PPSelectorCannotBeZero()",
+      "error RouteAlreadyExists(bytes4 selector, address verifier)",
+      "error RouteIsAlreadyFrozen(bytes4 selector)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error VKeyCannotBeZero()",
+      "event AddDefaultAggchainVKey(bytes4 selector, bytes32 newVKey)",
+      "event Initialized(uint64 version)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RouteAdded(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event RouteFrozen(bytes4 selector, address verifier, bytes32 pessimisticVKey)",
+      "event UnsetDefaultAggchainVKey(bytes4 selector)",
+      "event UpdateDefaultAggchainVKey(bytes4 selector, bytes32 previousVKey, bytes32 newVKey)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function addDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newAggchainVKey)",
+      "function addPessimisticVKeyRoute(bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
+      "function defaultAggchainVKeys(bytes4 defaultAggchainSelector) view returns (bytes32 defaultAggchainVKey)",
+      "function freezePessimisticVKeyRoute(bytes4 pessimisticVKeySelector)",
+      "function getDefaultAggchainVKey(bytes4 defaultAggchainSelector) view returns (bytes32)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function initialize(address defaultAdmin, address aggchainDefaultVKeyRole, address addRouteRole, address freezeRouteRole, bytes4 pessimisticVKeySelector, address verifier, bytes32 pessimisticVKey)",
+      "function pessimisticVKeyRoutes(bytes4 pessimisticVKeySelector) view returns (address verifier, bytes32 pessimisticVKey, bool frozen)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unsetDefaultAggchainVKey(bytes4 defaultAggchainSelector)",
+      "function updateDefaultAggchainVKey(bytes4 defaultAggchainSelector, bytes32 newDefaultAggchainVKey)",
+      "function verifyPessimisticProof(bytes publicValues, bytes proofBytes) view"
+    ],
+    "0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab": [
+      "constructor(address _globalExitRootManager, address _pol, address _bridgeAddress, address _aggLayerGateway)",
       "error AccessControlOnlyCanRenounceRolesForSelf()",
       "error AddressDoNotHaveRequiredRole()",
+      "error AggchainDataMustBeZeroForPessimisticVerifierType()",
       "error AllBatchesMustBeVerified()",
       "error AllSequencedMustBeVerified()",
       "error AllzkEVMSequencedBatchesMustBeVerified()",
@@ -1530,6 +1933,9 @@
       "error InitNumBatchDoesNotMatchPendingState()",
       "error InitSequenceMustMatchCurrentForkID()",
       "error InitSequenceNumDoesNotMatchPendingState()",
+      "error InvalidConstructorInputs()",
+      "error InvalidImplementationAddress()",
+      "error InvalidInputsForRollupType()",
       "error InvalidPessimisticProof()",
       "error InvalidProof()",
       "error InvalidRangeBatchTimeTarget()",
@@ -1538,6 +1944,7 @@
       "error InvalidRangeSequenceTimeTarget()",
       "error InvalidRollup()",
       "error InvalidRollupType()",
+      "error InvalidVerifierAddress()",
       "error InvalidVerifierType()",
       "error L1InfoTreeLeafCountInvalid()",
       "error MustSequenceSomeBatch()",
@@ -1549,7 +1956,6 @@
       "error NotAllowedAddress()",
       "error OldAccInputHashDoesNotExist()",
       "error OldStateRootDoesNotExist()",
-      "error OnlyChainsWithPessimisticProofs()",
       "error OnlyEmergencyState()",
       "error OnlyNotEmergencyState()",
       "error OnlyRollupAdmin()",
@@ -1558,6 +1964,7 @@
       "error PendingStateInvalid()",
       "error PendingStateNotConsolidable()",
       "error PendingStateNumExist()",
+      "error ReentrancyGuardReentrantCall()",
       "error RollbackBatchIsNotEndOfSequence()",
       "error RollbackBatchIsNotValid()",
       "error RollupAddressAlreadyExist()",
@@ -1566,14 +1973,16 @@
       "error RollupTypeDoesNotExist()",
       "error RollupTypeObsolete()",
       "error SenderMustBeRollup()",
+      "error StateTransitionChainsNotAllowed()",
       "error StoredRootMustBeDifferentThanNewRoot()",
       "error TrustedAggregatorTimeoutNotExpired()",
       "error UpdateNotCompatible()",
       "error UpdateToOldRollupTypeID()",
       "error UpdateToSameRollupTypeID()",
       "error zkGasPriceOfRange()",
-      "event AddExistingRollup(uint32 indexed rollupID, uint64 forkID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, uint64 lastVerifiedBatchBeforeUpgrade, bytes32 programVKey)",
+      "event AddExistingRollup(uint32 indexed rollupID, uint64 forkID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, uint64 lastVerifiedBatchBeforeUpgrade, bytes32 programVKey, bytes32 initPessimisticRoot)",
       "event AddNewRollupType(uint32 indexed rollupTypeID, address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "event CreateNewAggchain(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, uint8 rollupVerifierType, bytes initializeBytesAggchain)",
       "event CreateNewRollup(uint32 indexed rollupID, uint32 rollupTypeID, address rollupAddress, uint64 chainID, address gasTokenAddress)",
       "event EmergencyStateActivated()",
       "event EmergencyStateDeactivated()",
@@ -1589,19 +1998,21 @@
       "event UpdateRollup(uint32 indexed rollupID, uint32 newRollupTypeID, uint64 lastVerifiedBatchBeforeUpgrade)",
       "event UpdateRollupManagerVersion(string rollupManagerVersion)",
       "event VerifyBatchesTrustedAggregator(uint32 indexed rollupID, uint64 numBatch, bytes32 stateRoot, bytes32 exitRoot, address indexed aggregator)",
+      "event VerifyPessimisticStateTransition(uint32 indexed rollupID, bytes32 prevPessimisticRoot, bytes32 newPessimisticRoot, bytes32 prevLocalExitRoot, bytes32 newLocalExitRoot, bytes32 l1InfoRoot, address indexed trustedAggregator)",
       "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
       "function ROLLUP_MANAGER_VERSION() view returns (string)",
       "function activateEmergencyState()",
-      "function addExistingRollup(address rollupAddress, address verifier, uint64 forkID, uint64 chainID, bytes32 initRoot, uint8 rollupVerifierType, bytes32 programVKey)",
+      "function addExistingRollup(address rollupAddress, address verifier, uint64 forkID, uint64 chainID, bytes32 initRoot, uint8 rollupVerifierType, bytes32 programVKey, bytes32 initPessimisticRoot)",
       "function addNewRollupType(address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bytes32 genesis, string description, bytes32 programVKey)",
+      "function aggLayerGateway() view returns (address)",
+      "function attachAggchainToAL(uint32 rollupTypeID, uint64 chainID, bytes initializeBytesAggchain)",
       "function bridgeAddress() view returns (address)",
       "function calculateRewardPerBatch() view returns (uint256)",
       "function chainIDToRollupID(uint64 chainID) view returns (uint32 rollupID)",
-      "function createNewRollup(uint32 rollupTypeID, uint64 chainID, address admin, address sequencer, address gasTokenAddress, string sequencerURL, string networkName)",
       "function deactivateEmergencyState()",
       "function getBatchFee() view returns (uint256)",
       "function getForcedBatchFee() view returns (uint256)",
-      "function getInputPessimisticBytes(uint32 rollupID, bytes32 l1InfoTreeRoot, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot) view returns (bytes)",
+      "function getInputPessimisticBytes(uint32 rollupID, bytes32 l1InfoTreeRoot, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes aggchainData) view returns (bytes)",
       "function getInputSnarkBytes(uint32 rollupID, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 oldStateRoot, bytes32 newStateRoot) view returns (bytes)",
       "function getLastVerifiedBatch(uint32 rollupID) view returns (uint64)",
       "function getRoleAdmin(bytes32 role) view returns (bytes32)",
@@ -1624,7 +2035,9 @@
       "function rollupAddressToID(address rollupAddress) view returns (uint32 rollupID)",
       "function rollupCount() view returns (uint32)",
       "function rollupIDToRollupData(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 _legacyLastPendingState, uint64 _legacyLastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType) rollupData)",
+      "function rollupIDToRollupDataDeserialized(uint32 rollupID) view returns (address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 _legacyLastPendingState, uint64 _legacyLastPendingStateConsolidated, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType)",
       "function rollupIDToRollupDataV2(uint32 rollupID) view returns (tuple(address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey) rollupData)",
+      "function rollupIDToRollupDataV2Deserialized(uint32 rollupID) view returns (address rollupContract, uint64 chainID, address verifier, uint64 forkID, bytes32 lastLocalExitRoot, uint64 lastBatchSequenced, uint64 lastVerifiedBatch, uint64 lastVerifiedBatchBeforeUpgrade, uint64 rollupTypeID, uint8 rollupVerifierType, bytes32 lastPessimisticRoot, bytes32 programVKey)",
       "function rollupTypeCount() view returns (uint32)",
       "function rollupTypeMap(uint32 rollupTypeID) view returns (address consensusImplementation, address verifier, uint64 forkID, uint8 rollupVerifierType, bool obsolete, bytes32 genesis, bytes32 programVKey)",
       "function setBatchFee(uint256 newBatchFee)",
@@ -1633,7 +2046,38 @@
       "function updateRollup(address rollupContract, uint32 newRollupTypeID, bytes upgradeData)",
       "function updateRollupByRollupAdmin(address rollupContract, uint32 newRollupTypeID)",
       "function verifyBatchesTrustedAggregator(uint32 rollupID, uint64 pendingStateNum, uint64 initNumBatch, uint64 finalNewBatch, bytes32 newLocalExitRoot, bytes32 newStateRoot, address beneficiary, bytes32[24] proof)",
-      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof)"
+      "function verifyPessimisticTrustedAggregator(uint32 rollupID, uint32 l1InfoTreeLeafCount, bytes32 newLocalExitRoot, bytes32 newPessimisticRoot, bytes proof, bytes aggchainData)"
+    ],
+    "0xc38C76aE3C8A7dee99d07f1A39246ABe18919a48": [
+      "constructor(address _rollupManager, address _bridgeAddress)",
+      "error GlobalExitRootAlreadySet()",
+      "error GlobalExitRootNotFound()",
+      "error InvalidZeroAddress()",
+      "error MerkleTreeFull()",
+      "error OnlyAllowedContracts()",
+      "error OnlyGlobalExitRootRemover()",
+      "error OnlyGlobalExitRootUpdater()",
+      "error OnlyPendingGlobalExitRootRemover()",
+      "error OnlyPendingGlobalExitRootUpdater()",
+      "event InitL1InfoRootMap(uint32 leafCount, bytes32 currentL1InfoRoot)",
+      "event Initialized(uint8 version)",
+      "event UpdateL1InfoTree(bytes32 indexed mainnetExitRoot, bytes32 indexed rollupExitRoot)",
+      "event UpdateL1InfoTreeV2(bytes32 currentL1InfoRoot, uint32 indexed leafCount, uint256 blockhash, uint64 minTimestamp)",
+      "function GER_VERSION() view returns (string)",
+      "function bridgeAddress() view returns (address)",
+      "function calculateRoot(bytes32 leafHash, bytes32[32] smtProof, uint32 index) pure returns (bytes32)",
+      "function depositCount() view returns (uint256)",
+      "function getLastGlobalExitRoot() view returns (bytes32)",
+      "function getLeafValue(bytes32 newGlobalExitRoot, uint256 lastBlockHash, uint64 timestamp) pure returns (bytes32)",
+      "function getRoot() view returns (bytes32)",
+      "function globalExitRootMap(bytes32) view returns (uint256)",
+      "function initialize()",
+      "function l1InfoRootMap(uint32 leafCount) view returns (bytes32 l1InfoRoot)",
+      "function lastMainnetExitRoot() view returns (bytes32)",
+      "function lastRollupExitRoot() view returns (bytes32)",
+      "function rollupManager() view returns (address)",
+      "function updateExitRoot(bytes32 newRoot)",
+      "function verifyMerkleProof(bytes32 leafHash, bytes32[32] smtProof, uint32 index, bytes32 root) pure returns (bool)"
     ],
     "0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB": [
       "constructor(address _singleton)"
@@ -1730,10 +2174,12 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "polygon-cdk/AgglayerGateway": "0xe3233eedc0609119210c56c62004ae0e2f7b5e9d45e5d46aee3f9c2cbdc606d3",
     "polygon-cdk/PolygonGlobalExitRootV2": "0x1cc88444958b7582ad850833989c9a1ef2474d9c0804f38e0d9cde437f73e74b",
-    "polygon-cdk/PolygonRollupManager_pessimistic": "0x07e6443363d3b1a55f9514d38946df4f6030615786d629c78e66e0e134c8b383",
-    "polygon-cdk/PolygonSharedBridge": "0x79b4355cba744a06d8705695336f169622edf05c3f32b1ae35da91fa577c536c",
-    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb"
+    "polygon-cdk/PolygonRollupManager_al030": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
+    "polygon-cdk/PolygonSharedBridge_al030": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
+    "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x8e5dca0b2a2d313ad2b6de1ab873b338b8735205dc02af22486c9e1685fd5fbd"
+  "permissionsConfigHash": "0x348c3deccef8869986a9dcf1ca4104b6e8a468c71c9adb59bf66a3e9db2077a4"
 }

@@ -1,8 +1,8 @@
 {
   "name": "phala",
   "chain": "ethereum",
-  "blockNumber": 22631701,
-  "configHash": "0xafe2357199b43a3780ffe10c666754af016ad18868b8b47d1012006791360be4",
+  "blockNumber": 22780010,
+  "configHash": "0xacb7d400175d8989772a671e211e622ed844fe7b0f927057858fe86c44dc02c1",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -180,7 +180,7 @@
         ],
         "$upgradeCount": 1,
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619832",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619834",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -398,10 +398,6 @@
         "$immutable": true,
         "activeVerifiers": [
           {
-            "selector": "0x1b34fe11",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
-          },
-          {
             "selector": "0xd4e8ecd2",
             "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
           }
@@ -487,7 +483,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 72,
+        "nonce": 75,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -629,7 +625,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 11 (36%)",
-        "nonce": 104,
+        "nonce": 109,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -768,7 +764,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 2 (100%)",
-        "nonce": 17,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -903,7 +899,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1007,8 +1003,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 492334,
-          "prevBlockNum": 22630260
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 22704253
         },
         "paused": false,
         "superchainConfig": "0xeDe0D2f74e71bD43459e92D90c434D8cA5E597B8",
@@ -1086,7 +1082,7 @@
         "GnosisSafe_modules": ["0x126a736B18E0a64fBA19D421647A530E327E112C"],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 107,
+        "nonce": 108,
         "VERSION": "1.1.1"
       },
       "implementationNames": {
@@ -1223,10 +1219,10 @@
         "initializerVersion": 2,
         "L2_BLOCK_TIME": 10,
         "l2BlockTime": 10,
-        "latestBlockNumber": 1460460,
-        "latestOutputIndex": 372,
-        "nextBlockNumber": 1464780,
-        "nextOutputIndex": 373,
+        "latestBlockNumber": 1644060,
+        "latestOutputIndex": 406,
+        "nextBlockNumber": 1648380,
+        "nextOutputIndex": 407,
         "optimisticMode": false,
         "owner": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
         "proposer": "0xF579A1cDfb89D0Aaf240d489EF10aB01A2B7f8F2",
@@ -1311,7 +1307,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "multisigThreshold": "10 of 13 (77%)",
-        "nonce": 29,
+        "nonce": 31,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1383,7 +1379,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 11,
+        "nonce": 12,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1416,27 +1412,6 @@
         "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F": "Lib_AddressManager"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0xcc497e8b709d783cb24e3120d14c9fb3b015c3fe5ed7a57e0de6c38f9bfe937b"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v4.0.0-rc.3).",
-      "sinceTimestamp": 1735949699,
-      "sinceBlock": 21547470,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d",
-        "VERSION": "v4.0.0-rc.3"
-      },
-      "implementationNames": {
-        "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": "SP1Verifier"
-      }
     },
     {
       "address": "0xE7dEA1306D9F829bA469d1904c50903b46ebd02e",
@@ -2217,15 +2192,6 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
-    ],
     "0xeBf5859b7646ca9cf8A981613569bF28394F2571": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -2308,5 +2274,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0xb684ba7ffcd1509bbb3e5eeeb71c6e0cf3605e8db79ecdf7067c0f21a659121d"
+  "permissionsConfigHash": "0x93c5a8b7d0546d425bdb6a2436b3c7d3aba5f22deeb994deb295aaa50b9004c7"
 }

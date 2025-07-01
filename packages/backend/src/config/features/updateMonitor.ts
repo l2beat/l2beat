@@ -94,7 +94,8 @@ function getChainDiscoveryConfig(
     (x) =>
       x.type === 'etherscan' ||
       x.type === 'routescan' ||
-      x.type === 'blockscout',
+      x.type === 'blockscout' ||
+      x.type === 'sourcify',
   )
 
   if (!explorerApi) {
@@ -133,15 +134,17 @@ function getChainDiscoveryConfig(
               getContractCreation: explorerApi.contractCreationUnsupported,
             },
           }
-        : {
-            type: explorerApi.type,
-            url: env.string('ETHERSCAN_API_URL'),
-            apiKey: env.string('ETHERSCAN_API_KEY'),
-            // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
-            chainId: chainConfig.chainId!,
-            unsupported: {
-              getContractCreation: explorerApi.contractCreationUnsupported,
+        : explorerApi.type === 'sourcify'
+          ? {
+              type: explorerApi.type,
+              chainId: explorerApi.chainId,
+            }
+          : {
+              type: explorerApi.type,
+              url: env.string('ETHERSCAN_API_URL'),
+              apiKey: env.string('ETHERSCAN_API_KEY'),
+              // biome-ignore lint/style/noNonNullAssertion: We assume it's there since there is no etherscan for non-evm chains
+              chainId: chainConfig.chainId!,
             },
-          },
   }
 }

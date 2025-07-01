@@ -2,7 +2,7 @@
   "name": "mantapacific",
   "chain": "ethereum",
   "blockNumber": 20927642,
-  "configHash": "0x2f4eb0eb9a0fa043548ef411f4ced788d7959a2f42f5d37a0f3da95806d8d969",
+  "configHash": "0xe2a5aa5409bb65d52267190ae03a61be8e3e712305bd46bca8ab1885b9d6a21a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

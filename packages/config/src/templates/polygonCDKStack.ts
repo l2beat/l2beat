@@ -174,8 +174,11 @@ export function polygonCDKStack(
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      category:
-        templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      category: templateVars.reasonsForBeingOther
+        ? 'Other'
+        : templateVars.daProvider !== undefined
+          ? 'Validium'
+          : 'ZK Rollup',
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
@@ -254,11 +257,11 @@ export function polygonCDKStack(
                 stateRootsPostedToL1: true,
                 dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable: true,
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: null,
               },
               stage1: {
                 principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: {
@@ -355,7 +358,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046',
+              url: 'https://etherscan.io/address/0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab#code#F1#L1210',
             },
           ],
         },

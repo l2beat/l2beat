@@ -1,8 +1,8 @@
 {
   "name": "cartesi-prt-honeypot",
   "chain": "ethereum",
-  "blockNumber": 22729814,
-  "configHash": "0x5d7aee8781cdef63df913b005ec2b64afb6c168f1a4bcf16898322de5243303c",
+  "blockNumber": 22732019,
+  "configHash": "0x2953eb0241d1b940a15b800642a2f7b3b52eff4fe6c815a049c6147c4895319c",
   "entries": [
     {
       "name": "TopTournament",
@@ -69,7 +69,7 @@
         "0x040a3525c8ccc1fbd5fef3a9e0b3087a477f2f7d77e358637619e3c8702615ac"
       ],
       "proxyType": "immutable",
-      "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions.",
+      "description": "Main dApp contract that escrows assets and executes the verified results (outputs) from off-chain computation. It relies on the 0x6CE590b9F0697327f18c601DF6f0baE4a0801B68 contract to validate outputs before releasing assets or triggering on-chain actions. The immutable template hash of the dApp is `0x615acc9fb8ae058d0e45c0d12fa10e1a6c9e645222c6fd94dfeda194ee427c14`.",
       "sinceTimestamp": 1749510467,
       "sinceBlock": 22670193,
       "values": {

@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "redemptionTokenAddress": {
+      "handler": {
+        "type": "array",
+        "length": 5
+      }
+    }
+  }
+}

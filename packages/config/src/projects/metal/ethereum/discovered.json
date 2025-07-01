@@ -2,7 +2,7 @@
   "name": "metal",
   "chain": "ethereum",
   "blockNumber": 22716371,
-  "configHash": "0xdcc10b7faec79588f4493b9371a171275e718f26b6529d9dab73d01a0226fb4e",
+  "configHash": "0x8ee914e2301c1b2bc327cb6b47b99132c751020e600e799d8acc036896a26ee7",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

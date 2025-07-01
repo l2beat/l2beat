@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type ActivityTimeRange = z.infer<typeof ActivityTimeRange>
-export const ActivityTimeRange = z.enum(['30d', '90d', '180d', '1y', 'max'])
+export type ActivityTimeRange = v.infer<typeof ActivityTimeRange>
+export const ActivityTimeRange = v.enum(['30d', '90d', '180d', '1y', 'max'])

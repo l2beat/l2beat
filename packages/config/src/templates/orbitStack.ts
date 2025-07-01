@@ -476,7 +476,11 @@ function orbitStackCommon(
       stack: 'Arbitrum',
       category:
         templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToExternalDA
+            ? 'Optimium'
+            : 'Optimistic Rollup'),
     },
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
@@ -615,7 +619,16 @@ function orbitStackCommon(
           ],
           risks: [],
         },
-        EXITS.AUTONOMOUS,
+        {
+          ...EXITS.AUTONOMOUS,
+          references: [
+            ...EXITS.AUTONOMOUS.references,
+            {
+              title: 'List of whitelisted Kinto validators',
+              url: 'https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/kinto-validators',
+            },
+          ],
+        },
       ],
       otherConsiderations:
         templateVars.nonTemplateTechnology?.otherConsiderations ??
@@ -1146,6 +1159,20 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       query: {
         formula: 'functionCall',
         address: sequencerInbox.address,
+        selector: '0x37501551',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
+        sinceTimestamp: UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
         selector: '0x3e5aa082',
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -1239,11 +1266,11 @@ function computedStage(
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable:
           templateVars.isNodeAvailable ?? 'UnderReview',
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,

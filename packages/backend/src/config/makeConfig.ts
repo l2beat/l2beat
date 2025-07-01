@@ -150,6 +150,12 @@ export async function makeConfig(
       ),
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
+    shared: flags.isEnabled('shared') && {
+      ethereumWsUrl: env.string(['ETHEREUM_WS_URL']),
+    },
+    discord: {
+      anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
+    },
     // Must be last
     flags: flags.getResolved(),
   }

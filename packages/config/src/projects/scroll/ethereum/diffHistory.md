@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xc91e5a330e474f927ac954e1f8a675b413ab6a44
+
+# Diff at Wed, 18 Jun 2025 12:03:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22574521
+- current block number: 22731106
+
+## Description
+
+fee parameters and MS signer changed.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x8432728A257646449245558B8b7Dbe51A16c7a4D) {
+    +++ description: System configuration contract for Scroll, contains enforcedBatchParameters and messageQueueParameters determining permissionless mode.
+      values.messageQueueParameters.baseFeeOverhead:
+-        15680000
++        4790000
+      values.messageQueueParameters.baseFeeScalar:
+-        34000000000000
++        388000000000000
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      values.$members.4:
+-        "0xFCf6364F5157901f533DD3615A5d8c375F13c072"
++        "0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B"
+    }
+```
+
 Generated with discovered.json: 0xcf3fd18ab57f3ffe784876c4539bc8caf5e0d896
 
 # Diff at Mon, 16 Jun 2025 12:10:43 GMT:

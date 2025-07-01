@@ -72,7 +72,6 @@ async function getQueryState(tab: 'rollups' | 'others') {
   await helpers.costs.chart.prefetch({
     range: '30d',
     filter: { type: tab },
-    previewRecategorisation: false,
   })
   return helpers.dehydrate()
 }

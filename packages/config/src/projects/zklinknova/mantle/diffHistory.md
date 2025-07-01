@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5a1c34dc0a92da64a80b88ef1c668a3db5963d34
+
+# Diff at Wed, 18 Jun 2025 12:24:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 80670848
+- current block number: 81058973
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Watched changes
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      sourceHashes.0:
+-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff"
++        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5"
+      implementationNames.0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60:
+-        "GnosisSafeProxy"
++        "SafeProxy"
+    }
+```
+
 Generated with discovered.json: 0xc8f4a269e311ca5e1327403aeac60fd55590e4bc
 
 # Diff at Wed, 11 Jun 2025 10:36:44 GMT:

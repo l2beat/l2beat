@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "ignoreRelatives": ["asset"],
+  "ignoreMethods": [
+    "convertToAssets",
+    "convertToShares",
+    "previewDeposit",
+    "previewMint",
+    "previewRedeem",
+    "previewWithdraw",
+    "supplyQueue",
+    "withdrawQueue"
+  ],
+  "ignoreInWatchMode": [
+    "lastTotalAssets",
+    "supplyQueueLength",
+    "totalAssets",
+    "totalSupply",
+    "withdrawQueueLength"
+  ]
+}

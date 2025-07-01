@@ -6,9 +6,9 @@
     "blockNumber": 22188285
   },
   "VerifierV2_2": {
-    "hash": "0x3d0ebf0f8aafb6672ca85a4e9b3f8c912466ace744a78b5749a0b763bdc7876b",
-    "address": "0x89223192E728a830F09b32d93D51AaC88b6a466e",
+    "hash": "0x709abb48f790c58a1517d5b15d470a3b3058adc8ff1953bb2764302ffd552c1b",
+    "address": "0x5d4F36e70Ab3Ccd8cA898A06C2D725B22A1D57f0",
     "chain": "ethereum",
-    "blockNumber": 22438012
+    "blockNumber": 22731151
   }
 }

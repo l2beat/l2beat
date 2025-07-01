@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Dialog } from '../../../components/Dialog'
 import type { Node } from '../../store/State'
 import { useStore } from '../../store/store'
@@ -17,10 +17,15 @@ function ValuesDialogRoot({ children }: { children: React.ReactNode }) {
   return <Dialog.Root>{children}</Dialog.Root>
 }
 
-function ValuesDialogTrigger({ disabled }: { disabled: boolean }) {
+function ValuesDialogTrigger({
+  disabled,
+  children,
+}: { disabled: boolean; children: React.ReactNode }) {
   return (
     <Dialog.Trigger asChild disabled={disabled}>
-      <ControlButton disabled={disabled}>Values</ControlButton>
+      <ControlButton disabled={disabled} className="relative">
+        {children}
+      </ControlButton>
     </Dialog.Trigger>
   )
 }
@@ -42,6 +47,9 @@ function ValuesDialogBody({ node }: { node: Node }) {
   )
 
   const [hiddenFields, setHiddenFields] = useState(node.hiddenFields)
+  useEffect(() => {
+    setHiddenFields(node.hiddenFields)
+  }, [node.hiddenFields])
 
   const modifyNode = useCallback(() => {
     const newNode = {

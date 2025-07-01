@@ -21,6 +21,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('fuelv1')
 
 export const fuelv1: ScalingProject = {
+  archivedAt: UnixTime(1750414256), // Friday, June 20, 2025 10:10:52 AM
   type: 'layer2',
   id: ProjectId('fuelv1'),
   capability: 'appchain',
@@ -88,11 +89,11 @@ export const fuelv1: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,

@@ -1,4 +1,68 @@
-Generated with discovered.json: 0x780fe6be625055bc6cdbb8cb90036ebe048fa781
+Generated with discovered.json: 0x7c590631cd205c06aefc25952360c0f75524784f
+
+# Diff at Fri, 27 Jun 2025 12:18:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22494925
+- current block number: 22795725
+
+## Description
+
+Delete permissionless disputeGame for swell and arenaz [in one tx](https://app.blocksec.com/explorer/tx/eth/0x7d2a05b891c480b91a472a135e867e6a94ba196439e47e76cc08954401a9b224). Both did not use it.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.1:
+-        {"permission":"interact","from":"ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.6:
+-        {"permission":"upgrade","from":"ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be","role":"admin","via":[{"address":"ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"}]}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x658656A14AFdf9c507096aC406564497d13EC754) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.0:
+-        "0x733a80Ce3bAec1f27869b6e4C8bc0E358C121045"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x733a80Ce3bAec1f27869b6e4C8bc0E358C121045)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract ProxyAdmin (0xEEFD1782D70824CBcacf9438afab7f353F1797F0) {
+    +++ description: None
+      directlyReceivedPermissions.3:
+-        {"permission":"upgrade","from":"ethereum:0x46Bbd2515CBfd85e8aE786F253E403F84b5718Be","role":"admin"}
+    }
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH}/DelayedWETH.sol                   |    0
+ .../DelayedWETH}/Proxy.p.sol                       |    0
+ .../DelayedWETH.sol => /dev/null                   |  651 ----
+ .../Proxy.p.sol => /dev/null                       |  200 -
+ .../FaultDisputeGame.sol => /dev/null              | 3921 --------------------
+ 5 files changed, 4772 deletions(-)
+```
+
+Generated with discovered.json: 0xb154d48b03cb9fd175894bd3a8a89931f7e33f11
 
 # Diff at Mon, 16 Jun 2025 10:14:35 GMT:
 

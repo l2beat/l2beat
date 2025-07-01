@@ -1,6 +1,6 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
@@ -15,11 +15,11 @@ export type ProjectDaThroughputChartData = {
 }
 export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
-export const ProjectDaThroughputChartParams = z.object({
-  range: DaThroughputTimeRange.or(CostsTimeRange),
-  projectId: z.string(),
+export const ProjectDaThroughputChartParams = v.object({
+  range: v.union([DaThroughputTimeRange, CostsTimeRange]),
+  projectId: v.string(),
 })
-export type ProjectDaThroughputChartParams = z.infer<
+export type ProjectDaThroughputChartParams = v.infer<
   typeof ProjectDaThroughputChartParams
 >
 
@@ -99,7 +99,7 @@ function getMockProjectDaThroughputChartData({
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
-  if (!['ethereum', 'celestia', 'avail'].includes(projectId)) {
+  if (!['ethereum', 'celestia', 'avail', 'eigenda'].includes(projectId)) {
     return {
       chart: [],
       range: [from, to],

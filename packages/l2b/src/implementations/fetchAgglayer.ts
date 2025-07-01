@@ -58,6 +58,7 @@ export class AgglayerDataFetcher {
     '15': 'pentagon.games/pen-chain ',
     '16': 'pentagon games testnet?',
     '17': 'Okto (wallet?)',
+    '20': 'Katana',
   }
 
   // Rollup type ID descriptions
@@ -68,6 +69,22 @@ export class AgglayerDataFetcher {
     '8': 'okx validium',
     '9': 'pessimistic test',
     '10': 'pessimistic 2',
+    '11': 'pessimistic 3',
+    '12': 'aggchainFEP',
+  }
+
+  // map rollupVerifierType to string
+  private getRollupVerifierTypeString(verifierType: number): string {
+    switch (verifierType) {
+      case 0:
+        return 'statetransition (0)'
+      case 1:
+        return 'pessimistic (1)'
+      case 2:
+        return 'algateway-pp (2)'
+      default:
+        return `unknown (${verifierType})`
+    }
   }
 
   private rollupManagerAbi = [
@@ -160,8 +177,9 @@ export class AgglayerDataFetcher {
         lastVerifiedBatchBeforeUpgrade:
           data.lastVerifiedBatchBeforeUpgrade.toString(),
         rollupTypeID: `${rollupTypeID} (${rollupTypeName})`,
-        rollupVerifierType:
-          data.rollupVerifierType === 0 ? 'standard (0)' : 'pessimistic (1)',
+        rollupVerifierType: this.getRollupVerifierTypeString(
+          data.rollupVerifierType,
+        ),
         lastPessimisticRoot: data.lastPessimisticRoot,
         programVKey: data.programVKey,
       }
@@ -194,8 +212,9 @@ export class AgglayerDataFetcher {
     const rows: string[][] = []
 
     rollupDataList.forEach((data) => {
-      const verifierTypeString =
-        data.rollupVerifierType === 0 ? 'standard' : 'pessimistic'
+      const rollupVerifierTypeString = this.getRollupVerifierTypeString(
+        data.rollupVerifierType,
+      )
       const rollupTypeID = data.rollupTypeID.toString()
       const rollupTypeName = this.getFromStringMap(
         this.rollupTypeNames,
@@ -210,7 +229,7 @@ export class AgglayerDataFetcher {
         data.chainID.toString(),
         data.forkID.toString(),
         rollupTypeString,
-        verifierTypeString,
+        rollupVerifierTypeString,
       ])
     })
 

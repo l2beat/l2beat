@@ -51,6 +51,8 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
+  readonly shared: SharedModuleConfig | false
+  readonly discord: DiscordWebhookConfig
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -206,6 +208,10 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
+export interface DiscordWebhookConfig {
+  readonly anomaliesWebhookUrl?: string
+}
+
 export interface DaBeatConfig {
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
@@ -266,6 +272,7 @@ export type TimestampLayerDaTrackingConfig = {
   url: string
   callsPerMinute: number
   startingTimestamp: UnixTime
+  perProjectUrl?: string
 }
 
 export interface DataAvailabilityTrackingConfig {
@@ -273,4 +280,8 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+}
+
+export interface SharedModuleConfig {
+  ethereumWsUrl: string
 }

@@ -1,4 +1,68 @@
-Generated with discovered.json: 0x776dc5a2115bf3c456c5922f2c479d3888663fb1
+Generated with discovered.json: 0x6d28143bf8bec4e546de18f76f37619aaef759a9
+
+# Diff at Fri, 27 Jun 2025 12:21:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 22495698
+- current block number: 22795737
+
+## Description
+
+Delete permissionless disputeGame for swell and arenaz [in one tx](https://app.blocksec.com/explorer/tx/eth/0x7d2a05b891c480b91a472a135e867e6a94ba196439e47e76cc08954401a9b224). Both did not use it.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x2DabFf87A9a634f6c769b983aFBbF4D856aDD0bF)
+    +++ description: Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.
+```
+
+```diff
+    contract ProxyAdmin (0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6) {
+    +++ description: None
+      directlyReceivedPermissions.6:
+-        {"permission":"upgrade","from":"ethereum:0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D","role":"admin"}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"ethereum:0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D","description":"can pull funds from the contract in case of emergency.","role":".owner"}
+      receivedPermissions.10:
+-        {"permission":"upgrade","from":"ethereum:0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D","role":"admin","via":[{"address":"ethereum:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6"}]}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0x87690676786cDc8cCA75A472e483AF7C8F2f0F57) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.gameImpls.0:
+-        "0x2DabFf87A9a634f6c769b983aFBbF4D856aDD0bF"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedWETH (0xB8e81B42E0d4b9e9C2078cEd184892D5bC92F19D)
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+```
+
+## Source code changes
+
+```diff
+.../DelayedWETH}/DelayedWETH.sol                   |    0
+ .../DelayedWETH}/Proxy.p.sol                       |    0
+ .../DelayedWETH.sol => /dev/null                   |  651 ----
+ .../Proxy.p.sol => /dev/null                       |  200 -
+ .../FaultDisputeGame.sol => /dev/null              | 3921 --------------------
+ 5 files changed, 4772 deletions(-)
+```
+
+Generated with discovered.json: 0x6da4c1bdc3b2fa7c2e5f703c28cec8605a2b4c81
 
 # Diff at Mon, 16 Jun 2025 10:14:39 GMT:
 

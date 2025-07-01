@@ -1,6 +1,6 @@
 import type { TokenValueRecord } from '@l2beat/database'
-import { assert, TokenId, UnixTime, branded } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { assert, TokenId, UnixTime } from '@l2beat/shared-pure'
+import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -10,7 +10,7 @@ import { TvsChartRange, rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),
-  tokenId: branded(z.string(), TokenId),
+  tokenId: z.string().transform((v) => TokenId(v)),
 })
 
 export const TokenTvsChartParams = z.object({

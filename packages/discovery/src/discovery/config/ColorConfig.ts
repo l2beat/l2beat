@@ -1,11 +1,11 @@
-import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 
-export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'LOW'])
+export type ContractFieldSeverity = v.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = v.enum(['HIGH', 'LOW'])
 
-export type ContractValueType = z.infer<typeof ContractValueType>
-export const ContractValueType = z.enum([
+export type ContractValueType = v.infer<typeof ContractValueType>
+export const ContractValueType = v.enum([
   'CODE_CHANGE',
   'L2',
   'EXTERNAL',
@@ -13,51 +13,52 @@ export const ContractValueType = z.enum([
   'PERMISSION',
 ])
 
-export type ColorContractField = z.infer<typeof ColorContractField>
-export const ColorContractField = z.object({
-  description: z.string().optional(),
-  severity: z.optional(ContractFieldSeverity),
-  type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
+export type ColorContractField = v.infer<typeof ColorContractField>
+export const _ColorContractField = {
+  description: v.string().optional(),
+  severity: ContractFieldSeverity.optional(),
+  type: v.union([ContractValueType, v.array(ContractValueType)]).optional(),
+}
+export const ColorContractField = v.object(_ColorContractField)
+
+export type ExternalReference = v.infer<typeof ExternalReference>
+export const ExternalReference = v.object({
+  text: v.string(),
+  href: v.string(),
 })
 
-export type ExternalReference = z.infer<typeof ExternalReference>
-export const ExternalReference = z.object({
-  text: z.string(),
-  href: z.string(),
+export type DiscoveryCategory = v.infer<typeof DiscoveryCategory>
+export const DiscoveryCategory = v.object({
+  name: v.string(),
+  priority: v.number(),
 })
 
-export type DiscoveryCategory = z.infer<typeof DiscoveryCategory>
-export const DiscoveryCategory = z.object({
-  name: z.string(),
-  priority: z.number(),
-})
+export type ColorContract = v.infer<typeof ColorContract>
+export const _ColorContract = {
+  displayName: v.string().optional(),
+  categories: v.record(v.string(), DiscoveryCategory).optional(),
+  category: v.string().optional(),
+  description: v.string().optional(),
+  references: v.array(ExternalReference).optional(),
+  fields: v.record(v.string(), ColorContractField).default({}),
+  manualSourcePaths: v.record(v.string(), v.string()).default({}),
+}
+export const ColorContract = v.object(_ColorContract)
 
-export type ColorContract = z.infer<typeof ColorContract>
-export const ColorContract = z.object({
-  displayName: z.string().optional(),
-  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
-  category: z.optional(z.string()),
-  description: z.optional(z.string()),
-  references: z.optional(z.array(ExternalReference)),
-  fields: z.record(z.string(), ColorContractField).default({}),
-  manualSourcePaths: z.record(z.string()).default({}),
-})
-
-export type ColorConfig = z.infer<typeof ColorConfig>
-export const ColorConfig = z.object({
-  categories: z.optional(z.record(z.string(), DiscoveryCategory)),
-  names: z.optional(
-    z.record(
-      stringAs(EthereumAddress).transform((a) => a.toString()),
-      z.string(),
-    ),
-  ),
-  overrides: z.optional(
-    z.record(
-      z.string().refine((key) => EthereumAddress.check(key), {
-        message: 'Invalid Ethereum address',
-      }),
+export type ColorConfig = v.infer<typeof ColorConfig>
+export const _ColorConfig = {
+  categories: v.record(v.string(), DiscoveryCategory).optional(),
+  names: v
+    .record(
+      v.string().transform((v) => EthereumAddress(v).toString()),
+      v.string(),
+    )
+    .optional(),
+  overrides: v
+    .record(
+      v.string().transform((v) => EthereumAddress(v).toString()),
       ColorContract,
-    ),
-  ),
-})
+    )
+    .optional(),
+}
+export const ColorConfig = v.object(_ColorConfig)

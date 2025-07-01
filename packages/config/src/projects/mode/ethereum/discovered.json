@@ -2,7 +2,7 @@
   "name": "mode",
   "chain": "ethereum",
   "blockNumber": 22716369,
-  "configHash": "0xab5715e985b9a914828d775b48b0bac5d07ecd2073864ecd3af24d948d8928b3",
+  "configHash": "0x9042508308cb500bf28ce61ff579cb0cc3b4299fb9b05a3e73cdfd1df7fa91fd",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
