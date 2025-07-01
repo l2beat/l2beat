@@ -1,4 +1,5 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
+import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
@@ -8,7 +9,6 @@ import type { EntryParameters } from '../output/types'
 import { applyReturnFragment } from '../type-casters/applyReturnFragment'
 import type { HandlerResult } from './Handler'
 import { orderByCopyDependencies } from './orderByCopyDependencies'
-import merge from 'lodash/merge'
 
 export function decodeHandlerResults(
   results: HandlerResult[],
