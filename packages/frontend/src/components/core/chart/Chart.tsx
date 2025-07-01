@@ -201,34 +201,36 @@ function ChartLegendContent({
 
   const actualPayload = reverse ? [...payload].reverse() : payload
   return (
-    <div
-      className={cn(
-        'flex flex-wrap items-center justify-center gap-2',
-        verticalAlign === 'top' && 'pb-3',
-        className,
-      )}
-    >
-      {actualPayload.map((item) => {
-        const key = `${nameKey ?? item.dataKey ?? 'value'}`
-        const itemConfig = getPayloadConfigFromPayload(meta, item, key)
+    <div className="overflow-x-auto pl-2">
+      <div
+        className={cn(
+          'mx-auto flex w-fit items-center gap-2',
+          verticalAlign === 'top' && 'pb-3',
+          className,
+        )}
+      >
+        {actualPayload.map((item) => {
+          const key = `${nameKey ?? item.dataKey ?? 'value'}`
+          const itemConfig = getPayloadConfigFromPayload(meta, item, key)
 
-        if (!itemConfig || item.type === 'none') return null
+          if (!itemConfig || item.type === 'none') return null
 
-        return (
-          <div
-            key={item.value}
-            className="flex items-center gap-[3px] [&>svg]:text-secondary"
-          >
-            <ChartDataIndicator
-              type={itemConfig.indicatorType}
-              backgroundColor={itemConfig.color}
-            />
-            <span className="font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
-              {itemConfig.legendLabel ?? itemConfig.label}
-            </span>
-          </div>
-        )
-      })}
+          return (
+            <div
+              key={item.value}
+              className="flex items-center gap-[3px] [&>svg]:text-secondary"
+            >
+              <ChartDataIndicator
+                type={itemConfig.indicatorType}
+                backgroundColor={itemConfig.color}
+              />
+              <span className="text-nowrap font-medium text-2xs text-secondary leading-none tracking-[-0.2px]">
+                {itemConfig.legendLabel ?? itemConfig.label}
+              </span>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }
