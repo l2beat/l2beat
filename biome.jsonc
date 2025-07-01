@@ -89,6 +89,7 @@
         },
         "useSortedClasses": {
           "level": "error",
+          "fix": "safe",
           "options": {
             "attributes": ["className", "classname"],
             "functions": ["cn", "cva"]
