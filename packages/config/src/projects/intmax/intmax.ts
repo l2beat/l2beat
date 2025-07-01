@@ -1,8 +1,8 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
-import { upcomingL2 } from '../../templates/upcoming'
+import { underReviewL2 } from '../../templates/underReview'
 
-export const intmax: ScalingProject = upcomingL2({
+export const intmax: ScalingProject = underReviewL2({
   id: 'intmax',
   capability: 'universal',
   addedAt: UnixTime(1722256071), // 2024-07-29T12:27:51Z
@@ -23,4 +23,12 @@ export const intmax: ScalingProject = upcomingL2({
       socialMedia: ['https://twitter.com/intmaxIO'],
     },
   },
+  escrows: [
+    {
+      address: EthereumAddress('0xF65e73aAc9182e353600a916a6c7681F810f79C3'),
+      sinceTimestamp: UnixTime(1750500599),
+      tokens: '*',
+      chain: 'ethereum',
+    },
+  ],
 })
