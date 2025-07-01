@@ -13,6 +13,7 @@ interface Props {
 export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
   return (
     <div
+      id={ecosystem.name}
       style={
         {
           '--ecosystem-primary': ecosystem.colors.primary,
