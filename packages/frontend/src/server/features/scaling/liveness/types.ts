@@ -10,9 +10,9 @@ export interface LivenessDataPoint {
 
 export interface LivenessAnomaly {
   start: UnixTime
-  end: UnixTime
+  end: UnixTime | undefined
   durationInSeconds: number
-  type: TrackedTxsConfigSubtype
+  subtype: TrackedTxsConfigSubtype
 }
 
 export interface LivenessDetails {

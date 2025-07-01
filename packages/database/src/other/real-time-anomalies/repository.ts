@@ -51,7 +51,8 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
       .select(selectRealtimeAnomaly)
-      .where('status', '=', 'approved')
+      // TODO: CHANGE THIS TO APPROVED
+      .where('status', '=', 'ongoing')
       .where('projectId', 'in', projectIds)
       .execute()
 
