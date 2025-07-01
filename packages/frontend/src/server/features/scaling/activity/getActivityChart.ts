@@ -108,7 +108,7 @@ export async function getActivityChart({
 function getMockActivityChart({
   range,
 }: ActivityChartParams): ActivityChartData {
-  const [from, to] = getRangeWithMax(range, 'daily')
+  const [from, to] = getRangeWithMax({ type: range }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? MIN_TIMESTAMPS.activity,
     to,

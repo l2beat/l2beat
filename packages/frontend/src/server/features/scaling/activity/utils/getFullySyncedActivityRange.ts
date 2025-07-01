@@ -13,7 +13,7 @@ export function getFullySyncedActivityRange(
   range: StringWithAutocomplete<TimeRange>,
 ): [UnixTime, UnixTime] {
   const end = UnixTime.toStartOf(UnixTime.now(), 'day')
-  const days = rangeToDays(range)
+  const days = rangeToDays({ type: range })
 
   const start =
     days !== null ? end - days * UnixTime.DAY : MIN_TIMESTAMPS.activity

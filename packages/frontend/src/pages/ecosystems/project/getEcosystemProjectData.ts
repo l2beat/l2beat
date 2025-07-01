@@ -22,7 +22,7 @@ export async function getEcosystemProjectData(
 
   await Promise.all([
     helpers.tvs.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       excludeAssociatedTokens: false,
       filter: {
         type: 'projects',

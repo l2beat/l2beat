@@ -16,7 +16,7 @@ export const DaThroughputTimeRange = v.enum(DaThroughputTimeRangeValues)
 export function rangeToResolution(
   range: DaThroughputTimeRange | CostsTimeRange,
 ) {
-  const days = rangeToDays(range)
+  const days = rangeToDays({ type: range })
   if (days && days <= 7) return 'hourly'
   if (days && days < 180) return 'sixHourly'
   return 'daily'

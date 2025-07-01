@@ -34,7 +34,7 @@ export async function getDaThroughputChart({
   }
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
   const throughput = includeScalingOnly
@@ -126,7 +126,7 @@ export function groupByTimestampAndDaLayerId(
 function getMockDaThroughputChartData({
   range,
 }: DaThroughputChartParams): DaThroughputDataPoint[] {
-  const days = rangeToDays(range) ?? 730
+  const days = rangeToDays({ type: range }) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 
