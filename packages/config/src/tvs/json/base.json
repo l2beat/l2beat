@@ -966,6 +966,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-Fartcoin",
+      "priceId": "based-fartcoin",
+      "symbol": "Fartcoin",
+      "name": "Based Fartcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53113/large/farrtcoin_logo.png?1735241861",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "based-fartcoin",
+        "decimals": 18,
+        "sinceTimestamp": 1735171200,
+        "address": "0x2f6c17fa9f9bC3600346ab4e48C0701e1d5962AE",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-FET",
       "priceId": "fetch-ai",
       "symbol": "FET",
@@ -1113,6 +1132,43 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-GNS",
+      "priceId": "gains-network",
+      "symbol": "GNS",
+      "name": "Gains Network",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19737/large/logo.png?1696519161",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xFB1Aaba03c31EA98A3eEC7591808AcB1947ee7Ac",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1727111305
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-GPS",
+      "priceId": "goplus-security",
+      "symbol": "GPS",
+      "name": "GoPlus Security",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53686/large/Separate_logo%EF%BC%88green%EF%BC%89.png?1737033911",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "goplus-security",
+        "decimals": 18,
+        "sinceTimestamp": 1736985600,
+        "address": "0x0C1dC73159e30c4b06170F2593D3118968a0DCa5",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1269,6 +1325,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-LBTC-1",
+      "priceId": "lombard-staked-btc",
+      "symbol": "LBTC",
+      "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1731342311
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-LINK",
       "priceId": "chainlink",
       "symbol": "LINK",
@@ -1345,6 +1427,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-lsETH",
+      "priceId": "liquid-staked-ethereum",
+      "symbol": "lsETH",
+      "name": "Liquid Staked ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28848/large/LsETH-receipt-token-circle.png?1696527824",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB29749498954A3A821ec37BdE86e386dF3cE30B6",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1738837751
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-LUNA",
       "priceId": "luna-by-virtuals",
       "symbol": "LUNA",
@@ -1378,6 +1486,25 @@
       },
       "category": "stablecoin",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-MAG7.ssi",
+      "priceId": "mag7-ssi",
+      "symbol": "MAG7.ssi",
+      "name": "MAG7.ssi",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52962/large/mag7.png?1734863745",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "mag7-ssi",
+        "decimals": 8,
+        "sinceTimestamp": 1734825600,
+        "address": "0x9E6A46f294bB67c20F1D1E7AfB0bBEf614403B55",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -1617,6 +1744,33 @@
     },
     {
       "mode": "auto",
+      "id": "base-PARTI",
+      "priceId": "particle-network",
+      "symbol": "PARTI",
+      "name": "PARTI Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54955/large/parti-token-200.png?1742822558",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "particle-network",
+        "decimals": 18,
+        "sinceTimestamp": 1742860800,
+        "address": "0x59264f02D301281f3393e1385c0aEFd446Eb0F00",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-PENDLE",
       "priceId": "pendle",
       "symbol": "PENDLE",
@@ -1693,6 +1847,58 @@
     },
     {
       "mode": "auto",
+      "id": "base-POKT",
+      "priceId": "pocket-network",
+      "symbol": "POKT",
+      "name": "Pocket Network",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22506/large/POKT.jpg?1703257310",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x764A726d9ceD0433A8D7643335919dEb03a9a935",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1721825189
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole (xERC-20)",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "base-PRIME",
+      "priceId": "echelon-prime",
+      "symbol": "PRIME",
+      "name": "Prime",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29053/large/prime-logo-small-border_%282%29.png?1696528020",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfA980cEd6895AC314E7dE34Ef1bFAE90a5AdD21b",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1692376907
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v1 OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-PSTAKE",
       "priceId": "pstake-finance",
       "symbol": "PSTAKE",
@@ -1709,6 +1915,60 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "base-pumpBTC",
+      "priceId": "pumpbtc",
+      "symbol": "pumpBTC",
+      "name": "pumpBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+        "chain": "base",
+        "decimals": 8,
+        "sinceTimestamp": 1726196405
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "pumpbtc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+              "chain": "base",
+              "decimals": 8,
+              "sinceTimestamp": 1726196405
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "coinbase-wrapped-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf",
+              "chain": "base",
+              "escrowAddress": "0x1fCca65fb6Ae3b2758b9b2B394CB227eAE404e1E",
+              "decimals": 8,
+              "sinceTimestamp": 1726196405
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel)"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -2832,7 +3092,33 @@
     },
     {
       "mode": "auto",
-      "id": "base-W",
+      "id": "base-W-1",
+      "priceId": "non-playable-coin",
+      "symbol": "W",
+      "name": "Non-Playable Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1703137809
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "base-W-2",
       "priceId": "wormhole",
       "symbol": "W",
       "name": "Wormhole Token",

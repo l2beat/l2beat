@@ -1948,6 +1948,20 @@
       "supply": "zero"
     },
     {
+      "name": "Euler",
+      "coingeckoId": "euler",
+      "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+      "symbol": "EUL",
+      "decimals": 18,
+      "deploymentTimestamp": 1640894681,
+      "coingeckoListingTimestamp": 1656028800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26149/large/Coingecko_logo_%281%29.png?1706026067",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "EURA (previously agEUR)",
       "coingeckoId": "ageur",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
@@ -10156,6 +10170,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Based Fartcoin",
+      "coingeckoId": "based-fartcoin",
+      "address": "0x2f6c17fa9f9bC3600346ab4e48C0701e1d5962AE",
+      "symbol": "Fartcoin",
+      "decimals": 18,
+      "deploymentTimestamp": 1734325313,
+      "coingeckoListingTimestamp": 1735171200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53113/large/farrtcoin_logo.png?1735241861",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "BIM",
       "coingeckoId": "bim-2",
       "address": "0x555FFF48549C1A25a723Bd8e7eD10870D82E8379",
@@ -10317,6 +10345,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Gains Network",
+      "coingeckoId": "gains-network",
+      "address": "0xFB1Aaba03c31EA98A3eEC7591808AcB1947ee7Ac",
+      "symbol": "GNS",
+      "decimals": 18,
+      "deploymentTimestamp": 1727111305,
+      "coingeckoListingTimestamp": 1635811200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19737/large/logo.png?1696519161",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "GAME by Virtuals",
       "coingeckoId": "game-by-virtuals",
       "address": "0x1C4CcA7C5DB003824208aDDA61Bd749e55F463a3",
@@ -10329,6 +10371,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "GoPlus Security",
+      "coingeckoId": "goplus-security",
+      "address": "0x0C1dC73159e30c4b06170F2593D3118968a0DCa5",
+      "symbol": "GPS",
+      "decimals": 18,
+      "deploymentTimestamp": 1736845641,
+      "coingeckoListingTimestamp": 1736985600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53686/large/Separate_logo%EF%BC%88green%EF%BC%89.png?1737033911",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "KAITO",
@@ -10403,6 +10459,50 @@
       }
     },
     {
+      "name": "Liquid Staked ETH",
+      "coingeckoId": "liquid-staked-ethereum",
+      "address": "0xB29749498954A3A821ec37BdE86e386dF3cE30B6",
+      "symbol": "lsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1738837751,
+      "coingeckoListingTimestamp": 1678147200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28848/large/LsETH-receipt-token-circle.png?1696527824",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1731342311,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Luna by Virtuals",
       "coingeckoId": "luna-by-virtuals",
       "address": "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4",
@@ -10415,6 +10515,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "MAG7.ssi",
+      "coingeckoId": "mag7-ssi",
+      "address": "0x9E6A46f294bB67c20F1D1E7AfB0bBEf614403B55",
+      "symbol": "MAG7.ssi",
+      "decimals": 8,
+      "deploymentTimestamp": 1734536499,
+      "coingeckoListingTimestamp": 1734825600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52962/large/mag7.png?1734863745",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Mister Miggles",
@@ -10443,6 +10557,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Non-Playable Coin",
+      "coingeckoId": "non-playable-coin",
+      "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1703137809,
+      "coingeckoListingTimestamp": 1691107200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Onyxcoin",
@@ -10503,6 +10639,50 @@
       }
     },
     {
+      "name": "PARTI Token",
+      "coingeckoId": "particle-network",
+      "address": "0x59264f02D301281f3393e1385c0aEFd446Eb0F00",
+      "symbol": "PARTI",
+      "decimals": 18,
+      "deploymentTimestamp": 1742570595,
+      "coingeckoListingTimestamp": 1742860800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54955/large/parti-token-200.png?1742822558",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pocket Network",
+      "coingeckoId": "pocket-network",
+      "address": "0x764A726d9ceD0433A8D7643335919dEb03a9a935",
+      "symbol": "POKT",
+      "decimals": 6,
+      "deploymentTimestamp": 1721825189,
+      "coingeckoListingTimestamp": 1641945600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22506/large/POKT.jpg?1703257310",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole (xERC-20)",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
       "coingeckoId": "prefrontal-cortex-convo-agent-by-virtuals",
       "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
@@ -10515,6 +10695,49 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Prime",
+      "coingeckoId": "echelon-prime",
+      "address": "0xfA980cEd6895AC314E7dE34Ef1bFAE90a5AdD21b",
+      "symbol": "PRIME",
+      "decimals": 18,
+      "deploymentTimestamp": 1692376907,
+      "coingeckoListingTimestamp": 1677715200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29053/large/prime-logo-small-border_%282%29.png?1696528020",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v1 OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1726196405,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel)"
+          }
+        ]
+      }
     },
     {
       "name": "Renzo Restaked ETH",

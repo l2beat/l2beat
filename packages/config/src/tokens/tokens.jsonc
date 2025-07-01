@@ -1,6 +1,10 @@
 {
   "ethereum": [
     {
+      "symbol": "EUL",
+      "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b"
+    },
+    {
       "symbol": "BTRST",
       "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824"
     },
@@ -3588,6 +3592,128 @@
     }
   ],
   "base": [
+    {
+      "symbol": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PRIME",
+      "address": "0xfA980cEd6895AC314E7dE34Ef1bFAE90a5AdD21b",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v1 OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "POKT",
+      "address": "0x764A726d9ceD0433A8D7643335919dEb03a9a935",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole (xERC-20)",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "PARTI",
+      "address": "0x59264f02D301281f3393e1385c0aEFd446Eb0F00",
+      "source": "external",
+      "supply": "circulatingSupply", // preminted
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "W",
+      "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "MAG7.ssi",
+      "address": "0x9E6A46f294bB67c20F1D1E7AfB0bBEf614403B55",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "lsETH",
+      "address": "0xB29749498954A3A821ec37BdE86e386dF3cE30B6",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "LBTC",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "GPS",
+      "address": "0x0C1dC73159e30c4b06170F2593D3118968a0DCa5",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "GNS",
+      "address": "0xFB1Aaba03c31EA98A3eEC7591808AcB1947ee7Ac",
+      "source": "native",
+      "supply": "totalSupply" // circulating is mainly on polygonpos
+    },
+    {
+      "symbol": "Fartcoin",
+      "address": "0x2f6c17fa9f9bC3600346ab4e48C0701e1d5962AE",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "COOKIE",
       "address": "0xC0041EF357B183448B235a8Ea73Ce4E4eC8c265F",
