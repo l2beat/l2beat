@@ -12,6 +12,7 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './LivenessDurationCell'
+import { LiveIndicator } from '~/components/LiveIndicator'
 
 const SHOWN_ANOMALIES = 4
 
@@ -91,10 +92,7 @@ function AnomalyTooltipContent(props: {
             >
               {anomaly.end === undefined && (
                 <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 py-1 text-red-500">
-                  <span className="relative flex size-2">
-                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex size-2 rounded-full bg-red-500"></span>
-                  </span>
+                  <LiveIndicator />
                   <span className="font-medium">Ongoing anomaly</span>
                 </div>
               )}
