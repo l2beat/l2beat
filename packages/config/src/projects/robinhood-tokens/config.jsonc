@@ -1,0 +1,14 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "name": "robinhood-tokens",
+  "import": [
+    "../globalConfig.jsonc"
+  ],
+  "chains": {
+    "arbitrum": {
+      "initialAddresses": [
+        "0xd4Df56f929F309758c4b01b6D3D2644141DC59bF"
+      ]
+    }
+  }
+}
