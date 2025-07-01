@@ -27,6 +27,7 @@ const dataAvailabilityUpdate = v.object({
   newProjectsIds: v.array(v.string()).optional(),
   news: v.array(news).optional(),
 })
+export type DataAvailabilityUpdate = v.infer<typeof dataAvailabilityUpdate>
 
 const upcomingProjectUpdate = v.object({
   name: v.string(),

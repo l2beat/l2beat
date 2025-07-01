@@ -4,7 +4,9 @@ import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import { DaUpdateSection } from './components/DaUpdateSection'
 import { EcosystemUpdateSection } from './components/EcosystemUpdateSection'
+import type { DaMonthlyUpdateEntry } from './utils/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from './utils/getEcosystemEntries'
 
 interface Props extends AppLayoutProps {
@@ -13,6 +15,7 @@ interface Props extends AppLayoutProps {
   from: UnixTime
   to: UnixTime
   ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
+  daUpdatesEntries: DaMonthlyUpdateEntry[]
 }
 
 export function MonthlyUpdatePage({
@@ -21,6 +24,7 @@ export function MonthlyUpdatePage({
   from,
   to,
   ecosystemsUpdatesEntries,
+  daUpdatesEntries,
   ...props
 }: Props) {
   return (
@@ -37,15 +41,17 @@ export function MonthlyUpdatePage({
           <HorizontalSeparator className="my-8" />
           <div className="mx-auto mt-8 max-w-[960px] md:pt-8">
             <div className="mb-12 flex flex-col">
-              {[...ecosystemsUpdatesEntries].map((e, i) => (
-                <a
-                  href={`#${e.name}`}
-                  key={`#${e.name}`}
-                  className="font-normal font-roboto-serif text-[17px] text-link leading-[160%] underline"
-                >
-                  {i + 1}. {e.name}
-                </a>
-              ))}
+              {[...ecosystemsUpdatesEntries, ...daUpdatesEntries].map(
+                (e, i) => (
+                  <a
+                    href={`#${e.name}`}
+                    key={`#${e.name}`}
+                    className="w-fit font-normal font-roboto-serif text-[17px] text-link leading-[160%] underline"
+                  >
+                    {i + 1}. {e.name}
+                  </a>
+                ),
+              )}
             </div>
             {ecosystemsUpdatesEntries.map((ecosystem) => (
               <EcosystemUpdateSection
@@ -54,6 +60,9 @@ export function MonthlyUpdatePage({
                 from={from}
                 to={to}
               />
+            ))}
+            {daUpdatesEntries.map((da) => (
+              <DaUpdateSection key={da.daLayerId} daLayer={da} />
             ))}
           </div>
         </PrimaryCard>

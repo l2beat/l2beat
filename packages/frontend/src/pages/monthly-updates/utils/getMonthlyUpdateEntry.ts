@@ -2,6 +2,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import type { CollectionEntry } from '~/content/getCollection'
 import { formatPublicationDate } from '~/utils/dates'
 import {
+  type DaMonthlyUpdateEntry,
+  getDaMonthlyUpdateEntries,
+} from './getDaEntries'
+import {
   type EcosystemMonthlyUpdateEntry,
   getEcosystemMonthlyUpdateEntries,
 } from './getEcosystemEntries'
@@ -13,6 +17,7 @@ export interface MonthlyUpdateEntry {
   from: UnixTime
   to: UnixTime
   ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
+  daUpdatesEntries: DaMonthlyUpdateEntry[]
 }
 
 export async function getMonthlyUpdateEntry(
@@ -20,6 +25,9 @@ export async function getMonthlyUpdateEntry(
 ): Promise<MonthlyUpdateEntry> {
   const ecosystemsUpdatesEntries = await getEcosystemMonthlyUpdateEntries(
     entry.data.updates.filter((update) => update.type === 'ecosystem'),
+  )
+  const daUpdatesEntries = await getDaMonthlyUpdateEntries(
+    entry.data.updates.filter((update) => update.type === 'data-availability'),
   )
 
   return {
@@ -29,5 +37,6 @@ export async function getMonthlyUpdateEntry(
     to: UnixTime.fromDate(entry.data.endDate),
     publishedOn: formatPublicationDate(entry.data.publishedOn),
     ecosystemsUpdatesEntries,
+    daUpdatesEntries,
   }
 }
