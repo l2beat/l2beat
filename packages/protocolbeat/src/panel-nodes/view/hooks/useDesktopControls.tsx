@@ -1,6 +1,7 @@
 import { useMultiViewStore } from '../../../multi-view/store'
 import { useSearchStore } from '../../../search/store'
 import { useStore } from '../../store/store'
+import { useRef } from 'react'
 
 type Props = {
   viewRef: React.RefObject<HTMLElement | null>
@@ -39,6 +40,31 @@ export function useDesktopControls({
   const shouldCapture =
     (currentPanel === undefined || currentPanel === 'nodes') && !searchOpened
 
+  const rafIdRef = useRef<number | null>(null)
+  const lastEventRef = useRef<MouseEvent | null>(null)
+  const lastOptsRef = useRef<{ disableSelection?: boolean } | undefined>()
+
+  function processMouseMove(_: number) {
+    if (!containerRef.current || !lastEventRef.current) {
+      rafIdRef.current = null
+      return
+    }
+    onMouseMove(lastEventRef.current, containerRef.current, lastOptsRef.current)
+    rafIdRef.current = null
+  }
+
+  function handleMouseMove(
+    event: MouseEvent,
+    opts?: { disableSelection?: boolean },
+  ) {
+    lastEventRef.current = event
+    lastOptsRef.current = opts
+
+    if (rafIdRef.current === null) {
+      rafIdRef.current = requestAnimationFrame(processMouseMove)
+    }
+  }
+
   function handleWheel(event: WheelEvent) {
     if (!viewRef.current) return
     onWheel(event, viewRef.current)
@@ -47,14 +73,6 @@ export function useDesktopControls({
   function handleMouseDown(event: MouseEvent) {
     if (!containerRef.current) return
     onMouseDown(event, containerRef.current)
-  }
-
-  function handleMouseMove(
-    event: MouseEvent,
-    opts?: { disableSelection?: boolean },
-  ) {
-    if (!containerRef.current) return
-    onMouseMove(event, containerRef.current, opts)
   }
 
   function handleKeyDown(event: KeyboardEvent) {
