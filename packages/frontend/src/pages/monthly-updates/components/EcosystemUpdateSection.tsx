@@ -1,5 +1,4 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import { CssVariables } from '~/components/CssVariables'
 import type { EcosystemMonthlyUpdateEntry } from '../utils/getEcosystemEntries'
 import { MonthlyUpdateTvsChart } from './MonthlyUpdateTvsChart'
 import { News } from './News'
@@ -12,16 +11,14 @@ interface Props {
 
 export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
   return (
-    <div>
-      <CssVariables
-        variables={{
-          'ecosystem-primary': ecosystem.colors.primary,
-          'ecosystem-primary-50': `${ecosystem.colors.primary}80`,
-          'ecosystem-primary-25': `${ecosystem.colors.primary}40`,
-          'ecosystem-secondary': ecosystem.colors.secondary,
-          spacing: '0.75rem',
-        }}
-      />
+    <div
+      style={
+        {
+          '--ecosystem-primary': ecosystem.colors.primary,
+          '--ecosystem-secondary': ecosystem.colors.secondary,
+        } as React.CSSProperties
+      }
+    >
       <img
         src={`/images/monthly-updates/${ecosystem.ecosystemId}.png`}
         className="mb-8 min-h-[60px] w-full object-cover"

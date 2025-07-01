@@ -1,5 +1,5 @@
 import type { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
+import { useId, useMemo } from 'react'
 import { Area, AreaChart } from 'recharts'
 import type { TvsChartDataPoint } from '~/components/chart/tvs/TvsChart'
 import { TvsCustomTooltip } from '~/components/chart/tvs/TvsChart'
@@ -33,6 +33,7 @@ export function MonthlyUpdateTvsChart({
   from: UnixTime
   to: UnixTime
 }) {
+  const id = useId()
   const { data, isLoading } = api.tvs.chart.useQuery({
     range: {
       type: 'custom',
@@ -81,7 +82,7 @@ export function MonthlyUpdateTvsChart({
         <AreaChart data={chartData} accessibilityLayer margin={{ top: 20 }}>
           <defs>
             <CustomFillGradientDef
-              id="fill"
+              id={id}
               colors={{
                 primary: 'var(--ecosystem-primary)',
                 secondary: 'var(--ecosystem-secondary)',
@@ -90,7 +91,7 @@ export function MonthlyUpdateTvsChart({
           </defs>
           <Area
             dataKey="value"
-            fill="url(#fill)"
+            fill={`url(#${id})`}
             fillOpacity={1}
             stroke="var(--ecosystem-primary)"
             strokeWidth={2}
