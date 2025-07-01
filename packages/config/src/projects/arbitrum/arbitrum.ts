@@ -206,6 +206,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,
       excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
+      premintedTokens: ['SQD'],
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
       ...upgradeExecutorUpgradeability,
