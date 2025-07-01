@@ -10,7 +10,7 @@ export function EcosystemUpdateSection({ ecosystem }: Props) {
     <div>
       <img
         src={`/images/monthly-updates/${ecosystem.ecosystemId}.png`}
-        className="w-full mb-8"
+        className="mb-8 min-h-[60px] w-full object-cover"
       />
       {ecosystem.news && ecosystem.news?.length > 0 && (
         <News news={ecosystem.news} />
