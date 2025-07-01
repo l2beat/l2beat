@@ -59,7 +59,7 @@ export class Application {
 
     const modules: (ApplicationModule | undefined)[] = [
       createMetricsModule(config),
-      createSharedModule(config, logger, providers, database),
+      createSharedModule(config, logger, clock, providers, database),
       initActivityModule(config, logger, clock, providers, database),
       initDataAvailabilityModule(
         config,

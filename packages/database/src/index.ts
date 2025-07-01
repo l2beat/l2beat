@@ -23,6 +23,7 @@ export type {
 export type { L2CostPriceRecord } from './other/l2-cost-price/entity'
 export type { L2CostRecord } from './other/l2-cost/entity'
 export type { LivenessRecord } from './other/liveness/entity'
+export type { RealTimeLivenessRecord } from './other/real-time-liveness/entity'
 export type { VerifierStatusRecord } from './other/verifier-status/entity'
 export type { IndexerConfigurationRecord } from './uif/indexer-configuration/entity'
 export type { IndexerStateRecord } from './uif/indexer-state/entity'

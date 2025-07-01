@@ -3,15 +3,18 @@ import type { Database } from '@l2beat/database'
 import type { Config } from '../../config'
 import { DiscordWebhookClient } from '../../peripherals/discord/DiscordWebhookClient'
 import type { Providers } from '../../providers/Providers'
+import type { Clock } from '../../tools/Clock'
 import { EventIndexer } from '../../tools/EventIndexer'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import type { ApplicationModule } from '../ApplicationModule'
 import { BlockIndexer } from './indexers/BlockIndexer'
+import { AnomalyNotifier } from './notifiers/AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './processors/RealTimeLivenessProcessor'
 
 export function createSharedModule(
   config: Config,
   logger: Logger,
+  clock: Clock,
   providers: Providers,
   db: Database,
 ): ApplicationModule | undefined {
@@ -20,8 +23,13 @@ export function createSharedModule(
     return
   }
 
-  const discordClient = config.discord.anomaliesWebhookUrl
-    ? new DiscordWebhookClient(config.discord.anomaliesWebhookUrl)
+  const anomaliesNotifier = config.discord.anomaliesWebhookUrl
+    ? new AnomalyNotifier(
+        logger,
+        clock,
+        new DiscordWebhookClient(config.discord.anomaliesWebhookUrl),
+        db,
+      )
     : undefined
 
   logger = logger.tag({ feature: 'shared', module: 'shared' })
@@ -38,7 +46,7 @@ export function createSharedModule(
     config,
     logger,
     db,
-    discordClient,
+    anomaliesNotifier,
   )
 
   const blockIndexer = new BlockIndexer({
@@ -59,6 +67,7 @@ export function createSharedModule(
     logger.info('Starting...')
     eventIndexer.start()
     blockIndexer.start()
+    anomaliesNotifier?.start()
   }
 
   return {

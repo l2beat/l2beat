@@ -17,8 +17,8 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import type { Config } from '../../../config'
 import type { TrackedTxsConfig } from '../../../config/Config'
-import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { mockDatabase } from '../../../test/database'
+import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
 import { RealTimeLivenessProcessor } from './RealTimeLivenessProcessor'
 
 describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
@@ -35,7 +35,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
         config,
         Logger.SILENT,
         mockDatabase(),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<AnomalyNotifier>(),
       )
 
       const mockMatchLivenessTransactions = mockFn().resolvesTo(undefined)
@@ -135,7 +135,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
         config,
         Logger.SILENT,
         mockDatabase({ realTimeLiveness: realTimeLivenessRepository }),
-        mockObject<DiscordWebhookClient>(),
+        mockObject<AnomalyNotifier>(),
       )
 
       await processor.matchLivenessTransactions(block, logs)
@@ -238,8 +238,8 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
 
       const config = createMockConfig(projectId, configurations)
 
-      const mockDiscordClient = mockObject<DiscordWebhookClient>({
-        sendMessage: mockFn().resolvesTo(undefined),
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyDetected: mockFn().resolvesTo(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -250,7 +250,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
-        mockDiscordClient,
+        mockNotifier,
       )
 
       const block = mockObject<Block>({
@@ -274,7 +274,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
         },
       ])
 
-      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
+      expect(mockNotifier.anomalyDetected).toHaveBeenCalled()
     })
 
     it('should detect ongoing anomaly', async () => {
@@ -339,8 +339,8 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
 
       const config = createMockConfig(projectId, configurations)
 
-      const mockDiscordClient = mockObject<DiscordWebhookClient>({
-        sendMessage: mockFn().resolvesTo(undefined),
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyDetected: mockFn().resolvesTo(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -351,7 +351,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
-        mockDiscordClient,
+        mockNotifier,
       )
 
       const block = mockObject<Block>({
@@ -367,7 +367,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
-      expect(mockDiscordClient.sendMessage).not.toHaveBeenCalled()
+      expect(mockNotifier.anomalyDetected).not.toHaveBeenCalled()
     })
 
     it('should recover from anomaly', async () => {
@@ -433,8 +433,8 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
 
       const config = createMockConfig(projectId, configurations)
 
-      const mockDiscordClient = mockObject<DiscordWebhookClient>({
-        sendMessage: mockFn().resolvesTo(undefined),
+      const mockNotifier = mockObject<AnomalyNotifier>({
+        anomalyRecovered: mockFn().resolvesTo(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -445,7 +445,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           realTimeLiveness: realTimeLivenessRepository,
           realTimeAnomalies: realTimeAnomaliesRepository,
         }),
-        mockDiscordClient,
+        mockNotifier,
       )
 
       const block = mockObject<Block>({
@@ -470,7 +470,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
         },
       ])
 
-      expect(mockDiscordClient.sendMessage).toHaveBeenCalled()
+      expect(mockNotifier.anomalyRecovered).toHaveBeenCalled()
     })
   })
 })
