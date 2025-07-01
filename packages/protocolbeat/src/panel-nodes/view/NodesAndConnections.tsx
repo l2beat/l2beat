@@ -9,55 +9,67 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore((s) => s.userPreferences.enableDimming)
-  const visible = nodes.filter((n) => !hidden.includes(n.id))
 
-  const connections = visible
-    .flatMap((node) =>
-      node.fields.map((field, i) => {
-        const shouldHide =
-          hidden.includes(field.target) ||
-          node.hiddenFields.includes(field.name)
-        if (shouldHide) return null
+  const { visible, connections, bounds } = useMemo(() => {
+    const visibleNodes = nodes.filter((n) => !hidden.includes(n.id))
 
-        const targetNode = visible.find((n) => n.id === field.target)
-        const isDashed = targetNode?.addressType === 'EOA'
-        const isHighlighted =
-          selected.includes(node.id) || selected.includes(field.target)
-        const isDimmed = enableDimming && selected.length > 0 && !isHighlighted
+    const conns = visibleNodes
+      .flatMap((node) =>
+        node.fields.map((field, i) => {
+          const shouldHide =
+            hidden.includes(field.target) ||
+            node.hiddenFields.includes(field.name)
+          if (shouldHide) return null
 
-        return {
-          key: `${node.id}-${i}-${field.target}`,
-          from: field.connection.from,
-          to: field.connection.to,
-          isHighlighted,
-          isDashed,
-          isDimmed,
-        }
-      }),
-    )
-    .filter(Boolean) as {
-    key: string
-    from: { x: number; y: number; direction: 'left' | 'right' }
-    to: { x: number; y: number; direction: 'left' | 'right' }
-    isHighlighted: boolean
-    isDashed: boolean
-    isDimmed: boolean
-  }[]
+          const targetNode = visibleNodes.find((n) => n.id === field.target)
+          const isDashed = targetNode?.addressType === 'EOA'
+          const isHighlighted =
+            selected.includes(node.id) || selected.includes(field.target)
+          const isDimmed =
+            enableDimming && selected.length > 0 && !isHighlighted
 
-  let minX = Infinity,
-    minY = Infinity,
-    maxX = -Infinity,
-    maxY = -Infinity
+          return {
+            key: `${node.id}-${i}-${field.target}`,
+            from: field.connection.from,
+            to: field.connection.to,
+            isHighlighted,
+            isDashed,
+            isDimmed,
+          }
+        }),
+      )
+      .filter(Boolean) as {
+      key: string
+      from: { x: number; y: number; direction: 'left' | 'right' }
+      to: { x: number; y: number; direction: 'left' | 'right' }
+      isHighlighted: boolean
+      isDashed: boolean
+      isDimmed: boolean
+    }[]
 
-  connections.forEach(({ from, to }) => {
-    minX = Math.min(minX, from.x, to.x) - 200
-    maxX = Math.max(maxX, from.x, to.x) + 200
-    minY = Math.min(minY, from.y, to.y) - 200
-    maxY = Math.max(maxY, from.y, to.y) + 200
-  })
+    let minX = Infinity,
+      minY = Infinity,
+      maxX = -Infinity,
+      maxY = -Infinity
 
-  const width = maxX - minX
-  const height = maxY - minY
+    conns.forEach(({ from, to }) => {
+      minX = Math.min(minX, from.x, to.x) - 200
+      maxX = Math.max(maxX, from.x, to.x) + 200
+      minY = Math.min(minY, from.y, to.y) - 200
+      maxY = Math.max(maxY, from.y, to.y) + 200
+    })
+
+    const bounds = {
+      minX,
+      minY,
+      width: maxX - minX,
+      height: maxY - minY,
+    }
+
+    return { visible: visibleNodes, connections: conns, bounds }
+  }, [nodes, hidden, selected, enableDimming])
+
+  const { minX, minY, width, height } = bounds
 
   const highlightedIds = useMemo(() => {
     if (!enableDimming || selected.length === 0) {
