@@ -358,8 +358,8 @@ importers:
         specifier: workspace:*
         version: link:../validate
       '@mradomski/fast-solidity-parser':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.1.3
+        version: 0.1.3
       bignumber.js:
         specifier: ^9.1.2
         version: 9.1.2
@@ -681,8 +681,8 @@ importers:
         specifier: workspace:*
         version: link:../validate
       '@mradomski/fast-solidity-parser':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.1.3
+        version: 0.1.3
       ansi-to-html:
         specifier: ^0.7.2
         version: 0.7.2
@@ -1972,8 +1972,8 @@ packages:
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
 
-  '@mradomski/fast-solidity-parser@0.1.1':
-    resolution: {integrity: sha512-BnX+UKswinYed/yFgH9zwYNNBvUXJu32vJkxwnkZuPcV/YR9TDzMgjAOhiq8Vj77wDcfHHhyA0/MdIMhkd92PQ==}
+  '@mradomski/fast-solidity-parser@0.1.3':
+    resolution: {integrity: sha512-DuwCca59Hn9Pd9ey+rDZ9Q7csXwlKG56v+89CMrLemsYokz5GFIfCG6xDSgiZP7JaurNT1LaUSGvM3cq1nXRiQ==}
 
   '@mradomski/tinyerc55@0.1.3':
     resolution: {integrity: sha512-43EVFX8VdmAwSiqDt/s2AG1bdxSkurm8cH7A+SmH0ckeUJgeyDf3NYLfmtuCCaQbAf54vEQY17XZwKCt/lgOog==}
@@ -8424,7 +8424,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mradomski/fast-solidity-parser@0.1.1': {}
+  '@mradomski/fast-solidity-parser@0.1.3': {}
 
   '@mradomski/tinyerc55@0.1.3': {}
 
