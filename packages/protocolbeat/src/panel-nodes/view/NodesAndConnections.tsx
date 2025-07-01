@@ -9,9 +9,37 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const hidden = useStore((s) => s.hidden)
   const selected = useStore((s) => s.selected)
   const enableDimming = useStore((s) => s.userPreferences.enableDimming)
+  const transform = useStore((s) => s.transform)
+  const viewportContainer = useStore((s) => s.viewportContainer)
 
   const { visible, connections, bounds } = useMemo(() => {
-    const visibleNodes = nodes.filter((n) => !hidden.includes(n.id))
+    // Step 1: filter out hidden nodes
+    let candidates = nodes.filter((n) => !hidden.includes(n.id))
+
+    // Step 2: optional viewport clipping for large graphs
+    if (viewportContainer) {
+      const rect = viewportContainer.getBoundingClientRect()
+      const viewX = -transform.offsetX / transform.scale
+      const viewY = -transform.offsetY / transform.scale
+      const viewW = rect.width / transform.scale
+      const viewH = rect.height / transform.scale
+
+      const MARGIN = 400 // render some off-screen buffer for smoothness
+      const inView = (box: {
+        x: number
+        y: number
+        width: number
+        height: number
+      }) =>
+        box.x + box.width >= viewX - MARGIN &&
+        box.x <= viewX + viewW + MARGIN &&
+        box.y + box.height >= viewY - MARGIN &&
+        box.y <= viewY + viewH + MARGIN
+
+      candidates = candidates.filter((n) => inView(n.box))
+    }
+
+    const visibleNodes = candidates
 
     const conns = visibleNodes
       .flatMap((node) =>
@@ -67,7 +95,7 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
     }
 
     return { visible: visibleNodes, connections: conns, bounds }
-  }, [nodes, hidden, selected, enableDimming])
+  }, [nodes, hidden, selected, enableDimming, transform, viewportContainer])
 
   const { minX, minY, width, height } = bounds
 
