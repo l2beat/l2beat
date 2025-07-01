@@ -3593,6 +3593,40 @@
   ],
   "base": [
     {
+      "symbol": "WMTX",
+      "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "SIGN",
+      "address": "0x868FCEd65edBF0056c4163515dD840e9f287A4c3",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "REI",
+      "address": "0x6B2504A03ca4D43d0D73776F6aD46dAb2F2a4cFD",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "pumpBTC",
       "coingeckoId": "pumpbtc",
       "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
@@ -3649,7 +3683,7 @@
       }
     },
     {
-      "symbol": "W",
+      "symbol": "NPC",
       "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
       "source": "external",
       "supply": "totalSupply",

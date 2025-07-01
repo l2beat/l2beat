@@ -1585,6 +1585,32 @@
     },
     {
       "mode": "auto",
+      "id": "base-NPC",
+      "priceId": "non-playable-coin",
+      "symbol": "NPC",
+      "name": "Non-Playable Coin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1703137809
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "base-NSTR",
       "priceId": "nostra",
       "symbol": "NSTR",
@@ -1991,6 +2017,25 @@
     },
     {
       "mode": "auto",
+      "id": "base-REI",
+      "priceId": "unit-00-rei",
+      "symbol": "REI",
+      "name": "Unit 00 - Rei",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52005/large/TIAutjcd_400x400.jpg?1741519600",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "unit-00-rei",
+        "decimals": 18,
+        "sinceTimestamp": 1732233600,
+        "address": "0x6B2504A03ca4D43d0D73776F6aD46dAb2F2a4cFD",
+        "chain": "base"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "base-rETH",
       "priceId": "rocket-pool-eth",
       "symbol": "rETH",
@@ -2228,6 +2273,32 @@
       "category": "other",
       "source": "native",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-SIGN",
+      "priceId": "sign-global",
+      "symbol": "SIGN",
+      "name": "Sign",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55303/large/sign.jpg?1745303393",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x868FCEd65edBF0056c4163515dD840e9f287A4c3",
+        "chain": "base",
+        "decimals": 18,
+        "sinceTimestamp": 1745798400
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -3092,33 +3163,7 @@
     },
     {
       "mode": "auto",
-      "id": "base-W-1",
-      "priceId": "non-playable-coin",
-      "symbol": "W",
-      "name": "Non-Playable Coin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
-        "chain": "base",
-        "decimals": 18,
-        "sinceTimestamp": 1703137809
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Wormhole",
-            "slug": "portal"
-          }
-        ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "base-W-2",
+      "id": "base-W",
       "priceId": "wormhole",
       "symbol": "W",
       "name": "Wormhole Token",
@@ -3224,6 +3269,32 @@
       "category": "ether",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "base-WMTX",
+      "priceId": "world-mobile-token",
+      "symbol": "WMTX",
+      "name": "WorldMobileToken",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17333/large/Token_icon_round_1024.png?1741247846",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
+        "chain": "base",
+        "decimals": 6,
+        "sinceTimestamp": 1713552365
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

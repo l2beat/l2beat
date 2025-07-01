@@ -10562,7 +10562,7 @@
       "name": "Non-Playable Coin",
       "coingeckoId": "non-playable-coin",
       "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
-      "symbol": "W",
+      "symbol": "NPC",
       "decimals": 18,
       "deploymentTimestamp": 1703137809,
       "coingeckoListingTimestamp": 1691107200,
@@ -10826,6 +10826,28 @@
       "supply": "totalSupply"
     },
     {
+      "name": "Sign",
+      "coingeckoId": "sign-global",
+      "address": "0x868FCEd65edBF0056c4163515dD840e9f287A4c3",
+      "symbol": "SIGN",
+      "decimals": 18,
+      "deploymentTimestamp": 1744961803,
+      "coingeckoListingTimestamp": 1745798400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55303/large/sign.jpg?1745303393",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
       "name": "SmarDex",
       "coingeckoId": "smardex",
       "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
@@ -10956,6 +10978,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Unit 00 - Rei",
+      "coingeckoId": "unit-00-rei",
+      "address": "0x6B2504A03ca4D43d0D73776F6aD46dAb2F2a4cFD",
+      "symbol": "REI",
+      "decimals": 18,
+      "deploymentTimestamp": 1732224451,
+      "coingeckoListingTimestamp": 1732233600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52005/large/TIAutjcd_400x400.jpg?1741519600",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "UnlockProtocolToken",
       "coingeckoId": "unlockprotocoltoken",
       "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
@@ -11032,6 +11068,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "WorldMobileToken",
+      "coingeckoId": "world-mobile-token",
+      "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
+      "symbol": "WMTX",
+      "decimals": 6,
+      "deploymentTimestamp": 1713552365,
+      "coingeckoListingTimestamp": 1640217600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17333/large/Token_icon_round_1024.png?1741247846",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "Wormhole Token",
