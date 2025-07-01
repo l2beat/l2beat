@@ -42,35 +42,43 @@ export function updateNodePositions(state: State): State {
         // this should never happen
         throw new Error('missing dimensions for node ' + node.id)
       }
+
+      const hiddenFieldsSet = new Set(node.hiddenFields)
+
+      let visibleIndex = 0
+
+      const processedFields = node.fields.map((field, index) => {
+        const to = nodeDimensions[field.target]
+        if (!to) {
+          // this should never happen
+          throw new Error('missing dimensions for node ' + field.target)
+        }
+
+        const currentVisibleIndex = visibleIndex
+
+        if (!hiddenFieldsSet.has(field.name)) {
+          visibleIndex++
+        }
+
+        return {
+          ...field,
+          box: {
+            x: box.x,
+            y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
+            width: box.width,
+            height: FIELD_HEIGHT,
+          },
+          connection: {
+            nodeId: field.target,
+            ...processConnection(currentVisibleIndex, box, to),
+          },
+        }
+      })
+
       return {
         ...node,
         box,
-        fields: node.fields.map((field, index) => {
-          const to = nodeDimensions[field.target]
-          if (!to) {
-            // this should never happen
-            throw new Error('missing dimensions for node ' + field.target)
-          }
-
-          // Calculate the actual visible index by counting non-hidden fields up to the current index
-          const visibleIndex = node.fields
-            .slice(0, index)
-            .filter((f) => !node.hiddenFields.includes(f.name)).length
-
-          return {
-            ...field,
-            box: {
-              x: box.x,
-              y: box.y + HEADER_HEIGHT + index * FIELD_HEIGHT,
-              width: box.width,
-              height: FIELD_HEIGHT,
-            },
-            connection: {
-              nodeId: field.target,
-              ...processConnection(visibleIndex, box, to),
-            },
-          }
-        }),
+        fields: processedFields,
       }
     }),
   }

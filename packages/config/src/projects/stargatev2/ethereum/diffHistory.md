@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x716d952ab868f74b377440e478644951ef6c83cb
+
+# Diff at Tue, 01 Jul 2025 12:09:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 22666357
+- current block number: 22824293
+
+## Description
+
+Nethermind DVN now 1/4 (from 1/3).
+
+## Watched changes
+
+```diff
+    contract Nethermind Verifier (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0xf0dd2ce55073ec49480733619251a017c0f6a58d
 
 # Diff at Mon, 09 Jun 2025 10:36:22 GMT:

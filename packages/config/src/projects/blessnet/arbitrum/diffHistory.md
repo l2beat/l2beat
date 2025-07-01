@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9a894f4a664ec3e523762f84cde11e55ea9e50fd
+
+# Diff at Tue, 01 Jul 2025 12:12:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 336620777
+- current block number: 353119830
+
+## Description
+
+caldera MS signer change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
+-        "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
++        "0xEC114946E7213d113c9B9481028271B5E9e09371"
+    }
+```
+
 Generated with discovered.json: 0x9b964e133574fa43abf1fc0d918d97e74dab2fe3
 
 # Diff at Wed, 18 Jun 2025 12:22:00 GMT:

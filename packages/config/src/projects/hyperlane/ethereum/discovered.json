@@ -1,21 +1,11 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 22730993,
+  "blockNumber": 22823856,
   "configHash": "0x622cc5a249586363db423201c6942bab5cb906f0fe29d63fd40700e35e09e704",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -170,7 +160,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 57,
+        "nonce": 58,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -606,9 +596,8 @@
           "0xaC011Fe273794Ab1E07538CFA8099f2599103F64",
           "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424",
           "0x3d97E13A1D2bb4C9cE9EA9d424D83d3638F052ad",
-          "0x0F753619d5CAd05C6e0cDFA5f992914Ee22E1e89",
+          "0xEd700310D77BfBC3D2d962d11254861a6748cb3e",
           "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898",
-          "0x070165FA21c612FE7f1Be90Bc16D0fd11574C0cA",
           "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8",
           "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39",
           "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
@@ -617,8 +606,8 @@
         "domainSeparator": "0x45a540ffc15e9cddbfa68d8eb70409fb0fedd410e79037cbc1067c6a2b1d5ee5",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 2028,
+        "multisigThreshold": "4 of 8 (50%)",
+        "nonce": 2036,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -830,7 +819,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 196,
+        "nonce": 199,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1001,6 +990,11 @@
           "role": ".validators"
         }
       ]
+    },
+    {
+      "address": "0xEd700310D77BfBC3D2d962d11254861a6748cb3e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "HypERC20Collateral",
@@ -1539,5 +1533,5 @@
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x83b0eeb8112baa7cebbcba940890c1d567ffe39ff2df5b5122ba9422794e061e"
+  "permissionsConfigHash": "0x95b67f67235266ab147f5197e947674dafaa9fdde838c0d291f905c2b7b4fd3a"
 }

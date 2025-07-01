@@ -1,8 +1,8 @@
 {
   "name": "bobanetwork",
   "chain": "ethereum",
-  "blockNumber": 22795756,
-  "configHash": "0xce5b77e7c7044156097cab60439b21fca7c2eca074cbd3cff7c3481c382782e2",
+  "blockNumber": 22823822,
+  "configHash": "0x4e7c9688c148eacd104964f2c511e47818aa64015cd685b1572e9593b7f32543",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -378,7 +378,14 @@
     {
       "address": "0x67b2426fB1ba42c6168e53E1e40E116A4E963d60",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "challenge",
+          "from": "ethereum:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
+          "role": ".challenger"
+        }
+      ]
     },
     {
       "address": "0x6976498e37E4941E167161fC3BC5191EEDc302ab",
@@ -588,7 +595,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 22777639
+          "prevBlockNum": 22796899
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
@@ -944,7 +951,14 @@
     {
       "address": "0xf115011037999B39F0f89A40722AC8887a5f0515",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "propose",
+          "from": "ethereum:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
+          "role": ".proposer"
+        }
+      ]
     },
     {
       "name": "DisputeGameFactory",
@@ -957,7 +971,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
-      "ignoreInWatchMode": ["gameCount"],
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "sinceTimestamp": 1750459163,
       "sinceBlock": 22748716,
       "values": {
@@ -971,7 +985,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "gameCount": 39,
+        "gameCount": 132,
         "gameImpls": [
           "0x0000000000000000000000000000000000000000",
           "0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64",
@@ -981,7 +995,7 @@
         ],
         "initBonds": [0, 0, 0, 0, 0],
         "owner": "0x56121a8612474C3eB65D69a3b871f284705b9bC4",
-        "permissionedGamesTotal": 39,
+        "permissionedGamesTotal": 132,
         "version": "1.0.0"
       },
       "implementationNames": {
@@ -1620,5 +1634,5 @@
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x740244f23cb2beb01c05ba827f084ddd4fa4c21c6dd46ac10c7ec9c13528131d"
+  "permissionsConfigHash": "0xcd33fd6554a3760ad3fd9318595d356b4666a8a9a0ad8050eb48404dec1b63aa"
 }

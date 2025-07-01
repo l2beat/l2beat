@@ -1,16 +1,14 @@
-Generated with discovered.json: 0x5b3dbc071f6e73b6a108247b2ad1182971923fd1
+Generated with discovered.json: 0xf5fbaed687f19b2283212852fea5dd6fd49b27d4
 
-# Diff at Tue, 01 Jul 2025 16:03:59 GMT:
+# Diff at Tue, 01 Jul 2025 10:42:45 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
-- current block number: 22825459
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22816814
+- current block number: 22823862
 
 ## Description
 
-add the AggchainFEP core contract of Katana.
-
-predeposit vault deposits are paused (limit 0).
+Predeposits ended, chain is live (will switch to L2 TVS in separate PR).
 
 ## Watched changes
 
@@ -81,18 +79,6 @@ predeposit vault deposits are paused (limit 0).
  .../Safe.sol                                       | 1088 ++++++++++++++++++++
  .../SafeProxy.p.sol                                |   37 +
  3 files changed, 1125 insertions(+), 76 deletions(-)
-```
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22816814 (main branch discovery), not current.
-
-```diff
-+   Status: CREATED
-    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666)
-    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
 ```
 
 Generated with discovered.json: 0xb8798013ac6ee9c416ee1272bb9e516c63475f37
