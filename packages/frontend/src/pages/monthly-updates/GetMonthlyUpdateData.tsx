@@ -24,7 +24,7 @@ export async function getMonthlyUpdateData(
     head: {
       manifest,
       metadata: getMetadata(manifest, {
-        title: 'Monthly Updates - L2BEAT',
+        title: `${monthlyUpdateEntry.title} Update - L2BEAT`,
         openGraph: {
           url,
           image: '/meta-images/governance/opengraph-image.png',
