@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xd5dee85f10f94799f172c301fe3c251b28607d7a
+
+# Diff at Tue, 01 Jul 2025 10:40:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22625202
+- current block number: 22823842
+
+## Description
+
+new 3/8 Ejector Safe.
+
+## Watched changes
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator for violating the Service Legal Agreement (SLA).
+      values.ejectors.2:
++        "0x338477FfaF63c04AC06048787f910671eC914B34"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EigenDA Multisig (0x338477FfaF63c04AC06048787f910671eC914B34)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/EigenDA Multisig/Safe.sol       | 1088 ++++++++++++++++++++
+ .../.flat/EigenDA Multisig/SafeProxy.p.sol         |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
 Generated with discovered.json: 0x57db56ee72ee24af201b2c124573508c36a6db0f
 
 # Diff at Tue, 03 Jun 2025 16:21:03 GMT:
