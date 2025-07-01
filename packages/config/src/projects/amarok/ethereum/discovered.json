@@ -1,8 +1,8 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 22786874,
-  "configHash": "0xed4f28fd67754c3091ec4d6aa11dda17a6378060ebce1db1f49696c720825a65",
+  "blockNumber": 22823809,
+  "configHash": "0x39f237f533279fc4791c153037980693998adbd23b82bbc3a7f9c85339cf8787",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -35,7 +35,7 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 972733,
+        "getLastCompletedSnapshotId": 972981,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
         "lastSentBlock": 20634538,
@@ -45,7 +45,7 @@
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
         "optimisticMode": true,
-        "outboundRoot": "0xd4368ac882f11bb2bc74308648696765e2cd3f2798a86e8380c6278c2762c003",
+        "outboundRoot": "0xf04809285c1058ce26753c2841fee96e57a8499d98324a3b2e03f67a9107c204",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -668,7 +668,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750919915,
+        "getCurrentTime": 1751365883,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -1307,7 +1307,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 839,
+        "nonce": 840,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1600,7 +1600,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 70060,
+        "nonce": 70076,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",
@@ -1826,30 +1826,6 @@
       }
     },
     {
-      "name": "OptimisticOracleV2",
-      "address": "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xdd1f9488cffd829d25348f551ab2dbfe747638fa227df49feaca3defe9dcdd09"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1654686988,
-      "sinceBlock": 14926401,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "defaultLiveness": 7200,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750919915,
-        "OO_ANCILLARY_DATA_LIMIT": 8139,
-        "timerAddress": "0x0000000000000000000000000000000000000000",
-        "TOO_EARLY_RESPONSE": "-57896044618658097711785492504343953926634992332820282019728792003956564819968"
-      },
-      "implementationNames": {
-        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": "OptimisticOracleV2"
-      }
-    },
-    {
       "address": "0xAabB54394E8dd61Dd70897E9c80be8de7C64A895",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2008,28 +1984,6 @@
       "address": "0xbe8109517300c78f2bbdC00d9EA8Cf597160017E",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "OptimisticOracle",
-      "address": "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xf396c4025632e439a9c620010cef54a775abed2fd2fe6e4bcc7ca2e6a95a2df7"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1626104040,
-      "sinceBlock": 12813254,
-      "values": {
-        "$immutable": true,
-        "ancillaryBytesLimit": 8192,
-        "defaultLiveness": 7200,
-        "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1750919915,
-        "timerAddress": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": "OptimisticOracle"
-      }
     },
     {
       "address": "0xC4Ae07F276768A3b74AE8c47bc108a2aF0e40eBa",
@@ -4465,38 +4419,6 @@
       "function verifySender(address _expected) returns (bool)",
       "function withdrawFunds(address _to)"
     ],
-    "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": [
-      "constructor(uint256 _liveness, address _finderAddress, address _timerAddress)",
-      "event DisputePrice(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice)",
-      "event ProposePrice(address indexed requester, address indexed proposer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice, uint256 expirationTimestamp, address currency)",
-      "event RequestPrice(address indexed requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward, uint256 finalFee)",
-      "event Settle(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 price, uint256 payout)",
-      "function OO_ANCILLARY_DATA_LIMIT() view returns (uint256)",
-      "function TOO_EARLY_RESPONSE() view returns (int256)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function defaultLiveness() view returns (uint256)",
-      "function disputePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function disputePriceFor(address disputer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function finder() view returns (address)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getRequest(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (tuple(address proposer, address disputer, address currency, bool settled, tuple(bool eventBased, bool refundOnDispute, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled, uint256 bond, uint256 customLiveness) requestSettings, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee))",
-      "function getState(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (uint8)",
-      "function hasPrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (bool)",
-      "function proposePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function proposePriceFor(address proposer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function requestPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward) returns (uint256 totalBond)",
-      "function requests(bytes32) view returns (address proposer, address disputer, address currency, bool settled, tuple(bool eventBased, bool refundOnDispute, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled, uint256 bond, uint256 customLiveness) requestSettings, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee)",
-      "function setBond(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 bond) returns (uint256 totalBond)",
-      "function setCallbacks(bytes32 identifier, uint256 timestamp, bytes ancillaryData, bool callbackOnPriceProposed, bool callbackOnPriceDisputed, bool callbackOnPriceSettled)",
-      "function setCurrentTime(uint256 time)",
-      "function setCustomLiveness(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 customLiveness)",
-      "function setEventBased(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function setRefundOnDispute(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function settle(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 payout)",
-      "function settleAndGetPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (int256)",
-      "function stampAncillaryData(bytes ancillaryData, address requester) pure returns (bytes)",
-      "function timerAddress() view returns (address)"
-    ],
     "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": [
       "constructor(address implementationAddress, address ownerAddress, bytes data) payable",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -4737,34 +4659,6 @@
       "function setRouterRecipient(address _router, address _recipient)",
       "function unapproveRouter(address _router)",
       "function unapproveRouterForPortal(address _router)"
-    ],
-    "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": [
-      "constructor(uint256 _liveness, address _finderAddress, address _timerAddress)",
-      "event DisputePrice(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice)",
-      "event ProposePrice(address indexed requester, address indexed proposer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice, uint256 expirationTimestamp, address currency)",
-      "event RequestPrice(address indexed requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward, uint256 finalFee)",
-      "event Settle(address indexed requester, address indexed proposer, address indexed disputer, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 price, uint256 payout)",
-      "function ancillaryBytesLimit() view returns (uint256)",
-      "function defaultLiveness() view returns (uint256)",
-      "function disputePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function disputePriceFor(address disputer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 totalBond)",
-      "function finder() view returns (address)",
-      "function getCurrentTime() view returns (uint256)",
-      "function getRequest(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (tuple(address proposer, address disputer, address currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness))",
-      "function getState(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (uint8)",
-      "function hasPrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) view returns (bool)",
-      "function proposePrice(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function proposePriceFor(address proposer, address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData, int256 proposedPrice) returns (uint256 totalBond)",
-      "function requestPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData, address currency, uint256 reward) returns (uint256 totalBond)",
-      "function requests(bytes32) view returns (address proposer, address disputer, address currency, bool settled, bool refundOnDispute, int256 proposedPrice, int256 resolvedPrice, uint256 expirationTime, uint256 reward, uint256 finalFee, uint256 bond, uint256 customLiveness)",
-      "function setBond(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 bond) returns (uint256 totalBond)",
-      "function setCurrentTime(uint256 time)",
-      "function setCustomLiveness(bytes32 identifier, uint256 timestamp, bytes ancillaryData, uint256 customLiveness)",
-      "function setRefundOnDispute(bytes32 identifier, uint256 timestamp, bytes ancillaryData)",
-      "function settle(address requester, bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (uint256 payout)",
-      "function settleAndGetPrice(bytes32 identifier, uint256 timestamp, bytes ancillaryData) returns (int256)",
-      "function stampAncillaryData(bytes ancillaryData, address requester) pure returns (bytes)",
-      "function timerAddress() view returns (address)"
     ],
     "0xcCb64fDf1c0Cc1aac1C39E5968E82f89c1B8C769": [
       "error BaseConnextFacet__getAdoptedAsset_assetNotFound()",
@@ -5251,5 +5145,5 @@
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b"
   },
-  "permissionsConfigHash": "0x2aab1553ec008a01acabd473879a28b4307ac01d7d5e275c2dc5c1842859498c"
+  "permissionsConfigHash": "0xde59a7b48536f25c3ea0591ec78cd5e98b21ac63764cf2f387e5ea59b429d48c"
 }
