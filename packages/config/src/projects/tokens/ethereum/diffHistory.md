@@ -1,4 +1,34 @@
-Generated with discovered.json: 0xb44d12c77b25ff6c108a2832976e375edbadddb9
+Generated with discovered.json: 0x04390daa100429821b427d62399f637c5d8a3427
+
+# Diff at Tue, 01 Jul 2025 10:43:36 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@2e3b7342cf8336229de147049665411b14edb1d8 block: 22615727
+- current block number: 22615727
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615727 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract Mog Coin Token (0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xc2c3349d85d03772c28593994df3299d77bbc325
 
 # Diff at Mon, 02 Jun 2025 08:12:37 GMT:
 

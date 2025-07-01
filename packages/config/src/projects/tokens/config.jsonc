@@ -11,19 +11,80 @@
         "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
         "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b", // Virtual Token
         "0x1Bc71130A0e39942a7658878169764Bbd8A45993", // rsETH
-        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22" // cbETH
+        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22", // cbETH,
+        "0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71", // MOG
+        "0xf587B7116879a529353Cc71eE959cD69FD5CAE48", // cgETH.hashkey
+        "0x83dB73EF5192de4B6a4c92bD0141Ba1a0Dc87c65" // Compounding Open Dollar
       ],
+      "names": {
+        "0x0b3e328455c4059eeb9e3f84b5543f74e24e7e1b": "Virtual Token",
+        "0x1Bc71130A0e39942a7658878169764Bbd8A45993": "rsETH",
+        "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22": "cbETH",
+        "0x2Da56AcB9Ea78330f947bD57C54119Debda7AF71": "MOG",
+        "0xf587B7116879a529353Cc71eE959cD69FD5CAE48": "cgETH.hashkey",
+        "0x83dB73EF5192de4B6a4c92bD0141Ba1a0Dc87c65": "Compounding Open Dollar"
+      },
       "overrides": {
         "0x1e89F91Ee35D7d21c8e8238c79146daF7aB8Bb94": {
           "ignoreDiscovery": true
+        },
+        "0x1a44076050125825900e736c501f859c50fE728c": {
+          "fields": {
+            "oapps": {
+              "handler": {
+                "type": "event",
+                "add": {
+                  "event": "DelegateSet"
+                },
+                "groupBy": "sender",
+                "select": [
+                  "delegate"
+                ],
+                "ignoreRelative": true
+              }
+            }
+          }
         }
       }
     },
     "ethereum": {
       "initialAddresses": [
         "0xCa14007Eff0dB1f8135f4C25B34De49AB0d42766",
-        "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0"
-      ]
+        "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+        "0xaaeE1A9723aaDB7afA2810263653A34bA2C21C7a", // MOG (L1)
+        "0x3154Cf16ccdb4C6d922629664174b904d80F2C35" // Base L1StandardBridge
+      ],
+      "overrides": {
+        "0xc2eaB7d33d3cB97692eCB231A5D0e4A649Cb539d": {
+          "ignoreDiscovery": true
+        },
+        "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D": {
+          "ignoreDiscovery": true
+        },
+        "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": {
+          "ignoreRelatives": [
+            "messenger",
+            "MESSENGER",
+            "superchainConfig",
+            "$admin"
+          ],
+          "fields": {
+            "tokenPairs": {
+              "handler": {
+                "type": "event",
+                "add": {
+                  "event": "ERC20BridgeInitiated"
+                },
+                "select": [
+                  "remoteToken"
+                ],
+                "groupBy": "localToken",
+                "ignoreRelative": true
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
