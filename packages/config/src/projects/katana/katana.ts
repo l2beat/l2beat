@@ -16,7 +16,7 @@ export const katana: ScalingProject = underReviewL2({
     description:
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
-    category: 'Validium',
+    category: 'ZK Rollup',
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://katana.network/'],
