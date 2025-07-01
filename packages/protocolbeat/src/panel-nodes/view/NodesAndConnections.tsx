@@ -1,5 +1,6 @@
 import { useStore } from '../store/store'
-import { Connection } from './Connection'
+// import { Connection } from './Connection'
+import { ConnectionsCanvas } from './ConnectionsCanvas'
 import { NodeView } from './NodeView'
 import { useMemo } from 'react'
 import React from 'react'
@@ -41,7 +42,7 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
 
     const visibleNodes = candidates
 
-    const conns = visibleNodes
+    const conns = nodes
       .flatMap((node) =>
         node.fields.map((field, i) => {
           const shouldHide =
@@ -49,7 +50,7 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
             node.hiddenFields.includes(field.name)
           if (shouldHide) return null
 
-          const targetNode = visibleNodes.find((n) => n.id === field.target)
+          const targetNode = nodes.find((n) => n.id === field.target)
           const isDashed = targetNode?.addressType === 'EOA'
           const isHighlighted =
             selected.includes(node.id) || selected.includes(field.target)
@@ -66,7 +67,7 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
           }
         }),
       )
-      .filter(Boolean) as {
+      .filter((x) => x !== null) as {
       key: string
       from: { x: number; y: number; direction: 'left' | 'right' }
       to: { x: number; y: number; direction: 'left' | 'right' }
@@ -75,26 +76,67 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
       isDimmed: boolean
     }[]
 
-    let minX = Infinity,
-      minY = Infinity,
-      maxX = -Infinity,
-      maxY = -Infinity
+    // Use viewport bounds for canvas so it stays near visible area
+    let bounds
+    if (viewportContainer) {
+      const rect = viewportContainer.getBoundingClientRect()
+      const viewX = -transform.offsetX / transform.scale
+      const viewY = -transform.offsetY / transform.scale
+      const viewW = rect.width / transform.scale
+      const viewH = rect.height / transform.scale
+      const M = 800
+      bounds = {
+        minX: viewX - M,
+        minY: viewY - M,
+        width: viewW + 2 * M,
+        height: viewH + 2 * M,
+      }
+    } else {
+      // Fallback to connection bounding box
+      let minX = Infinity,
+        minY = Infinity,
+        maxX = -Infinity,
+        maxY = -Infinity
 
-    conns.forEach(({ from, to }) => {
-      minX = Math.min(minX, from.x, to.x) - 200
-      maxX = Math.max(maxX, from.x, to.x) + 200
-      minY = Math.min(minY, from.y, to.y) - 200
-      maxY = Math.max(maxY, from.y, to.y) + 200
-    })
+      conns.forEach(({ from, to }) => {
+        minX = Math.min(minX, from.x, to.x) - 200
+        maxX = Math.max(maxX, from.x, to.x) + 200
+        minY = Math.min(minY, from.y, to.y) - 200
+        maxY = Math.max(maxY, from.y, to.y) + 200
+      })
 
-    const bounds = {
-      minX,
-      minY,
-      width: maxX - minX,
-      height: maxY - minY,
+      bounds = {
+        minX,
+        minY,
+        width: maxX - minX,
+        height: maxY - minY,
+      }
     }
 
-    return { visible: visibleNodes, connections: conns, bounds }
+    // Filter connections roughly to viewport to limit drawing; keep margin
+    let filteredConns = conns
+    if (viewportContainer) {
+      const rect = viewportContainer.getBoundingClientRect()
+      const viewX = -transform.offsetX / transform.scale
+      const viewY = -transform.offsetY / transform.scale
+      const viewW = rect.width / transform.scale
+      const viewH = rect.height / transform.scale
+      const MARGIN = 800
+
+      filteredConns = conns.filter(
+        ({ from, to }) =>
+          (from.x >= viewX - MARGIN &&
+            from.x <= viewX + viewW + MARGIN &&
+            from.y >= viewY - MARGIN &&
+            from.y <= viewY + viewH + MARGIN) ||
+          (to.x >= viewX - MARGIN &&
+            to.x <= viewX + viewW + MARGIN &&
+            to.y >= viewY - MARGIN &&
+            to.y <= viewY + viewH + MARGIN),
+      )
+    }
+
+    return { visible: visibleNodes, connections: filteredConns, bounds }
   }, [nodes, hidden, selected, enableDimming, transform, viewportContainer])
 
   const { minX, minY, width, height } = bounds
@@ -129,16 +171,10 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
 
   return (
     <>
-      <svg
-        viewBox={`${minX} ${minY} ${width} ${height}`}
-        className="pointer-events-none absolute"
-        style={{ left: minX, top: minY, width, height }}
-        fill="none"
-      >
-        {connections.map((c) => (
-          <Connection {...c} />
-        ))}
-      </svg>
+      <ConnectionsCanvas
+        connections={connections}
+        bounds={{ minX, minY, width, height }}
+      />
 
       {visible.map((node) => {
         const nodeHighlighted = highlightedIds.has(node.id)
