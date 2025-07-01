@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x31597c4c6054b06033b166766fb9a6ca84650845
+Generated with discovered.json: 0x5b3dbc071f6e73b6a108247b2ad1182971923fd1
 
-# Diff at Tue, 01 Jul 2025 14:41:38 GMT:
+# Diff at Tue, 01 Jul 2025 16:03:59 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
-- current block number: 22824327
+- current block number: 22825459
 
 ## Description
 
@@ -88,14 +88,6 @@ predeposit vault deposits are paused (limit 0).
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 22816814 (main branch discovery), not current.
-
-```diff
-    EOA  (0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4) {
-    +++ description: None
-      receivedPermissions:
-+        [{"permission":"interact","from":"ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"set core system parameters like the trusted sequencer and manage forced transactions/batches.","role":".admin"}]
-    }
-```
 
 ```diff
 +   Status: CREATED
