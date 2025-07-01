@@ -235,4 +235,24 @@ contract Test {
 	function sorry() {
 		abi.encodePacked("{\"name\": \"Token #", _tokenId.toString(), "\", \"description\": \"A NodeLicense token\", \"image\": \"data:image/svg+xml;base64,", image, "\", \"attributes\": [{\"trait_type\": \"Owner\", \"value\": \"", StringsUpgradeable.toHexString(uint160(ownerAddress)), "\"}, {\"trait_type\": \"Legal\", \"value\": \"https://xai.games/sentrynodeagreement\"}]}");
 	}
+
+	function verify(uint256[] calldata, uint256[] calldata) public view virtual returns (bool) {
+		assembly {
+			function evaluateLagrangePolyOutOfDomain(polyNum, at) -> res {
+				let omegaPower := 1
+				if polyNum{
+					omegaPower := modexp(OMEGA, polyNum)
+				}
+				res := addmod(modexp(at, DOMAIN_SIZE), sub(R_MOD, 1), R_MOD)
+				if iszero(res) {
+					revertWithMessage(28, "invalid vanishing polynomial")
+				}
+				res := mulmod(res, omegaPower, R_MOD)
+				let denominator := addmod(at, sub(R_MOD, omegaPower), R_MOD)
+				denominator := mulmod(denominator, DOMAIN_SIZE, R_MOD)
+				denominator := modexp(denominator, sub(R_MOD, 2))
+				res := mulmod(res, denominator, R_MOD)
+			}
+		}
+	}
 }
