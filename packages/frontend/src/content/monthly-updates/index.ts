@@ -37,8 +37,8 @@ const upcomingProjectUpdate = v.object({
 
 const monthlyUpdate = v.object({
   title: v.string(),
-  startDate: v.string(),
-  endDate: v.string(),
+  startDate: v.unknown().transform((v) => new Date(v as string)),
+  endDate: v.unknown().transform((v) => new Date(v as string)),
   publishedOn: v.unknown().transform((v) => new Date(v as string)),
   updates: v.array(
     v.union([ecosystemUpdate, dataAvailabilityUpdate, upcomingProjectUpdate]),

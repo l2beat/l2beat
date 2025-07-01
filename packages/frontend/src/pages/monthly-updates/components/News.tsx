@@ -7,7 +7,7 @@ interface Props {
 
 export function News({ news }: Props) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 mt-8">
       <h2 className="font-bold text-[36px] leading-[115%]">News</h2>
       {news.map((news) => (
         <div key={news.title}>

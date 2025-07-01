@@ -18,7 +18,7 @@ export async function getMonthlyUpdateData(
     return undefined
   }
 
-  const monthlyUpdateEntry = getMonthlyUpdateEntry(monthlyUpdate)
+  const monthlyUpdateEntry = await getMonthlyUpdateEntry(monthlyUpdate)
 
   return {
     head: {

@@ -1,21 +1,26 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import { MainPageHeader } from '~/components/MainPageHeader'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import type { EcosystemUpdate } from '~/content/monthly-updates'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { EcosystemUpdateSection } from './components/EcosystemUpdateSection'
+import type { EcosystemMonthlyUpdateEntry } from './utils/getEcosystemEntries'
 
 interface Props extends AppLayoutProps {
   publishedOn: string
   title: string
-  ecosystemUpdates: EcosystemUpdate[]
+  from: UnixTime
+  to: UnixTime
+  ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
 }
 
 export function MonthlyUpdatePage({
   publishedOn,
   title,
-  ecosystemUpdates,
+  from,
+  to,
+  ecosystemsUpdatesEntries,
   ...props
 }: Props) {
   return (
@@ -31,10 +36,12 @@ export function MonthlyUpdatePage({
           </div>
           <HorizontalSeparator className="my-8" />
           <div className="mx-auto mt-8 max-w-[960px] md:pt-8">
-            {ecosystemUpdates.map((ecosystem) => (
+            {ecosystemsUpdatesEntries.map((ecosystem) => (
               <EcosystemUpdateSection
                 key={ecosystem.ecosystemId}
                 ecosystem={ecosystem}
+                from={from}
+                to={to}
               />
             ))}
           </div>
