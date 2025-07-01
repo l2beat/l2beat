@@ -1,6 +1,7 @@
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'
+import { useMemo } from 'react'
 
 export function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
@@ -57,6 +58,34 @@ export function NodesAndConnections() {
   const width = maxX - minX
   const height = maxY - minY
 
+  const highlightedIds = useMemo(() => {
+    if (!enableDimming || selected.length === 0) {
+      return new Set<string>()
+    }
+
+    const directTargets = visible
+      .filter((n) => (selected.includes(n.id) ? n.fields : []))
+      .flatMap((n) =>
+        n.fields
+          .filter((f) => !n.hiddenFields.includes(f.name))
+          .map((f) => f.target),
+      )
+
+    const sourcesOfSelected = visible
+      .filter((n) =>
+        n.fields
+          .filter((f) => !n.hiddenFields.includes(f.name))
+          .some((f) => selected.includes(f.target)),
+      )
+      .map((n) => n.id)
+
+    return new Set<string>([
+      ...selected,
+      ...directTargets,
+      ...sourcesOfSelected,
+    ])
+  }, [enableDimming, selected, visible])
+
   return (
     <>
       <svg
@@ -71,27 +100,6 @@ export function NodesAndConnections() {
       </svg>
 
       {visible.map((node) => {
-        const highlightedIds =
-          enableDimming && selected.length
-            ? new Set([
-                ...selected,
-                ...visible
-                  .filter((n) => (selected.includes(n.id) ? n.fields : []))
-                  .flatMap((n) =>
-                    n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
-                      .map((f) => f.target),
-                  ),
-                ...visible
-                  .filter((n) =>
-                    n.fields
-                      .filter((f) => !n.hiddenFields.includes(f.name))
-                      .some((f) => selected.includes(f.target)),
-                  )
-                  .map((n) => n.id),
-              ])
-            : new Set()
-
         const nodeHighlighted = highlightedIds.has(node.id)
         const isDimmed =
           enableDimming && selected.length > 0 && !nodeHighlighted
