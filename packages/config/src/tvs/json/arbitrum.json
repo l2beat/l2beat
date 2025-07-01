@@ -714,6 +714,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-BUIDL",
+      "priceId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "symbol": "BUIDL",
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+        "chain": "arbitrum",
+        "decimals": 6,
+        "sinceTimestamp": 1739318400
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-BUSD-1",
       "priceId": "binance-usd",
       "symbol": "BUSD",
@@ -730,6 +748,32 @@
       "category": "stablecoin",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-CAKE",
+      "priceId": "pancakeswap-token",
+      "symbol": "CAKE",
+      "name": "PancakeSwap Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1686816267
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -1815,6 +1859,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-EUTBL",
+      "priceId": "eutbl",
+      "symbol": "EUTBL",
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
+        "chain": "arbitrum",
+        "decimals": 5,
+        "sinceTimestamp": 1729851160
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-eXRD-1",
       "priceId": "e-radix",
       "symbol": "eXRD",
@@ -2802,6 +2864,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-KIMA",
+      "priceId": "kima",
+      "symbol": "KIMA",
+      "name": "KIMA",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50764/large/K-logo-01.png?1729053099",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "kima",
+        "decimals": 18,
+        "sinceTimestamp": 1732579200,
+        "address": "0x94fCD9c18f99538C0f7C61c5500cA79F0D5C4dab",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-KNC-1",
       "priceId": "kyber-network-crystal",
       "symbol": "KNC",
@@ -3293,6 +3374,25 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-MLK",
+      "priceId": "milk-alliance",
+      "symbol": "MLK",
+      "name": "MiL.k",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11978/large/2.png?1696511836",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "milk-alliance",
+        "decimals": 8,
+        "sinceTimestamp": 1740829785,
+        "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-MLN-1",
       "priceId": "melon",
       "symbol": "MLN",
@@ -3527,7 +3627,8 @@
         "chain": "ethereum",
         "escrowAddress": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
         "decimals": 18,
-        "sinceTimestamp": 1693872000
+        "sinceTimestamp": 1693872000,
+        "untilTimestamp": 1751353200
       },
       "category": "other",
       "source": "canonical",
@@ -4723,6 +4824,61 @@
       "isAssociated": false
     },
     {
+      "mode": "custom",
+      "id": "arbitrum-SolvBTC-1",
+      "priceId": "solv-btc",
+      "symbol": "SolvBTC",
+      "name": "Solv BTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1712448000
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1712448000
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+              "chain": "arbitrum",
+              "decimals": 8,
+              "escrowAddress": "0x032470abbb896b1255299d5165c1a5e9ef26bcd2",
+              "sinceTimestamp": 1712448000
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "mode": "auto",
       "id": "arbitrum-SPARTA",
       "priceId": "spartadex",
@@ -4796,6 +4952,39 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-SQD-2",
+      "priceId": "subsquid",
+      "symbol": "SQD",
+      "name": "Subsquid",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37869/large/New_Logo_SQD_Icon.png?1720048443",
+      "amount": {
+        "type": "calculation",
+        "operator": "min",
+        "arguments": [
+          {
+            "type": "circulatingSupply",
+            "apiId": "subsquid",
+            "decimals": 18,
+            "sinceTimestamp": 1715904000,
+            "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+            "chain": "ethereum"
+          },
+          {
+            "type": "balanceOfEscrow",
+            "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+            "escrowAddress": "0xcEe284F754E854890e311e3280b767F80797180d",
+            "chain": "ethereum",
+            "decimals": 18,
+            "sinceTimestamp": 1715904000
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
       "isAssociated": false
     },
     {
@@ -5178,6 +5367,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-tBTC-1",
+      "priceId": "tbtc",
+      "symbol": "tBTC",
+      "name": "Arbitrum tBTC v2",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1680261615
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -5713,6 +5928,32 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-USDY",
+      "priceId": "ondo-us-dollar-yield",
+      "symbol": "USDY",
+      "name": "Ondo U.S. Dollar Yield",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1723057357
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-USR",
       "priceId": "resolv-usr",
       "symbol": "USR",
@@ -5739,6 +5980,24 @@
     },
     {
       "mode": "auto",
+      "id": "arbitrum-USTBL",
+      "priceId": "spiko-us-t-bills-money-market-fund",
+      "symbol": "USTBL",
+      "name": "Spiko US T-Bills Money Market Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
+        "chain": "arbitrum",
+        "decimals": 5,
+        "sinceTimestamp": 1729851183
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "arbitrum-USUAL-1",
       "priceId": "usual",
       "symbol": "USUAL",
@@ -5754,6 +6013,25 @@
       },
       "category": "other",
       "source": "canonical",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-UXLINK",
+      "priceId": "uxlink",
+      "symbol": "UXLINK",
+      "name": "UXLINK Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39229/large/uxlink.jpg?1721201390",
+      "amount": {
+        "type": "circulatingSupply",
+        "apiId": "uxlink",
+        "decimals": 18,
+        "sinceTimestamp": 1721174400,
+        "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+        "chain": "arbitrum"
+      },
+      "category": "other",
+      "source": "native",
       "isAssociated": false
     },
     {
@@ -5850,6 +6128,32 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "arbitrum-W",
+      "priceId": "wormhole",
+      "symbol": "W",
+      "name": "Wormhole Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1713221460
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
@@ -6220,6 +6524,61 @@
       "category": "other",
       "source": "canonical",
       "isAssociated": false
+    },
+    {
+      "mode": "custom",
+      "id": "arbitrum-xSolvBTC",
+      "priceId": "solv-protocol-solvbtc-bbn",
+      "symbol": "xSolvBTC",
+      "name": "xSolvBTC",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/xSolvBTC.png?1744170824",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+        "chain": "arbitrum",
+        "decimals": 18,
+        "sinceTimestamp": 1722556800
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "solv-protocol-solvbtc-bbn",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "sinceTimestamp": 1722556800
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "solv-btc",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+              "chain": "arbitrum",
+              "decimals": 18,
+              "escrowAddress": "0x541C21b50e75fb347e01a49Bac69755dE723789B",
+              "sinceTimestamp": 1722556800
+            }
+          }
+        ]
+      },
+      "category": "other",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",
