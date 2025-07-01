@@ -1,4 +1,5 @@
 import { getErrorMessage } from '@l2beat/shared-pure'
+import merge from 'lodash/merge'
 import { BlipRuntime } from '../../blip/BlipRuntime'
 import type {
   DiscoveryCustomType,
@@ -36,7 +37,8 @@ export function decodeHandlerResults(
   }
 
   const runtime = new BlipRuntime(types)
-  const copyBatches = orderByCopyDependencies(fieldOverrides)
+  const fields = merge({}, values, fieldOverrides)
+  const copyBatches = orderByCopyDependencies(fields)
   for (const batch of copyBatches) {
     for (const fieldName of batch) {
       const copy = (fieldOverrides ?? {})[fieldName]?.copy
