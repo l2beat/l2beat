@@ -3,76 +3,154 @@
   "projectId": "katana",
   "tokens": [
     {
-      "mode": "custom",
-      "id": "katana-USDC.pdkatana",
+      "mode": "auto",
+      "id": "katana-AUSD",
+      "priceId": "agora-dollar",
+      "symbol": "AUSD",
+      "name": "AUSD",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/Circle_Agora_White_on_Olive_1080px.png?1722961274",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+        "chain": "katana",
+        "decimals": 6,
+        "sinceTimestamp": 1748541168
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-vbETH",
+      "priceId": "ethereum",
+      "symbol": "vbETH",
+      "name": "Vault Bridge ETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1748344157
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-vbUSDC",
       "priceId": "usd-coin",
-      "symbol": "USDC.pdkatana",
-      "name": "Katana Pre-Deposit USDC",
+      "symbol": "vbUSDC",
+      "name": "Vault Bridge USDC",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
       "amount": {
         "type": "totalSupply",
-        "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
-        "chain": "ethereum",
+        "address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
+        "chain": "katana",
         "decimals": 6,
-        "sinceTimestamp": 1747148987
+        "sinceTimestamp": 1748343387
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
     },
     {
-      "mode": "custom",
-      "id": "katana-USDT.pdkatana",
+      "mode": "auto",
+      "id": "katana-vbUSDS",
+      "priceId": "usds",
+      "symbol": "vbUSDS",
+      "name": "Vault Bridge USDS",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1748347232
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-vbUSDT",
       "priceId": "tether",
-      "symbol": "USDT.pdkatana",
-      "name": "Katana Pre-Deposit USDT",
+      "symbol": "vbUSDT",
+      "name": "Vault Bridge USDT",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
       "amount": {
         "type": "totalSupply",
-        "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
-        "chain": "ethereum",
+        "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+        "chain": "katana",
         "decimals": 6,
-        "sinceTimestamp": 1747148987
+        "sinceTimestamp": 1748354917
       },
-      "category": "other",
+      "category": "stablecoin",
       "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
     },
     {
-      "mode": "custom",
-      "id": "katana-WBTC.pdkatana",
+      "mode": "auto",
+      "id": "katana-vbWBTC",
       "priceId": "wrapped-bitcoin",
-      "symbol": "WBTC.pdkatana",
-      "name": "Katana Pre-Deposit WBTC",
+      "symbol": "vbWBTC",
+      "name": "Vault Bridge WBTC",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
       "amount": {
         "type": "totalSupply",
-        "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
-        "chain": "ethereum",
+        "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
+        "chain": "katana",
         "decimals": 8,
-        "sinceTimestamp": 1747148987
+        "sinceTimestamp": 1748346847
       },
       "category": "other",
       "source": "external",
-      "isAssociated": false
-    },
-    {
-      "mode": "custom",
-      "id": "katana-WETH.pdkatana",
-      "priceId": "weth",
-      "symbol": "WETH.pdkatana",
-      "name": "Katana Pre-Deposit WETH",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
-        "chain": "ethereum",
-        "decimals": 6,
-        "sinceTimestamp": 1747148987
-      },
-      "category": "other",
-      "source": "external",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
     }
   ]
 }

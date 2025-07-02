@@ -56,6 +56,14 @@
           // unused FinancialContractsAdmin
           "ignoreDiscovery": true
         },
+        "0xA0Ae6609447e57a42c51B50EAe921D701823FFAe": {
+          // unused optimistic oracle v2
+          "ignoreDiscovery": true
+        },
+        "0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6": {
+          // unused optimistic oracle v1
+          "ignoreDiscovery": true
+        },
         "0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A": {
           "ignoreInWatchMode": ["nonce"]
         },

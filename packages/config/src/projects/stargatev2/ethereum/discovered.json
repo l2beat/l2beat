@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 22666357,
+  "blockNumber": 22824293,
   "configHash": "0x934615ce72fd0e5d4628ed1386e2a4d6e32f38900cef2eaca615c1b9cfcee7a4",
   "entries": [
     {
@@ -173,14 +173,14 @@
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "22524576783109262",
-        "poolBalance": "65610252000000000000",
+        "plannerFee": "22567254808859089",
+        "poolBalance": "71920462000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 556127,
-        "tvl": "1972071455000000000000"
+        "treasuryFee": 555642,
+        "tvl": "1972063946000000000000"
       },
       "implementationNames": {
         "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D": "StargatePool"
@@ -266,7 +266,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 956,
+        "nonce": 960,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -452,14 +452,14 @@
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "270572617652197011",
-        "poolBalance": "7942218075000000000000",
+        "plannerFee": "291008783554281112",
+        "poolBalance": "164729551000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 2193126,
-        "tvl": "8928166699000000000000"
+        "treasuryFee": 1840794,
+        "tvl": "5803210936000000000000"
       },
       "implementationNames": {
         "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931": "StargatePoolNative"
@@ -540,14 +540,14 @@
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "133059985755044678",
-        "poolBalance": 1084545034067,
+        "plannerFee": "141920130801091731",
+        "poolBalance": 1756705685778,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 175630078394,
-        "tvl": 2982685425362
+        "treasuryFee": 182244238361,
+        "tvl": 107484867610
       },
       "implementationNames": {
         "0x933597a323Eb81cAe705C5bC29985172fd5A3973": "StargatePoolMigratable"
@@ -645,7 +645,7 @@
         "paused": false,
         "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 1,
-        "signerSize": 3,
+        "signerSize": 4,
         "vid": 101,
         "workerFeeLib": "0xa7b5189bcA84Cd304D8553977c7C614329750d99"
       },
@@ -728,14 +728,14 @@
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "191086636908809767",
-        "poolBalance": 18644730361334,
+        "plannerFee": "203593916562734158",
+        "poolBalance": 1611429429609,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 203681767834,
-        "tvl": 7889376749768
+        "treasuryFee": 217643312844,
+        "tvl": 2781441128198
       },
       "implementationNames": {
         "0xc026395860Db2d07ee33e05fE50ed7bD583189C7": "StargatePoolUSDC"
@@ -841,7 +841,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 269,
+        "nonce": 274,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

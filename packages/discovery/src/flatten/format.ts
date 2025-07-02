@@ -189,6 +189,18 @@ function AssemblyIf(node: AST.AssemblyIf, out: OutputStream) {
   out.beginLine()
   out.token('if')
   formatAstNode(node.condition, out)
+  // TODO(radomski): The types in the fast-solidity-parser are wrong as they
+  // are taken from the solidity-parser package verbatim. This check here
+  // shouldn't be present eitherway because we dependend on a bug inside the
+  // parser and now the hashes in the shapes expect that the output will
+  // contain this bug artifact.
+  // This can be removed once we have a script that goes over all the shapes
+  // and updates their hash with the new flattener verison.
+  //
+  // @ts-ignore: This can be Identifier, the types are wrong
+  if (node.condition.type === 'Identifier') {
+    out.noSpace()
+  }
   formatAstNode(node.body, out)
   out.endLine()
 }

@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xe957665b259e7cc041ba31e5cd819dd1e81c010f
+
+# Diff at Tue, 01 Jul 2025 10:33:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22786874
+- current block number: 22823809
+
+## Description
+
+config: remove unused uma contracts.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22786874 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OptimisticOracleV2 (0xA0Ae6609447e57a42c51B50EAe921D701823FFAe)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticOracle (0xC43767F4592DF265B4a9F1a398B97fF24F38C6A6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2c004217c6c3d74370364f368d24d7a729d84b02
 
 # Diff at Thu, 26 Jun 2025 11:10:14 GMT:

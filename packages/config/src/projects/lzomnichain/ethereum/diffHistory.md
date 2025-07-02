@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x957e8da9e671b7cfdf1d6f270a5fa3770f8b3d4b
+
+# Diff at Tue, 01 Jul 2025 11:56:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 22567714
+- current block number: 22824232
+
+## Description
+
+add one signer to the LZ v1 DVN (quorum still 1).
+
+## Watched changes
+
+```diff
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x4ca0e4d3b0e5a52e5fe650e54226de379750d1d0
 
 # Diff at Mon, 26 May 2025 15:00:00 GMT:

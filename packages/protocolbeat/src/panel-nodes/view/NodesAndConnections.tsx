@@ -3,93 +3,96 @@ import { Connection } from './Connection'
 import { NodeView } from './NodeView'
 
 export function NodesAndConnections() {
-  const nodes = useStore((state) => state.nodes)
-  const hidden = useStore((state) => state.hidden)
-  const selected = useStore((state) => state.selected)
-  const enableDimming = useStore((state) => state.userPreferences.enableDimming)
-  const visible = nodes.filter((node) => !hidden.includes(node.id))
+  const nodes = useStore((s) => s.nodes)
+  const hidden = useStore((s) => s.hidden)
+  const selected = useStore((s) => s.selected)
+  const enableDimming = useStore((s) => s.userPreferences.enableDimming)
+  const visible = nodes.filter((n) => !hidden.includes(n.id))
 
-  // Only compute highlighted nodes if dimming is enabled and we have selections
-  const highlightedNodeIds =
-    enableDimming && selected.length > 0
-      ? (() => {
-          // Get the IDs of the first-degree neighbors of selected nodes
-          const firstDegreeNeighborIds = visible
-            .filter((node) => selected.includes(node.id))
-            .flatMap((node) =>
-              node.fields
-                .filter((field) => !node.hiddenFields.includes(field.name)) // Only consider visible fields
-                .map((field) => field.target),
-            )
-            .filter((id) => !hidden.includes(id))
+  const connections = visible
+    .flatMap((node) =>
+      node.fields.map((field, i) => {
+        const shouldHide =
+          hidden.includes(field.target) ||
+          node.hiddenFields.includes(field.name)
+        if (shouldHide) return null
 
-          // Get target nodes pointing to selected nodes
-          const nodesPointingToSelected = visible
-            .filter((node) =>
-              node.fields
-                .filter((field) => !node.hiddenFields.includes(field.name)) // Only consider visible fields
-                .some((field) => selected.includes(field.target)),
-            )
-            .map((node) => node.id)
+        const targetNode = visible.find((n) => n.id === field.target)
+        const isDashed = targetNode?.addressType === 'EOA'
+        const isHighlighted =
+          selected.includes(node.id) || selected.includes(field.target)
+        const isDimmed = enableDimming && selected.length > 0 && !isHighlighted
 
-          // Combine all highlighted node IDs
-          return [
-            ...new Set([
-              ...selected,
-              ...firstDegreeNeighborIds,
-              ...nodesPointingToSelected,
-            ]),
-          ]
-        })()
-      : []
+        return {
+          key: `${node.id}-${i}-${field.target}`,
+          from: field.connection.from,
+          to: field.connection.to,
+          isHighlighted,
+          isDashed,
+          isDimmed,
+        }
+      }),
+    )
+    .filter(Boolean) as {
+    key: string
+    from: { x: number; y: number; direction: 'left' | 'right' }
+    to: { x: number; y: number; direction: 'left' | 'right' }
+    isHighlighted: boolean
+    isDashed: boolean
+    isDimmed: boolean
+  }[]
+
+  let minX = Infinity,
+    minY = Infinity,
+    maxX = -Infinity,
+    maxY = -Infinity
+
+  connections.forEach(({ from, to }) => {
+    minX = Math.min(minX, from.x, to.x) - 200
+    maxX = Math.max(maxX, from.x, to.x) + 200
+    minY = Math.min(minY, from.y, to.y) - 200
+    maxY = Math.max(maxY, from.y, to.y) + 200
+  })
+
+  const width = maxX - minX
+  const height = maxY - minY
 
   return (
     <>
-      {visible.map((node) =>
-        node.fields.map((field, i) => {
-          const shouldHide =
-            hidden.includes(field.target) ||
-            node.hiddenFields.includes(field.name)
+      <svg
+        viewBox={`${minX} ${minY} ${width} ${height}`}
+        className="pointer-events-none absolute"
+        style={{ left: minX, top: minY, width, height }}
+        fill="none"
+      >
+        {connections.map((c) => (
+          <Connection {...c} />
+        ))}
+      </svg>
 
-          if (shouldHide) {
-            return null
-          }
-
-          // Check if this connection is to an EOA node
-          const targetNode = visible.find((n) => n.id === field.target)
-          const isDashed = targetNode?.addressType === 'EOA'
-
-          // A connection is highlighted ONLY if:
-          // 1. It's directly from a selected node to any target
-          // 2. It's directly to a selected node from any source
-          // NOT if it's from a first-degree neighbor (unless that neighbor is also selected)
-          const connectionHighlighted =
-            selected.includes(node.id) || selected.includes(field.target)
-
-          // Dim connections when there are selected nodes, dimming is enabled, and this connection is not highlighted
-          const isDimmed =
-            enableDimming && selected.length > 0 && !connectionHighlighted
-
-          return (
-            <Connection
-              key={`${node.id}-${i}-${field.target}`}
-              from={field.connection.from}
-              to={field.connection.to}
-              isHighlighted={connectionHighlighted}
-              isDashed={isDashed}
-              isDimmed={isDimmed}
-            />
-          )
-        }),
-      )}
       {visible.map((node) => {
-        // A node is highlighted if it's selected or is a first-degree neighbor of a selected node
-        const nodeHighlighted =
-          enableDimming && selected.length > 0
-            ? highlightedNodeIds.includes(node.id)
-            : selected.includes(node.id)
+        const highlightedIds =
+          enableDimming && selected.length
+            ? new Set([
+                ...selected,
+                ...visible
+                  .filter((n) => (selected.includes(n.id) ? n.fields : []))
+                  .flatMap((n) =>
+                    n.fields
+                      .filter((f) => !n.hiddenFields.includes(f.name))
+                      .map((f) => f.target),
+                  ),
+                ...visible
+                  .filter((n) =>
+                    n.fields
+                      .filter((f) => !n.hiddenFields.includes(f.name))
+                      .some((f) => selected.includes(f.target)),
+                  )
+                  .map((n) => n.id),
+              ])
+            : new Set()
 
-        // Dim nodes when there are selected nodes, dimming is enabled, and this node is not highlighted
+        const nodeHighlighted = highlightedIds.has(node.id)
         const isDimmed =
           enableDimming && selected.length > 0 && !nodeHighlighted
 

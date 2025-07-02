@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x78b1acbc48c240441c578997b2ca20d11ec995ee
+
+# Diff at Tue, 01 Jul 2025 10:23:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22796528
+- current block number: 22823769
+
+## Description
+
+upgrade v28 completed.
+
+## Watched changes
+
+```diff
+    contract DiamondProxy (0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      values.getL2SystemContractsUpgradeBatchNumber:
+-        43
++        0
+      values.getL2SystemContractsUpgradeBlockNumber:
+-        43
++        0
+      values.getL2SystemContractsUpgradeTxHash:
+-        "0x6e60bd0408b14d086d55f00ff7313e9826e748a6fddf5cda55ae2883321c9804"
++        "0x0000000000000000000000000000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x6eab51acdb3ad4d61ff0650de53c7b0913501585
 
 # Diff at Fri, 27 Jun 2025 14:59:56 GMT:

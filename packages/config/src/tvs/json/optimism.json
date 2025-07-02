@@ -175,6 +175,24 @@
     },
     {
       "mode": "auto",
+      "id": "optimism-BUIDL",
+      "priceId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "symbol": "BUIDL",
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+        "chain": "optimism",
+        "decimals": 6,
+        "sinceTimestamp": 1739318400
+      },
+      "category": "other",
+      "source": "native",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "optimism-cbETH",
       "priceId": "coinbase-wrapped-staked-eth",
       "symbol": "cbETH",
@@ -2035,7 +2053,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "optimism-USDC-1",
       "priceId": "usd-coin",
       "symbol": "USDC",
@@ -2158,7 +2176,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "optimism-USDS-2",
       "priceId": "usds",
       "symbol": "USDS",
