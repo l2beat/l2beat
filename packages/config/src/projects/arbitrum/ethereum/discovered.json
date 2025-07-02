@@ -5227,5 +5227,8 @@
     "orbitstack/Timelock": "0x04f942abdcad9d7b2cb8d4a7d7ae99eb81b76e7872285ce0148c8cf27034a39c",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "permissionsConfigHash": "0x05265449bcc3f5ce73501b4299c69ba90e3648cf6d6a467c294b0ecf9925101f"
+  "permissionsConfigHash": "0x05265449bcc3f5ce73501b4299c69ba90e3648cf6d6a467c294b0ecf9925101f",
+  "dependentDiscoveries": {
+    "arbitrum": { "arbitrum": { "blockNumber": 348602301 } }
+  }
 }

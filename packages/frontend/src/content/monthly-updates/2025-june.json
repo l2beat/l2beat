@@ -148,11 +148,11 @@
       "news": [
         {
           "title": "EigenCloud has been launched to Bring Blockchain-Grade Trust to Any App",
-          "content": "Eigen Labs [has launched](https://blog.eigencloud.xyz/introducing-eigencloud/) the alpha version of EigenCloud, integrating EigenDA, EigenCompute, and EigenVerify."
+          "content": "Eigen Labs [has launched](https://blog.eigencloud.xyz/introducing-eigencloud/) the alpha version of EigenCloud, integrating EigenDA, EigenCompute, and EigenVerify. As usage grows, EigenCloud will generate protocol fees that flow back to restakers, turning Ethereum into a programmable trust layer. With $12B+ already restaked and over 200 AVSs secured, EigenLayer is now expanding from infrastructure to application-level trust at scale."
         },
         {
           "title": "Redistribution is Live on Testnet",
-          "content": "EigenLayer [activated](https://blog.eigencloud.xyz/redistribution-is-live-on-testnet/) its new “Redistribution” slashing mode on testnet; mainnet rollout expected late June → July 2025."
+          "content": "EigenLayer [activated](https://blog.eigencloud.xyz/redistribution-is-live-on-testnet/) its new “Redistribution” slashing mode on testnet; mainnet rollout expected late June → July 2025. AVSs can now redirect slashed funds (e.g. to reimburse users, reward reliable operators, or power lending / insurance logic) instead of burning them."
         },
         {
           "title": "EigenLayer Hits $817M Staked as AI Agents and Verifiable Apps Advance",
@@ -171,7 +171,7 @@
       "news": [
         {
           "title": "Nethermind’s April Feature: “Surge — A Based Rollup for Ethereum’s Future”",
-          "content": "Surge is a [new rollup template](https://www.nethermind.io/blog/surge-a-based-rollup-template-designed-for-ethereums-future?utm_source=chatgpt.com) built on the Taiko stack with Stage 2 security and no admin keys."
+          "content": "Nethermind published a new blog post on Surge - a [new rollup template](https://www.nethermind.io/blog/surge-a-based-rollup-template-designed-for-ethereums-future?utm_source=chatgpt.com) built on the Taiko stack with Stage 2 security and no admin keys."
         },
         {
           "title": "Nethermind Reveals Smarter Restaking Strategy for Symbiotic Vaults",

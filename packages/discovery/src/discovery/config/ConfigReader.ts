@@ -25,6 +25,29 @@ export class ConfigReader {
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
+    const rawConfig = this.readRawConfig(name)
+
+    const rawConfigForChain = {
+      chain,
+      name,
+      ...(rawConfig.archived ? { archived: true } : {}),
+      modelCrossChainPermissions: rawConfig.modelCrossChainPermissions,
+      ...merge(
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)['all'],
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)[chain],
+      ),
+    }
+
+    const config = new ConfigRegistry(rawConfigForChain)
+
+    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
+
+    return config
+  }
+
+  readRawConfig(name: string) {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
@@ -41,7 +64,7 @@ export class ConfigReader {
     if (!parseResult.success) {
       console.log(formatAsciiBorder([parseResult.message, 'config.jsonc']))
 
-      throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
+      throw new Error(`Cannot parse file ${name}/config.jsonc`)
     }
 
     // biome-ignore lint/suspicious/noExplicitAny: hack that we are aware of
@@ -53,24 +76,7 @@ export class ConfigReader {
         rawConfig,
       )
     }
-
-    const chainRawConfig = {
-      chain,
-      name,
-      ...(rawConfig.archived ? { archived: true } : {}),
-      ...merge(
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        (rawConfig.chains as any)['all'],
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        (rawConfig.chains as any)[chain],
-      ),
-    }
-
-    const config = new ConfigRegistry(chainRawConfig)
-
-    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
-
-    return config
+    return rawConfig
   }
 
   readDiscovery(name: string, chain: string): DiscoveryOutput {

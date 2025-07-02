@@ -81,7 +81,7 @@ export class ZKsyncEraValidatorsHandler implements Handler {
         // UpgradeHyperchains has data in `postUpgradeCalldata` and it uses
         // that calldata to set the validator address as valid. In theory there
         // can be more types of Upgrades that will do different things in the
-        // post-pass but it will always require manuall intervention.
+        // post-pass but it will always require manual intervention.
 
         // NOTE(radomski): Taken from:
         // https://etherscan.io/address/0xd719fca4433646cbd86f6b073ee364d36b856b1d
