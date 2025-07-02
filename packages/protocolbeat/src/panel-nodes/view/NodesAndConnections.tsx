@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
 import React from 'react'
 import { useStore } from '../store/store'
-// import { Connection } from './Connection'
-import { ConnectionsCanvas } from './ConnectionsCanvas'
-import { ConnectionsSVG } from './ConnectionsSVG'
 import { NodeView } from './NodeView'
+import { ConnectionsSVG } from './ConnectionsSVG'
 
 export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const nodes = useStore((s) => s.nodes)
@@ -13,12 +11,6 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const enableDimming = useStore((s) => s.userPreferences.enableDimming)
   const transform = useStore((s) => s.transform)
   const viewportContainer = useStore((s) => s.viewportContainer)
-  const scale = useStore((s) => s.transform.scale)
-
-  const CONNECTION_RENDER_MODE: 'canvas' | 'svg' =
-    scale < 0.5 ? 'svg' : 'canvas'
-
-  console.log('CONNECTION_RENDER_MODE', CONNECTION_RENDER_MODE)
 
   const { visible, connections, bounds } = useMemo(() => {
     // Step 1: filter out hidden nodes
@@ -128,7 +120,7 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
       const viewY = -transform.offsetY / transform.scale
       const viewW = rect.width / transform.scale
       const viewH = rect.height / transform.scale
-      const MARGIN = 800
+      const MARGIN = 0
 
       filteredConns = conns.filter(
         ({ from, to }) =>
@@ -153,42 +145,31 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
       return new Set<string>()
     }
 
-    const directTargets = visible
-      .filter((n) => (selected.includes(n.id) ? n.fields : []))
-      .flatMap((n) =>
-        n.fields
-          .filter((f) => !n.hiddenFields.includes(f.name))
-          .map((f) => f.target),
-      )
+    const selectedAndVisible = visible.filter((n) => selected.includes(n.id))
 
-    const sourcesOfSelected = visible
-      .filter((n) =>
-        n.fields
-          .filter((f) => !n.hiddenFields.includes(f.name))
-          .some((f) => selected.includes(f.target)),
-      )
-      .map((n) => n.id)
+    const directTargets = selectedAndVisible.flatMap((sav) =>
+      sav.fields
+        .filter((f) => !sav.hiddenFields.includes(f.name))
+        .map((f) => f.target),
+    )
+
+    const pointers = visible.filter((v) =>
+      v.fields.some((vf) => selected.includes(vf.target)),
+    )
 
     return new Set<string>([
       ...selected,
       ...directTargets,
-      ...sourcesOfSelected,
+      ...pointers.map((p) => p.id),
     ])
   }, [enableDimming, selected, visible])
 
   return (
     <>
-      {CONNECTION_RENDER_MODE === 'canvas' ? (
-        <ConnectionsCanvas
-          connections={connections}
-          bounds={{ minX, minY, width, height }}
-        />
-      ) : (
-        <ConnectionsSVG
-          connections={connections}
-          bounds={{ minX, minY, width, height }}
-        />
-      )}
+      <ConnectionsSVG
+        connections={connections}
+        bounds={{ minX, minY, width, height }}
+      />
 
       {visible.map((node) => {
         const nodeHighlighted = highlightedIds.has(node.id)
