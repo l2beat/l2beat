@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import { MainPageHeader } from '~/components/MainPageHeader'
+import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
@@ -78,6 +79,7 @@ export function MonthlyUpdatePage({
             ))}
           </div>
         </PrimaryCard>
+        <ScrollToTopButton />
       </SideNavLayout>
     </AppLayout>
   )
