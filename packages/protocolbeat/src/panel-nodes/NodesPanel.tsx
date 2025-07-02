@@ -14,6 +14,7 @@ import { NodesApp } from './NodesApp'
 import type { Field, Node } from './store/State'
 import { useStore as useNodeStore, useStore } from './store/store'
 import { NODE_WIDTH } from './store/utils/constants'
+import { PerformanceDebug } from './view/PerformanceDebug'
 
 export function NodesPanel() {
   const { project } = useParams()
@@ -37,6 +38,7 @@ export function NodesPanel() {
 
   return (
     <div className="h-full w-full overflow-x-hidden">
+      <PerformanceDebug />
       <NodesApp />
     </div>
   )
