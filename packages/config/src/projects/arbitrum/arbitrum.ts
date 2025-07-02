@@ -317,6 +317,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+     {
+      title: 'Timeboost, a new transaction ordering policy, introduced',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2025-04-29T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'BoLD, permissionless proof system, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',
