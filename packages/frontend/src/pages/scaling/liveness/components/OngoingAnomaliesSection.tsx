@@ -38,7 +38,7 @@ export function OngoingAnomaliesSection({
         />
         <h2
           className={cn(
-            'font-bold text-lg',
+            'font-bold text-lg text-negative',
             projectsWithAnomalies.length === 0 && 'text-primary',
           )}
         >
