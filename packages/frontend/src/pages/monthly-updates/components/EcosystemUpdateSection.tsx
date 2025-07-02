@@ -25,7 +25,7 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
     >
       <img
         src={`/images/monthly-updates/${ecosystem.ecosystemId}.png`}
-        className="mb-8 min-h-[60px] w-full object-cover"
+        className="mb-8 min-h-[60px] w-full rounded-lg object-cover"
       />
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
         <MonthlyUpdateTvsChart
