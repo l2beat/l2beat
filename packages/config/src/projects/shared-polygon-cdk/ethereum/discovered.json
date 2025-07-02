@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 22816820,
+  "blockNumber": 22829897,
   "configHash": "0x63c2dd2ee0852b7971ce0d4cf73edefdd6cc6f46742ea67f7389525610c48004",
   "entries": [
     {
@@ -422,7 +422,7 @@
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
         "getProxiedTokensManager": "0xEf1462451C30Ea7aD8555386226059Fe837CA4EF",
-        "getRoot": "0xd949a253fe7d5dda5808420aa214b7b5359b50dc38a3a8d18e5899730524d805",
+        "getRoot": "0x0a8066c8a6d5d973f460a282e9017f04947e92aeae1d1c4d9bcc6ad76816ad02",
         "getWrappedTokenBridgeImplementation": "0xc5240E74839794D512e77bD9b3702c4B6D5b0F0d",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
@@ -653,10 +653,10 @@
         ],
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0xfd25ec281d51573d752e44ea97f679637e9b73f98cc3797a9f83800f10e9eb24",
+        "getRollupExitRoot": "0x7f0e63478dd080a50954d48703b9d78a54b8a26c1c087f5c8586dc3cdefeec1c",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
-        "lastAggregationTimestamp": 1751280659,
+        "lastAggregationTimestamp": 1751439443,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "pessimisticProofSenders": [14, 17, 18, 19, 20],
         "pol": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
@@ -943,8 +943,8 @@
             "programVKey": "0x0000000000000000000000000000000000000000000000000000000000000000"
           }
         ],
-        "totalSequencedBatches": 765405,
-        "totalVerifiedBatches": 764913,
+        "totalSequencedBatches": 766618,
+        "totalVerifiedBatches": 766140,
         "trustedAggregatorAC": [
           "0x6329Fe417621925C81c16F9F9a18c203C21Af7ab",
           "0x20A53dCb196cD2bcc14Ece01F358f1C849aA51dE"
@@ -1024,9 +1024,9 @@
         ],
         "$upgradeCount": 4,
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 59997,
+        "depositCount": 60117,
         "GER_VERSION": "al-v0.3.0",
-        "getRoot": "0xccffbb42f8fd461275b64ebc58828caaa14cdb706b687c6061c9f2699a5e2a6e",
+        "getRoot": "0x0ea390034bfc853bf00f88c6218a01ebfe82fd5ec7abd2c0cb234254105f2f47",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "implementationNames": {

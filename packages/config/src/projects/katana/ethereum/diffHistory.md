@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb3349a79a036f43e1ea6196fd99701dc49c6ba33
+
+# Diff at Wed, 02 Jul 2025 06:54:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@717eea3a0fc625b39e556e700bc9e657bb32fa71 block: 22825494
+- current block number: 22829874
+
+## Description
+
+add op stack gasconfig parameters.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: volatility param: lower denominator -> quicker fee changes on L2
+      values.eip1559Denominator:
+-        0
++        250
+      values.eip1559Elasticity:
+-        0
++        60
+    }
+```
+
 Generated with discovered.json: 0x947fb3788d01d2f19ea5e0f4af048ad614ea9e24
 
 # Diff at Tue, 01 Jul 2025 16:11:11 GMT:
