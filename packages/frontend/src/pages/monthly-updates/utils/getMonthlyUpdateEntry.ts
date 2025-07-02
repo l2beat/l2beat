@@ -25,8 +25,13 @@ export interface MonthlyUpdateEntry {
 export async function getMonthlyUpdateEntry(
   entry: CollectionEntry<'monthly-updates'>,
 ): Promise<MonthlyUpdateEntry> {
+  const from = UnixTime.fromDate(entry.data.startDate)
+  const to = UnixTime.fromDate(entry.data.endDate)
+
   const ecosystemsUpdatesEntries = await getEcosystemMonthlyUpdateEntries(
     entry.data.updates.filter((update) => update.type === 'ecosystem'),
+    from,
+    to,
   )
   const daUpdatesEntries = await getDaMonthlyUpdateEntries(
     entry.data.updates.filter((update) => update.type === 'data-availability'),
@@ -37,8 +42,8 @@ export async function getMonthlyUpdateEntry(
   return {
     id: entry.id,
     title: entry.data.title,
-    from: UnixTime.fromDate(entry.data.startDate),
-    to: UnixTime.fromDate(entry.data.endDate),
+    from,
+    to,
     publishedOn: formatPublicationDate(entry.data.publishedOn),
     ecosystemsUpdatesEntries,
     daUpdatesEntries,

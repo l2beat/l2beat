@@ -4,7 +4,7 @@ import type {
   ProjectScalingCategory,
   ProjectScalingStage,
 } from '@l2beat/config'
-import { assert, type ProjectId } from '@l2beat/shared-pure'
+import { assert, type ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { EcosystemUpdate } from '~/content/monthly-updates'
 import {
@@ -40,6 +40,8 @@ export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
 
 export async function getEcosystemMonthlyUpdateEntries(
   ecosystemUpdateEntries: EcosystemUpdate[],
+  from: UnixTime,
+  to: UnixTime,
 ): Promise<EcosystemMonthlyUpdateEntry[]> {
   const allScalingProjects = await ps.getProjects({
     where: ['isScaling'],
@@ -53,8 +55,8 @@ export async function getEcosystemMonthlyUpdateEntries(
       where: ['isScaling'],
       whereNot: ['isUpcoming', 'archivedAt'],
     }),
-    get7dTvsBreakdown({ type: 'layer2' }),
-    getActivityLatestUops(allScalingProjects),
+    get7dTvsBreakdown({ type: 'layer2' }, to),
+    getActivityLatestUops(allScalingProjects, { type: 'custom', from, to }),
     ps.getProjects({
       ids: ecosystemUpdateEntries.flatMap(
         (e) => (e.newProjectsIds as ProjectId[]) ?? [],
