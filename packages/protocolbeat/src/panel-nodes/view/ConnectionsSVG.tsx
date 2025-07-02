@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { CONNECTION_CONTROL_OFFSET } from './constants'
 
 export interface SvgConnection {
   from: { x: number; y: number; direction: 'left' | 'right' }
@@ -13,22 +14,22 @@ export interface ConnectionsSVGProps {
   bounds: { minX: number; minY: number; width: number; height: number }
 }
 
-/**
- * Alternative to `ConnectionsCanvas` that renders each connection as an SVG
- * <path>. This allows direct comparison of canvas vs. DOM-based rendering
- * overhead. The component receives the same `connections` array that is
- * already viewport-clipped in `NodesAndConnections`.
- */
 export function ConnectionsSVG({ connections, bounds }: ConnectionsSVGProps) {
-  // Memoise path list to avoid re-creating on every render unless inputs change
   const paths = useMemo(() => {
     const xOffset = -bounds.minX
     const yOffset = -bounds.minY
 
     return connections.map((conn) => {
       const fromCtrlX =
-        conn.from.x + (conn.from.direction === 'left' ? -50 : 50)
-      const toCtrlX = conn.to.x + (conn.to.direction === 'left' ? -50 : 50)
+        conn.from.x +
+        (conn.from.direction === 'left'
+          ? -CONNECTION_CONTROL_OFFSET
+          : CONNECTION_CONTROL_OFFSET)
+      const toCtrlX =
+        conn.to.x +
+        (conn.to.direction === 'left'
+          ? -CONNECTION_CONTROL_OFFSET
+          : CONNECTION_CONTROL_OFFSET)
 
       const d = [
         'M',
