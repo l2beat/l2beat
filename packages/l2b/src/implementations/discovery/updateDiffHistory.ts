@@ -7,21 +7,19 @@
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
-import { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryDiff,
   type DiscoveryOutput,
+  DiscoveryRegistry,
   TemplateService,
   combinePermissionsIntoDiscovery,
   diffDiscovery,
-  discover,
   discoveryDiffToMarkdown,
-  getChainConfig,
-  getChainConfigs,
   getDiscoveryPaths,
-  modelPermissionsForIsolatedDiscovery,
+  modelPermissions,
 } from '@l2beat/discovery'
+import { getDependenciesToDiscoverForProject } from '@l2beat/discovery/dist/discovery/modelling/modelPermissions'
 import {
   assert,
   formatAsciiBorder,
@@ -30,6 +28,7 @@ import {
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
+import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -87,13 +86,14 @@ export async function updateDiffHistoryForChain(
   }
 
   if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
-    const rerun = await performDiscoveryOnPreviousBlock(
+    const rerun = await performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       discoveryFolder,
       discoveryFromMainBranch,
       projectName,
       chain,
       saveSources,
       overwriteCache,
+      configReader,
     )
     codeDiff = rerun.codeDiff
 
@@ -189,62 +189,80 @@ async function revertDiffHistory(
   }
 }
 
-async function performDiscoveryOnPreviousBlock(
+async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   discoveryFolder: string,
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chain: string,
   saveSources: boolean,
   overwriteCache: boolean,
+  configReader: ConfigReader,
 ) {
   if (discoveryFromMainBranch === undefined) {
+    console.log(`No previous discovery found for ${projectName} on ${chain}`)
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
-  // To check for changes to source code,
-  // download sources for block number from main branch
-  // Remove any old sources we fetched before, so that their count doesn't grow
-  await rimraf(`${discoveryFolder}/.code@*`, { glob: true })
-  await rimraf(`${discoveryFolder}/.flat@*`, { glob: true })
+  const discoveries = new DiscoveryRegistry()
+  // We rediscover on the past block number, but with current configs and dependencies
+  const rawConfig = configReader.readRawConfig(projectName)
+  const dependencies: { project: string; chain: string }[] =
+    rawConfig.modelCrossChainPermissions
+      ? getDependenciesToDiscoverForProject(projectName, configReader)
+      : [{ project: projectName, chain }]
 
-  const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
-
-  console.log('Discovering on previous block...')
-  await discover(
-    {
-      project: projectName,
-      chain: getChainConfig(chain),
-      blockNumber: blockNumberFromMainBranch,
-      sourcesFolder: `.code@${blockNumberFromMainBranch}`,
-      flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
-      discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+  for (const dependency of dependencies) {
+    let blockNumber =
+      discoveryFromMainBranch.dependentDiscoveries?.[dependency.project]?.[
+        dependency.chain
+      ]?.blockNumber
+    if (dependency.project === projectName && dependency.chain === chain) {
+      blockNumber = discoveryFromMainBranch.blockNumber
+    }
+    if (blockNumber === undefined) {
+      console.log(
+        `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+      )
+      continue
+    }
+    const prevStructure = await rediscoverStructureOnBlock(
+      dependency.project,
+      dependency.chain,
+      blockNumber,
       saveSources,
       overwriteCache,
+    )
+    discoveries.set(prevStructure.name, prevStructure.chain, prevStructure)
+  }
+
+  const discoveryPaths = getDiscoveryPaths()
+  const templateService = new TemplateService(discoveryPaths.discovery)
+  const permissionsOutput = await modelPermissions(
+    projectName,
+    discoveries,
+    configReader,
+    templateService,
+    discoveryPaths,
+    {
+      debug: false,
+      // We rediscover on the past block number, but with current configs and dependencies.
+      // Those dependencies might not have been referenced in the old discovery.
+      // In that case we don't fail - the diff will show all those "added".
+      ignoreMissingDependencies: true,
     },
-    getChainConfigs(),
-    Logger.SILENT,
   )
-  console.log('Discovery completed')
 
-  const prevDiscoveryFile = readFileSync(
-    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
-    'utf-8',
-  )
-  let prevDiscovery = JSON.parse(prevDiscoveryFile) as DiscoveryOutput
-
-  // This is a temporary solution to model project in isolation
-  // until we refactor diffHistory to support cross-chain discovery
-  await modelAndInjectPermissions(prevDiscovery, projectName, chain)
-  prevDiscovery = withoutUndefinedKeys(prevDiscovery)
-
-  // Remove discovered@... file, we don't need it
-  await rimraf(
-    `${discoveryFolder}/discovered@${blockNumberFromMainBranch}.json`,
-  )
+  const targetDiscovery = discoveries.get(projectName, chain)
+  if (targetDiscovery === undefined) {
+    throw new Error(`Target discovery not found for ${projectName} on ${chain}`)
+  }
+  combinePermissionsIntoDiscovery(targetDiscovery, permissionsOutput)
+  const prevDiscovery = withoutUndefinedKeys(targetDiscovery)
 
   // get code diff with main branch
+  // (we only diff code for target discovery, not dependencies)
   const flatDiff = compareFolders(
-    `${discoveryFolder}/.flat@${blockNumberFromMainBranch}`,
+    `${discoveryFolder}/.flat@${discoveryFromMainBranch.blockNumber}`,
     `${discoveryFolder}/.flat`,
   )
 
@@ -468,21 +486,4 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
-}
-
-async function modelAndInjectPermissions(
-  prevDiscovery: DiscoveryOutput,
-  projectName: string,
-  chain: string,
-) {
-  const discoveryPaths = getDiscoveryPaths()
-  const configReader = new ConfigReader(discoveryPaths.discovery)
-  const templateService = new TemplateService(discoveryPaths.discovery)
-  const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
-    prevDiscovery,
-    configReader.readConfig(projectName, chain).permission,
-    templateService,
-    discoveryPaths,
-  )
-  combinePermissionsIntoDiscovery(prevDiscovery, permissionsOutput)
 }
