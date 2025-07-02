@@ -14,7 +14,7 @@ interface Props {
 
 export function ProjectHeader({ project, showOngoingAnomaly }: Props) {
   return (
-    <div className="flex items-center gap-6">
+    <div className="flex gap-6 max-md:flex-col md:items-center">
       <h1 className="flex items-center justify-start gap-3">
         {project.slug && (
           <img
@@ -32,7 +32,7 @@ export function ProjectHeader({ project, showOngoingAnomaly }: Props) {
       {showOngoingAnomaly && (
         <a
           href="#liveness"
-          className="flex h-8 items-center gap-2 rounded border border-negative p-2"
+          className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
         >
           <LiveIndicator />
           <h3 className="font-medium text-negative text-xs uppercase leading-none">

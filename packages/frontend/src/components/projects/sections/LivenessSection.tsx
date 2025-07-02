@@ -34,7 +34,9 @@ export function LivenessSection({
 }: LivenessSectionProps) {
   return (
     <ProjectSection {...sectionProps}>
-      <OngoingAnomalies anomalies={anomalies} />
+      <OngoingAnomalies
+        anomalies={anomalies.filter((a) => a.end === undefined)}
+      />
       <p className="text-base">
         The chart illustrates how &quot;live&quot; the project&apos;s operators
         are by displaying how frequently they submit transactions of the
