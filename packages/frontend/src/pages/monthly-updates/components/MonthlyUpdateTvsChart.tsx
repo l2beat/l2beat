@@ -71,7 +71,7 @@ export function MonthlyUpdateTvsChart({
   const range = getChartRange(chartData)
 
   return (
-    <PrimaryCard className="border border-divider">
+    <PrimaryCard className="!rounded-lg border border-divider">
       <Header range={range} stats={stats} unit={'usd'} />
       <ChartContainer
         meta={chartMeta}
