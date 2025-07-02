@@ -98,9 +98,6 @@ export function DaAbsoluteThroughputChart({
           yAxis: {
             unit: ` ${unit}`,
             tickCount: 3,
-            tick: {
-              width: 100,
-            },
           },
         })}
         <ChartTooltip
