@@ -2972,5 +2972,8 @@
     "orbitstack/layer2/TreasuryTimelock": "0x980b51e8fac48051f563d3246b01c151b043c4bd3e252b27a5f4a301a0a3fad3",
     "orbitstack/layer2/UpgradeExecRouteBuilder": "0xf345ec40fe1222ef7f4a526c7eb6312670077f7d9b24d7f9f82c517103b02639"
   },
-  "permissionsConfigHash": "0x05265449bcc3f5ce73501b4299c69ba90e3648cf6d6a467c294b0ecf9925101f"
+  "permissionsConfigHash": "0x05265449bcc3f5ce73501b4299c69ba90e3648cf6d6a467c294b0ecf9925101f",
+  "dependentDiscoveries": {
+    "arbitrum": { "ethereum": { "blockNumber": 22730549 } }
+  }
 }
