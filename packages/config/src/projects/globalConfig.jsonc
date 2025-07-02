@@ -35,6 +35,9 @@
         "0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe": "Scroll Multisig 3",
         "0x8FA3b4570B4C96f8036C13b64971BA65867eEB48": "Scroll Multisig 4",
         "0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD": "Scroll Security Council", // multichain multisig
+
+        "0xd512543315c95506E4209805b888414EEF15C8C4": "Katana Admin Multisig", // multichain multisig
+        "0x03105070424FbA70E4FC37A674eB70eD5190F9A0": "Katana DeFi SC Multisig", // multichain multisig
         // eoa names (mostly for SCs)
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress", // aztec operator (private key is public)
         "0x352f1defB49718e7Ea411687E850aA8d6299F7aC": "Optimism EOA 1", // deputypauser

@@ -538,11 +538,11 @@ export interface ProjectScalingStateValidationCategory {
     | 'Verification Keys Generation'
     | 'Proven Program'
     | 'Validity proofs'
+    | 'Pessimistic Proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
-    | 'Pessimistic Proofs'
     | 'Fraud proofs'
     // Other
     | 'No state validation'
