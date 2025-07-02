@@ -74,15 +74,10 @@ export function getCode(
     address,
   )
 
-  const flatCodeCurrent = isFlatCodeCurrent(
-    configReader,
-    project,
-    address,
-    codePaths,
-  )
-
-  if (checkFlatCode && !flatCodeCurrent) {
-    throw new Error('Flat code is outdated')
+  if (checkFlatCode) {
+    if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
+      throw new Error('Flat code is outdated')
+    }
   }
 
   return {
