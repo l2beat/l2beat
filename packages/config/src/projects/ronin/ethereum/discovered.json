@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 22796542,
+  "blockNumber": 22824247,
   "configHash": "0x9f8b46154d89d238dacebf27b853c64d7ffd9c295b2091b1a4c857b9c98b2830",
   "entries": [
     {
@@ -179,7 +179,7 @@
         ],
         "required": 2,
         "spentToday": 0,
-        "transactionCount": 27
+        "transactionCount": 28
       },
       "implementationNames": {
         "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": "MultiSigWalletWithDailyLimit"
@@ -505,7 +505,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2704802262627831900328886"
+        "totalSupply": "2698701732682237808787569"
       },
       "implementationNames": {
         "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"

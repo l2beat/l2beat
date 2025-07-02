@@ -19,7 +19,9 @@
     "getNumberOfPriceRequests",
     "getCurrentRoundId",
     "currentActiveRequests",
-    "cumulativeStake"
+    "cumulativeStake",
+    "rewardPerToken",
+    "rewardPerTokenStored"
   ],
   "fields": {
     "owner": {
