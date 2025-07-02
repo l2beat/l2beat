@@ -1,7 +1,7 @@
 import { createHash } from 'crypto'
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { Hash256 } from '@l2beat/shared-pure'
+import { assert, Hash256 } from '@l2beat/shared-pure'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionsConfig } from '../config/PermissionConfig'
@@ -30,8 +30,12 @@ export type DiscoveryBlockNumbers = {
 export class DiscoveryRegistry {
   discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
 
-  get(project: string, chain: string): DiscoveryOutput | undefined {
-    return this.discoveries[project]?.[chain]
+  get(project: string, chain: string): DiscoveryOutput {
+    assert(
+      this.discoveries[project]?.[chain],
+      `Discovery for ${project} on ${chain} is not set.`,
+    )
+    return this.discoveries[project][chain]
   }
 
   set(project: string, chain: string, discovery: DiscoveryOutput) {
@@ -83,7 +87,6 @@ export async function modelPermissions(
   paths: DiscoveryPaths,
   options: {
     debug: boolean
-    ignoreMissingDependencies?: boolean
   },
 ): Promise<PermissionsOutput> {
   const { permissionFacts, permissionsConfigHash } =
@@ -161,14 +164,12 @@ export async function modelPermissionFactsUsingClingo(
   paths: DiscoveryPaths,
   options: {
     debug: boolean
-    ignoreMissingDependencies?: boolean
   },
 ) {
   const clingoForProject = generateClingoForDiscoveries(
     discoveries,
     configReader,
     templateService,
-    options,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
@@ -210,25 +211,11 @@ export function generateClingoForDiscoveries(
   discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
-  options: {
-    ignoreMissingDependencies?: boolean
-  } = {},
 ): string {
   const generatedClingo: string[] = []
 
   for (const { project, chain } of discoveries.getSortedProjects()) {
     const discovery = discoveries.get(project, chain)
-    if (!discovery) {
-      if (options.ignoreMissingDependencies) {
-        console.log(
-          `Ignoring missing dependency: ${project} on ${chain}, as requested.`,
-        )
-        continue
-      }
-      throw new Error(
-        `Discovery for ${project} on ${chain} is required as a dependency but is not provided.`,
-      )
-    }
     const config = configReader.readConfig(project, chain)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
