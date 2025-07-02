@@ -29,6 +29,7 @@ export function createSharedModule(
         clock,
         new DiscordWebhookClient(config.discord.anomaliesWebhookUrl),
         db,
+        config.discord.anomaliesMinDuration,
       )
     : undefined
 
