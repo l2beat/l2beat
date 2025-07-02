@@ -96,14 +96,14 @@ async function getLivenessData(projectId?: ProjectId) {
     (r) => r.projectId,
   )
 
-  for (const project of trackedTxsProjects) {
+  for (const trackedTxProject of trackedTxsProjects) {
     const livenessConfig = livenessProjects.find(
-      (p) => p.id === project.id,
+      (p) => p.id === trackedTxProject.id,
     )?.livenessConfig
 
-    const project30Days = groupedLast30Days?.[project.id]
-    const project90Days = groupedLast90Days?.[project.id]
-    const projectMax = groupedMax?.[project.id]
+    const project30Days = groupedLast30Days?.[trackedTxProject.id]
+    const project90Days = groupedLast90Days?.[trackedTxProject.id]
+    const projectMax = groupedMax?.[trackedTxProject.id]
     if (
       isEmpty(project30Days) &&
       isEmpty(project90Days) &&
@@ -111,8 +111,9 @@ async function getLivenessData(projectId?: ProjectId) {
     ) {
       continue
     }
-    const anomalies = anomaliesByProjectId[project.id] ?? []
-    const realTimeAnomalies = realTimeAnomaliesByProjectId[project.id] ?? []
+    const anomalies = anomaliesByProjectId[trackedTxProject.id] ?? []
+    const realTimeAnomalies =
+      realTimeAnomaliesByProjectId[trackedTxProject.id] ?? []
 
     const livenessData: LivenessProject = {
       stateUpdates: mapAggregatedLivenessRecords(
@@ -120,7 +121,7 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'stateUpdates',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
@@ -129,7 +130,7 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'batchSubmissions',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
@@ -138,7 +139,7 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'proofSubmissions',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
@@ -152,7 +153,7 @@ async function getLivenessData(projectId?: ProjectId) {
       livenessData[to] = { ...data }
     }
 
-    projects[project.id.toString()] = livenessData
+    projects[trackedTxProject.id.toString()] = livenessData
   }
 
   return projects
@@ -242,18 +243,20 @@ function getAnomalies(
       durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
       subtype: a.subtype,
     })),
-  ].sort((a, b) => {
-    if (a.end === undefined && b.end === undefined) {
-      return b.start - a.start
-    }
-    if (a.end === undefined) {
-      return -1
-    }
-    if (b.end === undefined) {
-      return 1
-    }
-    return b.end - a.end
-  })
+  ].sort(sortAnomalies)
+}
+
+function sortAnomalies(a: LivenessAnomaly, b: LivenessAnomaly) {
+  if (a.end === undefined && b.end === undefined) {
+    return b.start - a.start
+  }
+  if (a.end === undefined) {
+    return -1
+  }
+  if (b.end === undefined) {
+    return 1
+  }
+  return b.end - a.end
 }
 
 function getMockLivenessData(): LivenessResponse {

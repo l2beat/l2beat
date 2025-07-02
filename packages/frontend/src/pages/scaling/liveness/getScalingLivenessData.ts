@@ -23,6 +23,27 @@ export async function getScalingLivenessData(
     ),
   ])
 
+  const ongoingAnomalies = Object.values(entries)
+    .flat()
+    .flatMap((entry) => {
+      const ongoingAnomalies = entry.anomalies.filter(
+        (anomaly) => anomaly.end === undefined,
+      )
+
+      if (ongoingAnomalies.length === 0) {
+        return undefined
+      }
+
+      return ongoingAnomalies.map((anomaly) => ({
+        ...anomaly,
+        project: {
+          name: entry.name,
+          slug: entry.slug,
+        },
+      }))
+    })
+    .filter((entry) => entry !== undefined)
+
   return {
     head: {
       manifest,
@@ -38,6 +59,7 @@ export async function getScalingLivenessData(
       props: {
         ...appLayoutProps,
         entries,
+        ongoingAnomalies,
       },
     },
   }
