@@ -61,6 +61,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     emergencyWarning?: string
+    showOngoingAnomaly?: boolean
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -161,6 +162,7 @@ export async function getScalingProjectEntry(
     getScalingDaSolution(project),
     getContractUtils(),
   ])
+  const projectLiveness = liveness[project.id]
 
   const tvsProjectStats = tvsStats.projects[project.id]
   const header: ProjectScalingEntry['header'] = {
@@ -168,6 +170,9 @@ export async function getScalingProjectEntry(
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
+    showOngoingAnomaly:
+      projectLiveness &&
+      projectLiveness?.anomalies.filter((a) => a.end === undefined).length > 0,
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
@@ -334,7 +339,7 @@ export async function getScalingProjectEntry(
   const livenessSection = await getLivenessSection(
     helpers,
     project,
-    liveness[project.id],
+    projectLiveness,
     projectsChangeReport.projects[project.id],
   )
   if (livenessSection) {

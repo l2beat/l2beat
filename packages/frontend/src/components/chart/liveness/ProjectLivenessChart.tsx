@@ -68,7 +68,7 @@ export function ProjectLivenessChart({
   return (
     <section className="flex flex-col">
       <ProjectChartTimeRange range={chartRange} />
-      <ChartControlsWrapper className="mt-4 mb-2">
+      <ChartControlsWrapper className="mt-4 mb-2 flex-wrap-reverse">
         <LivenessChartSubtypeControls
           subtype={subtype}
           setSubtype={setSubtype}

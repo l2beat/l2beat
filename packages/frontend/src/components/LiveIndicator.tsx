@@ -1,21 +1,20 @@
 import { cn } from '~/utils/cn'
 
-const sizes = {
-  sm: 'size-2',
-  md: 'size-3',
-}
-type Size = keyof typeof sizes
-
 export function LiveIndicator({
   size = 'sm',
   disabled,
 }: {
-  size?: Size
+  size?: 'sm' | 'md'
   disabled?: boolean
 }) {
-  const sizeClassName = sizes[size]
   return (
-    <span className={cn('relative flex', sizeClassName)}>
+    <span
+      className={cn(
+        'relative flex',
+        size === 'sm' && 'ml-1 size-2',
+        size === 'md' && 'ml-1.5 size-3',
+      )}
+    >
       <span
         className={cn(
           'absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75',
@@ -26,7 +25,8 @@ export function LiveIndicator({
         className={cn(
           'relative inline-flex rounded-full bg-negative',
           disabled && 'bg-secondary',
-          sizeClassName,
+          size === 'sm' && 'size-2',
+          size === 'md' && 'size-3',
         )}
       />
     </span>
