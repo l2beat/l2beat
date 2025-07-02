@@ -11,13 +11,31 @@
   "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
   "ignoreRelatives": ["gasTokenAddress", "pol"],
   "fields": {
+    "aggchainManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
+        }
+      ]
+    },
+    "vkeyManager": {
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "manage whether aggchainVkeys are managed by the AggLayerGateway or AggchainFEP. Add new supported aggchainVkeys to AggchainFEP."
+        }
+      ]
+    },
     "aggregationVkey": {
-      "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key."
+      "severity": "HIGH",
+      "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
     },
     "rangeVkeyCommitment": {
-      "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks."
+      "severity": "HIGH",
+      "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
     }
-    // these params are there but not used, just like 'optimistic mode' is currently not wired up:
+    // these params are there but not used, just like 'optimistic mode' is currently not wired up (must check whether the proof references it):
     // "admin": {
     //   "permissions": [
     //     {

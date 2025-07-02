@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x2a0f533007591442d6925fd1908c71c51cc76e63
+Generated with discovered.json: 0xf1a035373ee38ee43fffc94cfdaf8ed272596f35
 
-# Diff at Wed, 02 Jul 2025 12:21:53 GMT:
+# Diff at Wed, 02 Jul 2025 15:28:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
@@ -108,8 +108,17 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```diff
     contract Katana Multisig 2 (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
     +++ description: None
-      receivedPermissions.0:
--        {"permission":"guard","from":"ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":".guardian"}
+      receivedPermissions.0.description:
++        "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
+      receivedPermissions.0.role:
+-        ".guardian"
++        ".aggchainManager"
+      receivedPermissions.0.from:
+-        "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
++        "ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
+      receivedPermissions.0.permission:
+-        "guard"
++        "interact"
     }
 ```
 

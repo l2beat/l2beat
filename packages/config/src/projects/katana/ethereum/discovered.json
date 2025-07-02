@@ -105,10 +105,12 @@
       },
       "fieldMeta": {
         "aggregationVkey": {
-          "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key."
+          "severity": "HIGH",
+          "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
         },
         "rangeVkeyCommitment": {
-          "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks."
+          "severity": "HIGH",
+          "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
         }
       },
       "implementationNames": {
@@ -1169,6 +1171,12 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash.",
+          "role": ".aggchainManager"
+        },
         {
           "permission": "interact",
           "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
@@ -3742,9 +3750,9 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainFEP": "0x1e4701c3d602b2895102d018f1b9a77f0e5c63866dc391fe59b351c8a0bb4e99",
+    "polygon-cdk/AggchainFEP": "0x5be491d910b795a115b54ac9f97b442a81a67941428c08569349c4bf43ff131e",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "permissionsConfigHash": "0x9eb72c7a1af4219ef3cf92a2291daa96369925a57dd8cfb2675ee5027dcfe871"
+  "permissionsConfigHash": "0xd0a0652a10f541cbd858d1161b986284251e6f7549983b59fff909d83186eaa5"
 }
