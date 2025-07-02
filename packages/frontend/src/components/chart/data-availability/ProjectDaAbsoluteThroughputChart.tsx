@@ -37,7 +37,7 @@ interface Props {
   isLoading: boolean
   showMax: boolean
   milestones: Milestone[]
-  syncedUntil?: UnixTime
+  syncedUntil: UnixTime | undefined
 }
 
 export function ProjectDaAbsoluteThroughputChart({
