@@ -172,7 +172,7 @@ function Stat({ name, seconds }: { name: string; seconds: number }) {
   )
 }
 
-function formatDuration(durationInSeconds: number) {
+export function formatDuration(durationInSeconds: number) {
   const seconds = durationInSeconds
   const minutes = Math.floor(seconds / 60)
   const hours = Math.floor(minutes / 60)

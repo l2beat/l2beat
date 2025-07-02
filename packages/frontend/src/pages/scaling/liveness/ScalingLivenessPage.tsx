@@ -12,14 +12,16 @@ import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>
-  ongoingAnomalies: (LivenessAnomaly & {
-    project: { name: string; slug: string }
-  })[]
+  projectsWithAnomalies: {
+    name: string
+    slug: string
+    anomalies: LivenessAnomaly[]
+  }[]
 }
 
 export function ScalingLivenessPage({
   entries,
-  ongoingAnomalies,
+  projectsWithAnomalies,
   ...props
 }: Props) {
   return (
@@ -27,8 +29,10 @@ export function ScalingLivenessPage({
       <SideNavLayout>
         <LivenessTimeRangeContextProvider>
           <LivenessHeader />
-
-          <OngoingAnomaliesSection anomalies={ongoingAnomalies} />
+          <OngoingAnomaliesSection
+            projectsWithAnomalies={projectsWithAnomalies}
+            className="max-md:mt-4 md:mb-6"
+          />
           <TableFilterContextProvider>
             <ScalingLivenessTables {...entries} />
           </TableFilterContextProvider>

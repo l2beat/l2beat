@@ -2,6 +2,7 @@ import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -12,7 +13,6 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './LivenessDurationCell'
-import { LiveIndicator } from '~/components/LiveIndicator'
 
 const SHOWN_ANOMALIES = 4
 
@@ -156,24 +156,24 @@ function AnomalyTooltipContent(props: {
   )
 }
 
-function AnomalyTypeBadge(props: {
+export function AnomalyTypeBadge(props: {
   type: LivenessAnomaly['subtype']
 }) {
   return (
-    <span className="w-max rounded bg-orange-400 px-1.5 text-black">
-      {typeToLabel(props.type)}
+    <span className="w-max rounded bg-orange-400 px-1.5 text-black uppercase">
+      {anomalySubtypeToLabel(props.type)}
     </span>
   )
 }
 
-function typeToLabel(type: LivenessAnomaly['subtype']) {
+export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   switch (type) {
     case 'batchSubmissions':
-      return 'TX DATA SUBMISSIONS'
+      return 'TX data submissions'
     case 'proofSubmissions':
-      return 'PROOF SUBMISSIONS'
+      return 'Proof submissions'
     case 'stateUpdates':
-      return 'STATE UPDATES'
+      return 'State updates'
     default:
       assertUnreachable(type)
   }

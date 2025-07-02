@@ -34,13 +34,11 @@ export async function getScalingLivenessData(
         return undefined
       }
 
-      return ongoingAnomalies.map((anomaly) => ({
-        ...anomaly,
-        project: {
-          name: entry.name,
-          slug: entry.slug,
-        },
-      }))
+      return {
+        name: entry.name,
+        slug: entry.slug,
+        anomalies: ongoingAnomalies,
+      }
     })
     .filter((entry) => entry !== undefined)
 
@@ -59,7 +57,7 @@ export async function getScalingLivenessData(
       props: {
         ...appLayoutProps,
         entries,
-        ongoingAnomalies,
+        projectsWithAnomalies: ongoingAnomalies,
       },
     },
   }

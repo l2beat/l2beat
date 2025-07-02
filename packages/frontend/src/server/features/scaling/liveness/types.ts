@@ -1,4 +1,12 @@
-import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import type { UnixTime } from '@l2beat/shared-pure'
+
+export const TrackedTxsConfigSubtypeValues = [
+  'stateUpdates',
+  'batchSubmissions',
+  'proofSubmissions',
+] as const
+export type TrackedTxsConfigSubtype =
+  (typeof TrackedTxsConfigSubtypeValues)[number]
 
 export type LivenessTimeRange = '30d' | '90d' | 'max'
 
