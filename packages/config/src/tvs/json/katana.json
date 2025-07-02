@@ -3,6 +3,37 @@
   "projectId": "katana",
   "tokens": [
     {
+      "mode": "custom",
+      "id": "katana-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "340282366920938463463374607431768211455",
+            "decimals": 18,
+            "sinceTimestamp": 1748344157
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "katana",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+            "sinceTimestamp": 1748344157
+          }
+        ]
+      },
+      "isAssociated": false
+    },
+    {
       "mode": "auto",
       "id": "katana-AUSD",
       "priceId": "agora-dollar",
@@ -28,7 +59,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "katana-vbETH",
       "priceId": "ethereum",
       "symbol": "vbETH",
@@ -40,6 +71,35 @@
         "chain": "katana",
         "decimals": 18,
         "sinceTimestamp": 1748344157
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
+              "chain": "katana",
+              "decimals": 18,
+              "sinceTimestamp": 1748344157
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "ethereum",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "native",
+              "chain": "katana",
+              "decimals": 18,
+              "sinceTimestamp": 1748344157,
+              "escrowAddress": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62"
+            }
+          }
+        ]
       },
       "category": "ether",
       "source": "external",
