@@ -34,3 +34,4 @@ export type {
 export type { TokenValueRecord } from './tvs/token-value/entity'
 export type { ProjectValueRecord } from './tvs/project-value/entity'
 export type { UpdateDiffRecord } from './discovery/update-diff/entity'
+export type { NotificationRecord } from './other/notifications/entity'

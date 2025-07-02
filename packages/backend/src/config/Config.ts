@@ -210,6 +210,7 @@ export interface DiscordConfig {
 
 export interface DiscordWebhookConfig {
   readonly anomaliesWebhookUrl?: string
+  readonly anomaliesMinDuration: number
 }
 
 export interface DaBeatConfig {
