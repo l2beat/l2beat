@@ -3,6 +3,7 @@ import React from 'react'
 import { useStore } from '../store/store'
 // import { Connection } from './Connection'
 import { ConnectionsCanvas } from './ConnectionsCanvas'
+import { ConnectionsSVG } from './ConnectionsSVG'
 import { NodeView } from './NodeView'
 
 export const NodesAndConnections = React.memo(function NodesAndConnections() {
@@ -12,6 +13,12 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
   const enableDimming = useStore((s) => s.userPreferences.enableDimming)
   const transform = useStore((s) => s.transform)
   const viewportContainer = useStore((s) => s.viewportContainer)
+  const scale = useStore((s) => s.transform.scale)
+
+  const CONNECTION_RENDER_MODE: 'canvas' | 'svg' =
+    scale < 0.5 ? 'svg' : 'canvas'
+
+  console.log('CONNECTION_RENDER_MODE', CONNECTION_RENDER_MODE)
 
   const { visible, connections, bounds } = useMemo(() => {
     // Step 1: filter out hidden nodes
@@ -171,10 +178,17 @@ export const NodesAndConnections = React.memo(function NodesAndConnections() {
 
   return (
     <>
-      <ConnectionsCanvas
-        connections={connections}
-        bounds={{ minX, minY, width, height }}
-      />
+      {CONNECTION_RENDER_MODE === 'canvas' ? (
+        <ConnectionsCanvas
+          connections={connections}
+          bounds={{ minX, minY, width, height }}
+        />
+      ) : (
+        <ConnectionsSVG
+          connections={connections}
+          bounds={{ minX, minY, width, height }}
+        />
+      )}
 
       {visible.map((node) => {
         const nodeHighlighted = highlightedIds.has(node.id)
