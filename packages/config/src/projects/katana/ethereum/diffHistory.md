@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xb3349a79a036f43e1ea6196fd99701dc49c6ba33
+Generated with discovered.json: 0xceeb3a5a0be59aef3cc1f4c8b8b5475d6ee465ea
 
-# Diff at Wed, 02 Jul 2025 09:22:09 GMT:
+# Diff at Wed, 02 Jul 2025 12:14:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@717eea3a0fc625b39e556e700bc9e657bb32fa71 block: 22825494
-- current block number: 22829874
+- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
+- current block number: 22831429
 
 ## Description
 
@@ -25,33 +25,100 @@ add op stack gasconfig parameters.
     }
 ```
 
-Generated with discovered.json: 0x947fb3788d01d2f19ea5e0f4af048ad614ea9e24
+```diff
++   Status: CREATED
+    contract Safe (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
 
-# Diff at Tue, 01 Jul 2025 16:11:11 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
-- current block number: 22825494
-
-## Description
-
-Predeposits ended (limit 0), chain is live.
-
-add the AggchainFEP core contract of Katana.
-
-move TVS to L2 configs.
-
-## Watched changes
+## Source code changes
 
 ```diff
-    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb) {
+.../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 2 files changed, 1125 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22816814 (main branch discovery), not current.
+
+```diff
+    contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
+    +++ description: The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.
+      description:
+-        "[PAUSED] The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits."
++        "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system."
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
     +++ description: None
-      values.deposit_limit:
--        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-+        0
-      values.deposit_limit_module:
--        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
-+        "0x0000000000000000000000000000000000000000"
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract VbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Accountant (0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb)
+    +++ description: None
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract MIPS (0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C) {
+    +++ description: The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract GenericVaultBridgeToken (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: None
+      category:
++        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract DelayedWETH (0x74034597d29613CC8C0BDc8780e1d292A553Bd32) {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
@@ -62,61 +129,68 @@ move TVS to L2 configs.
 ```
 
 ```diff
-    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822) {
+-   Status: DELETED
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822)
     +++ description: None
-      values.deposit_limit:
--        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-+        0
-      values.deposit_limit_module:
--        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
-+        "0x0000000000000000000000000000000000000000"
+```
+
+```diff
+-   Status: DELETED
+    contract ShareReceiver (0x836304B832687f3811a0dF935934C724B40578eB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728)
+    +++ description: None
+```
+
+```diff
+    contract PreimageOracle (0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277) {
+    +++ description: The PreimageOracle contract is used to load the required data from L1 for a dispute game.
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
 ```diff
-    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728) {
-    +++ description: None
-      values.deposit_limit:
--        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-+        0
-      values.deposit_limit_module:
--        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
-+        "0x0000000000000000000000000000000000000000"
+    contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      category:
++        {"name":"Spam","priority":-1}
     }
 ```
 
 ```diff
-    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF) {
-    +++ description: None
-      values.deposit_limit:
--        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
-+        0
-      values.deposit_limit_module:
--        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
-+        "0x0000000000000000000000000000000000000000"
-    }
-```
-
-```diff
-+   Status: CREATED
-    contract Safe (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+-   Status: DELETED
+    contract DepositRelayer (0xB01dADEC98308528ee57A17b24A473213c1704bb)
     +++ description: None
 ```
 
-## Source code changes
-
 ```diff
-.../.flat@22816814/DepositModule.sol => /dev/null  |   76 --
- .../Safe.sol                                       | 1088 ++++++++++++++++++++
- .../SafeProxy.p.sol                                |   37 +
- 3 files changed, 1125 insertions(+), 76 deletions(-)
+-   Status: DELETED
+    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF)
+    +++ description: None
 ```
 
-## Config/verification related changes
+```diff
+-   Status: DELETED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
 
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22816814 (main branch discovery), not current.
+```diff
+-   Status: DELETED
+    contract ERC20Router (0xeeeeee9eC4769A09a76A83C7bC42b185872860eE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Yearn Treasury Multisig (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
+    +++ description: None
+```
 
 ```diff
 +   Status: CREATED

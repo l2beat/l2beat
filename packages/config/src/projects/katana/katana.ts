@@ -57,6 +57,7 @@ export const katana: ScalingProject = {
     purposes: ['Universal'],
     category: 'ZK Rollup',
     stack: 'Agglayer CDK',
+    upgradesAndGovernanceImage: 'polygoncdk',
     links: {
       websites: ['https://katana.network/'],
       bridges: ['https://app.katana.network/'],
@@ -155,7 +156,7 @@ export const katana: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          'Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof or aggchain proof by Agglayer and contains 1) the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2 and 2) the bridge accounting proof proving minimally secure accounting of the Agglayer shared bridge.',
+          'Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof or aggchain proof by Agglayer and contains 1) the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2 and 2) the bridge accounting proof proving only the secure accounting of the Agglayer shared bridge.',
         references: [
           {
             url: 'https://docs.agglayer.dev/cdk/cdk-opgeth/architecture/#cdk-opgeth-zkrollup-not-live-yet',
