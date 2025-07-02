@@ -2,7 +2,7 @@
   "name": "katana",
   "chain": "ethereum",
   "blockNumber": 22831429,
-  "configHash": "0xe89d70f4324a574a49cc4f2769bb9c370730c1dfa9f304a3bf9dc17125e5e801",
+  "configHash": "0x40a3ba8bd0b2d65b61964704cec02e1f67714fed8b664bfe72ee9e16975e47fd",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -848,7 +848,7 @@
       "name": "SuperchainConfig",
       "address": "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigFake",
+      "template": "opstack/SuperchainConfigNoGuard",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3f0bcc82f3184c1cb2e9aa6d3ecdd7c863186eea851dda56dd7e100d9174b840"
@@ -888,7 +888,7 @@
         "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": "Proxy",
         "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A": "SuperchainConfig"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProxyAdmin",
@@ -1169,11 +1169,6 @@
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
-        {
-          "permission": "guard",
-          "from": "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
-          "role": ".guardian"
-        },
         {
           "permission": "interact",
           "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
@@ -3745,11 +3740,11 @@
     "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
     "polygon-cdk/AggchainFEP": "0x1e4701c3d602b2895102d018f1b9a77f0e5c63866dc391fe59b351c8a0bb4e99",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "permissionsConfigHash": "0x6992a95747bdd37427da9854800b1f2f49eb52ab84080c711fc7885ccc970260"
+  "permissionsConfigHash": "0x9eb72c7a1af4219ef3cf92a2291daa96369925a57dd8cfb2675ee5027dcfe871"
 }

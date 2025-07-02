@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xceeb3a5a0be59aef3cc1f4c8b8b5475d6ee465ea
+Generated with discovered.json: 0x2a0f533007591442d6925fd1908c71c51cc76e63
 
-# Diff at Wed, 02 Jul 2025 12:14:00 GMT:
+# Diff at Wed, 02 Jul 2025 12:21:53 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
@@ -71,6 +71,21 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SuperchainConfig (0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811) {
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+      template:
+-        "opstack/SuperchainConfigFake"
++        "opstack/SuperchainConfigNoGuard"
+      category.name:
+-        "Governance"
++        "Spam"
+      category.priority:
+-        3
++        -1
+    }
+```
+
+```diff
     contract GenericVaultBridgeToken (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
     +++ description: None
       category:
@@ -88,6 +103,14 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 -   Status: DELETED
     contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb)
     +++ description: None
+```
+
+```diff
+    contract Katana Multisig 2 (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"guard","from":"ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811","role":".guardian"}
+    }
 ```
 
 ```diff

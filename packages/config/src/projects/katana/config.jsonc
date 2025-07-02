@@ -17,15 +17,6 @@
         "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
       ],
       "overrides": {
-        // hide opstack guardian since withdrawals are impossible via guarded contracts
-        "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": {
-          "category": "spam",
-          "fields": {
-            "guardian": {
-              "permissions": []
-            }
-          }
-        },
         // hide unused op stack contracts
         "0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
           "category": "spam"
