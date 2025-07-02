@@ -19,12 +19,6 @@ export interface NodeViewProps {
 }
 
 function NodeViewComponent(props: NodeViewProps) {
-  // Increment global render counter used by the PerformanceDebug overlay
-  if (typeof window !== 'undefined') {
-    window.__NODEVIEW_RENDER_COUNT__ =
-      (window.__NODEVIEW_RENDER_COUNT__ ?? 0) + 1
-  }
-
   const { isDark } = getColor(props.node)
 
   const fullHeight =

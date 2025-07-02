@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { NodeView } from './NodeView'
 import type { Node } from '../store/State'
+import { NodeView } from './NodeView'
 
 export interface NodesRendererProps {
   nodes: readonly Node[]

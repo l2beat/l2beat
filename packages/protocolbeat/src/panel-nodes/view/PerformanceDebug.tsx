@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useStore } from '../store/store'
 
-declare global {
-  interface Window {
-    __NODEVIEW_RENDER_COUNT__?: number
-  }
-}
-
 /**
  * A simple performance debug overlay that can be dropped into any branch to
  * quickly inspect rendering performance.  ✅
@@ -43,19 +37,6 @@ export function PerformanceDebug() {
     return () => cancelAnimationFrame(rafId)
   }, [])
 
-  // Global NodeView render counter (incremented in NodeView.tsx)
-  const [nodeRenders, setNodeRenders] = useState<number>(0)
-  useEffect(() => {
-    const id = setInterval(() => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore – injected on window in NodeView
-      const value =
-        (window.__NODEVIEW_RENDER_COUNT__ as number | undefined) ?? 0
-      setNodeRenders(value)
-    }, 100)
-    return () => clearInterval(id)
-  }, [])
-
   // Misc state of interest from the zustand store
   const totalNodes = useStore((s) => s.nodes.length)
   const hidden = useStore((s) => s.hidden.length)
@@ -68,7 +49,6 @@ export function PerformanceDebug() {
       style={{ pointerEvents: 'none' }}
     >
       <div>FPS: {fps}</div>
-      <div>Node renders: {nodeRenders}</div>
       <div>Total nodes: {totalNodes}</div>
       <div>Hidden: {hidden}</div>
       <div>Selected: {selected}</div>

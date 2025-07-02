@@ -1,9 +1,9 @@
 import type { Node } from '../store/State'
 import type { SvgConnection } from './ConnectionsSVG'
 import {
-  VIEWPORT_RENDER_MARGIN,
   CONNECTION_BOUNDS_PADDING,
   VIEWPORT_BOUNDS_MARGIN,
+  VIEWPORT_RENDER_MARGIN,
 } from './constants'
 
 export interface ViewportInfo {

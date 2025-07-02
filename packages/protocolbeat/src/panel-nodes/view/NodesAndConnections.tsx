@@ -4,10 +4,10 @@ import { useStore } from '../store/store'
 import { ConnectionsSVG } from './ConnectionsSVG'
 import { NodesRenderer } from './NodesRenderer'
 import {
-  getViewportInfo,
-  filterVisibleNodes,
   calculateBounds,
   filterVisibleConnections,
+  filterVisibleNodes,
+  getViewportInfo,
 } from './viewport-utils'
 
 export const NodesAndConnections = React.memo(function NodesAndConnections() {
