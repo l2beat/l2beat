@@ -47,7 +47,6 @@ const paths = getDiscoveryPaths()
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
-  private readonly dependentDiscoveries: DiscoveryOutput[]
   private readonly projectAndDependentDiscoveries: DiscoveryOutput[]
   private eoaIDMap: Record<string, string> = {}
   private permissionRegistry: PermissionRegistry
@@ -64,17 +63,14 @@ export class ProjectDiscovery {
         configReader.readDiscovery(module, chain),
       ),
     ]
-    this.dependentDiscoveries = [
+    this.projectAndDependentDiscoveries = [
+      ...this.discoveries,
       ...Object.entries(discovery.dependentDiscoveries ?? {}).flatMap(
         ([projectName, chains]) =>
           Object.keys(chains).map((chain) =>
             configReader.readDiscovery(projectName, chain),
           ),
       ),
-    ]
-    this.projectAndDependentDiscoveries = [
-      ...this.discoveries,
-      ...this.dependentDiscoveries,
     ]
     this.permissionRegistry = new PermissionsFromDiscovery(this)
   }
