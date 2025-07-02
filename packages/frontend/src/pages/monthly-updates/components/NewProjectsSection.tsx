@@ -1,8 +1,8 @@
 import { StageBadge } from '~/components/badge/StageBadge'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { formatNumber } from '~/utils/number-format/formatNumber'
-import type { EcosystemMonthlyUpdateEntry } from '../utils/getEcosystemEntries'
 
 interface Props {
   newProjects: EcosystemMonthlyUpdateEntry['newProjects']

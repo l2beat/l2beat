@@ -5,11 +5,11 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
+import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import { DaUpdateSection } from './components/DaUpdateSection'
-import { EcosystemUpdateSection } from './components/EcosystemUpdateSection'
 import { UpcomingProjectUpdateSection } from './components/UpcomingProjectUpdateSection'
-import type { DaMonthlyUpdateEntry } from './utils/getDaEntries'
-import type { EcosystemMonthlyUpdateEntry } from './utils/getEcosystemEntries'
+import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
 
 interface Props extends AppLayoutProps {
   publishedOn: string

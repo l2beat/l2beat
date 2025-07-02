@@ -1,10 +1,10 @@
 import type { UnixTime } from '@l2beat/shared-pure'
-import type { EcosystemMonthlyUpdateEntry } from '../utils/getEcosystemEntries'
-import { Leaderboards } from './Leaderboards'
-import { MonthlyUpdateActivityChart } from './MonthlyUpdateActivityChart'
-import { MonthlyUpdateTvsChart } from './MonthlyUpdateTvsChart'
-import { NewProjectsSection } from './NewProjectsSection'
-import { News } from './News'
+import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
+import { Leaderboards } from '../Leaderboards'
+import { MonthlyUpdateActivityChart } from '../MonthlyUpdateActivityChart'
+import { MonthlyUpdateTvsChart } from '../MonthlyUpdateTvsChart'
+import { NewProjectsSection } from '../NewProjectsSection'
+import { News } from '../News'
 
 interface Props {
   ecosystem: EcosystemMonthlyUpdateEntry
@@ -44,7 +44,10 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
           to={to}
         />
       </div>
-      <Leaderboards tvsLeaderboard={ecosystem.tvsLeaderboard} />
+      <Leaderboards
+        tvsLeaderboard={ecosystem.tvsLeaderboard}
+        activityLeaderboard={ecosystem.activityLeaderboard}
+      />
       {ecosystem.newProjects.length > 0 && (
         <NewProjectsSection newProjects={ecosystem.newProjects} />
       )}

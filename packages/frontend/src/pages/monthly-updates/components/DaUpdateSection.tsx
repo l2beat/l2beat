@@ -1,4 +1,4 @@
-import type { DaMonthlyUpdateEntry } from '../utils/getDaEntries'
+import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import { News } from './News'
 
 interface Props {

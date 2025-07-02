@@ -1,9 +1,9 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
+import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getMonthlyUpdateEntry } from './utils/getMonthlyUpdateEntry'
 
 export async function getMonthlyUpdateData(
   manifest: Manifest,
