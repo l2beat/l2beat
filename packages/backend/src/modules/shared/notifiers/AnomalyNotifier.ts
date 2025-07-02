@@ -51,7 +51,7 @@ export class AnomalyNotifier {
     latestStat: AnomalyStatsRecord,
   ) {
     const message =
-      `**${projectId}** stopped posting **${formatSubtype(subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      `**${projectId}** stopped **${formatSubtype(subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
