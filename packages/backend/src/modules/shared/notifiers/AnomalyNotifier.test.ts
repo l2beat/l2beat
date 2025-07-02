@@ -37,21 +37,28 @@ describe(AnomalyNotifier.name, () => {
       const subtype = 'batchSubmissions'
       const block = mockObject<Block>({
         number: 123456,
-        timestamp: UnixTime.now(),
+        timestamp: 1234,
       })
       const lastRecord = mockObject<RealTimeLivenessRecord>({
         txHash: '0x1234567890abcdef',
+        timestamp: 5678,
       })
       const stats = mockObject<AnomalyStatsRecord>({
         mean: 60,
         stdDev: 15,
       })
 
-      await notifier.anomalyDetected(
-        60,
-        15,
+      const newAnomaly: RealTimeAnomalyRecord = {
+        start: lastRecord.timestamp,
         projectId,
         subtype,
+        status: 'ongoing',
+      }
+
+      await notifier.anomalyDetected(
+        newAnomaly,
+        60,
+        15,
         block,
         lastRecord,
         stats,
@@ -64,8 +71,8 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${projectId}-${subtype}-${block.timestamp}`,
-          timestamp: UnixTime.now(),
+          relatedEntityId: `${newAnomaly.projectId}-${newAnomaly.subtype}-${lastRecord.timestamp}`,
+          timestamp: block.timestamp,
         },
       ])
     })
@@ -91,12 +98,12 @@ describe(AnomalyNotifier.name, () => {
       const block = mockObject<Block>()
       const lastRecord = mockObject<RealTimeLivenessRecord>()
       const stats = mockObject<AnomalyStatsRecord>()
+      const newAnomaly = mockObject<RealTimeAnomalyRecord>()
 
       await notifier.anomalyDetected(
+        newAnomaly,
         60,
         15,
-        'project-1',
-        'batchSubmissions',
         block,
         lastRecord,
         stats,
@@ -133,10 +140,11 @@ describe(AnomalyNotifier.name, () => {
       const subtype = 'batchSubmissions'
       const block = mockObject<Block>({
         number: 123456,
-        timestamp: UnixTime.now(),
+        timestamp: 1234,
       })
       const lastRecord = mockObject<RealTimeLivenessRecord>({
         txHash: '0x1234567890abcdef',
+        timestamp: 5678,
       })
       const stats = mockObject<AnomalyStatsRecord>({
         mean: 60,
@@ -147,16 +155,16 @@ describe(AnomalyNotifier.name, () => {
         projectId,
         subtype,
         status: 'ongoing',
-        start: block.timestamp,
+        start: lastRecord.timestamp,
       })
 
       await notifier.anomalyOngoing(
+        ongoingAnomaly,
         60,
         15,
         block,
         lastRecord,
         stats,
-        ongoingAnomaly,
       )
 
       expect(mockSendDiscordNotification).toHaveBeenCalled()
@@ -166,8 +174,8 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-detected',
-          relatedEntityId: `${projectId}-${subtype}-${block.timestamp}`,
-          timestamp: UnixTime.now(),
+          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          timestamp: block.timestamp,
         },
       ])
     })
@@ -196,12 +204,12 @@ describe(AnomalyNotifier.name, () => {
       const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>()
 
       await notifier.anomalyOngoing(
+        ongoingAnomaly,
         60,
         15,
         block,
         lastRecord,
         stats,
-        ongoingAnomaly,
       )
 
       expect(mockSendDiscordNotification).not.toHaveBeenCalled()
@@ -248,12 +256,12 @@ describe(AnomalyNotifier.name, () => {
       const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>()
 
       await notifier.anomalyOngoing(
+        ongoingAnomaly,
         60,
         15,
         block,
         lastRecord,
         stats,
-        ongoingAnomaly,
       )
 
       expect(mockSendDiscordNotification).not.toHaveBeenCalled()
@@ -286,13 +294,21 @@ describe(AnomalyNotifier.name, () => {
       const subtype = 'batchSubmissions'
       const block = mockObject<Block>({
         number: 123456,
-        timestamp: UnixTime.now(),
+        timestamp: 1234,
       })
       const lastRecord = mockObject<RealTimeLivenessRecord>({
         txHash: '0x1234567890abcdef',
+        timestamp: 5678,
       })
 
-      await notifier.anomalyRecovered(60, projectId, subtype, block, lastRecord)
+      const ongoingAnomaly: RealTimeAnomalyRecord = {
+        start: lastRecord.timestamp,
+        projectId,
+        subtype,
+        status: 'ongoing',
+      }
+
+      await notifier.anomalyRecovered(ongoingAnomaly, 60, block, lastRecord)
 
       expect(mockSendDiscordNotification).toHaveBeenCalled()
 
@@ -301,8 +317,8 @@ describe(AnomalyNotifier.name, () => {
           id: messageId,
           channel: 'discord',
           type: 'anomaly-recovered',
-          relatedEntityId: `${projectId}-${subtype}-${block.timestamp}`,
-          timestamp: UnixTime.now(),
+          relatedEntityId: `${ongoingAnomaly.projectId}-${ongoingAnomaly.subtype}-${ongoingAnomaly.start}`,
+          timestamp: block.timestamp,
         },
       ])
     })
@@ -327,14 +343,9 @@ describe(AnomalyNotifier.name, () => {
 
       const block = mockObject<Block>()
       const lastRecord = mockObject<RealTimeLivenessRecord>()
+      const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>()
 
-      await notifier.anomalyRecovered(
-        60,
-        'project-1',
-        'batchSubmissions',
-        block,
-        lastRecord,
-      )
+      await notifier.anomalyRecovered(ongoingAnomaly, 60, block, lastRecord)
 
       expect(mockSendDiscordNotification).not.toHaveBeenCalled()
 

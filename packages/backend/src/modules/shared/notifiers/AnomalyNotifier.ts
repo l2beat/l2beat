@@ -6,12 +6,7 @@ import type {
   RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
 } from '@l2beat/database'
-import {
-  type Block,
-  type TrackedTxsConfigSubtype,
-  UnixTime,
-  formatAsAsciiTable,
-} from '@l2beat/shared-pure'
+import { type Block, UnixTime, formatAsAsciiTable } from '@l2beat/shared-pure'
 import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
@@ -49,10 +44,9 @@ export class AnomalyNotifier {
   }
 
   async anomalyDetected(
+    newAnomaly: RealTimeAnomalyRecord,
     interval: number,
     z: number,
-    projectId: string,
-    subtype: TrackedTxsConfigSubtype,
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
@@ -62,7 +56,7 @@ export class AnomalyNotifier {
     }
 
     const message =
-      `**${projectId}** stopped **${formatSubtype(subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
@@ -77,29 +71,25 @@ export class AnomalyNotifier {
     await this.saveNotification(
       id,
       'anomaly-detected',
-      this.generateRelatedEntityId(projectId, subtype, block.timestamp),
+      this.generateRelatedEntityId(newAnomaly),
       block.timestamp,
     )
   }
 
   async anomalyOngoing(
+    ongoingAnomaly: RealTimeAnomalyRecord,
     interval: number,
     z: number,
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
-    ongoingAnomaly: RealTimeAnomalyRecord,
   ) {
     // send only if the duration is over minDuration and we haven't sent a notification yet
     if (interval < this.minDuration) {
       return
     }
 
-    const relatedEntityId = this.generateRelatedEntityId(
-      ongoingAnomaly.projectId,
-      ongoingAnomaly.subtype,
-      ongoingAnomaly.start,
-    )
+    const relatedEntityId = this.generateRelatedEntityId(ongoingAnomaly)
     const notifications =
       await this.db.notifications.getByRelatedEntityId(relatedEntityId)
 
@@ -108,10 +98,9 @@ export class AnomalyNotifier {
     }
 
     this.anomalyDetected(
+      ongoingAnomaly,
       interval,
       z,
-      ongoingAnomaly.projectId,
-      ongoingAnomaly.subtype,
       block,
       latestRecord,
       latestStat,
@@ -119,9 +108,8 @@ export class AnomalyNotifier {
   }
 
   async anomalyRecovered(
+    ongoingAnomaly: RealTimeAnomalyRecord,
     duration: number,
-    projectId: string,
-    subtype: TrackedTxsConfigSubtype,
     block: Block,
     latestRecord: RealTimeLivenessRecord,
   ) {
@@ -130,7 +118,7 @@ export class AnomalyNotifier {
     }
 
     const message =
-      `**${projectId}** recovered from **${formatSubtype(subtype)}** anomaly that lasted for **${formatDuration(duration)}**\n\n` +
+      `**${ongoingAnomaly.projectId}** recovered from **${formatSubtype(ongoingAnomaly.subtype)}** anomaly that lasted for **${formatDuration(duration)}**\n\n` +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- recovered at time: \`${block.timestamp}\`\n` +
       `- recovered on block: \`${block.number}\`\n` +
@@ -143,7 +131,7 @@ export class AnomalyNotifier {
     await this.saveNotification(
       id,
       'anomaly-recovered',
-      this.generateRelatedEntityId(projectId, subtype, block.timestamp),
+      this.generateRelatedEntityId(ongoingAnomaly),
       block.timestamp,
     )
   }
@@ -205,11 +193,7 @@ export class AnomalyNotifier {
     await this.db.notifications.insertMany([notification])
   }
 
-  generateRelatedEntityId(
-    projectId: string,
-    subtype: TrackedTxsConfigSubtype,
-    start: UnixTime,
-  ): string {
-    return `${projectId}-${subtype}-${start.toString()}`
+  generateRelatedEntityId(anomaly: RealTimeAnomalyRecord): string {
+    return `${anomaly.projectId}-${anomaly.subtype}-${anomaly.start}`
   }
 }
