@@ -40,7 +40,7 @@ describe(AnomalyNotifier.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
-        '# Daily report @ 2025-07-01\n' +
+        `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
           '### Ongoing anomalies:\n' +
           '```|  Duration | ProjectId |          Subtype |  Status |\n' +
           '|-----------|-----------|------------------|---------|\n' +
