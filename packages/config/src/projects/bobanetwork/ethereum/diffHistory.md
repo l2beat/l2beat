@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x3a3541632dc92702cb89ec6eebbf8553299bf2b1
+
+# Diff at Tue, 01 Jul 2025 10:37:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6dae2e2c6da3c994ad2a4e3a50e7430960cb763e block: 22795756
+- current block number: 22823822
+
+## Description
+
+Configure manual overrides for permissioned games.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22795756 (main branch discovery), not current.
+
+```diff
+    EOA  (0x67b2426fB1ba42c6168e53E1e40E116A4E963d60) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"challenge","from":"ethereum:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64","role":".challenger"}]
+    }
+```
+
+```diff
+    EOA  (0xf115011037999B39F0f89A40722AC8887a5f0515) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"propose","from":"ethereum:0x97e8B3e46a251A657A56CEe8c24E4C0F1864be64","role":".proposer"}]
+    }
+```
+
 Generated with discovered.json: 0x136327a080fd446067111c974ce4e06e723952ad
 
 # Diff at Fri, 27 Jun 2025 12:24:39 GMT:

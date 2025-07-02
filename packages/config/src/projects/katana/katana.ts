@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -16,7 +16,7 @@ export const katana: ScalingProject = underReviewL2({
     description:
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
-    category: 'Validium',
+    category: 'ZK Rollup',
     stack: 'Agglayer CDK',
     links: {
       websites: ['https://katana.network/'],
@@ -46,23 +46,6 @@ export const katana: ScalingProject = underReviewL2({
       { type: 'blockscout', url: 'https://explorer.katanarpc.com/api' },
     ],
   },
-  escrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x7B5A0182E400b241b317e781a4e9dEdFc1429822'),
-      tokens: ['USDC.pdkatana'],
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb'),
-      tokens: ['USDT.pdkatana'],
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x92C82f5F771F6A44CfA09357DD0575B81BF5F728'),
-      tokens: ['WBTC.pdkatana'],
-    }),
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF'),
-      tokens: ['WETH.pdkatana'],
-    }),
-  ],
+  escrows: [],
   discoveryInfo: getDiscoveryInfo([discovery]),
 })

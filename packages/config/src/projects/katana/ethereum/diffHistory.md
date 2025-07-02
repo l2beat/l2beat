@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x947fb3788d01d2f19ea5e0f4af048ad614ea9e24
+
+# Diff at Tue, 01 Jul 2025 16:11:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
+- current block number: 22825494
+
+## Description
+
+Predeposits ended (limit 0), chain is live.
+
+add the AggchainFEP core contract of Katana.
+
+move TVS to L2 configs.
+
+## Watched changes
+
+```diff
+    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DepositModule (0x793D85F585145c050487c7AfBF0e9B97143fF1CB)
+    +++ description: None
+```
+
+```diff
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@22816814/DepositModule.sol => /dev/null  |   76 --
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 3 files changed, 1125 insertions(+), 76 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22816814 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666)
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+```
+
 Generated with discovered.json: 0xb8798013ac6ee9c416ee1272bb9e516c63475f37
 
 # Diff at Mon, 30 Jun 2025 11:04:12 GMT:
