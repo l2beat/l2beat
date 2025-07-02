@@ -1,6 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database, RealTimeAnomalyRecord } from '@l2beat/database'
-import type { RealTimeLivenessRecord } from '@l2beat/database/dist/other/real-time-liveness/entity'
+import type {
+  Database,
+  RealTimeAnomalyRecord,
+  RealTimeLivenessRecord,
+} from '@l2beat/database'
 import type {
   TrackedTxFunctionCallConfig,
   TrackedTxLivenessConfig,
@@ -16,11 +19,10 @@ import {
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import type { Config, TrackedTxsConfig } from '../../../config/Config'
-import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import { isChainIdMatching } from '../../tracked-txs/utils/isChainIdMatching'
 import { isProgramHashProven } from '../../tracked-txs/utils/isProgramHashProven'
+import type { AnomalyNotifier } from '../notifiers/AnomalyNotifier'
 import type { BlockProcessor } from '../types'
-import { formatDuration, formatSubtype } from '../utils/format'
 
 export class RealTimeLivenessProcessor implements BlockProcessor {
   private logger: Logger
@@ -41,7 +43,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
     config: Config,
     logger: Logger,
     private readonly db: Database,
-    private readonly discordClient?: DiscordWebhookClient,
+    private readonly notifier?: AnomalyNotifier,
   ) {
     this.logger = logger.for(this)
 
@@ -197,16 +199,15 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
         })
 
-        const message =
-          `**${group.projectId}** stopped posting **${formatSubtype(group.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
-          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
-          `- detected at time: \`${block.timestamp}\`\n` +
-          `- detected on block: \`${block.number}\`\n` +
-          `- interval: \`${formatDuration(interval)}\`\n` +
-          `- avg interval: \`${formatDuration(latestStat.mean)}\`\n` +
-          `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)`
-
-        await this.sendDiscordNotification(message)
+        await this.notifier?.anomalyDetected(
+          interval,
+          z,
+          group.projectId,
+          group.subtype,
+          block,
+          latestRecord,
+          latestStat,
+        )
 
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
@@ -227,14 +228,15 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
         })
 
-        const message =
-          `**${group.projectId}** recovered from **${formatSubtype(group.subtype)}** anomaly that lasted for **${formatDuration(latestRecord.timestamp - ongoingAnomaly.start)}**\n\n` +
-          `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
-          `- recovered at time: \`${block.timestamp}\`\n` +
-          `- recovered on block: \`${block.number}\`\n` +
-          `- duration: \`${formatDuration(latestRecord.timestamp - ongoingAnomaly.start)}\``
+        const duration = latestRecord.timestamp - ongoingAnomaly.start
 
-        await this.sendDiscordNotification(message)
+        await this.notifier?.anomalyRecovered(
+          duration,
+          group.projectId,
+          group.subtype,
+          block,
+          latestRecord,
+        )
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
@@ -330,19 +332,5 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
         params: TrackedTxSharedBridgeConfig
       } => c.params.formula === 'sharedBridge',
     )
-  }
-
-  private async sendDiscordNotification(message: string) {
-    if (!this.discordClient) {
-      return
-    }
-
-    try {
-      await this.discordClient.sendMessage(message)
-    } catch (error) {
-      this.logger.error('Failed to send Discord notification', {
-        error,
-      })
-    }
   }
 }
