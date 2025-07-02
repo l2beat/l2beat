@@ -8,6 +8,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
+import { EmptyStateIcon } from '~/icons/EmptyState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -55,10 +56,9 @@ export function OngoingAnomaliesSection({
           ))}
         </div>
       ) : (
-        <div className="mt-4 text-center text-secondary text-sm leading-tight">
-          Our anomaly detector is bored.
-          <br />
-          That's a good thing. A great thing, actually.
+        <div className="relative mt-4 text-center text-secondary text-sm leading-tight">
+          <EmptyStateIcon className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-10 fill-secondary opacity-15" />
+          <span>No ongoing anomalies detected</span>
         </div>
       )}
     </PrimaryCard>
