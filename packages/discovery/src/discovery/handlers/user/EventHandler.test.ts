@@ -356,7 +356,7 @@ describe(EventHandler.name, () => {
       expect(result.value).toEqual(2)
     })
 
-    it('throws if ABI compatiblity is not met', async () => {
+    it('throws if ABI compatibility is not met', async () => {
       expect(() => {
         new EventHandler(
           'field',
