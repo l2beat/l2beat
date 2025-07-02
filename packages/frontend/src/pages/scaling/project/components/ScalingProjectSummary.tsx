@@ -33,7 +33,7 @@ export function ProjectScalingSummary({ project }: Props) {
           <div className="w-full space-y-4 md:space-y-6">
             <ProjectHeader
               project={project}
-              showOngoingAnomaly={project.header.showOngoingAnomaly}
+              ongoingAnomaly={project.header.ongoingAnomaly}
             />
             <div className="space-y-2">
               {project.archivedAt && <ArchivedBar />}

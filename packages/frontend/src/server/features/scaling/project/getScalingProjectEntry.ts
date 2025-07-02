@@ -61,7 +61,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     emergencyWarning?: string
-    showOngoingAnomaly?: boolean
+    ongoingAnomaly?: 'single' | 'multiple'
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -164,15 +164,23 @@ export async function getScalingProjectEntry(
   ])
   const projectLiveness = liveness[project.id]
 
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
+
   const tvsProjectStats = tvsStats.projects[project.id]
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
-    showOngoingAnomaly:
-      projectLiveness &&
-      projectLiveness?.anomalies.filter((a) => a.end === undefined).length > 0,
+    ongoingAnomaly: ongoingAnomalies
+      ? ongoingAnomalies.length === 0
+        ? undefined
+        : ongoingAnomalies.length === 1
+          ? 'single'
+          : 'multiple'
+      : undefined,
     category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,

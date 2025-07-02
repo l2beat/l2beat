@@ -9,10 +9,10 @@ interface Project {
 
 interface Props {
   project: Project
-  showOngoingAnomaly?: boolean
+  ongoingAnomaly?: 'single' | 'multiple'
 }
 
-export function ProjectHeader({ project, showOngoingAnomaly }: Props) {
+export function ProjectHeader({ project, ongoingAnomaly }: Props) {
   return (
     <div className="flex gap-6 max-md:flex-col md:items-center">
       <h1 className="flex items-center justify-start gap-3">
@@ -29,14 +29,16 @@ export function ProjectHeader({ project, showOngoingAnomaly }: Props) {
           {project.name}
         </span>
       </h1>
-      {showOngoingAnomaly && (
+      {!!ongoingAnomaly && (
         <a
           href="#liveness"
           className="flex h-8 items-center justify-center gap-2 rounded border border-negative p-2"
         >
           <LiveIndicator />
           <h3 className="font-medium text-negative text-xs uppercase leading-none">
-            Ongoing anomaly
+            {ongoingAnomaly === 'single'
+              ? 'Ongoing anomaly'
+              : 'Ongoing anomalies'}
           </h3>
           <ChevronIcon className="-rotate-90 size-2.5 fill-negative" />
         </a>
