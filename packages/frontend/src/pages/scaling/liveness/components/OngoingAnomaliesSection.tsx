@@ -14,12 +14,14 @@ import { formatTimestamp } from '~/utils/dates'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
 
+export interface ProjectWithAnomaly {
+  name: string
+  slug: string
+  anomalies: LivenessAnomaly[]
+}
+
 interface Props {
-  projectsWithAnomalies: {
-    name: string
-    slug: string
-    anomalies: LivenessAnomaly[]
-  }[]
+  projectsWithAnomalies: ProjectWithAnomaly[]
   className?: string
 }
 
@@ -30,116 +32,134 @@ export function OngoingAnomaliesSection({
   return (
     <PrimaryCard className={className}>
       <div className="flex items-center gap-2">
-        <LiveIndicator size="md" />
-        <h2 className="font-bold text-lg text-negative">Ongoing anomalies</h2>
+        <LiveIndicator
+          size="md"
+          disabled={projectsWithAnomalies.length === 0}
+        />
+        <h2
+          className={cn(
+            'font-bold text-lg',
+            projectsWithAnomalies.length === 0 && 'text-primary',
+          )}
+        >
+          Ongoing anomalies
+        </h2>
       </div>
-      {projectsWithAnomalies.length > 0 && (
+      {projectsWithAnomalies.length > 0 ? (
         <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {projectsWithAnomalies.map((projectWithAnomalies) => {
-            return (
-              <Collapsible
-                key={projectWithAnomalies.name}
-                className="h-fit rounded bg-surface-secondary"
-              >
-                <CollapsibleTrigger className="group flex w-full items-center justify-between px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <img
-                      src={`/icons/${projectWithAnomalies.slug}.png`}
-                      alt={projectWithAnomalies.name}
-                      className="size-5"
-                    />
-                    <span className="font-bold text-base leading-none">
-                      {projectWithAnomalies.name}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="transition-opacity duration-300 group-data-[state=open]:opacity-0">
-                      {projectWithAnomalies.anomalies.length === 1 ? (
-                        <span
-                          className={cn(
-                            'font-medium text-xs',
-                            getDurationColorClassName(
-                              // biome-ignore lint/style/noNonNullAssertion: <explanation>
-                              projectWithAnomalies.anomalies[0]!
-                                .durationInSeconds,
-                            ),
-                          )}
-                        >
-                          {anomalySubtypeToLabel(
-                            // biome-ignore lint/style/noNonNullAssertion: it's there for sure
-                            projectWithAnomalies.anomalies[0]!.subtype,
-                          )}
-                        </span>
-                      ) : (
-                        <span
-                          className={cn(
-                            'font-medium text-xs',
-                            getDurationColorClassName(
-                              Math.max(
-                                ...projectWithAnomalies.anomalies.map(
-                                  (a) => a.durationInSeconds,
-                                ),
-                              ),
-                            ),
-                          )}
-                        >
-                          Multiple anomalies
-                        </span>
-                      )}
-                    </div>
-                    <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
-                  </div>
-                </CollapsibleTrigger>
-                <CollapsibleContent className="px-4">
-                  <div className="flex flex-col gap-2">
-                    {projectWithAnomalies.anomalies.map((anomaly) => {
-                      return (
-                        <div key={anomaly.start} className="text-xs last:mb-3">
-                          <HorizontalSeparator className="my-3 first:mt-0" />
-
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-secondary">
-                              Type:
-                            </span>
-                            <span className="font-bold">
-                              {anomalySubtypeToLabel(anomaly.subtype)}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-secondary">
-                              Duration:
-                            </span>
-                            <span
-                              className={cn(
-                                'font-bold',
-                                getDurationColorClassName(
-                                  anomaly.durationInSeconds,
-                                ),
-                              )}
-                            >
-                              {formatDuration(anomaly.durationInSeconds)}
-                            </span>
-                          </div>
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium text-secondary">
-                              Start:
-                            </span>
-                            <span className="font-bold">
-                              {formatTimestamp(anomaly.start, {
-                                mode: 'datetime',
-                              })}
-                            </span>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </CollapsibleContent>
-              </Collapsible>
-            )
-          })}
+          {projectsWithAnomalies.map((projectWithAnomalies) => (
+            <AnomalyCollapsible
+              key={projectWithAnomalies.name}
+              projectWithAnomalies={projectWithAnomalies}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="mt-4 text-center text-secondary text-sm leading-tight">
+          Our anomaly detector is bored.
+          <br />
+          That's a good thing. A great thing, actually.
         </div>
       )}
     </PrimaryCard>
+  )
+}
+
+function AnomalyCollapsible({
+  projectWithAnomalies,
+}: {
+  projectWithAnomalies: ProjectWithAnomaly
+}) {
+  return (
+    <Collapsible
+      key={projectWithAnomalies.name}
+      className="h-fit rounded bg-surface-secondary"
+    >
+      <CollapsibleTrigger className="group flex w-full items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-2">
+          <img
+            src={`/icons/${projectWithAnomalies.slug}.png`}
+            alt={projectWithAnomalies.name}
+            className="size-5"
+          />
+          <span className="font-bold text-base leading-none">
+            {projectWithAnomalies.name}
+          </span>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="transition-opacity duration-300 group-data-[state=open]:opacity-0">
+            {projectWithAnomalies.anomalies.length === 1 ? (
+              <span
+                className={cn(
+                  'font-medium text-xs',
+                  getDurationColorClassName(
+                    // biome-ignore lint/style/noNonNullAssertion: <explanation>
+                    projectWithAnomalies.anomalies[0]!.durationInSeconds,
+                  ),
+                )}
+              >
+                {anomalySubtypeToLabel(
+                  // biome-ignore lint/style/noNonNullAssertion: it's there for sure
+                  projectWithAnomalies.anomalies[0]!.subtype,
+                )}
+              </span>
+            ) : (
+              <span
+                className={cn(
+                  'font-medium text-xs',
+                  getDurationColorClassName(
+                    Math.max(
+                      ...projectWithAnomalies.anomalies.map(
+                        (a) => a.durationInSeconds,
+                      ),
+                    ),
+                  ),
+                )}
+              >
+                Multiple anomalies
+              </span>
+            )}
+          </div>
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
+        </div>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="px-4">
+        <div className="flex flex-col gap-2">
+          {projectWithAnomalies.anomalies.map((anomaly) => {
+            return (
+              <div key={anomaly.start} className="text-xs last:mb-3">
+                <HorizontalSeparator className="my-3 first:mt-0" />
+
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-secondary">Type:</span>
+                  <span className="font-bold">
+                    {anomalySubtypeToLabel(anomaly.subtype)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-secondary">Duration:</span>
+                  <span
+                    className={cn(
+                      'font-bold',
+                      getDurationColorClassName(anomaly.durationInSeconds),
+                    )}
+                  >
+                    {formatDuration(anomaly.durationInSeconds)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium text-secondary">Start:</span>
+                  <span className="font-bold">
+                    {formatTimestamp(anomaly.start, {
+                      mode: 'datetime',
+                    })}
+                  </span>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </CollapsibleContent>
+    </Collapsible>
   )
 }

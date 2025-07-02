@@ -23,7 +23,7 @@ export async function getScalingLivenessData(
     ),
   ])
 
-  const ongoingAnomalies = Object.values(entries)
+  const projectsWithAnomalies = Object.values(entries)
     .flat()
     .flatMap((entry) => {
       const ongoingAnomalies = entry.anomalies.filter(
@@ -57,7 +57,7 @@ export async function getScalingLivenessData(
       props: {
         ...appLayoutProps,
         entries,
-        projectsWithAnomalies: ongoingAnomalies,
+        projectsWithAnomalies,
       },
     },
   }

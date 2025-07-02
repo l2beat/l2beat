@@ -4,19 +4,17 @@ import { AppLayout } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
-import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { LivenessHeader } from './components/LivenessHeader'
 import { LivenessTimeRangeContextProvider } from './components/LivenessTimeRangeContext'
-import { OngoingAnomaliesSection } from './components/OngoingAnomaliesSection'
+import {
+  OngoingAnomaliesSection,
+  type ProjectWithAnomaly,
+} from './components/OngoingAnomaliesSection'
 import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 
 interface Props extends AppLayoutProps {
   entries: TabbedScalingEntries<ScalingLivenessEntry>
-  projectsWithAnomalies: {
-    name: string
-    slug: string
-    anomalies: LivenessAnomaly[]
-  }[]
+  projectsWithAnomalies: ProjectWithAnomaly[]
 }
 
 export function ScalingLivenessPage({
