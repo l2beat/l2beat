@@ -110,8 +110,9 @@ function getChartData(
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
+  const adjustedTarget = range.type === 'custom' ? range.to : target
   const [from, to] = getRangeWithMax(range, resolution, {
-    now: target,
+    now: adjustedTarget,
   })
   const timestamps = generateTimestamps(
     [from ?? MIN_TIMESTAMPS.tvs, to],

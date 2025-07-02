@@ -119,8 +119,8 @@ function getMockActivityChart({
 }: ActivityChartParams): ActivityChartData {
   const [from, to] = getRangeWithMax(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? MIN_TIMESTAMPS.activity,
-    to,
+    range.type === 'custom' ? range.from : (from ?? MIN_TIMESTAMPS.activity),
+    range.type === 'custom' ? range.to : to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 
