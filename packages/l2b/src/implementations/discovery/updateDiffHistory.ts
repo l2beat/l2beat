@@ -220,6 +220,9 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       blockNumber = discoveryFromMainBranch.blockNumber
     }
     if (blockNumber === undefined) {
+      // We rediscover on the past block number, but with current configs and dependencies.
+      // Those dependencies might not have been referenced in the old discovery.
+      // In that case we don't fail - the diff will show all those "added".
       console.log(
         `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
       )
@@ -245,10 +248,6 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
     discoveryPaths,
     {
       debug: false,
-      // We rediscover on the past block number, but with current configs and dependencies.
-      // Those dependencies might not have been referenced in the old discovery.
-      // In that case we don't fail - the diff will show all those "added".
-      ignoreMissingDependencies: true,
     },
   )
 
