@@ -22,26 +22,6 @@
       "address": "0x4C1746A800D224393fE2470C70A35717eD4eA5F1"
     },
     {
-      "symbol": "WBTC.pdkatana",
-      "coingeckoId": "wrapped-bitcoin",
-      "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728"
-    },
-    {
-      "symbol": "USDT.pdkatana",
-      "coingeckoId": "tether",
-      "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb"
-    },
-    {
-      "symbol": "USDC.pdkatana",
-      "coingeckoId": "usd-coin",
-      "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822"
-    },
-    {
-      "symbol": "WETH.pdkatana",
-      "coingeckoId": "weth",
-      "address": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF"
-    },
-    {
       "symbol": "TRALA",
       "address": "0xD5e0eda0214f1d05af466E483d9376a77A67448b"
     },
@@ -7365,6 +7345,97 @@
           {
             "name": "Stargate v2",
             "slug": "stargatev2"
+          }
+        ]
+      }
+    }
+  ],
+  "katana": [
+    {
+      "symbol": "vbUSDC",
+      "category": "stablecoin",
+      "coingeckoId": "usd-coin",
+      "address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbUSDT",
+      "coingeckoId": "tether",
+      "category": "stablecoin",
+      "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbWBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbETH",
+      "coingeckoId": "ethereum",
+      "category": "ether",
+      "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "vbUSDS",
+      "coingeckoId": "usds",
+      "category": "stablecoin",
+      "address": "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "AUSD",
+      "coingeckoId": "agora-dollar",
+      "category": "stablecoin",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
           }
         ]
       }

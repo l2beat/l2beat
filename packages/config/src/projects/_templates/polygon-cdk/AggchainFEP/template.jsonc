@@ -1,0 +1,44 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "The main system contract defining the {{networkName}} Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.",
+  "ignoreInWatchMode": [
+    "lastAccInputHash",
+    "latestBlockNumber",
+    "latestOutputIndex",
+    "nextBlockNumber",
+    "nextOutputIndex"
+  ],
+  "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
+  "ignoreRelatives": ["gasTokenAddress", "pol"],
+  "fields": {
+    "aggregationVkey": {
+      "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key."
+    },
+    "rangeVkeyCommitment": {
+      "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks."
+    }
+    // these params are there but not used, just like 'optimistic mode' is currently not wired up:
+    // "admin": {
+    //   "permissions": [
+    //     {
+    //       "type": "interact",
+    //       "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches."
+    //     }
+    //   ]
+    // },
+    // "trustedSequencer": {
+    //   "permissions": [{ "type": "sequence" }]
+    // },
+    // "forceBatchAddress": {
+    //   "severity": "HIGH",
+    //   "description": "If this changes to the ZERO address, an update to the risk rosette is probably needed, since forcing batches is open to everyone.",
+    //   "permissions": [
+    //     {
+    //       "type": "interact",
+    //       "description": "sole address that can force batches."
+    //     }
+    //   ]
+    // }
+  },
+  "category": "core"
+}
