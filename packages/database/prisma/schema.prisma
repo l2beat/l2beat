@@ -308,13 +308,3 @@ model UpdateDiff {
 
   @@unique([projectId, address, type, chain])
 }
-
-model Notification {
-  id              String   @db.VarChar(255)
-  channel         String   @db.VarChar(255)
-  type            String   @db.VarChar(255)
-  relatedEntityId String   @db.VarChar(255)
-  timestamp       DateTime @db.Timestamp(6)
-
-  @@id([id])
-}

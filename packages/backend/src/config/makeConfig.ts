@@ -155,10 +155,6 @@ export async function makeConfig(
     },
     discord: {
       anomaliesWebhookUrl: env.optionalString('ANOMALIES_DISCORD_WEBHOOK_URL'),
-      anomaliesMinDuration: env.integer(
-        'ANOMALIES_MIN_DURATION',
-        60 * 60, // 1 hour
-      ),
     },
     // Must be last
     flags: flags.getResolved(),

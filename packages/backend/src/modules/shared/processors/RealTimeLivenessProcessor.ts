@@ -189,16 +189,6 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
             duration: interval,
             blockNumber: block.number,
           })
-
-          await this.notifier?.anomalyOngoing(
-            interval,
-            z,
-            block,
-            latestRecord,
-            latestStat,
-            ongoingAnomaly,
-          )
-
           continue
         }
 
