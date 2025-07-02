@@ -17,6 +17,7 @@ import {
 } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
+import { type TvsLeaderboard, getTvsLeaderboard } from './getTvsLeaderboard'
 
 export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
   colors: ProjectColors
@@ -36,6 +37,20 @@ export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
     isAppchain: boolean
     badges: BadgeWithParams[]
   }[]
+  tvsLeaderboard: {
+    gainers: {
+      slug: string
+      name: string
+      tvs: number
+      change: number
+    }[]
+    leaders: {
+      slug: string
+      name: string
+      tvs: number
+      change: number
+    }[]
+  }
 }
 
 export async function getEcosystemMonthlyUpdateEntries(
@@ -43,26 +58,37 @@ export async function getEcosystemMonthlyUpdateEntries(
   from: UnixTime,
   to: UnixTime,
 ): Promise<EcosystemMonthlyUpdateEntry[]> {
-  const allScalingProjects = await ps.getProjects({
-    where: ['isScaling'],
-  })
-  const [ecosystems, projects, tvs, activity, newProjects] = await Promise.all([
-    ps.getProjects({
-      select: ['ecosystemConfig', 'colors'],
-    }),
-    ps.getProjects({
-      select: ['ecosystemInfo'],
-      where: ['isScaling'],
-      whereNot: ['isUpcoming', 'archivedAt'],
-    }),
+  const [projects, ecosystems, allScalingProjects, newProjects] =
+    await Promise.all([
+      ps.getProjects({
+        select: ['ecosystemInfo'],
+        where: ['isScaling'],
+        whereNot: ['isUpcoming', 'archivedAt'],
+      }),
+      ps.getProjects({
+        select: ['ecosystemConfig', 'colors'],
+      }),
+      ps.getProjects({
+        where: ['isScaling'],
+      }),
+      ps.getProjects({
+        ids: ecosystemUpdateEntries.flatMap(
+          (e) => (e.newProjectsIds as ProjectId[]) ?? [],
+        ),
+        select: ['scalingStage', 'display', 'scalingInfo'],
+      }),
+    ])
+
+  const [tvs, activity, tvsLeaderboard] = await Promise.all([
     get7dTvsBreakdown({ type: 'layer2' }, to),
     getActivityLatestUops(allScalingProjects, { type: 'custom', from, to }),
-    ps.getProjects({
-      ids: ecosystemUpdateEntries.flatMap(
-        (e) => (e.newProjectsIds as ProjectId[]) ?? [],
-      ),
-      select: ['scalingStage', 'display', 'scalingInfo'],
-    }),
+    getTvsLeaderboard(
+      {
+        type: 'projects',
+        projectIds: projects.map((p) => p.id),
+      },
+      { type: 'custom', from, to },
+    ),
   ])
 
   const allScalingProjectsUops = allScalingProjects.reduce(
@@ -81,6 +107,7 @@ export async function getEcosystemMonthlyUpdateEntries(
       activity,
       allScalingProjectsUops,
       newProjects,
+      tvsLeaderboard,
     )
   })
 }
@@ -93,9 +120,15 @@ function getEcosystemMonthlyUpdateEntry(
   activity: ActivityLatestUopsData,
   allScalingProjectsUops: number,
   newProjects: Project<'scalingStage' | 'display' | 'scalingInfo'>[],
+  tvsLeaderboardData: TvsLeaderboard,
 ): EcosystemMonthlyUpdateEntry {
   const ecosystemProjects = projects.filter(
     (p) => p.ecosystemInfo.id === ecosystem.id,
+  )
+
+  const tvsLeaderboard = getEcosystemTvsLeaderboard(
+    ecosystemProjects,
+    tvsLeaderboardData,
   )
 
   return {
@@ -125,5 +158,45 @@ function getEcosystemMonthlyUpdateEntry(
       uops: allScalingProjectsUops,
     },
     projects: ecosystemProjects.map((project) => project.id),
+    tvsLeaderboard,
+  }
+}
+
+function getEcosystemTvsLeaderboard(
+  ecosystemProjects: Project<'ecosystemInfo'>[],
+  tvsLeaderboard: TvsLeaderboard,
+): EcosystemMonthlyUpdateEntry['tvsLeaderboard'] {
+  const ecosystemTvsLeaderBoardData = Object.entries(
+    tvsLeaderboard.projects,
+  ).filter(([id]) => ecosystemProjects.some((p) => p.id === id))
+
+  const gainers = ecosystemTvsLeaderBoardData
+    .sort((a, b) => b[1].change - a[1].change)
+    .slice(0, 3)
+  const leaders = ecosystemTvsLeaderBoardData
+    .sort((a, b) => b[1].tvs - a[1].tvs)
+    .slice(0, 3)
+
+  return {
+    gainers: gainers.map(([id, data]) => {
+      const project = ecosystemProjects.find((p) => p.id === id)
+      assert(project, `Project not found for ${id}`)
+      return {
+        slug: project.slug,
+        name: project.name,
+        tvs: data.tvs,
+        change: data.change,
+      }
+    }),
+    leaders: leaders.map(([id, data]) => {
+      const project = ecosystemProjects.find((p) => p.id === id)
+      assert(project, `Project not found for ${id}`)
+      return {
+        slug: project.slug,
+        name: project.name,
+        tvs: data.tvs,
+        change: data.change,
+      }
+    }),
   }
 }

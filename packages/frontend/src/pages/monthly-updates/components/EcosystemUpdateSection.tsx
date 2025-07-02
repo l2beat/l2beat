@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemMonthlyUpdateEntry } from '../utils/getEcosystemEntries'
+import { Leaderboards } from './Leaderboards'
 import { MonthlyUpdateActivityChart } from './MonthlyUpdateActivityChart'
 import { MonthlyUpdateTvsChart } from './MonthlyUpdateTvsChart'
 import { NewProjectsSection } from './NewProjectsSection'
@@ -27,7 +28,7 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
         src={`/images/monthly-updates/${ecosystem.ecosystemId}.png`}
         className="mb-8 min-h-[60px] w-full rounded-lg object-cover"
       />
-      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+      <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <MonthlyUpdateTvsChart
           name={ecosystem.name}
           entries={ecosystem.projects}
@@ -43,6 +44,7 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
           to={to}
         />
       </div>
+      <Leaderboards tvsLeaderboard={ecosystem.tvsLeaderboard} />
       {ecosystem.newProjects.length > 0 && (
         <NewProjectsSection newProjects={ecosystem.newProjects} />
       )}
