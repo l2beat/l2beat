@@ -3,37 +3,6 @@
   "projectId": "katana",
   "tokens": [
     {
-      "mode": "custom",
-      "id": "katana-ETH",
-      "priceId": "ethereum",
-      "symbol": "ETH",
-      "name": "Ethereum",
-      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
-      "category": "ether",
-      "source": "canonical",
-      "amount": {
-        "type": "calculation",
-        "operator": "diff",
-        "arguments": [
-          {
-            "type": "const",
-            "value": "340282366920938463463374607431768211455",
-            "decimals": 18,
-            "sinceTimestamp": 1748344157
-          },
-          {
-            "type": "balanceOfEscrow",
-            "chain": "katana",
-            "decimals": 18,
-            "address": "native",
-            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-            "sinceTimestamp": 1748344157
-          }
-        ]
-      },
-      "isAssociated": false
-    },
-    {
       "mode": "auto",
       "id": "katana-AUSD",
       "priceId": "agora-dollar",
@@ -56,6 +25,163 @@
             "name": "Agglayer shared bridge (custom L2 contract)"
           }
         ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-ETH",
+      "priceId": "ethereum",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "iconUrl": "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880",
+      "category": "ether",
+      "source": "canonical",
+      "amount": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "const",
+            "value": "340282366920938463463374607431768211455",
+            "decimals": 18,
+            "sinceTimestamp": 1746742811
+          },
+          {
+            "type": "balanceOfEscrow",
+            "chain": "katana",
+            "decimals": 18,
+            "address": "native",
+            "escrowAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
+            "sinceTimestamp": 1746742811
+          }
+        ]
+      },
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
+      "id": "katana-LBTC",
+      "priceId": "lombard-staked-btc",
+      "symbol": "LBTC",
+      "name": "Lombard Staked Bitcoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x859492f5dEac8491cc628d2E97b5D1E8baccbF98",
+        "chain": "katana",
+        "decimals": 8,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-MORPHO",
+      "priceId": "morpho",
+      "symbol": "MORPHO",
+      "name": "Morpho Token",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29837/large/Morpho-token-icon.png?1726771230",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x1e5eFCA3D0dB2c6d5C67a4491845c43253eB9e4e",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-POL",
+      "priceId": "polygon-ecosystem-token",
+      "symbol": "POL",
+      "name": "Polygon Ecosystem Token",
+      "iconUrl": "https://assets.coingecko.com/coins/images/32440/large/polygon.png?1698233684",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xb24e3035d1FCBC0E43CF3143C3Fd92E53df2009b",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-SUSHI",
+      "priceId": "sushi",
+      "symbol": "SUSHI",
+      "name": "SushiToken",
+      "iconUrl": "https://assets.coingecko.com/coins/images/12271/large/512x512_Logo_no_chop.png?1696512101",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x17BFF452dae47e07CeA877Ff0E1aba17eB62b0aB",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-USDC",
+      "priceId": "usd-coin",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "iconUrl": "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xfd415D011FfaA8e6f17fa753CdB080d1dE266784",
+        "chain": "katana",
+        "decimals": 6,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-USDS",
+      "priceId": "usds",
+      "symbol": "USDS",
+      "name": "USDS Stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2134866886ce784fE2E0DE819118E4D32b4Be32C",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-USDT",
+      "priceId": "tether",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "iconUrl": "https://assets.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "category": "stablecoin",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xf44e3BCB7A2461CC08185E127B324f2486a74E20",
+        "chain": "katana",
+        "decimals": 6,
+        "sinceTimestamp": 1746742811
       }
     },
     {
@@ -210,6 +336,96 @@
             "name": "Agglayer shared bridge (custom L2 contract)"
           }
         ]
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-WBTC",
+      "priceId": "wrapped-bitcoin",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "iconUrl": "https://assets.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0xB33e43A3F276e8e75792b941bccC996EcB2c0bBD",
+        "chain": "katana",
+        "decimals": 8,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-weETH",
+      "priceId": "wrapped-eeth",
+      "symbol": "weETH",
+      "name": "Wrapped eETH",
+      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x9893989433e7a383Cb313953e4c2365107dc19a7",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-WETH",
+      "priceId": "weth",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "iconUrl": "https://assets.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x815955d051C6262C16c720b19D735426254Bec5B",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-wstETH",
+      "priceId": "wrapped-steth",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
+      "category": "ether",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x7Fb4D0f51544F24F385a421Db6e7D4fC71Ad8e5C",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
+      }
+    },
+    {
+      "mode": "auto",
+      "id": "katana-YFI",
+      "priceId": "yearn-finance",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "iconUrl": "https://assets.coingecko.com/coins/images/11849/large/yearn.jpg?1696511720",
+      "category": "other",
+      "source": "canonical",
+      "isAssociated": false,
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x476eaCd417cD65421bD34fca054377658BB5E02b",
+        "chain": "katana",
+        "decimals": 18,
+        "sinceTimestamp": 1746742811
       }
     }
   ]
