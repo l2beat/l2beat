@@ -14,7 +14,7 @@ describe(ModelIdRegistry.name, () => {
     it('returns undefined when address is not found', () => {
       expect(
         registry.getModelIdOrUndefined(
-          'ethereum',
+          'eth',
           '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         ),
       ).toEqual(undefined)
@@ -23,10 +23,10 @@ describe(ModelIdRegistry.name, () => {
     it('returns id when found', () => {
       expect(
         registry.getModelId(
-          'ethereum',
+          'eth',
           '0x000000000000000000000000000000000000ccc1',
         ),
-      ).toEqual('contractA_ethereum_0x000000000000000000000000000000000000ccc1')
+      ).toEqual('contractA_eth_0x000000000000000000000000000000000000ccc1')
     })
   })
 
@@ -34,11 +34,11 @@ describe(ModelIdRegistry.name, () => {
     it('throws when no id is found', () => {
       expect(() =>
         registry.getModelId(
-          'ethereum',
+          'eth',
           '0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
         ),
       ).toThrow(
-        'No id found for ethereum:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+        'No id found for eth:0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
       )
     })
   })
@@ -47,12 +47,12 @@ describe(ModelIdRegistry.name, () => {
     it('returns address data', () => {
       expect(
         registry.getAddressData(
-          'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+          'contractA_eth_0x000000000000000000000000000000000000ccc1',
         ),
       ).toEqual({
         modelId:
-          'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
-        chain: 'ethereum',
+          'contractA_eth_0x000000000000000000000000000000000000ccc1',
+        shortChain: 'eth',
         address: '0x000000000000000000000000000000000000ccc1',
         name: 'ContractA',
         type: 'contract',
@@ -61,11 +61,11 @@ describe(ModelIdRegistry.name, () => {
 
       expect(
         registry.getAddressData(
-          'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
+          'eoaA_eth_0x000000000000000000000000000000000000eee1',
         ),
       ).toEqual({
-        modelId: 'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
-        chain: 'ethereum',
+        modelId: 'eoaA_eth_0x000000000000000000000000000000000000eee1',
+        shortChain: 'eth',
         address: '0x000000000000000000000000000000000000eee1',
         name: 'Special EOA',
         type: 'eoa',
@@ -88,7 +88,7 @@ describe(ModelIdRegistry.name, () => {
   describe(ModelIdRegistry.prototype.replaceIdsWithNames.name, () => {
     it('correctly replaces ids with names', () => {
       const result = registry.replaceIdsWithNames(
-        'Contract @@contractA_ethereum_0x000000000000000000000000000000000000ccc1, eoa @@eoaA_ethereum_0x000000000000000000000000000000000000eee1, unknown @@a_b_c',
+        'Contract @@contractA_eth_0x000000000000000000000000000000000000ccc1, eoa @@eoaA_eth_0x000000000000000000000000000000000000eee1, unknown @@a_b_c',
       )
       expect(result).toEqual(
         'Contract ContractA, eoa Special EOA, unknown a_b_c',
@@ -101,120 +101,120 @@ const facts: ClingoFact[] = [
   {
     atom: 'address',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
-      'ethereum',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
+      'eth',
       '0x000000000000000000000000000000000000ccc1',
     ],
   },
   {
     atom: 'addressName',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'ContractA',
     ],
   },
   {
     atom: 'addressType',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'contract',
     ],
   },
   {
     atom: 'addressDescription',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'Description of ContractA',
     ],
   },
   {
     atom: 'permission',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'act',
-      'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
+      'eoaA_eth_0x000000000000000000000000000000000000eee1',
     ],
   },
   {
     atom: 'permissionDescription',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'act',
-      'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
+      'eoaA_eth_0x000000000000000000000000000000000000eee1',
       'Description of Permission 2',
     ],
   },
   {
     atom: 'permissionDelay',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'act',
-      'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
+      'eoaA_eth_0x000000000000000000000000000000000000eee1',
       3600,
     ],
   },
   {
     atom: 'permission',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'upgrade',
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
     ],
   },
   {
     atom: 'permissionDescription',
     params: [
-      'contractA_ethereum_0x000000000000000000000000000000000000ccc1',
+      'contractA_eth_0x000000000000000000000000000000000000ccc1',
       'upgrade',
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
       'Description of Permission 1',
     ],
   },
   {
     atom: 'address',
     params: [
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
-      'ethereum',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
+      'eth',
       '0x000000000000000000000000000000000000ccc2',
     ],
   },
   {
     atom: 'addressName',
     params: [
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
       'ContractB',
     ],
   },
   {
     atom: 'addressType',
     params: [
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
       'contract',
     ],
   },
   {
     atom: 'addressDescription',
     params: [
-      'contractB_ethereum_0x000000000000000000000000000000000000ccc2',
+      'contractB_eth_0x000000000000000000000000000000000000ccc2',
       'Description of ContractB',
     ],
   },
   {
     atom: 'address',
     params: [
-      'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
-      'ethereum',
+      'eoaA_eth_0x000000000000000000000000000000000000eee1',
+      'eth',
       '0x000000000000000000000000000000000000eee1',
     ],
   },
   {
     atom: 'addressType',
-    params: ['eoaA_ethereum_0x000000000000000000000000000000000000eee1', 'eoa'],
+    params: ['eoaA_eth_0x000000000000000000000000000000000000eee1', 'eoa'],
   },
   {
     atom: 'addressName',
     params: [
-      'eoaA_ethereum_0x000000000000000000000000000000000000eee1',
+      'eoaA_eth_0x000000000000000000000000000000000000eee1',
       'Special EOA',
     ],
   },

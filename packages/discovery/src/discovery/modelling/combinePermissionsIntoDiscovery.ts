@@ -7,6 +7,7 @@ import type {
   ReceivedPermission,
 } from '../output/types'
 import type { DiscoveryBlockNumbers } from './modelPermissions'
+import { getChainShortName } from '../../config/config.discovery'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -17,6 +18,7 @@ export async function combinePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
+  const shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,
@@ -41,7 +43,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${discovery.chain}:${entry.address}`) &&
+          p.receiver.startsWith(`${shortChain}:${entry.address}`) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -60,7 +62,7 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${discovery.chain}:${entry.address}`),
+          ChainSpecificAddress(`${shortChain}:${entry.address}`),
         )
           ? true
           : undefined

@@ -18,6 +18,7 @@ import {
   parseUltimatePermissionFact,
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
+import { getChainShortName } from '../../config/config.discovery'
 
 export type DiscoveryBlockNumbers = {
   [project: string]: {
@@ -235,8 +236,9 @@ export function generateClingoForProjectOnChain(
 ) {
   const generatedClingo: string[] = []
 
+  const shortChain = getChainShortName(discovery.chain)
   const addressToNameMap = buildAddressToNameMap(
-    discovery.chain,
+    shortChain,
     discovery.entries,
   )
 
@@ -245,7 +247,7 @@ export function generateClingoForProjectOnChain(
     .forEach((entry) => {
       const clingoFromPermissions = generateClingoFromPermissionsConfig(
         entry,
-        discovery.chain,
+        shortChain,
         config,
         templateService,
         addressToNameMap,
@@ -253,7 +255,7 @@ export function generateClingoForProjectOnChain(
       generatedClingo.push(clingoFromPermissions)
       const clingoFromModelLp = generateClingoFromModelLp(
         entry,
-        discovery.chain,
+        shortChain,
         templateService,
         addressToNameMap,
       )

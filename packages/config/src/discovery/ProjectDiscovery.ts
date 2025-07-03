@@ -7,6 +7,7 @@ import type {
 import {
   ConfigReader,
   RolePermissionEntries,
+  getChainShortName,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
 import {
@@ -647,9 +648,10 @@ export class ProjectDiscovery {
       : this.discoveries
     discoveries.forEach((discovery) => {
       discovery.entries.forEach((e) => {
+        const shortChain = getChainShortName(discovery.chain)
         if (e.type === 'Contract') {
           const chainSpecificAddress = ChainSpecificAddress(
-            `${discovery.chain}:${e.address}`,
+            `${shortChain}:${e.address}`,
           )
           if (result[chainSpecificAddress] !== undefined) {
             throw new Error(
@@ -762,13 +764,14 @@ export class ProjectDiscovery {
         descriptions[0] ?? RoleDescriptions[role].description,
       ]
 
+      const shortChain = getChainShortName(this.chain)
       for (const c of matching) {
         const initialConditions = (c.receivedPermissions ?? [])
           .filter((p) => p.permission === role)
           .map((p) =>
             this.formatViaPath(
               {
-                address: ChainSpecificAddress(`${this.chain}:${c.address}`),
+                address: ChainSpecificAddress(`${shortChain}:${c.address}`),
                 condition: p.condition,
                 delay: p.delay,
               },
