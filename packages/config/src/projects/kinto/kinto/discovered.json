@@ -919,7 +919,7 @@
         "0x02777a2575f23718a66224f10ac65db704c8c844f66d08dd5f9afd58b869f133"
       ],
       "proxyType": "immutable",
-      "description": "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation.",
+      "description": "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.",
       "sinceTimestamp": 1703803644,
       "sinceBlock": 65,
       "values": {

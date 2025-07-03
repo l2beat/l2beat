@@ -186,7 +186,7 @@
         "0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": "Proxy",
         "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d": "L1ERC721Bridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Yearn Strategist Multisig",
@@ -372,7 +372,7 @@
         "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": "ResolvedDelegateProxy",
         "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": "L1CrossDomainMessenger"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
@@ -1796,7 +1796,7 @@
         "0x98906C3f90A06B5484DD67bf32938815d2993dBC": "L1ChugSplashProxy",
         "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF": "L1StandardBridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PreimageOracle",
@@ -2229,7 +2229,7 @@
         "0xe06278351d120288eDfCB963F934113Ca3C21AFe": "Proxy",
         "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B": "DisputeGameFactory"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",

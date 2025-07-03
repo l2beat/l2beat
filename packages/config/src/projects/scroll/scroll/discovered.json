@@ -1456,7 +1456,7 @@
         "0xf49a07669c94c3b5ba913378cfa842a379d9d3f4456a1070979d52d7f9d69c87"
       ],
       "proxyType": "immutable",
-      "description": "Manager contract for minter management [sic].",
+      "description": " Contract that uses controllers to manage minters for USDC on Scroll.",
       "sinceTimestamp": 1696919091,
       "sinceBlock": 38,
       "values": {

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x08a7b696c74bc58e54890b5909a70ada849891d6
+
+# Diff at Thu, 03 Jul 2025 10:57:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22823856
+- current block number: 22823856
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823856 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+      description:
+-        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message."
+    }
+```
+
+```diff
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+      description:
+-        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse."
+    }
+```
+
 Generated with discovered.json: 0xd782d212e5151fe80d1fd2e9351623fa13f689b6
 
 # Diff at Tue, 01 Jul 2025 10:41:26 GMT:

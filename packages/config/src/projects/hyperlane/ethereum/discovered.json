@@ -18,7 +18,7 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -524,7 +524,7 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.",
       "sinceTimestamp": 1726246067,
       "sinceBlock": 20742981,
       "values": {

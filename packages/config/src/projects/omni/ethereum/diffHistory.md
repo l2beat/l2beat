@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0dca27e6b9e14acd91fe9b4c8aa8c5383c80a855
+
+# Diff at Thu, 03 Jul 2025 10:57:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22630069
+- current block number: 22630069
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630069 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
+      description:
+-        "Custom multisignature contract for Validator addresses."
++        "Custom Multisignature contract for Validators."
+    }
+```
+
 Generated with discovered.json: 0xe20d99981c22600430723d3bb3e71e206747eee6
 
 # Diff at Wed, 04 Jun 2025 08:36:55 GMT:

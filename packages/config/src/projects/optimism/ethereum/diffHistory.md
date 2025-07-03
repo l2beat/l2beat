@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xb8869ad66c7579fdda1454834f8b9c1b86d4b63d
+
+# Diff at Thu, 03 Jul 2025 10:57:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22567749
+- current block number: 22567749
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567749 (main branch discovery), not current.
+
+```diff
+    contract L1DAIEscrow (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65) {
+    +++ description: Stores DAI deposited from the attached L1DAITokenBridge.
+      description:
+-        "Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens."
++        "Stores DAI deposited from the attached L1DAITokenBridge."
+    }
+```
+
 Generated with discovered.json: 0x2bcbfa17532cf9f269da8f62f760c437b84aae20
 
 # Diff at Mon, 16 Jun 2025 08:43:56 GMT:

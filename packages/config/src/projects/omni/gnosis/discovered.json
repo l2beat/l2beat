@@ -295,19 +295,19 @@
       "fieldMeta": {
         "targetAddress": {
           "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
+          "description": "Address of the target contract on Ethereum"
         },
         "adapters": {
           "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
+          "description": "Array of the adapters on Ethereum"
         },
         "reporters": {
           "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
+          "description": "Array of the reporters on Ethereum"
         },
         "threshold": {
           "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
+          "description": "Threshold of the adapters on Ethereum"
         },
         "HASHI_IS_MANDATORY": {
           "severity": "HIGH",
