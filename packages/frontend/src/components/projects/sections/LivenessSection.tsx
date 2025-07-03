@@ -77,7 +77,7 @@ export function OngoingAnomalies({
             <th className="w-1/3 max-lg:hidden">Start</th>
           </tr>
         </thead>
-        <tbody className="align-top text-lg leading-none">
+        <tbody className="!leading-none align-top text-sm md:text-lg">
           {anomalies.map((anomaly) => {
             const formattedStart = formatTimestamp(anomaly.start, {
               mode: 'datetime',
