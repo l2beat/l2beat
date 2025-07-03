@@ -24,7 +24,7 @@ export function AddressDisplay({ value, simplified }: AddressDisplayProps) {
       className="block h-4 w-4"
       onClick={(e) => {
         e.preventDefault()
-        copyToClipboard(value.address)
+        copyToClipboard(address ?? value.address)
       }}
     >
       {!copied && (

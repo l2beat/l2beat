@@ -5,6 +5,7 @@
     "name": { "type": "string" },
     "import": { "type": "array", "items": { "type": "string" } },
     "archived": { "type": "boolean" },
+    "modelCrossChainPermissions": { "type": "boolean" },
     "chains": {
       "type": "object",
       "propertyNames": { "type": "string" },

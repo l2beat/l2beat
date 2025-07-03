@@ -1083,6 +1083,16 @@
         "0x01f0a31698C4d065659b9bdC21B3610292a1c506": "Wrapped eETH Token"
       }
     },
+    "katana": {
+      "names": {
+        "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a": "AUSD Token",
+        "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62": "Vault Bridge ETH Token",
+        "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36": "Vault Bridge USDC Token",
+        "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3": "Vault Bridge USDS Token",
+        "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2": "Vault Bridge USDT Token",
+        "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52": "Vault Bridge WBTC Token"
+      }
+    },
     "zklinknova": {
       "names": {
         "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C": "Free Bridged SolvBTC Token",

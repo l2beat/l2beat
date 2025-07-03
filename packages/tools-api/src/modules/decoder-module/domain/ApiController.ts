@@ -1,10 +1,11 @@
+import { inflateRawSync } from 'zlib'
 import type { Chain } from '../../../config/types'
 import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type { Decoder, Transaction } from './Decoder'
 
 export interface ApiQuery {
   hash?: `0x${string}`
-  data?: `0x${string}`
+  data?: string
   to?: `0x${string}`
   chainId?: number
 }
@@ -42,7 +43,7 @@ export class ApiController {
       }
 
       return {
-        data: query.data,
+        data: decodeCalldata(query.data),
         to: query.to ? `${chain.shortName}:${query.to}` : undefined,
         chain,
       }
@@ -75,4 +76,24 @@ export class ApiController {
     }
     throw new Error('Transaction not found!')
   }
+}
+
+function decodeCalldata(calldata: string): `0x${string}` {
+  if (calldata.length > 4096) {
+    throw new Error('Calldata too long')
+  }
+
+  const compressedBytes = urlSafeBase64Decode(calldata)
+  const bytes = inflateRawSync(compressedBytes, { maxOutputLength: 128 * 1024 })
+  const result = `0x${bytes.toString('hex')}` as const
+  return result
+}
+
+function urlSafeBase64Decode(data: string): Buffer {
+  const replaced = data
+    .replace(/-/g, '+')
+    .replace(/_/g, '/')
+    .padEnd(data.length + ((4 - (data.length % 4)) % 4), '=')
+
+  return Buffer.from(replaced, 'base64')
 }

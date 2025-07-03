@@ -209,7 +209,7 @@ export const phala: ScalingProject = {
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
         stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
