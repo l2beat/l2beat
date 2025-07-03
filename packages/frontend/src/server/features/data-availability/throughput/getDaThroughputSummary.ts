@@ -61,10 +61,10 @@ const getDaThroughputSummaryData = async (
 function getMockDaThroughputSummaryData(): ThroughputSummaryData {
   return {
     latest: {
-      ethereum: 200000,
-      celestia: 200000,
-      avail: 200000,
-      eigenda: 200000,
+      ethereum: 4000000,
+      celestia: 4000000,
+      avail: 4000000,
+      eigenda: 4000000,
     },
     data7dAgo: {
       ethereum: 100000,
