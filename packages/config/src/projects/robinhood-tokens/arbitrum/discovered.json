@@ -1,0 +1,24 @@
+{
+  "name": "robinhood-tokens",
+  "chain": "arbitrum",
+  "blockNumber": 352838717,
+  "configHash": "0x435480477eb9493358b160577493528689a1d8d7718063efaf809deb95e3f679",
+  "entries": [
+    {
+      "name": "",
+      "address": "0xd4Df56f929F309758c4b01b6D3D2644141DC59bF",
+      "type": "Contract",
+      "unverified": true,
+      "proxyType": "immutable",
+      "sinceTimestamp": 1747319311,
+      "sinceBlock": 336966563,
+      "values": { "$immutable": true },
+      "implementationNames": {
+        "0xd4Df56f929F309758c4b01b6D3D2644141DC59bF": ""
+      }
+    }
+  ],
+  "abis": {},
+  "usedTemplates": {},
+  "permissionsConfigHash": "0x8509ffc4d16eae058011802466352117d587eb4a4d90655e97ec381811297c1a"
+}

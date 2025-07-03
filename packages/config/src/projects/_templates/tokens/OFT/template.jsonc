@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Standard OFT token",
+  "ignoreInWatchMode": [
+    "totalSupply"
+  ],
+  "fields": {
+    "peers": {
+      "handler": {
+        "type": "event",
+        "select": "peer",
+        "groupBy": "eid",
+        "set": {
+          "event": "PeerSet"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Non-standard OP stack's canonically bridged L2 token implementation that has been modified to also be a OFT.",
+  "ignoreInWatchMode": [
+    "totalSupply"
+  ],
+  "fields": {
+    "peers": {
+      "handler": {
+        "type": "event",
+        "select": "peer",
+        "groupBy": "eid",
+        "set": {
+          "event": "PeerSet"
+        }
+      }
+    }
+  }
+}
