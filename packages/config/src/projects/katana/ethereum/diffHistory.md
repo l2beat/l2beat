@@ -1,14 +1,16 @@
-Generated with discovered.json: 0xf1a035373ee38ee43fffc94cfdaf8ed272596f35
+Generated with discovered.json: 0x4c563a7156ed3a15687e58480d6345fcd7cce311
 
-# Diff at Wed, 02 Jul 2025 15:28:23 GMT:
+# Diff at Thu, 03 Jul 2025 07:40:04 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
-- current block number: 22831429
+- comparing to: main@717eea3a0fc625b39e556e700bc9e657bb32fa71 block: 22825494
+- current block number: 22837267
 
 ## Description
 
 add op stack gasconfig parameters.
+
+config: refine descriptions and permissions.
 
 ## Watched changes
 
@@ -25,25 +27,27 @@ add op stack gasconfig parameters.
     }
 ```
 
-```diff
-+   Status: CREATED
-    contract Safe (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
-    +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../Safe.sol                                       | 1088 ++++++++++++++++++++
- .../SafeProxy.p.sol                                |   37 +
- 2 files changed, 1125 insertions(+)
-```
-
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 22816814 (main branch discovery), not current.
+discovery. Values are for block 22825494 (main branch discovery), not current.
+
+```diff
+    contract AggchainFEP (0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666) {
+    +++ description: The main system contract defining the katana Layer 2 logic. As this contract is based on the OP-Succinct L2OutputOracle, OP stack outputRoots (L2 state roots) are saved here.
+      fieldMeta.aggregationVkey.description:
+-        "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key."
++        "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
+      fieldMeta.aggregationVkey.severity:
++        "HIGH"
+      fieldMeta.rangeVkeyCommitment.description:
+-        "Verification key for the OP Stack derivation + STF proof for a range of blocks."
++        "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
+      fieldMeta.rangeVkeyCommitment.severity:
++        "HIGH"
+    }
+```
 
 ```diff
     contract OptimismPortal2 (0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E) {
@@ -55,18 +59,37 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GenericVaultBridgeToken (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
-    +++ description: None
+    contract vbWBTC (0x2C24B57e2CCd1f273045Af6A5f632504C432374F) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      name:
+-        "GenericVaultBridgeToken"
++        "vbWBTC"
+      description:
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
       category:
-+        {"name":"Spam","priority":-1}
++        {"name":"External Bridges","priority":1}
     }
 ```
 
 ```diff
-    contract VbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
-    +++ description: None
+    contract vbETH (0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      name:
+-        "VbETH"
++        "vbETH"
+      description:
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
       category:
-+        {"name":"Spam","priority":-1}
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 1 (0x2De242e27386e224E5fbF110EA8406d5B70740ec) {
+    +++ description: None
+      name:
+-        "Safe"
++        "Katana vaultBridge Multisig 1"
     }
 ```
 
@@ -86,10 +109,15 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GenericVaultBridgeToken (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
-    +++ description: None
+    contract vbUSDS (0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      name:
+-        "GenericVaultBridgeToken"
++        "vbUSDS"
+      description:
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
       category:
-+        {"name":"Spam","priority":-1}
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -100,14 +128,27 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
+    contract MigrationManager (0x417d01B64Ea30C4E163873f3a1f77b727c689e02) {
+    +++ description: Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.
+      description:
++        "Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults."
+      category:
++        {"name":"External Bridges","priority":1}
+    }
+```
+
+```diff
 -   Status: DELETED
     contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb)
     +++ description: None
 ```
 
 ```diff
-    contract Katana Multisig 2 (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
+    contract Katana Foundation Engineering/Security Multisig (0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a) {
     +++ description: None
+      name:
+-        "Katana Multisig 2"
++        "Katana Foundation Engineering/Security Multisig"
       receivedPermissions.0.description:
 +        "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
       receivedPermissions.0.role:
@@ -123,10 +164,15 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GenericVaultBridgeToken (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
-    +++ description: None
+    contract vbUSDC (0x53E82ABbb12638F09d9e624578ccB666217a765e) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      name:
+-        "GenericVaultBridgeToken"
++        "vbUSDC"
+      description:
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
       category:
-+        {"name":"Spam","priority":-1}
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -139,10 +185,24 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GenericVaultBridgeToken (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    contract Katana yieldRecipient Mulsitig (0x67C912fF560951526BffDff66dFbD4DF8AE23756) {
     +++ description: None
+      name:
+-        "Safe"
++        "Katana yieldRecipient Mulsitig"
+    }
+```
+
+```diff
+    contract vbUSDT (0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC) {
+    +++ description: This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.
+      name:
+-        "GenericVaultBridgeToken"
++        "vbUSDT"
+      description:
++        "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756."
       category:
-+        {"name":"Spam","priority":-1}
++        {"name":"External Bridges","priority":1}
     }
 ```
 
@@ -156,14 +216,17 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 
 ```diff
 -   Status: DELETED
-    contract DepositModule (0x793D85F585145c050487c7AfBF0e9B97143fF1CB)
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822)
     +++ description: None
 ```
 
 ```diff
--   Status: DELETED
-    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822)
+    contract Katana Steakhouse Financial / Morpho Multisig (0x827e86072B06674a077f592A531dcE4590aDeCdB) {
     +++ description: None
+      name:
+-        "Safe"
++        "Katana Steakhouse Financial / Morpho Multisig"
+    }
 ```
 
 ```diff
@@ -187,10 +250,28 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Polygon Labs Engineering/Security Multisig (0x9d851f8b8751c5FbC09b9E74E6e68E9950949052) {
+    +++ description: None
+      name:
+-        "Polygon Multisig 2"
++        "Polygon Labs Engineering/Security Multisig"
+    }
+```
+
+```diff
     contract OptimismMintableERC20Factory (0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E) {
     +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
       category:
 +        {"name":"Spam","priority":-1}
+    }
+```
+
+```diff
+    contract Katana vaultBridge Multisig 2 (0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff) {
+    +++ description: None
+      name:
+-        "Safe"
++        "Katana vaultBridge Multisig 2"
     }
 ```
 
@@ -219,10 +300,112 @@ discovery. Values are for block 22816814 (main branch discovery), not current.
 ```
 
 ```diff
+    contract Katana vaultBridge Multisig 3 (0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E) {
+    +++ description: None
+      name:
+-        "Katana Multisig"
++        "Katana vaultBridge Multisig 3"
+    }
+```
+
+```diff
 -   Status: DELETED
     contract Yearn Treasury Multisig (0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52)
     +++ description: None
 ```
+
+Generated with discovered.json: 0x947fb3788d01d2f19ea5e0f4af048ad614ea9e24
+
+# Diff at Tue, 01 Jul 2025 16:11:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816814
+- current block number: 22825494
+
+## Description
+
+Predeposits ended (limit 0), chain is live.
+
+add the AggchainFEP core contract of Katana.
+
+move TVS to L2 configs.
+
+## Watched changes
+
+```diff
+    contract Katana Pre-Deposit USDT Token (0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DepositModule (0x793D85F585145c050487c7AfBF0e9B97143fF1CB)
+    +++ description: None
+```
+
+```diff
+    contract Katana Pre-Deposit USDC Token (0x7B5A0182E400b241b317e781a4e9dEdFc1429822) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WBTC Token (0x92C82f5F771F6A44CfA09357DD0575B81BF5F728) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Katana Pre-Deposit WETH Token (0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF) {
+    +++ description: None
+      values.deposit_limit:
+-        "115792089237316195423570985008687907853269984665640564039457584007913129639935"
++        0
+      values.deposit_limit_module:
+-        "0x793D85F585145c050487c7AfBF0e9B97143fF1CB"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x67C912fF560951526BffDff66dFbD4DF8AE23756)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../.flat@22816814/DepositModule.sol => /dev/null  |   76 --
+ .../Safe.sol                                       | 1088 ++++++++++++++++++++
+ .../SafeProxy.p.sol                                |   37 +
+ 3 files changed, 1125 insertions(+), 76 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22816814 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED

@@ -1,8 +1,8 @@
 {
   "name": "katana",
   "chain": "ethereum",
-  "blockNumber": 22831429,
-  "configHash": "0x40a3ba8bd0b2d65b61964704cec02e1f67714fed8b664bfe72ee9e16975e47fd",
+  "blockNumber": 22837267,
+  "configHash": "0x44b18d24f77a4c2e3089b9fa2b30dd1303f49a5eac66a6a69c8e21a035513b9d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -78,11 +78,11 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 4708688,
-        "latestOutputIndex": 119,
+        "latestBlockNumber": 4777088,
+        "latestOutputIndex": 131,
         "networkName": "katana",
-        "nextBlockNumber": 4708689,
-        "nextOutputIndex": 120,
+        "nextBlockNumber": 4777089,
+        "nextOutputIndex": 132,
         "optimisticMode": false,
         "optimisticModeManager": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
@@ -475,7 +475,7 @@
       }
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbWBTC",
       "address": "0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -484,6 +484,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -526,7 +527,7 @@
           }
         },
         "asset": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 35158 },
+        "backingDifference": { "positive": true, "difference": 45129 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -551,13 +552,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 20640527700,
+        "stakedAssets": 20640542097,
         "symbol": "vbWBTC",
-        "totalAssets": 20640527700,
-        "totalSupply": 20640492542,
+        "totalAssets": 20640542097,
+        "totalSupply": 20640496968,
         "underlyingToken": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 35158,
+        "yield": 45129,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -567,7 +568,7 @@
         "0x2C24B57e2CCd1f273045Af6A5f632504C432374F": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
@@ -672,7 +673,7 @@
       ]
     },
     {
-      "name": "VbETH",
+      "name": "vbETH",
       "address": "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -681,6 +682,7 @@
         "0x4988be5ea9a1e587b7ad36189901d0e442b1905a12fcfb0f0896de5d089234cd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -725,7 +727,7 @@
         "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "1891575165162636052"
+          "difference": "2673418809329762803"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -751,13 +753,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "19725792339718642912483",
+        "stakedAssets": "19726581288772810039234",
         "symbol": "vbETH",
-        "totalAssets": "19725792339718642912483",
-        "totalSupply": "19723900764553480276431",
+        "totalAssets": "19726581288772810039234",
+        "totalSupply": "19723907869963480276431",
         "underlyingToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "1891575165162636052",
+        "yield": "2673418809329762803",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -767,10 +769,10 @@
         "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": "TransparentUpgradeableProxy",
         "0x81c16F89222C32806Daf01f5129937dFE19D525e": "VbETH"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana vaultBridge Multisig 1",
       "address": "0x2De242e27386e224E5fbF110EA8406d5B70740ec",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -930,7 +932,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDS",
       "address": "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -939,6 +941,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -983,7 +986,7 @@
         "asset": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "backingDifference": {
           "positive": true,
-          "difference": 8145315439187934
+          "difference": "11217348534115588"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1009,13 +1012,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "33272171906684290432",
+        "stakedAssets": "33275243939779218086",
         "symbol": "vbUSDS",
-        "totalAssets": "33272171906684290432",
+        "totalAssets": "33275243939779218086",
         "totalSupply": "33264026591245102498",
         "underlyingToken": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "version": "0.5.0",
-        "yield": 8145315439187934,
+        "yield": "11217348534115588",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x0868076663Bbc6638ceDd27704cc8F0Fa53d5b81",
@@ -1025,7 +1028,7 @@
         "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x4082A1D91A353b16e112FbE36b55d222bF417919",
@@ -1042,6 +1045,7 @@
         "0x9b0e45306537c9239f8f5b642a4beaafd206728e42a557b88f1eeccee5647066"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1074,7 +1078,8 @@
       "implementationNames": {
         "0x417d01B64Ea30C4E163873f3a1f77b727c689e02": "TransparentUpgradeableProxy",
         "0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45": "MigrationManager"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ProxyAdmin",
@@ -1161,7 +1166,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Katana Multisig 2",
+      "name": "Katana Foundation Engineering/Security Multisig",
       "address": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1324,7 +1329,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDC",
       "address": "0x53E82ABbb12638F09d9e624578ccB666217a765e",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -1333,6 +1338,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1375,7 +1381,7 @@
           }
         },
         "asset": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 11775785127 },
+        "backingDifference": { "positive": true, "difference": 17151937625 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1400,13 +1406,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 74941916114609,
+        "stakedAssets": 75257582481452,
         "symbol": "vbUSDC",
-        "totalAssets": 74941916114609,
-        "totalSupply": 74930140329482,
+        "totalAssets": 75257582481452,
+        "totalSupply": 75240430543827,
         "underlyingToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 11775785127,
+        "yield": 17151937625,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1416,7 +1422,7 @@
         "0x53E82ABbb12638F09d9e624578ccB666217a765e": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "MIPS",
@@ -1441,7 +1447,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana yieldRecipient Mulsitig",
       "address": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1503,7 +1509,7 @@
       }
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDT",
       "address": "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -1512,6 +1518,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1554,7 +1561,7 @@
           }
         },
         "asset": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 2671729580 },
+        "backingDifference": { "positive": true, "difference": 3917508769 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1579,13 +1586,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 19814276342933,
+        "stakedAssets": 19565522133122,
         "symbol": "vbUSDT",
-        "totalAssets": 19814276342933,
-        "totalSupply": 19811604613353,
+        "totalAssets": 19565522133122,
+        "totalSupply": 19561604624353,
         "underlyingToken": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 2671729580,
+        "yield": 3917508769,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1595,7 +1602,7 @@
         "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
       },
-      "category": { "name": "Spam", "priority": -1 }
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "DelayedWETH",
@@ -1682,7 +1689,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Katana Steakhouse Financial / Morpho Multisig",
       "address": "0x827e86072B06674a077f592A531dcE4590aDeCdB",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1811,7 +1818,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Polygon Multisig 2",
+      "name": "Polygon Labs Engineering/Security Multisig",
       "address": "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1918,7 +1925,7 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana vaultBridge Multisig 2",
       "address": "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2247,7 +2254,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Katana Multisig",
+      "name": "Katana vaultBridge Multisig 3",
       "address": "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -3754,5 +3761,5 @@
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "permissionsConfigHash": "0xd0a0652a10f541cbd858d1161b986284251e6f7549983b59fff909d83186eaa5"
+  "permissionsConfigHash": "0xd0c98d3d76110541589ca76b0bd0def616ec1bdf2c5124377f2201ee575ee24c"
 }

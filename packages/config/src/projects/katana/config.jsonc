@@ -17,6 +17,22 @@
         "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855"
       ],
       "overrides": {
+        // name generic vaultBridge tokens
+        "0x2C24B57e2CCd1f273045Af6A5f632504C432374F": {
+          "displayName": "vbWBTC"
+        },
+        "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": {
+          "displayName": "vbUSDT"
+        },
+        "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": {
+          "displayName": "vbUSDS"
+        },
+        "0x53E82ABbb12638F09d9e624578ccB666217a765e": {
+          "displayName": "vbUSDC"
+        },
+        "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": {
+          "displayName": "vbETH"
+        },
         // hide unused op stack contracts
         "0xe06278351d120288eDfCB963F934113Ca3C21AFe": {
           "category": "spam"
