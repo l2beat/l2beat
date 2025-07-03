@@ -86,8 +86,6 @@ export function StageSection({
 
   const notEvenAStage0 = type === 'Other' && stageConfig.missing?.requirements
 
-  console.log(stageConfig.summary[0]?.requirements)
-
   return (
     <ProjectSection {...sectionProps}>
       {emergencyWarning && (
