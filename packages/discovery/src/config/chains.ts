@@ -308,4 +308,14 @@ export const chains: ChainConfig[] = [
       chainId: 48900,
     },
   },
+  {
+    name: 'katana',
+    chainId: 747474,
+    shortName: 'katana',
+    multicall: undefined,
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.katanarpc.com/api',
+    },
+  },
 ] as const satisfies ChainConfig[]
