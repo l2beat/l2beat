@@ -169,7 +169,7 @@ export function AnomalyTypeBadge(props: {
 export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   switch (type) {
     case 'batchSubmissions':
-      return 'TX data submissions'
+      return 'Tx data submissions'
     case 'proofSubmissions':
       return 'Proof submissions'
     case 'stateUpdates':
