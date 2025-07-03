@@ -1,5 +1,5 @@
 import type { DataAvailabilityRecord } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
@@ -12,6 +12,7 @@ import { DaThroughputTimeRange, rangeToResolution } from './utils/range'
 export type ProjectDaThroughputChartData = {
   chart: ProjectDaThroughputDataPoint[]
   range: [UnixTime | null, UnixTime]
+  syncedUntil: UnixTime
 }
 export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
 
@@ -32,30 +33,42 @@ export async function getProjectDaThroughputChart(
 
   const db = getDb()
   const resolution = rangeToResolution(params.range)
+  const now = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
   const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
-    now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
+    now,
   })
+
   const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
     [params.projectId],
-    [from, to],
+    [from, now],
   )
   if (throughput.length === 0) {
     return undefined
   }
-  const { grouped, minTimestamp, maxTimestamp } = groupByTimestampAndProjectId(
+  const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     resolution,
   )
+  const chartAdjustedTo =
+    resolution === 'hourly'
+      ? to - UnixTime.HOUR
+      : resolution === 'sixHourly'
+        ? to - UnixTime.HOUR * 6
+        : to - UnixTime.DAY
 
   const timestamps = generateTimestamps(
-    [minTimestamp, maxTimestamp],
+    [minTimestamp, chartAdjustedTo],
     resolution,
   )
+  const syncedUntil = throughput.at(-1)?.timestamp
+  assert(syncedUntil, 'syncedUntil is undefined')
+
   return {
     chart: timestamps.map((timestamp) => {
       return [timestamp, grouped[timestamp] ?? 0]
     }),
-    range: [minTimestamp, maxTimestamp],
+    range: [minTimestamp, chartAdjustedTo],
+    syncedUntil,
   }
 }
 
@@ -64,7 +77,6 @@ function groupByTimestampAndProjectId(
   resolution: 'hourly' | 'sixHourly' | 'daily',
 ) {
   let minTimestamp = Infinity
-  let maxTimestamp = -Infinity
   const result: Record<number, number> = {}
   for (const record of records) {
     const timestamp = UnixTime.toStartOf(
@@ -82,12 +94,10 @@ function groupByTimestampAndProjectId(
       result[timestamp] += Number(value)
     }
     minTimestamp = Math.min(minTimestamp, timestamp)
-    maxTimestamp = Math.max(maxTimestamp, timestamp)
   }
   return {
     grouped: result,
     minTimestamp: UnixTime(minTimestamp),
-    maxTimestamp: UnixTime(maxTimestamp),
   }
 }
 
@@ -103,6 +113,7 @@ function getMockProjectDaThroughputChartData({
     return {
       chart: [],
       range: [from, to],
+      syncedUntil: UnixTime.now(),
     }
   }
 
@@ -114,5 +125,6 @@ function getMockProjectDaThroughputChartData({
       return [timestamp, Math.round(throughputValue)]
     }),
     range: [from, to],
+    syncedUntil: UnixTime.now(),
   }
 }

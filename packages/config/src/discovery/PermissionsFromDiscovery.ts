@@ -270,7 +270,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     const reversedVia = [...(receivedPermission.via ?? [])].reverse()
     const result = []
     if (reversedVia.length > 0) {
-      result.push('- acting via')
       result.push(
         reversedVia
           .map((p) => this.projectDiscovery.formatViaPath(p))

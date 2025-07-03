@@ -134,9 +134,6 @@ export function ProjectTokenChart({
             data: chartData,
             isLoading,
             yAxis: {
-              tick: {
-                width: 150,
-              },
               tickFormatter: (value: number) =>
                 formatCurrency(value, unit === 'usd' ? 'usd' : token.symbol),
             },

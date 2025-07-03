@@ -230,7 +230,7 @@ export class ProjectDiscovery {
         : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
-      `* A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
+      `A Multisig with ${this.getMultisigStats(identifier)} threshold. ` +
         fullModulesDescription,
     ]
   }
@@ -726,7 +726,7 @@ export class ProjectDiscovery {
       .map((contract) => contract.name)
     return safesWithThisMember.length === 0
       ? undefined
-      : `* Member of ${safesWithThisMember.join(', ')}.`
+      : `Member of ${safesWithThisMember.join(', ')}.`
   }
 
   describeRolePermissions(

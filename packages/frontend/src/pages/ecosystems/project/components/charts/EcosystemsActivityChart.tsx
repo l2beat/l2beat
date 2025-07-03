@@ -122,9 +122,6 @@ export function EcosystemsActivityChart({
             data: chartData,
             isLoading,
             yAxis: {
-              tick: {
-                width: 100,
-              },
               scale: 'lin',
               unit: ' UOPS',
             },
