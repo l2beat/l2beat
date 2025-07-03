@@ -5,7 +5,6 @@
   "publishedOn": "2025-07-01",
   "updates": [
     {
-      "name": "Arbitrum Orbit",
       "type": "ecosystem",
       "ecosystemId": "arbitrum-orbit",
       "news": [
@@ -45,7 +44,6 @@
       ]
     },
     {
-      "name": "Elastic Network",
       "type": "ecosystem",
       "ecosystemId": "the-elastic-network",
       "news": [
@@ -77,7 +75,6 @@
       ]
     },
     {
-      "name": "Superchain",
       "type": "ecosystem",
       "ecosystemId": "superchain",
       "news": [
@@ -121,7 +118,6 @@
       ]
     },
     {
-      "name": "Agglayer",
       "type": "ecosystem",
       "ecosystemId": "agglayer",
       "newProjectsIds": ["katana"],
@@ -146,7 +142,6 @@
       ]
     },
     {
-      "name": "EigenLayer",
       "type": "data-availability",
       "daLayerId": "eigenda",
       "news": [

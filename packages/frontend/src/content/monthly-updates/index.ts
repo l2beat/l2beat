@@ -12,7 +12,6 @@ const news = v.object({
 export type News = v.infer<typeof news>
 
 const ecosystemUpdate = v.object({
-  name: v.string(),
   type: v.literal('ecosystem'),
   ecosystemId: v.string(),
   newProjectsIds: v.array(v.string()).optional(),
@@ -21,7 +20,6 @@ const ecosystemUpdate = v.object({
 export type EcosystemUpdate = v.infer<typeof ecosystemUpdate>
 
 const dataAvailabilityUpdate = v.object({
-  name: v.string(),
   type: v.literal('data-availability'),
   daLayerId: v.string(),
   newProjectsIds: v.array(v.string()).optional(),

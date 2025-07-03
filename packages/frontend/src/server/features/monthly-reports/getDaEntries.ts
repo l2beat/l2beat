@@ -12,6 +12,7 @@ import {
 } from '../scaling/tvs/get7dTvsBreakdown'
 
 export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
+  name: string
   colors: ProjectColors
   daProjects: ProjectId[]
   allProjects: {
@@ -68,6 +69,7 @@ function getDaMonthlyUpdateEntry(
 
   return {
     ...daUpdateEntry,
+    ...daLayer,
     colors: daLayer.colors,
     daProjects: allUsedIn.map((x) => x.id),
     allProjects: {

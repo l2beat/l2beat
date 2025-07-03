@@ -37,6 +37,7 @@ interface BaseLeaderboard {
 }
 
 export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
+  name: string
   colors: ProjectColors
   projects: ProjectId[]
   allScalingProjects: {
