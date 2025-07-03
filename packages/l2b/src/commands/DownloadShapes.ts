@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   TemplateService,
   combineImplementationHashes,
@@ -9,9 +10,10 @@ import {
   getDiscoveryPaths,
   getExplorerClient,
 } from '@l2beat/discovery'
-import { CliLogger, HttpClient } from '@l2beat/shared'
+import { HttpClient } from '@l2beat/shared'
 import { command, positional, string } from 'cmd-ts'
 import { rimraf } from 'rimraf'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 
 export const DownloadShapes = command({
   name: 'download-shapes',
@@ -24,12 +26,12 @@ export const DownloadShapes = command({
     }),
   },
   handler: async (args) => {
-    const logger = new CliLogger()
+    const logger = getPlainLogger()
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
 
     if (templateService.exists(args.template) === false) {
-      logger.logLine(`Couldn't find template "${args.template}"`)
+      logger.info(`Couldn't find template "${args.template}"`)
       return
     }
 
@@ -45,7 +47,7 @@ export const DownloadAllShapes = command({
     'Download all Solidity files for shapes defined in all templates.',
   args: {},
   handler: async () => {
-    const logger = new CliLogger()
+    const logger = getPlainLogger()
     const paths = getDiscoveryPaths()
     const templateService = new TemplateService(paths.discovery)
 
@@ -63,18 +65,15 @@ export const DownloadAllShapes = command({
       await downloadShape(templateId)
       progress++
       const percent = (progress / total) * 100
-      logger.updateStatus('lastDownloaded', `Last downloaded: ${templateId}`)
-      logger.updateStatus(
-        'progress',
-        `Progress: ${percent.toFixed(2)}% (${progress}/${total})`,
-      )
+      logger.info(`Last downloaded: ${templateId}`)
+      logger.info(`Progress: ${percent.toFixed(2)}% (${progress}/${total})`)
     }
   },
 })
 
 function createShapeDownloader(
   templateService: TemplateService,
-  logger: CliLogger,
+  logger: Logger,
 ) {
   return async (templateId: string) => {
     const templatePath = templateService.getTemplatePath(templateId)
@@ -85,9 +84,9 @@ function createShapeDownloader(
     // 1. Remove and recreate the shapes folder
     // (helps if there are renames or removed shapes)
     const shapesFolder = join(templatePath, 'shapes')
-    logger.logLine('Emptying the shapes folder')
+    logger.info('Emptying the shapes folder')
     rimraf.sync(shapesFolder)
-    logger.logLine('Creating the shapes folder')
+    logger.info('Creating the shapes folder')
     mkdirSync(shapesFolder, { recursive: true })
     for (const fileName in shapeSchema) {
       const outputFiles: Record<string, string> = {}
@@ -96,7 +95,7 @@ function createShapeDownloader(
       const chainConfig = getChainConfig(shape.chain)
       const httpClient = new HttpClient()
       const client = getExplorerClient(httpClient, chainConfig.explorer)
-      logger.logLine(`Fetching source code of ${fileName}`)
+      logger.info(`Fetching source code of ${fileName}`)
 
       // 2. Download the source code and flatten it
       const sources = await Promise.all(
@@ -137,20 +136,20 @@ function createShapeDownloader(
 
       // Make sure the hash matches shape.hash
       if (matchingHash !== shape.hash) {
-        logger.logLine(`Error: hash mismatch!`)
+        logger.info(`Error: hash mismatch!`)
         return
       }
 
       // 3. Create the directory for the shape under shape key
-      logger.logLine(`Creating directory for ${fileName}`)
+      logger.info(`Creating directory for ${fileName}`)
       mkdirSync(join(shapesFolder, fileName), { recursive: true })
 
       // 4. Write all the files to the designated shape folder
-      logger.logLine(
+      logger.info(
         `Writing shape files - ${Object.keys(outputFiles).length} files`,
       )
       for (const [filePath, content] of Object.entries(outputFiles)) {
-        logger.logLine(`Writing ${filePath}`)
+        logger.info(`Writing ${filePath}`)
         writeFileSync(filePath, content)
       }
     }
