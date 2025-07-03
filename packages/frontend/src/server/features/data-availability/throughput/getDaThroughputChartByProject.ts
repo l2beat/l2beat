@@ -38,7 +38,7 @@ const getDaThroughputChartByProjectData = async (
   params: DaThroughputChartByProjectParams,
 ): Promise<DaThroughputChartDataByChart> => {
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
+  const resolution = rangeToResolution({ type: params.range })
   const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })

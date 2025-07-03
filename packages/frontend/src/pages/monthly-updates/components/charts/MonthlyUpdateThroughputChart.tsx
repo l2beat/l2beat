@@ -1,9 +1,8 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { UnixTime } from '@l2beat/shared-pure'
 import { useId, useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
-import { Skeleton } from '~/components/core/Skeleton'
+import { Area, AreaChart } from 'recharts'
+import { ProjectDaThroughputCustomTooltip } from '~/components/chart/data-availability/ProjectDaAbsoluteThroughputChart'
+import { getDaDataParams } from '~/components/chart/data-availability/getDaDataParams'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -14,33 +13,31 @@ import {
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
-import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
-import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
-export function MonthlyUpdateActivityChart({
+export function MonthlyUpdateThroughputChart({
   name,
-  entries,
-  allScalingProjectsUops,
+  daLayer,
   from,
   to,
+  pastDayPosted,
+  dataPosted,
 }: {
   name: string
-  entries: ProjectId[]
-  allScalingProjectsUops: number
+  daLayer: string
   from: UnixTime
   to: UnixTime
+  pastDayPosted: number
+  dataPosted: number
 }) {
   const id = useId()
-  const { data, isLoading } = api.activity.chart.useQuery({
-    range: { type: 'custom', from, to },
-    filter: {
-      type: 'projects',
-      projectIds: entries,
-    },
+  const { data, isLoading } = api.da.projectChart.useQuery({
+    range: { type: 'custom', from, to: to + UnixTime.DAY },
+    projectId: daLayer,
   })
 
   const chartMeta = useMemo(() => {
@@ -55,23 +52,32 @@ export function MonthlyUpdateActivityChart({
     } satisfies ChartMeta
   }, [name])
 
-  const chartData = useMemo(
-    () =>
-      data?.data.map(([timestamp, _, __, projectsUops]) => {
-        return {
-          timestamp,
-          projects: projectsUops / UnixTime.DAY,
-        }
-      }),
-    [data?.data],
-  )
+  const max = useMemo(() => {
+    return data ? Math.max(...data.chart.map(([_, value]) => value)) : undefined
+  }, [data])
 
-  const stats = getStats(chartData, allScalingProjectsUops)
+  const { denominator, unit } = getDaDataParams(max)
+
+  const chartData = useMemo(() => {
+    return data?.chart?.map(([timestamp, value]) => {
+      return {
+        timestamp,
+        projects: value / denominator,
+      }
+    })
+  }, [data?.chart, denominator])
+
   const range = getChartRange(chartData)
 
   return (
     <PrimaryCard className="!rounded-lg border border-divider">
-      <Header range={range} stats={stats} />
+      <Header
+        range={range}
+        stats={{
+          pastDayPosted,
+          dataPosted,
+        }}
+      />
       <ChartContainer
         data={chartData}
         meta={chartMeta}
@@ -80,25 +86,29 @@ export function MonthlyUpdateActivityChart({
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
-          {getStrokeOverFillAreaComponents({
-            data: compact([
-              {
-                dataKey: 'projects',
-                stroke: 'var(--project-primary)',
-                fill: `url(#${id})`,
-              },
-            ]),
-          })}
+          <Area
+            dataKey="projects"
+            fill={`url(#${id})`}
+            fillOpacity={1}
+            stroke={chartMeta.projects?.color}
+            strokeWidth={2}
+            isAnimationActive={false}
+            dot={false}
+          />
           {getCommonChartComponents({
             data: chartData,
             isLoading,
             yAxis: {
-              scale: 'lin',
-              unit: ' UOPS',
+              unit: ` ${unit}`,
             },
           })}
           <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
+            content={
+              <ProjectDaThroughputCustomTooltip
+                unit={unit}
+                syncedUntil={data?.syncedUntil}
+              />
+            }
           />
           <defs>
             <CustomFillGradientDef
@@ -120,44 +130,22 @@ function Header({
   stats,
 }: {
   range: [number, number] | undefined
-  stats: { latestUops: number; marketShare: number } | undefined
+  stats: { pastDayPosted: number; dataPosted: number }
 }) {
   return (
     <div className="mb-3 flex items-center justify-between">
       <div>
-        <div className="font-bold text-xl">Activity</div>
+        <div className="font-bold text-xl">Throughput</div>
         <div className="font-medium text-secondary text-xs">
           <ChartTimeRange range={range} />
         </div>
       </div>
       <div className="text-right">
-        {stats?.latestUops !== undefined ? (
-          <div className="font-bold text-xl">
-            {formatActivityCount(stats.latestUops)} UOPS
-          </div>
-        ) : (
-          <Skeleton className="my-[5px] ml-auto h-5 w-32" />
-        )}
-        <MarketShare marketShare={stats?.marketShare} />
+        <div className="font-bold text-xl">
+          {formatBpsToMbps(stats.pastDayPosted / UnixTime.DAY)}
+        </div>
+        <MarketShare marketShare={stats.pastDayPosted / stats.dataPosted} />
       </div>
     </div>
   )
-}
-
-function getStats(
-  chartData: { projects: number }[] | undefined,
-  allScalingProjectsUops: number,
-) {
-  if (!chartData) {
-    return undefined
-  }
-  const last = chartData.at(-1)
-  if (!last) {
-    return undefined
-  }
-
-  return {
-    latestUops: last.projects,
-    marketShare: last.projects / allScalingProjectsUops,
-  }
 }

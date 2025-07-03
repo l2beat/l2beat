@@ -132,7 +132,12 @@ export function ProjectDaAbsoluteThroughputChart({
           />
         )}
         <ChartTooltip
-          content={<CustomTooltip unit={unit} syncedUntil={syncedUntil} />}
+          content={
+            <ProjectDaThroughputCustomTooltip
+              unit={unit}
+              syncedUntil={syncedUntil}
+            />
+          }
         />
         {getCommonChartComponents({
           data: chartData,
@@ -146,7 +151,7 @@ export function ProjectDaAbsoluteThroughputChart({
   )
 }
 
-function CustomTooltip({
+export function ProjectDaThroughputCustomTooltip({
   active,
   payload,
   label,

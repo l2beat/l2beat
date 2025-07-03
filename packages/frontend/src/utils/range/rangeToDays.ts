@@ -8,8 +8,7 @@ export function rangeToDays(
 ) {
   if (range.type === 'custom') {
     const { from, to } = range as { from: number; to: number }
-    const days = to - from
-    return UnixTime.toDays(days)
+    return Math.round((to - from) / UnixTime.DAY)
   }
 
   if (range.type === 'max') return null

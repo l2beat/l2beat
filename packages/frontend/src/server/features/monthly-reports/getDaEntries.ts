@@ -1,7 +1,11 @@
 import type { Project, ProjectColors } from '@l2beat/config'
-import { assert, type ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { DataAvailabilityUpdate } from '~/content/monthly-updates'
 import { ps } from '~/server/projects'
+import {
+  type ThroughputSummaryData,
+  getDaThroughputSummary,
+} from '../data-availability/throughput/getDaThroughputSummary'
 import {
   type SevenDayTvsBreakdown,
   get7dTvsBreakdown,
@@ -10,16 +14,18 @@ import {
 export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
   colors: ProjectColors
   daProjects: ProjectId[]
-  allScalingProjects: {
+  allProjects: {
     tvs: number
+    dataPosted: number
   }
+  pastDayPosted: number
 }
 
 export async function getDaMonthlyUpdateEntries(
   daUpdateEntries: DataAvailabilityUpdate[],
   to: UnixTime,
 ): Promise<DaMonthlyUpdateEntry[]> {
-  const [daLayers, daBridges, tvs] = await Promise.all([
+  const [daLayers, daBridges, tvs, throughput] = await Promise.all([
     ps.getProjects({
       select: ['isDaLayer', 'daLayer', 'colors'],
     }),
@@ -27,12 +33,13 @@ export async function getDaMonthlyUpdateEntries(
       select: ['daBridge'],
     }),
     get7dTvsBreakdown({ type: 'layer2' }, to),
+    getDaThroughputSummary({ to: to + UnixTime.DAY }),
   ])
 
   return daUpdateEntries.map((e) => {
     const daLayer = daLayers.find((p) => p.id === e.daLayerId)
     assert(daLayer, `DA Layer not found for ${e.daLayerId}`)
-    return getDaMonthlyUpdateEntry(e, daLayer, daBridges, tvs)
+    return getDaMonthlyUpdateEntry(e, daLayer, daBridges, tvs, throughput)
   })
 }
 
@@ -41,6 +48,7 @@ function getDaMonthlyUpdateEntry(
   daLayer: Project<'isDaLayer' | 'daLayer' | 'colors'>,
   daBridges: Project<'daBridge'>[],
   tvs: SevenDayTvsBreakdown,
+  throughput: ThroughputSummaryData,
 ): DaMonthlyUpdateEntry {
   const projectBridges = daBridges.filter(
     (x) => x.daBridge.daLayer === daLayer.id,
@@ -50,12 +58,22 @@ function getDaMonthlyUpdateEntry(
     projectBridges.flatMap((x) => x.daBridge.usedIn),
   )
 
+  const pastDayPosted =
+    throughput?.latest[daLayer.id as keyof typeof throughput.latest] ?? 0
+
+  const dataPosted = Object.values(throughput?.latest ?? {}).reduce(
+    (acc, curr) => acc + curr,
+    0,
+  )
+
   return {
     ...daUpdateEntry,
     colors: daLayer.colors,
     daProjects: allUsedIn.map((x) => x.id),
-    allScalingProjects: {
+    allProjects: {
       tvs: tvs.total,
+      dataPosted,
     },
+    pastDayPosted,
   }
 }

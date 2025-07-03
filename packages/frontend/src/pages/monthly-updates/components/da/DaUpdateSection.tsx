@@ -1,6 +1,7 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import { News } from '../News'
+import { MonthlyUpdateThroughputChart } from '../charts/MonthlyUpdateThroughputChart'
 import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 
 interface Props {
@@ -29,14 +30,15 @@ export function DaUpdateSection({ daLayer, from, to }: Props) {
         <MonthlyUpdateTvsChart
           name={daLayer.name}
           entries={daLayer.daProjects}
-          allScalingProjectsTvs={daLayer.allScalingProjects.tvs}
+          allScalingProjectsTvs={daLayer.allProjects.tvs}
           from={from}
           to={to}
         />
-        <MonthlyUpdateTvsChart
+        <MonthlyUpdateThroughputChart
           name={daLayer.name}
-          entries={daLayer.daProjects}
-          allScalingProjectsTvs={daLayer.allScalingProjects.tvs}
+          daLayer={daLayer.daLayerId}
+          dataPosted={daLayer.allProjects.dataPosted}
+          pastDayPosted={daLayer.pastDayPosted}
           from={from}
           to={to}
         />

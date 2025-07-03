@@ -39,7 +39,7 @@ export async function getDaThroughputChart({
     return { data: getMockDaThroughputChartData({ range, includeScalingOnly }) }
   }
   const db = getDb()
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
   const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
