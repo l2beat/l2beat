@@ -76,6 +76,7 @@ export const scroll: ScalingProject = {
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
+        'https://scroll.blockscout.com/',
         'https://okx.com/web3/explorer/scroll',
       ],
       repositories: [
