@@ -58,7 +58,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
           : 'hour',
     )
     const posted = timestampedDaData[dailyTimestamp]
-    return [...cost, posted !== undefined ? posted : undefined] as const
+    return [...cost, posted] as const
   })
 
   const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
