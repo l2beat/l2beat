@@ -378,4 +378,8 @@
   .paragraph-13 {
     @apply text-[13px] font-normal leading-[140%];
   }
+
+  .paragraph-12-medium {
+    @apply text-2xs font-medium leading-[125%];
+  }
 }

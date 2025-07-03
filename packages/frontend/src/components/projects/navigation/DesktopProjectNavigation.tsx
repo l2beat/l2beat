@@ -7,8 +7,6 @@ import {
   useRef,
   useState,
 } from 'react'
-
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   Select,
   SelectContent,
@@ -73,18 +71,16 @@ export function DesktopProjectNavigation({
             isSummarySection === false && 'opacity-100',
           )}
         >
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-2">
             {project.slug && (
               <img
-                width={32}
-                height={32}
+                width={24}
+                height={24}
                 src={project.icon}
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="font-bold text-xl lg:text-2xl">
-              {project.title}
-            </span>
+            <span className="font-bold text-lg">{project.title}</span>
           </div>
           {project.isUnderReview && (
             <UnderReviewCallout small className="mt-2" />
@@ -112,7 +108,6 @@ export function DesktopProjectNavigation({
               </Select>
             </div>
           )}
-          <HorizontalSeparator className="my-4" />
         </div>
 
         <ProjectNavigationList
@@ -156,7 +151,7 @@ function ProjectNavigationList({
   return (
     <div
       className={cn(
-        'absolute top-0 flex w-[246px] min-w-[246px] flex-col gap-3 overflow-y-auto leading-none transition-[top] duration-300',
+        'absolute top-0 flex w-[172px] min-w-[172px] flex-col gap-3 overflow-y-auto font-medium text-xs leading-none transition-[top] duration-300',
         isUnderReview
           ? 'max-h-[calc(100vh-300px)]'
           : 'max-h-[calc(100vh-220px)]',
@@ -167,11 +162,13 @@ function ProjectNavigationList({
       <a
         href="#"
         className={cn(
-          'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
-          currentSection && currentSection.id !== 'summary' && 'opacity-60',
+          'flex flex-row items-center gap-1.5 transition-opacity hover:opacity-100',
+          currentSection &&
+            currentSection.id !== 'summary' &&
+            'opacity-60 dark:opacity-80',
         )}
       >
-        <SummaryIcon className="size-6" />
+        <SummaryIcon className="size-5" />
         Summary
       </a>
       {sections.map((section, i) => {
@@ -187,12 +184,12 @@ function ProjectNavigationList({
               href={`#${section.id}`}
               ref={selected ? currentMenuEntry : null}
               className={cn(
-                'flex flex-row items-center transition-opacity hover:opacity-100',
+                'flex flex-row items-center gap-1.5 transition-opacity hover:opacity-100',
                 !selected && 'opacity-60',
               )}
             >
               <NavigationListIndex index={i + 1} selected={selected} />
-              <span className="ml-3">{section.title}</span>
+              <span>{section.title}</span>
             </a>
             {section.subsections && (
               <div className="flex flex-col">
@@ -216,10 +213,10 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center font-bold text-xs',
+        'flex size-5 shrink-0 items-center justify-center rounded text-center font-medium text-2xs',
         props.selected
           ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
-          : 'bg-surface-tertiary',
+          : 'bg-surface-primary',
       )}
     >
       <span>{props.index}</span>

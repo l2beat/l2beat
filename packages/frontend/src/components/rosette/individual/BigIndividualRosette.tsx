@@ -8,6 +8,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '../../core/tooltip/Tooltip'
+import { rosetteParameters } from '../parameters'
 import { PizzaRosetteLabels } from '../pizza/PizzaRosetteLabels'
 import type { RosetteValueTuple } from './IndividualRosetteIcon'
 import { IndividualPizzaRosetteIcon } from './IndividualRosetteIcon'
@@ -29,6 +30,7 @@ export interface Props {
   isUnderReview?: boolean
   className?: string
   background?: 'header' | 'surface'
+  size?: 'small' | 'regular'
 }
 
 export function BigIndividualRosette(props: Props) {
@@ -37,12 +39,13 @@ export function BigIndividualRosette(props: Props) {
     Object.values(props.l2.risks.concat(props.l3.risks)).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
+  const parameters = rosetteParameters[props.size ?? 'regular']
 
   if (isUnderReview || props.isUpcoming) {
     return (
       <div
         className={cn(
-          'relative h-[284px] w-[272px] whitespace-pre p-12 text-center font-medium text-xs uppercase leading-tight',
+          'relative whitespace-pre p-12 pb-7 text-center font-medium text-xs uppercase leading-tight',
           props.className,
         )}
       >
@@ -50,7 +53,10 @@ export function BigIndividualRosette(props: Props) {
           l2={props.l2}
           l3={props.l3}
           isUnderReview={isUnderReview}
-          className={cn(props.isUpcoming && 'opacity-30')}
+          className={cn(
+            props.isUpcoming && 'opacity-30',
+            parameters.rosetteClassName,
+          )}
           background={props.background}
         />
         {props.isUpcoming && (
@@ -58,8 +64,9 @@ export function BigIndividualRosette(props: Props) {
         )}
         <PizzaRosetteLabels
           values={props.l3.risks}
-          containerSize={272}
-          textRadius={102}
+          containerSize={parameters.containerSize}
+          textRadius={parameters.textRadius}
+          size={props.size}
         />
       </div>
     )
@@ -68,19 +75,21 @@ export function BigIndividualRosette(props: Props) {
   return (
     <IndividualRosetteTooltipContextProvider>
       <Tooltip>
-        <div className={cn('relative w-[272px] p-12', props.className)}>
+        <div className={cn('relative p-12 pb-7', props.className)}>
           <TooltipTrigger>
             <IndividualPizzaRosetteIcon
               l2={props.l2}
               l3={props.l3}
               isUnderReview={isUnderReview}
               background={props.background}
+              className={parameters.rosetteClassName}
             />
           </TooltipTrigger>
           <PizzaRosetteLabels
             values={props.l3.risks}
-            containerSize={272}
-            textRadius={102}
+            containerSize={parameters.containerSize}
+            textRadius={parameters.textRadius}
+            size={props.size}
           />
         </div>
         <RosetteTooltipContent />

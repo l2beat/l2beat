@@ -16,7 +16,7 @@ import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { TokenBreakdownStat } from './TokenBreakdownStat'
+import { formatNumber } from '~/utils/number-format/formatNumber'
 
 interface Props {
   project: ProjectScalingEntry
@@ -26,10 +26,22 @@ interface Props {
 export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectStat
-      key="tokens"
-      title="Tokens"
-      valueClassName="max-md:-mt-0.5"
-      value={<TokenBreakdownStat tokenTvs={project.header.tvs?.tokens} />}
+      key="tvs"
+      title="Total Value Secured"
+      valueClassName=""
+      value={
+        project.header.tvs?.breakdown ? (
+          <ValueWithPercentageChange
+            change={project.header.tvs.breakdown.totalChange}
+            className="!leading-none font-medium md:font-bold md:text-lg"
+            changeClassName="md:text-base md:font-medium !leading-none"
+          >
+            {formatNumber(project.header.tvs.breakdown.total)}
+          </ValueWithPercentageChange>
+        ) : (
+          <NoDataBadge />
+        )
+      }
     />,
     <ProjectStat
       key="ops-count"
@@ -49,13 +61,6 @@ export function ProjectScalingStats({ project, className }: Props) {
         )
       }
     />,
-
-    project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
-      <ProjectStat
-        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
-        value={project.header.gasTokens.join(', ')}
-      />
-    ) : undefined,
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectStat
         title="Stage"
@@ -70,6 +75,12 @@ export function ProjectScalingStats({ project, className }: Props) {
             />
           </a>
         }
+      />
+    ) : undefined,
+    project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
+      <ProjectStat
+        title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
+        value={project.header.gasTokens.join(', ')}
       />
     ) : undefined,
     <ProjectStat
@@ -97,7 +108,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid grid-cols-1 gap-3 rounded-lg md:grid-cols-4 md:bg-header-secondary md:px-6 md:py-5',
+        'grid h-fit grid-cols-1 gap-3 rounded-lg md:grid-cols-4',
         className,
       )}
     >
@@ -137,25 +148,20 @@ function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="text-secondary text-xs leading-normal">
+        <span className="paragraph-12-medium text-secondary">
           {props.title}
         </span>
         {props.tooltip && (
           <Tooltip>
-            <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 md:size-3.5" variant="gray" />
+            <TooltipTrigger className="size-3">
+              <InfoIcon className="size-3" variant="gray" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>
         )}
       </div>
 
-      <span
-        className={cn(
-          '!leading-none font-medium text-lg md:font-bold',
-          props.valueClassName,
-        )}
-      >
+      <span className={cn('label-value-16-bold', props.valueClassName)}>
         {props.value}
       </span>
     </li>

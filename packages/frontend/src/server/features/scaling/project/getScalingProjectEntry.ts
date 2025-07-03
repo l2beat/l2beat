@@ -51,6 +51,7 @@ import { getScalingRosette } from './getScalingRosetteValues'
 export interface ProjectScalingEntry {
   type: 'layer3' | 'layer2'
   name: string
+  shortName: string | undefined
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
@@ -215,6 +216,7 @@ export async function getScalingProjectEntry(
   const common = {
     type: project.scalingInfo.layer,
     name: project.name,
+    shortName: project.shortName,
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({

@@ -24,7 +24,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       id={props.id}
       data-role="project-section"
       className={cn(
-        'scroll-mt-10 px-4 py-8 md:mt-10 md:scroll-mt-8 md:p-8',
+        'scroll-mt-10 px-4 py-8 md:mt-4 md:scroll-mt-8 md:p-8',
         'max-md:border-divider max-md:border-b max-md:last:border-none',
         'md:rounded-lg',
         props.nested && 'mt-10 p-0 md:p-0',
