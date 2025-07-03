@@ -11,8 +11,8 @@ export function LiveIndicator({
     <span
       className={cn(
         'relative flex',
-        size === 'sm' && 'ml-1 size-2',
-        size === 'md' && 'ml-1.5 size-3',
+        size === 'sm' && 'ml-0.5 size-2',
+        size === 'md' && 'ml-[3px] size-3',
       )}
     >
       <span

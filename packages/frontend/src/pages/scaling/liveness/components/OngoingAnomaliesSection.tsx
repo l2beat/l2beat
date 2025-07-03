@@ -82,16 +82,16 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className="font-bold text-base leading-none">
+          <span className="text-left font-bold text-base leading-none">
             {projectWithAnomalies.name}
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <div className="transition-opacity duration-300 group-data-[state=open]:opacity-0">
+          <div className="text-left leading-none transition-opacity duration-300 group-data-[state=open]:opacity-0">
             {projectWithAnomalies.anomalies.length === 1 ? (
               <span
                 className={cn(
-                  'font-medium text-xs',
+                  'font-medium text-xs leading-none',
                   getDurationColorClassName(
                     // biome-ignore lint/style/noNonNullAssertion: <explanation>
                     projectWithAnomalies.anomalies[0]!.durationInSeconds,
@@ -106,7 +106,7 @@ function AnomalyCollapsible({
             ) : (
               <span
                 className={cn(
-                  'font-medium text-xs',
+                  'font-medium text-xs leading-none',
                   getDurationColorClassName(
                     Math.max(
                       ...projectWithAnomalies.anomalies.map(
