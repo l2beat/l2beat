@@ -161,20 +161,15 @@ export function AnomalyTypeBadge(props: {
 }) {
   return (
     <span className="w-max rounded bg-orange-400 px-1.5 text-black uppercase">
-      {anomalySubtypeToLabel(props.type, { short: true })}
+      {anomalySubtypeToLabel(props.type)}
     </span>
   )
 }
 
-export function anomalySubtypeToLabel(
-  type: LivenessAnomaly['subtype'],
-  opts?: { short: boolean },
-) {
+export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   switch (type) {
     case 'batchSubmissions':
-      return opts?.short
-        ? 'Tx data submissions'
-        : 'Transaction data submissions'
+      return 'TX data submissions'
     case 'proofSubmissions':
       return 'Proof submissions'
     case 'stateUpdates':
