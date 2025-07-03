@@ -25,9 +25,11 @@ export async function getMonthlyUpdateData(
       manifest,
       metadata: getMetadata(manifest, {
         title: `${monthlyUpdateEntry.title} Update - L2BEAT`,
+        description:
+          "L2BEAT's monthly overview of the Ethereum scaling ecosystem: key news, protocol updates, and metrics.",
         openGraph: {
           url,
-          image: '/meta-images/governance/opengraph-image.png',
+          image: '/meta-images/monthly-updates/opengraph-image.png',
         },
       }),
     },

@@ -1395,5 +1395,6 @@
   "static/images/monthly-updates/superchain.png": "b2cdaf058f4b6cf3d3da365657521e0e",
   "static/images/monthly-updates/the-elastic-network.png": "6ef576424599e1b4fd80be6376032d43",
   "static/images/monthly-updates/eigenda.png": "55d15e6902f37b0e7b4287df987511cb",
-  "static/images/monthly-updates/nethermind.png": "1476c8dba69c7900343700d7f426f8b2"
+  "static/images/monthly-updates/nethermind.png": "1476c8dba69c7900343700d7f426f8b2",
+  "static/meta-images/monthly-updates/opengraph-image.png": "a44569db4b1c62092a1e64447d6e0ccf"
 }
