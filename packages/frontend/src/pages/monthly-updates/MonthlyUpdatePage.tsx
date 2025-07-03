@@ -8,9 +8,9 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
-import { DaUpdateSection } from './components/DaUpdateSection'
-import { UpcomingProjectUpdateSection } from './components/UpcomingProjectUpdateSection'
+import { DaUpdateSection } from './components/da/DaUpdateSection'
 import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateSection'
+import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
 
 interface Props extends AppLayoutProps {
   publishedOn: string
@@ -69,7 +69,12 @@ export function MonthlyUpdatePage({
               />
             ))}
             {daUpdatesEntries.map((da) => (
-              <DaUpdateSection key={da.daLayerId} daLayer={da} />
+              <DaUpdateSection
+                key={da.daLayerId}
+                daLayer={da}
+                from={from}
+                to={to}
+              />
             ))}
             {upcomingProjectsUpdatesEntries.map((upcomingProject) => (
               <UpcomingProjectUpdateSection

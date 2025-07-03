@@ -1,10 +1,10 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import { Leaderboards } from '../Leaderboards'
-import { MonthlyUpdateActivityChart } from '../MonthlyUpdateActivityChart'
-import { MonthlyUpdateTvsChart } from '../MonthlyUpdateTvsChart'
 import { NewProjectsSection } from '../NewProjectsSection'
 import { News } from '../News'
+import { MonthlyUpdateActivityChart } from '../charts/MonthlyUpdateActivityChart'
+import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 
 interface Props {
   ecosystem: EcosystemMonthlyUpdateEntry
@@ -19,8 +19,8 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
       className="mt-12"
       style={
         {
-          '--ecosystem-primary': ecosystem.colors.primary,
-          '--ecosystem-secondary': ecosystem.colors.secondary,
+          '--project-primary': ecosystem.colors.primary,
+          '--project-secondary': ecosystem.colors.secondary,
         } as React.CSSProperties
       }
     >

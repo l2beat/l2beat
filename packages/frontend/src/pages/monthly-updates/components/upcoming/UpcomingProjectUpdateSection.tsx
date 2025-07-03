@@ -1,5 +1,5 @@
 import type { UpcomingProjectUpdate } from '~/content/monthly-updates'
-import { News } from './News'
+import { News } from '../News'
 
 interface Props {
   upcomingProject: UpcomingProjectUpdate

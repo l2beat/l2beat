@@ -35,6 +35,7 @@ export async function getMonthlyUpdateEntry(
   )
   const daUpdatesEntries = await getDaMonthlyUpdateEntries(
     entry.data.updates.filter((update) => update.type === 'data-availability'),
+    to,
   )
   const upcomingProjectsUpdatesEntries = entry.data.updates.filter(
     (update) => update.type === 'upcoming-project',

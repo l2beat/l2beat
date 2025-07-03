@@ -16,9 +16,9 @@ import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradie
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
-import { EcosystemsMarketShare } from '~/pages/ecosystems/project/components/charts/EcosystemsMarketShare'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
   name,
@@ -60,7 +60,7 @@ export function MonthlyUpdateTvsChart({
   const chartMeta = useMemo(() => {
     return {
       value: {
-        color: 'var(--ecosystem-primary)',
+        color: 'var(--project-primary)',
         indicatorType: { shape: 'line' },
         label: name,
       },
@@ -84,8 +84,8 @@ export function MonthlyUpdateTvsChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
+                primary: 'var(--project-primary)',
+                secondary: 'var(--project-secondary)',
               }}
             />
           </defs>
@@ -93,7 +93,7 @@ export function MonthlyUpdateTvsChart({
             dataKey="value"
             fill={`url(#${id})`}
             fillOpacity={1}
-            stroke="var(--ecosystem-primary)"
+            stroke="var(--project-primary)"
             strokeWidth={2}
             isAnimationActive={false}
           />
@@ -135,7 +135,7 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-20" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.marketShare} />
+        <MarketShare marketShare={stats?.marketShare} />
       </div>
     </div>
   )

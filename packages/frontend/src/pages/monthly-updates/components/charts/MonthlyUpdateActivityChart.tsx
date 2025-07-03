@@ -12,18 +12,14 @@ import {
   ChartTooltip,
 } from '~/components/core/chart/Chart'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
-import {
-  EthereumFillGradientDef,
-  EthereumStrokeGradientDef,
-} from '~/components/core/chart/defs/EthereumGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
-import { EcosystemsMarketShare } from '~/pages/ecosystems/project/components/charts/EcosystemsMarketShare'
 import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
   name,
@@ -51,7 +47,7 @@ export function MonthlyUpdateActivityChart({
     return {
       projects: {
         label: name,
-        color: 'var(--ecosystem-primary)',
+        color: 'var(--project-primary)',
         indicatorType: {
           shape: 'line',
         },
@@ -88,7 +84,7 @@ export function MonthlyUpdateActivityChart({
             data: compact([
               {
                 dataKey: 'projects',
-                stroke: 'var(--ecosystem-primary)',
+                stroke: 'var(--project-primary)',
                 fill: `url(#${id})`,
               },
             ]),
@@ -111,12 +107,10 @@ export function MonthlyUpdateActivityChart({
             <CustomFillGradientDef
               id={id}
               colors={{
-                primary: 'var(--ecosystem-primary)',
-                secondary: 'var(--ecosystem-secondary)',
+                primary: 'var(--project-primary)',
+                secondary: 'var(--project-secondary)',
               }}
             />
-            <EthereumFillGradientDef id="fillEthereum" />
-            <EthereumStrokeGradientDef id="strokeEthereum" />
           </defs>
         </AreaChart>
       </ChartContainer>
@@ -147,7 +141,7 @@ function Header({
         ) : (
           <Skeleton className="my-[5px] ml-auto h-5 w-32" />
         )}
-        <EcosystemsMarketShare marketShare={stats?.marketShare} />
+        <MarketShare marketShare={stats?.marketShare} />
       </div>
     </div>
   )
