@@ -89,6 +89,6 @@ For a rollup on Ethereum to use the blob data, it needs proof on Ethereum that t
 
 1.  **Relaying to L1**: A client, such as the rollup itself, can post the `BatchHeader` and the aggregated signature to the EigenDA smart contracts on Ethereum.
 
-2.  **L1 Verification**: The EigenDA contracts, which are part of the broader EigenLayer protocol, verify the submitted proof. They check the aggregated signature against the registered set of operators and their corresponding stake, confirming that the amount of stake declared in the tx input has indeed attested to the data. Currently, no minimum stake threshold is enforced, meaning that a batch can be confirmed on Ethereum with lower than the minimum safety threhold of 55%. It is responsibility of the L2 to check that their blob's batch meets their desired safety threshold.
+2.  **L1 Verification**: The EigenDA contracts, which are part of the broader EigenLayer protocol, verify the submitted proof. They check the aggregated signature against the registered set of operators and their corresponding stake, confirming that the amount of stake declared in the tx input has indeed attested to the data. Currently, no minimum stake threshold is enforced, meaning that a batch can be confirmed on Ethereum with lower than the minimum safety threshold of 55%. It is responsibility of the L2 to check that their blob's batch meets their desired safety threshold.
 
 Once the certificate is verified on-chain, the blob's data is considered final and can be used by the L2's L1 contracts for state updates or other operations. 

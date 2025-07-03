@@ -1,10 +1,12 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import isEmpty from 'lodash/isEmpty'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
+import type { DiscoveryBlockNumbers } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -13,6 +15,7 @@ import type {
 export async function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  options: { skipDependentDiscoveries?: boolean } = {},
 ) {
   const updateRelevantField = (
     entry: EntryParameters,
@@ -62,6 +65,23 @@ export async function combinePermissionsIntoDiscovery(
           ? true
           : undefined
     }
+  }
+
+  if (!options.skipDependentDiscoveries) {
+    const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
+    for (const [project, chains] of Object.entries(
+      permissionsOutput.dependentBlockNumbers,
+    )) {
+      for (const [chain, blockNumber] of Object.entries(chains)) {
+        if (!(project === discovery.name && chain === discovery.chain)) {
+          blockNumbersWithoutCurProj[project] ??= {}
+          blockNumbersWithoutCurProj[project][chain] = blockNumber
+        }
+      }
+    }
+    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
+      ? undefined // remove entry if there are no dependent discoveries
+      : blockNumbersWithoutCurProj
   }
 }
 

@@ -1,11 +1,13 @@
 import { isDeepStrictEqual } from 'util'
 import {
   ConfigReader,
+  DiscoveryRegistry,
   TemplateService,
   colorize,
   combineStructureAndColor,
-  generateClingoForProject,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
+  getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   makeEntryStructureConfig,
 } from '@l2beat/discovery'
@@ -236,16 +238,27 @@ describe('discovery config.jsonc', () => {
   })
 
   it('model-permissions is up to date', () => {
-    for (const c of chainConfigs ?? []) {
-      const discovery = configReader.readDiscovery(c.name, c.chain)
-      const clingoInput = generateClingoForProject(
+    for (const c of chainConfigs) {
+      const dependencies = getDependenciesToDiscoverForProject(
         c.name,
+        configReader,
+      )
+      const discoveries = new DiscoveryRegistry()
+      for (const dependency of dependencies) {
+        const discovery = configReader.readDiscovery(
+          dependency.project,
+          dependency.chain,
+        )
+        discoveries.set(dependency.project, dependency.chain, discovery)
+      }
+      const clingoInput = generateClingoForDiscoveries(
+        discoveries,
         configReader,
         templateService,
       )
       const hash = generatePermissionConfigHash(clingoInput)
       assert(
-        hash === discovery.permissionsConfigHash,
+        hash === discoveries.get(c.name, c.chain)?.permissionsConfigHash,
         [
           '',
           `Permissions model of "${c.name}" is not up to date.`,

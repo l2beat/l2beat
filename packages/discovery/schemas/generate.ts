@@ -54,6 +54,7 @@ async function main() {
     name: v.string().check((x) => x.length > 0),
     import: v.array(v.string()).optional(),
     archived: v.boolean().optional(),
+    modelCrossChainPermissions: v.boolean().optional(),
     // Chain-specific configurations
     chains: v.record(v.string(), ChainConfig),
   })
