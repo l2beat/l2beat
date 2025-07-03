@@ -1,5 +1,5 @@
 import { createHash } from 'crypto'
-import { readFileSync, unlinkSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { assert, Hash256 } from '@l2beat/shared-pure'
 import type { TemplateService } from '../analysis/TemplateService'
@@ -173,22 +173,22 @@ export async function modelPermissionFactsUsingClingo(
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
-  const projectPath = configReader.getProjectPath(project)
 
+  const projectPath = configReader.getProjectPath(project)
   const inputFilePath = join(projectPath, 'clingo.input.lp')
-  writeFileSync(inputFilePath, combinedClingo)
+  const outputFilePath = join(projectPath, 'clingo.output.lp')
+
+  if (options.debug) {
+    writeFileSync(inputFilePath, combinedClingo)
+  }
 
   const facts = await runClingoForSingleModel(combinedClingo)
 
-  const outputFilePath = join(projectPath, 'clingo.output.lp')
-  writeFileSync(outputFilePath, facts.join('.\n'))
+  if (options.debug) {
+    writeFileSync(outputFilePath, facts.join('.\n'))
+  }
 
   const result = facts.map(parseClingoFact)
-
-  if (!options.debug) {
-    unlinkSync(inputFilePath)
-    unlinkSync(outputFilePath)
-  }
 
   const permissionsConfigHash = generatePermissionConfigHash(clingoForProject)
   return {
@@ -263,26 +263,4 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
-}
-
-// This function is a temporary solution for Update Monitor
-// which does discovery per single isolated project.
-export async function modelPermissionsForIsolatedDiscovery(
-  discovery: DiscoveryOutput,
-  permissionConfig: PermissionsConfig,
-  templateService: TemplateService,
-  paths: DiscoveryPaths,
-) {
-  const discoveries = new DiscoveryRegistry()
-  discoveries.set(discovery.name, discovery.chain, discovery)
-  const clingoForProject = generateClingoForProjectOnChain(
-    permissionConfig,
-    discovery,
-    templateService,
-  )
-  const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
-  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
-  const facts = await runClingoForSingleModel(combinedClingo)
-  const parsedFacts = facts.map(parseClingoFact)
-  return buildPermissionsOutput(parsedFacts, Hash256.ZERO, discoveries) // hash for isolated discovery is incorrect anyway
 }
