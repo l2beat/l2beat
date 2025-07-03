@@ -73,6 +73,45 @@ export const katana: ScalingProject = {
     },
   },
   config: {
+    trackedTxs: [
+      {
+        uses: [
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'l2costs', subtype: 'batchSubmissions' },
+        ],
+        query: {
+          formula: 'transfer',
+          from: EthereumAddress('0x1FFDA89C755f6D4Af069897D77CcAbb580Fd412a'),
+          to: EthereumAddress('0x000d4411cdeb152378626B5C5E33fd5D6808939a'),
+          sinceTimestamp: UnixTime(1746742811),
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'liveness',
+            subtype: 'proofSubmissions',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666',
+          ),
+          selector: '0x9ee4afa3',
+          functionSignature: 'function onVerifyPessimistic(bytes aggchainData)',
+          sinceTimestamp: UnixTime(1746742811),
+        },
+      },
+    ],
     daTracking: [
       {
         type: 'ethereum',
