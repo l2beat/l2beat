@@ -2,19 +2,20 @@ import type { Logger } from '@l2beat/backend-tools'
 import type {
   AnomalyStatsRecord,
   Database,
+  NotificationRecord,
+  RealTimeAnomalyRecord,
   RealTimeLivenessRecord,
 } from '@l2beat/database'
-import {
-  type Block,
-  type ProjectId,
-  type TrackedTxsConfigSubtype,
-  UnixTime,
-  formatAsAsciiTable,
-} from '@l2beat/shared-pure'
+import { type Block, UnixTime, formatAsAsciiTable } from '@l2beat/shared-pure'
 import type { DiscordWebhookClient } from '../../../peripherals/discord/DiscordWebhookClient'
 import type { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { formatDuration, formatSubtype } from './utils/format'
+
+export type AnomalyNotificationType =
+  | 'anomaly-detected'
+  | 'anomaly-ongoing'
+  | 'anomaly-recovered'
 
 export class AnomalyNotifier {
   private logger: Logger
@@ -25,6 +26,7 @@ export class AnomalyNotifier {
     private readonly clock: Clock,
     private readonly discordClient: DiscordWebhookClient,
     private readonly db: Database,
+    private readonly minDuration: number,
   ) {
     this.logger = logger.for(this)
     this.notificationQueue = new TaskQueue<void>(
@@ -42,16 +44,19 @@ export class AnomalyNotifier {
   }
 
   async anomalyDetected(
+    newAnomaly: RealTimeAnomalyRecord,
     interval: number,
     z: number,
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
     block: Block,
     latestRecord: RealTimeLivenessRecord,
     latestStat: AnomalyStatsRecord,
   ) {
+    if (interval < this.minDuration) {
+      return
+    }
+
     const message =
-      `**${projectId}** stopped **${formatSubtype(subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
+      `**${newAnomaly.projectId}** stopped **${formatSubtype(newAnomaly.subtype)}** - typically posts every **${formatDuration(latestStat.mean)}**, hasn't posted for **${formatDuration(interval)}**\n\n` +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- detected at time: \`${block.timestamp}\`\n` +
       `- detected on block: \`${block.number}\`\n` +
@@ -59,24 +64,76 @@ export class AnomalyNotifier {
       `- avg interval: \`${formatDuration(latestStat.mean)}\`\n` +
       `- z-score: \`${z}\` (interval: \`${interval}\`, mean: \`${latestStat.mean}\`, stddev: \`${latestStat.stdDev}\`)`
 
-    await this.sendDiscordNotification(message)
+    const id = await this.sendDiscordNotification(message)
+
+    if (!id) return
+
+    await this.saveNotification(
+      id,
+      'anomaly-detected',
+      this.generateRelatedEntityId(newAnomaly),
+      block.timestamp,
+    )
+  }
+
+  async anomalyOngoing(
+    ongoingAnomaly: RealTimeAnomalyRecord,
+    interval: number,
+    z: number,
+    block: Block,
+    latestRecord: RealTimeLivenessRecord,
+    latestStat: AnomalyStatsRecord,
+  ) {
+    // send only if the duration is over minDuration and we haven't sent a notification yet
+    if (interval < this.minDuration) {
+      return
+    }
+
+    const relatedEntityId = this.generateRelatedEntityId(ongoingAnomaly)
+    const notifications =
+      await this.db.notifications.getByRelatedEntityId(relatedEntityId)
+
+    if (notifications.length > 0) {
+      return
+    }
+
+    this.anomalyDetected(
+      ongoingAnomaly,
+      interval,
+      z,
+      block,
+      latestRecord,
+      latestStat,
+    )
   }
 
   async anomalyRecovered(
+    ongoingAnomaly: RealTimeAnomalyRecord,
     duration: number,
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
     block: Block,
     latestRecord: RealTimeLivenessRecord,
   ) {
+    if (duration < this.minDuration) {
+      return
+    }
+
     const message =
-      `**${projectId}** recovered from **${formatSubtype(subtype)}** anomaly that lasted for **${formatDuration(duration)}**\n\n` +
+      `**${ongoingAnomaly.projectId}** recovered from **${formatSubtype(ongoingAnomaly.subtype)}** anomaly that lasted for **${formatDuration(duration)}**\n\n` +
       `- last registered transaction: [${latestRecord.txHash}](https://etherscan.io/tx/${latestRecord.txHash})\n` +
       `- recovered at time: \`${block.timestamp}\`\n` +
       `- recovered on block: \`${block.number}\`\n` +
       `- duration: \`${formatDuration(duration)}\``
 
-    await this.sendDiscordNotification(message)
+    const id = await this.sendDiscordNotification(message)
+
+    if (!id) return
+
+    await this.saveNotification(
+      id,
+      'anomaly-recovered',
+      this.generateRelatedEntityId(ongoingAnomaly),
+      block.timestamp,
+    )
   }
 
   async dailyReport() {
@@ -109,17 +166,34 @@ export class AnomalyNotifier {
     )
   }
 
-  async sendDiscordNotification(message: string) {
-    if (!this.discordClient) {
-      return
-    }
-
+  async sendDiscordNotification(message: string): Promise<string | undefined> {
     try {
-      await this.discordClient.sendMessage(message)
+      return await this.discordClient.sendMessage(message)
     } catch (error) {
       this.logger.error('Failed to send Discord notification', {
         error,
       })
     }
+  }
+
+  async saveNotification(
+    id: string,
+    type: AnomalyNotificationType,
+    relatedEntityId: string,
+    timestamp: UnixTime,
+  ) {
+    const notification: NotificationRecord = {
+      id,
+      channel: 'discord',
+      type,
+      relatedEntityId,
+      timestamp,
+    }
+
+    await this.db.notifications.insertMany([notification])
+  }
+
+  generateRelatedEntityId(anomaly: RealTimeAnomalyRecord): string {
+    return `${anomaly.projectId}-${anomaly.subtype}-${anomaly.start}`
   }
 }

@@ -340,7 +340,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
       const config = createMockConfig(projectId, configurations)
 
       const mockNotifier = mockObject<AnomalyNotifier>({
-        anomalyDetected: mockFn().resolvesTo(undefined),
+        anomalyOngoing: mockFn().resolvesTo(undefined),
       })
 
       const processor = new RealTimeLivenessProcessor(
@@ -367,7 +367,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
       expect(realTimeAnomaliesRepository.getOngoingAnomalies).toHaveBeenCalled()
 
       expect(realTimeAnomaliesRepository.upsertMany).not.toHaveBeenCalled()
-      expect(mockNotifier.anomalyDetected).not.toHaveBeenCalled()
+      expect(mockNotifier.anomalyOngoing).toHaveBeenCalled()
     })
 
     it('should recover from anomaly', async () => {

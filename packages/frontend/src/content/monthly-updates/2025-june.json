@@ -54,6 +54,10 @@
           "content": "ZKsync [launches](https://x.com/zksync/status/1932480613342458064) Gateway, a middleware that aggregates proofs from every Elastic-Chain into one on-chain verification, and will add native cross-chain messaging in v29."
         },
         {
+          "title": "ZKsync Launches Airbender: The Fastest Open-Source RISC-V zkVM",
+          "content": "ZKsync has [unveiled](https://zksync.mirror.xyz/ZgRmbYA_EE3wfGcXWv81m-xcED-ppNKkRzkleS6YZRc) Airbender, a groundbreaking open-source zkVM built on the RISC-V architecture that is redefining performance benchmarks in zero-knowledge proving. Touted as the fastest system of its kind, Airbender is capable of proving average Ethereum blocks in under 35 seconds using just a single GPU—an achievement that drastically reduces hardware requirements and unlocks the possibility of real-time proving on consumer-grade machines."
+        },
+        {
           "title": "ZKsync Unveils “ZKnomics” Tokenomics Vision to Power Next-Gen Protocol Economy",
           "content": "ZKsync [has introduced](https://forum.zknation.io/t/zknomics-roadmap-vision/712) ZKnomics, a long-term tokenomics framework designed to align the ZK token with the protocol’s evolving infrastructure and, of course, all Elastic chains. As core systems like Gateway, EVM Equivalence, and Prividium come online, ZKnomics proposes a usage-based revenue model where protocol fees are directed toward staking rewards and supply management via token burns.",
           "tags": ["governance"]

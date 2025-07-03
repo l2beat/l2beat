@@ -189,6 +189,16 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
             duration: interval,
             blockNumber: block.number,
           })
+
+          await this.notifier?.anomalyOngoing(
+            ongoingAnomaly,
+            interval,
+            z,
+            block,
+            latestRecord,
+            latestStat,
+          )
+
           continue
         }
 
@@ -199,22 +209,21 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           blockNumber: block.number,
         })
 
-        await this.notifier?.anomalyDetected(
-          interval,
-          z,
-          group.projectId,
-          group.subtype,
-          block,
-          latestRecord,
-          latestStat,
-        )
-
         const newAnomaly: RealTimeAnomalyRecord = {
           start: latestRecord.timestamp,
           projectId: group.projectId,
           subtype: group.subtype,
           status: 'ongoing',
         }
+
+        await this.notifier?.anomalyDetected(
+          newAnomaly,
+          interval,
+          z,
+          block,
+          latestRecord,
+          latestStat,
+        )
 
         records.push(newAnomaly)
       } else {
@@ -230,19 +239,18 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
         const duration = latestRecord.timestamp - ongoingAnomaly.start
 
-        await this.notifier?.anomalyRecovered(
-          duration,
-          group.projectId,
-          group.subtype,
-          block,
-          latestRecord,
-        )
-
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
           status: 'recovered',
           end: latestRecord.timestamp,
         }
+
+        await this.notifier?.anomalyRecovered(
+          recoveredAnomaly,
+          duration,
+          block,
+          latestRecord,
+        )
 
         records.push(recoveredAnomaly)
       }
