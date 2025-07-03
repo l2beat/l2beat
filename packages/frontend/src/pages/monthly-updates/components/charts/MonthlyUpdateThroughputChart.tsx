@@ -53,7 +53,9 @@ export function MonthlyUpdateThroughputChart({
   }, [name])
 
   const max = useMemo(() => {
-    return data ? Math.max(...data.chart.map(([_, value]) => value)) : undefined
+    return data
+      ? Math.max(...data.chart.map(([_, value]) => value ?? 0))
+      : undefined
   }, [data])
 
   const { denominator, unit } = getDaDataParams(max)
@@ -62,7 +64,7 @@ export function MonthlyUpdateThroughputChart({
     return data?.chart?.map(([timestamp, value]) => {
       return {
         timestamp,
-        projects: value / denominator,
+        projects: value ? value / denominator : null,
       }
     })
   }, [data?.chart, denominator])
