@@ -1,7 +1,7 @@
 import {
-  getChainShortName,
   type EntryParameters,
   type ReceivedPermission,
+  getChainShortName,
 } from '@l2beat/discovery'
 import {
   ChainSpecificAddress,

@@ -52,7 +52,7 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
     throw new TypeError(`Invalid ChainSpecificAddress: ${value}`)
   }
 
-  if(!SHORT_CHAIN_NAMES.has(chain)) {
+  if (!SHORT_CHAIN_NAMES.has(chain)) {
     throw new TypeError(`Unknown chain name: ${chain}`)
   }
 

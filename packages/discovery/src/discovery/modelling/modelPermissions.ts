@@ -2,6 +2,7 @@ import { createHash } from 'crypto'
 import { readFileSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { assert, Hash256 } from '@l2beat/shared-pure'
+import { getChainShortName } from '../../config/config.discovery'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionsConfig } from '../config/PermissionConfig'
@@ -18,7 +19,6 @@ import {
   parseUltimatePermissionFact,
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
-import { getChainShortName } from '../../config/config.discovery'
 
 export type DiscoveryBlockNumbers = {
   [project: string]: {
@@ -237,10 +237,7 @@ export function generateClingoForProjectOnChain(
   const generatedClingo: string[] = []
 
   const shortChain = getChainShortName(discovery.chain)
-  const addressToNameMap = buildAddressToNameMap(
-    shortChain,
-    discovery.entries,
-  )
+  const addressToNameMap = buildAddressToNameMap(shortChain, discovery.entries)
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))

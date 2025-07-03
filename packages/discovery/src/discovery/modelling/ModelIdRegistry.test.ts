@@ -50,8 +50,7 @@ describe(ModelIdRegistry.name, () => {
           'contractA_eth_0x000000000000000000000000000000000000ccc1',
         ),
       ).toEqual({
-        modelId:
-          'contractA_eth_0x000000000000000000000000000000000000ccc1',
+        modelId: 'contractA_eth_0x000000000000000000000000000000000000ccc1',
         shortChain: 'eth',
         address: '0x000000000000000000000000000000000000ccc1',
         name: 'ContractA',

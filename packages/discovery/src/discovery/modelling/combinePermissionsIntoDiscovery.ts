@@ -1,5 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
+import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -7,7 +8,6 @@ import type {
   ReceivedPermission,
 } from '../output/types'
 import type { DiscoveryBlockNumbers } from './modelPermissions'
-import { getChainShortName } from '../../config/config.discovery'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
