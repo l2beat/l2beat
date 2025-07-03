@@ -2,7 +2,7 @@
   "name": "shared-zk-stack",
   "chain": "zksync2",
   "blockNumber": 61100811,
-  "configHash": "0x3b4e2c234e593ffedace322e27e8f5ee3de3d9368b47ca262b1059cb0d2e2cb4",
+  "configHash": "0xff35e3160d6a7978d70bf2bf236d114dc7bb70580ec822338892e3670fee8ff5",
   "entries": [
     {
       "name": "ProtocolTimelockController",
@@ -13,7 +13,7 @@
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
       "proxyType": "immutable",
-      "description": "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.",
+      "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",

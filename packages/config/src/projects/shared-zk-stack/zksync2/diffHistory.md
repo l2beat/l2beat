@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2c75ce216f235722edf41e2a50010b869323a607
+Generated with discovered.json: 0x3de6244c3c29bf06b84e9bc90b2d9b98fa3de3c6
 
-# Diff at Thu, 03 Jul 2025 13:05:45 GMT:
+# Diff at Thu, 03 Jul 2025 13:13:59 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 61100811
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2bf1651fdc6ade0d159b4c4c95f961e0088ae458 block: 61100811
 - current block number: 61100811
 
 ## Description
@@ -15,15 +15,6 @@ Discovery rerun on the same block number with only config-related changes.
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 61100811 (main branch discovery), not current.
-
-```diff
-    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
-    +++ description: This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.
-      description:
--        "Timelock contract allowing the queueing of transactions with a minimum delay of 0s."
-+        "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet."
-    }
-```
 
 ```diff
     contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
