@@ -118,9 +118,6 @@ export function ActivityChart({
           data,
           isLoading,
           yAxis: {
-            tick: {
-              width: 100,
-            },
             scale,
             unit: metric === 'tps' ? ' TPS' : ' UOPS',
           },
