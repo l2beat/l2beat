@@ -28,15 +28,20 @@ export async function getMonthlyUpdateEntry(
   const from = UnixTime.fromDate(entry.data.startDate)
   const to = UnixTime.fromDate(entry.data.endDate)
 
-  const ecosystemsUpdatesEntries = await getEcosystemMonthlyUpdateEntries(
-    entry.data.updates.filter((update) => update.type === 'ecosystem'),
-    from,
-    to,
-  )
-  const daUpdatesEntries = await getDaMonthlyUpdateEntries(
-    entry.data.updates.filter((update) => update.type === 'data-availability'),
-    to,
-  )
+  const [ecosystemsUpdatesEntries, daUpdatesEntries] = await Promise.all([
+    getEcosystemMonthlyUpdateEntries(
+      entry.data.updates.filter((update) => update.type === 'ecosystem'),
+      from,
+      to,
+    ),
+    getDaMonthlyUpdateEntries(
+      entry.data.updates.filter(
+        (update) => update.type === 'data-availability',
+      ),
+      to,
+    ),
+  ])
+
   const upcomingProjectsUpdatesEntries = entry.data.updates.filter(
     (update) => update.type === 'upcoming-project',
   )
