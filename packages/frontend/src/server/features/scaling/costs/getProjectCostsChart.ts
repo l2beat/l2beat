@@ -62,7 +62,7 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   })
 
   const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
-    return acc + throughput
+    return acc + (throughput ?? 0)
   }, 0)
   const total = withTotal({
     ...costs,
