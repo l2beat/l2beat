@@ -8,7 +8,7 @@ import {
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
-import { EmptyStateIcon } from '~/icons/EmptyState'
+import { VerifiedIcon } from '~/icons/Verified'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -30,37 +30,38 @@ export function OngoingAnomaliesSection({
   projectsWithAnomalies,
   className,
 }: Props) {
+  projectsWithAnomalies = []
+
+  if (projectsWithAnomalies.length === 0) {
+    return (
+      <PrimaryCard
+        className={cn(
+          'flex items-center justify-center gap-1 border border-positive max-md:border-x-0',
+          className,
+        )}
+      >
+        <VerifiedIcon className="size-5 fill-positive" />
+        <span className="text-center font-medium text-positive leading-none">
+          No ongoing anomalies detected
+        </span>
+      </PrimaryCard>
+    )
+  }
+
   return (
     <PrimaryCard className={className}>
       <div className="flex items-center gap-2">
-        <LiveIndicator
-          size="md"
-          disabled={projectsWithAnomalies.length === 0}
-        />
-        <h2
-          className={cn(
-            'font-bold text-lg text-negative',
-            projectsWithAnomalies.length === 0 && 'text-primary',
-          )}
-        >
-          Ongoing anomalies
-        </h2>
+        <LiveIndicator size="md" />
+        <h2 className={'font-bold text-lg text-negative'}>Ongoing anomalies</h2>
       </div>
-      {projectsWithAnomalies.length > 0 ? (
-        <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-          {projectsWithAnomalies.map((projectWithAnomalies) => (
-            <AnomalyCollapsible
-              key={projectWithAnomalies.name}
-              projectWithAnomalies={projectWithAnomalies}
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="relative mt-4 text-center text-secondary text-sm leading-tight">
-          <EmptyStateIcon className="-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 size-10 fill-secondary opacity-15" />
-          <span>No ongoing anomalies detected</span>
-        </div>
-      )}
+      <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        {projectsWithAnomalies.map((projectWithAnomalies) => (
+          <AnomalyCollapsible
+            key={projectWithAnomalies.name}
+            projectWithAnomalies={projectWithAnomalies}
+          />
+        ))}
+      </div>
     </PrimaryCard>
   )
 }
