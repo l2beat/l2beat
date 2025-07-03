@@ -2109,7 +2109,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Polygon Multisig 2",
       "address": "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
       "type": "Contract",
       "template": "GnosisSafe",

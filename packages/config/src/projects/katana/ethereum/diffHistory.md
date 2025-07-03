@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x4c563a7156ed3a15687e58480d6345fcd7cce311
+Generated with discovered.json: 0x3b13d6a5b0687495f2c0ef18721874dec8cc114c
 
-# Diff at Thu, 03 Jul 2025 07:40:04 GMT:
+# Diff at Thu, 03 Jul 2025 07:43:45 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@717eea3a0fc625b39e556e700bc9e657bb32fa71 block: 22825494
@@ -25,6 +25,14 @@ config: refine descriptions and permissions.
 -        0
 +        60
     }
+```
+
+## Source code changes
+
+```diff
+.../ethereum/{.flat@22825494/Polygon Multisig 2 => .flat/Safe}/Safe.sol   | 0
+ .../{.flat@22825494/Polygon Multisig 2 => .flat/Safe}/SafeProxy.p.sol     | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -291,6 +299,15 @@ discovery. Values are for block 22825494 (main branch discovery), not current.
 -   Status: DELETED
     contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
     +++ description: None
+```
+
+```diff
+    contract Polygon Multisig 2 (0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC) {
+    +++ description: None
+      name:
+-        "Safe"
++        "Polygon Multisig 2"
+    }
 ```
 
 ```diff
