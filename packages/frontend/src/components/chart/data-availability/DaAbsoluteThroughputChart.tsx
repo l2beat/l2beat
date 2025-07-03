@@ -28,12 +28,14 @@ interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }
 
 export function DaAbsoluteThroughputChart({
   data,
   isLoading,
   includeScalingOnly,
+  syncStatus,
 }: Props) {
   const chartMeta = getDaChartMeta({ shape: 'line' })
   const max = useMemo(() => {
@@ -105,6 +107,7 @@ export function DaAbsoluteThroughputChart({
             <CustomTooltip
               unit={unit}
               includeScalingOnly={includeScalingOnly}
+              syncStatus={syncStatus}
             />
           }
         />
@@ -119,9 +122,11 @@ function CustomTooltip({
   label,
   unit,
   includeScalingOnly,
+  syncStatus,
 }: TooltipProps<number, string> & {
   unit: string
   includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }) {
   const { meta: config } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
@@ -140,9 +145,11 @@ function CustomTooltip({
           const configEntry = entry.name ? config[entry.name] : undefined
           if (!configEntry) return null
 
-          // We don't have data for EigenDA projects for the past day, so we show estimated data for the current day
-          const isEstimated =
-            includeScalingOnly && isCurrentDay && entry.name === 'eigenda'
+          const projectSyncStatus = entry.name
+            ? syncStatus?.[entry.name]
+            : undefined
+          const isEstimated = projectSyncStatus && projectSyncStatus < label
+
           return (
             <div
               key={index}
