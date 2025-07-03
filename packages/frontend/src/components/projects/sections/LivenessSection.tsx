@@ -32,17 +32,19 @@ export function LivenessSection({
   milestones,
   ...sectionProps
 }: LivenessSectionProps) {
+  const ongoingAnomalies = anomalies.filter((a) => a.end === undefined)
   return (
     <ProjectSection {...sectionProps}>
-      <OngoingAnomalies
-        anomalies={anomalies.filter((a) => a.end === undefined)}
-      />
-      <p className="text-base">
-        The chart illustrates how &quot;live&quot; the project&apos;s operators
+      <p className="mb-4 text-base">
+        This section shows how &quot;live&quot; the project&apos;s operators are
         are by displaying how frequently they submit transactions of the
-        selected type and if these intervals deviate from their typical
-        schedule.
+        selected type. It also highlights anomalies - significant deviations
+        from their typical schedule.
       </p>
+      {ongoingAnomalies.length > 0 && (
+        <OngoingAnomalies anomalies={ongoingAnomalies} />
+      )}
+
       <HorizontalSeparator className="my-4" />
       <ProjectLivenessChart
         projectId={projectId}
@@ -62,7 +64,7 @@ export function OngoingAnomalies({
   anomalies,
 }: { anomalies: LivenessAnomaly[] }) {
   return (
-    <div className="mb-4 rounded-lg bg-surface-secondary px-5 py-4">
+    <div className="rounded-lg bg-surface-secondary px-5 py-4">
       <div className="mb-3 flex items-center gap-2">
         <LiveIndicator size="md" />
         <h3 className="font-medium text-base text-negative uppercase">
