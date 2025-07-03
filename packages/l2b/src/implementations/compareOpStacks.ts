@@ -29,7 +29,7 @@ export async function analyseAllOpStackChains(
       (obj) => obj.name === 'L2OutputOracle',
     )
     const optimismPortal = discovery.entries.find(
-      (obj) => obj.name === 'OptimismPortal',
+      (obj) => obj.name === 'OptimismPortal' || obj.name === 'OptimismPortal2',
     )
     const l1StandardBridge = discovery.entries.find(
       (obj) => obj.name === 'L1StandardBridge',
