@@ -30,8 +30,6 @@ export function OngoingAnomaliesSection({
   projectsWithAnomalies,
   className,
 }: Props) {
-  projectsWithAnomalies = []
-
   if (projectsWithAnomalies.length === 0) {
     return (
       <PrimaryCard
