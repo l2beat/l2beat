@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x0a63033544bee2b06983e6bfb49938e9e1b33a85
+
+# Diff at Thu, 03 Jul 2025 10:57:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 16562505
+- current block number: 16562505
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16562505 (main branch discovery), not current.
+
+```diff
+    contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE) {
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+      description:
+-        "Manager contract for minter management [sic]."
++        " Contract that uses controllers to manage minters for USDC on Scroll."
+    }
+```
+
 Generated with discovered.json: 0x9a2440616c0b425220ba85fc9629d3b03f3a6cd7
 
 # Diff at Wed, 18 Jun 2025 12:03:41 GMT:

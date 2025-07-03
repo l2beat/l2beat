@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x7f939249de81d404888352117d495b5ae0cf397b
+
+# Diff at Thu, 03 Jul 2025 10:57:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 884077
+- current block number: 884077
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 884077 (main branch discovery), not current.
+
+```diff
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828) {
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+      description:
+-        "A beacon with an upgradeable implementation currently set as 0xbFE260680514e0D669fdC5A5f7334b97a5513d9D. Beacon proxy contracts pointing to this beacon will all use its implementation."
++        "Beacon proxy for the KintoWallet smartwallet implementation that is used for all users."
+    }
+```
+
 Generated with discovered.json: 0x87162635161c8e2715f4691f8600aa3de1c604d0
 
 # Diff at Wed, 18 Jun 2025 12:22:57 GMT:

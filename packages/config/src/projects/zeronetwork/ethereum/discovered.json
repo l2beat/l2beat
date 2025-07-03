@@ -193,7 +193,7 @@
       "implementationNames": {
         "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
       },
-      "category": { "name": "Shared Infrastructure", "priority": 4 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ValidatorTimelock",

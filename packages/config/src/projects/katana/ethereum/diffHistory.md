@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x5aa7e41e27277da1df64f06a0985e2f48af69bf3
+
+# Diff at Thu, 03 Jul 2025 10:57:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22837267
+- current block number: 22837267
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22837267 (main branch discovery), not current.
+
+```diff
+    contract L1ERC721Bridge (0x15a32FCeA89617Ff450F094cDE102CCa46598B7F) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      category.name:
+-        "Canonical Bridges"
++        "Spam"
+      category.priority:
+-        2
++        -1
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      category.name:
+-        "Canonical Bridges"
++        "Spam"
+      category.priority:
+-        2
++        -1
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x98906C3f90A06B5484DD67bf32938815d2993dBC) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      category.name:
+-        "Canonical Bridges"
++        "Spam"
+      category.priority:
+-        2
++        -1
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe06278351d120288eDfCB963F934113Ca3C21AFe) {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      category.name:
+-        "Local Infrastructure"
++        "Spam"
+      category.priority:
+-        5
++        -1
+    }
+```
+
 Generated with discovered.json: 0xfb8af94a9da8bc0661f4417e752fcc542343186b
 
 # Diff at Thu, 03 Jul 2025 09:54:26 GMT:

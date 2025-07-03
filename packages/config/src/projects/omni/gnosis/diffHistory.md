@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xd09165495e199bd225eb2bd2e7634fd70f7ad347
+
+# Diff at Thu, 03 Jul 2025 10:57:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 40494132
+- current block number: 40494132
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40494132 (main branch discovery), not current.
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      fieldMeta.targetAddress.description:
+-        "Address of the target contract on GnosisChain"
++        "Address of the target contract on Ethereum"
+      fieldMeta.adapters.description:
+-        "Array of the adapters on GnosisChain"
++        "Array of the adapters on Ethereum"
+      fieldMeta.reporters.description:
+-        "Array of the reports on GnosisChain"
++        "Array of the reporters on Ethereum"
+      fieldMeta.threshold.description:
+-        "Threshold of the adapters on GnosisChain"
++        "Threshold of the adapters on Ethereum"
+    }
+```
+
 Generated with discovered.json: 0xd0a17c6a19cc3fa2116c6f1b8d55ecc3d5e82cd6
 
 # Diff at Wed, 04 Jun 2025 08:36:56 GMT:

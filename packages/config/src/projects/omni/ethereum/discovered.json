@@ -912,7 +912,7 @@
         "0x7123b263360e368977fbfb7da550817b9a4807849090a69d6415b0b1bb33b398"
       ],
       "proxyType": "Eternal Storage proxy",
-      "description": "Custom multisignature contract for Validator addresses.",
+      "description": "Custom Multisignature contract for Validators.",
       "receivedPermissions": [
         {
           "permission": "validateBridge3",

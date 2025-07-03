@@ -13,7 +13,7 @@
         "0x2d84b1bb959469a8ddf00b906d14914c4b3e902442e41cd94f6c6b48f845c77f"
       ],
       "proxyType": "immutable",
-      "description": "Timelock contract allowing the queueing of transactions with a minimum delay of 0s.",
+      "description": "This timelock has a minimum delay of 0s. It does not have the L2_SENDER_ROLE yet.",
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
@@ -162,7 +162,7 @@
         "0x10560f8B7eE37571AD7E3702EEb12Bc422036E89": "ZkTokenGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProtocolTimelockController_deprecated",
@@ -383,7 +383,7 @@
         "0x496869a7575A1f907D1C5B1eca28e4e9E382afAb": "ZkGovOpsGovernor"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 24 } }],
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ZkToken",
@@ -506,7 +506,7 @@
         "0x82c5a05996248ee29f451f121ff0f973a3b17f7c7a8ed31878d30c5eaa51b245"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -654,7 +654,7 @@
         "0x3d8c2d3bcd396a14d951c81ad0c163139768c7439152292846ce2ef8a34affe8"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
@@ -1002,7 +1002,7 @@
         "0x7132507bdacfea50a991d23f4b78d18a03a78fe5a265fd7a07397c4f6ce93399"
       ],
       "proxyType": "immutable",
-      "description": "A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.",
+      "description": "Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.",
       "receivedPermissions": [
         {
           "permission": "interact",
