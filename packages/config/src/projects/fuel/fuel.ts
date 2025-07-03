@@ -203,7 +203,7 @@ export const fuel: ScalingProject = {
     dataAvailability: {
       name: 'Data is posted to EigenDA',
       description:
-        'Transactions roots are posted onchain and the full data is posted on EigenDA. Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that data is not guaranteed to be available.',
+        'No transactions roots are posted onchain and the full data is posted on EigenDA. Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that data is not guaranteed to be available.',
       risks: [
         {
           category: 'Funds can be lost if',
