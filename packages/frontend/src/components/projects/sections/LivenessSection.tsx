@@ -64,20 +64,20 @@ export function OngoingAnomalies({
   return (
     <div className="mb-4 rounded-lg bg-surface-secondary px-5 py-4">
       <div className="mb-3 flex items-center gap-2">
-        <LiveIndicator />
-        <h3 className="font-medium text-negative text-xs uppercase">
+        <LiveIndicator size="md" />
+        <h3 className="font-medium text-base text-negative uppercase">
           Ongoing {pluralize(anomalies.length, 'anomaly', 'anomalies')}
         </h3>
       </div>
-      <table className="w-full text-xs">
-        <thead>
+      <table className="w-full">
+        <thead className="text-xs">
           <tr className="text-left font-medium text-secondary ">
             <th className="w-1/2 pr-2 lg:w-1/3">Type</th>
             <th className="w-1/2 pr-2 lg:w-1/3">Duration</th>
             <th className="w-1/3 max-lg:hidden">Start</th>
           </tr>
         </thead>
-        <tbody className="align-top">
+        <tbody className="align-top text-lg leading-none">
           {anomalies.map((anomaly) => {
             const formattedStart = formatTimestamp(anomaly.start, {
               mode: 'datetime',
