@@ -47,6 +47,7 @@ export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
     id: ProjectId
     name: string
     stage: ProjectScalingStage
+    slug: string
     description: string
     category: ProjectScalingCategory
     tvs?: number
@@ -167,6 +168,7 @@ function getEcosystemMonthlyUpdateEntry(
         return {
           id: project.id,
           name: project.name,
+          slug: project.slug,
           stage: project.scalingStage,
           description: project.display.description,
           category: project.scalingInfo.type,

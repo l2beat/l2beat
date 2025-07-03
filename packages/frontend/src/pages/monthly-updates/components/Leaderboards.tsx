@@ -53,10 +53,13 @@ function LeaderboardTvsItem({
 }) {
   return (
     <div className="grid grid-cols-4 items-center">
-      <div className="col-span-2 flex items-center gap-1.5">
+      <a
+        className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
+        href={`/scaling/projects/${item.slug}`}
+      >
         <img src={`/icons/${item.slug}.png`} className="size-5" />
         <span className="font-bold text-xs">{item.name}</span>
-      </div>
+      </a>
       <PercentChange value={item.change} textClassName="font-semibold" />
       <div className="text-right font-bold text-xs">
         {formatCurrency(item.tvs, 'usd')}
@@ -72,10 +75,13 @@ function LeaderboardActivityItem({
 }) {
   return (
     <div className="grid grid-cols-4 items-center">
-      <div className="col-span-2 flex items-center gap-1.5">
+      <a
+        className="col-span-2 flex w-fit items-center gap-1.5 rounded-[4px] p-1 hover:bg-primary/10"
+        href={`/scaling/projects/${item.slug}`}
+      >
         <img src={`/icons/${item.slug}.png`} className="size-5" />
         <span className="font-bold text-xs">{item.name}</span>
-      </div>
+      </a>
       <PercentChange value={item.change} textClassName="font-semibold" />
       <div className="text-right font-bold text-xs">
         {formatNumber(item.uops)}

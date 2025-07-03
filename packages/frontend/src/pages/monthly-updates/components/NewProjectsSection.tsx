@@ -31,11 +31,14 @@ function NewProject({
     >
       {/* Desktop */}
       <div className="max-md:hidden">
-        <div className="grid grid-cols-5 text-sm">
-          <div className="flex items-center gap-2">
+        <div className="grid grid-cols-5 items-center text-sm">
+          <a
+            className="flex w-fit items-center gap-2 rounded-[4px] p-1 hover:bg-primary/10"
+            href={`/scaling/projects/${project.slug}`}
+          >
             <img src={`/icons/${project.id}.png`} className="size-5" />
             <span className="font-bold text-sm">{project.name}</span>
-          </div>
+          </a>
           <span className="font-medium">{project.category}</span>
           <StageBadge
             stage={project.stage.stage}
