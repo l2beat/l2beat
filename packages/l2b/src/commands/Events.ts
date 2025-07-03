@@ -1,5 +1,5 @@
-import { CliLogger } from '@l2beat/shared'
 import { command, positional, restPositionals, string } from 'cmd-ts'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { getEvents } from '../implementations/events'
 import {
   chainName,
@@ -25,7 +25,7 @@ export const Events = command({
     explorerChainId,
   },
   handler: async (args) => {
-    const logger = new CliLogger()
+    const logger = getPlainLogger()
     await getEvents(logger, args)
   },
 })

@@ -1,7 +1,7 @@
 import { estimateSimilarity } from '@l2beat/discovery'
 import chalk from 'chalk'
 
-import type { CliLogger } from '@l2beat/shared'
+import type { Logger } from '@l2beat/backend-tools'
 import { formatAsAsciiTable } from '@l2beat/shared-pure'
 import { type Project, removeCommonPath, transpose } from './common'
 
@@ -10,7 +10,7 @@ export function formatHeader(title: string): string {
 }
 
 function formatTable(
-  logger: CliLogger,
+  logger: Logger,
   aIDs: string[],
   bIDs: string[],
   matrix: Record<string, Record<string, number>>,
@@ -22,7 +22,7 @@ function formatTable(
   const minTableWidth = Math.min(...widths)
 
   if (minTableWidth > terminalWidth && !options?.forceTable) {
-    logger.logLine(
+    logger.info(
       [
         `${chalk.yellow('WARNING')}: Table is too wide to fit in the terminal`,
         `Terminal is ${terminalWidth} characters wide, table is ${minTableWidth} characters wide`,
@@ -59,7 +59,7 @@ function computeTableWidth(headerColumns: string[]): number {
 }
 
 export function printComparisonBetweenProjects(
-  logger: CliLogger,
+  logger: Logger,
   matrix: Record<string, Record<string, number>>,
   firstProject: Project,
   secondProject: Project,
@@ -87,19 +87,19 @@ export function printComparisonBetweenProjects(
   )
 
   if (table) {
-    logger.logLine(formatHeader(firstProject.name))
-    logger.logLine(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    logger.logLine(formatHeader(secondProject.name))
-    logger.logLine(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
-    logger.logLine('====================================\n')
-    logger.logLine(table)
+    logger.info(formatHeader(firstProject.name))
+    logger.info(aIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    logger.info(formatHeader(secondProject.name))
+    logger.info(bIds.map((e) => `${e.id} - ${e.path}`).join('\n'))
+    logger.info('====================================\n')
+    logger.info(table)
   }
 
   const concatenatedSimilarity = estimateSimilarity(
     firstProject.concatenatedSource,
     secondProject.concatenatedSource,
   )
-  logger.logLine(
+  logger.info(
     `\nEstimated similarity between two projects: ${colorMap(
       concatenatedSimilarity,
     )}`,
