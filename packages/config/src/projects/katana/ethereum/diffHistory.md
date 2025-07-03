@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xd6ef0cb99d37563ab24ed712a9bcb4185961a859
+Generated with discovered.json: 0xfb8af94a9da8bc0661f4417e752fcc542343186b
 
-# Diff at Thu, 03 Jul 2025 08:46:51 GMT:
+# Diff at Thu, 03 Jul 2025 09:54:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@717eea3a0fc625b39e556e700bc9e657bb32fa71 block: 22825494
@@ -27,14 +27,6 @@ config: refine descriptions and permissions.
     }
 ```
 
-## Source code changes
-
-```diff
-.../ethereum/{.flat@22825494/Polygon Multisig 2 => .flat/Safe}/Safe.sol   | 0
- .../{.flat@22825494/Polygon Multisig 2 => .flat/Safe}/SafeProxy.p.sol     | 0
- 2 files changed, 0 insertions(+), 0 deletions(-)
-```
-
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
@@ -54,6 +46,8 @@ discovery. Values are for block 22825494 (main branch discovery), not current.
 +        "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
       fieldMeta.rangeVkeyCommitment.severity:
 +        "HIGH"
+      fieldMeta.optimisticMode:
++        {"severity":"HIGH","description":"degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."}
     }
 ```
 
@@ -157,11 +151,13 @@ discovery. Values are for block 22825494 (main branch discovery), not current.
       name:
 -        "Katana Multisig 2"
 +        "Katana Foundation Engineering/Security Multisig"
+      receivedPermissions.0:
++        {"permission":"interact","from":"ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash.","role":".aggchainManager"}
       receivedPermissions.0.description:
-+        "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash."
++        "toggle the 'optimisticMode'."
       receivedPermissions.0.role:
 -        ".guardian"
-+        ".aggchainManager"
++        ".optimisticModeManager"
       receivedPermissions.0.from:
 -        "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811"
 +        "ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666"
@@ -287,6 +283,14 @@ discovery. Values are for block 22825494 (main branch discovery), not current.
 -   Status: DELETED
     contract DepositRelayer (0xB01dADEC98308528ee57A17b24A473213c1704bb)
     +++ description: None
+```
+
+```diff
+    EOA  (0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666","description":"finalize any state root with only their signature.","role":".trustedSequencer","condition":"optimisticMode is enabled by the optimisticModeManager."}]
+    }
 ```
 
 ```diff

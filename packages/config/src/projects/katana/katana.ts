@@ -11,7 +11,6 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  FRONTRUNNING_RISK,
   RISK_VIEW,
   SEQUENCER_NO_MECHANISM,
   TECHNOLOGY_DATA_AVAILABILITY,
@@ -57,7 +56,7 @@ export const katana: ScalingProject = {
     purposes: ['Universal'],
     category: 'ZK Rollup',
     stack: 'Agglayer CDK',
-    upgradesAndGovernanceImage: 'polygoncdk',
+    upgradesAndGovernanceImage: 'agglayer-algateway',
     links: {
       websites: ['https://katana.network/'],
       bridges: ['https://app.katana.network/'],
@@ -156,7 +155,7 @@ export const katana: ScalingProject = {
       {
         title: 'Prover Architecture',
         description:
-          'Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof or aggchain proof by Agglayer and contains 1) the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2 and 2) the bridge accounting proof proving only the secure accounting of the Agglayer shared bridge.',
+          "Katana uses the Agglayer CDK in CDK-opgeth-zkrollup configuration. This combines an OP-Succinct zk rollup base with Agglayer shared bridge interoperability. Both parts are verified in a single nested proof using the Succinct Sp1Verifier. This proof is called the pessimistic proof by Agglayer which contains 1) the bridge accounting proof proving only the secure accounting of the Agglayer shared bridge and can have 2) a reference to an 'aggchain proof', which can define additional programs to be proven. In the case of Katana, these are the op-succinct block range proofs as an aggregated proof proving the state transitions of the L2.",
         references: [
           {
             url: 'https://docs.agglayer.dev/cdk/cdk-opgeth/architecture/#cdk-opgeth-zkrollup-not-live-yet',
@@ -181,15 +180,11 @@ export const katana: ScalingProject = {
           },
           {
             category: 'Funds can be stolen if',
+            text: 'A malicious state transition is finalized by activating the permissioned optimistic mode.',
+          },
+          {
+            category: 'Funds can be stolen if',
             text: 'the proposer routes proof verification through a malicious or faulty verifier by specifying an unsafe route id.',
-          },
-          {
-            category: 'Funds can be frozen if',
-            text: 'the permissioned proposer fails to publish state roots to the L1.',
-          },
-          {
-            category: 'Funds can be frozen if',
-            text: 'the permissioned sequencer fails to publish transaction data to the L1.',
           },
           {
             category: 'Funds can be frozen if',
@@ -226,11 +221,13 @@ export const katana: ScalingProject = {
       description:
         'Only a trusted sequencer is allowed to submit transaction batches. A mechanism for users to submit their own batches is currently disabled. Only a trusted proposer can propose and prove new state roots.',
       risks: [
-        FRONTRUNNING_RISK,
         {
           category: 'Funds can be frozen if',
-          text: 'the sequencer refuses to include an exit transaction.',
-          isCritical: true,
+          text: 'the permissioned proposer fails to publish state roots to the L1.',
+        },
+        {
+          category: 'Funds can be frozen if',
+          text: 'the permissioned sequencer fails to publish transaction data to the L1.',
         },
       ],
       references: [
@@ -257,7 +254,7 @@ export const katana: ScalingProject = {
       {
         name: 'Shared bridge and Pessimistic Proofs',
         description:
-          "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign'). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum are able to share the bridge with the zkEVM Agglayer projects.",
+          "Polygon Agglayer uses a shared bridge escrow for Rollups, Validiums and external chains that opt in to participate in interoperability. Each participating chain needs to provide zk proofs to access any assets in the shared bridge. In addition to the full execution proofs that are used for the state validation of Rollups and Validiums, accounting proofs over the bridges state (Polygon calls them 'Pessimistic Proofs') are used by external chains ('cdk-sovereign' and aggchains). Using the SP1 zkVM by Succinct, projects without a full proof system on Ethereum or custom proof systems are able to share the bridge with the zkEVM Agglayer projects.",
         risks: [
           {
             category: 'Funds can be lost if',
@@ -283,7 +280,7 @@ The regular upgrade process for all system contracts (shared and L2-specific) st
 
 The PolygonSecurityCouncil can expedite the upgrade process by declaring an emergency state. This state pauses both the shared bridge and the PolygonRollupManager and allows for instant upgrades through the timelock. Accordingly, instant upgrades for all system contracts are possible with the cooperation of the SecurityCouncil. The emergency state has been activated ${emergencyActivatedCount} time(s) since inception.
 
-Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
+Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trusted aggregator (proposer and prover) for all participating Layer 2s, deactivate the emergency state, obsolete rolupTypes and manage operational parameters and fees in the PolygonRollupManager directly. The local admin of a specific Layer 2 can manage their chain by choosing the trusted sequencer, manage forced batches and set the data availability config. Creating new Layer 2s (of existing rollupType) is outsourced to the PolygonCreateRollupMultisig but can also be done by the PolygonAdminMultisig. Finally, it can manage SP1 verification keys for pessimistic proofs and aggchain proofs, which defines the affected chains' state validation. Custom non-shared bridge escrows have their custom upgrade admins listed in the permissions section.`,
 
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   contracts: {

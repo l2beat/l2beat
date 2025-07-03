@@ -104,6 +104,10 @@
         "vKeyManager": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
       },
       "fieldMeta": {
+        "optimisticMode": {
+          "severity": "HIGH",
+          "description": "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
+        },
         "aggregationVkey": {
           "severity": "HIGH",
           "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
@@ -1184,6 +1188,12 @@
         },
         {
           "permission": "interact",
+          "from": "ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "toggle the 'optimisticMode'.",
+          "role": ".optimisticModeManager"
+        },
+        {
+          "permission": "interact",
           "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
@@ -2091,7 +2101,16 @@
     {
       "address": "0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "ethereum:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "finalize any state root with only their signature.",
+          "role": ".trustedSequencer",
+          "condition": "optimisticMode is enabled by the optimisticModeManager."
+        }
+      ]
     },
     {
       "address": "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645",
@@ -3757,9 +3776,9 @@
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
     "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainFEP": "0x5be491d910b795a115b54ac9f97b442a81a67941428c08569349c4bf43ff131e",
+    "polygon-cdk/AggchainFEP": "0xcee497f8f6d1aab075ec58d3f3ed5451d07ac7a9ecbf5fa3ba1014f46d2af06c",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "permissionsConfigHash": "0x8ccd1a250d0023d3aafaae339f9203193ddf86e4ef75b68329b3c465b0b25439"
+  "permissionsConfigHash": "0x18846105e1d6a2186493040b644549870ba91aa4fef4a864db76e18de8353c1a"
 }
