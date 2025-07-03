@@ -10,8 +10,10 @@ interface Props {
 
 export function NewProjectsSection({ newProjects }: Props) {
   return (
-    <div className="mt-6 rounded-lg border border-divider px-6 py-5">
-      <h2 className="font-bold text-xl">New Projects</h2>
+    <div className="mt-6 rounded-lg border border-divider px-6 pt-5 pb-1">
+      <h2 className="font-bold text-xl leading-none">
+        New projects joined the ecosystem
+      </h2>
       <div>
         {newProjects.map((p) => (
           <NewProject key={p.id} project={p} />
