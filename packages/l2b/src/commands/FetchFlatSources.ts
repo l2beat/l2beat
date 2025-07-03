@@ -1,8 +1,8 @@
 import { getDiscoveryPaths } from '@l2beat/discovery'
-import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { boolean, command, flag, option, optional } from 'cmd-ts'
 import { keyInYN } from 'readline-sync'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import {
   fetchFlatSources,
   saveIntoDirectory,
@@ -42,7 +42,7 @@ export const FetchFlatSources = command({
   },
   handler: async (args) => {
     const paths = getDiscoveryPaths()
-    const logger = new CliLogger(args.quiet)
+    const logger = getPlainLogger()
     if (
       !args.confirmed &&
       paths.discovery !== undefined &&

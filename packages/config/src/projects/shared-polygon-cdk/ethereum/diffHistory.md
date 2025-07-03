@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xaaf4a424a5ceb181a0342a9cf9593fadb1e6362f
+
+# Diff at Wed, 02 Jul 2025 16:35:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f7cc75f3e93efbba70ffb8d54f4aeceb76299220 block: 22816820
+- current block number: 22829897
+
+## Description
+
+Config: clarify some descriptions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22816820 (main branch discovery), not current.
+
+```diff
+    contract AggLayerGateway (0x046Bb8bb98Db4ceCbB2929542686B74b516274b3) {
+    +++ description: A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.
+      fieldMeta.aggchainVKeys.description:
+-        "First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is not used in verifyPessimisticProof()."
++        "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey()."
+      fieldMeta.routes.description:
+-        "This map is used for routing in verifyPessimisticProof()."
++        "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey."
+      fieldMeta.routes.severity:
++        "HIGH"
+      fieldMeta.aggchainVKeysUpdated:
++        {"description":"emitted when an existing aggchainVKey in `aggchainVKeys` is updated."}
+    }
+```
+
+```diff
+    contract PolygonAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
++        "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
+      receivedPermissions.1.description:
+-        "add or update default aggchain verification keys."
++        "add or update default aggchain verification keys (aggchainVkey) for any given selectors."
+      receivedPermissions.2.description:
+-        "freeze routes from proof selector to verifier / vKey for pessimistic proofs."
++        "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: A timelock with access control. In the case of an activated emergency state in the 0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2, all transactions through this timelock are immediately executable. The current minimum delay is 3d.
+      directlyReceivedPermissions.2.description:
+-        "add new routes from proof selector to verifier / vKey for pessimistic proofs."
++        "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
+    }
+```
+
 Generated with discovered.json: 0x07da52b96d7aa63f333391a496012d2c81a25c5c
 
 # Diff at Fri, 27 Jun 2025 15:10:51 GMT:

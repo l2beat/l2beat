@@ -1,9 +1,9 @@
 import { ProxyDetector, get$Implementations } from '@l2beat/discovery'
-import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { command, positional } from 'cmd-ts'
 import { getProvider } from '../implementations/common/GetProvider'
 import { getExplorerConfig } from '../implementations/common/getExplorer'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import {
   chainName,
   explorerApiKey,
@@ -27,7 +27,7 @@ export const DetectProxy = command({
     explorerChainId,
   },
   handler: async (args) => {
-    const logger = new CliLogger()
+    const logger = getPlainLogger()
 
     const explorer = getExplorerConfig(args)
     const provider = await getProvider(args.rpcUrl, explorer)
@@ -36,19 +36,17 @@ export const DetectProxy = command({
     const result = await proxyDetector.detectProxy(provider, args.address)
 
     if (result === undefined) {
-      logger.logLine(
+      logger.info(
         "Couldn't detect the type of the proxy. Either it's not a proxy or it's a proxy we can't yet detect.",
       )
       return
     }
 
-    logger.logLine(`Detected Proxy of kind: ${chalk.green(result.type)}`)
+    logger.info(`Detected Proxy of kind: ${chalk.green(result.type)}`)
     const implementations = get$Implementations(result.values)
     for (const [i, implementation] of implementations.entries()) {
       const prefix = i === implementations.length - 1 ? `└─` : `├─`
-      logger.logLine(
-        ` ${prefix} ${chalk.blueBright(implementation.toString())}`,
-      )
+      logger.info(` ${prefix} ${chalk.blueBright(implementation.toString())}`)
     }
   },
 })

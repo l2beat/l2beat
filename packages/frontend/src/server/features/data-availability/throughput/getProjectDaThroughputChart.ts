@@ -14,7 +14,10 @@ export type ProjectDaThroughputChartData = {
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
+export type ProjectDaThroughputDataPoint = [
+  timestamp: number,
+  value: number | null,
+]
 
 export const ProjectDaThroughputChartParams = v.object({
   range: v.union([
@@ -79,7 +82,7 @@ export async function getProjectDaThroughputChart(
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, grouped[timestamp] ?? 0]
+      return [timestamp, grouped[timestamp] ?? null]
     }),
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,
