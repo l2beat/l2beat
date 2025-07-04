@@ -1,3 +1,113 @@
+Generated with discovered.json: 0x15fe5ecbc9c2bd83c003a3d94247add917dfa040
+
+# Diff at Fri, 04 Jul 2025 08:36:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b1ec4bef906de72c4073ae74026bc48cea1b83e9 block: 22666325
+- current block number: 22844606
+
+## Description
+
+add rsETH to polynomial, refresh plugs crawl
+
+## Watched changes
+
+```diff
+    contract USDS Vault (Polynomial) (0x49bFcE41d0594acA7390eD0820d83Fda308c39a7) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      unverified:
++        true
+      sinceTimestamp:
++        1749766247
+      sinceBlock:
++        22691377
+      values:
++        {"$immutable":true}
+      implementationNames:
++        {"0x49bFcE41d0594acA7390eD0820d83Fda308c39a7":""}
+    }
+```
+
+```diff
+    contract rsETH Vault (Polynomial) (0x8309E63F777805f362d42f5B5f2D1A20287d5Df2) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      unverified:
++        true
+      sinceTimestamp:
++        1751017763
+      sinceBlock:
++        22794987
+      values:
++        {"$immutable":true}
+      implementationNames:
++        {"0x8309E63F777805f362d42f5B5f2D1A20287d5Df2":""}
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.164:
++        "0x4CC07BCB7949CAbAb7b19EC94267AF5C0e47AEdA"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.165:
++        "0x47D5E4eCae70c9AD12eaDF469344B6B52a0ebCcE"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.166:
++        "0xec837c413c25B6952845551183ba8900cc543b95"
+    }
+```
+
+```diff
+    contract USDT Vault (Polynomial) (0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB) {
+    +++ description: None
+      type:
+-        "EOA"
++        "Contract"
+      proxyType:
+-        "EOA"
++        "immutable"
+      unverified:
++        true
+      sinceTimestamp:
++        1749766103
+      sinceBlock:
++        22691365
+      values:
++        {"$immutable":true}
+      implementationNames:
++        {"0xc7C71E39C2F87b0a70C434Ed5bc0497F4cd55bfB":""}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666325 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract USUAL Vault (Kinto) (0xE753E9E0d046eD2Ff3234CD174C22E277F143FbF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xdfb848e42793e7ddce172da80a9487ae90a77749
 
 # Diff at Mon, 09 Jun 2025 10:09:03 GMT:

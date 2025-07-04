@@ -811,7 +811,7 @@ function generateCopyPasta(
       address: EthereumAddress('${hubAddr}'),
       name: '${vaultName}',
       description: 'Socket Vault holding ${tokenName} (${tokenSymbol}) associated with ${slugName}. Owned by ${ownerNameStr}.',
-      tokens: ['${tokenSymbol}'], // Assumes symbol is the key in token list
+      tokens: ['${tokenSymbol}'],
     }),`,
         )
         currentProjectAddedHubs.add(hubAddr)
