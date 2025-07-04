@@ -1,6 +1,8 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { command, option, optional, run, string } from 'cmd-ts'
+import { type Hex, decodeFunctionResult, parseAbi } from 'viem'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols'
 
@@ -38,7 +40,7 @@ const cmd = command({
   args,
   handler: async (args) => {
     const http = new HttpClient()
-    const logger = Logger.SILENT
+    const logger = Logger.INFO
     const env = getEnv()
 
     const chains = args.chains
@@ -69,8 +71,26 @@ const cmd = command({
       for (const l of logs) {
         for (const decoder of decoders) {
           const decoded = decoder(r.chain, l)
+
           if (decoded) {
-            console.log(decoded)
+            const token = await r.rpc.call(
+              {
+                to: EthereumAddress(decoded?.token),
+                data: Bytes.fromHex('0x95d89b41'),
+              },
+              22845129,
+            )
+
+            logger.debug(decoded)
+            logger.info(decoded.protocol, {
+              source: decoded.source,
+              destination: decoded.destination,
+              token: decodeFunctionResult({
+                abi: ERC20,
+                functionName: 'symbol',
+                data: token.toString() as unknown as Hex,
+              }),
+            })
           }
         }
       }
@@ -81,3 +101,5 @@ const cmd = command({
 })
 
 run(cmd, process.argv.slice(2))
+
+const ERC20 = parseAbi(['function symbol() view returns (string)'])
