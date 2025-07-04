@@ -8,12 +8,12 @@ import {
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
-import { VerifiedIcon } from '~/icons/Verified'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
+import { NoOngoingAnomaliesState } from './NoOngoingAnomaliesState'
 
 export interface ProjectWithAnomaly {
   name: string
@@ -26,24 +26,9 @@ interface Props {
   className?: string
 }
 
-export function OngoingAnomaliesSection({
-  projectsWithAnomalies,
-  className,
-}: Props) {
+export function OngoingAnomalies({ projectsWithAnomalies, className }: Props) {
   if (projectsWithAnomalies.length === 0) {
-    return (
-      <PrimaryCard
-        className={cn(
-          'flex items-center justify-center gap-1 border border-positive max-md:border-x-0',
-          className,
-        )}
-      >
-        <VerifiedIcon className="size-5 fill-positive" />
-        <span className="text-center font-medium text-positive leading-none">
-          No ongoing anomalies detected
-        </span>
-      </PrimaryCard>
-    )
+    return <NoOngoingAnomaliesState className="max-md:border-x-0" />
   }
 
   return (

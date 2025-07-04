@@ -7,9 +7,9 @@ import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/ge
 import { LivenessHeader } from './components/LivenessHeader'
 import { LivenessTimeRangeContextProvider } from './components/LivenessTimeRangeContext'
 import {
-  OngoingAnomaliesSection,
+  OngoingAnomalies,
   type ProjectWithAnomaly,
-} from './components/OngoingAnomaliesSection'
+} from './components/OngoingAnomalies'
 import { ScalingLivenessTables } from './components/ScalingLivenessTables'
 
 interface Props extends AppLayoutProps {
@@ -27,7 +27,7 @@ export function ScalingLivenessPage({
       <SideNavLayout>
         <LivenessTimeRangeContextProvider>
           <LivenessHeader />
-          <OngoingAnomaliesSection
+          <OngoingAnomalies
             projectsWithAnomalies={projectsWithAnomalies}
             className="max-md:mt-4 md:mb-6"
           />

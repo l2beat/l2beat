@@ -6,6 +6,7 @@ import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenes
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { getDurationColorClassName } from '~/pages/scaling/liveness/components/LivenessDurationCell'
+import { NoOngoingAnomaliesState } from '~/pages/scaling/liveness/components/NoOngoingAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -41,9 +42,7 @@ export function LivenessSection({
         selected type. It also highlights anomalies - significant deviations
         from their typical schedule.
       </p>
-      {ongoingAnomalies.length > 0 && (
-        <OngoingAnomalies anomalies={ongoingAnomalies} />
-      )}
+      <OngoingAnomalies anomalies={ongoingAnomalies} />
 
       <HorizontalSeparator className="my-4" />
       <ProjectLivenessChart
@@ -63,6 +62,10 @@ export function LivenessSection({
 export function OngoingAnomalies({
   anomalies,
 }: { anomalies: LivenessAnomaly[] }) {
+  if (anomalies.length === 0) {
+    return <NoOngoingAnomaliesState className="!rounded-lg" />
+  }
+
   return (
     <div className="rounded-lg bg-surface-secondary px-5 py-4">
       <div className="mb-3 flex items-center gap-2">
