@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x5b8deccd3b07da4c71a6e6191bb7d5d93f5f27aa
+
+# Diff at Fri, 04 Jul 2025 13:01:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@34cb32da9aba13b54692a657031c317903866c59 block: 22823809
+- current block number: 22823809
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823809 (main branch discovery), not current.
+
+```diff
+    EOA Relayer2 (0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
+```diff
+    EOA Relayer8 (0x43728A95386D64384C76Afd416Dcc8118869BA6c) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
+```diff
+    EOA Relayer9 (0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
+```diff
+    EOA Relayer4 (0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
+```diff
+    EOA Relayer6 (0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
+```diff
+    contract Relayer11 (0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0) {
+    +++ description: None
+      template:
+-        "amarok/Relayer"
+    }
+```
+
 Generated with discovered.json: 0xaff1e3db68a20c09b30caa1c3d80346a7a5ac5ed
 
 # Diff at Fri, 04 Jul 2025 12:18:51 GMT:
