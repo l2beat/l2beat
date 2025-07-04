@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x9e233594a7d1e3d269a67cc7068097538eaa4491
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 57470008
+- current block number: 57470008
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 57470008 (main branch discovery), not current.
+
+```diff
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
++        "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+      receivedPermissions.0.from:
+-        "zksync2:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
++        "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+      receivedPermissions.1.from:
+-        "zksync2:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
++        "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
++        "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98"
+    }
+```
+
+```diff
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
++        "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"
+    }
+```
+
 Generated with discovered.json: 0x0c460ae0b6f0c04088ff4d5b1d5f554be3d258da
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

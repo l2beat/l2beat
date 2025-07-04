@@ -382,7 +382,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         }
       ]
@@ -394,13 +394,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
+          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
           "description": "call requestL2Transaction() with any target/calldata (whitelisted superuser sender).",
           "role": ".whitelistedSendersAC"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
+          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
           "description": "manage the whitelist.",
           "role": ".defaultAdminAC"
         }
@@ -419,7 +419,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -452,7 +452,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -475,7 +475,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -541,7 +541,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "role": ".getTransactionFilterer"
         }
@@ -628,7 +628,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -645,7 +645,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
           "description": "set the conversion factor for gas token deposits.",
           "role": ".tokenMultiplierSetter"
         }
@@ -663,7 +663,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         }
@@ -704,16 +704,16 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
+          "from": "eth:0x05eDE6aD1f39B7A16C949d5C33a0658c9C7241e3",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin",
           "via": [
-            { "address": "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }
+            { "address": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
+          "from": "eth:0x9D06B34adc3026eF876e4DABb859C424DbDA3063",
           "description": "manage the whitelist.",
           "role": ".defaultAdminAC"
         }
@@ -721,7 +721,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
+          "from": "eth:0xE1eeA4D6443b19D373Fe99De838b930Ef0ac2Ad3",
           "role": ".owner"
         }
       ],
@@ -765,7 +765,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
+          "from": "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
           "role": ".validatorsVTL"
         }
       ]
@@ -1308,5 +1308,5 @@
     "shared-zk-stack/TransactionFilterer": "0x590d37dd842667198e464e09383d8240a77ae5af274853f992c7c5fc1b70de2a",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x56f8655e2b736c724fa1fc7da1102e7435dd6f6a3d39b42943b65090aeaf8c86"
+  "permissionsConfigHash": "0x7cc4116267f35aa35ddfc2ef06c42725bd4b6feeb1064d6fb6a776667d6588d8"
 }

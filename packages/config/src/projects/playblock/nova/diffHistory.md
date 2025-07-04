@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xf31e34964bf7d4eecdb70762990831c4f0cfd2a3
+
+# Diff at Fri, 04 Jul 2025 12:19:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 82973305
+- current block number: 82973305
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 82973305 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
++        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+      directlyReceivedPermissions.1.from:
+-        "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
++        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+    }
+```
+
+```diff
+    EOA  (0x10Fe3cb853F7ef551E1598d91436e95d41Aea45a) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      receivedPermissions.0.from:
+-        "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
++        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+      receivedPermissions.1.via.0.address:
+-        "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      receivedPermissions.1.from:
+-        "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
++        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+      directlyReceivedPermissions.0.from:
+-        "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "arb-nova:0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+      receivedPermissions.1.from:
+-        "nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
++        "arb-nova:0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
+      receivedPermissions.2.from:
+-        "nova:0x383eFE8D410285c5CbE1B4F296022640759aA834"
++        "arb-nova:0x383eFE8D410285c5CbE1B4F296022640759aA834"
+      receivedPermissions.3.from:
+-        "nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
++        "arb-nova:0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
+      receivedPermissions.4.from:
+-        "nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
++        "arb-nova:0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+      receivedPermissions.5.from:
+-        "nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
++        "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
+      receivedPermissions.6.from:
+-        "nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad"
++        "arb-nova:0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad"
+    }
+```
+
+```diff
+    EOA  (0x3A8F935c5722535A8F34BD176d57D130Cb37d3A0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
++        "arb-nova:0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
+    }
+```
+
+```diff
+    EOA  (0xB246421622FB931BdAc20B4a26816F881771Db1e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
++        "arb-nova:0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"
+    }
+```
+
 Generated with discovered.json: 0x87043858a3e28717532f0dd5846d1dea9cf58cc3
 
 # Diff at Wed, 18 Jun 2025 12:24:44 GMT:

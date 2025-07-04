@@ -22,22 +22,22 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+          "from": "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA",
+          "from": "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA",
           "role": "admin",
           "via": [
-            { "address": "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4" }
+            { "address": "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
+          "from": "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
           "role": ".owner"
         }
       ],
@@ -77,7 +77,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+          "from": "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
           "role": "admin"
         }
       ]
@@ -217,7 +217,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA",
+          "from": "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA",
           "role": "admin"
         }
       ],
@@ -507,5 +507,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
 }

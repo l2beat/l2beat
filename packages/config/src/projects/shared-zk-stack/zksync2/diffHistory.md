@@ -1,3 +1,276 @@
+Generated with discovered.json: 0x09110da964c6b1ed98d8e3355d03e831151831bf
+
+# Diff at Fri, 04 Jul 2025 12:19:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 61100811
+- current block number: 61100811
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 61100811 (main branch discovery), not current.
+
+```diff
+    contract ProtocolTimelockController (0x085b8B6407f150D62adB1EF926F7f304600ec714) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor_deprecated (0x10560f8B7eE37571AD7E3702EEb12Bc422036E89) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+      receivedPermissions.0.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+      receivedPermissions.1.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+      receivedPermissions.2.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+      receivedPermissions.3.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+    }
+```
+
+```diff
+    contract ProtocolTimelockController_deprecated (0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 0s.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+    }
+```
+
+```diff
+    contract TokenTimelockController_deprecated (0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
++        "zksync:0x3E21c654B545Bf6236DC08236169DcF13dA4dDd6"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor_deprecated (0x496869a7575A1f907D1C5B1eca28e4e9E382afAb) {
+    +++ description: A token governance contract that allows token holders to create and vote on proposals. At least 21M tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed. The accepted token is 0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E.
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+      receivedPermissions.0.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+      receivedPermissions.1.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+      receivedPermissions.2.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+      receivedPermissions.3.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+    }
+```
+
+```diff
+    EOA Guardians_l2Alias (0x711ea620AB29f41AbC6596a15981e14ce58C97c9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
+      receivedPermissions.1.from:
+-        "zksync2:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
++        "zksync:0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160"
+    }
+```
+
+```diff
+    contract ZkProtocolGovernor (0x76705327e682F2d96943280D99464Ab61219e34f) {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.0.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.1.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.2.via.0.address:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.2.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.3.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      receivedPermissions.4.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      receivedPermissions.5.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      receivedPermissions.6.via.0.address:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      receivedPermissions.6.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      receivedPermissions.7.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x085b8B6407f150D62adB1EF926F7f304600ec714"
++        "zksync:0x085b8B6407f150D62adB1EF926F7f304600ec714"
+      directlyReceivedPermissions.1.from:
+-        "zksync2:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
++        "zksync:0x3701fB675bCd4A85eb11A2467628BBe193F6e6A8"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias_deprecated (0xA08b9912416E8aDc4D9C21Fae1415d3318A129A8) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
++        "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+      receivedPermissions.0.from:
+-        "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
++        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
++        "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC"
+    }
+```
+
+```diff
+    contract ZkTokenGovernor (0xb83FF6501214ddF40C91C9565d095400f3F45746) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Token Program Proposals (TPPs) usually targeting the ZK token on ZKsync Era. At least 21M ZK tokens are necessary to start a proposal (for delegates) and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      receivedPermissions.0.from:
+-        "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
++        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+      receivedPermissions.1.via.0.address:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      receivedPermissions.1.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      receivedPermissions.2.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      receivedPermissions.3.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      receivedPermissions.4.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+    }
+```
+
+```diff
+    contract GovOpsTimelockController_deprecated (0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
++        "zksync:0xC3e970cB015B5FC36edDf293D2370ef5D00F7a19"
+    }
+```
+
+```diff
+    contract GovOpsTimelockController (0xC9E442574958f96C026DeF9a50C3236cab17428a) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+    }
+```
+
+```diff
+    EOA ZKFoundationMultisig_l2Alias (0xcd2753Bd3829dfeC575AFC3816d4899CD103C62D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "zksync2:0xb83FF6501214ddF40C91C9565d095400f3F45746"
++        "zksync:0xb83FF6501214ddF40C91C9565d095400f3F45746"
+    }
+```
+
+```diff
+    contract ZkTokenProxyAdmin (0xdB1E46B448e68a5E35CB693a99D59f784aD115CC) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
++        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+    }
+```
+
+```diff
+    contract ZkTokenTimelockController (0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d) {
+    +++ description: Timelock contract allowing the queueing of transactions with a minimum delay of 3d.
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
++        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+      directlyReceivedPermissions.1.from:
+-        "zksync2:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
++        "zksync:0xe5d21A9179CA2E1F0F327d598D464CcF60d89c3d"
+    }
+```
+
+```diff
+    contract ZkGovOpsGovernor (0xEEEa739a8b6fB1b8f703E23C9Be03CeeA643b160) {
+    +++ description: Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for Governance Advisory Proposals (GAPs) that are not executable onchain. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      receivedPermissions.0.via.0.address:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+      receivedPermissions.0.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+      receivedPermissions.1.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+      receivedPermissions.2.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+      receivedPermissions.3.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+      directlyReceivedPermissions.0.from:
+-        "zksync2:0xC9E442574958f96C026DeF9a50C3236cab17428a"
++        "zksync:0xC9E442574958f96C026DeF9a50C3236cab17428a"
+    }
+```
+
+```diff
+    EOA ProtocolUpgradeHandler_l2Alias (0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "zksync2:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
++        "zksync:0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E"
+    }
+```
+
 Generated with discovered.json: 0x3de6244c3c29bf06b84e9bc90b2d9b98fa3de3c6
 
 # Diff at Thu, 03 Jul 2025 13:13:59 GMT:

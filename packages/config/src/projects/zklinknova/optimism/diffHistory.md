@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x9493e1075ac6aae6de7c03b5d2345e28fe37f665
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 133041012
+- current block number: 133041012
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133041012 (main branch discovery), not current.
+
+```diff
+    contract OptimismOwner (0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
++        "oeth:0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"
+      receivedPermissions.1.via.0.address:
+-        "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+      receivedPermissions.1.from:
+-        "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA"
++        "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA"
+      directlyReceivedPermissions.0.from:
+-        "optimism:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
++        "oeth:0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
+    }
+```
+
+```diff
+    EOA  (0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
++        "oeth:0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"
+    }
+```
+
+```diff
+    contract OptimismProxyAdmin (0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "optimism:0x5Bd51296423A9079b931414C1De65e7057326EaA"
++        "oeth:0x5Bd51296423A9079b931414C1De65e7057326EaA"
+    }
+```
+
 Generated with discovered.json: 0xc1e61ab6f4e52b5081e6a264f79be6ff5a21fba0
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

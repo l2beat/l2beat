@@ -1,3 +1,156 @@
+Generated with discovered.json: 0xaff1e3db68a20c09b30caa1c3d80346a7a5ac5ed
+
+# Diff at Fri, 04 Jul 2025 12:18:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22823809
+- current block number: 22823809
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823809 (main branch discovery), not current.
+
+```diff
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460) {
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 3d. The rules for proposals can be read directly from the contract values.
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
++        "eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+      receivedPermissions.0.from:
+-        "ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"
++        "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
++        "eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625"
+    }
+```
+
+```diff
+    EOA  (0x2bAaA41d155ad8a4126184950B31F50A1513cE25) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+    }
+```
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"
++        "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460"
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+      receivedPermissions.0.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+    }
+```
+
+```diff
+    EOA  (0x6Fde30A7F4709A1739a32A8235Af651C038CeDf9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
++        "eth:0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007"
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+      receivedPermissions.0.from:
+-        "ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
++        "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
+      receivedPermissions.1.from:
+-        "ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      receivedPermissions.2.from:
+-        "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      receivedPermissions.3.from:
+-        "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+      receivedPermissions.4.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      receivedPermissions.5.from:
+-        "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      receivedPermissions.6.from:
+-        "ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
++        "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
+      receivedPermissions.7.from:
+-        "ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
++        "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
+      receivedPermissions.8.from:
+-        "ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+    }
+```
+
+```diff
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+      receivedPermissions.0.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+    }
+```
+
+```diff
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
++        "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      receivedPermissions.0.from:
+-        "ethereum:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
++        "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
++        "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+      receivedPermissions.1.from:
+-        "ethereum:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
++        "eth:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
++        "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
++        "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99"
+      receivedPermissions.1.from:
+-        "ethereum:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
++        "eth:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92"
+    }
+```
+
 Generated with discovered.json: 0xe957665b259e7cc041ba31e5cd819dd1e81c010f
 
 # Diff at Tue, 01 Jul 2025 10:33:28 GMT:

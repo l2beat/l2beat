@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x19196e2f38016b4a8e52bdc6764ecdbcfbb3f5d3
+
+# Diff at Fri, 04 Jul 2025 12:19:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 40494132
+- current block number: 40494132
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40494132 (main branch discovery), not current.
+
+```diff
+    EOA  (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
++        "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
++        "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.1.from:
+-        "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      receivedPermissions.2.from:
+-        "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
++        "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.3.from:
+-        "gnosis:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
++        "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+    }
+```
+
+```diff
+    contract SafeL2 (0xb1F43dc8B57562e7FA48157D73102a8e4a94975A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
++        "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+    }
+```
+
 Generated with discovered.json: 0xd09165495e199bd225eb2bd2e7634fd70f7ad347
 
 # Diff at Thu, 03 Jul 2025 10:57:03 GMT:

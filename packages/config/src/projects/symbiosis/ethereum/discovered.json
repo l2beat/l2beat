@@ -20,12 +20,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+          "from": "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
+          "from": "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
           "role": "admin"
         }
       ],
@@ -60,7 +60,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
+          "from": "eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0",
           "role": "admin"
         }
       ],
@@ -506,5 +506,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x7b93f3d252320f5f9b011136200f3009bb49e1c32f5d583572d0577251a2302e"
+  "permissionsConfigHash": "0x557f9dc32c7240d6671d48c460b875ceacd5ad5aacb4c95cc5840e35d79330ef"
 }

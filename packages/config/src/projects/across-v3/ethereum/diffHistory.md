@@ -1,3 +1,168 @@
+Generated with discovered.json: 0xd69a5e30f623dd65a12e45a3f26f870da47a03bd
+
+# Diff at Fri, 04 Jul 2025 12:18:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22823774
+- current block number: 22823774
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823774 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2bAaA41d155ad8a4126184950B31F50A1513cE25) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+    }
+```
+
+```diff
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+      receivedPermissions.0.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+    }
+```
+
+```diff
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8) {
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+      receivedPermissions.0.from:
+-        "ethereum:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
++        "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac"
+      receivedPermissions.1.from:
+-        "ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
++        "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE"
+      receivedPermissions.2.from:
+-        "ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
++        "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3"
+      receivedPermissions.3.from:
+-        "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
++        "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC"
+      receivedPermissions.4.from:
+-        "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
++        "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF"
+      receivedPermissions.5.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+      receivedPermissions.6.from:
+-        "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+      receivedPermissions.7.from:
+-        "ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
++        "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570"
+      receivedPermissions.8.from:
+-        "ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
++        "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7"
+      receivedPermissions.9.from:
+-        "ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
++        "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE"
+    }
+```
+
+```diff
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
++        "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748"
+    }
+```
+
+```diff
+    contract OptimisticGovernor (0x8692B776d1Ff0664177c90465038056Dc64f8991) {
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 2d. The rules for proposals can be read directly from the contract values.
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      receivedPermissions.0.from:
+-        "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5"
++        "eth:0x3B03509645713718B78951126E0A6de6f10043f5"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      receivedPermissions.1.from:
+-        "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991"
++        "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      receivedPermissions.2.from:
+-        "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+      receivedPermissions.3.from:
+-        "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xB524735356985D2f267FA010D681f061DfF03715"
++        "eth:0xB524735356985D2f267FA010D681f061DfF03715"
+    }
+```
+
+```diff
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748) {
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+      receivedPermissions.0.from:
+-        "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
++        "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8"
+    }
+```
+
+```diff
+    contract Across Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5"
++        "eth:0x3B03509645713718B78951126E0A6de6f10043f5"
+      receivedPermissions.1.from:
+-        "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991"
++        "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991"
+      receivedPermissions.2.from:
+-        "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
++        "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda"
+      receivedPermissions.3.from:
+-        "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
++        "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+    }
+```
+
+```diff
+    EOA  (0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+      receivedPermissions.1.from:
+-        "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
++        "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea"
+    }
+```
+
 Generated with discovered.json: 0x823833e03f6b9fd54c07f5c52ec01fcdeaa6d181
 
 # Diff at Tue, 01 Jul 2025 10:30:49 GMT:
