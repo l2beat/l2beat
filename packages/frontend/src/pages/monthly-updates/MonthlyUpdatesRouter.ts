@@ -14,14 +14,14 @@ export function createMonthlyUpdatesRouter(
   const router = express.Router()
 
   router.get(
-    '/publications/monthly-updates/:slug',
+    '/publications/monthly-updates/:id',
     validateRoute({
-      params: v.object({ slug: v.string() }),
+      params: v.object({ id: v.string() }),
     }),
     async (req, res) => {
       const data = await getMonthlyUpdateData(
         manifest,
-        req.params.slug,
+        req.params.id,
         req.originalUrl,
         cache,
       )

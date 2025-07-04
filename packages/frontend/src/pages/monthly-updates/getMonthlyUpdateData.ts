@@ -10,13 +10,13 @@ import type { Manifest } from '~/utils/Manifest'
 
 export async function getMonthlyUpdateData(
   manifest: Manifest,
-  slug: string,
+  id: string,
   url: string,
   cache: ICache,
 ): Promise<RenderData | undefined> {
   const publications = getCollection('monthly-updates')
 
-  const monthlyUpdate = publications.find((p) => p.id === slug)
+  const monthlyUpdate = publications.find((p) => p.id === id)
   if (!monthlyUpdate || !env.NEXT_PUBLIC_PARTNERS) {
     return undefined
   }
