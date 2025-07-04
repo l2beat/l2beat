@@ -1,6 +1,11 @@
 import type { EVMLog } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
+import { utils } from 'ethers'
 import type { BridgeTransfer } from '../cli'
+
+const ABI = new utils.Interface([
+  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
+])
 
 export function decodeAcross(
   chain: string,
@@ -12,27 +17,22 @@ export function decodeAcross(
   )
     return undefined
 
-  if (
-    log.topics[0] ===
-    '0x32ed1a409ef04c7b0227189c3a103dc5ac10e775a15b785dcc510201f7c25ad3'
-  )
-    return {
-      chain,
-      protocol: 'across',
-      txHash: log.transactionHash,
-      direction: 'deposit',
-    }
+  if (log.topics[0] === ABI.getEventTopic('FundsDeposited')) {
+    const data = ABI.decodeEventLog('FundsDeposited', log.data)
 
-  if (
-    log.topics[0] ===
-    '0x44b559f101f8fbcc8a0ea43fa91a05a729a5ea6e14a7c75aa750374690137208'
-  )
+    console.log(data)
+
     return {
-      chain,
       protocol: 'across',
+      source: chain,
+      destination: log.topics[1],
+      token: data[0],
+      amount: JSON.parse(data[2]),
+      sender: log.topics[3],
+      receiver: data[10],
       txHash: log.transactionHash,
-      direction: 'withdraw',
     }
+  }
 
   return undefined
 }

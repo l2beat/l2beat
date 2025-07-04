@@ -5,10 +5,15 @@ import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols'
 
 export interface BridgeTransfer {
-  chain: string
   protocol: string
+  source: string
+  destination: string
+  token: string
+  amount: string
+  sender: string
+  receiver: string
   txHash: string
-  direction: 'deposit' | 'withdraw'
+  id?: string
 }
 
 const args = {
