@@ -1,5 +1,6 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
+import { env } from '~/env'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -14,7 +15,7 @@ export async function getMonthlyUpdateData(
   const publications = getCollection('monthly-updates')
 
   const monthlyUpdate = publications.find((p) => p.id === slug)
-  if (!monthlyUpdate) {
+  if (!monthlyUpdate || !env.NEXT_PUBLIC_PARTNERS) {
     return undefined
   }
 

@@ -7,14 +7,8 @@ import type {
 import { assert, type ProjectId, type UnixTime } from '@l2beat/shared-pure'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { EcosystemUpdate } from '~/content/monthly-updates'
-import {
-  type ActivityLatestUopsData,
-  getActivityLatestUops,
-} from '~/server/features/scaling/activity/getActivityLatestTps'
-import {
-  type SevenDayTvsBreakdown,
-  get7dTvsBreakdown,
-} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '~/server/features/scaling/activity/getActivityLatestTps'
+import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import {
@@ -68,60 +62,61 @@ export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
 
 export async function getEcosystemMonthlyUpdateEntries(
   ecosystemUpdateEntries: EcosystemUpdate[],
+  allScalingProjects: Project<'isScaling'>[],
+  tvs: SevenDayTvsBreakdown,
+  activity: ActivityLatestUopsData,
   from: UnixTime,
   to: UnixTime,
 ): Promise<EcosystemMonthlyUpdateEntry[]> {
-  const [projects, ecosystems, allScalingProjects, newProjects] =
-    await Promise.all([
-      ps.getProjects({
-        select: ['ecosystemInfo'],
-        where: ['isScaling'],
-        whereNot: ['isUpcoming', 'archivedAt'],
-      }),
-      ps.getProjects({
-        select: ['ecosystemConfig', 'colors'],
-      }),
-      ps.getProjects({
-        where: ['isScaling'],
-      }),
-      ps.getProjects({
-        ids: ecosystemUpdateEntries.flatMap(
-          (e) => (e.newProjectsIds as ProjectId[]) ?? [],
-        ),
-        select: ['scalingStage', 'display', 'scalingInfo'],
-      }),
-    ])
+  const [projects, ecosystems, newProjects] = await Promise.all([
+    ps.getProjects({
+      select: ['ecosystemInfo'],
+      where: ['isScaling'],
+      whereNot: ['isUpcoming', 'archivedAt'],
+    }),
+    ps.getProjects({
+      select: ['ecosystemConfig', 'colors'],
+    }),
+    ps.getProjects({
+      ids: ecosystemUpdateEntries.flatMap(
+        (e) => (e.newProjectsIds as ProjectId[]) ?? [],
+      ),
+      select: ['scalingStage', 'display', 'scalingInfo'],
+    }),
+  ])
 
-  const [tvs, activity, tvsLeaderboard, activityLeaderboard] =
-    await Promise.all([
-      get7dTvsBreakdown({ type: 'layer2' }, to),
-      getActivityLatestUops(allScalingProjects, { type: 'custom', from, to }),
-      getTvsLeaderboard(
-        {
-          type: 'projects',
-          projectIds: projects.map((p) => p.id),
-        },
-        { type: 'custom', from, to },
-      ),
-      getActivityLeaderboard(
-        {
-          type: 'projects',
-          projectIds: projects.map((p) => p.id),
-        },
-        { type: 'custom', from, to },
-      ),
-    ])
+  const [tvsLeaderboard, activityLeaderboard] = await Promise.all([
+    getTvsLeaderboard(
+      {
+        type: 'projects',
+        projectIds: projects.map((p) => p.id),
+      },
+      { type: 'custom', from, to },
+    ),
+    getActivityLeaderboard(
+      {
+        type: 'projects',
+        projectIds: projects.map((p) => p.id),
+      },
+      { type: 'custom', from, to },
+    ),
+  ])
 
   const allScalingProjectsUops = allScalingProjects.reduce(
     (acc, curr) => acc + (activity[curr.id.toString()]?.pastDayUops ?? 0),
     0,
   )
 
-  return ecosystemUpdateEntries.map((e) => {
-    const ecosystem = ecosystems.find((p) => p.id === e.ecosystemId)
-    assert(ecosystem, `Ecosystem not found for ${e.ecosystemId}`)
+  return ecosystemUpdateEntries.map((ecosystemUpdateEntry) => {
+    const ecosystem = ecosystems.find(
+      (p) => p.id === ecosystemUpdateEntry.ecosystemId,
+    )
+    assert(
+      ecosystem,
+      `Ecosystem not found for ${ecosystemUpdateEntry.ecosystemId}`,
+    )
     return getEcosystemMonthlyUpdateEntry(
-      e,
+      ecosystemUpdateEntry,
       ecosystem,
       projects,
       tvs,

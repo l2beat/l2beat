@@ -1,15 +1,20 @@
-import type { Project, ProjectColors } from '@l2beat/config'
+import type {
+  Project,
+  ProjectColors,
+  ProjectScalingCategory,
+  ProjectScalingStage,
+} from '@l2beat/config'
 import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { DataAvailabilityUpdate } from '~/content/monthly-updates'
 import { ps } from '~/server/projects'
+import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import {
   type ThroughputSummaryData,
   getDaThroughputSummary,
 } from '../data-availability/throughput/getDaThroughputSummary'
-import {
-  type SevenDayTvsBreakdown,
-  get7dTvsBreakdown,
-} from '../scaling/tvs/get7dTvsBreakdown'
+import type { ActivityLatestUopsData } from '../scaling/activity/getActivityLatestTps'
+import type { SevenDayTvsBreakdown } from '../scaling/tvs/get7dTvsBreakdown'
 
 export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
   name: string
@@ -19,28 +24,55 @@ export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
     tvs: number
     dataPosted: number
   }
+  newProjects: {
+    id: ProjectId
+    name: string
+    stage: ProjectScalingStage
+    slug: string
+    description: string
+    category: ProjectScalingCategory
+    tvs?: number
+    uops?: number
+    isAppchain: boolean
+    badges: BadgeWithParams[]
+  }[]
   pastDayPosted: number
 }
 
 export async function getDaMonthlyUpdateEntries(
   daUpdateEntries: DataAvailabilityUpdate[],
+  tvs: SevenDayTvsBreakdown,
+  activity: ActivityLatestUopsData,
   to: UnixTime,
 ): Promise<DaMonthlyUpdateEntry[]> {
-  const [daLayers, daBridges, tvs, throughput] = await Promise.all([
+  const [daLayers, daBridges, newProjects, throughput] = await Promise.all([
     ps.getProjects({
       select: ['isDaLayer', 'daLayer', 'colors'],
     }),
     await ps.getProjects({
       select: ['daBridge'],
     }),
-    get7dTvsBreakdown({ type: 'layer2' }, to),
+    ps.getProjects({
+      ids: daUpdateEntries.flatMap(
+        (e) => (e.newProjectsIds as ProjectId[]) ?? [],
+      ),
+      select: ['scalingStage', 'display', 'scalingInfo'],
+    }),
     getDaThroughputSummary({ to: to + UnixTime.DAY }),
   ])
 
-  return daUpdateEntries.map((e) => {
-    const daLayer = daLayers.find((p) => p.id === e.daLayerId)
-    assert(daLayer, `DA Layer not found for ${e.daLayerId}`)
-    return getDaMonthlyUpdateEntry(e, daLayer, daBridges, tvs, throughput)
+  return daUpdateEntries.map((daUpdateEntry) => {
+    const daLayer = daLayers.find((p) => p.id === daUpdateEntry.daLayerId)
+    assert(daLayer, `DA Layer not found for ${daUpdateEntry.daLayerId}`)
+    return getDaMonthlyUpdateEntry(
+      daUpdateEntry,
+      daLayer,
+      daBridges,
+      newProjects,
+      tvs,
+      activity,
+      throughput,
+    )
   })
 }
 
@@ -48,7 +80,9 @@ function getDaMonthlyUpdateEntry(
   daUpdateEntry: DataAvailabilityUpdate,
   daLayer: Project<'isDaLayer' | 'daLayer' | 'colors'>,
   daBridges: Project<'daBridge'>[],
+  newProjects: Project<'scalingStage' | 'display' | 'scalingInfo'>[],
   tvs: SevenDayTvsBreakdown,
+  activity: ActivityLatestUopsData,
   throughput: ThroughputSummaryData,
 ): DaMonthlyUpdateEntry {
   const projectBridges = daBridges.filter(
@@ -76,6 +110,25 @@ function getDaMonthlyUpdateEntry(
       tvs: tvs.total,
       dataPosted,
     },
+    newProjects:
+      daUpdateEntry.newProjectsIds?.map((p) => {
+        const project = newProjects.find((n) => n.id === p)
+        assert(project, `Project not found for ${p}`)
+        return {
+          id: project.id,
+          name: project.name,
+          slug: project.slug,
+          stage: project.scalingStage,
+          description: project.display.description,
+          category: project.scalingInfo.type,
+          tvs: tvs.projects[p.toString()]?.breakdown.total,
+          uops: activity[p.toString()]?.pastDayUops,
+          isAppchain: project.scalingInfo.capability === 'appchain',
+          badges: project.display.badges
+            .map((badge) => getBadgeWithParams(badge))
+            .filter((badge) => badge !== undefined),
+        }
+      }) ?? [],
     pastDayPosted,
   }
 }

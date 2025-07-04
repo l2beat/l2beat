@@ -1,5 +1,6 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { DaMonthlyUpdateEntry } from '~/server/features/monthly-reports/getDaEntries'
+import { NewProjectsSection } from '../NewProjectsSection'
 import { News } from '../News'
 import { MonthlyUpdateThroughputChart } from '../charts/MonthlyUpdateThroughputChart'
 import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
@@ -43,6 +44,9 @@ export function DaUpdateSection({ daLayer, from, to }: Props) {
           to={to}
         />
       </div>
+      {daLayer.newProjects.length > 0 && (
+        <NewProjectsSection newProjects={daLayer.newProjects} />
+      )}
       {daLayer.news && daLayer.news?.length > 0 && <News news={daLayer.news} />}
     </div>
   )
