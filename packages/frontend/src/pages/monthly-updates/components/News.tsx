@@ -8,18 +8,18 @@ interface Props {
 
 export function News({ news }: Props) {
   return (
-    <div className="mt-8 space-y-8">
+    <div className="mt-8 space-y-10">
       <h2 className="heading-36">News</h2>
       {news.map((item) => (
         <div key={item.title}>
-          <h3 className="mb-4">
-            <span className="heading-28 mr-3 mb-0.5 leading-normal">
-              {item.title}
-            </span>
+          <div className="flex gap-2">
             {item.tags?.map((tag) => (
               <Tag key={tag} tag={tag} />
             ))}
-          </h3>
+          </div>
+          <div className="heading-20 md:heading-28 mt-3 mb-2 leading-none">
+            {item.title}
+          </div>
           <Article>{item.content}</Article>
         </div>
       ))}
@@ -29,14 +29,15 @@ export function News({ news }: Props) {
 
 function Tag({ tag }: { tag: string }) {
   return (
-    <span
+    <div
       className={cn(
-        '-mt-2 mr-2 inline-flex h-[26px] items-center justify-center rounded px-3 align-middle font-medium text-white text-xs uppercase',
-        tag === 'upcoming' && 'border border-n-green-450 bg-n-green-700',
-        tag === 'governance' && 'border border-n-blue-400 bg-n-blue-700',
+        'flex h-[22px] w-fit items-center justify-center rounded px-2 font-medium text-white text-xs uppercase',
+        tag === 'upcoming' &&
+          'border border-positive/20 bg-positive/20 text-positive',
+        tag === 'governance' && 'border border-brand/15 bg-brand/15 text-brand',
       )}
     >
       {tag}
-    </span>
+    </div>
   )
 }
