@@ -48,13 +48,6 @@ export function ScalingProjectPage({
               </div>
             )}
             <ProjectHeader project={projectEntry} className="mt-[18px] mb-6" />
-            <div className="mb-3 max-md:hidden">
-              <DesktopProjectLinks
-                projectLinks={projectEntry.header.links}
-                variant="primary"
-                discoUiHref={projectEntry.discoUiHref}
-              />
-            </div>
             <div className="mb-3 space-y-2">
               {projectEntry.archivedAt && <ArchivedBar />}
               {projectEntry.isUpcoming && <UpcomingBar />}
@@ -85,6 +78,13 @@ export function ScalingProjectPage({
                   className="w-full items-center justify-center p-2.5 text-xs md:text-base"
                 />
               )}
+            </div>
+            <div className="mb-3 max-md:hidden">
+              <DesktopProjectLinks
+                projectLinks={projectEntry.header.links}
+                variant="primary"
+                discoUiHref={projectEntry.discoUiHref}
+              />
             </div>
             <ContentWrapper mobileFull className="!px-0">
               {isNavigationEmpty ? (
