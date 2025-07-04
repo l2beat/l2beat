@@ -1,3 +1,99 @@
+Generated with discovered.json: 0xdba0cfe7b3a32d76a6203a8068736f66920d2351
+
+# Diff at Fri, 04 Jul 2025 12:19:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22630069
+- current block number: 22630069
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630069 (main branch discovery), not current.
+
+```diff
+    EOA  (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
++        "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+      receivedPermissions.1.from:
+-        "ethereum:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
++        "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+    }
+```
+
+```diff
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
++        "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      receivedPermissions.1.from:
+-        "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      receivedPermissions.2.from:
+-        "ethereum:0x88ad09518695c6c3712AC10a214bE5109a655671"
++        "eth:0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.3.from:
+-        "ethereum:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
++        "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+      receivedPermissions.4.from:
+-        "ethereum:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
++        "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+      receivedPermissions.5.from:
+-        "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
++        "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+      receivedPermissions.6.from:
+-        "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+      receivedPermissions.7.from:
+-        "ethereum:0x88ad09518695c6c3712AC10a214bE5109a655671"
++        "eth:0x88ad09518695c6c3712AC10a214bE5109a655671"
+      receivedPermissions.8.from:
+-        "ethereum:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
++        "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E"
+      receivedPermissions.9.from:
+-        "ethereum:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
++        "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+    }
+```
+
+```diff
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
++        "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9"
+      receivedPermissions.1.from:
+-        "ethereum:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
++        "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD"
+    }
+```
+
+```diff
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E) {
+    +++ description: Custom Multisignature contract for Validators.
+      receivedPermissions.0.from:
+-        "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
++        "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016"
+    }
+```
+
+```diff
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: Custom multisignature contract for Validator addresses.
+      receivedPermissions.0.from:
+-        "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+    }
+```
+
 Generated with discovered.json: 0x0dca27e6b9e14acd91fe9b4c8aa8c5383c80a855
 
 # Diff at Thu, 03 Jul 2025 10:57:03 GMT:

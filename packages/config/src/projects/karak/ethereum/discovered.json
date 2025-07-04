@@ -84,44 +84,44 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
+          "from": "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "from": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x952851CecB07705A5bb483C1CE080F97e1E7491E",
+          "from": "eth:0x952851CecB07705A5bb483C1CE080F97e1E7491E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
+          "from": "eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+          "from": "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
+          "from": "eth:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
           "role": "admin"
         }
       ],
@@ -155,101 +155,101 @@
       "receivedPermissions": [
         {
           "permission": "challenge",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": ".challenger"
         },
         {
           "permission": "challenge",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": ".CHALLENGER"
         },
         {
           "permission": "guard",
-          "from": "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
           "role": ".guardian"
         },
         {
           "permission": "guard",
-          "from": "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
           "role": ".GUARDIAN"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "from": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
+          "from": "eth:0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "from": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x952851CecB07705A5bb483C1CE080F97e1E7491E",
+          "from": "eth:0x952851CecB07705A5bb483C1CE080F97e1E7491E",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
+          "from": "eth:0x9BFfA66a8FcAAd7AC9ea7c7d4b9a6fc46777022d",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+          "from": "eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
+          "from": "eth:0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
+          "from": "eth:0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
+            { "address": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
+          "from": "eth:0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C",
           "role": ".owner"
         }
       ],
@@ -291,12 +291,12 @@
       "receivedPermissions": [
         {
           "permission": "propose",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": ".proposer"
         },
         {
           "permission": "propose",
-          "from": "ethereum:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
+          "from": "eth:0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
           "role": ".PROPOSER"
         }
       ]
@@ -393,7 +393,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "from": "eth:0x622333688CC1878C7ff4205c89bDe051798788A7",
           "role": ".batcherHash"
         }
       ]
@@ -985,5 +985,5 @@
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0xb3577a967a3dc17b9417dab19a78a000721e51249ca720a7ca111a93ac3627f4"
+  "permissionsConfigHash": "0x2f9ce0f294893d99df0b550badd951f4e6b7d8ccd454b6c819e6aaf6467782e8"
 }

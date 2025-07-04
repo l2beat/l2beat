@@ -11,7 +11,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
+          "from": "arb1:0xa5f208e072434bC67592E4C49C1B991BA79BCA46",
           "role": "admin"
         }
       ]
@@ -214,30 +214,30 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400",
+          "from": "arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400",
           "role": "admin",
           "via": [
-            { "address": "arbitrum:0xa3F61770BBd12e705734Ad940f382227d0fD82fE" }
+            { "address": "arb1:0xa3F61770BBd12e705734Ad940f382227d0fD82fE" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x818351386C3a63A8244C78aDAD42B9b4f9a516d4",
+          "from": "arb1:0x818351386C3a63A8244C78aDAD42B9b4f9a516d4",
           "role": "admin",
           "via": [
-            { "address": "arbitrum:0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1" }
+            { "address": "arb1:0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "arbitrum:0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1",
+          "from": "arb1:0x951e848eAD9c2B4aFaEa5e0649b36A00f97f01b1",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "arbitrum:0xa3F61770BBd12e705734Ad940f382227d0fD82fE",
+          "from": "arb1:0xa3F61770BBd12e705734Ad940f382227d0fD82fE",
           "role": ".owner"
         }
       ]
@@ -362,7 +362,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x818351386C3a63A8244C78aDAD42B9b4f9a516d4",
+          "from": "arb1:0x818351386C3a63A8244C78aDAD42B9b4f9a516d4",
           "role": "admin"
         }
       ],
@@ -389,7 +389,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400",
+          "from": "arb1:0x0E9C1a3AA696299E38b00a8144Bf6dc16C1F5400",
           "role": "admin"
         }
       ],
@@ -470,7 +470,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
+          "from": "arb1:0x397A5f7f3dBd538f23DE225B51f532c34448dA9B",
           "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
@@ -1000,5 +1000,5 @@
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c",
     "wormhole": "0x5a6ef2aca99ae337de77c543a9fe799d22ea71925a551ec8314b9ed552a8a71c"
   },
-  "permissionsConfigHash": "0x749ac4c6135e51523c3b412a230c15fd9fbf79d53d6a89723e4b0df8334625f0"
+  "permissionsConfigHash": "0x02aed5385e6df4fef5e692f60304163e8e0753b8628fed1bb58aff68c49fa0f5"
 }

@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x6ff852eada57af8405286ffcd439a0c1f9236524
+
+# Diff at Fri, 04 Jul 2025 12:18:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22732019
+- current block number: 22732019
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22732019 (main branch discovery), not current.
+
+```diff
+    contract Cartesi Multisig (0x60247492F1538Ed4520e61aE41ca2A8447592Ff5) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c"
++        "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c"
+    }
+```
+
 Generated with discovered.json: 0xde17cc07cc9b72d0da01196f068c630f0df9444e
 
 # Diff at Wed, 18 Jun 2025 14:39:58 GMT:

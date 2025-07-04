@@ -78,7 +78,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "guard",
-          "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian"
         }
       ],
@@ -358,18 +358,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "from": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935",
+          "from": "eth:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": "admin"
         }
       ],
@@ -463,34 +463,34 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+          "from": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
+            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935",
+          "from": "eth:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
+            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
+            { "address": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+          "from": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
           "role": ".owner"
         }
       ],
@@ -904,10 +904,10 @@
       "receivedPermissions": [
         {
           "permission": "guard",
-          "from": "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
+          "from": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
           "role": ".guardian",
           "via": [
-            { "address": "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
+            { "address": "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2" }
           ]
         }
       ],
@@ -1946,5 +1946,5 @@
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SuperchainConfig": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c"
   },
-  "permissionsConfigHash": "0xa5314096c6ad7a298e153d83ab871aa82ff90779346eba66a1fcca77550d735d"
+  "permissionsConfigHash": "0x5035721d0da08031c14f522fb9488a170b2145c07e8175c17678bcc537c52212"
 }

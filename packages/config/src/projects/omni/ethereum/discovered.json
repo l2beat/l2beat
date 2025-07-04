@@ -61,12 +61,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
           "role": "admin"
         }
       ]
@@ -95,57 +95,57 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
           "description": "change all critical configurations like fees, yield farming for escrowed funds, limits, validating contract references.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
           "description": "change external validation logic refered to by this contract (e.g. Hashi).",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
           "description": "change all critical configurations like yield farming for escrowed funds and limits.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "from": "eth:0x88ad09518695c6c3712AC10a214bE5109a655671",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
+          "from": "eth:0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "from": "eth:0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
           "role": "admin"
         }
       ],
@@ -456,13 +456,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
+          "from": "eth:0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9",
           "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
+          "from": "eth:0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD",
           "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
           "role": ".owner"
         }
@@ -916,7 +916,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "ethereum:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
+          "from": "eth:0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016",
           "role": ".validatorContract"
         }
       ],
@@ -992,7 +992,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge3",
-          "from": "ethereum:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "from": "eth:0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
           "role": ".validatorContract"
         }
       ],
@@ -1666,5 +1666,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x80692291dfff3df931a0798454ed5c46074c4123609dba450279fe12a6297c0a"
+  "permissionsConfigHash": "0xa8526f74efdadf863d02bdec1b1c960dffc3dd45c4574aec0dc9595d7c8d2fba"
 }
