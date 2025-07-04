@@ -84,7 +84,6 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { intmax } from '../projects/intmax/intmax'
-import { kakarotzkevm } from '../projects/kakarotzkevm/kakarotzkevm'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -312,7 +311,6 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   intmax,
-  kakarotzkevm,
   karak,
   katana,
   kinto,
