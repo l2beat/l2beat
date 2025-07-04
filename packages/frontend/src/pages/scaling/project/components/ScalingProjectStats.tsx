@@ -16,7 +16,7 @@ import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
-import { formatNumber } from '~/utils/number-format/formatNumber'
+import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
 interface Props {
   project: ProjectScalingEntry
@@ -33,9 +33,10 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.tvs?.breakdown ? (
           <ValueWithPercentageChange
             change={project.header.tvs.breakdown.totalChange}
+            className="!text-base !font-medium !leading-[100%]"
             changeClassName="label-value-15-medium"
           >
-            {formatNumber(project.header.tvs.breakdown.total)}
+            {formatCurrency(project.header.tvs.breakdown.total, 'usd')}
           </ValueWithPercentageChange>
         ) : (
           <NoDataBadge />
@@ -50,6 +51,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
+            className="!text-base !font-medium !leading-[100%]"
             changeClassName="label-value-15-medium"
           >
             {project.header.activity.lastDayUops.toFixed(2)}
@@ -106,7 +108,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid h-fit grid-cols-1 gap-3 rounded-lg md:grid-cols-4',
+        'grid h-fit grid-cols-1 gap-x-6 gap-y-3 rounded-lg md:grid-cols-4',
         className,
       )}
     >
@@ -136,7 +138,7 @@ interface ProjectStat {
   valueClassName?: string
 }
 
-function ProjectStat(props: ProjectStat) {
+export function ProjectStat(props: ProjectStat) {
   return (
     <li
       key={props.title}
@@ -159,7 +161,7 @@ function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className={cn('label-value-16-bold', props.valueClassName)}>
+      <span className={cn('label-value-16-bold w-full', props.valueClassName)}>
         {props.value}
       </span>
     </li>

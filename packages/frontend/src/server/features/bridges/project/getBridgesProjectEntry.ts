@@ -29,6 +29,7 @@ import { getProjectIcon } from '../../utils/getProjectIcon'
 
 export interface BridgesProjectEntry {
   name: string
+  shortName: string | undefined
   slug: string
   icon: string
   archivedAt: UnixTime | undefined
@@ -101,6 +102,7 @@ export async function getBridgesProjectEntry(
 
   const common: Omit<BridgesProjectEntry, 'sections'> = {
     name: project.name,
+    shortName: project.shortName,
     slug: project.slug,
     icon: getProjectIcon(project.slug),
     underReviewStatus: getUnderReviewStatus({
