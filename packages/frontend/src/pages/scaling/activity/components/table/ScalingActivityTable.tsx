@@ -30,6 +30,7 @@ export function ScalingActivityTable({ entries, rollups, notReviewed }: Props) {
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
       activity: true,
+      ignoreUnderReviewIcon: notReviewed,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),

@@ -7,7 +7,7 @@ import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
 import { toTableRows } from '../../utils/ToTableRows'
-import { scalingTvsColumns } from './Columns'
+import { getScalingTvsColumns } from './Columns'
 
 interface Props {
   entries: ScalingTvsEntry[]
@@ -30,7 +30,7 @@ export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
 
   const table = useTable({
     data: allProjects,
-    columns: scalingTvsColumns,
+    columns: getScalingTvsColumns({ ignoreUnderReviewIcon: true }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

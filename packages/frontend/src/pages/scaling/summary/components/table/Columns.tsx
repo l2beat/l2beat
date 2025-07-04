@@ -198,7 +198,11 @@ export const scalingSummaryOthersColumns = [
 ]
 
 export const scalingSummaryNotReviewedColumns = [
-  ...scalingSummaryColumns.slice(0, 3),
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+    { ignoreUnderReviewIcon: true },
+  ),
   ...scalingSummaryColumns.slice(4, 5),
   ...scalingSummaryColumns.slice(6, 8),
 ]

@@ -4,7 +4,7 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
-import { scalingRiskColumns } from './Columns'
+import { getScalingRiskColumns } from './Columns'
 
 export function ScalingRiskTable({
   entries,
@@ -18,7 +18,7 @@ export function ScalingRiskTable({
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: scalingRiskColumns,
+    columns: getScalingRiskColumns({ ignoreUnderReviewIcon: true }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
