@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xe97e41029573e01c2c917e569473ceadea2f15f9
+
+# Diff at Fri, 04 Jul 2025 12:34:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@34cb32da9aba13b54692a657031c317903866c59 block: 22367347
+- current block number: 22367347
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      sourceHashes.0:
+-        "0x60cd8a11d99e2d3ed98fa2bbd47ef1096acb4bc535c5520343ae45cea6436e7b"
++        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
+      implementationNames.0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        ""
++        "ERC1967Factory"
+      references:
+-        [{"text":"Source Code","href":"https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"}]
+    }
+```
+
 Generated with discovered.json: 0xfef5cf3def59f7ea8f916f1ee67b3d5df3b76041
 
 # Diff at Fri, 04 Jul 2025 12:19:00 GMT:
