@@ -12,9 +12,7 @@ export function UpcomingProjectUpdateSection({ upcomingProject }: Props) {
       name={upcomingProject.name}
       bannerImg={upcomingProject.bannerImg}
     >
-      {upcomingProject.news && upcomingProject.news?.length > 0 && (
-        <News news={upcomingProject.news} />
-      )}
+      <News news={upcomingProject.news} />
     </ProjectUpdateSection>
   )
 }
