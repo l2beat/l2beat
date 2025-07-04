@@ -18,7 +18,7 @@ export function ProjectScalingRosette({ project, size }: Props) {
   if (project.type === 'layer2') {
     return (
       <BigPizzaRosette
-        className="mt-auto max-lg:hidden"
+        className="my-auto max-lg:hidden"
         values={project.rosette.self}
         isUnderReview={project.underReviewStatus === 'config'}
         isUpcoming={project.isUpcoming}
@@ -31,7 +31,7 @@ export function ProjectScalingRosette({ project, size }: Props) {
     children,
     hideSelector,
   }: { children: React.ReactNode; hideSelector?: boolean }) => (
-    <div className="mt-auto flex flex-col gap-3 max-lg:hidden">
+    <div className="my-auto flex flex-col gap-3 max-lg:hidden">
       {!hideSelector && (
         <RosetteSelector
           rosetteType={rosetteType}

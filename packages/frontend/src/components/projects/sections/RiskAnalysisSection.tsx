@@ -57,7 +57,9 @@ export function RiskAnalysisSection({
       )}
 
       {!shouldHideRosette && (
-        <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
+        <div className="flex justify-center">
+          <BigPizzaRosette values={rosetteValues} className="mx-auto my-6" />
+        </div>
       )}
       <div className="space-y-6">
         {Object.values(rosetteValues).map((value) => (
