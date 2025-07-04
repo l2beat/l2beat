@@ -1,3 +1,189 @@
+Generated with discovered.json: 0xfde13256afcb1bc645b9179bf78825e35680dfc3
+
+# Diff at Fri, 04 Jul 2025 12:19:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 353119902
+- current block number: 353119902
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 353119902 (main branch discovery), not current.
+
+```diff
+    EOA  (0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+    }
+```
+
+```diff
+    EOA  (0x451f05C41BC5CC10d7D63ed88bA0A522FE183074) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.0.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.1.via.0.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.1.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.2.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.2.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.2.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+      receivedPermissions.3.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.3.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.3.from:
+-        "arbitrum:0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79"
+      receivedPermissions.4.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.4.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.4.from:
+-        "arbitrum:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      receivedPermissions.5.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.5.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.5.from:
+-        "arbitrum:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      receivedPermissions.6.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.6.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.6.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.7.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.7.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.7.from:
+-        "arbitrum:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
++        "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
+      receivedPermissions.8.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.8.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.8.from:
+-        "arbitrum:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      receivedPermissions.9.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.9.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.9.from:
+-        "arbitrum:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      receivedPermissions.10.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.10.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.10.from:
+-        "arbitrum:0xE1d32C985825562edAa906fAC39295370Db72195"
++        "arb1:0xE1d32C985825562edAa906fAC39295370Db72195"
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      directlyReceivedPermissions.3.from:
+-        "arbitrum:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      directlyReceivedPermissions.4.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      directlyReceivedPermissions.5.from:
+-        "arbitrum:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
++        "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
+      directlyReceivedPermissions.6.from:
+-        "arbitrum:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      directlyReceivedPermissions.7.from:
+-        "arbitrum:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      directlyReceivedPermissions.8.from:
+-        "arbitrum:0xE1d32C985825562edAa906fAC39295370Db72195"
++        "arb1:0xE1d32C985825562edAa906fAC39295370Db72195"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+    }
+```
+
 Generated with discovered.json: 0x42702605c43cc692752f03116b5d94878195927b
 
 # Diff at Tue, 01 Jul 2025 12:12:41 GMT:

@@ -107,18 +107,18 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460",
+          "from": "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625" }
+            { "address": "eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
+          "from": "eth:0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -250,7 +250,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
           "description": "withdraw fees.",
           "role": ".withdrawer"
         }
@@ -602,7 +602,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460",
+          "from": "eth:0x172fB6b07D6aB708dd67392a09e1c40d16dA0460",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner"
         }
@@ -655,7 +655,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "propose governance actions.",
           "role": ".proposer"
         }
@@ -959,7 +959,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
+          "from": "eth:0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007",
           "role": "admin"
         }
       ]
@@ -1079,55 +1079,55 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
+          "from": "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
           "description": "manage registered contracts.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+          "from": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
           "description": "manage address mappings.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+          "from": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "description": "set the bond amount.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
           "description": "set fees for disputes and manage all roles in the contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "manage all roles in the contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
           "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
+          "from": "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
           "description": "manage the whitelist.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
+          "from": "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
           "description": "manage the addresses on the whitelist.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+          "from": "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
           "description": "set critical administrative parameters like default bonds, bond token, fees.",
           "role": ".owner"
         }
@@ -1285,7 +1285,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
           "description": "remove proposals, execute emergency proposals.",
           "role": ".executor"
         }
@@ -1713,7 +1713,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "can bypass the voting system and execute proposals immediately.",
           "role": ".emergencyProposer"
         }
@@ -2618,25 +2618,25 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "from": "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }
+            { "address": "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "from": "eth:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }
+            { "address": "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
+          "from": "eth:0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b",
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -2884,12 +2884,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
+          "from": "eth:0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
+          "from": "eth:0xaBcC9b596420A9E9172FD5938620E265a0f9Df92",
           "role": "admin"
         }
       ],
@@ -5145,5 +5145,5 @@
     "uma/SkinnyOptimisticOracle": "0x1434821bf46e935aa8212feff24f12aba596cb343a0f7e1cd85c013d25744d5f",
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b"
   },
-  "permissionsConfigHash": "0xde59a7b48536f25c3ea0591ec78cd5e98b21ac63764cf2f387e5ea59b429d48c"
+  "permissionsConfigHash": "0xd8b769feee48b9c26eb535cfd9a2412f5d1076a5b20f691562d3f830cf6b612d"
 }

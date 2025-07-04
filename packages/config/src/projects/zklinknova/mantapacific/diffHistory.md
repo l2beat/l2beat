@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x883aa0c3251017f2fe9fcc28d25425ddb9968a67
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 4745686
+- current block number: 4745686
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 4745686 (main branch discovery), not current.
+
+```diff
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
++        "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
+    }
+```
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
++        "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
+      receivedPermissions.0.from:
+-        "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
++        "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF"
+      receivedPermissions.1.from:
+-        "mantapacific:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
++        "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657"
+      receivedPermissions.2.from:
+-        "mantapacific:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
++        "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+      directlyReceivedPermissions.0.from:
+-        "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
++        "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
+    }
+```
+
 Generated with discovered.json: 0x0fdf5ab991c31117b41a79c2076ebc2631580e64
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

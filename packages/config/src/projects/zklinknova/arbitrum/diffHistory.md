@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x92406d3bad9c57dd943c09cd0ab9efaf95d78d39
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 314504547
+- current block number: 314504547
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 314504547 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
++        "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
+    }
+```
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
++        "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+      receivedPermissions.1.via.0.address:
+-        "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917"
++        "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917"
+      receivedPermissions.1.from:
+-        "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
++        "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"
+      receivedPermissions.2.from:
+-        "arbitrum:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
++        "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917"
++        "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917"
+    }
+```
+
 Generated with discovered.json: 0x84f9010162dafe3c7a6a70f944322af52eeeb4c9
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

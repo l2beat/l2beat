@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x9d79c226a38e8b7e71e666a00a7718d663d81030
+
+# Diff at Fri, 04 Jul 2025 12:19:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22738242
+- current block number: 22738242
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22738242 (main branch discovery), not current.
+
+```diff
+    contract TaikoDAOController (0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a) {
+    +++ description: Contract that maintains ownership DAO-controlled assets and contracts. Its token weight does not count towards the DAO quorum.
+      receivedPermissions.0.from:
+-        "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
++        "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800"
+      receivedPermissions.1.from:
+-        "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E"
++        "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E"
+      receivedPermissions.2.from:
+-        "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
++        "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab"
+      receivedPermissions.3.from:
+-        "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
++        "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C"
+      receivedPermissions.4.from:
+-        "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
++        "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.1.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.2.from:
+-        "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.3.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.4.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.5.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.6.from:
+-        "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.7.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.8.from:
+-        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+      receivedPermissions.9.from:
+-        "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
++        "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03"
+      receivedPermissions.10.from:
+-        "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
++        "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a"
+      receivedPermissions.11.from:
+-        "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
++        "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261"
+      receivedPermissions.12.from:
+-        "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
++        "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a"
+      receivedPermissions.13.from:
+-        "ethereum:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
++        "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9"
+      receivedPermissions.14.from:
+-        "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
++        "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE"
+      receivedPermissions.15.from:
+-        "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
++        "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782"
+      receivedPermissions.16.from:
+-        "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
++        "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3"
+      receivedPermissions.17.from:
+-        "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
++        "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e"
+      receivedPermissions.18.from:
+-        "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
++        "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136"
+      receivedPermissions.19.from:
+-        "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
++        "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72"
+      receivedPermissions.20.from:
+-        "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
++        "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1"
+      receivedPermissions.21.from:
+-        "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
++        "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9"
+      receivedPermissions.22.from:
+-        "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
++        "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa"
+    }
+```
+
+```diff
+    contract DAO (0x9CDf589C941ee81D75F34d3755671d614f7cf261) {
+    +++ description: The main contract of the Aragon-based DAO governance framework.
+      receivedPermissions.0.from:
+-        "ethereum:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
++        "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      receivedPermissions.1.from:
+-        "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
++        "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3"
+    }
+```
+
 Generated with discovered.json: 0x375f6b8891b6a923cdfe2360c4becc0eb11bc870
 
 # Diff at Thu, 19 Jun 2025 11:31:54 GMT:

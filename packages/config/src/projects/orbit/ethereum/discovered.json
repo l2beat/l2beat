@@ -56,41 +56,41 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
+          "from": "eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xFb504CD4eD46024B83c4337044995CF112205f18" }
+            { "address": "eth:0xFb504CD4eD46024B83c4337044995CF112205f18" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x830433dE03ABedE062660CC629e1A2c714272474",
+          "from": "eth:0x830433dE03ABedE062660CC629e1A2c714272474",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xFb504CD4eD46024B83c4337044995CF112205f18" }
+            { "address": "eth:0xFb504CD4eD46024B83c4337044995CF112205f18" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "from": "eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xFb504CD4eD46024B83c4337044995CF112205f18" }
+            { "address": "eth:0xFb504CD4eD46024B83c4337044995CF112205f18" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
+          "from": "eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xFb504CD4eD46024B83c4337044995CF112205f18" }
+            { "address": "eth:0xFb504CD4eD46024B83c4337044995CF112205f18" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xFb504CD4eD46024B83c4337044995CF112205f18",
+          "from": "eth:0xFb504CD4eD46024B83c4337044995CF112205f18",
           "role": ".owner"
         }
       ],
@@ -256,7 +256,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
+          "from": "eth:0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8",
           "role": "admin"
         }
       ],
@@ -315,22 +315,22 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
+          "from": "eth:0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x830433dE03ABedE062660CC629e1A2c714272474",
+          "from": "eth:0x830433dE03ABedE062660CC629e1A2c714272474",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "from": "eth:0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
+          "from": "eth:0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
           "role": "admin"
         }
       ],
@@ -520,5 +520,5 @@
   "usedTemplates": {
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
   },
-  "permissionsConfigHash": "0x5be97e75e5df399b7665a46fa1aeae9fc39dc80d9edf737421853cefcb15bf2a"
+  "permissionsConfigHash": "0xbdddf96d526f16acc695e974ee8e049302219b92621480e36941ac7c933fa341"
 }

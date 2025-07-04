@@ -1,3 +1,381 @@
+Generated with discovered.json: 0xf4f826135f93fbbd6f3b7d64313f8d14d841edce
+
+# Diff at Fri, 04 Jul 2025 12:19:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 16562505
+- current block number: 16562505
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16562505 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0c5cc5155b346453154059aD9d2Ff695dB92f774) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
++        "scr:0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0xA76acF000C890b0DD7AEEf57627d9899F955d026"
++        "scr:0xA76acF000C890b0DD7AEEf57627d9899F955d026"
+      directlyReceivedPermissions.2.from:
+-        "scroll:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"
++        "scr:0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e"
+    }
+```
+
+```diff
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.0.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.1.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.2.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      receivedPermissions.3.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.4.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.5.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.6.via.0.address:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.6.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.7.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.8.via.0.address:
+-        "scroll:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
++        "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
+      receivedPermissions.8.from:
+-        "scroll:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
++        "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
++        "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
+    }
+```
+
+```diff
+    contract TimelockSCEmergency (0x1f807E2E8ab2e61230a0A9C271F90242831278b4) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      directlyReceivedPermissions.2.from:
+-        "scroll:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
++        "scr:0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B"
+      directlyReceivedPermissions.3.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+    }
+```
+
+```diff
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      directlyReceivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    EOA  (0x26eceC198AdC0be598311bAe8EDfd4eEa47A56c5) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    contract TimelockFast (0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376) {
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "scroll:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
++        "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
+    }
+```
+
+```diff
+    contract TimelockSCSlow (0x79D83D1518e2eAA64cdc0631df01b06e2762CC14) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
++        "scr:0x79D83D1518e2eAA64cdc0631df01b06e2762CC14"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
++        "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
++        "scr:0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
++        "scr:0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4"
+      directlyReceivedPermissions.1.from:
+-        "scroll:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
++        "scr:0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79"
+      directlyReceivedPermissions.2.from:
+-        "scroll:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
++        "scr:0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc"
+      directlyReceivedPermissions.3.from:
+-        "scroll:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
++        "scr:0x64CCBE37c9A82D85A1F2E74649b7A42923067988"
+      directlyReceivedPermissions.4.from:
+-        "scroll:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
++        "scr:0x6EA73e05AdC79974B931123675ea8F78FfdacDF0"
+      directlyReceivedPermissions.5.from:
+-        "scroll:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
++        "scr:0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC"
+      directlyReceivedPermissions.6.from:
+-        "scroll:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
++        "scr:0x7bC08E1c04fb41d75F1410363F0c5746Eae80582"
+      directlyReceivedPermissions.7.from:
+-        "scroll:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
++        "scr:0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A"
+    }
+```
+
+```diff
+    contract TimelockEmergency (0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f) {
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+      directlyReceivedPermissions.0.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+      receivedPermissions.1.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+      receivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+      receivedPermissions.3.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+      directlyReceivedPermissions.0.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0xd29687c813D741E2F938F4aC377128810E217b1b"
++        "scr:0xd29687c813D741E2F938F4aC377128810E217b1b"
+    }
+```
+
+```diff
+    EOA  (0xEe9bb388d320F4305af6a4a1a70c862D3F4d0D5B) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+```diff
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.3.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+    }
+```
+
+```diff
+    EOA  (0xFcf1f182FC79047d99e5db0d7113c0EfE2EC9402) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.0.from:
+-        "scroll:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
++        "scr:0x1f807E2E8ab2e61230a0A9C271F90242831278b4"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.1.from:
+-        "scroll:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
++        "scr:0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376"
+      receivedPermissions.2.via.0.address:
+-        "scroll:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
++        "scr:0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f"
+      receivedPermissions.2.from:
+-        "scroll:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
++        "scr:0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f"
+    }
+```
+
+Generated with discovered.json: 0x0a63033544bee2b06983e6bfb49938e9e1b33a85
+
+# Diff at Thu, 03 Jul 2025 10:57:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 16562505
+- current block number: 16562505
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16562505 (main branch discovery), not current.
+
+```diff
+    contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE) {
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+      description:
+-        "Manager contract for minter management [sic]."
++        " Contract that uses controllers to manage minters for USDC on Scroll."
+    }
+```
+
 Generated with discovered.json: 0x9a2440616c0b425220ba85fc9629d3b03f3a6cd7
 
 # Diff at Wed, 18 Jun 2025 12:03:41 GMT:

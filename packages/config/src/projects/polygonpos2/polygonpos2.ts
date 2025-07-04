@@ -18,7 +18,10 @@ export const polygonpos2: ScalingProject = upcomingL2({
       websites: ['https://polygon.technology'],
       bridges: ['https://wallet.polygon.technology/'],
       documentation: ['https://wiki.polygon.technology/'],
-      explorers: ['https://polygonscan.com/'],
+      explorers: [
+        'https://polygonscan.com/',
+        'https://polygon.blockscout.com/',
+      ],
       repositories: ['https://github.com/maticnetwork/'],
       socialMedia: [
         'https://twitter.com/0xPolygonLabs',

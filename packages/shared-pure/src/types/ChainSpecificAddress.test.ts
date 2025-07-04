@@ -5,26 +5,24 @@ import { ChainSpecificAddress } from './ChainSpecificAddress'
 describe(ChainSpecificAddress.name, () => {
   it('accepts lowercase addresses', () => {
     const address = ChainSpecificAddress(
-      'ethereum:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+      'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toBeA(String)
   })
 
   it('accepts addresses with checksum', () => {
     const address = ChainSpecificAddress(
-      'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
     )
     expect(address).toBeA(String)
   })
 
   it('checks the checksum', () => {
     expect(() =>
-      ChainSpecificAddress(
-        'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
-      ),
+      ChainSpecificAddress('eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD'),
     ).toThrow(
       TypeError,
-      'Invalid ChainSpecificAddress: ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+      'Invalid ChainSpecificAddress: eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
     )
   })
 
@@ -50,10 +48,10 @@ describe(ChainSpecificAddress.name, () => {
 
   it('converts to a representation with a checksum', () => {
     const address = ChainSpecificAddress(
-      'ethereum:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+      'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
     )
     expect(address).toEqual(
-      'ethereum:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
+      'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
     )
   })
 })

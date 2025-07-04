@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x2f5cccde02c834b7ccec85f0e136bf969eda3d4a
+
+# Diff at Fri, 04 Jul 2025 12:19:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21995404
+- current block number: 21995404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+      receivedPermissions.0.from:
+-        "ethereum:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+      receivedPermissions.1.from:
+-        "ethereum:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
++        "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+    }
+```
+
 Generated with discovered.json: 0x3c0d06c8501b07678c60d3108cf0844ad61f5351
 
 # Diff at Fri, 23 May 2025 09:40:57 GMT:

@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xd9a33a0a08fe09354deb2bd012af5e5d5c227252
+
+# Diff at Fri, 04 Jul 2025 12:19:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22731194
+- current block number: 22731194
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22731194 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2B711ee00B50d67667c4439c28AeAf7B75CB6E0D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract zkCandyZkEvmAdmin (0x309EfA797ec5cd324Cb473F141F95214F3a25ab2) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"
+    }
+```
+
+```diff
+    contract zkCandy Multisig (0x8eb156588D2FAD21dE0066BAA5BfDcd940695196) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+      receivedPermissions.0.from:
+-        "ethereum:0xF2704433d11842d15aa76BBF0E00407267a99C92"
++        "eth:0xF2704433d11842d15aa76BBF0E00407267a99C92"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
++        "eth:0x309EfA797ec5cd324Cb473F141F95214F3a25ab2"
+    }
+```
+
+```diff
+    EOA  (0xc300Cc8f451C9EF8DaDE822bd0f9636117209F70) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
 Generated with discovered.json: 0xf7e49816478e5740aad8ca8bfc4244cf7baa2d1c
 
 # Diff at Wed, 25 Jun 2025 07:17:55 GMT:

@@ -14,7 +14,7 @@ export const contractStub: EntryParameters = {
     {
       permission: 'sequence',
       from: ChainSpecificAddress(
-        'ethereum:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+        'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
       ),
     },
   ],
@@ -82,7 +82,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
         {
           permission: 'validate',
           from: ChainSpecificAddress(
-            'ethereum:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+            'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           ),
         },
       ],
@@ -94,7 +94,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
         {
           permission: 'sequence',
           from: ChainSpecificAddress(
-            'ethereum:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+            'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
           ),
         },
       ],

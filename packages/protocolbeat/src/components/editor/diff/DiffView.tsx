@@ -166,20 +166,6 @@ export function DiffView(props: DiffViewProps) {
           >
             <IconSwap className="size-4" />
           </button>
-          <button
-            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
-            onClick={() => {
-              if (diff === undefined) {
-                return
-              }
-
-              const inlineDiff = getInlineDiff(diff, splitLeft, splitRight)
-              copyInlineDiff(inlineDiff)
-            }}
-          >
-            {!inlineDiffCopied && <IconCopy className="size-4" />}
-            {inlineDiffCopied && <IconTick className="block text-aux-green" />}
-          </button>
           <div className="w-px bg-coffee-700" />
           <button
             className="rounded p-1.5 transition-colors hover:bg-coffee-700"
@@ -196,6 +182,20 @@ export function DiffView(props: DiffViewProps) {
             <IconArrowToDotUp className="size-4" />
           </button>
           <div className="w-px bg-coffee-700" />
+          <button
+            className="rounded p-1.5 transition-colors hover:bg-coffee-700"
+            onClick={() => {
+              if (diff === undefined) {
+                return
+              }
+
+              const inlineDiff = getInlineDiff(diff, splitLeft, splitRight)
+              copyInlineDiff(inlineDiff)
+            }}
+          >
+            {!inlineDiffCopied && <IconCopy className="size-4" />}
+            {inlineDiffCopied && <IconTick className="block text-aux-green" />}
+          </button>
           <button
             className="rounded p-1.5 transition-colors hover:bg-coffee-700 disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => {

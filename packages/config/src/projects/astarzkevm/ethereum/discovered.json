@@ -40,7 +40,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
           "role": "admin"
         }
       ],
@@ -263,7 +263,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           "role": ".trustedSequencer"
         }
       ]
@@ -306,35 +306,35 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
+          "from": "eth:0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "from": "eth:0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }
+            { "address": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+          "from": "eth:0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
           "role": ".owner"
         }
       ],
@@ -603,5 +603,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x5fbae30120c7b22430487d0e45478a2f391b2128f274b79f61ab3279aeaaef50"
+  "permissionsConfigHash": "0x1e21baaefb5df2b334081d1fc7709b8cd8913c37657678877da6bb57f8ef25be"
 }

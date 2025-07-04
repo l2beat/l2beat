@@ -46,7 +46,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "define addresses that can send transactions from L1 to L2 (e.g. for deposits, withdrawals, queued transactions). This is enforced in the Mailbox Facet.",
           "role": ".getTransactionFilterer"
         }
@@ -145,7 +145,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5540DE94485dB078025318428F813C5d88215823",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
           "role": "admin"
         }
       ],
@@ -446,7 +446,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "commit, prove, execute, revert batches directly in the main Diamond contract. This role is typically held by a proxying ValidatorTimelock.",
           "role": ".validators"
         }
@@ -479,7 +479,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -491,7 +491,7 @@
       "receivedPermissions": [
         {
           "permission": "validateZkStack",
-          "from": "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
+          "from": "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564",
           "role": ".validatorsVTL"
         }
       ]
@@ -529,7 +529,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
+          "from": "eth:0xFe94B8AEB7950a26C276EA615a6d3C7289Fd2ac3",
           "description": "set the conversion factor for gas token deposits.",
           "role": ".tokenMultiplierSetter"
         }
@@ -547,29 +547,29 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x5540DE94485dB078025318428F813C5d88215823",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
           "description": "manage filter lists.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
+          "from": "eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9",
           "description": "manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5540DE94485dB078025318428F813C5d88215823",
+          "from": "eth:0x5540DE94485dB078025318428F813C5d88215823",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
+            { "address": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
+          "from": "eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734",
           "role": ".owner"
         }
       ],
@@ -982,5 +982,5 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock": "0xc605499cf1c033abb2a1ee7a146ab364bfcbc9722b13bea57f2def8905bb409f"
   },
-  "permissionsConfigHash": "0x562ea5bc3c33a3cf676a30c35d7527b3cdc8a4bfb70774c7e6613ade02413414"
+  "permissionsConfigHash": "0xea7ed61f3e9321db15f4164994c5e7120c7c7fba5564f36f72bee5345bac98a8"
 }
