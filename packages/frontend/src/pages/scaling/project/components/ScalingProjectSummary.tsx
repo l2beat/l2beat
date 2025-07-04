@@ -1,12 +1,25 @@
-import { TokenBreakdown } from '~/components/breakdown/TokenBreakdown'
-import { ValueSecuredBreakdown } from '~/components/breakdown/ValueSecuredBreakdown'
+import {
+  TokenBreakdown,
+  TokenBreakdownTooltipContent,
+} from '~/components/breakdown/TokenBreakdown'
+import {
+  ValueSecuredBreakdown,
+  ValueSecuredBreakdownTooltipContent,
+} from '~/components/breakdown/ValueSecuredBreakdown'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { VerticalSeparator } from '~/components/core/VerticalSeparator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
+import { cn } from '~/utils/cn'
 import { ProjectScalingRosette } from './ScalingProjectRosette'
 import { ProjectScalingStats } from './ScalingProjectStats'
 
@@ -15,6 +28,20 @@ interface Props {
 }
 
 export function ProjectScalingSummary({ project }: Props) {
+  const hasTokenWarnings =
+    project.header.tvs && project.header.tvs?.tokens.warnings?.length > 0
+
+  const anyBadWarnings = project.header.tvs?.tokens.warnings?.some(
+    (w) => w.sentiment === 'bad',
+  )
+  const anyWarningWarnings = project.header.tvs?.tokens.warnings?.some(
+    (w) => w.sentiment === 'warning',
+  )
+  const warningSentiment = anyBadWarnings
+    ? 'bad'
+    : anyWarningWarnings
+      ? 'warning'
+      : 'neutral'
   return (
     <PrimaryCard className="!rounded-lg !p-6">
       <section id="summary" data-role="project-section">
@@ -24,31 +51,74 @@ export function ProjectScalingSummary({ project }: Props) {
             <HorizontalSeparator className="mt-5 mb-4" />
             <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
               <div>
-                <p className="label-value-12-medium mb-2 text-secondary">
+                <p
+                  className={cn(
+                    'label-value-12-medium text-secondary',
+                    !hasTokenWarnings && 'mb-2',
+                  )}
+                >
                   Tokens breakdown
                 </p>
-                <TokenBreakdown
-                  total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                  associated={
-                    project.header.tvs?.tokens.breakdown?.associated ?? 0
-                  }
-                  ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                  stablecoin={
-                    project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                  }
-                  className="h-1.5 w-full"
-                />
+                <Tooltip>
+                  <TooltipTrigger className="flex w-full items-center gap-1">
+                    <TokenBreakdown
+                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                      associated={
+                        project.header.tvs?.tokens.breakdown?.associated ?? 0
+                      }
+                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                      stablecoin={
+                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                      }
+                      className="h-1.5 w-full"
+                    />
+                    {hasTokenWarnings && (
+                      <RoundedWarningIcon
+                        sentiment={warningSentiment}
+                        className="size-[22px]"
+                      />
+                    )}
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <TokenBreakdownTooltipContent
+                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                      associated={
+                        project.header.tvs?.tokens.breakdown?.associated ?? 0
+                      }
+                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                      stablecoin={
+                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                      }
+                      associatedTokenSymbols={
+                        project.header.tvs?.tokens.associatedTokens ?? []
+                      }
+                      tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
+                    />
+                  </TooltipContent>
+                </Tooltip>
               </div>
               <div>
                 <p className="label-value-12-medium mb-2 text-secondary">
                   Value secured breakdown
                 </p>
-                <ValueSecuredBreakdown
-                  canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                  external={project.header.tvs?.breakdown?.external ?? 0}
-                  native={project.header.tvs?.breakdown?.native ?? 0}
-                  className="h-1.5 w-full"
-                />
+                <Tooltip>
+                  <TooltipTrigger className="block w-full">
+                    <ValueSecuredBreakdown
+                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                      external={project.header.tvs?.breakdown?.external ?? 0}
+                      native={project.header.tvs?.breakdown?.native ?? 0}
+                      className="h-1.5 w-full"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <ValueSecuredBreakdownTooltipContent
+                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                      external={project.header.tvs?.breakdown?.external ?? 0}
+                      native={project.header.tvs?.breakdown?.native ?? 0}
+                      tvsWarnings={[]}
+                    />
+                  </TooltipContent>
+                </Tooltip>
               </div>
             </div>
           </div>

@@ -33,7 +33,7 @@ export function BridgesProjectStats({ project }: Props) {
           !project.isUpcoming && project.header.tvs ? (
             <Tooltip>
               <TooltipTrigger className="w-full">
-                <span className="flex items-center gap-2">
+                <span className="mb-0.5 flex items-center gap-2">
                   {project.header.tvs.tokenBreakdown.warnings.length > 0 && (
                     <RoundedWarningIcon
                       sentiment={isAnyTokenWarningBad ? 'bad' : 'warning'}

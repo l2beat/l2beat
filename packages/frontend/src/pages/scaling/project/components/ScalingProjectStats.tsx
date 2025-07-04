@@ -14,6 +14,7 @@ import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
 import { InfoIcon } from '~/icons/Info'
+import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
@@ -31,13 +32,28 @@ export function ProjectScalingStats({ project, className }: Props) {
       valueClassName=""
       value={
         project.header.tvs?.breakdown ? (
-          <ValueWithPercentageChange
-            change={project.header.tvs.breakdown.totalChange}
-            className="!text-base !font-medium !leading-[100%]"
-            changeClassName="label-value-15-medium"
-          >
-            {formatCurrency(project.header.tvs.breakdown.total, 'usd')}
-          </ValueWithPercentageChange>
+          <span className="mb-0.5 flex items-center gap-2">
+            {project.header.tvs.warning && (
+              <Tooltip>
+                <TooltipTrigger>
+                  <RoundedWarningIcon
+                    sentiment={project.header.tvs.warning.sentiment}
+                    className="size-4"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  {project.header.tvs.warning.value}
+                </TooltipContent>
+              </Tooltip>
+            )}
+            <ValueWithPercentageChange
+              className="!text-base !font-medium !leading-[100%]"
+              changeClassName="label-value-14-bold"
+              change={project.header.tvs.breakdown.totalChange}
+            >
+              {formatCurrency(project.header.tvs.breakdown.total, 'usd')}
+            </ValueWithPercentageChange>
+          </span>
         ) : (
           <NoDataBadge />
         )
