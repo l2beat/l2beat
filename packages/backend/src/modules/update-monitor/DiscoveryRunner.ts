@@ -3,16 +3,18 @@ import {
   type AllProviderStats,
   type AllProviders,
   type Analysis,
+  ConfigReader,
   type ConfigRegistry,
   type DiscoveryEngine,
   type DiscoveryOutput,
+  DiscoveryRegistry,
   ProviderMeasurement,
   type ProviderStats,
   type TemplateService,
   combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
   getDiscoveryPaths,
-  modelPermissionsForIsolatedDiscovery,
+  modelPermissions,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
 import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
@@ -49,7 +51,12 @@ export class DiscoveryRunner {
   private async discover(
     config: ConfigRegistry,
     blockNumber: number,
+    configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
+    const discoveryPaths = getDiscoveryPaths()
+    configReader ??= new ConfigReader(discoveryPaths.discovery)
+    const discoveries = new DiscoveryRegistry()
+
     const provider = this.allProviders.get(config.chain, blockNumber)
     const result = await this.discoveryEngine.discover(
       provider,
@@ -64,15 +71,15 @@ export class DiscoveryRunner {
       blockNumber,
       result,
     )
+    discoveries.set(config.name, config.chain, discovery)
 
-    // This is a temporary solution to model project in isolation
-    // until we refactor Update Monitor to support cross-chain discovery
-    const discoveryPaths = getDiscoveryPaths()
-    const permissionsOutput = await modelPermissionsForIsolatedDiscovery(
-      discovery,
-      config.permission,
+    const permissionsOutput = await modelPermissions(
+      discovery.name,
+      discoveries,
+      configReader,
       this.templateService,
       discoveryPaths,
+      { debug: false },
     )
     combinePermissionsIntoDiscovery(discovery, permissionsOutput)
 
@@ -92,13 +99,14 @@ export class DiscoveryRunner {
     logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
+    configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     let result: DiscoveryRunResult | undefined = undefined
     let err: Error | undefined = undefined
 
     for (let i = 0; i <= maxRetries; i++) {
       try {
-        result = await this.discover(config, blockNumber)
+        result = await this.discover(config, blockNumber, configReader)
         break
       } catch (error) {
         err = isError(err) ? (error as Error) : new Error(JSON.stringify(error))
