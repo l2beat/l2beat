@@ -6,6 +6,7 @@
       "handler": {
         "type": "constructorArgs"
       },
+      "edit": ["delete", 2],
       "template": "shared-sharp-verifier/ignoreComputeSpam"
     }
   }
