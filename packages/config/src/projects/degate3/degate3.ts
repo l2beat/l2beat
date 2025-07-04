@@ -479,7 +479,7 @@ export const degate3: ScalingProject = {
       date: '2025-06-26T00:00:00Z',
       description:
         'Shutdown mode prevents further state updates and allows users to withdraw their funds.',
-      type: 'general',
+      type: 'incident',
     },
     {
       title: 'DeGate Mainnet Beta Redeploy',
