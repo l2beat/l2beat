@@ -2,6 +2,14 @@ import { Logger, getEnv } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, option, optional, run, string } from 'cmd-ts'
 import { CHAINS } from './chains'
+import { PROTOCOLS } from './protocols'
+
+export interface BridgeTransfer {
+  chain: string
+  protocol: string
+  txHash: string
+  direction: 'deposit' | 'withdraw'
+}
 
 const args = {
   chains: option({
@@ -32,22 +40,35 @@ const cmd = command({
       ? CHAINS.filter((c) => args.chains?.split(',').includes(c.name))
       : CHAINS
 
-    const rpcs = chains.map(
-      (c) =>
-        new RpcClient({
-          url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
-          sourceName: c.name,
-          http,
-          logger,
-          callsPerMinute: c.callsPerMinute,
-          retryStrategy: 'RELIABLE',
-        }),
-    )
+    const rpcs = chains.map((c) => ({
+      chain: c.name,
+      rpc: new RpcClient({
+        url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
+        sourceName: c.name,
+        http,
+        logger,
+        callsPerMinute: c.callsPerMinute,
+        retryStrategy: 'RELIABLE',
+      }),
+    }))
+
+    const protocols = args.protocols
+      ? PROTOCOLS.filter((p) => args.protocols?.split(',').includes(p.name))
+      : PROTOCOLS
+
+    const decoders = protocols.map((p) => p.decoder)
 
     for (const r of rpcs) {
-      const latest = await r.getLatestBlockNumber()
-      const logs = await r.getLogs(latest - 10, latest)
-      console.log(logs.map((l) => l.transactionHash))
+      // TODO: pass as params block number and range
+      const logs = await r.rpc.getLogs(22845129 - 10, 22845129)
+      for (const l of logs) {
+        for (const decoder of decoders) {
+          const decoded = decoder(r.chain, l)
+          if (decoded) {
+            console.log(decoded)
+          }
+        }
+      }
     }
 
     process.exit(0)
@@ -55,5 +76,3 @@ const cmd = command({
 })
 
 run(cmd, process.argv.slice(2))
-
-// function decode(tx: Transaction) {}
