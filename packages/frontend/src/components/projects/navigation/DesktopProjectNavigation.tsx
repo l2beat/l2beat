@@ -62,7 +62,7 @@ export function DesktopProjectNavigation({
   }, [headerHeight])
 
   return (
-    <div className="sticky top-8">
+    <div className="sticky top-8 w-[172px] min-w-[172px] ">
       <div className="relative">
         <div
           ref={headerRef}
