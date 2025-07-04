@@ -1,7 +1,7 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { command, option, optional, run, string } from 'cmd-ts'
+import { command, number, option, optional, run, string } from 'cmd-ts'
 import { type Hex, decodeFunctionResult, parseAbi } from 'viem'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols'
@@ -19,6 +19,19 @@ export interface BridgeTransfer {
 }
 
 const args = {
+  start: option({
+    type: optional(number),
+    long: 'start',
+    short: 's',
+    description:
+      'Starting block. If not passed will use "latest - range". Currently there is no support for per-chain starting blocks, you can only see latest for multiple chains.',
+  }),
+  range: option({
+    type: optional(number),
+    long: 'range',
+    short: 'r',
+    description: 'Specify how many blocks to fetch. Defaults to 100.',
+  }),
   chains: option({
     type: optional(string),
     long: 'chains',
@@ -66,19 +79,21 @@ const cmd = command({
     const decoders = protocols.map((p) => p.decoder)
 
     for (const r of rpcs) {
-      // TODO: pass as params block number and range
-      const logs = await r.rpc.getLogs(22845129 - 10, 22845129)
+      const range = args.range ?? 100
+      const start = args.start
+        ? args.start
+        : (await r.rpc.getLatestBlockNumber()) - range
+      const logs = await r.rpc.getLogs(start, start + range)
       for (const l of logs) {
         for (const decoder of decoders) {
           const decoded = decoder(r.chain, l)
-
           if (decoded) {
             const token = await r.rpc.call(
               {
                 to: EthereumAddress(decoded?.token),
                 data: Bytes.fromHex('0x95d89b41'),
               },
-              22845129,
+              start,
             )
 
             logger.debug(decoded)
