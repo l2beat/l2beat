@@ -5,7 +5,7 @@ interface SquareProps extends VariantProps<typeof squareVariants> {
   className?: string
 }
 
-const squareVariants = cva('rounded', {
+const squareVariants = cva('shrink-0 rounded', {
   variants: {
     variant: {
       default: 'bg-black dark:bg-white',
