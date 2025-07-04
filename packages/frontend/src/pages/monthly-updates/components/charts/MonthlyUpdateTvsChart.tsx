@@ -21,13 +21,13 @@ import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateTvsChart({
-  name,
+  type,
   entries,
   allScalingProjectsTvs,
   from,
   to,
 }: {
-  name: string
+  type: 'ecosystem' | 'daLayer'
   entries: ProjectId[]
   allScalingProjectsTvs: number
   from: UnixTime
@@ -62,10 +62,15 @@ export function MonthlyUpdateTvsChart({
       value: {
         color: 'var(--project-primary)',
         indicatorType: { shape: 'line' },
-        label: name,
+        label:
+          type === 'ecosystem'
+            ? 'Total Value Secured'
+            : type === 'daLayer'
+              ? 'L2s TVS'
+              : 'TVS',
       },
     } satisfies ChartMeta
-  }, [name])
+  }, [type])
 
   const stats = getStats(chartData, allScalingProjectsTvs)
   const range = getChartRange(chartData)

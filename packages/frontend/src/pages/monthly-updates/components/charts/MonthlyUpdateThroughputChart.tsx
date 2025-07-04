@@ -20,14 +20,12 @@ import { formatBpsToMbps } from '~/utils/number-format/formatBytes'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateThroughputChart({
-  name,
   daLayer,
   from,
   to,
   pastDayPosted,
   dataPosted,
 }: {
-  name: string
   daLayer: string
   from: UnixTime
   to: UnixTime
@@ -43,14 +41,14 @@ export function MonthlyUpdateThroughputChart({
   const chartMeta = useMemo(() => {
     return {
       projects: {
-        label: name,
+        label: 'Data Posted',
         color: 'var(--project-primary)',
         indicatorType: {
           shape: 'line',
         },
       },
     } satisfies ChartMeta
-  }, [name])
+  }, [])
 
   const max = useMemo(() => {
     return data

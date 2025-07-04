@@ -1,8 +1,7 @@
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { useId, useMemo } from 'react'
-import { AreaChart } from 'recharts'
-import { ActivityCustomTooltip } from '~/components/chart/activity/ActivityChart'
+import { AreaChart, type TooltipProps } from 'recharts'
 import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
@@ -10,7 +9,10 @@ import {
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
+  ChartTooltipWrapper,
+  useChart,
 } from '~/components/core/chart/Chart'
+import { ChartDataIndicator } from '~/components/core/chart/ChartDataIndicator'
 import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
@@ -18,17 +20,17 @@ import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/G
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { api } from '~/trpc/React'
+import { formatTimestamp } from '~/utils/dates'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
+import { formatInteger } from '~/utils/number-format/formatInteger'
 import { MarketShare } from './MonthlyUpdateMarketShare'
 
 export function MonthlyUpdateActivityChart({
-  name,
   entries,
   allScalingProjectsUops,
   from,
   to,
 }: {
-  name: string
   entries: ProjectId[]
   allScalingProjectsUops: number
   from: UnixTime
@@ -46,14 +48,14 @@ export function MonthlyUpdateActivityChart({
   const chartMeta = useMemo(() => {
     return {
       projects: {
-        label: name,
+        label: 'UOPS',
         color: 'var(--project-primary)',
         indicatorType: {
           shape: 'line',
         },
       },
     } satisfies ChartMeta
-  }, [name])
+  }, [])
 
   const chartData = useMemo(
     () =>
@@ -97,9 +99,7 @@ export function MonthlyUpdateActivityChart({
               unit: ' UOPS',
             },
           })}
-          <ChartTooltip
-            content={<ActivityCustomTooltip syncedUntil={undefined} />}
-          />
+          <ChartTooltip content={<CustomTooltip />} />
           <defs>
             <CustomFillGradientDef
               id={id}
@@ -141,6 +141,69 @@ function Header({
         <MarketShare marketShare={stats?.marketShare} />
       </div>
     </div>
+  )
+}
+
+export function CustomTooltip({
+  active,
+  payload,
+  label: timestamp,
+}: TooltipProps<number, string>) {
+  const { meta } = useChart()
+  if (!active || !payload || typeof timestamp !== 'number') return null
+  return (
+    <ChartTooltipWrapper>
+      <div className="flex w-40 flex-col sm:w-60">
+        <div className="label-value-14-medium mb-3 whitespace-nowrap text-secondary">
+          {formatTimestamp(timestamp, {
+            longMonthName: true,
+          })}
+        </div>
+        {payload.map((entry) => {
+          if (
+            entry.name === undefined ||
+            entry.value === undefined ||
+            entry.type === 'none'
+          )
+            return null
+          const config = meta[entry.name]
+          assert(config, 'No config')
+
+          return (
+            <div key={entry.name} className="flex flex-col gap-2">
+              <div className="flex w-full items-center justify-between gap-2">
+                <div className="flex items-center gap-1">
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
+                  />
+                  <span className="label-value-14-medium w-20 sm:w-fit">
+                    Average UOPS
+                  </span>
+                </div>
+                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                  {formatActivityCount(entry.value)}
+                </span>
+              </div>
+              <div className="flex w-full items-center justify-between gap-2">
+                <div className="flex items-center gap-1">
+                  <ChartDataIndicator
+                    backgroundColor={config.color}
+                    type={config.indicatorType}
+                  />
+                  <span className="label-value-14-medium w-20 sm:w-fit">
+                    Operations count
+                  </span>
+                </div>
+                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                  {formatInteger(entry.value * UnixTime.DAY)}
+                </span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </ChartTooltipWrapper>
   )
 }
 

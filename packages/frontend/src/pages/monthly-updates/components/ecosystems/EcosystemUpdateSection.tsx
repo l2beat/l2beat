@@ -30,14 +30,13 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
       />
       <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <MonthlyUpdateTvsChart
-          name={ecosystem.name}
+          type="ecosystem"
           entries={ecosystem.projects}
           allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
           from={from}
           to={to}
         />
         <MonthlyUpdateActivityChart
-          name={ecosystem.name}
           entries={ecosystem.projects}
           allScalingProjectsUops={ecosystem.allScalingProjects.uops}
           from={from}
