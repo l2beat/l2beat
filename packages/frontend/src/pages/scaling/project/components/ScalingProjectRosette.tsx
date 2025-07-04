@@ -36,8 +36,6 @@ export function ProjectScalingRosette({ project, size }: Props) {
         <RosetteSelector
           rosetteType={rosetteType}
           setRosetteType={setRosetteType}
-          // Offset for labels
-          className="mb-3"
           isDisabled={
             project.underReviewStatus === 'config' ||
             project.isUpcoming ||
