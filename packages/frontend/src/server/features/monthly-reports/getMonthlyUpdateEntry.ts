@@ -13,6 +13,7 @@ import {
   type EcosystemMonthlyUpdateEntry,
   getEcosystemMonthlyUpdateEntries,
 } from './getEcosystemEntries'
+import { getUpcomingProjectUpdateEntries } from './getUpcomingEntries'
 
 export interface MonthlyUpdateEntry {
   id: string
@@ -59,9 +60,10 @@ export async function getMonthlyUpdateEntry(
     ),
   ])
 
-  const upcomingProjectsUpdatesEntries = entry.data.updates.filter(
-    (update) => update.type === 'upcoming-project',
+  const upcomingProjectsUpdatesEntries = getUpcomingProjectUpdateEntries(
+    entry.data.updates.filter((update) => update.type === 'upcoming-project'),
   )
+
   return {
     id: entry.id,
     title: entry.data.title,

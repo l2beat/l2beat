@@ -9,6 +9,7 @@ import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { DataAvailabilityUpdate } from '~/content/monthly-updates'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
+import { getImageParams } from '~/utils/project/getImageParams'
 import {
   type ThroughputSummaryData,
   getDaThroughputSummary,
@@ -20,6 +21,7 @@ export interface DaMonthlyUpdateEntry extends DataAvailabilityUpdate {
   name: string
   colors: ProjectColors
   daProjects: ProjectId[]
+  bannerImg?: string
   allProjects: {
     tvs: number
     dataPosted: number
@@ -101,9 +103,14 @@ function getDaMonthlyUpdateEntry(
     0,
   )
 
+  const bannerImg = getImageParams(
+    `/images/monthly-updates/${daUpdateEntry.daLayerId}.png`,
+  )?.src
+
   return {
     ...daUpdateEntry,
     ...daLayer,
+    bannerImg,
     colors: daLayer.colors,
     daProjects: allUsedIn.map((x) => x.id),
     allProjects: {

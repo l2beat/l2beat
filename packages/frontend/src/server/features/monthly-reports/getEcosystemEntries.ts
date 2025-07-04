@@ -11,6 +11,7 @@ import type { ActivityLatestUopsData } from '~/server/features/scaling/activity/
 import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
+import { getImageParams } from '~/utils/project/getImageParams'
 import {
   type ActivityLeaderboard,
   getActivityLeaderboard,
@@ -34,6 +35,7 @@ export interface EcosystemMonthlyUpdateEntry extends EcosystemUpdate {
   name: string
   colors: ProjectColors
   projects: ProjectId[]
+  bannerImg?: string
   allScalingProjects: {
     tvs: number
     uops: number
@@ -154,9 +156,14 @@ function getEcosystemMonthlyUpdateEntry(
     activityLeaderboardData,
   )
 
+  const bannerImg = getImageParams(
+    `/images/monthly-updates/${ecosystemUpdateEntry.ecosystemId}.png`,
+  )?.src
+
   return {
     ...ecosystemUpdateEntry,
     ...ecosystem,
+    bannerImg,
     newProjects:
       ecosystemUpdateEntry.newProjectsIds?.map((p) => {
         const project = newProjects.find((n) => n.id === p)

@@ -25,7 +25,7 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
       }
     >
       <img
-        src={`/images/monthly-updates/${ecosystem.ecosystemId}.png`}
+        src={ecosystem.bannerImg}
         className="mb-8 min-h-[60px] w-full rounded-lg object-cover"
       />
       <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2">
