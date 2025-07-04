@@ -30,7 +30,8 @@
     "dev": "pnpm build:dependencies && pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
     "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
-    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts"
+    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
+    "bridges:cli": "ts-node ./scripts/bridges/cli.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
