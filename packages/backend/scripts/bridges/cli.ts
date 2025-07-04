@@ -2,7 +2,12 @@ import { Logger, getEnv } from '@l2beat/backend-tools'
 import { HttpClient, RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { command, number, option, optional, run, string } from 'cmd-ts'
-import { type Hex, decodeFunctionResult, parseAbi } from 'viem'
+import {
+  type Hex,
+  decodeFunctionResult,
+  encodeFunctionData,
+  parseAbi,
+} from 'viem'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols'
 
@@ -88,13 +93,35 @@ const cmd = command({
         for (const decoder of decoders) {
           const decoded = decoder(r.chain, l)
           if (decoded) {
-            const token = await r.rpc.call(
+            const symbol = await r.rpc.call(
               {
                 to: EthereumAddress(decoded?.token),
-                data: Bytes.fromHex('0x95d89b41'),
+                data: Bytes.fromHex(
+                  encodeFunctionData({ abi: ERC20, functionName: 'symbol' }),
+                ),
               },
               start,
             )
+
+            const decimals = await r.rpc.call(
+              {
+                to: EthereumAddress(decoded?.token),
+                data: Bytes.fromHex(
+                  encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
+                ),
+              },
+              start,
+            )
+
+            const dec = decodeFunctionResult({
+              abi: ERC20,
+              functionName: 'decimals',
+              data: decimals.toString() as unknown as Hex,
+            })
+
+            const decimalShift = BigInt(dec) - 4n
+            const divisor = decimalShift > 0n ? 10n ** decimalShift : 1n
+            const amount = Number(BigInt(decoded.amount) / divisor) / 10000
 
             logger.debug(decoded)
             logger.info(decoded.protocol, {
@@ -103,8 +130,10 @@ const cmd = command({
               token: decodeFunctionResult({
                 abi: ERC20,
                 functionName: 'symbol',
-                data: token.toString() as unknown as Hex,
+                data: symbol.toString() as unknown as Hex,
               }),
+              amount: amount,
+              hash: decoded.txHash,
             })
           }
         }
@@ -117,4 +146,7 @@ const cmd = command({
 
 run(cmd, process.argv.slice(2))
 
-const ERC20 = parseAbi(['function symbol() view returns (string)'])
+const ERC20 = parseAbi([
+  'function decimals() view returns (uint8)',
+  'function symbol() view returns (string)',
+])
