@@ -2,7 +2,7 @@
   "name": "ink",
   "chain": "ink",
   "blockNumber": 13539010,
-  "configHash": "0x66430daddaefd0a72ead63bbac119d8385cb2b32eff178ce9b0cab9ac8aed108",
+  "configHash": "0x945fab66683e7151ea598a23a586f686a1d70d1207c82bc42f6c239e8d5d3e42",
   "entries": [
     {
       "name": "L2CrossDomainMessenger",

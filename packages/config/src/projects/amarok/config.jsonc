@@ -278,48 +278,6 @@
         },
         "0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44": {
           "ignoreDiscovery": true
-        },
-        "0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4": {
-          "extends": "amarok/RelayerProxyHub"
-        },
-        "0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28": {
-          "extends": "amarok/RelayerProxyHub"
-        },
-        "0xB4F8D176466f5F544bAd53737bffAaeA17185c05": {
-          "extends": "amarok/RelayerProxyHub"
-        },
-        "0xaBcC9b596420A9E9172FD5938620E265a0f9Df92": {
-          "extends": "amarok/Relayer"
-        },
-        "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2": {
-          "extends": "amarok/Relayer"
-        },
-        "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9": {
-          "extends": "amarok/Relayer"
-        },
-        "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47": {
-          "extends": "amarok/Relayer"
-        },
-        "0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007": {
-          "extends": "amarok/Relayer"
-        },
-        "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE": {
-          "extends": "amarok/Relayer"
-        },
-        "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78": {
-          "extends": "amarok/Relayer"
-        },
-        "0x43728A95386D64384C76Afd416Dcc8118869BA6c": {
-          "extends": "amarok/Relayer"
-        },
-        "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6": {
-          "extends": "amarok/Relayer"
-        },
-        "0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99": {
-          "extends": "amarok/Relayer"
-        },
-        "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0": {
-          "extends": "amarok/Relayer"
         }
       }
     }

@@ -159,24 +159,19 @@
           "description": "Escrow for USDC that is bridged from Ethereum to Eclipse."
         },
         "0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c": {
-          "description": "Escrow for apxETH that is bridged from Ethereum to Eclipse.",
-          "extends": "hyperlane/HypERC20Collateral"
+          "description": "Escrow for apxETH that is bridged from Ethereum to Eclipse."
         },
         "0x647C621CEb36853Ef6A907E397Adf18568E70543": {
-          "description": "Escrow for USDT that is bridged from Ethereum to Eclipse.",
-          "extends": "hyperlane/HypERC20Collateral"
+          "description": "Escrow for USDT that is bridged from Ethereum to Eclipse."
         },
         "0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A": {
-          "description": "Escrow for WBTC that is bridged from Ethereum to Eclipse.",
-          "extends": "hyperlane/HypERC20Collateral"
+          "description": "Escrow for WBTC that is bridged from Ethereum to Eclipse."
         },
         "0xc2495f3183F043627CAECD56dAaa726e3B2D9c09": {
-          "description": "Escrow for tETH that is bridged from Ethereum to Eclipse.",
-          "extends": "hyperlane/HypERC20Collateral"
+          "description": "Escrow for tETH that is bridged from Ethereum to Eclipse."
         },
         "0xef899e92DA472E014bE795Ecce948308958E25A2": {
-          "description": "Escrow for weETHs that is bridged from Ethereum to Eclipse.",
-          "extends": "hyperlane/HypERC20Collateral"
+          "description": "Escrow for weETHs that is bridged from Ethereum to Eclipse."
         }
       }
     }

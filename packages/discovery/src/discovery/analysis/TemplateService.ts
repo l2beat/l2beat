@@ -267,16 +267,11 @@ export class TemplateService {
         contract.template !== undefined &&
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
-        if (
-          config.structure.overrides?.[contract.address.toString()]?.extends ===
-          undefined
-        ) {
-          if (matchingTemplates.length === 0) {
-            return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
-          }
-          if (contract.template !== matchingTemplates[0]) {
-            return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
-          }
+        if (matchingTemplates.length === 0) {
+          return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
+        }
+        if (contract.template !== matchingTemplates[0]) {
+          return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
         }
       } else if (matchingTemplates.length > 0) {
         return `A contract "${contract.name}" without template now matches: "${matchingTemplates.join(', ')}"`

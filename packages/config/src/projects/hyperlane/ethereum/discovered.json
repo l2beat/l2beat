@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 22823856,
-  "configHash": "0x622cc5a249586363db423201c6942bab5cb906f0fe29d63fd40700e35e09e704",
+  "configHash": "0x33ed0c24f23219b04ce699ae0224744ac11e6d002c5ce24183c045ff79f1c535",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -544,10 +544,10 @@
         "threshold": 1
       },
       "fieldMeta": {
-        "modules": { "severity": "HIGH" },
         "modulesAndThreshold": {
           "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
-        }
+        },
+        "modules": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm"

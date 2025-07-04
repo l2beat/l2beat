@@ -16,9 +16,6 @@
       "overrides": {
         "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": {
           "ignoreRelatives": ["bEIGEN"]
-        },
-        "0x6075546538c3eFbD607ea6aFC24149fCcFb2edF4": {
-          "extends": "eigenlayer/Strategy"
         }
       },
       "sharedModules": ["shared-eigenlayer"]

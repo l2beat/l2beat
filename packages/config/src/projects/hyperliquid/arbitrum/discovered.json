@@ -117,12 +117,12 @@
         ]
       },
       "fieldMeta": {
-        "hotAddresses": {
-          "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update."
-        },
         "validatorSetUpdates": {
           "severity": "HIGH",
           "description": "Validator set updates. See config.jsonc and update the hardcoded validator addresses."
+        },
+        "hotAddresses": {
+          "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update."
         }
       },
       "implementationNames": {

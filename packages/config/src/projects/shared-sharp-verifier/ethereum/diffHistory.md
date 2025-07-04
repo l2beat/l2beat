@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xf699d39cde57d76ae9259d35fbada301b3dc46fc
+
+# Diff at Fri, 04 Jul 2025 13:26:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f3be48c7969ce9c9727876024c540666c2956e91 block: 22472206
+- current block number: 22472206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22472206 (main branch discovery), not current.
+
+```diff
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff) {
+    +++ description: None
+      values.constructorArgs.2:
+-        "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460"
+    }
+```
+
 Generated with discovered.json: 0x623297236b1cf486ab08eef72385512ccf17e85d
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

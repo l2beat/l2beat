@@ -2,7 +2,7 @@
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
   "blockNumber": 22472206,
-  "configHash": "0x660e3353816a1a2b29758654d5ec931d7989845a60426ee77b1b8049d8f98eab",
+  "configHash": "0xa076c513791e6a2424478d9ed2dc3237d48b51c79d293548f575e43923999578",
   "entries": [
     {
       "name": "EcdsaPointsXColumn",
@@ -99,7 +99,6 @@
             "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
           ],
           "0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -173,7 +172,6 @@
             "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
           ],
           "0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -273,7 +271,6 @@
             "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
           ],
           "0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -364,7 +361,6 @@
             "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
           ],
           "0xA9db7bDfbc3664C8954f490e4d94B8607a080f23",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -407,7 +403,6 @@
             "0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2"
           ],
           "0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -1455,7 +1450,6 @@
             "0xE3929Ea107238Ce59d64A3cE497f12b57846B716"
           ],
           "0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -1629,7 +1623,6 @@
             "0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed"
           ],
           "0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -1810,7 +1803,6 @@
             "0x032e5cDb729Ce94638ACA9e82A22688109B43046"
           ],
           "0x4742f8723CAE9C17Cb1D54708898904fB43621c9",
-          "0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460",
           "0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd",
           "0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400",
           "80",
@@ -2211,7 +2203,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-sharp-verifier/CairoBootloaderProgram": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "shared-sharp-verifier/CpuFrilessVerifier": "0x472c63729146d653de2dafc032021def31a3227f6c7bcb2dfd6fb7cc96c442fa",
+    "shared-sharp-verifier/CpuFrilessVerifier": "0x7c6992d8b819382607fb02323da862e54bd127ec825697d5d9d8b20a2961d1b1",
     "shared-sharp-verifier/ignoreComputeSpam": "0x267b15793053816118dde43f1cfe44b29b6496604275660ece4f747b85bab98e",
     "shared-sharp-verifier/MemoryPageFactRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-sharp-verifier/SHARPVerifier": "0x5ddc350d207181dc4b0b73ef2f493ee3afbaf139e29f26420b57497c7259afc5",

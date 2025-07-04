@@ -56,7 +56,6 @@ export const ManualProxyType = v.enum([
 
 export type StructureContract = v.infer<typeof StructureContract>
 export const _StructureContract = {
-  extends: v.string().optional(),
   canActIndependently: v.boolean().optional(),
   ignoreDiscovery: v.boolean().default(false),
   proxyType: ManualProxyType.optional(),
