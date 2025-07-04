@@ -37,6 +37,7 @@ export const henez: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'henez',
+    gasTokens: ['ETH'],
     chainId: 91111,
     apis: [
       {
