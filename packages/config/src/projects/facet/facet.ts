@@ -17,6 +17,7 @@ const FINALIZATION_PERIOD_SECONDS: number = discovery.getContractValue<number>(
 )
 
 export const facet: ScalingProject = opStackL2({
+  reviewStatus: 'inReview',
   addedAt: UnixTime(1735889012), // 2025-01-03T01:36:52Z
   discovery,
   additionalBadges: [BADGES.Other.BasedSequencing],
