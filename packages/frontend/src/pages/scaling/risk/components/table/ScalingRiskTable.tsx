@@ -9,11 +9,11 @@ import { scalingRiskColumns } from './Columns'
 export function ScalingRiskTable({
   entries,
   rollups,
-  underReview,
+  notReviewed,
 }: {
   entries: ScalingRiskEntry[]
   rollups?: boolean
-  underReview?: boolean
+  notReviewed?: boolean
 }) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
@@ -38,7 +38,7 @@ export function ScalingRiskTable({
   ) : (
     <BasicTable
       table={table}
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
     />
   )
 }

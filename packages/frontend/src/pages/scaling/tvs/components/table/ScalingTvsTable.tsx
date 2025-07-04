@@ -12,10 +12,10 @@ import { scalingTvsColumns } from './Columns'
 interface Props {
   entries: ScalingTvsEntry[]
   rollups?: boolean
-  underReview?: boolean
+  notReviewed?: boolean
 }
 
-export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
+export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -51,7 +51,7 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
     <BasicTable
       table={table}
       insideMainPageCard
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
     />
   )
 }
