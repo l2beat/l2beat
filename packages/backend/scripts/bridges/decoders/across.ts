@@ -7,7 +7,18 @@ const ABI = parseAbi([
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
 ])
 
-const CHAIN_IDS = [{ id: 8453, name: 'base' }]
+const CHAIN_IDS = [
+  { id: 1, name: 'ethereum' },
+  { id: 10, name: 'optimism' },
+  { id: 137, name: 'polygon' },
+  { id: 8453, name: 'base' },
+  { id: 42161, name: 'arbitrum' },
+  { id: 57073, name: 'ink' },
+  { id: 59144, name: 'linea' },
+  { id: 81457, name: 'blast' },
+  { id: 534352, name: 'scroll' },
+  { id: 7777777, name: 'zora' },
+]
 
 export function decodeAcross(
   chain: string,
