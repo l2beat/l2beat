@@ -36,6 +36,7 @@ export const onchain: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'onchain',
+    gasTokens: ['POP'],
     chainId: 17071,
     apis: [
       {

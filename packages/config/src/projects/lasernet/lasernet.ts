@@ -31,6 +31,7 @@ export const lasernet: ScalingProject = underReviewL2({
   },
   chainConfig: {
     name: 'lasernet',
+    gasTokens: ['DIA'],
     chainId: 1050,
     apis: [
       {
