@@ -13,25 +13,18 @@ import { EcosystemUpdateSection } from './components/ecosystems/EcosystemUpdateS
 import { UpcomingProjectUpdateSection } from './components/upcoming/UpcomingProjectUpdateSection'
 
 interface Props extends AppLayoutProps {
-  publishedOn: string
-  title: string
-  from: UnixTime
-  to: UnixTime
-  ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
-  daUpdatesEntries: DaMonthlyUpdateEntry[]
-  upcomingProjectsUpdatesEntries: UpcomingProjectUpdate[]
+  entry: {
+    publishedOn: string
+    title: string
+    from: UnixTime
+    to: UnixTime
+    ecosystemsUpdatesEntries: EcosystemMonthlyUpdateEntry[]
+    daUpdatesEntries: DaMonthlyUpdateEntry[]
+    upcomingProjectsUpdatesEntries: UpcomingProjectUpdate[]
+  }
 }
 
-export function MonthlyUpdatePage({
-  publishedOn,
-  title,
-  from,
-  to,
-  ecosystemsUpdatesEntries,
-  daUpdatesEntries,
-  upcomingProjectsUpdatesEntries,
-  ...props
-}: Props) {
+export function MonthlyUpdatePage({ entry, ...props }: Props) {
   return (
     <AppLayout {...props}>
       <SideNavLayout>
@@ -39,17 +32,17 @@ export function MonthlyUpdatePage({
         <PrimaryCard className="md:p-8">
           <div>
             <p className="subtitle-12 text-brand uppercase">
-              Published on {publishedOn}
+              Published on {entry.publishedOn}
             </p>
-            <h1 className="md:heading-32 heading-24 mt-2">{title}</h1>
+            <h1 className="md:heading-32 heading-24 mt-2">{entry.title}</h1>
           </div>
           <HorizontalSeparator className="my-6 md:my-8" />
           <div className="mx-auto mt-6 max-w-[960px] md:mt-8">
             <div className="mb-6 flex flex-col md:mb-8">
               {[
-                ...ecosystemsUpdatesEntries,
-                ...daUpdatesEntries,
-                ...upcomingProjectsUpdatesEntries,
+                ...entry.ecosystemsUpdatesEntries,
+                ...entry.daUpdatesEntries,
+                ...entry.upcomingProjectsUpdatesEntries,
               ].map((e, i) => (
                 <a
                   href={`#${e.name}`}
@@ -60,23 +53,23 @@ export function MonthlyUpdatePage({
                 </a>
               ))}
             </div>
-            {ecosystemsUpdatesEntries.map((ecosystem) => (
+            {entry.ecosystemsUpdatesEntries.map((ecosystem) => (
               <EcosystemUpdateSection
                 key={ecosystem.ecosystemId}
                 ecosystem={ecosystem}
-                from={from}
-                to={to}
+                from={entry.from}
+                to={entry.to}
               />
             ))}
-            {daUpdatesEntries.map((da) => (
+            {entry.daUpdatesEntries.map((da) => (
               <DaUpdateSection
                 key={da.daLayerId}
                 daLayer={da}
-                from={from}
-                to={to}
+                from={entry.from}
+                to={entry.to}
               />
             ))}
-            {upcomingProjectsUpdatesEntries.map((upcomingProject) => (
+            {entry.upcomingProjectsUpdatesEntries.map((upcomingProject) => (
               <UpcomingProjectUpdateSection
                 key={upcomingProject.projectId}
                 upcomingProject={upcomingProject}

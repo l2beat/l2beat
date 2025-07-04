@@ -1,5 +1,6 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
+import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
@@ -8,6 +9,7 @@ import { getMonthlyUpdateData } from './getMonthlyUpdateData'
 export function createMonthlyUpdatesRouter(
   manifest: Manifest,
   render: RenderFunction,
+  cache: ICache,
 ) {
   const router = express.Router()
 
@@ -21,6 +23,7 @@ export function createMonthlyUpdatesRouter(
         manifest,
         req.params.slug,
         req.originalUrl,
+        cache,
       )
 
       if (!data) {

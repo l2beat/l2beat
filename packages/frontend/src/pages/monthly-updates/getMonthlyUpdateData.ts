@@ -1,6 +1,8 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
+import type { ICache } from '~/server/cache/ICache'
 import { getMonthlyUpdateEntry } from '~/server/features/monthly-reports/getMonthlyUpdateEntry'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -10,8 +12,8 @@ export async function getMonthlyUpdateData(
   manifest: Manifest,
   slug: string,
   url: string,
+  cache: ICache,
 ): Promise<RenderData | undefined> {
-  const appLayoutProps = await getAppLayoutProps()
   const publications = getCollection('monthly-updates')
 
   const monthlyUpdate = publications.find((p) => p.id === slug)
@@ -19,7 +21,17 @@ export async function getMonthlyUpdateData(
     return undefined
   }
 
-  const monthlyUpdateEntry = await getMonthlyUpdateEntry(monthlyUpdate)
+  const [appLayoutProps, monthlyUpdateEntry] = await Promise.all([
+    getAppLayoutProps(),
+    cache.get(
+      {
+        key: ['monthly-updates', 'data'],
+        ttl: UnixTime.HOUR,
+        staleWhileRevalidate: UnixTime.HOUR,
+      },
+      () => getMonthlyUpdateEntry(monthlyUpdate),
+    ),
+  ])
 
   return {
     head: {
@@ -38,7 +50,7 @@ export async function getMonthlyUpdateData(
       page: 'MonthlyUpdatePage',
       props: {
         ...appLayoutProps,
-        ...monthlyUpdateEntry,
+        entry: monthlyUpdateEntry,
       },
     },
   }
