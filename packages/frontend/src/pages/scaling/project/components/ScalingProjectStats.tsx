@@ -33,8 +33,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.tvs?.breakdown ? (
           <ValueWithPercentageChange
             change={project.header.tvs.breakdown.totalChange}
-            className="!leading-none font-medium md:font-bold md:text-lg"
-            changeClassName="md:text-base md:font-medium !leading-none"
+            changeClassName="label-value-15-medium"
           >
             {formatNumber(project.header.tvs.breakdown.total)}
           </ValueWithPercentageChange>
@@ -51,8 +50,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         project.header.activity ? (
           <ValueWithPercentageChange
             change={project.header.activity.uopsWeeklyChange}
-            className="!leading-none font-medium md:font-bold md:text-lg"
-            changeClassName="md:text-base md:font-medium !leading-none"
+            changeClassName="label-value-15-medium"
           >
             {project.header.activity.lastDayUops.toFixed(2)}
           </ValueWithPercentageChange>
