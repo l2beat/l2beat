@@ -24,7 +24,7 @@ export function ProjectSection(props: ExtendedProjectSectionProps) {
       id={props.id}
       data-role="project-section"
       className={cn(
-        'scroll-mt-10 px-4 py-8 md:mt-4 md:scroll-mt-8 md:p-8',
+        'scroll-mt-10 px-4 py-8 md:mt-4 md:scroll-mt-4 md:p-6',
         'max-md:border-divider max-md:border-b max-md:last:border-none',
         'md:rounded-lg',
         props.nested && 'mt-10 p-0 md:p-0',
@@ -78,19 +78,14 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'hidden size-10 items-center justify-center rounded bg-surface-secondary px-3 font-bold text-[26px] text-secondary tabular-nums md:flex',
+            'heading-18 hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 font-bold text-secondary tabular-nums md:flex',
             props.nested && 'h-8 w-11 text-xl',
           )}
         >
           {props.sectionOrder}
         </div>
       )}
-      <span
-        className={cn(
-          'font-bold text-2xl md:text-4xl',
-          props.nested && 'text-xl md:text-3xl',
-        )}
-      >
+      <span className={cn('heading-24', props.nested && 'text-xl md:text-3xl')}>
         {props.title}
       </span>
     </a>
