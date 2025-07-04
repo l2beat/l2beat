@@ -8,7 +8,7 @@ interface Props {
 
 export function News({ news }: Props) {
   return (
-    <div className="mt-8">
+    <div className="mt-6 md:mt-8">
       <h2 className="heading-24 md:heading-36 mb-3 md:mb-6">News</h2>
       <div className="space-y-10">
         {news.map((item) => (

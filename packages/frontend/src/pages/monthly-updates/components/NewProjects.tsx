@@ -8,7 +8,7 @@ interface Props {
   newProjects: EcosystemMonthlyUpdateEntry['newProjects']
 }
 
-export function NewProjectsSection({ newProjects }: Props) {
+export function NewProjects({ newProjects }: Props) {
   return (
     <div className="mt-6 rounded-lg border border-divider px-6 pt-5 pb-1">
       <h2 className="font-bold text-xl leading-none">

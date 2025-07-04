@@ -11,7 +11,7 @@ interface Props {
 
 export function Leaderboards({ tvsLeaderboard, activityLeaderboard }: Props) {
   return (
-    <div className="grid gap-3 md:grid-cols-2">
+    <div className="mb-8 grid gap-3 md:grid-cols-2">
       <PrimaryCard className="!rounded-lg border border-divider">
         <div className="mb-3 font-bold text-xl">Top TVS Gainers</div>
         <div className="space-y-1">

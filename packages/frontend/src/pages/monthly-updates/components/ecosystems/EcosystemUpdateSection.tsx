@@ -1,8 +1,9 @@
 import type { UnixTime } from '@l2beat/shared-pure'
 import type { EcosystemMonthlyUpdateEntry } from '~/server/features/monthly-reports/getEcosystemEntries'
 import { Leaderboards } from '../Leaderboards'
-import { NewProjectsSection } from '../NewProjectsSection'
+import { NewProjects } from '../NewProjects'
 import { News } from '../News'
+import { ProjectUpdateSection } from '../ProjectUpdateSection'
 import { MonthlyUpdateActivityChart } from '../charts/MonthlyUpdateActivityChart'
 import { MonthlyUpdateTvsChart } from '../charts/MonthlyUpdateTvsChart'
 
@@ -14,20 +15,11 @@ interface Props {
 
 export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
   return (
-    <div
-      id={ecosystem.name}
-      className="mb-8 md:mb-16"
-      style={
-        {
-          '--project-primary': ecosystem.colors.primary,
-          '--project-secondary': ecosystem.colors.secondary,
-        } as React.CSSProperties
-      }
+    <ProjectUpdateSection
+      name={ecosystem.name}
+      colors={ecosystem.colors}
+      bannerImg={ecosystem.bannerImg}
     >
-      <img
-        src={ecosystem.bannerImg}
-        className="mb-4 min-h-[70px] w-full rounded-lg object-cover md:mb-8"
-      />
       <div className="mb-6 grid grid-cols-1 gap-3 md:grid-cols-2">
         <MonthlyUpdateTvsChart
           type="ecosystem"
@@ -48,11 +40,11 @@ export function EcosystemUpdateSection({ ecosystem, from, to }: Props) {
         activityLeaderboard={ecosystem.activityLeaderboard}
       />
       {ecosystem.newProjects.length > 0 && (
-        <NewProjectsSection newProjects={ecosystem.newProjects} />
+        <NewProjects newProjects={ecosystem.newProjects} />
       )}
       {ecosystem.news && ecosystem.news?.length > 0 && (
         <News news={ecosystem.news} />
       )}
-    </div>
+    </ProjectUpdateSection>
   )
 }
