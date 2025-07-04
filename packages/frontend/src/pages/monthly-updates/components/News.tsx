@@ -8,21 +8,23 @@ interface Props {
 
 export function News({ news }: Props) {
   return (
-    <div className="mt-8 space-y-10">
-      <h2 className="heading-36">News</h2>
-      {news.map((item) => (
-        <div key={item.title}>
-          <div className="flex gap-2">
-            {item.tags?.map((tag) => (
-              <Tag key={tag} tag={tag} />
-            ))}
+    <div className="mt-8">
+      <h2 className="heading-24 md:heading-36 mb-3 md:mb-6">News</h2>
+      <div className="space-y-10">
+        {news.map((item) => (
+          <div key={item.title}>
+            <div className="flex gap-2">
+              {item.tags?.map((tag) => (
+                <Tag key={tag} tag={tag} />
+              ))}
+            </div>
+            <div className="heading-20 md:heading-28 mt-3 mb-2 leading-none">
+              {item.title}
+            </div>
+            <Article>{item.content}</Article>
           </div>
-          <div className="heading-20 md:heading-28 mt-3 mb-2 leading-none">
-            {item.title}
-          </div>
-          <Article>{item.content}</Article>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }
