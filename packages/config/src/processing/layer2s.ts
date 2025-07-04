@@ -43,7 +43,6 @@ import { dcamonster } from '../projects/dcamonster/dcamonster'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
-import { degenlayer } from '../projects/degenlayer/degenlayer'
 import { destra } from '../projects/destra/destra'
 import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
@@ -272,7 +271,6 @@ export const layer2s: ScalingProject[] = [
   degate,
   degate2,
   degate3,
-  degenlayer,
   destra,
   dydx,
   ebichain,
