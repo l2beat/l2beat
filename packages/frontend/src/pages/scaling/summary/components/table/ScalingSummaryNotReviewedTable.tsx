@@ -6,13 +6,13 @@ import { useTable } from '~/hooks/useTable'
 import { useScalingAssociatedTokensContext } from '~/pages/scaling/components/ScalingAssociatedTokensContext'
 import type { ScalingSummaryEntry } from '~/server/features/scaling/summary/getScalingSummaryEntries'
 import { toTableRows } from '../../utils/toTableRows'
-import { scalingSummaryUnderReviewColumns } from './Columns'
+import { scalingSummaryNotReviewedColumns } from './Columns'
 
 interface Props {
   entries: ScalingSummaryEntry[]
 }
 
-export function ScalingSummaryUnderReviewTable({ entries }: Props) {
+export function ScalingSummaryNotReviewedTable({ entries }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -27,7 +27,7 @@ export function ScalingSummaryUnderReviewTable({ entries }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: scalingSummaryUnderReviewColumns,
+    columns: scalingSummaryNotReviewedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

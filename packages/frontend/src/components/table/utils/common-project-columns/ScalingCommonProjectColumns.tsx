@@ -17,7 +17,11 @@ export function getScalingCommonProjectColumns<T extends CommonProjectEntry>(
       id: 'name',
       cell: (ctx) => {
         const projectName = (
-          <ProjectNameCell project={ctx.row.original} withInfoTooltip />
+          <ProjectNameCell
+            project={ctx.row.original}
+            withInfoTooltip
+            ignoreUnderReviewIcon={opts?.ignoreUnderReviewIcon}
+          />
         )
 
         if (ctx.row.original.id === ProjectId.ETHEREUM) {

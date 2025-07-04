@@ -39,7 +39,7 @@ export function createScalingRouter(
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
           .default('rollups'),
       }),
     }),
@@ -61,7 +61,7 @@ export function createScalingRouter(
     validateRoute({
       query: v.object({
         tab: v
-          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'underReview'])
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
           .default('rollups'),
       }),
     }),

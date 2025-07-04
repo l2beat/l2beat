@@ -4,21 +4,21 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingRiskEntry } from '~/server/features/scaling/risks/getScalingRiskEntries'
-import { scalingRiskColumns } from './Columns'
+import { getScalingRiskColumns } from './Columns'
 
 export function ScalingRiskTable({
   entries,
   rollups,
-  underReview,
+  notReviewed,
 }: {
   entries: ScalingRiskEntry[]
   rollups?: boolean
-  underReview?: boolean
+  notReviewed?: boolean
 }) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: scalingRiskColumns,
+    columns: getScalingRiskColumns({ ignoreUnderReviewIcon: true }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -38,7 +38,7 @@ export function ScalingRiskTable({
   ) : (
     <BasicTable
       table={table}
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
     />
   )
 }

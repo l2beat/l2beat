@@ -7,15 +7,15 @@ import { useTable } from '~/hooks/useTable'
 import type { ScalingTvsEntry } from '~/server/features/scaling/tvs/getScalingTvsEntries'
 import { useScalingAssociatedTokensContext } from '../../../components/ScalingAssociatedTokensContext'
 import { toTableRows } from '../../utils/ToTableRows'
-import { scalingTvsColumns } from './Columns'
+import { getScalingTvsColumns } from './Columns'
 
 interface Props {
   entries: ScalingTvsEntry[]
   rollups?: boolean
-  underReview?: boolean
+  notReviewed?: boolean
 }
 
-export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
+export function ScalingTvsTable({ entries, rollups, notReviewed }: Props) {
   const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -30,7 +30,7 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
 
   const table = useTable({
     data: allProjects,
-    columns: scalingTvsColumns,
+    columns: getScalingTvsColumns({ ignoreUnderReviewIcon: true }),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
@@ -51,7 +51,7 @@ export function ScalingTvsTable({ entries, rollups, underReview }: Props) {
     <BasicTable
       table={table}
       insideMainPageCard
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
     />
   )
 }

@@ -1,5 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
+import type { CommonProjectColumnsOptions } from '~/components/table/utils/common-project-columns/CommonProjectColumns'
 import { getScalingCommonProjectColumns } from '~/components/table/utils/common-project-columns/ScalingCommonProjectColumns'
 import { getColumnHeaderUnderline } from '~/utils/table/getColumnHeaderUnderline'
 import { TableLink } from '../../../../../components/table/TableLink'
@@ -9,10 +10,11 @@ import { ValueSecuredCell } from './ValueSecuredCell'
 
 const columnHelper = createColumnHelper<ScalingTvsTableRow>()
 
-export const scalingTvsColumns = [
+export const getScalingTvsColumns = (opts?: CommonProjectColumnsOptions) => [
   ...getScalingCommonProjectColumns(
     columnHelper,
     (row) => `/scaling/projects/${row.slug}#tvs`,
+    opts,
   ),
   columnHelper.group({
     id: 'data',
