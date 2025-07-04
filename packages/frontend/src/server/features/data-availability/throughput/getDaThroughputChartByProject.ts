@@ -38,8 +38,8 @@ const getDaThroughputChartByProjectData = async (
   params: DaThroughputChartByProjectParams,
 ): Promise<DaThroughputChartDataByChart> => {
   const db = getDb()
-  const resolution = rangeToResolution(params.range)
-  const [from, to] = getRangeWithMax(params.range, resolution, {
+  const resolution = rangeToResolution({ type: params.range })
+  const [from, to] = getRangeWithMax({ type: params.range }, resolution, {
     now: UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR,
   })
   const [throughput, allProjects] = await Promise.all([
@@ -135,7 +135,7 @@ function groupByTimestampAndProjectId(
 function getMockDaThroughputChartByProjectData({
   range,
 }: DaThroughputChartByProjectParams): DaThroughputChartDataByChart {
-  const days = rangeToDays(range) ?? 730
+  const days = rangeToDays({ type: range }) ?? 730
   const to = UnixTime.toStartOf(UnixTime.now(), 'day')
   const from = to - days * UnixTime.DAY
 

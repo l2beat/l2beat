@@ -26,7 +26,7 @@
 
 .article p,
 .article li {
-  @apply text-base text-primary text-opacity-80 dark:text-opacity-80 md:text-[17px] leading-[1.6] font-light;
+  @apply text-sm text-primary text-opacity-80 dark:text-opacity-80 md:text-[17px] leading-[1.6] font-light;
 }
 
 .article blockquote {

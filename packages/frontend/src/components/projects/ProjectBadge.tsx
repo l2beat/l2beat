@@ -4,6 +4,7 @@ import { cn } from '~/utils/cn'
 import {
   Tooltip,
   TooltipContent,
+  TooltipPortal,
   TooltipTrigger,
 } from '../core/tooltip/Tooltip'
 
@@ -52,10 +53,12 @@ export function ProjectBadge({
   return (
     <Tooltip delayDuration={0}>
       <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
-      <TooltipContent>
-        <span className="label-value-14-medium mb-1 block">{badge.name}</span>
-        <span>{badge.description}</span>
-      </TooltipContent>
+      <TooltipPortal>
+        <TooltipContent>
+          <span className="label-value-14-medium mb-1 block">{badge.name}</span>
+          <span>{badge.description}</span>
+        </TooltipContent>
+      </TooltipPortal>
     </Tooltip>
   )
 }

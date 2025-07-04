@@ -18,7 +18,16 @@ import { ActivityTimeRange } from './utils/range'
 export type ActivityChartParams = v.infer<typeof ActivityChartParams>
 export const ActivityChartParams = v.object({
   filter: ActivityProjectFilter,
-  range: ActivityTimeRange,
+  range: v.union([
+    v.object({
+      type: ActivityTimeRange,
+    }),
+    v.object({
+      type: v.literal('custom'),
+      from: v.number(),
+      to: v.number(),
+    }),
+  ]),
 })
 
 export type ActivityChartData = {
@@ -110,8 +119,8 @@ function getMockActivityChart({
 }: ActivityChartParams): ActivityChartData {
   const [from, to] = getRangeWithMax(range, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
-    from ?? MIN_TIMESTAMPS.activity,
-    to,
+    range.type === 'custom' ? range.from : (from ?? MIN_TIMESTAMPS.activity),
+    range.type === 'custom' ? range.to : to,
   ]
   const timestamps = generateTimestamps(adjustedRange, 'daily')
 

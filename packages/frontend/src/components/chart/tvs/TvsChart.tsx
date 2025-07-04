@@ -78,14 +78,18 @@ export function TvsCustomTooltip({
   payload,
   label,
   unit,
-}: TooltipProps<number, string> & { unit: ChartUnit }) {
+  fullDate,
+}: TooltipProps<number, string> & { unit: ChartUnit; fullDate?: boolean }) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
         <div className="label-value-14-medium mb-3 text-secondary">
-          {formatTimestamp(label, { longMonthName: true })}
+          {formatTimestamp(label, {
+            longMonthName: true,
+            mode: fullDate ? 'datetime' : undefined,
+          })}
         </div>
         <div className="flex flex-col gap-2">
           {payload.map((entry) => {

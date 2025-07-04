@@ -85,7 +85,7 @@ async function getQueryState(
 
   await Promise.all([
     helpers.activity.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: tab },
     }),
     helpers.activity.chartStats.prefetch({

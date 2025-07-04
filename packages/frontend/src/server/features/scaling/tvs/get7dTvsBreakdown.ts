@@ -48,13 +48,14 @@ type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
+  customTarget?: UnixTime,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
     return getMockTvsBreakdownData()
   }
 
   const db = getDb()
-  const target = getTvsTargetTimestamp()
+  const target = customTarget ?? getTvsTargetTimestamp()
 
   const projectIds = props.type === 'projects' ? props.projectIds : undefined
 

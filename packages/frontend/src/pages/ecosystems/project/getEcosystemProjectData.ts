@@ -22,7 +22,7 @@ export async function getEcosystemProjectData(
 
   await Promise.all([
     helpers.tvs.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       excludeAssociatedTokens: false,
       filter: {
         type: 'projects',
@@ -30,7 +30,7 @@ export async function getEcosystemProjectData(
       },
     }),
     helpers.activity.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: {
         type: 'projects',
         projectIds: ecosystem.projects.map((project) => project.id),

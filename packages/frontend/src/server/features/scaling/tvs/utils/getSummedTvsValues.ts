@@ -9,20 +9,21 @@ import { rangeToResolution } from './range'
 
 export async function getSummedTvsValues(
   projectIds: ProjectId[],
-  range: TvsChartRange,
+  range: { type: TvsChartRange } | { type: 'custom'; from: number; to: number },
   type?: ProjectValueType,
 ) {
   const db = getDb()
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
+  const adjustedTarget = range.type === 'custom' ? range.to : target
   const [from] = getRangeWithMax(range, resolution, {
-    now: target,
+    now: adjustedTarget,
   })
   const [latest, valueRecords] = await Promise.all([
     db.tvsProjectValue.getLatestValues(type ?? 'SUMMARY', projectIds),
     db.tvsProjectValue.getSummedByTimestamp(projectIds, type ?? 'SUMMARY', [
       from,
-      target,
+      adjustedTarget,
     ]),
   ])
 

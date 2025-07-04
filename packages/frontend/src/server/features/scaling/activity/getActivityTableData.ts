@@ -46,7 +46,7 @@ export async function getActivityTable(
   }
 
   const db = getDb()
-  const range = getFullySyncedActivityRange('30d')
+  const range = getFullySyncedActivityRange({ type: '30d' })
   const [records, maxCounts] = await Promise.all([
     db.activity.getByProjectsAndTimeRange(
       [ProjectId.ETHEREUM, ...projects.map((p) => p.id)],

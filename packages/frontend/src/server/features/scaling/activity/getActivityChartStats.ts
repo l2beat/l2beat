@@ -18,7 +18,7 @@ export async function getActivityChartStats(
   // We should use the last 7 days but 30d is probably cached already so it's faster
   const { data: chartData } = await getActivityChart({
     filter,
-    range: '30d',
+    range: { type: '30d' },
   })
 
   const latestData = chartData.at(-1)

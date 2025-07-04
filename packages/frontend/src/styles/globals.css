@@ -259,6 +259,10 @@
     @apply text-4xl font-bold leading-[115%];
   }
 
+  .heading-36 {
+    @apply text-[36px] font-bold leading-[115%];
+  }
+
   .heading-32 {
     @apply text-3xl font-bold leading-[115%];
   }

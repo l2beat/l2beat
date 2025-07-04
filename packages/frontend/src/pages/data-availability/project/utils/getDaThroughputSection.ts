@@ -20,7 +20,7 @@ export async function getDaThroughputSection(
   const [throughputChart, throughputData, projectsWithColors] =
     await Promise.all([
       helpers.da.projectChart.fetch({
-        range: '1y',
+        range: { type: '1y' },
         projectId: project.id,
       }),
       getDaThroughputTable([project.id]),

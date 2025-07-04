@@ -44,7 +44,7 @@ export function ScalingStackedTvsChart({ milestones, entries, tab }: Props) {
   }, [entries, filters, tab])
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     excludeAssociatedTokens,
     filter,
   })

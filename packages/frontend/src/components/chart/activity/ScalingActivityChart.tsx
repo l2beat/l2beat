@@ -64,7 +64,7 @@ export function ScalingActivityChart({
     filter: chartFilter,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: chartFilter,
   })
 

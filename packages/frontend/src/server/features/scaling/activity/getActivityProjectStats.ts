@@ -18,7 +18,7 @@ type ActivityProjectStats = Awaited<
 >
 async function getActivityProjectStatsData(projectId: ProjectId) {
   const db = getDb()
-  const range = getFullySyncedActivityRange('30d')
+  const range = getFullySyncedActivityRange({ type: '30d' })
   const counts = await db.activity.getByProjectAndTimeRange(projectId, range)
   if (counts.length === 0) {
     return

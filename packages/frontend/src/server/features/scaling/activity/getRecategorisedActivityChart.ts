@@ -54,7 +54,7 @@ export async function getRecategorisedActivityChart(
     )
     .map((p) => p.id)
 
-  const adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = getFullySyncedActivityRange({ type: range })
   const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
     await Promise.all([
       await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
@@ -127,7 +127,7 @@ function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
 ): RecategorisedActivityChartData {
-  const [from, to] = getRangeWithMax(timeRange, 'daily')
+  const [from, to] = getRangeWithMax({ type: timeRange }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? MIN_TIMESTAMPS.activity,
     to,

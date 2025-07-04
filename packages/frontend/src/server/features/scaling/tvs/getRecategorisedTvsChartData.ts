@@ -63,9 +63,9 @@ export async function getRecategorisedTvsChart({
 
   const [rollupValues, validiumAndOptimiumsValues, othersValues] =
     await Promise.all([
-      getSummedTvsValues(rollups, range, 'SUMMARY'),
-      getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
-      getSummedTvsValues(others, range, 'SUMMARY'),
+      getSummedTvsValues(rollups, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(validiumsAndOptimiums, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(others, { type: range }, 'SUMMARY'),
     ])
 
   return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
@@ -117,9 +117,9 @@ function getChartData(
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
   const target = getTvsTargetTimestamp()
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
   const timestamps = generateTimestamps(

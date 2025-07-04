@@ -5,7 +5,9 @@ export type TimeRange = '1d' | '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
 export type Resolution = 'hourly' | 'daily' | 'sixHourly'
 
 export function getRange(
-  range: Exclude<TimeRange, 'max'>,
+  range:
+    | { type: Exclude<TimeRange, 'max'> }
+    | { type: 'custom'; from: number; to: number },
   resolution: Resolution,
   opts?: {
     now?: UnixTime
@@ -26,7 +28,7 @@ export function getRange(
 }
 
 export function getRangeWithMax(
-  range: TimeRange,
+  range: { type: TimeRange } | { type: 'custom'; from: number; to: number },
   resolution: Resolution,
   opts?: {
     now?: UnixTime

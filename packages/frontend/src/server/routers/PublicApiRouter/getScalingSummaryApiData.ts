@@ -5,7 +5,7 @@ export async function getScalingSummaryApiData() {
   const [entries, data] = await Promise.all([
     getScalingApiEntries(),
     getTvsChart({
-      range: '30d',
+      range: { type: '30d' },
       excludeAssociatedTokens: false,
       filter: { type: 'layer2' },
     }),
