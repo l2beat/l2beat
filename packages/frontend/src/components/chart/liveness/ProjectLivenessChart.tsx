@@ -1,5 +1,5 @@
 import type { Milestone } from '@l2beat/config'
-import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import type { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { useMemo, useState } from 'react'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
@@ -41,7 +41,9 @@ export function ProjectLivenessChart({
 
   const chartData = useMemo(() => {
     let rawChartData = chart?.data
-    const anyAnomalyLive = isAnyAnomalyLive(anomalies, subtype)
+    const anyAnomalyLive = anomalies.some(
+      (anomaly) => anomaly.subtype === subtype && anomaly.end === undefined,
+    )
 
     if (!anyAnomalyLive) {
       // If there is no anomaly live, remove all data after the last valid timestamp
@@ -66,7 +68,7 @@ export function ProjectLivenessChart({
   return (
     <section className="flex flex-col">
       <ProjectChartTimeRange range={chartRange} />
-      <ChartControlsWrapper className="mt-4 mb-2">
+      <ChartControlsWrapper className="mt-4 mb-2 flex-wrap-reverse">
         <LivenessChartSubtypeControls
           subtype={subtype}
           setSubtype={setSubtype}
@@ -92,19 +94,5 @@ export function ProjectLivenessChart({
         hasTrackedContractsChanged={hasTrackedContractsChanged}
       />
     </section>
-  )
-}
-
-function isAnyAnomalyLive(
-  anomalies: LivenessAnomaly[],
-  subtype: TrackedTxsConfigSubtype,
-) {
-  const NOW = UnixTime.now()
-  const subtypeAnomalies = anomalies.filter(
-    (anomaly) => anomaly.type === subtype,
-  )
-  return subtypeAnomalies.some(
-    (anomaly) =>
-      NOW - 4 * UnixTime.HOUR <= anomaly.timestamp + anomaly.durationInSeconds,
   )
 }

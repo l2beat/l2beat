@@ -9,7 +9,7 @@ function Collapsible({
 }: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {
   return (
     <CollapsiblePrimitive.Root
-      className={cn(className, './group/Collapsible')}
+      className={cn(className, 'group/Collapsible')}
       {...props}
     />
   )

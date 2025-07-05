@@ -94,7 +94,12 @@ function getScalingLivenessEntry(
   const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
   const data = transformLivenessData(liveness, project, !syncWarning)
   return {
-    ...getCommonScalingEntry({ project, changes, syncWarning }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncWarning,
+      ongoingAnomaly: liveness.anomalies.some((a) => a.end === undefined),
+    }),
     category: project.scalingInfo.type,
     stack: project.scalingInfo.stack,
     data,

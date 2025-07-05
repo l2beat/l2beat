@@ -9,17 +9,21 @@ export function getRowType(
   rowColoringMode: BasicTableProps<CommonProjectEntry>['rowColoringMode'],
 ) {
   if (entry.id === ProjectId.ETHEREUM) {
-    return 'ethereum'
+    return 'blue'
   }
   if (rowColoringMode === 'ignore-colors') {
     return undefined
   }
 
-  if (!!entry.statuses?.verificationWarning || !!entry.statuses?.redWarning) {
-    return 'unverified'
+  if (
+    !!entry.statuses?.verificationWarning ||
+    !!entry.statuses?.redWarning ||
+    !!entry.statuses?.ongoingAnomaly
+  ) {
+    return 'red'
   }
   if (entry.statuses?.underReview) {
-    return 'underReview'
+    return 'yellow'
   }
 }
 
@@ -28,11 +32,11 @@ export function getRowType(
 */
 export function getRowClassNames(rowType: RowType) {
   switch (rowType) {
-    case 'ethereum':
+    case 'blue':
       return 'bg-blue-500/35 dark:bg-blue-700/25'
-    case 'unverified':
+    case 'red':
       return UNVERIFIED_DA_CLASSNAME
-    case 'underReview':
+    case 'yellow':
       return 'bg-yellow-200/10'
     default:
       return undefined
@@ -41,11 +45,11 @@ export function getRowClassNames(rowType: RowType) {
 
 export function getRowClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
-    case 'ethereum':
+    case 'blue':
       return 'bg-blue-400 dark:bg-blue-900'
-    case 'unverified':
+    case 'red':
       return 'bg-[#FEE4E4] dark:bg-[#371315]'
-    case 'underReview':
+    case 'yellow':
       return 'bg-[#faf5e6] dark:bg-[#2F2A1D]'
     default:
       return 'bg-surface-primary'

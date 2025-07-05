@@ -7,7 +7,6 @@ export function EmptyStateIcon(props: SvgIconProps) {
       width="32"
       height="36"
       viewBox="0 0 32 36"
-      fill="yellow"
       aria-label="Empty state icon"
       {...props}
     >
