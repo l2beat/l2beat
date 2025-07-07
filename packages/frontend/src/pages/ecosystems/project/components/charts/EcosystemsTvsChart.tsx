@@ -40,7 +40,9 @@ export function EcosystemsTvsChart({
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: {
+      type: timeRange,
+    },
     excludeAssociatedTokens: false,
     filter: {
       type: 'projects',

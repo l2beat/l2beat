@@ -87,7 +87,7 @@ async function getQueryState(
     filter: {
       type: tab,
     },
-    range: '1y',
+    range: { type: '1y' },
     excludeAssociatedTokens: false,
   })
   return helpers.dehydrate()

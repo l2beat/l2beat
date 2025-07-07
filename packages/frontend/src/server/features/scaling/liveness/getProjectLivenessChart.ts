@@ -49,7 +49,7 @@ export async function getProjectLivenessChart({
   const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
 
@@ -142,7 +142,7 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
 function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
-  const [from, to] = getRangeWithMax(range, 'daily')
+  const [from, to] = getRangeWithMax({ type: range }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     to,
