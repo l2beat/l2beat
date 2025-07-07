@@ -156,27 +156,25 @@ export function NavLayout({
       preventTitleNavigation: true,
       links: [
         {
-          name: 'AggLayer',
-          slug: 'agglayer',
-        },
-        {
           name: 'Arbitrum Orbit',
           slug: 'arbitrum-orbit',
+        },
+        {
+          name: 'The Elastic Network',
+          slug: 'the-elastic-network',
         },
         {
           name: 'Superchain',
           slug: 'superchain',
         },
         {
-          name: 'The Elastic Network',
-          slug: 'the-elastic-network',
+          name: 'AggLayer',
+          slug: 'agglayer',
         },
-      ]
-        .map((ecosystem) => ({
-          title: ecosystem.name,
-          href: `/ecosystems/${ecosystem.slug}`,
-        }))
-        .sort((a, b) => a.title.localeCompare(b.title)),
+      ].map((ecosystem) => ({
+        title: ecosystem.name,
+        href: `/ecosystems/${ecosystem.slug}`,
+      })),
     },
   ])
 
