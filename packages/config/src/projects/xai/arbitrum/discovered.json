@@ -1,7 +1,7 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 348632935,
+  "blockNumber": 355131295,
   "configHash": "0xee7ee99569be5062bf75ccb66ccd81251d2bdcb0f77985a8294db3a0982eebfe",
   "entries": [
     {
@@ -38,7 +38,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -544,7 +544,7 @@
         "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 10,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -726,7 +726,7 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 91991,
+        "delayedMessageCount": 92034,
         "inboxHistory": [
           "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
@@ -736,8 +736,8 @@
         "outboxHistory": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 154260,
-        "sequencerReportedSubMessageCount": 101952619
+        "sequencerMessageCount": 156026,
+        "sequencerReportedSubMessageCount": 103347403
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -867,19 +867,18 @@
           ]
         ],
         "$upgradeCount": 3,
-        "batchCount": 154260,
+        "batchCount": 156026,
         "batchPosterManager": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
-          "requiredSignatures": 4,
-          "membersCount": 6,
+          "requiredSignatures": 3,
+          "membersCount": 5,
           "blsSignatures": [
             "YAaEnUny7I1Stgrqdkdn5ob8omB9Id5dh2xtP87ifNORqK2gdi8NLU9Lw4PAXlg/pwPcmuYrAp8OZOPAw02Z5NOUhTKS+udcc7iSEST/tJ6CI1KeH2jXoToqA5FADD4hrwt7qHtu0RK56+zb3voUzyGnjt838DQH0UZSAMmsEZq8k/KCZPeej6IP03lSQOPxSQAAzbxLd3GZKk0V9tYEF9HCHxHjyJHHN7whXqovNDOE/vcw87RZzBlBeP9fOQ8HKRdEvB70DjshSupH/QeU5Znd034y+4NGiMvaCIkoZGb0/tZxHFc9yxp2Uy2HpaVVDxMmZYLSAsWIdsfkAMHKLmQ2ZtqW8Khd9M/uXOaEqTSu6yjJyizIDyXbA3FUuoW8uQ==",
             "YBnmxAj50xHWx74c8TEJQ4hMxDc8au4r/8ZjDdm9VZZeVz30yudFDkKd5gzt/bnDkxL/fS3uO/uyV5IK/x5g53D7ZBMcrVJF3UMriIitIvf/jriRsnCi1TSZVG+RpGoMNAAji+ipTEVV5YnQPi/AVGQIGwmoEzhA/giQH7evlxzC1Q876MQqHTwwfIrX63UZ5hPEs84OyTq5gHvR71UYbI7TEzHRNi3RJTfgsidx8Q1v2jndA5HfYUq2pxmmPPkIoxHSK+Syt24Fe9q/6dIMN76BXMDpbXu1+r0QdQMPLEfSWm/aquMI6sN1ljaa958XThaluC1z+iqrR9b5e8LoEq1OliZf2qCHnv9MFX51KCF42zEQiz493XQrf0HUJIfCag==",
             "YAX5RGkb2ssH+fb3F+MTg0p+7jF3Le5BT8W/hIR7iSsgHvN2l435zpiSVuqOZNaIaQ/wyuGPur4m2hoiJ1d0J+r/VvbEYQGFCxPe6oi5JzIuAb/QlRA9lT+B1Rup8HKhcAAnSGaIowju3bSosv0LG04H0NlZOSRdJSFOIBA3WyfiK1867Nju+ZqfWF/TLUvR4AnIz2uNkZ7TzuIiA6mQnDHvpKSKsAUvhhAovG8Y8TI0iC1W/LSX1G9VVqFBeI2k1gDX3vzit2yN2PjskBfh5+N6bsIRSECZPRXBqskekNytvRlFveesFOwpXOmiyRPmFAwaYLtsQtSVjz94Ev5rabPQim7x1y9s6AEtV/Q/ggRU7/lTha1SVmMCRdYWWu3Igg==",
-            "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A==",
             "YA+ljLY01rxIncmXWl8bIZduwLObm0LKJIjzdyXjzH5FLN4Y+sUF2zjvF07aUPHOyADiV0y/+ztNO/iTpKLCVUzPzRHTtsukZaE3SUY+IIYU6NvUYdMXfhcKnHH3VU+iVRaSfiK2hw7OCfsge8AQcucdNlgaHSrdvlDmzAIx7jsemsLh8ov5dpywIVkWWZGY6wIwVh2/zUWBMZ4O3V3OYWppRttXZr2ukmwIDU5hQ4qtKRKemHaHSgb18QTuUsowMhkLwx2eW5hMOIYyzLV+NyUTyaQhkD0EtYISRBhHM7RinbP9LQWbLm0dnueZ9O3AkwnbH8w6/h3jkshPZx8hqJ6QH33SwbML1KIvOTEFvgBs7dnj9gbcfMq+17Bu3/YkWw==",
             "YBHz50DGYvPi02ynzcvcJS9K2nhXWKKSIZdDtXqxxoD3a1s2Fh2he79bMUWZ6M6qEhHM52HZr3l5jLoU4kOTBN+Q87yo0ljgZJYaphdYrHb+jabsPUcR+xdauJKAoKSkjQz8BWC9b2QZ3F7LK+Ro3cpWgkHR9SQlt86mk+eM71AWRl3ybwlRaxwAzYwOd9TRkQYARTY8fjvRmhChCY5lz7FtY0ttPrbJ3Mc2VXy5r0yyIoNFAQjg/jMNoablUOOIZRn+4KGLBQSPKcnl/Nv/0ZNdT563sLPj6mP3qLPlvwAhFpI5vIhSpGdpgJ8n8Ns3uxJyYsPD8qaHQciNLNTzYWGEze40CPMkxEeGRqi8yRoK8iuK5kse/+kqhBOyR3NVJg=="
           ]
@@ -889,7 +888,7 @@
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
         "isUsingFeeToken": true,
-        "keySetUpdates": 7,
+        "keySetUpdates": 8,
         "maxDataSize": 104857,
         "maxTimeVariation": {
           "delayBlocks": 5760,
@@ -902,7 +901,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 91991,
+        "totalDelayedMessagesRead": 92034,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -1125,7 +1124,7 @@
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "totalSupply": 3583289,
+        "totalSupply": 3583296,
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "usdcAddress": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
         "xaiAddress": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66"
@@ -1189,13 +1188,13 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 12326,
+        "firstUnresolvedNode": 12774,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 12325,
-        "latestNodeCreated": 12477,
+        "latestConfirmed": 12773,
+        "latestNodeCreated": 12925,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -1693,10 +1692,10 @@
         ],
         "$upgradeCount": 20,
         "calculateChallengeEmissionAndTier": [
-          "17836757990867579908675",
-          "312500000000000000000000000"
+          "8918378995433789954337",
+          "156250000000000000000000000"
         ],
-        "challengeCounter": 13217,
+        "challengeCounter": 13665,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
