@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, fromParts } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { EntryParameters } from '../output/types'
 import {
@@ -39,7 +39,7 @@ describe(interpolateModelTemplate.name, () => {
   it('properly interpolates the model file', () => {
     const modelTemplate = `
       msig(@self, &$threshold).
-      member(@self, 
+      member(@self,
         &$members
       ).
       myAddr(&$.address, "&$.address:raw").
@@ -50,23 +50,23 @@ describe(interpolateModelTemplate.name, () => {
     `
     const contract: EntryParameters = {
       type: 'Contract',
-      address: EthereumAddress.from('0x123'),
+      address: fromParts('eth', EthereumAddress.from('0x123')),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
       values: {
         $threshold: 2,
         $members: [
-          EthereumAddress.from('0x456').toString(),
-          EthereumAddress.from('0x789').toString(),
-          EthereumAddress.from('0xabc').toString(),
+          fromParts('eth', EthereumAddress.from('0x456')).toString(),
+          fromParts('eth', EthereumAddress.from('0x789')).toString(),
+          fromParts('eth', EthereumAddress.from('0xabc')).toString(),
         ],
       },
     }
 
     const addressToNameMap = {
-      [EthereumAddress.from('0x123').toString()]: 'ContactMsigA',
-      [EthereumAddress.from('0x456').toString()]: 'MemberA',
-      [EthereumAddress.from('0x789').toString()]: 'MemberB',
+      [fromParts('eth', EthereumAddress.from('0x123')).toString()]: 'ContactMsigA',
+      [fromParts('eth', EthereumAddress.from('0x456')).toString()]: 'MemberA',
+      [fromParts('eth', EthereumAddress.from('0x789')).toString()]: 'MemberB',
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
@@ -77,10 +77,10 @@ describe(interpolateModelTemplate.name, () => {
     )
     expect(result).toEqual(`
       msig(contactMsigA, 2).
-      member(contactMsigA, 
-        (memberA; memberB; "0x0000000000000000000000000000000000000abc")
+      member(contactMsigA,
+        (memberA; memberB; "eth:0x0000000000000000000000000000000000000abc")
       ).
-      myAddr(contactMsigA, "0x0000000000000000000000000000000000000123").
+      myAddr(contactMsigA, "eth:0x0000000000000000000000000000000000000123").
       myName("ContactMsigA").
       myDescription("Description of ContactMsigA").
       shouldCastToNil(nil).
@@ -92,7 +92,7 @@ describe(interpolateModelTemplate.name, () => {
     const modelTemplate = `msg1("&msg|lower").msg2("&msg:raw|lower").`
     const contract: EntryParameters = {
       type: 'Contract',
-      address: EthereumAddress.from('0x123'),
+      address: fromParts('eth', EthereumAddress.from('0x123')),
       name: 'ContractA',
       description: 'Description of ContractA',
       values: {
@@ -112,7 +112,7 @@ describe(interpolateModelTemplate.name, () => {
     `
     const contract: EntryParameters = {
       type: 'Contract',
-      address: EthereumAddress.from('0x123'),
+      address: fromParts('eth', EthereumAddress.from('0x123')),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
       values: {
@@ -131,7 +131,7 @@ describe(contractValuesForInterpolation.name, () => {
   it('properly prepares values for interpolation', () => {
     const contract: EntryParameters = {
       type: 'Contract',
-      address: EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
+      address: fromParts('eth', EthereumAddress('0x00000000000000000000000000000000DeaDBeef')),
       name: 'ContractA',
       description: 'Description of ContractA',
       values: {
@@ -143,7 +143,7 @@ describe(contractValuesForInterpolation.name, () => {
     const values = contractValuesForInterpolation('ethereum', contract)
     expect(values).toEqual({
       '$.chain': 'ethereum',
-      '$.address': '0x00000000000000000000000000000000deadbeef',
+      '$.address': 'eth:0x00000000000000000000000000000000deadbeef',
       '$.name': 'ContractA',
       '$.description': 'Description of ContractA',
       one: 1,

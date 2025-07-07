@@ -60,9 +60,17 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
   return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
 
+ChainSpecificAddress.check = function check(value: string) {
+  try {
+    return ChainSpecificAddress(value).toString() === value
+  } catch {
+    return false
+  }
+}
+
 export function fromParts(
   shortChainName: string,
-  pureAddress: string,
+  pureAddress: string | EthereumAddress,
 ): ChainSpecificAddress {
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
 }

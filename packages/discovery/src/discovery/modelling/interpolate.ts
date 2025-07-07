@@ -1,5 +1,7 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractValue, EntryParameters } from '../output/types'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
+import type { EntryParameters } from '../output/types'
+import type { ContractValue } from '../output/types'
+import { getChainShortName } from '../../config/config.discovery'
 
 export function interpolateModelTemplate(
   content: string,
@@ -61,7 +63,7 @@ export function tryCastingToName(
 }
 
 export function quoteEthereumAddress(value: string) {
-  return EthereumAddress.checkIgnoringCase(value)
+  return ChainSpecificAddress.check(value)
     ? `"${value.toLowerCase()}"`
     : value
 }
