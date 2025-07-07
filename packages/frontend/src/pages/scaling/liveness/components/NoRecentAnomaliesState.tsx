@@ -2,7 +2,13 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { VerifiedIcon } from '~/icons/Verified'
 import { cn } from '~/utils/cn'
 
-export function NoRecentAnomaliesState({ className }: { className?: string }) {
+export function NoAnomaliesState({
+  type,
+  className,
+}: {
+  type: 'recent' | 'ongoing'
+  className?: string
+}) {
   return (
     <PrimaryCard
       className={cn(
@@ -12,7 +18,7 @@ export function NoRecentAnomaliesState({ className }: { className?: string }) {
     >
       <VerifiedIcon className="size-5 fill-positive" />
       <span className="text-center font-medium text-positive leading-none">
-        No recent anomalies detected
+        No {type} anomalies detected
       </span>
     </PrimaryCard>
   )

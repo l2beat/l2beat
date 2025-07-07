@@ -6,7 +6,7 @@ import { ProjectLivenessChart } from '~/components/chart/liveness/ProjectLivenes
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { anomalySubtypeToLabel } from '~/pages/scaling/liveness/components/AnomalyIndicator'
 import { getDurationColorClassName } from '~/pages/scaling/liveness/components/LivenessDurationCell'
-import { NoRecentAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
+import { NoAnomaliesState } from '~/pages/scaling/liveness/components/NoRecentAnomaliesState'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
@@ -63,7 +63,7 @@ export function OngoingAnomalies({
   anomalies,
 }: { anomalies: LivenessAnomaly[] }) {
   if (anomalies.length === 0) {
-    return <NoRecentAnomaliesState className="!rounded-lg" />
+    return <NoAnomaliesState className="!rounded-lg" type="ongoing" />
   }
 
   return (

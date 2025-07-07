@@ -14,7 +14,7 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
-import { NoRecentAnomaliesState } from './NoRecentAnomaliesState'
+import { NoAnomaliesState } from './NoRecentAnomaliesState'
 import { OngoingAnomalyBanner } from './OngoingAnomalyBanner'
 
 export interface ProjectWithAnomaly {
@@ -31,7 +31,10 @@ interface Props {
 export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
   if (projectsWithAnomalies.length === 0) {
     return (
-      <NoRecentAnomaliesState className={cn('max-md:border-x-0', className)} />
+      <NoAnomaliesState
+        className={cn('max-md:border-x-0', className)}
+        type="recent"
+      />
     )
   }
 
@@ -75,7 +78,18 @@ function AnomalyCollapsible({
           </span>
         </div>
         <div className="flex items-center gap-4">
-          {isAnyOngoing && <LiveIndicator />}
+          {isAnyOngoing ? (
+            <div className="flex items-center gap-1">
+              <LiveIndicator />
+              <span className="font-medium text-2xs text-negative uppercase">
+                Ongoing
+              </span>
+            </div>
+          ) : (
+            <span className="font-medium text-2xs text-secondary uppercase">
+              Resolved
+            </span>
+          )}
           <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
