@@ -136,6 +136,10 @@ function AnomalyTooltipContent(props: {
                 />
               </div>
               <div className="flex justify-between gap-2">
+                Avg. interval:
+                <LivenessDurationCell durationInSeconds={anomaly.avgInterval} />
+              </div>
+              <div className="flex justify-between gap-2">
                 Type: <AnomalyTypeBadge type={anomaly.subtype} />
               </div>
             </div>
