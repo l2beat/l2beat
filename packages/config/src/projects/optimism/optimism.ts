@@ -249,14 +249,15 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://vote.optimism.io/proposals/8705916809146420472067303211131851783087744913535435360574720946039078686841',
       date: '2025-04-12T00:00:00Z',
       description: 
-       'Optimism introduces the Isthmus hard fork and its features.',
+        'Optimism introduces the Isthmus hard fork and its features.',
       type: 'general',
     },
     {
       title: 'Upgrade #14  Isthmus L1 Contracts + MT-Cannon',
       url: 'https://vote.optimism.io/proposals/95528263587371532982719325402371584327430753545162858644972401153516332664853',
       date: '2025-04-12T00:00:00Z',
-      description: 'Optimism introduces MT-Cannon and the Operator Fee.',
+      description: 
+        'Optimism introduces MT-Cannon and the Operator Fee.',
       type: 'general',
     },
     {
@@ -264,14 +265,14 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://vote.optimism.io/proposals/84511922734478887667300419900648701566511387783615524992018614345859900443455',
       date: '2025-03-22T00:00:00Z',
       description: 
-       'Optimism introduces a new system for upgrading L1 contracts across the Superchain.',
+        'Optimism introduces a new system for upgrading L1 contracts across the Superchain.',
       type: 'general',
     },
     {
       title: 'Maintainance Upgrade L1 Pectra Readiness',
       url: 'https://vote.optimism.io/proposals/38506287861710446593663598830868940900144818754960277981092485594195671514829',
       date: '2025-03-05T00:00:00Z',
-      description: "Optimism prepares for Ethereum\'s pectra upgrade.",
+      description: "Optimism prepares for Ethereum's pectra upgrade.",
       type: 'general',
     },
     {
@@ -301,7 +302,7 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://x.com/Optimism/status/1824560759747256596',
       date: '2024-08-16T00:00:00Z',
       description:
-        'OP Mainnet preventively disables the fraud proof system due to a bug for 26 days.',
+       'OP Mainnet preventively disables the fraud proof system due to a bug for 26 days.',
       type: 'incident',
     },
     {
@@ -309,7 +310,7 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://x.com/Optimism/status/1800256837088145799',
       date: '2024-06-10T00:00:00Z',
       description:
-        'OP Mainnet introduces fraud proofs and updates permissions.',
+         'OP Mainnet introduces fraud proofs and updates permissions.',
       type: 'general',
     },
     {
