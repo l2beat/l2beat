@@ -20,5 +20,5 @@ export interface BridgeTransfer {
   /** Custom property to differentiate between events from the same bridge */
   type: string
   /** Custom id used (by given protocol) to identify other part of the transfer */
-  id?: string
+  matchingId?: string
 }

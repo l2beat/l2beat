@@ -93,12 +93,12 @@ const cmd = command({
                 ...(decoded.txHash
                   ? { explorerLink: r.getTxUrl(decoded.txHash) }
                   : {}),
-                ...(decoded.id ? { id: decoded.id } : {}),
+                ...(decoded.matchingId ? { id: decoded.matchingId } : {}),
               },
             )
 
-            if (decoded.id) {
-              const key = `${decoded.protocol}:${decoded.id}`
+            if (decoded.matchingId) {
+              const key = `${decoded.protocol}:${decoded.matchingId}`
 
               if (!transfersByProtocolAndId[key]) {
                 transfersByProtocolAndId[key] = []

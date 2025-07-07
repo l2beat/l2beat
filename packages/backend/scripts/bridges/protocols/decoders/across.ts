@@ -41,7 +41,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
       receiver: extractAddressFromPadded(data.args.recipient),
       txHash: log.transactionHash ?? undefined,
       type: 'FundsDeposited',
-      id: data.args.depositId.toString(),
+      matchingId: data.args.depositId.toString(),
     }
   }
 
@@ -71,7 +71,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
       receiver: extractAddressFromPadded(data.args.recipient),
       txHash: log.transactionHash ?? undefined,
       type: 'FilledRelay',
-      id: data.args.depositId.toString(),
+      matchingId: data.args.depositId.toString(),
     }
   }
   return undefined
