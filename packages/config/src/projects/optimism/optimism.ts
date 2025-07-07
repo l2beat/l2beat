@@ -277,7 +277,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
      {
-      title: 'Upgrade #11 Holocine',
+      title: 'Upgrade #11 Holocene',
       url: 'https://vote.optimism.io/proposals/50775220738623167695573388814398057544437236582252674861818535424434586434657',
       date: '2025-01-09T00:00:00Z',
       description:
