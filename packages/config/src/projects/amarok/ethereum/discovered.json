@@ -2,7 +2,7 @@
   "name": "amarok",
   "chain": "ethereum",
   "blockNumber": 22823809,
-  "configHash": "0x39f237f533279fc4791c153037980693998adbd23b82bbc3a7f9c85339cf8787",
+  "configHash": "0x809b7c5a3b9e60e10e8676a6b09ab804d506822208a05d12af8fe6ffc1dd07bc",
   "entries": [
     {
       "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
@@ -76,7 +76,6 @@
       "name": "Relayer2",
       "address": "0x0ae392879A228B2484D9B1F80A5D0B7080FE79C2",
       "type": "EOA",
-      "template": "amarok/Relayer",
       "proxyType": "EOA"
     },
     {
@@ -576,7 +575,6 @@
       "name": "Relayer8",
       "address": "0x43728A95386D64384C76Afd416Dcc8118869BA6c",
       "type": "EOA",
-      "template": "amarok/Relayer",
       "proxyType": "EOA"
     },
     {
@@ -919,7 +917,6 @@
       "name": "Relayer9",
       "address": "0x62B1a88CCc6BC5e6FF91FB2FCD29Ab4F819b35C6",
       "type": "EOA",
-      "template": "amarok/Relayer",
       "proxyType": "EOA"
     },
     {
@@ -1742,7 +1739,6 @@
       "name": "Relayer4",
       "address": "0x935AaAe0f5b02007c08512F0629a9d37Af2E1A47",
       "type": "EOA",
-      "template": "amarok/Relayer",
       "proxyType": "EOA"
     },
     {
@@ -2807,7 +2803,6 @@
       "name": "Relayer6",
       "address": "0xE2Fc8F14B6cEb1AD8165623E02953eDB100288bE",
       "type": "EOA",
-      "template": "amarok/Relayer",
       "proxyType": "EOA"
     },
     {
@@ -3081,7 +3076,6 @@
       "name": "Relayer11",
       "address": "0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0",
       "type": "Contract",
-      "template": "amarok/Relayer",
       "sourceHashes": [
         "0x70de0f52f9c98e17b083184c29d00c0c7ba199299d2758c1ec88e6af3428b060"
       ],

@@ -197,8 +197,12 @@ export const scalingSummaryOthersColumns = [
   ...scalingSummaryValidiumAndOptimiumsColumns.slice(5),
 ]
 
-export const scalingSummaryUnderReviewColumns = [
-  ...scalingSummaryColumns.slice(0, 3),
+export const scalingSummaryNotReviewedColumns = [
+  ...getScalingCommonProjectColumns(
+    columnHelper,
+    (row) => `/scaling/projects/${row.slug}`,
+    { ignoreUnderReviewIcon: true },
+  ),
   ...scalingSummaryColumns.slice(4, 5),
   ...scalingSummaryColumns.slice(6, 8),
 ]

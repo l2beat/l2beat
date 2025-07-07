@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x657b878b2dbac6e33f1572c417925568efe723b0
+
+# Diff at Mon, 07 Jul 2025 07:27:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 20311131
+- current block number: 22865800
+
+## Description
+
+[This address](https://etherscan.io/address/0x728001a80a3657e886810daab9e796fefd66b6c7) is doing weird ['withdrawals'](https://app.blocksec.com/explorer/tx/eth/0x3755c1e01271133b4549d2c341a24acfd36baaabe0787fa02a5e9865d810abcb) (mints) of an iliquid token. zkswap diso now archived.
+
+## Watched changes
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      values.totalOpenPriorityRequests:
+-        0
++        2
+    }
+```
+
 Generated with discovered.json: 0xdb436c23ac272aa2c82e9087174835a9d8be64ea
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

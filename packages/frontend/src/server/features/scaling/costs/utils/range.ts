@@ -22,7 +22,7 @@ export type CostsTimeRange = v.infer<typeof CostsTimeRange>
 export function getFullySyncedCostsRange(
   range: CostsTimeRange,
 ): [UnixTime, UnixTime] {
-  const days = rangeToDays(range)
+  const days = rangeToDays({ type: range })
 
   const startOfDay = UnixTime.toStartOf(UnixTime.now(), 'day')
 
@@ -33,7 +33,7 @@ export function getFullySyncedCostsRange(
 
 export type CostsResolution = ReturnType<typeof rangeToResolution>
 export function rangeToResolution(value: CostsTimeRange) {
-  const days = rangeToDays(value)
+  const days = rangeToDays({ type: value })
   if (days && days < 30) {
     return 'hourly'
   }

@@ -1,8 +1,8 @@
 {
   "name": "hyperlane",
   "chain": "ethereum",
-  "blockNumber": 22823856,
-  "configHash": "0x622cc5a249586363db423201c6942bab5cb906f0fe29d63fd40700e35e09e704",
+  "blockNumber": 22866629,
+  "configHash": "0x33ed0c24f23219b04ce699ae0224744ac11e6d002c5ce24183c045ff79f1c535",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -160,7 +160,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 9 (44%)",
-        "nonce": 58,
+        "nonce": 61,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -309,7 +309,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "6 of 10 (60%)",
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -544,10 +544,10 @@
         "threshold": 1
       },
       "fieldMeta": {
-        "modules": { "severity": "HIGH" },
         "modulesAndThreshold": {
           "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
-        }
+        },
+        "modules": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm"
@@ -599,15 +599,14 @@
           "0xEd700310D77BfBC3D2d962d11254861a6748cb3e",
           "0x7f03DFC538Df4f6893D6f1AE3089eafF8924D898",
           "0xF3385420ffaae12CF719B3D4AbB4f1122A2873F8",
-          "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39",
           "0x6B1d3f8882fCA07416184D68f2906d0C3725a4aA"
         ],
-        "$threshold": 4,
+        "$threshold": 3,
         "domainSeparator": "0x45a540ffc15e9cddbfa68d8eb70409fb0fedd410e79037cbc1067c6a2b1d5ee5",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 8 (50%)",
-        "nonce": 2036,
+        "multisigThreshold": "3 of 7 (43%)",
+        "nonce": 2039,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -819,7 +818,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 199,
+        "nonce": 201,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -956,11 +955,6 @@
         "0xe1De9910fe71cC216490AC7FCF019e13a34481D7": "TransparentUpgradeableProxy",
         "0xe8CC4FF9203196A90734d2C4328B83775486163C": "HypERC20Collateral"
       }
-    },
-    {
-      "address": "0xe7Ad7d90639A565FE3A6F68A41AD0B095f631F39",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0xe8eA8990643A0431E4B28F7F7f6878aaB88fE424",
@@ -1533,5 +1527,5 @@
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x642c5bd18a91dc1b3d49d1d10c1c6c27a8e01940ad0d790cdbebab4bc8e92dee"
+  "permissionsConfigHash": "0xe0284aa0b733005adc842a5ef6f8a051d135965f67eaf6a24a7df38cc07342bd"
 }

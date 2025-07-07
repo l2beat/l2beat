@@ -4,12 +4,15 @@ import { ProjectBadge } from '../ProjectBadge'
 
 interface BadgesSectionProps {
   badges: BadgeWithParams[]
+  hideTitle?: boolean
 }
 
-export function BadgesSection({ badges }: BadgesSectionProps) {
+export function BadgesSection({ badges, hideTitle }: BadgesSectionProps) {
   return (
     <div className="flex shrink-0 flex-col gap-2 lg:min-w-[288px]">
-      <h2 className="font-medium text-secondary text-xs uppercase">Badges</h2>
+      {!hideTitle && (
+        <h2 className="font-medium text-secondary text-xs uppercase">Badges</h2>
+      )}
       <OverflowWrapper className="-m-4">
         <div className="flex flex-row gap-1 p-4 lg:flex-wrap">
           {badges.map((badge, key) => (

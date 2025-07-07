@@ -1,7 +1,7 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 22796170,
+  "blockNumber": 22865583,
   "configHash": "0x40f14d0f31d0e457b53be294cdc3b34890a4447c979c1f61995cea4f04d8d446",
   "entries": [
     {
@@ -209,7 +209,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 616,
+        "batchCount": 640,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x9298413c781c241aF6F6733b7df00De5D4A42D93",
@@ -381,8 +381,8 @@
         "outboxHistory": ["0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d"],
         "rollup": "0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
-        "sequencerMessageCount": 616,
-        "sequencerReportedSubMessageCount": 672254
+        "sequencerMessageCount": 640,
+        "sequencerReportedSubMessageCount": 695742
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -454,13 +454,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 425,
+        "firstUnresolvedNode": 444,
         "inbox": "0x37693F11f3D724E55D0B03D5F328D8202C913243",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 21224759,
-        "latestConfirmed": 424,
-        "latestNodeCreated": 435,
+        "lastStakeBlock": 22839093,
+        "latestConfirmed": 443,
+        "latestNodeCreated": 456,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
@@ -470,7 +470,7 @@
         "rollupEventInbox": "0x6282197777e7c318C7209bd7059110886aa429C6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
         "setValidatorCount": 2,
-        "stakerCount": 1,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,

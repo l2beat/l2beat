@@ -1,3 +1,34 @@
+Generated with discovered.json: 0x412925f5a3d77153896e30071f970baeb1a7a45f
+
+# Diff at Mon, 07 Jul 2025 08:09:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 348632935
+- current block number: 355131295
+
+## Description
+
+remove one DAC member.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.dacKeyset.requiredSignatures:
+-        4
++        3
+      values.dacKeyset.membersCount:
+-        6
++        5
+      values.dacKeyset.blsSignatures.3:
+-        "YBWhdxIOTQsrGcRQF8bHAEauHwl6F64farjSibsWDNPgplumU8MFRPn6X0jtBBMR1hH/aXso0ftQEI0edQVEB5dJkB4gymdhxq6hFCbYZpxsb8Ipr4lJe05WNmJRX1VeTRIu9WaeVLZlm+RMtvSuzbXXKJyNUnSZ420JaMKyR8Wt9M05nFZ832+eqer4eOtKDBX6gPBzdbUG+WRYdQlvFMkH/Nwo7LyKlHx231VIXKEIeuYXBmMxdtd0++QT7wi7PRN1XLjxGC8osyHYh3rksjBjG6urtgt4b/tVWyNevNaHT5YuO5MBPMMoQFgUqeV6dQiU3v2aXCwnnInTCjEvNbI5PUdwOosJi8JcdY7N1Vpm9jn8Gm89pCdwc8avTGWU5A=="
+      values.keySetUpdates:
+-        7
++        8
+    }
+```
+
 Generated with discovered.json: 0x194dce36541320d2549afbb965370db3967568ab
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

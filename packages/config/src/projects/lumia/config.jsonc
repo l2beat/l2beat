@@ -9,11 +9,6 @@
         "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
       ],
       "names": { "0x92726F7dE49300DBdb60930066bc1d0803c0740B": "Validium" },
-      "overrides": {
-        "0x92726F7dE49300DBdb60930066bc1d0803c0740B": {
-          "extends": "polygon-cdk/PolygonZkEVM"
-        }
-      },
       "sharedModules": ["shared-polygon-cdk"]
     }
   }
