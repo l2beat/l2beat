@@ -1,12 +1,12 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
   formatSeconds,
   rawAddress,
-  ChainSpecificAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,

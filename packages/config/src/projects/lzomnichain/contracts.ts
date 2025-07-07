@@ -1,11 +1,10 @@
 import {
   assert,
-  assertUnreachable,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
   assertUnreachable,
   fromParts,
-  ChainSpecificAddress,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

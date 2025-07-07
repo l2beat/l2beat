@@ -1,4 +1,4 @@
-import { EthereumAddress, fromParts, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, fromParts } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'

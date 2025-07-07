@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -160,7 +165,9 @@ export const sygma: Bridge = {
         discovery.getPermissionDetails(
           'Pauser/Unpauser',
           discovery.formatPermissionedAccounts([
-            ChainSpecificAddress('eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049'),
+            ChainSpecificAddress(
+              'eth:0x695bd50CB07ffBd4098b272CE8b52B3c256ca049',
+            ),
           ]),
           'EOA address with the permission to pause/unpause the bridge.',
         ),

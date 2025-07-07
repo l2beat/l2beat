@@ -1,4 +1,9 @@
-import { ChainSpecificAddress, EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -146,28 +151,36 @@ export const orbiter: Bridge = {
         discovery.getPermissionDetails(
           'ETH escrow',
           discovery.formatPermissionedAccounts([
-            ChainSpecificAddress('eth:0x80C67432656d59144cEFf962E8fAF8926599bCF8'),
+            ChainSpecificAddress(
+              'eth:0x80C67432656d59144cEFf962E8fAF8926599bCF8',
+            ),
           ]),
           'Maker account for ETH deposits/withdrawals',
         ),
         discovery.getPermissionDetails(
           'USDC escrow',
           discovery.formatPermissionedAccounts([
-            ChainSpecificAddress('eth:0x41d3D33156aE7c62c094AAe2995003aE63f587B3'),
+            ChainSpecificAddress(
+              'eth:0x41d3D33156aE7c62c094AAe2995003aE63f587B3',
+            ),
           ]),
           'Maker account for USDC deposits/withdrawals',
         ),
         discovery.getPermissionDetails(
           'USDT escrow',
           discovery.formatPermissionedAccounts([
-            ChainSpecificAddress('eth:0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC'),
+            ChainSpecificAddress(
+              'eth:0xd7Aa9ba6cAAC7b0436c91396f22ca5a7F31664fC',
+            ),
           ]),
           'Maker account for USDT deposits/withdrawals',
         ),
         discovery.getPermissionDetails(
           'DAI escrow',
           discovery.formatPermissionedAccounts([
-            ChainSpecificAddress('eth:0x095D2918B03b2e86D68551DCF11302121fb626c9'),
+            ChainSpecificAddress(
+              'eth:0x095D2918B03b2e86D68551DCF11302121fb626c9',
+            ),
           ]),
           'Maker account for DAI deposits/withdrawals',
         ),

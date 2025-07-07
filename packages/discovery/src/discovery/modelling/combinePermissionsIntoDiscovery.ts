@@ -1,5 +1,4 @@
 import isEmpty from 'lodash/isEmpty'
-import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -17,7 +16,6 @@ export function combinePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
-  const _shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,

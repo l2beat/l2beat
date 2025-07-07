@@ -1,10 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import {
-  assert,
-  type EthereumAddress,
-  formatJson,
-  rawAddress,
-} from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'

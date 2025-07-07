@@ -1,6 +1,6 @@
 import {
-  fromParts,
   type Hash256,
+  fromParts,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'

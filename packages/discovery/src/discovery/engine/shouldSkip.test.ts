@@ -1,4 +1,4 @@
-import { EthereumAddress, fromParts, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, fromParts } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import type { ConfigReader } from '../config/ConfigReader'
 import { ConfigRegistry } from '../config/ConfigRegistry'

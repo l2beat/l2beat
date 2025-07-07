@@ -64,7 +64,8 @@ describe(interpolateModelTemplate.name, () => {
     }
 
     const addressToNameMap = {
-      [fromParts('eth', EthereumAddress.from('0x123')).toString()]: 'ContactMsigA',
+      [fromParts('eth', EthereumAddress.from('0x123')).toString()]:
+        'ContactMsigA',
       [fromParts('eth', EthereumAddress.from('0x456')).toString()]: 'MemberA',
       [fromParts('eth', EthereumAddress.from('0x789')).toString()]: 'MemberB',
     }
@@ -131,7 +132,10 @@ describe(contractValuesForInterpolation.name, () => {
   it('properly prepares values for interpolation', () => {
     const contract: EntryParameters = {
       type: 'Contract',
-      address: fromParts('eth', EthereumAddress('0x00000000000000000000000000000000DeaDBeef')),
+      address: fromParts(
+        'eth',
+        EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
+      ),
       name: 'ContractA',
       description: 'Description of ContractA',
       values: {
