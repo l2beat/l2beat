@@ -76,10 +76,10 @@ export function OngoingAnomalies({
       </div>
       <table className="w-full">
         <thead className="text-xs">
-          <tr className="text-left font-medium text-secondary">
-            <th className="w-1/2 pr-2 pb-2 lg:w-1/3">Type</th>
-            <th className="w-1/2 pr-2 pb-2 lg:w-1/3">Duration</th>
-            <th className="w-1/3 pb-2 max-lg:hidden">Start</th>
+          <tr className="text-left text-secondary">
+            <th className="w-1/2 pr-2 pb-2 font-medium lg:w-1/3">Type</th>
+            <th className="w-1/2 pr-2 pb-2 font-medium lg:w-1/3">Duration</th>
+            <th className="w-1/3 pb-2 font-medium max-lg:hidden">Start</th>
           </tr>
         </thead>
         <tbody className="!leading-none align-top text-sm md:text-lg">
