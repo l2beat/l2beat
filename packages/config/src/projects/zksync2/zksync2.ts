@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
+  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
@@ -107,7 +108,7 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: rawAddress(bridge.address),
       tokens: '*',
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',

@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -87,7 +87,7 @@ export const hashkey = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: disputeGameFactory.address,
+        address: rawAddress(disputeGameFactory.address),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

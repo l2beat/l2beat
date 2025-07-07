@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -61,7 +66,7 @@ export const treasure: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('TreasureZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: rawAddress(bridge.address),
       tokens: ['MAGIC'],
       description:
         'Shared bridge for depositing tokens to Treasure and other ZK stack chains.',

@@ -4,7 +4,12 @@ import {
   type EntryParameters,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type EthereumAddress,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { Bridge, ScalingProject } from '../internalTypes'
@@ -91,16 +96,19 @@ function containsAllAddresses(
 }
 
 function addressesInDiscovery(discovery: DiscoveryOutput): EthereumAddress[] {
-  return discovery.entries.flatMap((c) => [c.address, ...getImplementations(c)])
+  return discovery.entries.flatMap((c) => [
+    rawAddress(c.address),
+    ...getImplementations(c).map((a) => rawAddress(a)),
+  ])
 }
 
-function getImplementations(entry: EntryParameters): EthereumAddress[] {
+function getImplementations(entry: EntryParameters): ChainSpecificAddress[] {
   const implementations = entry.values?.['$implementation'] ?? []
 
   if (Array.isArray(implementations)) {
-    return implementations.map((i) => EthereumAddress(i.toString()))
+    return implementations.map((i) => ChainSpecificAddress(i.toString()))
   }
-  return [EthereumAddress(implementations.toString())]
+  return [ChainSpecificAddress(implementations.toString())]
 }
 
 type Project = ScalingProject | Bridge | BaseProject

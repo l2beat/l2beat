@@ -3,12 +3,13 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   Hash256,
+  fromParts,
 } from '@l2beat/shared-pure'
 
 export const contractStub: EntryParameters = {
   type: 'Contract',
   name: 'MockedContract',
-  address: EthereumAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
+  address: ChainSpecificAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
   proxyType: 'StarkWare diamond',
   receivedPermissions: [
     {
@@ -46,7 +47,9 @@ export const discoveredJsonStub: DiscoveryOutput = {
     {
       type: 'Contract',
       name: 'DuplicatedNameContractMock',
-      address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+      address: ChainSpecificAddress(
+        '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+      ),
       values: {
         $immutable: true,
         BOND_LOWER_BOUND_DIVISOR: 2,
@@ -62,7 +65,9 @@ export const discoveredJsonStub: DiscoveryOutput = {
     {
       type: 'Contract',
       name: 'DuplicatedNameContractMock',
-      address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
+      address: ChainSpecificAddress(
+        '0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+      ),
       values: {
         $immutable: true,
         BOND_LOWER_BOUND_DIVISOR: 2,
@@ -77,7 +82,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
     {
       type: 'EOA',
-      address: EthereumAddress.from('0xaa11'),
+      address: fromParts('eth', EthereumAddress.from('0xaa11')),
       receivedPermissions: [
         {
           permission: 'validate',
@@ -89,7 +94,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
     {
       type: 'EOA',
-      address: EthereumAddress.from('0xbb22'),
+      address: fromParts('eth', EthereumAddress.from('0xbb22')),
       receivedPermissions: [
         {
           permission: 'sequence',

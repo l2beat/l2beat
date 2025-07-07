@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -61,7 +61,7 @@ export const lens: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: rawAddress(bridge.address),
       tokens: ['LGHO', 'ETH'],
       description:
         'Shared bridge for depositing tokens to Lens and other ZK stack chains.',

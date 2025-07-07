@@ -1,7 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
-  EthereumAddress,
+  ChainSpecificAddress,
   ProjectId,
   type UnixTime,
   formatSeconds,
@@ -149,7 +149,7 @@ export function polygonCDKStack(
 
   assert(
     rollupManagerContract.address ===
-      EthereumAddress('0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
+      ChainSpecificAddress('eth:0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2'),
     'Polygon rollup manager address does not match with the one in the shared Polygon CDK discovery. Tracked transactions would be misconfigured, bailing.',
   )
   const bridge = shared.getContract('PolygonSharedBridge')
