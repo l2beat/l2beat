@@ -3,6 +3,7 @@ import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
+import type { BridgeTransfer } from './types/BridgeTransfer'
 import { getTokenAmount, getTokenSymbol } from './utils/erc20'
 import { logToViemLog } from './utils/viem'
 
@@ -62,6 +63,8 @@ const cmd = command({
 
     const decoders = protocols.map((p) => p.decoder)
 
+    const transfersByProtocolAndId: Record<string, BridgeTransfer[]> = {}
+
     for (const r of rpcs) {
       const range = args.range ?? 100
       const start = args.start
@@ -77,21 +80,65 @@ const cmd = command({
             const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
             const amount = await getTokenAmount(r.rpc, decoded, start)
 
-            logger.info(`${decoded.protocol} ${decoded.type ?? ''}`, {
-              origin: decoded.origin,
-              destination: decoded.destination,
-              token: tokenSymbol,
-              amount: amount,
-              ...(decoded.sender ? { sender: decoded.sender } : {}),
-              ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
-              ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
-              ...(decoded.txHash
-                ? { explorerLink: r.getTxUrl(decoded.txHash) }
-                : {}),
-              ...(decoded.id ? { id: decoded.id } : {}),
-            })
+            logger.info(
+              `${decoded.protocol} on ${decoded.chain} (${decoded.type ?? ''})`,
+              {
+                origin: decoded.origin,
+                destination: decoded.destination,
+                token: tokenSymbol,
+                amount: amount,
+                ...(decoded.sender ? { sender: decoded.sender } : {}),
+                ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
+                ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
+                ...(decoded.txHash
+                  ? { explorerLink: r.getTxUrl(decoded.txHash) }
+                  : {}),
+                ...(decoded.id ? { id: decoded.id } : {}),
+              },
+            )
+
+            if (decoded.id) {
+              const key = `${decoded.protocol}:${decoded.id}`
+
+              if (!transfersByProtocolAndId[key]) {
+                transfersByProtocolAndId[key] = []
+              }
+              transfersByProtocolAndId[key].push(decoded)
+            }
           }
         }
+      }
+    }
+
+    logger.info('--- Related transfers (same protocol and ID) ---')
+    for (const [key, transfers] of Object.entries(transfersByProtocolAndId)) {
+      if (transfers.length > 1) {
+        const [protocol, id] = key.split(':')
+        logger.info(
+          `Found ${transfers.length} related transfers for ${protocol} with ID ${id}:`,
+        )
+
+        transfers.forEach((transfer, index) => {
+          const getTxUrl = CHAINS.find(
+            (c) => c.name === transfer.chain,
+          )?.getTxUrl
+
+          logger.info(
+            `  [${index + 1}] ${transfer.type} on ${transfer.chain}`,
+            {
+              origin: transfer.origin,
+              destination: transfer.destination,
+              token: transfer.token,
+              amount: transfer.amount,
+              ...(transfer.sender ? { sender: transfer.sender } : {}),
+              ...(transfer.receiver ? { receiver: transfer.receiver } : {}),
+              ...(transfer.txHash ? { txHash: transfer.txHash } : {}),
+              ...(transfer.txHash && getTxUrl
+                ? { explorerLink: getTxUrl(transfer.txHash) }
+                : {}),
+            },
+          )
+        })
       }
     }
 

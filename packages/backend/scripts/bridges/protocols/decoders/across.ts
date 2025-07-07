@@ -30,6 +30,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
 
     return {
       protocol: ACROSS.name,
+      chain: chainName,
       origin: chain.name,
       destination: destination ?? data.args.destinationChainId.toString(),
       token: extractAddressFromPadded(data.args.inputToken),
@@ -61,6 +62,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
 
     return {
       protocol: ACROSS.name,
+      chain: chainName,
       origin: origin ?? data.args.originChainId.toString(),
       destination: chain.name,
       token: extractAddressFromPadded(data.args.outputToken),
