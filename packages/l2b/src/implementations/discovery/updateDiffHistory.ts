@@ -7,6 +7,7 @@
 import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import path, { join, relative } from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryDiff,
@@ -27,10 +28,9 @@ import {
 } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { rimraf } from 'rimraf'
+import { getPlainLogger } from '../common/getPlainLogger'
 import { updateDiffHistoryHash } from './hashing'
 import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
-import { getPlainLogger } from '../common/getPlainLogger'
-import type { Logger } from '@l2beat/backend-tools'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 

@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DiscoverCommandArgs,
@@ -8,9 +9,8 @@ import {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { command, option, optional, positional, string } from 'cmd-ts'
-import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 import { getPlainLogger } from '../implementations/common/getPlainLogger'
-import type { Logger } from '@l2beat/backend-tools'
+import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
 
 // NOTE(radomski): We need to modify the args object because the only allowed
 // chains are those that we know of. But we also want to allow the user to
@@ -71,7 +71,10 @@ export const Discover = command({
   },
 })
 
-function logProjectsToDiscover(projectsOnChain: Record<string, string[]>, logger: Logger) {
+function logProjectsToDiscover(
+  projectsOnChain: Record<string, string[]>,
+  logger: Logger,
+) {
   if (Object.keys(projectsOnChain).length === 0) {
     logger.info(chalk.greenBright('Nothing to discover'))
     return

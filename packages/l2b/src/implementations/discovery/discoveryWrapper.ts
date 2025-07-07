@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import {
   type ConfigReader,
   type DiscoveryModuleConfig,
@@ -8,7 +9,6 @@ import {
   modelPermissionsCommand,
 } from '@l2beat/discovery'
 import { updateDiffHistory } from './updateDiffHistory'
-import type { Logger } from '@l2beat/backend-tools'
 
 export interface Options {
   logger: Logger

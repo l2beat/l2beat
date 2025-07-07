@@ -1,3 +1,4 @@
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type ConfigRegistry,
@@ -5,14 +6,13 @@ import {
   getChainConfig,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { boolean, command, flag, option, optional, string } from 'cmd-ts'
-import { keyInYN } from 'readline-sync'
-import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
-import { Separated } from './types'
-import { getPlainLogger } from '../implementations/common/getPlainLogger'
-import type { Logger } from '@l2beat/backend-tools'
 import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
+import { boolean, command, flag, option, optional, string } from 'cmd-ts'
+import { keyInYN } from 'readline-sync'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
+import { discoverAndUpdateDiffHistory } from '../implementations/discovery/discoveryWrapper'
+import { Separated } from './types'
 
 export const RefreshDiscovery = command({
   name: 'refresh-discovery',
