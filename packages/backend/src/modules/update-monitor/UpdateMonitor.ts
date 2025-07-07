@@ -232,6 +232,9 @@ export class UpdateMonitor {
       projectConfig,
       blockNumber,
       this.logger,
+      undefined,
+      undefined,
+      previousDiscovery?.dependentDiscoveries,
     )
 
     if (!previousDiscovery || !discovery) return
@@ -333,6 +336,9 @@ export class UpdateMonitor {
       projectConfig,
       previousDiscovery.blockNumber,
       this.logger,
+      undefined,
+      undefined,
+      previousDiscovery.dependentDiscoveries,
     )
 
     // NOTE(radomski): We should only write to the database files that are

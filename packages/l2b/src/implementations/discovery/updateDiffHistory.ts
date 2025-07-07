@@ -252,11 +252,11 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   )
 
   const targetDiscovery = discoveries.get(projectName, chain)
-  if (targetDiscovery === undefined) {
-    throw new Error(`Target discovery not found for ${projectName} on ${chain}`)
-  }
-  combinePermissionsIntoDiscovery(targetDiscovery, permissionsOutput)
-  const prevDiscovery = withoutUndefinedKeys(targetDiscovery)
+  combinePermissionsIntoDiscovery(
+    targetDiscovery.discoveryOutput,
+    permissionsOutput,
+  )
+  const prevDiscovery = withoutUndefinedKeys(targetDiscovery.discoveryOutput)
 
   // get code diff with main branch
   // (we only diff code for target discovery, not dependencies)
