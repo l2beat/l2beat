@@ -41,7 +41,9 @@
     "BRIDGE_HUB",
     "L2_REFUND_ADDRESS",
     "SHARED_BRIDGE",
-    "USDC_SHARED_BRIDGE"
+    "USDC_SHARED_BRIDGE",
+    "cctpMessageTransmitter",
+    "SOLANA_USDC_ADDRESS"
   ],
   "ignoreMethods": ["getL1CallValue"],
   "ignoreInWatchMode": [
