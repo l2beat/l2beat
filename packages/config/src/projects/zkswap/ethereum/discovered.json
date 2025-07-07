@@ -1,8 +1,8 @@
 {
   "name": "zkswap",
   "chain": "ethereum",
-  "blockNumber": 20311131,
-  "configHash": "0x14711c1406ec32dc45d647268e62e70ab55c4b55179b04fb1670a544c01aa59a",
+  "blockNumber": 22865800,
+  "configHash": "0x07f8e818a264dba84f317cb8621ecbb42fd341ae2688bca3fa3032010a9b020f",
   "entries": [
     {
       "name": "Governance",
@@ -213,12 +213,12 @@
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
         "governance": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
-        "numberOfPendingWithdrawals": 0,
+        "numberOfPendingWithdrawals": 6,
         "pairManager": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
-        "totalBlocksCommitted": 130738,
-        "totalBlocksVerified": 130738,
+        "totalBlocksCommitted": 130744,
+        "totalBlocksVerified": 130744,
         "totalCommittedPriorityRequests": 0,
-        "totalOpenPriorityRequests": 0,
+        "totalOpenPriorityRequests": 2,
         "totalPairTokens": 108,
         "upgradePreparationActivationTime": 0,
         "upgradePreparationActive": false,

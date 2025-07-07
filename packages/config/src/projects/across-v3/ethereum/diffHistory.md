@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x4de0b28750bf8d639de102e7af84feb054207e56
+
+# Diff at Mon, 07 Jul 2025 06:37:18 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 22823774
+- current block number: 22865552
+
+## Description
+
+Solana adapter (via circle CCTP) added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: The central L1 contract (hub) that manages liquidity from LPs and coordinates cross-chain settlements. It receives and secures settlement proposals (root bundles) using the UMA Optimistic Oracle, with a challenge period of 1h and a bond amount of 0.45 ABT.
+      values.Adapters.34268394551451:
++        "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
+      values.CrossChainContracts.34268394551451:
++        "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Solana_Adapter (0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3)
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Solana_Adapter.sol    | 695 +++++++++++++++++++++
+ 1 file changed, 695 insertions(+)
+```
+
 Generated with discovered.json: 0xd69a5e30f623dd65a12e45a3f26f870da47a03bd
 
 # Diff at Fri, 04 Jul 2025 12:18:50 GMT:
