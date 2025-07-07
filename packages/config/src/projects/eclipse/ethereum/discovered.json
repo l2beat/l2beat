@@ -1,7 +1,7 @@
 {
   "name": "eclipse",
   "chain": "ethereum",
-  "blockNumber": 21121371,
+  "blockNumber": 22865587,
   "configHash": "0x7b1ebd5ae7ac6f4f5d926613ad16a23b895a78a553c422b0fda0316655cc6d17",
   "entries": [
     {
@@ -38,11 +38,6 @@
       }
     },
     {
-      "address": "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "CanonicalBridge",
       "address": "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
       "type": "Contract",
@@ -72,10 +67,7 @@
           },
           "WITHDRAW_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "0x4720342419C1D316B948690d12C86D5b485C64E0",
-              "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
-            ]
+            "members": ["0x4720342419C1D316B948690d12C86D5b485C64E0"]
           },
           "CLAIM_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -148,7 +140,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 18,
+        "nonce": 26,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -194,7 +186,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 8,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -246,6 +238,35 @@
       "implementationNames": {
         "0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1": "ERC1967Proxy",
         "0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9": "EtherBridge"
+      }
+    },
+    {
+      "name": "CanonicalBridgeV2",
+      "address": "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3d55623cb35937b0b8f6a42b0dec9a7287f19e54ebca9af664a6215829b5df66"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1751855051,
+      "sinceBlock": 22864313,
+      "values": {
+        "$immutable": true,
+        "CLAIM_AUTHORITY_ROLE": "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc",
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "FRAUD_WINDOW_SETTER_ROLE": "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0",
+        "fraudWindowDuration": 604800,
+        "getVersionComponents": { "major": 2, "minor": 1, "patch": 0 },
+        "MIN_DEPOSIT": 2000000000000000,
+        "paused": false,
+        "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
+        "STARTER_ROLE": "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c",
+        "TREASURY": "0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+        "WITHDRAW_AUTHORITY_ROLE": "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53",
+        "WITHDRAW_CANCELLER_ROLE": "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040"
+      },
+      "implementationNames": {
+        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": "CanonicalBridgeV2"
       }
     },
     {
@@ -421,15 +442,16 @@
           "DEPOSITOR_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
-              "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
             ]
           },
           "WITHDRAW_AUTHORITY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": [
               "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
-              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+              "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC",
+              "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
             ]
           }
         },
@@ -623,6 +645,65 @@
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
     ],
+    "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51": [
+      "constructor(address owner, address treasuryAddress, address canonicalBridgeV1)",
+      "error AccessControlBadConfirmation()",
+      "error AccessControlUnauthorizedAccount(address account, bytes32 neededRole)",
+      "error CannotCancel()",
+      "error CanonicalBridgeTransactionRejected(uint64 withdrawId, string reason)",
+      "error DurationTooShort()",
+      "error EmptyBytes32()",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error ReentrancyGuardReentrantCall()",
+      "error WithdrawFailed()",
+      "error WithdrawUnauthorized()",
+      "event CanonicalBridgeV1(address indexed deployer, address canonicalBridgeV1)",
+      "event Deployed(address indexed deployer, address owner, address treasuryAddress)",
+      "event Deposited(address indexed sender, bytes32 indexed recipient, uint256 amountWei, uint256 amountLamports)",
+      "event FraudWindowSet(address indexed sender, uint256 durationSeconds)",
+      "event Paused(address account)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event Unpaused(address account)",
+      "event WithdrawAuthorized(address indexed sender, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message, bytes32 indexed messageHash, uint256 startTime)",
+      "event WithdrawCancelled(address indexed sender, bytes32 indexed messageHash)",
+      "event WithdrawClaimed(address indexed receiver, bytes32 indexed remoteSender, bytes32 indexed messageHash, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageDeleted(address authority, tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "event WithdrawMessageHashDeleted(address indexed authority, bytes32 indexed messageHash)",
+      "function CLAIM_AUTHORITY_ROLE() view returns (bytes32)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function FRAUD_WINDOW_SETTER_ROLE() view returns (bytes32)",
+      "function MIN_DEPOSIT() view returns (uint256)",
+      "function PAUSER_ROLE() view returns (bytes32)",
+      "function STARTER_ROLE() view returns (bytes32)",
+      "function TREASURY() view returns (address)",
+      "function WITHDRAW_AUTHORITY_ROLE() view returns (bytes32)",
+      "function WITHDRAW_CANCELLER_ROLE() view returns (bytes32)",
+      "function authorizeWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function authorizeWithdraws(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei)[] messages)",
+      "function claimWithdraw(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deleteWithdrawMessage(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message)",
+      "function deposit(bytes32 recipient, uint256 amountWei) payable",
+      "function fraudWindowDuration() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getVersionComponents() pure returns (tuple(uint8 major, uint8 minor, uint8 patch))",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function renounceRole(bytes32 role, address callerConfirmation)",
+      "function revokeRole(bytes32 role, address account)",
+      "function setFraudWindowDuration(uint256 durationSeconds)",
+      "function startTime(bytes32 withdrawMessageHash) view returns (uint256 startTime)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function unpause()",
+      "function withdrawMessageHash(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) pure returns (bytes32)",
+      "function withdrawMessageStatus(bytes32 messageHash) view returns (uint8)",
+      "function withdrawMessageStatus(tuple(bytes32 from, address destination, uint256 amountWei, uint64 withdrawId, address feeReceiver, uint256 feeWei) message) view returns (uint8)",
+      "function withdrawMsgIdProcessed(uint64 withdrawMessageId) view returns (uint256 blockNumber)"
+    ],
     "0xb23B2492f7A9631104A5877F7FFA00633660968d": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -781,5 +862,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xe66f27e9a1ebbd2ea2e61c95e9660c5643c57a3114cf78f1100f82cfb5644cd4"
+  "permissionsConfigHash": "0xaf5b43053157abe29f6b8d13d9c6b60a7cc9fa674dc9545655c121661497fab4"
 }

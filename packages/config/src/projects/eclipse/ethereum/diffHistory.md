@@ -1,3 +1,50 @@
+Generated with discovered.json: 0x0ac93af827da261b7c079687cee8694a8fc824e3
+
+# Diff at Mon, 07 Jul 2025 06:40:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 21121371
+- current block number: 22865587
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract CanonicalBridge (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11) {
+    +++ description: None
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.1:
+-        "0x1a84163249B2909f746C725F23D5ae2a66D7C4fE"
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: None
+      values.accessControl.DEPOSITOR_ROLE.members.0:
+-        "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11"
+      values.accessControl.DEPOSITOR_ROLE.members.1:
++        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+      values.accessControl.WITHDRAW_AUTHORITY_ROLE.members.2:
++        "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV2 (0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../eclipse/ethereum/.flat/CanonicalBridgeV2.sol   | 1516 ++++++++++++++++++++
+ 1 file changed, 1516 insertions(+)
+```
+
 Generated with discovered.json: 0xb8ddfecb85439ef7202e97a2197ee761dc94935c
 
 # Diff at Tue, 04 Mar 2025 10:39:06 GMT:
