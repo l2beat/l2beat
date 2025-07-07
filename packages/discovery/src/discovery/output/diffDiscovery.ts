@@ -1,4 +1,4 @@
-import { rawAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
 
 import { type FieldDiff, diffContracts } from './diffContracts'
 import type { EntryParameters, StructureEntry } from './types'

@@ -1,3 +1,4 @@
+import { rawAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { PermissionsConfig } from '../config/PermissionConfig'
@@ -7,7 +8,6 @@ import {
   buildPermissionsModel,
   contractValuesForInterpolation,
 } from './relations'
-import { rawAddress } from '@l2beat/shared-pure'
 
 export function generateClingoFromPermissionsConfig(
   entry: StructureEntry,

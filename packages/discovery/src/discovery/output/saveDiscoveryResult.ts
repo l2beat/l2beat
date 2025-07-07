@@ -1,6 +1,6 @@
 import { dirname, posix } from 'path'
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, rawAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { assert, type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'

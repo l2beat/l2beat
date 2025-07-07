@@ -3,9 +3,8 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
-  ChainSpecificAddress,
   fromParts,
+  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'

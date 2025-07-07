@@ -1,8 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
-  ChainSpecificAddress,
   assert,
-  EthereumAddress,
+  ChainSpecificAddress,
   ProjectId,
   UnixTime,
   formatSeconds,

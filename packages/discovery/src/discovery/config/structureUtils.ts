@@ -1,4 +1,4 @@
-import { rawAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { ConfigReader } from './ConfigReader'
 import { type StructureConfig, StructureContract } from './StructureConfig'

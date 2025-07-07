@@ -1,4 +1,10 @@
-import { ChainSpecificAddress, EthereumAddress, UnixTime, formatSeconds, rawAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import {
   ESCROW,
   OPERATOR,

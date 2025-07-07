@@ -1,5 +1,5 @@
 import {
-    ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,

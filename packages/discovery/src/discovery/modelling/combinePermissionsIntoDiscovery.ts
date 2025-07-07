@@ -1,6 +1,4 @@
-import { ChainSpecificAddress } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
-import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
@@ -18,7 +16,6 @@ export async function combinePermissionsIntoDiscovery(
   permissionsOutput: PermissionsOutput,
   options: { skipDependentDiscoveries?: boolean } = {},
 ) {
-  const shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,

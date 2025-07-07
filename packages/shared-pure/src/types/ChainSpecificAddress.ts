@@ -1,5 +1,5 @@
 import { validateAddress } from '@mradomski/tinyerc55'
-import { EthereumAddress } from './EthereumAddress'
+import type { EthereumAddress } from './EthereumAddress'
 
 export type ChainSpecificAddress = string & {
   _ChainSpecificAddressBrand: string
