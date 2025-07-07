@@ -89,22 +89,24 @@ export const zkCatalogTags = [
   // configure rest tags here
 ] as const satisfies ZkCatalogTag[]
 
-type AnyTag = (typeof zkCatalogTags)[number]
+type AnyZkCatalogTag = (typeof zkCatalogTags)[number]
 
-export const TAGS: {
+export const ZK_CATALOG_TAGS: {
   [T in keyof typeof ZkCatalogTagType]: {
-    [K in Extract<AnyTag, { type: T }>['id']]: ZkCatalogTag
+    [K in Extract<AnyZkCatalogTag, { type: T }>['id']]: ZkCatalogTag
   }
-} = zkCatalogTags.reduce((acc, tag) => {
-  if (!acc[tag.type]) acc[tag.type] = {}
-  acc[tag.type][tag.id] = tag
+} = zkCatalogTags.reduce((acc, zkCatalogTag) => {
+  if (!acc[zkCatalogTag.type]) acc[zkCatalogTag.type] = {}
+  acc[zkCatalogTag.type][zkCatalogTag.id] = zkCatalogTag
   return acc
   // biome-ignore lint/suspicious/noExplicitAny:
 }, {} as any)
 
-export const tagTypeOrder = Object.values<string>(ZkCatalogTagType)
-export const tagsCompareFn = (a: ZkCatalogTag, b: ZkCatalogTag) => {
-  const typeOrder = tagTypeOrder.indexOf(a.type) - tagTypeOrder.indexOf(b.type)
+export const zkCatalogTagTypeOrder = Object.values<string>(ZkCatalogTagType)
+export const zkCatalogTagsCompareFn = (a: ZkCatalogTag, b: ZkCatalogTag) => {
+  const typeOrder =
+    zkCatalogTagTypeOrder.indexOf(a.type) -
+    zkCatalogTagTypeOrder.indexOf(b.type)
   if (typeOrder !== 0) return typeOrder
   return a.name.localeCompare(b.name)
 }
