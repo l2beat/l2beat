@@ -209,6 +209,13 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
+export interface ZkCatalogTag {
+  id: string
+  type: string
+  name: string
+  description: string
+}
+
 export interface Milestone {
   title: string
   url: string
