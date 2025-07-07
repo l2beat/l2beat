@@ -6,7 +6,12 @@ import {
   writeFileSync,
 } from 'fs'
 import path, { join } from 'path'
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  Hash256,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import type { Parser } from '@l2beat/validate'
 import {
   combineImplementationHashes,
@@ -260,7 +265,7 @@ export class TemplateService {
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,
-        contract.address,
+        rawAddress(contract.address),
       )
 
       if (

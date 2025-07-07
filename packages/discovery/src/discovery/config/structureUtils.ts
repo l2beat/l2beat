@@ -1,4 +1,4 @@
-import type { EthereumAddress } from '@l2beat/shared-pure'
+import { rawAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
 import { ConfigReader } from './ConfigReader'
 import { type StructureConfig, StructureContract } from './StructureConfig'
@@ -14,7 +14,7 @@ export function buildSharedModuleIndex(
   for (const sharedModule of config.sharedModules) {
     const discovery = configReader?.readDiscovery(sharedModule, config.chain)
     for (const entry of discovery.entries) {
-      result.add(entry.address)
+      result.add(rawAddress(entry.address))
     }
   }
   return result

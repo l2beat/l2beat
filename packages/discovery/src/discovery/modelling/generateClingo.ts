@@ -7,6 +7,7 @@ import {
   buildPermissionsModel,
   contractValuesForInterpolation,
 } from './relations'
+import { rawAddress } from '@l2beat/shared-pure'
 
 export function generateClingoFromPermissionsConfig(
   entry: StructureEntry,
@@ -21,7 +22,7 @@ export function generateClingoFromPermissionsConfig(
   const mergedPermissionsConfig = merge(
     {},
     permissionTemplate,
-    permissionsConfig.overrides?.[entry.address.toString()],
+    permissionsConfig.overrides?.[rawAddress(entry.address).toString()],
   )
 
   return buildPermissionsModel(

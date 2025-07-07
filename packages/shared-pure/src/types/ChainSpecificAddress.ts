@@ -1,4 +1,5 @@
 import { validateAddress } from '@mradomski/tinyerc55'
+import { EthereumAddress } from './EthereumAddress'
 
 export type ChainSpecificAddress = string & {
   _ChainSpecificAddressBrand: string
@@ -64,4 +65,12 @@ export function fromParts(
   pureAddress: string,
 ): ChainSpecificAddress {
   return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
+}
+
+export function rawAddress(value: ChainSpecificAddress): EthereumAddress {
+  return value.slice(value.indexOf(':') + 1) as unknown as EthereumAddress
+}
+
+export function shortChainName(value: ChainSpecificAddress): string {
+  return value.slice(0, value.indexOf(':'))
 }

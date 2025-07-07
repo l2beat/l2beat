@@ -5,7 +5,13 @@
 // Once the internals operate on chain-specific addresses, we can remove this
 // file.
 
-import { type ChainSpecificAddress, fromParts } from '@l2beat/shared-pure'
+import {
+  assert,
+  type ChainSpecificAddress,
+  EthereumAddress,
+  fromParts,
+} from '@l2beat/shared-pure'
+import type { ContractValue } from './types'
 
 export function migrateImplementationNames(
   implementationNames: Record<string, string> | undefined,
@@ -21,4 +27,42 @@ export function migrateImplementationNames(
       name,
     ]),
   )
+}
+
+export function migrateValues(
+  values: Record<string, ContractValue | undefined>,
+  shortChainName: string,
+): Record<string, ContractValue | undefined> {
+  assert(values !== undefined)
+
+  return Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [
+      key,
+      value === undefined ? undefined : migrateValue(value, shortChainName),
+    ]),
+  )
+}
+
+function migrateValue(
+  value: ContractValue,
+  shortChainName: string,
+): ContractValue {
+  if (typeof value === 'string' && EthereumAddress.check(value)) {
+    return fromParts(shortChainName, value)
+  }
+
+  if (Array.isArray(value)) {
+    return value.map((v) => migrateValue(v, shortChainName))
+  }
+
+  if (typeof value === 'object') {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, value]) => [
+        migrateValue(key, shortChainName),
+        value === undefined ? undefined : migrateValue(value, shortChainName),
+      ]),
+    )
+  }
+
+  return value
 }

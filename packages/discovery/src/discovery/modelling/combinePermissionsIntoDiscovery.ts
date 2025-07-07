@@ -43,7 +43,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${shortChain}:${entry.address}`) &&
+          p.receiver.startsWith(entry.address) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -62,7 +62,7 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${shortChain}:${entry.address}`),
+          entry.address,
         )
           ? true
           : undefined

@@ -81,7 +81,7 @@ export interface ContractCategory {
 
 export type StructureEntry = {
   type: 'Contract' | 'EOA'
-  address: EthereumAddress
+  address: ChainSpecificAddress
   name?: string
   implementationNames?: Record<ChainSpecificAddress, string>
   template?: string
