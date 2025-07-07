@@ -209,7 +209,7 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
-export interface Tag {
+export interface ZkCatalogTag {
   id: string
   type: string
   name: string

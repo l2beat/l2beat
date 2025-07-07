@@ -1,6 +1,6 @@
-import type { Tag } from '../types'
+import type { ZkCatalogTag } from '../types'
 
-export const TagType = {
+export const ZkCatalogTagType = {
   STARK: 'STARK',
   ISA: 'ISA',
   SNARK: 'SNARK',
@@ -11,99 +11,99 @@ export const TagType = {
   Other: 'Other',
 } as const
 
-export const tags = [
+export const zkCatalogTags = [
   // STARK
   {
     id: 'Boojum',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'boojum',
     description: 'description',
   },
   {
     id: 'Plonky3',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'Plonky3',
     description: 'description',
   },
   {
     id: 'PIL-STARK',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'PIL-STARK',
     description: 'description',
   },
   {
     id: 'Stone',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'Stone',
     description: 'description',
   },
   {
     id: 'ZkvmProver',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'zkvm-prover',
     description: 'description',
   },
   {
     id: 'RISC0',
-    type: TagType.STARK,
+    type: ZkCatalogTagType.STARK,
     name: 'Risc0',
     description: 'description',
   },
   // ISA
   {
     id: 'EraVM',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'EraVM',
     description: 'description',
   },
   {
     id: 'RISCV',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'RISC-V',
     description: 'description',
   },
   {
     id: 'ZkASM',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'zkASM',
     description: 'description',
   },
   {
     id: 'CASM',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'cASM',
     description: 'description',
   },
   {
     id: 'EVM',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'EVM',
     description: 'description',
   },
   {
     id: 'OpenVM',
-    type: TagType.ISA,
+    type: ZkCatalogTagType.ISA,
     name: 'OpenVM',
     description: 'description',
   },
   // configure rest tags here
-] as const satisfies Tag[]
+] as const satisfies ZkCatalogTag[]
 
-type AnyTag = (typeof tags)[number]
+type AnyTag = (typeof zkCatalogTags)[number]
 
 export const TAGS: {
-  [T in keyof typeof TagType]: {
-    [K in Extract<AnyTag, { type: T }>['id']]: Tag
+  [T in keyof typeof ZkCatalogTagType]: {
+    [K in Extract<AnyTag, { type: T }>['id']]: ZkCatalogTag
   }
-} = tags.reduce((acc, tag) => {
+} = zkCatalogTags.reduce((acc, tag) => {
   if (!acc[tag.type]) acc[tag.type] = {}
   acc[tag.type][tag.id] = tag
   return acc
   // biome-ignore lint/suspicious/noExplicitAny:
 }, {} as any)
 
-export const tagTypeOrder = Object.values<string>(TagType)
-export const tagsCompareFn = (a: Tag, b: Tag) => {
+export const tagTypeOrder = Object.values<string>(ZkCatalogTagType)
+export const tagsCompareFn = (a: ZkCatalogTag, b: ZkCatalogTag) => {
   const typeOrder = tagTypeOrder.indexOf(a.type) - tagTypeOrder.indexOf(b.type)
   if (typeOrder !== 0) return typeOrder
   return a.name.localeCompare(b.name)
