@@ -24,7 +24,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 const discovery = new ProjectDiscovery('eclipse')
 
 const withdrawalDelaySeconds = discovery.getContractValue<number>(
-  'CanonicalBridge',
+  'CanonicalBridgeV2',
   'fraudWindowDuration',
 )
 
