@@ -1,10 +1,13 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -123,7 +126,7 @@ interface OpStackConfigCommon {
   upgradeability?: {
     upgradableBy?: ProjectUpgradeableActor[]
   }
-  l1StandardBridgeEscrow?: EthereumAddress
+  l1StandardBridgeEscrow?: ChainSpecificAddress
   l1StandardBridgeTokens?: string[]
   l1StandardBridgePremintedTokens?: string[]
   optimismPortalPremintedTokens?: string[]
@@ -305,7 +308,7 @@ function opStackCommon(
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: portal.address,
+          address: rawAddress(portal.address),
           tokens: optimismPortalTokens,
           premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -315,7 +318,7 @@ function opStackCommon(
         }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: l1StandardBridgeEscrow,
+          address: rawAddress(l1StandardBridgeEscrow),
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -1189,7 +1192,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: l2OutputOracle.address,
+            address: rawAddress(l2OutputOracle.address),
             selector: '0x9aaab648',
             functionSignature:
               'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -1226,7 +1229,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: disputeGameFactory.address,
+            address: rawAddress(disputeGameFactory.address),
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

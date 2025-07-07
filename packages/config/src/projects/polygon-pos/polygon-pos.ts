@@ -3,6 +3,8 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -132,7 +134,7 @@ export const polygonpos: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: discovery.getContract('RootChain').address,
+          address: rawAddress(discovery.getContract('RootChain').address),
           selector: '0x4e43e495',
           functionSignature:
             'function submitCheckpoint(bytes data, uint256[3][] sigs)',

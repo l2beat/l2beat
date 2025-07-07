@@ -3,11 +3,7 @@ import {
   getChainShortName,
   type ReceivedPermission,
 } from '@l2beat/discovery'
-import {
-  ChainSpecificAddress,
-  type EthereumAddress,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import { UltimatePermissionToPrefix } from './descriptions'
@@ -23,7 +19,7 @@ import {
 export class PermissionsFromDiscovery implements PermissionRegistry {
   constructor(private readonly projectDiscovery: ProjectDiscovery) {}
 
-  getPermissionedContracts(): EthereumAddress[] {
+  getPermissionedContracts(): ChainSpecificAddress[] {
     const contracts = this.projectDiscovery.getContracts()
 
     return [
@@ -42,7 +38,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     ].map((e) => e.address)
   }
 
-  getPermissionedEoas(): EthereumAddress[] {
+  getPermissionedEoas(): ChainSpecificAddress[] {
     return this.projectDiscovery
       .getEoas()
       .filter((e) => e.receivedPermissions !== undefined)
@@ -193,7 +189,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       .join('\n')
   }
 
-  getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
+  getUltimatelyIssuedPermissions(fromAddress: ChainSpecificAddress) {
     const shortChain = getChainShortName(this.projectDiscovery.chain)
     const prefixedFromAddress = ChainSpecificAddress(
       `${shortChain}:${fromAddress}`,
@@ -211,7 +207,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
       )
   }
 
-  getIssuedPermissions(fromAddress: EthereumAddress) {
+  getIssuedPermissions(fromAddress: ChainSpecificAddress) {
     const shortChain = getChainShortName(this.projectDiscovery.chain)
     const prefixedFromAddress = ChainSpecificAddress(
       `${shortChain}:${fromAddress}`,

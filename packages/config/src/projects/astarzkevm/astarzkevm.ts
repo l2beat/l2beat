@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -104,7 +104,7 @@ export const astarzkevm: ScalingProject = polygonCDKStack({
   isForcedBatchDisallowed,
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: rawAddress(bridge.address),
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

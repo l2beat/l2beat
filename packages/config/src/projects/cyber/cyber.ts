@@ -1,4 +1,11 @@
-import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+  rawAddress,
+} from '@l2beat/shared-pure'
+import { DA_LAYERS } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import {
   DA_LAYERS,
   DaCommitteeSecurityRisk,
@@ -139,7 +146,7 @@ export const cyber: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: l2OutputOracle.address,
+        address: rawAddress(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -160,13 +167,13 @@ export const cyber: ScalingProject = opStackL2({
 ![CyberDA layer](/images/da-layer-technology/cyberda/architecture.png#center)
 
 ## Data Availability Challenges
-Cyber relies on DA challenges for data availability. 
+Cyber relies on DA challenges for data availability.
 The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
-If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}. 
+If a DA challenger finds that the data behind a tx data commitment is not available, they can submit a challenge which requires locking a bond within ${daChallengeWindow}.
 A challenge can be resolved by publishing the preimage data within an additional ${daResolveWindow}.
 In such case, a portion of the challenger bond is burned, with the exact amount estimated as the cost incurred by the resolver to publish the full data, meaning that the resolver and challenger will approximately lose the same amount of funds.
-The system is not secure if the malicious sequencer is able to outspend the altruistic challengers. 
-If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state. 
+The system is not secure if the malicious sequencer is able to outspend the altruistic challengers.
+If instead, after a challenge, the preimage data is not published, the chain reorgs to the last fully derivable state.
 
 ## DA Bridge
 Only hashes of data batches are posted as DA commitments to an EOA on Ethereum.

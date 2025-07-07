@@ -1,4 +1,9 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  UnixTime,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -115,7 +120,9 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: discovery.getContract('DisputeGameFactory').address,
+        address: rawAddress(
+          discovery.getContract('DisputeGameFactory').address,
+        ),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

@@ -3,6 +3,8 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
+  rawAddress,
 } from '@l2beat/shared-pure'
 
 import {
@@ -184,7 +186,7 @@ export const metis: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: stateCommitmentChain.address,
+          address: rawAddress(stateCommitmentChain.address),
           selector: '0x5b297172',
           functionSignature:
             'function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',
@@ -199,7 +201,7 @@ export const metis: ScalingProject = {
         query: {
           // this query assumes that the chain id used is always metis' chain id (1088)
           formula: 'functionCall',
-          address: stateCommitmentChain.address,
+          address: rawAddress(stateCommitmentChain.address),
           selector: '0x0a17d699',
           functionSignature:
             'function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string _proposer, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',

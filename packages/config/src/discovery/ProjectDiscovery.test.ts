@@ -1,3 +1,6 @@
+import { assert, EthereumAddress, rawAddress } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+
 import {
   type ConfigReader,
   ConfigRegistry,
@@ -98,7 +101,7 @@ describe(ProjectDiscovery.name, () => {
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
-          address: contractStub.address,
+          address: rawAddress(contractStub.address),
           type: 'Contract',
           isVerified: true,
           name: '0x0D4C…72ac',

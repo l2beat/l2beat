@@ -1,8 +1,10 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -284,9 +286,9 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
     },
     ...(() => {
       assert(
-        EthereumAddress(discoveredReceiveLib.lib) ===
+        ChainSpecificAddress(discoveredReceiveLib.lib) ===
           discovery.getContract('ReceiveUln302').address &&
-          EthereumAddress(discoveredSendLib) ===
+          ChainSpecificAddress(discoveredSendLib) ===
             discovery.getContract('SendUln302').address,
         "Update the contracts and risk section, the endpoint's message libraries have changed.",
       )
@@ -332,7 +334,7 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
               discoveredDelegates[0].address ===
                 discoveredDelegates[1].address &&
               discoveredDelegates[1].address ===
-                discovery.getContract('Stargate Multisig').address,
+                rawAddress(discovery.getContract('Stargate Multisig').address),
             'Update the permissions and risk section, the OApp owners or delegates are different from the Stargate Multisig.',
           )
           return [

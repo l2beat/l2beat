@@ -1,10 +1,6 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import {
-  DA_BRIDGES,
-  DA_LAYERS,
-  REASON_FOR_BEING_OTHER,
-  RISK_VIEW,
-} from '../../common'
+import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
+import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
+import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -103,7 +99,7 @@ export const xlayer: ScalingProject = polygonCDKStack({
   associatedTokens: ['OKB'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: bridge.address,
+      address: rawAddress(bridge.address),
       tokens: '*',
       sinceTimestamp: UnixTime(1712620800),
       sharedEscrow: {

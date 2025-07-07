@@ -3,6 +3,8 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -140,7 +142,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: rawAddress(l2OutputOracle.address),
           selector: '0x9ad84880',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof)',
@@ -155,7 +157,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: rawAddress(l2OutputOracle.address),
           selector: '0x59c3e00a', // non-optimistic mode
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, uint256 _l1BlockNumber, bytes _proof, address _proverAddress)',
@@ -169,7 +171,7 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: l2OutputOracle.address,
+          address: rawAddress(l2OutputOracle.address),
           selector: '0x9aaab648', // optimistic mode
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1BlockHash, uint256 _l1BlockNumber)',
