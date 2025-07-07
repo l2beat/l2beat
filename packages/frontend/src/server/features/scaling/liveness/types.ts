@@ -13,6 +13,7 @@ export interface LivenessAnomaly {
   end: UnixTime | undefined
   durationInSeconds: number
   subtype: TrackedTxsConfigSubtype
+  avgInterval: number
 }
 
 export interface LivenessDetails {

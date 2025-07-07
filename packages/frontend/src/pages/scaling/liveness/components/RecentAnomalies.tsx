@@ -140,6 +140,19 @@ function AnomalyCollapsible({
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
+                  <span className="font-medium text-secondary">
+                    Avg. interval:
+                  </span>
+                  <span
+                    className={cn(
+                      'font-bold',
+                      getDurationColorClassName(anomaly.avgInterval),
+                    )}
+                  >
+                    {formatDuration(anomaly.avgInterval)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
                   <span className="font-medium text-secondary">Start:</span>
                   <span className="font-bold">
                     {formatTimestamp(anomaly.start, {

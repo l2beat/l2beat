@@ -143,7 +143,7 @@ async function getLivenessData(projectId?: ProjectId) {
         configurations,
         anomalies,
       ),
-      anomalies: getAnomalies(anomalies, realTimeAnomalies),
+      anomalies: getAnomalies(anomalies, realTimeAnomalies, project30Days),
     }
     // duplicate data from one subtype to another if configured
     if (livenessConfig) {
@@ -222,27 +222,49 @@ function mapAggregatedLivenessRecords(
 function getAnomalies(
   anomalies: AnomalyRecord[],
   realTimeAnomalies: RealTimeAnomalyRecord[],
+  project30Days:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
 ): LivenessAnomaly[] {
+  if (!project30Days) {
+    return []
+  }
+
   const filteredAnomalies = anomalies.filter((a) => {
     const record = realTimeAnomalies.find((r) => r.start === a.timestamp)
     const alreadyExists =
       record?.subtype === a.subtype && record.projectId === a.projectId
     return !alreadyExists
   })
+
   return [
-    ...filteredAnomalies.map((a) => ({
-      // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-      start: a.timestamp,
-      durationInSeconds: a.duration,
-      end: a.timestamp + a.duration,
-      subtype: a.subtype,
-    })),
-    ...realTimeAnomalies.map((a) => ({
-      start: a.start,
-      end: a.end,
-      durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
-      subtype: a.subtype,
-    })),
+    ...filteredAnomalies.map((a) => {
+      const avgInterval = project30Days.find(
+        (r) => r.subtype === a.subtype,
+      )?.avg
+      assert(avgInterval, 'Avg interval must exist')
+      return {
+        start: a.timestamp,
+        durationInSeconds: a.duration,
+        end: a.timestamp + a.duration,
+        subtype: a.subtype,
+        avgInterval,
+      }
+    }),
+    ...realTimeAnomalies.map((a) => {
+      const avgInterval = project30Days.find(
+        (r) => r.subtype === a.subtype,
+      )?.avg
+      assert(avgInterval, 'Avg interval must exist')
+
+      return {
+        start: a.start,
+        end: a.end,
+        durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
+        subtype: a.subtype,
+        avgInterval,
+      }
+    }),
   ].sort(sortAnomalies)
 }
 
@@ -373,6 +395,7 @@ function generateAnomalies(): LivenessAnomaly[] {
           start,
           end: isOngoing ? end : undefined,
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
+          avgInterval: generateRandomTime(),
         } as const
       })
     : []
