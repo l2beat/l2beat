@@ -4,6 +4,9 @@ import {
   formatSeconds,
   ProjectId,
   UnixTime,
+  formatSeconds,
+  rawAddress,
+  ChainSpecificAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -163,11 +166,15 @@ export const kroma: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'batcherHash'),
+          from: rawAddress(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'batcherHash'),
+            ),
           ),
-          to: EthereumAddress(
-            discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+          to: rawAddress(
+            ChainSpecificAddress(
+              discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+            ),
           ),
           sinceTimestamp: UnixTime(1693883663),
         },

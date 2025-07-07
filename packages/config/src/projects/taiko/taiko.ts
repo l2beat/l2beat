@@ -85,7 +85,7 @@ const preconfRouter = discovery.getContractValue(
 )
 
 assert(
-  preconfRouter === '0x0000000000000000000000000000000000000000',
+  preconfRouter === 'eth:0x0000000000000000000000000000000000000000',
   'preconf router is set, update sequencing sections',
 ) // also check this line:         require(p.blocks[0].signalSlots.length == 0, InvalidSignalSlots());
 

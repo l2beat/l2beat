@@ -1,7 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
+  ChainSpecificAddress,
   assert,
-  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -853,8 +853,10 @@ function getTechnology(
   explorerUrl: string | undefined,
   daProvider: DAProvider | undefined,
 ): ProjectScalingTechnology {
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = rawAddress(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
 
   const portal = getOptimismPortal(templateVars)
@@ -1159,11 +1161,15 @@ function getTrackedTxs(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
-  const sequencerInbox = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+  const sequencerInbox = rawAddress(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+    ),
   )
-  const sequencerAddress = EthereumAddress(
-    templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+  const sequencerAddress = rawAddress(
+    ChainSpecificAddress(
+      templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
+    ),
   )
 
   switch (fraudProofType) {

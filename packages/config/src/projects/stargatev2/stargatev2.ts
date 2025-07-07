@@ -131,14 +131,14 @@ These credits can be moved and rebalanced (but not minted) by a permissioned rol
       assert(
         discoveredUlnConfig.requiredDVNCount === 2 &&
           discoveredUlnConfig.requiredDVNs[0] ===
-            '0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
+            'eth:0x8FafAE7Dd957044088b3d0F67359C327c6200d18' && // Stargate DVN address
           discoveredUlnConfig.requiredDVNs[1] ===
-            '0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
+            'eth:0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5', // Nethermind DVN address
         'Update the validation, poO and permissions sections, the security config of Stargatev2 has changed.',
       )
       assert(
         discoveredExecutorConfig.executor ===
-          '0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
+          'eth:0x173272739Bd7Aa6e4e214714048a9fE699453059', // LayerZero Executor
         'The configured Executor for Stargatev2 changed: Review the permissions section.',
       )
 

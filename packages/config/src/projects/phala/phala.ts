@@ -1,4 +1,5 @@
 import {
+    ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -36,11 +37,11 @@ const finalizationPeriod = discovery.getContractValue<number>(
   'finalizationPeriodSeconds',
 )
 
-const sequencerAddress = EthereumAddress(
+const sequencerAddress = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'batcherHash'),
 )
 
-const sequencerInbox = EthereumAddress(
+const sequencerInbox = ChainSpecificAddress(
   discovery.getContractValue('SystemConfig', 'sequencerInbox'),
 )
 
@@ -130,8 +131,8 @@ export const phala: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: sequencerAddress,
-          to: sequencerInbox,
+          from: rawAddress(sequencerAddress),
+          to: rawAddress(sequencerInbox),
           sinceTimestamp: UnixTime(1734388655),
         },
       },

@@ -659,11 +659,8 @@ export class ProjectDiscovery {
       : this.discoveries
     discoveries.forEach((discovery) => {
       discovery.entries.forEach((e) => {
-        const shortChain = getChainShortName(discovery.chain)
         if (e.type === 'Contract') {
-          const chainSpecificAddress = ChainSpecificAddress(
-            `${shortChain}:${e.address}`,
-          )
+          const chainSpecificAddress = e.address
           if (result[chainSpecificAddress] !== undefined) {
             throw new Error(
               `Duplicate contract address entry: ${chainSpecificAddress}`,
@@ -775,14 +772,13 @@ export class ProjectDiscovery {
         descriptions[0] ?? RoleDescriptions[role].description,
       ]
 
-      const shortChain = getChainShortName(this.chain)
       for (const c of matching) {
         const initialConditions = (c.receivedPermissions ?? [])
           .filter((p) => p.permission === role)
           .map((p) =>
             this.formatViaPath(
               {
-                address: ChainSpecificAddress(`${shortChain}:${c.address}`),
+                address: c.address,
                 condition: p.condition,
                 delay: p.delay,
               },
@@ -846,7 +842,7 @@ export class ProjectDiscovery {
   }
 
   replaceAddressesWithNames(s: string): string {
-    const ethereumAddressRegex = /\b0x[a-fA-F0-9]{40}\b/g
+    const ethereumAddressRegex = /\b(?:[a-zA-Z0-9]+:)?0x[a-fA-F0-9]{40}\b/g
     const addresses = s.match(ethereumAddressRegex) ?? []
 
     for (const address of addresses) {

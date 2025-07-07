@@ -1,4 +1,5 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -174,8 +175,8 @@ export const metis: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress(blobBatcher),
-          to: EthereumAddress(inboxAddress),
+          from: EthereumAddress(blobBatcher), // TODO(radomski): For some reason it does not have the chain prefix
+          to: rawAddress(ChainSpecificAddress(inboxAddress)),
           sinceTimestamp: UnixTime(1747234799),
         },
       },
