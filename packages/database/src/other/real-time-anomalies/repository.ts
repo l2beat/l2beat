@@ -45,13 +45,15 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getApprovedAnomaliesByProjectIds(
+  async getApprovedAndRecoveredAnomaliesByProjectIds(
     projectIds: string[],
   ): Promise<RealTimeAnomalyRecord[]> {
+    if (projectIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
       .select(selectRealtimeAnomaly)
-      .where('status', '=', 'approved')
+      .where('status', 'in', ['approved', 'recovered'])
       .where('projectId', 'in', projectIds)
       .execute()
 
