@@ -58,3 +58,10 @@ export function ChainSpecificAddress(value: string): ChainSpecificAddress {
 
   return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
+
+export function fromParts(
+  shortChainName: string,
+  pureAddress: string,
+): ChainSpecificAddress {
+  return ChainSpecificAddress(`${shortChainName}:${pureAddress}`)
+}

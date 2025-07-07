@@ -83,7 +83,7 @@ export type StructureEntry = {
   type: 'Contract' | 'EOA'
   address: EthereumAddress
   name?: string
-  implementationNames?: Record<EthereumAddress, string>
+  implementationNames?: Record<ChainSpecificAddress, string>
   template?: string
   sourceHashes?: string[]
   unverified?: true
