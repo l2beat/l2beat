@@ -5,7 +5,6 @@ export {
   DiscoveryRegistry,
   getDependenciesToDiscoverForProject,
   modelPermissions,
-  modelPermissionsForIsolatedDiscovery,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'

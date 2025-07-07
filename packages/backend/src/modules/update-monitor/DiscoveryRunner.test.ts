@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   type AllProviders,
+  type ConfigReader,
   ConfigRegistry,
   type DiscoveryEngine,
   type IProvider,
@@ -32,7 +33,14 @@ describe(DiscoveryRunner.name, () => {
         mockObject<TemplateService>(),
         'ethereum',
       )
-      await runner.discoverWithRetry(sourceConfig, 1, Logger.SILENT)
+      await runner.discoverWithRetry(
+        sourceConfig,
+        1,
+        Logger.SILENT,
+        1,
+        10,
+        getMockConfigReader(),
+      )
 
       expect(sourceConfig).toEqual(getMockConfig())
     })
@@ -59,7 +67,14 @@ describe(DiscoveryRunner.name, () => {
           'ethereum',
         )
 
-        await runner.discoverWithRetry(getMockConfig(), 1, Logger.SILENT, 2, 10)
+        await runner.discoverWithRetry(
+          getMockConfig(),
+          1,
+          Logger.SILENT,
+          2,
+          10,
+          getMockConfigReader(),
+        )
 
         expect(engine.discover).toHaveBeenCalledTimes(3)
       })
@@ -93,6 +108,7 @@ describe(DiscoveryRunner.name, () => {
               Logger.SILENT,
               1,
               10,
+              getMockConfigReader(),
             ),
         ).toBeRejectedWith('error')
       })
@@ -108,5 +124,12 @@ const getMockConfig = () => {
     maxDepth: 6,
     initialAddresses: [],
     sharedModules: [],
+  })
+}
+
+const getMockConfigReader = () => {
+  return mockObject<ConfigReader>({
+    readConfig: () => getMockConfig(),
+    getProjectPath: () => '/tmp/discovery',
   })
 }
