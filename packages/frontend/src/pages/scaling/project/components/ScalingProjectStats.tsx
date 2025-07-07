@@ -29,7 +29,6 @@ export function ProjectScalingStats({ project, className }: Props) {
     <ProjectStat
       key="tvs"
       title="Total Value Secured"
-      valueClassName=""
       value={
         project.header.tvs?.breakdown ? (
           <span className="mb-0.5 flex items-center gap-2">
@@ -118,13 +117,15 @@ export function ProjectScalingStats({ project, className }: Props) {
     ) : undefined,
   ])
 
-  const GROUPS = 4
-  const partitioned = chunk(stats, GROUPS)
+  const groups = stats.length > 4 ? 4 : 2
+  const partitioned = chunk(stats, groups)
 
   return (
     <div
       className={cn(
-        'grid h-fit grid-cols-1 gap-x-6 gap-y-3 rounded-lg md:grid-cols-4',
+        'grid h-fit grid-cols-1 gap-x-6 gap-y-3 rounded-lg',
+        groups === 2 && 'md:grid-cols-2',
+        groups === 4 && 'md:grid-cols-4',
         className,
       )}
     >
@@ -148,6 +149,7 @@ export function ProjectScalingStats({ project, className }: Props) {
 
 interface ProjectStat {
   title: string
+  shortTitle?: string
   value: ReactNode
   tooltip?: string
   className?: string
@@ -164,9 +166,19 @@ export function ProjectStat(props: ProjectStat) {
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span className="paragraph-12-medium text-secondary">
+        <span
+          className={cn(
+            'paragraph-12-medium text-nowrap text-secondary',
+            props.shortTitle && 'max-md:hidden',
+          )}
+        >
           {props.title}
         </span>
+        {props.shortTitle && (
+          <span className="paragraph-12-medium text-secondary md:hidden">
+            {props.shortTitle}
+          </span>
+        )}
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="size-3">
@@ -177,7 +189,7 @@ export function ProjectStat(props: ProjectStat) {
         )}
       </div>
 
-      <span className={cn('label-value-16-bold w-full', props.valueClassName)}>
+      <span className={cn('label-value-16-bold', props.valueClassName)}>
         {props.value}
       </span>
     </li>

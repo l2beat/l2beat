@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { AboutSection } from '~/components/projects/sections/AboutSection'
 import { BadgesSection } from '~/components/projects/sections/BadgesSection'
@@ -43,120 +43,122 @@ export function ProjectScalingSummary({ project }: Props) {
       ? 'warning'
       : 'neutral'
   return (
-    <PrimaryCard className="!rounded-lg !p-6">
-      <section id="summary" data-role="project-section">
-        <div className="flex">
-          <div className="w-full">
-            <ProjectScalingStats project={project} />
-            <HorizontalSeparator className="mt-5 mb-4" />
-            <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
-              <div>
-                <p
-                  className={cn(
-                    'label-value-12-medium text-secondary',
-                    !hasTokenWarnings && 'mb-2',
-                  )}
-                >
-                  Tokens breakdown
-                </p>
-                <Tooltip>
-                  <TooltipTrigger className="flex w-full items-center gap-1">
-                    <TokenBreakdown
-                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                      associated={
-                        project.header.tvs?.tokens.breakdown?.associated ?? 0
-                      }
-                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                      stablecoin={
-                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                      }
-                      className="h-1.5 w-full"
-                    />
-                    {hasTokenWarnings && (
-                      <RoundedWarningIcon
-                        sentiment={warningSentiment}
-                        className="size-[22px]"
-                      />
-                    )}
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <TokenBreakdownTooltipContent
-                      total={project.header.tvs?.tokens.breakdown?.total ?? 0}
-                      associated={
-                        project.header.tvs?.tokens.breakdown?.associated ?? 0
-                      }
-                      ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
-                      stablecoin={
-                        project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
-                      }
-                      associatedTokenSymbols={
-                        project.header.tvs?.tokens.associatedTokens ?? []
-                      }
-                      tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
-                    />
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-              <div>
-                <p className="label-value-12-medium mb-2 text-secondary">
-                  Value secured breakdown
-                </p>
-                <Tooltip>
-                  <TooltipTrigger className="block w-full">
-                    <ValueSecuredBreakdown
-                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                      external={project.header.tvs?.breakdown?.external ?? 0}
-                      native={project.header.tvs?.breakdown?.native ?? 0}
-                      className="h-1.5 w-full"
-                    />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <ValueSecuredBreakdownTooltipContent
-                      canonical={project.header.tvs?.breakdown?.canonical ?? 0}
-                      external={project.header.tvs?.breakdown?.external ?? 0}
-                      native={project.header.tvs?.breakdown?.native ?? 0}
-                      tvsWarnings={[]}
-                    />
-                  </TooltipContent>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-          <VerticalSeparator className="mr-8 ml-12 self-stretch max-lg:hidden" />
-
-          <ProjectScalingRosette project={project} size="small" />
-        </div>
-
-        {/* {project.discoUiHref && (
-          <div className="md:hidden">
-            <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-screen md:hidden" />
-            <div className="flex items-center justify-between">
-              <a
-                className="text-link text-xs underline"
-                href={project.discoUiHref}
+    <section
+      id="summary"
+      data-role="project-section"
+      className="w-full border-divider bg-surface-primary px-4 pt-4 max-md:border-b md:rounded-lg md:p-6"
+    >
+      <div className="flex">
+        <div className="w-full">
+          <ProjectScalingStats project={project} />
+          <HorizontalSeparator className="mt-5 mb-4" />
+          <div className="grid gap-x-10 gap-y-4 md:grid-cols-2">
+            <div>
+              <p
+                className={cn(
+                  'label-value-12-medium text-secondary',
+                  !hasTokenWarnings && 'mb-2',
+                )}
               >
-                Explore more in Discovery UI
-              </a>
-              <DiscoUiLink href={project.discoUiHref} />
+                Tokens breakdown
+              </p>
+              <Tooltip>
+                <TooltipTrigger className="flex w-full items-center gap-1">
+                  <TokenBreakdown
+                    total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                    associated={
+                      project.header.tvs?.tokens.breakdown?.associated ?? 0
+                    }
+                    ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                    stablecoin={
+                      project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                    }
+                    className="h-1.5 w-full"
+                  />
+                  {hasTokenWarnings && (
+                    <RoundedWarningIcon
+                      sentiment={warningSentiment}
+                      className="size-[22px]"
+                    />
+                  )}
+                </TooltipTrigger>
+                <TooltipContent>
+                  <TokenBreakdownTooltipContent
+                    total={project.header.tvs?.tokens.breakdown?.total ?? 0}
+                    associated={
+                      project.header.tvs?.tokens.breakdown?.associated ?? 0
+                    }
+                    ether={project.header.tvs?.tokens.breakdown?.ether ?? 0}
+                    stablecoin={
+                      project.header.tvs?.tokens.breakdown?.stablecoin ?? 0
+                    }
+                    associatedTokenSymbols={
+                      project.header.tvs?.tokens.associatedTokens ?? []
+                    }
+                    tvsWarnings={project.header.tvs?.tokens.warnings ?? []}
+                  />
+                </TooltipContent>
+              </Tooltip>
+            </div>
+            <div>
+              <p className="label-value-12-medium mb-2 text-secondary">
+                Value secured breakdown
+              </p>
+              <Tooltip>
+                <TooltipTrigger className="block w-full">
+                  <ValueSecuredBreakdown
+                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                    external={project.header.tvs?.breakdown?.external ?? 0}
+                    native={project.header.tvs?.breakdown?.native ?? 0}
+                    className="h-1.5 w-full"
+                  />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <ValueSecuredBreakdownTooltipContent
+                    canonical={project.header.tvs?.breakdown?.canonical ?? 0}
+                    external={project.header.tvs?.breakdown?.external ?? 0}
+                    native={project.header.tvs?.breakdown?.native ?? 0}
+                    tvsWarnings={[]}
+                  />
+                </TooltipContent>
+              </Tooltip>
             </div>
           </div>
-        )} */}
-
-        <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-screen md:my-4" />
-        <div className="md:hidden">
-          <MobileProjectLinks projectLinks={project.header.links} />
         </div>
-        <div className="max-md:hidden">
-          <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
-            {project.header.badges && project.header.badges.length > 0 && (
-              <BadgesSection badges={project.header.badges} />
-            )}
-            {project.header.description && (
-              <AboutSection description={project.header.description} />
-            )}
+        <VerticalSeparator className="mr-8 ml-12 self-stretch max-lg:hidden" />
+
+        <ProjectScalingRosette project={project} size="small" />
+      </div>
+
+      {project.discoUiHref && (
+        <div className="md:hidden">
+          <HorizontalSeparator className="max-md:-mx-4 mt-4 mb-2 max-md:w-[calc(100%+2rem)] md:hidden" />
+          <div className="flex items-center justify-between">
+            <a
+              className="text-link text-xs underline"
+              href={project.discoUiHref}
+            >
+              Explore more in Discovery UI
+            </a>
+            <DiscoUiLink href={project.discoUiHref} />
           </div>
         </div>
-      </section>
-    </PrimaryCard>
+      )}
+
+      <HorizontalSeparator className="max-md:-mx-4 mt-2 max-md:w-[calc(100%+2rem)] md:my-4" />
+      <div className="md:hidden">
+        <MobileProjectLinks projectLinks={project.header.links} />
+      </div>
+      <div className="max-md:hidden">
+        <div className="mt-6 flex flex-col gap-4 px-4 max-md:mt-2 md:px-0 lg:flex-row lg:gap-8">
+          {project.header.badges && project.header.badges.length > 0 && (
+            <BadgesSection badges={project.header.badges} />
+          )}
+          {project.header.description && (
+            <AboutSection description={project.header.description} />
+          )}
+        </div>
+      </div>
+    </section>
   )
 }

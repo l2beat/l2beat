@@ -28,6 +28,8 @@ export function BridgesProjectStats({ project }: Props) {
     <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-4">
       <ProjectStat
         title="Total value secured"
+        shortTitle="TVS"
+        valueClassName="md:w-full"
         tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         value={
           !project.isUpcoming && project.header.tvs ? (
