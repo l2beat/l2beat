@@ -293,6 +293,10 @@
         "yaru": "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
       },
       "fieldMeta": {
+        "HASHI_IS_MANDATORY": {
+          "severity": "HIGH",
+          "description": "If true, Hashi validation is mandatory"
+        },
         "targetAddress": {
           "severity": "HIGH",
           "description": "Address of the target contract on Ethereum"
@@ -308,10 +312,6 @@
         "threshold": {
           "severity": "HIGH",
           "description": "Threshold of the adapters on Ethereum"
-        },
-        "HASHI_IS_MANDATORY": {
-          "severity": "HIGH",
-          "description": "If true, Hashi validation is mandatory"
         }
       },
       "implementationNames": {
