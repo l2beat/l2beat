@@ -7,8 +7,8 @@ export function createOrderedSort<T>(
     const bIndex = order.indexOf(keyExtractor(b))
 
     // Treat items not in order as having a very high index (sort to end)
-    const normalizedAIndex = aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex
-    const normalizedBIndex = bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex
+    const normalizedAIndex = aIndex === -1 ? Infinity : aIndex
+    const normalizedBIndex = bIndex === -1 ? Infinity : bIndex
 
     return normalizedAIndex - normalizedBIndex
   }
