@@ -1,6 +1,7 @@
 import type { LogConfig } from 'kysely'
 import type { PoolConfig } from 'pg'
 import { ActivityRepository } from './activity/repository'
+import { BlobsRepository } from './da-beat/blob/repository'
 import { CurrentPriceRepository } from './da-beat/current-price/repository'
 import { DataAvailabilityRepository } from './da-beat/data-availability/repository'
 import { StakeRepository } from './da-beat/stake/repository'
@@ -47,6 +48,7 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     currentPrice: new CurrentPriceRepository(db),
     stake: new StakeRepository(db),
     dataAvailability: new DataAvailabilityRepository(db),
+    blobs: new BlobsRepository(db),
     // #endregion
 
     // #region Discovery

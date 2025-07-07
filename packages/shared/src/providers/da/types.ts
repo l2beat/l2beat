@@ -3,6 +3,7 @@ import type { UnixTime } from '@l2beat/shared-pure'
 export interface DaBlobBase {
   daLayer: string
   blockTimestamp: UnixTime
+  blockNumber: number
   size: bigint
 }
 
@@ -24,3 +25,8 @@ export interface CelestiaBlob extends DaBlobBase {
 }
 
 export type DaBlob = EthereumBlob | AvailBlob | CelestiaBlob
+
+export interface BlobCache {
+  write: (blobs: DaBlob[]) => Promise<void>
+  read: (daLayer: string, from: number, to: number) => Promise<DaBlob[]>
+}

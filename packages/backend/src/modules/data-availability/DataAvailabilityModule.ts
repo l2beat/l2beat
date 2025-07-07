@@ -5,6 +5,7 @@ import partition from 'lodash/partition'
 import type { Config } from '../../config'
 import type { DataAvailabilityTrackingConfig } from '../../config/Config'
 import type { Peripherals } from '../../peripherals/Peripherals'
+import { DbBlobCache } from '../../providers/DbBlobCache'
 import type { Providers } from '../../providers/Providers'
 import type { Clock } from '../../tools/Clock'
 import { HourlyIndexer } from '../../tools/HourlyIndexer'
@@ -121,6 +122,8 @@ function createIndexers(
       parents: [targetIndexer],
       indexerService,
       db: database,
+      dbCache:
+        daLayer.type === 'ethereum' ? new DbBlobCache(database) : undefined,
     })
 
     daIndexers.push(indexer)
