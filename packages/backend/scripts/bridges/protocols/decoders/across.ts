@@ -1,24 +1,20 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import {
-  type Hex,
-  type Log,
-  decodeEventLog,
-  encodeEventTopics,
-  parseAbi,
-} from 'viem'
+import { type Log, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { BridgeTransfer } from '../../types/BridgeTransfer'
+import { extractAddressFromPadded } from '../../utils/viem'
 
-const ABI = parseAbi([
-  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
-])
+export const ACROSS = {
+  name: 'across',
+  decode: decodeAcross,
+}
 
 export function decodeAcross(
-  chain: string,
+  chainName: string,
   log: Log,
 ): BridgeTransfer | undefined {
-  const bridge = CHAIN_IDS.find((c) => c.name === chain)?.bridge
+  const chain = CHAINS.find((c) => c.name === chainName)
 
-  if (!bridge || EthereumAddress(log.address) !== bridge) return undefined
+  if (!chain || EthereumAddress(log.address) !== chain.bridge) return undefined
 
   if (
     log.topics[0] ===
@@ -32,20 +28,20 @@ export function decodeAcross(
       topics: log.topics,
     })
 
-    const destination = CHAIN_IDS.find(
+    const destination = CHAINS.find(
       (c) => c.id === +data.args.destinationChainId.toString(),
     )
 
     return {
-      protocol: 'across',
-      source: chain,
+      protocol: ACROSS.name,
+      source: chain.name,
       destination: destination?.name ?? data.args.destinationChainId.toString(),
-      token: extractAddressFromPaddedBytes32(data.args.inputToken),
+      token: extractAddressFromPadded(data.args.inputToken),
       amount: data.args.inputAmount.toString(),
       sender: log.topics[3]
-        ? extractAddressFromPaddedBytes32(log.topics[3])
+        ? extractAddressFromPadded(log.topics[3])
         : undefined,
-      receiver: extractAddressFromPaddedBytes32(data.args.recipient),
+      receiver: extractAddressFromPadded(data.args.recipient),
       txHash: log.transactionHash ?? undefined,
     }
   }
@@ -53,19 +49,11 @@ export function decodeAcross(
   return undefined
 }
 
-export function extractAddressFromPaddedBytes32(bytes32String: Hex): Hex {
-  if (!bytes32String.startsWith('0x') || bytes32String.length !== 66) {
-    throw new Error(
-      `Invalid bytes32 string format. Expected '0x' prefix and 64 hex characters, but got: ${bytes32String}`,
-    )
-  }
+const ABI = parseAbi([
+  'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
+])
 
-  const addressPart = bytes32String.slice(-40)
-
-  return `0x${addressPart}`
-}
-
-const CHAIN_IDS = [
+const CHAINS = [
   {
     id: 1,
     name: 'ethereum',

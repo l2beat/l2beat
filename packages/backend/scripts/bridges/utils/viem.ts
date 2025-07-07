@@ -16,3 +16,15 @@ export function logToViemLog(log: EVMLog): Log {
     removed: false,
   }
 }
+
+export function extractAddressFromPadded(bytes32String: Hex): Hex {
+  if (!bytes32String.startsWith('0x') || bytes32String.length !== 66) {
+    throw new Error(
+      `Invalid bytes32 string format. Expected '0x' prefix and 64 hex characters, but got: ${bytes32String}`,
+    )
+  }
+
+  const addressPart = bytes32String.slice(-40)
+
+  return `0x${addressPart}`
+}

@@ -1,8 +1,3 @@
-import { decodeAcross } from './decoders/across'
+import { ACROSS } from './decoders/across'
 
-export const PROTOCOLS = [
-  {
-    name: 'across',
-    decoder: decodeAcross,
-  },
-]
+export const PROTOCOLS = [ACROSS]
