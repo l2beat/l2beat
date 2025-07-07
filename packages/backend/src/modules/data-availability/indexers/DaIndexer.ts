@@ -1,14 +1,15 @@
 import type { BlobCache, DaBlob, DaProvider } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  type Configuration,
+  type RemovalConfiguration,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import type {
-  Configuration,
-  ManagedMultiIndexerOptions,
-  RemovalConfiguration,
-} from '../../../tools/uif/multi/types'
+import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
 import type { DaService } from '../services/DaService'
 
 export interface Dependencies
@@ -17,7 +18,7 @@ export interface Dependencies
   daProvider: DaProvider
   daLayer: string
   batchSize: number
-  dbCache?: BlobCache
+  blobCache?: BlobCache
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -106,17 +107,52 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       to: adjustedTo,
     })
 
-    const blobs = await this.$.daProvider.getBlobs(
-      this.daLayer,
-      from,
-      adjustedTo,
-    )
+    const blobs = []
 
-    if (blobs.length > 0 && this.$.dbCache) {
-      this.logger.info('Writing blobs to cache', {
-        count: blobs.length,
+    let adjustedFrom = from
+    // get as much as we can from cache
+    if (this.$.blobCache) {
+      const cachedBlobs = await this.$.blobCache.read(
+        this.$.daLayer,
+        from,
+        adjustedTo,
+      )
+
+      if (cachedBlobs.length > 0) {
+        cachedBlobs.sort((a, b) => b.blockNumber - a.blockNumber)
+        const cachedUpTo = cachedBlobs[0].blockNumber
+        this.logger.info('Fetched blobs from cache', {
+          from,
+          to: cachedUpTo,
+          count: cachedBlobs.length,
+        })
+        adjustedFrom = cachedUpTo + 1
+        blobs.push(...cachedBlobs)
+      }
+    }
+
+    // get the rest from provider
+    if (adjustedFrom < adjustedTo) {
+      const onchainBlobs = await this.$.daProvider.getBlobs(
+        this.daLayer,
+        adjustedFrom,
+        adjustedTo,
+      )
+
+      this.logger.info('Fetched blobs from chain', {
+        from: adjustedFrom,
+        to: adjustedTo,
+        count: onchainBlobs.length,
       })
-      await this.$.dbCache.write(blobs)
+
+      if (this.$.blobCache) {
+        this.logger.info('Writing blobs to cache', {
+          count: blobs.length,
+        })
+        await this.$.blobCache.write(onchainBlobs)
+      }
+
+      blobs.push(...onchainBlobs)
     }
 
     return blobs

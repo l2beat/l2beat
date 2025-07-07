@@ -122,7 +122,7 @@ function createIndexers(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      dbCache:
+      blobCache:
         daLayer.type === 'ethereum' ? new DbBlobCache(database) : undefined,
     })
 
