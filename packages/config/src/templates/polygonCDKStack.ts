@@ -401,7 +401,7 @@ export function polygonCDKStack(
         {
           title: 'Pessimistic Proofs',
           description:
-            'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
+            'The pessimistic proofs that are used to prove correct accounting in the Agglayer shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
         },
         {
           ...STATE_VALIDATION.VALIDITY_PROOFS,

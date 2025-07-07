@@ -1,5 +1,4 @@
 import type { Project } from '@l2beat/config'
-import { UnixTime } from '@l2beat/shared-pure'
 import { getDaThroughputTable } from '~/server/features/data-availability/throughput/getDaThroughputTable'
 import { getThroughputSyncWarning } from '~/server/features/data-availability/throughput/isThroughputSynced'
 import { THROUGHPUT_ENABLED_DA_LAYERS } from '~/server/features/data-availability/throughput/utils/consts'
@@ -21,23 +20,25 @@ export async function getDaThroughputSection(
   const [throughputChart, throughputData, projectsWithColors] =
     await Promise.all([
       helpers.da.projectChart.fetch({
-        range: '1y',
+        range: { type: '1y' },
         projectId: project.id,
       }),
       getDaThroughputTable([project.id]),
       ps.getProjects({ select: ['colors'] }),
     ])
+
   if (!throughputChart || throughputChart.chart.length === 0) return undefined
 
   const projectData = throughputData.data[project.id]
 
   if (!projectData) return undefined
 
-  const notSyncedStatus = projectData.syncedUntil
-    ? getThroughputSyncWarning(UnixTime(projectData.syncedUntil), {
-        shorter: true,
-      })
-    : undefined
+  const notSyncedStatus = getThroughputSyncWarning(
+    throughputChart.syncedUntil,
+    {
+      shorter: true,
+    },
+  )
 
   return {
     projectId: project.id,

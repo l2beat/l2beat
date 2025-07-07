@@ -29,6 +29,12 @@ export const deri = orbitStackL3({
       ],
     },
   },
+  chainConfig: {
+    name: 'deri',
+    chainId: undefined,
+    gasTokens: ['ETH'],
+    apis: [],
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),

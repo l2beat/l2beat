@@ -6,6 +6,7 @@ import type {
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
+import type { DiscoveryBlockNumbers } from '../modelling/modelPermissions'
 
 export type ContractValue =
   | string
@@ -35,6 +36,7 @@ export interface DiscoveryOutput {
   sharedModules?: string[]
   usedTemplates: Record<string, Hash256>
   permissionsConfigHash?: Hash256
+  dependentDiscoveries?: DiscoveryBlockNumbers
 }
 
 export interface DiscoveryCustomType {
@@ -132,4 +134,5 @@ export type PermissionsOutput = {
     isFinal: boolean
     role?: string
   }[]
+  dependentBlockNumbers: DiscoveryBlockNumbers
 }

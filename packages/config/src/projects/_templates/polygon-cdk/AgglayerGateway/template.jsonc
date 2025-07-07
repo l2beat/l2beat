@@ -24,7 +24,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "add or update default aggchain verification keys."
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors."
         }
       ]
     },
@@ -39,7 +39,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "add new routes from proof selector to verifier / vKey for pessimistic proofs."
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
         }
       ]
     },
@@ -54,13 +54,13 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "freeze routes from proof selector to verifier / vKey for pessimistic proofs."
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
         }
       ]
     },
     // need two configs here to catch all aggchainVKey updates
     "aggchainVKeys": {
-      "description": "First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is not used in verifyPessimisticProof().",
+      "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey().",
       "handler": {
         "type": "event",
         "groupBy": "selector",
@@ -73,6 +73,7 @@
       }
     },
     "aggchainVKeysUpdated": {
+      "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated.",
       "handler": {
         "type": "event",
         "groupBy": "selector",
@@ -82,7 +83,8 @@
       }
     },
     "routes": {
-      "description": "This map is used for routing in verifyPessimisticProof().",
+      "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey.",
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "groupBy": "selector",

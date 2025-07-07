@@ -152,7 +152,7 @@ export const sophon: ScalingProject = zkStackL2({
         },
         {
           title: 'Mailbox facet',
-          url: 'https://etherscan.io/address/0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f#code#F1#L472',
+          url: 'https://etherscan.io/address/0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec#code#F1#L472',
         },
         {
           title: 'TransactionFilterer',

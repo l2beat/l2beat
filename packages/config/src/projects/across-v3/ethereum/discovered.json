@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 22823774,
+  "blockNumber": 22865552,
   "configHash": "0x0b7fa96fe04ab217e12ea897c8ac004783f4afe3bde3af0d173e240bb36bc73f",
   "entries": [
     {
@@ -31,28 +31,28 @@
       "values": {
         "$immutable": true,
         "ANCILLARY_BYTES_LIMIT": 8192,
-        "cumulativeStake": "24817144351555678674176525",
+        "cumulativeStake": "25070040673339319951227803",
         "currentActiveRequests": true,
         "delayFmt": "1d",
         "emissionRate": "130000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "gat": "5000000000000000000000000",
-        "getCurrentRoundId": 10135,
+        "getCurrentRoundId": 10138,
         "getNumberOfPriceRequests": {
-          "numberPendingPriceRequests": 12,
-          "numberResolvedPriceRequests": 1098
+          "numberPendingPriceRequests": 14,
+          "numberResolvedPriceRequests": 1121
         },
         "getVotePhase": 0,
-        "lastRoundIdProcessed": 10135,
-        "lastUpdateTime": 1751365151,
+        "lastRoundIdProcessed": 10138,
+        "lastUpdateTime": 1751869295,
         "maxRequestsPerRound": 1000,
         "maxRolls": 4,
         "migratedAddress": "0x0000000000000000000000000000000000000000",
-        "nextPendingIndexToProcess": 12,
+        "nextPendingIndexToProcess": 14,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "previousVotingContract": "0x8B1631ab830d11531aE83725fDa4D86012eCCd77",
-        "rewardPerToken": "637595677957750391",
-        "rewardPerTokenStored": "637594106463486284",
+        "rewardPerToken": "640221643876432110",
+        "rewardPerTokenStored": "640218159239085953",
         "slashingLibrary": "0x9a406ba5a99983250Fd663947b3c968D387ce5cd",
         "spat": "650000000000000000",
         "UINT64_MAX": "18446744073709551615",
@@ -255,7 +255,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
           "description": "withdraw fees.",
           "role": ".withdrawer"
         }
@@ -611,7 +611,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "propose governance actions.",
           "role": ".proposer"
         }
@@ -624,7 +624,7 @@
         "bond": "5000000000000000000000",
         "bondFmt": "5,000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1751365451,
+        "getCurrentTime": 1751869967,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -718,6 +718,11 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
       "type": "Contract",
@@ -793,11 +798,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1751365451,
+        "getCurrentTime": 1751869967,
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_EXCLUSIVITY_PERIOD_SECONDS": 31536000,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 2785067,
+        "numberOfDeposits": 2807793,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -900,61 +905,61 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
+          "from": "eth:0x004395edb43EFca9885CEdad51EC9fAf93Bd34ac",
           "description": "set critical administrative parameters like migrating to a new contract and requesting governance actions (`requestPrice()`) directly.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
+          "from": "eth:0x3e532e6222afe9Bcf02DCB87216802c75D5113aE",
           "description": "manage registered contracts.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
+          "from": "eth:0x40f941E48A552bF496B154Af6bf55725f18D77c3",
           "description": "manage address mappings.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
+          "from": "eth:0x50efaC9619225d7fB4703C5872da978849B6E7cC",
           "description": "set the bond amount.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
+          "from": "eth:0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF",
           "description": "set fees for disputes and manage all roles in the contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "manage all roles in the contract.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
           "description": "remove and slash proposals, set the bond amount and the expiry time, manage the executor address.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
+          "from": "eth:0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570",
           "description": "manage the whitelist.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
+          "from": "eth:0xdBF90434dF0B98219f87d112F37d74B1D90758c7",
           "description": "manage the addresses on the whitelist.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
+          "from": "eth:0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
           "description": "set critical administrative parameters like default bonds, bond token, fees.",
           "role": ".owner"
         }
@@ -966,7 +971,7 @@
         "$immutable": true,
         "emergencyProposer": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1751365451,
+        "getCurrentTime": 1751869967,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -1026,7 +1031,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
+          "from": "eth:0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
           "description": "remove proposals, execute emergency proposals.",
           "role": ".executor"
         }
@@ -1048,7 +1053,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 840,
+        "nonce": 841,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1079,45 +1084,45 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
           "description": "update configuration values.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
           "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
           ]
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
           "description": "manage the proposer role.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715" }
+            { "address": "eth:0xB524735356985D2f267FA010D681f061DfF03715" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xB524735356985D2f267FA010D681f061DfF03715",
+          "from": "eth:0xB524735356985D2f267FA010D681f061DfF03715",
           "role": ".GnosisSafe_modules"
         }
       ],
@@ -1204,7 +1209,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
+          "from": "eth:0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "description": "can bypass the voting system and execute proposals immediately.",
           "role": ".emergencyProposer"
         }
@@ -1218,7 +1223,7 @@
         "delayFmt": "10d",
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1751365451,
+        "getCurrentTime": 1751869967,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -1260,6 +1265,39 @@
       "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "Solana_Adapter",
+      "address": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
+      "type": "Contract",
+      "template": "acrossv3/adapter",
+      "sourceHashes": [
+        "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738"
+      ],
+      "proxyType": "immutable",
+      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1748612783,
+      "sinceBlock": 22595936,
+      "values": {
+        "$immutable": true,
+        "cctpMessageTransmitter": "0x0a992d191DEeC32aFe36203Ad87D7d289a738F81",
+        "cctpTokenMessenger": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
+        "cctpV2": false,
+        "recipientCircleDomainId": 5,
+        "SOLANA_SPOKE_POOL_ADDRESS": "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a",
+        "SOLANA_SPOKE_POOL_BYTES32": "0xb7664086de37ee70821c10445b162f2c7ec8795bd0800c1462949e2328d1dd5a",
+        "SOLANA_SPOKE_POOL_USDC_VAULT": "0xf5d9ddc2b5d994277e15ea380117a3f8ef04ce1e37e2c678c3be4d11b2a5d034",
+        "SOLANA_USDC_ADDRESS": "0xaBc97431B1Bbe4C2D2f6E0E47ca60203452f5d61",
+        "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      },
+      "implementationNames": {
+        "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3": "Solana_Adapter"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ZkStack_Adapter",
@@ -1338,25 +1376,25 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x3B03509645713718B78951126E0A6de6f10043f5",
+          "from": "eth:0x3B03509645713718B78951126E0A6de6f10043f5",
           "description": "update configuration values.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x8692B776d1Ff0664177c90465038056Dc64f8991",
+          "from": "eth:0x8692B776d1Ff0664177c90465038056Dc64f8991",
           "description": "set guard, avatar, target, delay, identifier, escalationManager, bond token and amount.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
+          "from": "eth:0xc186fA914353c44b2E33eBE05f21846F1048bEda",
           "description": "pause the system, manage all fees, bonds and security parameters, manage tokens and chain support, and critical emergency actions like admin functions on remote SpokePools or deleting proposals (can steal funds).",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
           "description": "manage the proposer role.",
           "role": ".owner"
         }
@@ -1379,7 +1417,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 337,
+        "nonce": 340,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1400,13 +1438,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
           "description": "relay and delete root bundles, pause the contract, manage routes, set the withdrawal recipient (crosschain rebalancing target).",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "from": "eth:0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
           "role": "admin"
         }
       ],
@@ -1436,7 +1474,8 @@
           "59144": "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
           "81457": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
           "534352": "0x2DA799c2223c6ffB595e578903AE6b95839160d8",
-          "7777777": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+          "7777777": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
+          "34268394551451": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3"
         },
         "bondAmount": "450000000000000000",
         "bondAmountFmt": "0.45",
@@ -1462,7 +1501,8 @@
           "59144": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
           "81457": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
           "534352": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-          "7777777": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+          "7777777": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
+          "34268394551451": "0x5b162F2c7EC8795BD0800C1462949E2328D1DD5a"
         },
         "finalizationDelayFmt": "1h",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
@@ -1475,13 +1515,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xeddc0f568421c19f6c103028f284d70bf3cfc76dc848c6bd71d371c50f6df150",
-          "relayerRefundRoot": "0xb22d1de83b527909c03b3647e57843c212f1ac408e88f14a5b0a457d7fff9069",
+          "poolRebalanceRoot": "0xbef446e61f5038ac3439fff973f0523634f19f5644b23fa6af4f2809c5aaf4db",
+          "relayerRefundRoot": "0x6530cca9b53bf3dc25ba80d937bbcc8d5f202ef64e42e956a8bd2f6b920ebe21",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 19,
-          "challengePeriodEndTimestamp": 1751367359
+          "challengePeriodEndTimestamp": 1751870447
         },
         "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
         "timerAddress": "0x0000000000000000000000000000000000000000",
@@ -2421,12 +2461,12 @@
       "receivedPermissions": [
         {
           "permission": "acrossPropose",
-          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
           "role": ".proposers"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
+          "from": "eth:0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
           "description": "use ABT as a bond to the HubPool contract for root bundle proposals.",
           "role": ".proposers"
         }
@@ -3026,6 +3066,29 @@
       "function calcWrongVoteSlashPerTokenGovernance(uint256 totalStaked, uint256 totalVotes, uint256 totalCorrectVotes, uint256 priceRequestIndex) view returns (uint256)",
       "function governanceSlashAmount() view returns (uint256)"
     ],
+    "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3": [
+      "constructor(address _l1Usdc, address _cctpTokenMessenger, address _cctpMessageTransmitter, bytes32 solanaSpokePool, bytes32 solanaUsdc, bytes32 solanaSpokePoolUsdcVault)",
+      "error InvalidAmount(uint256 amount)",
+      "error InvalidCctpMessageTransmitter(address messageTransmitter)",
+      "error InvalidCctpTokenMessenger(address tokenMessenger)",
+      "error InvalidL1Token(address l1Token)",
+      "error InvalidL2Token(address l2Token)",
+      "error InvalidRelayMessageTarget(address target)",
+      "error InvalidTokenRecipient(address to)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function SOLANA_SPOKE_POOL_ADDRESS() view returns (address)",
+      "function SOLANA_SPOKE_POOL_BYTES32() view returns (bytes32)",
+      "function SOLANA_SPOKE_POOL_USDC_VAULT() view returns (bytes32)",
+      "function SOLANA_USDC_ADDRESS() view returns (address)",
+      "function cctpMessageTransmitter() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function cctpV2() view returns (bool)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "0xA374585E6062517Ee367ee5044946A6fBe17724f": [
       "constructor(uint256 _chainId, address _bridgeHub, address _l1Weth, address _l2RefundAddress, uint256 _l2GasLimit, uint256 _l1GasToL2GasPerPubDataLimit, uint256 _maxTxGasprice)",
       "error ETHGasTokenRequired()",
@@ -3494,7 +3557,7 @@
   },
   "usedTemplates": {
     "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "acrossv3/adapter": "0xb4255921436c1b241e151988fe5443ec28852daad474c31507370e6006903dbe",
+    "acrossv3/adapter": "0xcfbc484c1ad9933519bb20dea0ebbd045fcbbac723bb8c52058345cfa473f8df",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
     "acrossv3/HubPool": "0x88041cb87c7b8bfa14c528c9c6a13530bd02686140611aff8e1ccb544fa88872",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
@@ -3514,5 +3577,5 @@
     "uma/Store": "0x0a0876560462dda4883db23e6343c1d28c8234886cda82b177de3cb263b1e86b",
     "uma/VotingV2": "0x8f7872c0ad9d4612ce7305fb6318475b85db06d8406d8e835e88e5afc8367f64"
   },
-  "permissionsConfigHash": "0xb0ef55036c514169bc596ef567bd7dcb949c18e8bb40e5390933c3d04d6a6d5f"
+  "permissionsConfigHash": "0x920ffd93f371412a979f609a4ec30be8db5e9e7ac4addb0808aacc7aedc9214f"
 }

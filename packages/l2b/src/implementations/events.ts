@@ -1,6 +1,6 @@
+import type { Logger } from '@l2beat/backend-tools'
 import { type IProvider, ProxyDetector } from '@l2beat/discovery'
 import { get$Implementations } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
 import {
   assert,
   type EthereumAddress,
@@ -24,7 +24,7 @@ export interface EventArgs {
   explorerChainId: number | undefined
 }
 
-export async function getEvents(logger: CliLogger, args: EventArgs) {
+export async function getEvents(logger: Logger, args: EventArgs) {
   const { address, topics: inputTopics, rpcUrl } = args
 
   const explorer = getExplorerConfig(args)
@@ -33,7 +33,7 @@ export async function getEvents(logger: CliLogger, args: EventArgs) {
   const onlyHashedTopics = inputTopics.every((t) => Hash256.check(t))
   const topics = []
   if (!onlyHashedTopics) {
-    logger.logLine(
+    logger.info(
       'Some of the topics you provided are not hashes, trying to match them to the ABI',
     )
 
@@ -45,7 +45,7 @@ export async function getEvents(logger: CliLogger, args: EventArgs) {
       addresses.push(...get$Implementations(result.values))
     }
 
-    logger.logLine('Fetching sources...')
+    logger.info('Fetching sources...')
     const sources = await Promise.all(
       addresses.map((address) => provider.getSource(address)),
     )
@@ -65,7 +65,7 @@ export async function getEvents(logger: CliLogger, args: EventArgs) {
       try {
         topics.push(iface.getEventTopic(topic))
       } catch {
-        logger.logLine(
+        logger.info(
           `${chalk.red('ERROR')}: Event ${chalk.green(
             `"${topic}"`,
           )} does not exist in the ABI.`,
@@ -73,17 +73,17 @@ export async function getEvents(logger: CliLogger, args: EventArgs) {
         throw new Error(`Unable to decode event name.`)
       }
     }
-    logger.logLine('Done')
+    logger.info('Done')
   } else {
     topics.push(...inputTopics)
   }
 
-  logger.logLine('Fetching logs...')
+  logger.info('Fetching logs...')
   const logs = await provider.getLogs(
     address,
     topics.map((t) => t),
   )
-  logger.logLine('Done.')
+  logger.info('Done.')
 
   const headers = ['Date', 'Transaction hash', 'Sender']
   const values: string[][] = await Promise.all(
@@ -94,7 +94,7 @@ export async function getEvents(logger: CliLogger, args: EventArgs) {
     }),
   )
 
-  logger.logLine(formatAsAsciiTable(headers, values))
+  logger.info(formatAsAsciiTable(headers, values))
 }
 
 async function getTimestampFromBlock(

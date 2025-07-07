@@ -1,4 +1,8 @@
-import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
+import {
+  type EntryParameters,
+  type ReceivedPermission,
+  getChainShortName,
+} from '@l2beat/discovery'
 import {
   ChainSpecificAddress,
   type EthereumAddress,
@@ -190,8 +194,9 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getUltimatelyIssuedPermissions(fromAddress: EthereumAddress) {
+    const shortChain = getChainShortName(this.projectDiscovery.chain)
     const prefixedFromAddress = ChainSpecificAddress(
-      `${this.projectDiscovery.chain}:${fromAddress}`,
+      `${shortChain}:${fromAddress}`,
     )
     return this.projectDiscovery
       .getEntries()
@@ -207,8 +212,9 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getIssuedPermissions(fromAddress: EthereumAddress) {
+    const shortChain = getChainShortName(this.projectDiscovery.chain)
     const prefixedFromAddress = ChainSpecificAddress(
-      `${this.projectDiscovery.chain}:${fromAddress}`,
+      `${shortChain}:${fromAddress}`,
     )
     return this.projectDiscovery
       .getEntries()
@@ -270,7 +276,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
     const reversedVia = [...(receivedPermission.via ?? [])].reverse()
     const result = []
     if (reversedVia.length > 0) {
-      result.push('- acting via')
       result.push(
         reversedVia
           .map((p) => this.projectDiscovery.formatViaPath(p))

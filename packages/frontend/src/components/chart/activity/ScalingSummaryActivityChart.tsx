@@ -128,9 +128,6 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             isLoading,
             yAxis: {
               unit: ' UOPS',
-              tick: {
-                width: 100,
-              },
             },
           })}
         </AreaChart>

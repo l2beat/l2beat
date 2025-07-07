@@ -1,10 +1,13 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
+import isEmpty from 'lodash/isEmpty'
+import { getChainShortName } from '../../config/config.discovery'
 import type {
   DiscoveryOutput,
   EntryParameters,
   PermissionsOutput,
   ReceivedPermission,
 } from '../output/types'
+import type { DiscoveryBlockNumbers } from './modelPermissions'
 
 // This function transforms permission modelling output such that
 // it matches the historical format of ReceivedPermission.
@@ -13,7 +16,9 @@ import type {
 export async function combinePermissionsIntoDiscovery(
   discovery: DiscoveryOutput,
   permissionsOutput: PermissionsOutput,
+  options: { skipDependentDiscoveries?: boolean } = {},
 ) {
+  const shortChain = getChainShortName(discovery.chain)
   const updateRelevantField = (
     entry: EntryParameters,
     field: keyof EntryParameters,
@@ -38,7 +43,7 @@ export async function combinePermissionsIntoDiscovery(
     for (const key of permissionKeys) {
       const ultimatePermissionsForEntry = permissionsOutput.permissions.filter(
         (p) =>
-          p.receiver.startsWith(`${discovery.chain}:${entry.address}`) &&
+          p.receiver.startsWith(`${shortChain}:${entry.address}`) &&
           (key === 'receivedPermissions' ? p.isFinal : !p.isFinal),
       )
       const permissions =
@@ -57,11 +62,28 @@ export async function combinePermissionsIntoDiscovery(
 
       entry.controlsMajorityOfUpgradePermissions =
         permissionsOutput.eoasWithMajorityUpgradePermissions?.includes(
-          ChainSpecificAddress(`${discovery.chain}:${entry.address}`),
+          ChainSpecificAddress(`${shortChain}:${entry.address}`),
         )
           ? true
           : undefined
     }
+  }
+
+  if (!options.skipDependentDiscoveries) {
+    const blockNumbersWithoutCurProj: DiscoveryBlockNumbers = {}
+    for (const [project, chains] of Object.entries(
+      permissionsOutput.dependentBlockNumbers,
+    )) {
+      for (const [chain, blockNumber] of Object.entries(chains)) {
+        if (!(project === discovery.name && chain === discovery.chain)) {
+          blockNumbersWithoutCurProj[project] ??= {}
+          blockNumbersWithoutCurProj[project][chain] = blockNumber
+        }
+      }
+    }
+    discovery.dependentDiscoveries = isEmpty(blockNumbersWithoutCurProj)
+      ? undefined // remove entry if there are no dependent discoveries
+      : blockNumbersWithoutCurProj
   }
 }
 

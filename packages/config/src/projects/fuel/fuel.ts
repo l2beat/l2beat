@@ -12,13 +12,11 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { RISK_VIEW } from '../../common/riskView'
-import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -46,11 +44,14 @@ export const fuel: ScalingProject = {
   capability: 'universal',
   addedAt: UnixTime(1729589660), // 2024-10-22T09:34:20Z
   dataAvailability: {
-    layer: DA_LAYERS.ETH_BLOBS,
-    bridge: DA_BRIDGES.ENSHRINED,
+    layer: DA_LAYERS.EIGEN_DA,
+    bridge: DA_BRIDGES.NONE,
     mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
   },
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [
+    REASON_FOR_BEING_OTHER.NO_PROOFS,
+    REASON_FOR_BEING_OTHER.NO_DA_ORACLE,
+  ],
   display: {
     name: 'Fuel Ignition',
     slug: 'fuel',
@@ -76,7 +77,10 @@ export const fuel: ScalingProject = {
       ],
     },
   },
-  badges: [BADGES.VM.FuelVM, BADGES.DA.EthereumBlobs],
+  stage: {
+    stage: 'NotApplicable',
+  },
+  badges: [BADGES.VM.FuelVM, BADGES.DA.EigenDA],
   type: 'layer2',
   config: {
     associatedTokens: ['FUEL'],
@@ -100,10 +104,18 @@ export const fuel: ScalingProject = {
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
-        sinceBlock: 0, // Edge Case: config added @ DA Module start
+        sinceBlock: 20915271,
         inbox: '0xEA0337EFC12e98AB118948dA570C07691E8E4b37',
         sequencers: ['0xEA0337EFC12e98AB118948dA570C07691E8E4b37'],
+        untilBlock: 22837254,
       },
+      // TODO: add as soon as we have their customerId
+      // {
+      //   type: 'eigen-da',
+      //   customerId: '',
+      //   daLayer: ProjectId('eigenda'),
+      //   sinceTimestamp: UnixTime(1751528219),
+      // },
     ],
     trackedTxs: [
       {
@@ -116,6 +128,7 @@ export const fuel: ScalingProject = {
           from: sequencerAddress,
           to: sequencerAddress,
           sinceTimestamp: UnixTime(1728323243),
+          untilTimestamp: UnixTime(1751528219),
         },
       },
       {
@@ -154,36 +167,12 @@ export const fuel: ScalingProject = {
       ...RISK_VIEW.STATE_NONE,
       secondLine: formatChallengePeriod(challengePeriod),
     },
-    dataAvailability: RISK_VIEW.DATA_ON_CHAIN,
+    dataAvailability: RISK_VIEW.DATA_EIGENDA(false),
     exitWindow: RISK_VIEW.EXIT_WINDOW(0, challengePeriod),
     sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   },
 
-  stage: getStage(
-    {
-      stage0: {
-        callsItselfRollup: true,
-        stateRootsPostedToL1: true,
-        dataAvailabilityOnL1: true,
-        rollupNodeSourceAvailable: true,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
-      },
-      stage1: {
-        principle: false,
-        usersCanExitWithoutCooperation: false,
-        usersHave7DaysToExit: false,
-        securityCouncilProperlySetUp: false,
-      },
-      stage2: {
-        fraudProofSystemIsPermissionless: null,
-        delayWith30DExitWindow: false,
-        proofSystemOverriddenOnlyInCaseOfABug: false,
-      },
-    },
-    { rollupNodeLink: 'https://github.com/FuelLabs/network-watchtower' },
-  ),
   stateValidation: {
     categories: [
       {
@@ -212,18 +201,24 @@ export const fuel: ScalingProject = {
   },
   technology: {
     dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CANONICAL,
+      name: 'Data is posted to EigenDA',
+      description:
+        'No transactions roots are posted onchain and the full data is posted on EigenDA. Since the ServiceManager bridge is not used, availability of the data is not verified against EigenDA operators, meaning that data is not guaranteed to be available.',
+      risks: [
+        {
+          category: 'Funds can be lost if',
+          text: 'the data is not available on the external provider.',
+          isCritical: true,
+        },
+      ],
       references: [
         {
-          title: 'Sequencer - Etherscan address',
-          url: `https://etherscan.io/address/${sequencerAddress}`,
-        },
-        {
-          title: 'Fuel docs - Blobs',
-          url: 'https://docs.fuel.network/docs/fuel-book/the-architecture/fuel-and-ethereum/#blobs',
+          title: 'EigenDA Docs - Overview',
+          url: 'https://docs.eigenda.xyz/overview',
         },
       ],
     },
+
     operator: OPERATOR.CENTRALIZED_SEQUENCER,
     forceTransactions: {
       ...FORCE_TRANSACTIONS.CANONICAL_ORDERING('smart contract'),
@@ -285,11 +280,12 @@ export const fuel: ScalingProject = {
           ),
           'Whitelisted addresses that can pause the FuelChainState.',
         ),
-        discovery.getPermissionDetails(
-          'Sequencer',
-          discovery.formatPermissionedAccounts([sequencerAddress]),
-          'Permissioned address submitting tx data as blobs.',
-        ),
+        // uncomment if there are commitments posted here in the future
+        // discovery.getPermissionDetails(
+        //   'Sequencer',
+        //   discovery.formatPermissionedAccounts([sequencerAddress]),
+        //   'Permissioned address submitting tx data as blobs.',
+        // ),
         discovery.getPermissionDetails(
           'Proposer',
           discovery.getAccessControlRolePermission(
@@ -341,6 +337,14 @@ export const fuel: ScalingProject = {
     ],
   },
   milestones: [
+    {
+      title: 'Switch to EigenDA',
+      date: '2025-07-03T00:00:00Z',
+      url: 'https://x.com/IAmNickDodson/status/1940736106187678037',
+      description:
+        'Data publishing to Ethereum blobs is stopped and moved to EigenDA without a DA bridge instead.',
+      type: 'general',
+    },
     {
       title: 'Fuel Ignition Mainnet is Live',
       date: '2024-10-16T00:00:00Z',

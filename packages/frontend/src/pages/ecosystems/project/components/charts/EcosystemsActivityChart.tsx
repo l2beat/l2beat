@@ -52,7 +52,7 @@ export function EcosystemsActivityChart({
   )
 
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id),
@@ -122,9 +122,6 @@ export function EcosystemsActivityChart({
             data: chartData,
             isLoading,
             yAxis: {
-              tick: {
-                width: 100,
-              },
               scale: 'lin',
               unit: ' UOPS',
             },

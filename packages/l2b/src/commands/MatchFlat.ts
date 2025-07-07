@@ -1,7 +1,7 @@
 import { buildSimilarityHashmap, format } from '@l2beat/discovery'
-import { CliLogger } from '@l2beat/shared'
 import { command, number, option, positional, subcommands } from 'cmd-ts'
 import { getExplorer } from '../implementations/common/getExplorer'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { fetchAndFlatten } from '../implementations/flatten'
 import { matchFile, readAndHashFile } from '../implementations/matchFlat'
 import {
@@ -39,7 +39,7 @@ const MatchFlatFile = command({
     maxResults,
   },
   handler: async (args) => {
-    const logger: CliLogger = new CliLogger()
+    const logger = getPlainLogger()
     const baseFile = readAndHashFile(args.file)
 
     await matchFile(
@@ -67,7 +67,7 @@ const MatchFlatAddress = command({
     explorerChainId,
   },
   handler: async (args) => {
-    const logger: CliLogger = new CliLogger()
+    const logger = getPlainLogger()
     const client = getExplorer(args)
     const flat = await fetchAndFlatten(args.address, client, logger, false)
 

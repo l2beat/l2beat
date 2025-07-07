@@ -125,7 +125,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
+          "from": "eth:0x4c1E74EF88a75C24e49eddD9f70D82A94D19251c",
           "description": "withdraw the entire balance in the escrow.",
           "role": ".withdrawer"
         }
@@ -645,5 +645,5 @@
     "cartesi/TopTournamentFactory": "0x923d60afe222ac83f542612d719320f16646244a35b371e99bcc8add0e00f072",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x2e7db4a1312020b21d53f2184bd50181fcf9a719a49005d50f6d7316553ef660"
+  "permissionsConfigHash": "0xbe70e2be9b43a1580864e4cb9a99a8cec2b99c362ecc148d1bdf9dd363d7284e"
 }

@@ -144,7 +144,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2d5d7d31F671F86C782533cc367F14109a082712",
+          "from": "eth:0x2d5d7d31F671F86C782533cc367F14109a082712",
           "role": "admin"
         }
       ]
@@ -545,5 +545,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xeb9dc0f3bf6027d1be9c4618c40038c91bf244b7321ad4e8db9ad5e71ae010d6"
+  "permissionsConfigHash": "0x3a6a3f13bec48296b9c65ac4a953eb90fe2f949a7763621fab4682039bccae44"
 }

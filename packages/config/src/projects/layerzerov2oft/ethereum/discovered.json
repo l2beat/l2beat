@@ -520,7 +520,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+          "from": "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
           "role": "admin"
         }
       ],
@@ -547,17 +547,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
+          "from": "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc" }
+            { "address": "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
+          "from": "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc",
           "role": ".owner"
         }
       ],
@@ -975,7 +975,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+          "from": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
           "role": "admin"
         }
       ],
@@ -1345,7 +1345,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
+          "from": "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
           "role": "admin"
         }
       ],
@@ -3636,5 +3636,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x1737c8c6248dd03d3b63241b91192f611dc7792cc912c4d38d1d52a981a8e09b"
+  "permissionsConfigHash": "0x25cf08641e992098dd4a576656f8f229a2f836010f40d0f084134d84dc83eb16"
 }

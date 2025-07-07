@@ -1,8 +1,8 @@
 import { writeFileSync } from 'fs'
-import { CliLogger } from '@l2beat/shared'
 import chalk from 'chalk'
 import { boolean, command, flag, option, positional, string } from 'cmd-ts'
 import { getExplorer } from '../implementations/common/getExplorer'
+import { getPlainLogger } from '../implementations/common/getPlainLogger'
 import { fetchAndFlatten } from '../implementations/flatten'
 import {
   chainName,
@@ -39,7 +39,7 @@ export const Flatten = command({
     }),
   },
   handler: async (args) => {
-    const logger: CliLogger = new CliLogger()
+    const logger = getPlainLogger()
     const client = getExplorer(args)
     const flat = await fetchAndFlatten(
       args.address,

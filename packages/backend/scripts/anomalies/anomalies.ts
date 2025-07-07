@@ -5,6 +5,7 @@ import {
   assert,
   ProjectId,
   type TrackedTxsConfigSubtype,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   boolean,
@@ -16,6 +17,7 @@ import {
   run,
   string,
 } from 'cmd-ts'
+import { formatDuration } from '../../src/modules/shared/notifiers/utils/format'
 
 export const AnomalyKey = extendType(string, {
   async from(input) {
@@ -96,15 +98,27 @@ const cmd = command({
         console.log('No ongoing anomalies found.')
         process.exit(0)
       }
+      const now = UnixTime.now()
+      const rows = ongoingAnomalies
+        .map((anomaly) => ({
+          duration: now - anomaly.start,
+          ...anomaly,
+        }))
+        .sort((a, b) => {
+          return b.duration - a.duration
+        })
+        .map((anomaly) => ({
+          ...anomaly,
+          duration: formatDuration(anomaly.duration),
+          start: new Date(anomaly.start * 1000).toISOString(),
+        }))
 
-      ongoingAnomalies.sort((a, b) => {
-        return b.start - a.start
-      })
-      console.table(ongoingAnomalies, [
-        'start',
+      console.table(rows, [
+        'duration',
         'projectId',
         'subtype',
         'status',
+        'start',
       ])
     } else if (args.approve) {
       const ongoingAnomalies = await db.realTimeAnomalies.getOngoingAnomalies()

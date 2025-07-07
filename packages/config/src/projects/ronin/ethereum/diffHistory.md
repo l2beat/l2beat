@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x0712bb4f53355022bd44737c470ed1e7e561e2b6
+
+# Diff at Fri, 04 Jul 2025 12:19:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22824247
+- current block number: 22824247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22824247 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
++        "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"
+    }
+```
+
+```diff
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
++        "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"
+    }
+```
+
 Generated with discovered.json: 0x9f685d1a9b6356c6eb78701beff80192ee04ad36
 
 # Diff at Tue, 01 Jul 2025 11:59:42 GMT:

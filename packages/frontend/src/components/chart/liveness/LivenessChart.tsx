@@ -92,9 +92,6 @@ export function LivenessChart({
           data,
           isLoading,
           yAxis: {
-            tick: {
-              width: 100,
-            },
             tickFormatter: (value: number) => formatDuration(value),
             domain: ['auto', 'auto'],
           },

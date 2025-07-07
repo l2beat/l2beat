@@ -2,9 +2,10 @@ export { discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
 export {
+  DiscoveryRegistry,
+  getDependenciesToDiscoverForProject,
   modelPermissions,
-  modelPermissionsForIsolatedDiscovery,
-  generateClingoForProject,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'

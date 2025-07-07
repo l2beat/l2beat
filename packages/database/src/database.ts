@@ -19,6 +19,7 @@ import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
+import { NotificationsRepository } from './other/notifications/repository'
 import { RealTimeAnomaliesRepository } from './other/real-time-anomalies/repository'
 import { RealTimeLivenessRepository } from './other/real-time-liveness/repository'
 import { VerifierStatusRepository } from './other/verifier-status/repository'
@@ -83,5 +84,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     tvsTokenValue: new TokenValueRepository(db),
     tvsProjectValue: new ProjectValueRepository(db),
     // #endregion
+    notifications: new NotificationsRepository(db),
   }
 }

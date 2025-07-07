@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "arbitrum",
   "blockNumber": 314504547,
-  "configHash": "0x8e102738d79db50b54bfbde058207b5b745ade355222b02f66bc9ae76c3d39ea",
+  "configHash": "0x3c4e4c94b29d71fa64a25d066682ff534b64d08e809c9dd5338f8b77af694ec4",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -21,7 +21,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+          "from": "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
           "role": "admin"
         }
       ],
@@ -107,27 +107,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+          "from": "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+          "from": "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
           "role": "admin",
           "via": [
-            { "address": "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917" }
+            { "address": "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
+          "from": "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "arbitrum:0x48698A17D193bFc882395AC06a1DEdbb222F2917",
+          "from": "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917",
           "role": ".owner"
         }
       ],
@@ -510,5 +510,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
 }

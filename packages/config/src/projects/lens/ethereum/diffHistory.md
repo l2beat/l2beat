@@ -1,3 +1,273 @@
+Generated with discovered.json: 0xc241ecec70a16dd4e90c460147f183b00a159a05
+
+# Diff at Mon, 07 Jul 2025 06:48:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 22738142
+- current block number: 22865631
+
+## Description
+
+standard zk stack v28 upgrade.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0)
+    +++ description: A router contract for verifiers. Routes verification requests to 0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF or 0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
+    contract LensZkEvmAdmin (0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) {
+    +++ description: None
++++ description: Timestamps for new protocol version upgrades can be registered here (NOT enforced)
+      values.upgradeTimestamps.2:
++        {"_protocolVersion":120259084288,"_upgradeTimestamp":1750942800}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0xAd36FFc4066855aeF3Bdf6BF03cA427bb084636e)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+    contract LensZkEvm (0xc29d04A93F893700015138E3E334eB828dAC3cef) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      values.$implementation.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.$implementation.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.$implementation.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.$implementation.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.$pastUpgrades.5:
++        ["2025-07-02T18:42:59.000Z","0x8d2c504c58a659511bef547888186da42708e16923743741cd11acf4c6d908b3",["0x431449e2a28A69122860A4956A3f7191eE15aFBC","0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22","0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec","0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"]]
+      values.$upgradeCount:
+-        5
++        6
+      values.facetAddresses.0:
+-        "0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4"
++        "0x431449e2a28A69122860A4956A3f7191eE15aFBC"
+      values.facetAddresses.1:
+-        "0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4"
++        "0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22"
+      values.facetAddresses.2:
+-        "0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f"
++        "0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec"
+      values.facetAddresses.3:
+-        "0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490"
++        "0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A"
+      values.facets.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.facets.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        ["acceptAdmin()","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))","setPorterAvailability(bool)","setTransactionFilterer(address)","setTokenMultiplier(uint128,uint128)","freezeDiamond()","genesisUpgrade(address,address,bytes,bytes[])","forwardedBridgeMint(bytes,bool)","prepareChainCommitment()","setValidator(address,bool)","setPendingAdmin(address)","allowEvmEmulation()","setDAValidatorPair(address,address)","forwardedBridgeBurn(address,address,bytes)","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","makePermanentRollup()","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","forwardedBridgeRecoverFailedTransfer(uint256,bytes32,address,bytes)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)"]
+      values.facets.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        ["getPubdataPricingMode()","getPriorityTxMaxGasLimit()","getTotalBlocksCommitted()","getVerifierParams()","baseTokenGasPriceMultiplierDenominator()","getTransactionFilterer()","isDiamondStorageFrozen()","getProtocolVersion()","getChainId()","getBridgehub()","getTotalBlocksExecuted()","getPriorityTreeRoot()","getVerifier()","facetAddresses()","getDAValidatorPair()","getPriorityQueueSize()","getSettlementLayer()","getAdmin()","storedBlockHash(uint256)","getFirstUnprocessedPriorityTx()","facets()","getL2SystemContractsUpgradeTxHash()","isPriorityQueueActive()","getChainTypeManager()","getBaseTokenAssetId()","getBaseToken()","l2LogsRootHash(uint256)","getL2SystemContractsUpgradeBlockNumber()","getTotalPriorityTxs()","facetFunctionSelectors(address)","getTotalBlocksVerified()","storedBatchHash(uint256)","getTotalBatchesExecuted()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","facetAddress(bytes4)","getPendingAdmin()","getL2BootloaderBytecodeHash()","getTotalBatchesCommitted()","getL2EvmEmulatorBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","isFunctionFreezable(bytes4)","baseTokenGasPriceMultiplierNominator()","getTotalBatchesVerified()","getPriorityTreeStartIndex()","getSemverProtocolVersion()","isValidator(address)","getL2DefaultAccountBytecodeHash()"]
+      values.facets.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        ["proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","proveL2LeafInclusion(uint256,uint256,bytes32,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","requestL2TransactionToGatewayMailbox(uint256,bytes32,uint64)","requestL2ServiceTransaction(address,bytes)","bridgehubRequestL2TransactionOnGateway(bytes32,uint64)","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])"]
+      values.facets.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        ["revertBatchesSharedBridge(uint256,uint256)","proveBatchesSharedBridge(uint256,uint256,uint256,bytes)","commitBatchesSharedBridge(uint256,uint256,uint256,bytes)","executeBatchesSharedBridge(uint256,uint256,uint256,bytes)"]
+      values.getL2BootloaderBytecodeHash:
+-        "0x0100087fe7df1cf5616646f85bd5eebc8efe5d8deac4d85bea9b9aefd88803dd"
++        "0x0100085f9382a7928dd83bfc529121827b5f29f18b9aa10d18aa68e1be7ddc35"
+      values.getL2DefaultAccountBytecodeHash:
+-        "0x0100050bf9baf9d08e5d3c037f8d8b486076de7e6dceb3f3fc0989ea2c99cd67"
++        "0x010005f72e443c94460f4583fb38ef5d0c5cd9897021c41df840f91465c0392e"
+      values.getL2EvmEmulatorBytecodeHash:
+-        "0x01000bbb8116fe7bdf690c19740ea350375426cec23f4f1f69a12fdc58adc9ba"
++        "0x01000d83e0329d9144ad041430fafcbc2b388e5434db8cb8a96e80157738a1da"
++++ description: Protocol version, increments with each protocol upgrade.
++++ severity: HIGH
+      values.getProtocolVersion:
+-        115964116992
++        120259084288
+      values.getSemverProtocolVersion.1:
+-        27
++        28
+      values.getVerifier:
+-        "0x079004D9C534Ff1dC3414F5dB31B4a0a1F4fc9d0"
++        "0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579"
+      implementationNames.0xF2C9D38D16c7A7Dc9aA4F743Fce024354d9c19B4:
+-        "AdminFacet"
+      implementationNames.0x05DeB01AaDB6C98F8B78a1F9A81ccd68Ac4d70d4:
+-        "GettersFacet"
+      implementationNames.0x26b9a55DaBab9A8e74815A9D6Cd7F74AC0d7215f:
+-        "MailboxFacet"
+      implementationNames.0x0A7C1b8D56BE02d9731e3A764107602f8F6dd490:
+-        "ExecutorFacet"
+      implementationNames.0x431449e2a28A69122860A4956A3f7191eE15aFBC:
++        "AdminFacet"
+      implementationNames.0xae5cbB5f70e134668a13d7C8EcEF5e9E6FffCF22:
++        "GettersFacet"
+      implementationNames.0x365D0ae3ECA13004daf2A4ba1501c01AaEbb4fec:
++        "MailboxFacet"
+      implementationNames.0x2f116b9033d88Bb3Cf64C371AE5458fbA22BA39A:
++        "ExecutorFacet"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+## Source code changes
+
+```diff
+.../lens/ethereum/{.flat@22738142 => .flat}/DualVerifier.sol   |  2 +-
+ .../ethereum/{.flat@22738142 => .flat}/L1VerifierFflonk.sol    |  6 +++---
+ .../ethereum/{.flat@22738142 => .flat}/L1VerifierPlonk.sol     | 10 +++++-----
+ .../{.flat@22738142 => .flat}/LensZkEvm/AdminFacet.1.sol       |  2 +-
+ .../{.flat@22738142 => .flat}/LensZkEvm/ExecutorFacet.4.sol    |  2 +-
+ .../{.flat@22738142 => .flat}/LensZkEvm/GettersFacet.2.sol     |  2 +-
+ .../{.flat@22738142 => .flat}/LensZkEvm/MailboxFacet.3.sol     |  2 +-
+ 7 files changed, 13 insertions(+), 13 deletions(-)
+```
+
+Generated with discovered.json: 0x7655df2ab2ffad645038cf020fb303388d249f8a
+
+# Diff at Fri, 04 Jul 2025 12:19:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22738142
+- current block number: 22738142
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22738142 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3eA4D1684C65756E892b0B8d3e331E10D9d3a484) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    EOA  (0x477c1B7DC1091389CBD3Eef21Efb00081606Ab67) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract Lens Multisig (0x4968A0E4b025eD7d095753E54058377969b41abC) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433"
++        "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433"
+      receivedPermissions.0.from:
+-        "ethereum:0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433"
++        "eth:0x6bd8d33551077Ed281Cb047835a2aE4033eEc433"
+    }
+```
+
+```diff
+    contract ValidatorTimelock3 (0x5C03468829A26981c410a7930bD4853622F0B2E5) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 0s.
+      receivedPermissions.0.from:
+-        "ethereum:0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
+    }
+```
+
+```diff
+    contract LensZkEvmAdmin (0x6bd8d33551077Ed281Cb047835a2aE4033eEc433) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xc29d04A93F893700015138E3E334eB828dAC3cef"
++        "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef"
+    }
+```
+
+```diff
+    EOA  (0xAaF7b278baC078AA4f9bdc8E0a93CDe604aA67d9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
++        "eth:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
+```diff
+    EOA  (0xb1a0c1F1B50436AC94B8Ce9Ae919B0e820aCb374) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5C03468829A26981c410a7930bD4853622F0B2E5"
++        "eth:0x5C03468829A26981c410a7930bD4853622F0B2E5"
+      receivedPermissions.1.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+    }
+```
+
 Generated with discovered.json: 0xe5fd1307c3ec2430bc90dbe72268325c2c324e91
 
 # Diff at Wed, 25 Jun 2025 07:17:24 GMT:

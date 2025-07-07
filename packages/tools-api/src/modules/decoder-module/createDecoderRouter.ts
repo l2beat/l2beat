@@ -31,7 +31,7 @@ const DecodeQuery = z.object({
     .optional(),
   data: z
     .string()
-    .check((v) => /^0x([a-f\d]{2})*$/.test(v))
+    .check((v) => /^[A-Za-z0-9_-]*$/.test(v))
     .optional(),
   to: z
     .string()
@@ -44,7 +44,7 @@ function parseQuery(data: unknown): ApiQuery {
   const query = DecodeQuery.parse(data)
   return {
     hash: query.hash as `0x${string}`,
-    data: query.data as `0x${string}`,
+    data: query.data,
     to: query.to as `0x${string}`,
     chainId: query.chainId ? parseInt(query.chainId) : undefined,
   }

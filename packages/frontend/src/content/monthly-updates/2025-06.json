@@ -2,11 +2,11 @@
   "title": "Monthly Updates - June 2025",
   "startDate": "2025-06-01",
   "endDate": "2025-06-30",
-  "reports": [
+  "publishedOn": "2025-07-01",
+  "updates": [
     {
-      "name": "Orbit",
       "type": "ecosystem",
-      "ecosystemId": "orbit",
+      "ecosystemId": "arbitrum-orbit",
       "news": [
         {
           "title": "Quorum-threshold reduction proposal",
@@ -44,14 +44,16 @@
       ]
     },
     {
-      "name": "Elastic Network",
       "type": "ecosystem",
       "ecosystemId": "the-elastic-network",
-      "newProjectsIds": [],
       "news": [
         {
           "title": "ZKsync Gateway is live",
           "content": "ZKsync [launches](https://x.com/zksync/status/1932480613342458064) Gateway, a middleware that aggregates proofs from every Elastic-Chain into one on-chain verification, and will add native cross-chain messaging in v29."
+        },
+        {
+          "title": "ZKsync Launches Airbender: The Fastest Open-Source RISC-V zkVM",
+          "content": "ZKsync has [unveiled](https://zksync.mirror.xyz/ZgRmbYA_EE3wfGcXWv81m-xcED-ppNKkRzkleS6YZRc) Airbender, a groundbreaking open-source zkVM built on the RISC-V architecture that is redefining performance benchmarks in zero-knowledge proving. Touted as the fastest system of its kind, Airbender is capable of proving average Ethereum blocks in under 35 seconds using just a single GPU—an achievement that drastically reduces hardware requirements and unlocks the possibility of real-time proving on consumer-grade machines."
         },
         {
           "title": "ZKsync Unveils “ZKnomics” Tokenomics Vision to Power Next-Gen Protocol Economy",
@@ -73,7 +75,6 @@
       ]
     },
     {
-      "name": "Superchain",
       "type": "ecosystem",
       "ecosystemId": "superchain",
       "news": [
@@ -117,7 +118,6 @@
       ]
     },
     {
-      "name": "Agglayer",
       "type": "ecosystem",
       "ecosystemId": "agglayer",
       "newProjectsIds": ["katana"],
@@ -142,17 +142,16 @@
       ]
     },
     {
-      "name": "EigenLayer",
       "type": "data-availability",
       "daLayerId": "eigenda",
       "news": [
         {
           "title": "EigenCloud has been launched to Bring Blockchain-Grade Trust to Any App",
-          "content": "Eigen Labs [has launched](https://blog.eigencloud.xyz/introducing-eigencloud/) the alpha version of EigenCloud, integrating EigenDA, EigenCompute, and EigenVerify."
+          "content": "Eigen Labs [has launched](https://blog.eigencloud.xyz/introducing-eigencloud/) the alpha version of EigenCloud, integrating EigenDA, EigenCompute, and EigenVerify. As usage grows, EigenCloud will generate protocol fees that flow back to restakers, turning Ethereum into a programmable trust layer. With $12B+ already restaked and over 200 AVSs secured, EigenLayer is now expanding from infrastructure to application-level trust at scale."
         },
         {
           "title": "Redistribution is Live on Testnet",
-          "content": "EigenLayer [activated](https://blog.eigencloud.xyz/redistribution-is-live-on-testnet/) its new “Redistribution” slashing mode on testnet; mainnet rollout expected late June → July 2025."
+          "content": "EigenLayer [activated](https://blog.eigencloud.xyz/redistribution-is-live-on-testnet/) its new “Redistribution” slashing mode on testnet; mainnet rollout expected late June → July 2025. AVSs can now redirect slashed funds (e.g. to reimburse users, reward reliable operators, or power lending / insurance logic) instead of burning them."
         },
         {
           "title": "EigenLayer Hits $817M Staked as AI Agents and Verifiable Apps Advance",
@@ -167,11 +166,11 @@
     {
       "name": "Nethermind",
       "type": "upcoming-project",
-      "projectId": "surge",
+      "projectId": "nethermind",
       "news": [
         {
           "title": "Nethermind’s April Feature: “Surge — A Based Rollup for Ethereum’s Future”",
-          "content": "Surge is a [new rollup template](https://www.nethermind.io/blog/surge-a-based-rollup-template-designed-for-ethereums-future?utm_source=chatgpt.com) built on the Taiko stack with Stage 2 security and no admin keys."
+          "content": "Nethermind published a new blog post on Surge - a [new rollup template](https://www.nethermind.io/blog/surge-a-based-rollup-template-designed-for-ethereums-future?utm_source=chatgpt.com) built on the Taiko stack with Stage 2 security and no admin keys."
         },
         {
           "title": "Nethermind Reveals Smarter Restaking Strategy for Symbiotic Vaults",
@@ -179,8 +178,7 @@
         },
         {
           "title": "Nethermind Secures Pimlico’s Cross-Chain Account Abstraction Infrastructure",
-          "content": "Pimlico [partnered](https://www.nethermind.io/blog/securing-pimlicos-account-abstraction-infrastructure?utm_source=chatgpt.com) with Nethermind Security to audit its ERC-4337 cross-chain infrastructure.",
-          "tags": ["other"]
+          "content": "Pimlico [partnered](https://www.nethermind.io/blog/securing-pimlicos-account-abstraction-infrastructure?utm_source=chatgpt.com) with Nethermind Security to audit its ERC-4337 cross-chain infrastructure."
         }
       ]
     }

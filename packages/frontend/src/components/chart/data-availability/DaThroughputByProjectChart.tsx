@@ -147,9 +147,6 @@ export function DaThroughputByProjectChart({
           yAxis: {
             unit: ` ${unit}`,
             tickCount: 3,
-            tick: {
-              width: 100,
-            },
           },
         })}
         <ChartTooltip content={<CustomTooltip denominator={denominator} />} />
