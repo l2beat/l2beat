@@ -2,7 +2,6 @@ import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
-import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -13,6 +12,7 @@ import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './LivenessDurationCell'
+import { OngoingAnomalyBanner } from './OngoingAnomalyBanner'
 
 const SHOWN_ANOMALIES = 4
 
@@ -90,12 +90,7 @@ function AnomalyTooltipContent(props: {
               className="space-y-0.5 border-divider border-t px-4 py-2"
               key={anomaly.start}
             >
-              {anomaly.end === undefined && (
-                <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 py-1 text-red-500">
-                  <LiveIndicator />
-                  <span className="font-medium">Ongoing anomaly</span>
-                </div>
-              )}
+              {anomaly.end === undefined && <OngoingAnomalyBanner />}
               {anomaly.end === undefined &&
                 props.hasTrackedContractsChanged && (
                   <Callout

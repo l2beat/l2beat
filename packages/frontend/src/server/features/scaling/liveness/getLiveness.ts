@@ -340,7 +340,7 @@ function generateMockData(): LivenessProject {
       max: generateDataPoint(),
       syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
     },
-    anomalies: generateAnomalies(),
+    anomalies: generateAnomalies().sort(sortAnomalies),
   }
 }
 
@@ -360,15 +360,19 @@ function generateAnomalies(): LivenessAnomaly[] {
   const anomaliesCount = Math.round(Math.random() * 15)
   return anomaliesCount !== 0
     ? range(anomaliesCount).map(() => {
+        const isOngoing = Math.random() > 0.05
+
         const start =
           UnixTime.now() +
           UnixTime(Math.round(Math.random() * -29) - 1) * UnixTime.DAY +
           UnixTime(Math.round(Math.random() * 172800))
+        const end = start + UnixTime(Math.round(Math.random() * 172800))
+
         return {
           subtype: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
           start,
-          end: start + UnixTime(Math.round(Math.random() * 172800)),
-          durationInSeconds: generateRandomTime(),
+          end: isOngoing ? end : undefined,
+          durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
         } as const
       })
     : []

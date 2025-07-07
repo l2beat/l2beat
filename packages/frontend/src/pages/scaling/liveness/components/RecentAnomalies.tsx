@@ -1,5 +1,5 @@
-import { LiveIndicator } from '~/components/LiveIndicator'
 import { formatDuration } from '~/components/chart/liveness/LivenessChart'
+import { Button } from '~/components/core/Button'
 import {
   Collapsible,
   CollapsibleContent,
@@ -13,12 +13,13 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
-import { NoOngoingAnomaliesState } from './NoOngoingAnomaliesState'
+import { NoRecentAnomaliesState } from './NoRecentAnomaliesState'
+import { OngoingAnomalyBanner } from './OngoingAnomalyBanner'
 
 export interface ProjectWithAnomaly {
   name: string
   slug: string
-  anomalies: LivenessAnomaly[]
+  recentAnomalies: LivenessAnomaly[]
 }
 
 interface Props {
@@ -26,17 +27,16 @@ interface Props {
   className?: string
 }
 
-export function OngoingAnomalies({ projectsWithAnomalies, className }: Props) {
+export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
   if (projectsWithAnomalies.length === 0) {
-    return <NoOngoingAnomaliesState className="max-md:border-x-0" />
+    return (
+      <NoRecentAnomaliesState className={cn('max-md:border-x-0', className)} />
+    )
   }
 
   return (
     <PrimaryCard className={className}>
-      <div className="flex items-center gap-2">
-        <LiveIndicator size="md" />
-        <h2 className={'font-bold text-lg text-negative'}>Ongoing anomalies</h2>
-      </div>
+      <h2 className="font-bold text-lg">Recent anomalies</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {projectsWithAnomalies.map((projectWithAnomalies) => (
           <AnomalyCollapsible
@@ -54,12 +54,20 @@ function AnomalyCollapsible({
 }: {
   projectWithAnomalies: ProjectWithAnomaly
 }) {
+  const isAnyOngoing = projectWithAnomalies.recentAnomalies.some(
+    (anomaly) => anomaly.end === undefined,
+  )
   return (
     <Collapsible
       key={projectWithAnomalies.name}
       className="h-fit rounded bg-surface-secondary"
     >
-      <CollapsibleTrigger className="group flex w-full items-center justify-between px-4 py-3">
+      <CollapsibleTrigger
+        className={cn(
+          'group flex w-full items-center justify-between rounded px-4 py-3',
+          isAnyOngoing && 'border border-negative',
+        )}
+      >
         <div className="flex items-center gap-2">
           <img
             src={`/icons/${projectWithAnomalies.slug}.png`}
@@ -72,19 +80,19 @@ function AnomalyCollapsible({
         </div>
         <div className="flex items-center gap-4">
           <div className="text-left leading-none transition-opacity duration-300 group-data-[state=open]:opacity-0">
-            {projectWithAnomalies.anomalies.length === 1 ? (
+            {projectWithAnomalies.recentAnomalies.length === 1 ? (
               <span
                 className={cn(
                   'font-medium text-xs leading-none',
                   getDurationColorClassName(
                     // biome-ignore lint/style/noNonNullAssertion: <explanation>
-                    projectWithAnomalies.anomalies[0]!.durationInSeconds,
+                    projectWithAnomalies.recentAnomalies[0]!.durationInSeconds,
                   ),
                 )}
               >
                 {anomalySubtypeToLabel(
                   // biome-ignore lint/style/noNonNullAssertion: it's there for sure
-                  projectWithAnomalies.anomalies[0]!.subtype,
+                  projectWithAnomalies.recentAnomalies[0]!.subtype,
                 )}
               </span>
             ) : (
@@ -93,7 +101,7 @@ function AnomalyCollapsible({
                   'font-medium text-xs leading-none',
                   getDurationColorClassName(
                     Math.max(
-                      ...projectWithAnomalies.anomalies.map(
+                      ...projectWithAnomalies.recentAnomalies.map(
                         (a) => a.durationInSeconds,
                       ),
                     ),
@@ -107,13 +115,13 @@ function AnomalyCollapsible({
           <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
-      <CollapsibleContent className="px-4">
+      <CollapsibleContent className="space-y-3 px-4 pb-3">
         <div className="flex flex-col gap-2">
-          {projectWithAnomalies.anomalies.map((anomaly) => {
+          {projectWithAnomalies.recentAnomalies.map((anomaly) => {
             return (
-              <div key={anomaly.start} className="text-xs last:mb-3">
+              <div key={anomaly.start} className="text-xs">
                 <HorizontalSeparator className="my-3 first:mt-0" />
-
+                {anomaly.end === undefined && <OngoingAnomalyBanner />}
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-secondary">Type:</span>
                   <span className="font-bold">
@@ -139,10 +147,30 @@ function AnomalyCollapsible({
                     })}
                   </span>
                 </div>
+                {anomaly.end && (
+                  <div className="flex items-center justify-between">
+                    <span className="font-medium text-secondary">End:</span>
+                    <span className="font-bold">
+                      {formatTimestamp(anomaly.end, {
+                        mode: 'datetime',
+                      })}
+                    </span>
+                  </div>
+                )}
               </div>
             )
           })}
         </div>
+        <Button
+          variant="outline"
+          size="sm"
+          className="mb-3 w-full py-1"
+          asChild
+        >
+          <a href={`/scaling/projects/${projectWithAnomalies.slug}#liveness`}>
+            See more details
+          </a>
+        </Button>
       </CollapsibleContent>
     </Collapsible>
   )

@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
@@ -26,19 +27,39 @@ export async function getScalingLivenessData(
   const projectsWithAnomalies = Object.values(entries)
     .flat()
     .flatMap((entry) => {
-      const ongoingAnomalies = entry.anomalies.filter(
-        (anomaly) => anomaly.end === undefined,
+      const recentAnomalies = entry.anomalies.filter(
+        (anomaly) =>
+          anomaly.end === undefined ||
+          anomaly.end > UnixTime.now() - UnixTime.DAY * 2,
       )
 
-      if (ongoingAnomalies.length === 0) {
+      if (recentAnomalies.length === 0) {
         return undefined
       }
 
       return {
         name: entry.name,
         slug: entry.slug,
-        anomalies: ongoingAnomalies,
+        recentAnomalies,
       }
+    })
+    .sort((a, b) => {
+      const aOngoing = a?.recentAnomalies.some(
+        (anomaly) => anomaly.end === undefined,
+      )
+      const bOngoing = b?.recentAnomalies.some(
+        (anomaly) => anomaly.end === undefined,
+      )
+
+      if (aOngoing && !bOngoing) {
+        return -1
+      }
+
+      if (!aOngoing && bOngoing) {
+        return 1
+      }
+
+      return 0
     })
     .filter((entry) => entry !== undefined)
 
