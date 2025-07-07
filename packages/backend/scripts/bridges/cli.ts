@@ -110,6 +110,8 @@ const cmd = command({
       }
     }
 
+    const transfersCountByProtocol: Record<string, number> = {}
+
     logger.info('--- Related transfers (same protocol and ID) ---')
     for (const [key, transfers] of Object.entries(transfersByProtocolAndId)) {
       if (transfers.length > 1) {
@@ -139,8 +141,15 @@ const cmd = command({
             },
           )
         })
+
+        if (!transfersCountByProtocol[protocol]) {
+          transfersCountByProtocol[protocol] = 0
+        }
+        transfersCountByProtocol[protocol]++
       }
     }
+
+    logger.info(`Matching summary`, { protocols: transfersCountByProtocol })
 
     process.exit(0)
   },
