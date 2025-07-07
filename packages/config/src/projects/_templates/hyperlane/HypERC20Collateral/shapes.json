@@ -4,5 +4,17 @@
     "address": "0x5ADdEB216C6dB923b4DE9449A27120da9F399021",
     "chain": "ethereum",
     "blockNumber": 22188285
+  },
+  "HypERC20Collateral-apxETH": {
+    "hash": "0x52d9c07270b792443fea2a84f31175c53a2a02cbc56dfdd9a5c94dfd3f1ba6f4",
+    "address": "0x7e076Bff164B31c0D053Fe0C17fF3125d8deeF4e",
+    "chain": "ethereum",
+    "blockNumber": 22823856
+  },
+  "HypERC20Collateral-USDT": {
+    "hash": "0x2f6c18a7a1399d67a6fd7eb044c8a8586f33dc0e246c50fe34b158098244d959",
+    "address": "0x4F2A0cC6015A33C04F6d09aDa657A03A953388e7",
+    "chain": "ethereum",
+    "blockNumber": 22823856
   }
 }

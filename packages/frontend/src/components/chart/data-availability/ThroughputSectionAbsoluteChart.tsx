@@ -35,7 +35,7 @@ export function ThroughputSectionAbsoluteChart({
   setShowMax,
 }: Props) {
   const { data, isLoading } = api.da.projectChart.useQuery({
-    range,
+    range: { type: range },
     projectId: daLayer,
   })
 
