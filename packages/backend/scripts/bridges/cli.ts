@@ -10,7 +10,7 @@ import {
   parseAbi,
 } from 'viem'
 import { CHAINS } from './chains'
-import { PROTOCOLS } from './protocols'
+import { PROTOCOLS } from './protocols/protocols'
 
 const args = {
   start: option({
