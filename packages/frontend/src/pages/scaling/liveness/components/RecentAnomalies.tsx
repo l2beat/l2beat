@@ -1,3 +1,4 @@
+import { LiveIndicator } from '~/components/LiveIndicator'
 import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { Button } from '~/components/core/Button'
 import {
@@ -36,7 +37,7 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
 
   return (
     <PrimaryCard className={className}>
-      <h2 className="font-bold text-lg">Recent anomalies</h2>
+      <h2 className="font-bold text-lg">Recent major anomalies</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {projectsWithAnomalies.map((projectWithAnomalies) => (
           <AnomalyCollapsible
@@ -62,12 +63,7 @@ function AnomalyCollapsible({
       key={projectWithAnomalies.name}
       className="h-fit rounded bg-surface-secondary"
     >
-      <CollapsibleTrigger
-        className={cn(
-          'group flex w-full items-center justify-between rounded px-4 py-3',
-          isAnyOngoing && 'border border-negative',
-        )}
-      >
+      <CollapsibleTrigger className="group flex w-full items-center justify-between rounded px-4 py-3">
         <div className="flex items-center gap-2">
           <img
             src={`/icons/${projectWithAnomalies.slug}.png`}
@@ -79,39 +75,7 @@ function AnomalyCollapsible({
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <div className="text-left leading-none transition-opacity duration-300 group-data-[state=open]:opacity-0">
-            {projectWithAnomalies.recentAnomalies.length === 1 ? (
-              <span
-                className={cn(
-                  'font-medium text-xs leading-none',
-                  getDurationColorClassName(
-                    // biome-ignore lint/style/noNonNullAssertion: <explanation>
-                    projectWithAnomalies.recentAnomalies[0]!.durationInSeconds,
-                  ),
-                )}
-              >
-                {anomalySubtypeToLabel(
-                  // biome-ignore lint/style/noNonNullAssertion: it's there for sure
-                  projectWithAnomalies.recentAnomalies[0]!.subtype,
-                )}
-              </span>
-            ) : (
-              <span
-                className={cn(
-                  'font-medium text-xs leading-none',
-                  getDurationColorClassName(
-                    Math.max(
-                      ...projectWithAnomalies.recentAnomalies.map(
-                        (a) => a.durationInSeconds,
-                      ),
-                    ),
-                  ),
-                )}
-              >
-                Multiple anomalies
-              </span>
-            )}
-          </div>
+          {isAnyOngoing && <LiveIndicator />}
           <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
