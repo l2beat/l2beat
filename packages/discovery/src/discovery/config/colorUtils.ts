@@ -15,15 +15,12 @@ export function makeEntryColorConfig(
   const override =
     config.overrides?.[address.toString()] ?? ColorContract.parse({})
 
-  const result = merge(
-    {
-      address,
-      name,
-      ...override,
-      categories: merge(config.categories ?? {}, override.categories),
-    },
-    template,
-  )
+  const result = merge({}, template, {
+    address,
+    name,
+    ...override,
+    categories: merge(config.categories ?? {}, override.categories),
+  })
 
   return result
 }

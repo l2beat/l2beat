@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xe1cd4082f74299474fee25d08a6085797aa6e0b5
+
+# Diff at Fri, 04 Jul 2025 12:18:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 350984309
+- current block number: 350984309
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 350984309 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
++        "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x738a9b55304f9fcF776B3BA285e50c0f9eF77997) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
++        "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+      receivedPermissions.1.from:
+-        "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
++        "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+    }
+```
+
+```diff
+    EOA  (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
++        "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
 Generated with discovered.json: 0x6e2d453d59ab1b3e859f5745dac4dc5da3942180
 
 # Diff at Wed, 25 Jun 2025 07:41:06 GMT:

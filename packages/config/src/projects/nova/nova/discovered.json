@@ -201,12 +201,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C",
+          "from": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
+          "from": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
           "role": ".owner"
         }
       ],
@@ -339,22 +339,22 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+          "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+          "from": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+          "from": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+          "from": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
           "role": "admin"
         }
       ],
@@ -434,63 +434,75 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+          "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+          "from": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "role": "admin",
           "via": [
-            { "address": "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+          "from": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+          "from": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
+          "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
           "role": "admin",
           "via": [
-            { "address": "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "role": ".executors"
         }
       ],
@@ -642,12 +654,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
+          "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
           "role": "admin"
         }
       ],
@@ -670,63 +682,75 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
+          "from": "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
+          "from": "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "role": "admin",
           "via": [
-            { "address": "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
+          "from": "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
+          "from": "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257",
           "role": "admin",
           "via": [
-            { "address": "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
+          "from": "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD",
           "role": "admin",
           "via": [
-            { "address": "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9" },
-            { "address": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
+            {
+              "address": "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+            },
+            { "address": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
+          "from": "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "role": ".executors"
         }
       ]
@@ -1130,5 +1154,5 @@
     "orbitstack/layer2/L2WethGateway": "0xd84f362cbad6cd7de185b612e49e8eee1ad5e4d94eb0dd821258681d7f1448a5",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "permissionsConfigHash": "0x438a3e8ccf04c5035f524997c726dabaaae07df2943d49bf0055c4f131243457"
+  "permissionsConfigHash": "0x1d18b20602c5f59354f906305df09d1c8fbc94af9321257fe3d395084df7711e"
 }

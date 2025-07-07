@@ -32,7 +32,11 @@ export const celo: ScalingProject = opStackL2({
     links: {
       websites: ['https://celo.org/'],
       documentation: ['https://docs.celo.org/'],
-      explorers: ['https://explorer.celo.org/mainnet/', 'https://celoscan.io'],
+      explorers: [
+        'https://explorer.celo.org/mainnet/',
+        'https://celoscan.io',
+        'https://celo.blockscout.com/',
+      ],
       repositories: ['https://github.com/celo-org'],
       socialMedia: [
         'https://x.com/Celo',

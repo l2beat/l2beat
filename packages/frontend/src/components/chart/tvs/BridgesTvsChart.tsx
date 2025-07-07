@@ -24,7 +24,7 @@ export function BridgesTvsChart() {
   const [timeRange, setTimeRange] = useState<TvsChartRange>('1y')
 
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: { type: 'bridge' },
     excludeAssociatedTokens: false,
   })

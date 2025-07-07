@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x9af9ae61be52d74c0c9f9f0702de8de8e58778c4
+
+# Diff at Fri, 04 Jul 2025 12:19:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22615727
+- current block number: 22615727
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615727 (main branch discovery), not current.
+
+```diff
+    contract Voting (0x2e59A20f205bB85a89C53f1936454680651E618e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f"
++        "eth:0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f"
+    }
+```
+
+```diff
+    contract Lido Dao Agent (0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c) {
+    +++ description: Custom role-based operations entrypoint for Lido.
+      receivedPermissions.0.from:
+-        "ethereum:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e"
++        "eth:0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e"
+      receivedPermissions.1.from:
+-        "ethereum:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB"
++        "eth:0x4D4074628678Bd302921c20573EEa1ed38DdF7FB"
+      receivedPermissions.2.from:
+-        "ethereum:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da"
++        "eth:0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da"
+      receivedPermissions.3.from:
+-        "ethereum:0x852deD011285fe67063a08005c71a85690503Cee"
++        "eth:0x852deD011285fe67063a08005c71a85690503Cee"
+      receivedPermissions.4.from:
+-        "ethereum:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1"
++        "eth:0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1"
+      receivedPermissions.5.from:
+-        "ethereum:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb"
++        "eth:0xC1d0b3DE6792Bf6b4b37EccdcC24e45978Cfd2Eb"
+      receivedPermissions.6.from:
+-        "ethereum:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
++        "eth:0xD99CC66fEC647E68294C6477B40fC7E0F6F618D0"
+      receivedPermissions.7.from:
+-        "ethereum:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
++        "eth:0xdA7dE2ECdDfccC6c3AF10108Db212ACBBf9EA83F"
+      receivedPermissions.8.from:
+-        "ethereum:0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
++        "eth:0xFdDf38947aFB03C621C71b06C9C70bce73f12999"
+    }
+```
+
+```diff
+    contract Safe (0x909d0CB383Ecc77e44daE5d0146cF476f611f62b) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xCa14076A3cec95448BaD179cc19B351A4204B88B"
++        "eth:0xCa14076A3cec95448BaD179cc19B351A4204B88B"
+    }
+```
+
 Generated with discovered.json: 0xc2c3349d85d03772c28593994df3299d77bbc325
 
 # Diff at Mon, 02 Jun 2025 08:12:37 GMT:

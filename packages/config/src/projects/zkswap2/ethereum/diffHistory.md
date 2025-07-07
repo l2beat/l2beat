@@ -1,3 +1,42 @@
+Generated with discovered.json: 0xea81adf3cc32cf30dae8dde40fe6ec638e860378
+
+# Diff at Fri, 04 Jul 2025 12:19:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef"
++        "eth:0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef"
+      receivedPermissions.1.from:
+-        "ethereum:0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
++        "eth:0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3"
+      receivedPermissions.2.from:
+-        "ethereum:0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B"
++        "eth:0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B"
+      receivedPermissions.3.from:
+-        "ethereum:0xb56878d21F6b101f48bb55f1AA9D3F624f04E513"
++        "eth:0xb56878d21F6b101f48bb55f1AA9D3F624f04E513"
+      receivedPermissions.4.from:
+-        "ethereum:0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D"
++        "eth:0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D"
+    }
+```
+
 Generated with discovered.json: 0x4fec88ef80bc5a6a930c70c3bb6cc9945cbe97e8
 
 # Diff at Wed, 28 May 2025 13:56:20 GMT:

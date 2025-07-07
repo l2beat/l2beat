@@ -14,10 +14,22 @@ export type ProjectDaThroughputChartData = {
   range: [UnixTime | null, UnixTime]
   syncedUntil: UnixTime
 }
-export type ProjectDaThroughputDataPoint = [timestamp: number, value: number]
+export type ProjectDaThroughputDataPoint = [
+  timestamp: number,
+  value: number | null,
+]
 
 export const ProjectDaThroughputChartParams = v.object({
-  range: v.union([DaThroughputTimeRange, CostsTimeRange]),
+  range: v.union([
+    v.object({
+      type: v.union([DaThroughputTimeRange, CostsTimeRange]),
+    }),
+    v.object({
+      type: v.literal('custom'),
+      from: v.number(),
+      to: v.number(),
+    }),
+  ]),
   projectId: v.string(),
 })
 export type ProjectDaThroughputChartParams = v.infer<
@@ -33,18 +45,23 @@ export async function getProjectDaThroughputChart(
 
   const db = getDb()
   const resolution = rangeToResolution(params.range)
-  const now = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
+  const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - UnixTime.HOUR
+  const adjustedTarget =
+    params.range.type === 'custom' ? params.range.to : target
+
   const [from, to] = getRangeWithMax(params.range, resolution, {
-    now,
+    now: adjustedTarget,
   })
 
   const throughput = await db.dataAvailability.getByProjectIdsAndTimeRange(
     [params.projectId],
-    [from, now],
+    [from, adjustedTarget],
   )
+
   if (throughput.length === 0) {
     return undefined
   }
+
   const { grouped, minTimestamp } = groupByTimestampAndProjectId(
     throughput,
     resolution,
@@ -65,7 +82,7 @@ export async function getProjectDaThroughputChart(
 
   return {
     chart: timestamps.map((timestamp) => {
-      return [timestamp, grouped[timestamp] ?? 0]
+      return [timestamp, grouped[timestamp] ?? null]
     }),
     range: [minTimestamp, chartAdjustedTo],
     syncedUntil,

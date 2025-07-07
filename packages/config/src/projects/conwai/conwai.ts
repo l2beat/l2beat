@@ -39,6 +39,7 @@ export const conwai: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'conwai',
+    gasTokens: ['CNW'],
     chainId: 668668,
     apis: [
       {

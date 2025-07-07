@@ -1,3 +1,30 @@
+Generated with discovered.json: 0x34f940d0afbee4a7b7f6af98835d1714f62e03a9
+
+# Diff at Fri, 04 Jul 2025 12:19:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21973864
+- current block number: 21973864
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21973864 (main branch discovery), not current.
+
+```diff
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
++        "eth:0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"
+    }
+```
+
 Generated with discovered.json: 0x460878f86ed1b7a443128d3b42838f6b593c6dad
 
 # Diff at Wed, 28 May 2025 13:56:07 GMT:

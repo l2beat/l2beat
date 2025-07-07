@@ -11,7 +11,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -41,7 +41,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -71,7 +71,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -90,13 +90,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "fastconfirm",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -128,25 +128,25 @@
       "receivedPermissions": [
         {
           "permission": "fastconfirm",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
           "via": [
-            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
+            { "address": "arb1:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
           ]
         },
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
+            { "address": "arb1:0x1a8902780F37e0526788198Dee30b8375A0B24Bc" }
           ]
         },
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -254,7 +254,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -304,7 +304,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+          "from": "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
           "role": "admin"
         }
       ],
@@ -514,7 +514,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -532,7 +532,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -545,7 +545,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -558,7 +558,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -721,7 +721,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -740,125 +740,107 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
+          "from": "arb1:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
+          "from": "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "role": "admin",
           "via": [
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7",
+          "from": "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x832CF28be3042b6F60D7225E393E924D7f0936F6",
+          "from": "arb1:0x832CF28be3042b6F60D7225E393E924D7f0936F6",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
+          "from": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
+          "from": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xe41363751bd1C305384375F428585C20e3dF516A",
+          "from": "arb1:0xe41363751bd1C305384375F428585C20e3dF516A",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
+          "from": "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
           "role": "admin",
           "via": [
-            {
-              "address": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
-            },
-            { "address": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
+            { "address": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E" },
+            { "address": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
+          "from": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
           "role": ".executors"
         }
       ],
@@ -901,7 +883,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -914,7 +896,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -932,7 +914,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1023,7 +1005,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1048,18 +1030,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E",
+          "from": "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "role": "admin"
         }
       ],
@@ -1125,7 +1107,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1138,7 +1120,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1166,7 +1148,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1221,7 +1203,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1234,7 +1216,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1247,7 +1229,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1260,7 +1242,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1278,47 +1260,47 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
+          "from": "arb1:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
+          "from": "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7",
+          "from": "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x832CF28be3042b6F60D7225E393E924D7f0936F6",
+          "from": "arb1:0x832CF28be3042b6F60D7225E393E924D7f0936F6",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
+          "from": "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
+          "from": "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xe41363751bd1C305384375F428585C20e3dF516A",
+          "from": "arb1:0xe41363751bd1C305384375F428585C20e3dF516A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
+          "from": "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db",
           "role": "admin"
         }
       ],
@@ -1339,7 +1321,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1352,7 +1334,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1365,7 +1347,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1378,7 +1360,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1391,17 +1373,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "arbitrum:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
+          "from": "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944",
           "role": "admin",
           "via": [
-            { "address": "arbitrum:0x401eCb1D350407f13ba348573E5630B83638E30D" }
+            { "address": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "arbitrum:0x401eCb1D350407f13ba348573E5630B83638E30D",
+          "from": "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D",
           "role": ".owner"
         }
       ]
@@ -1413,7 +1395,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1463,7 +1445,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
+          "from": "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1476,7 +1458,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1489,7 +1471,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1517,7 +1499,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
+          "from": "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -2388,5 +2370,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xbd9edac4d7f66e3f8a16181b7ac621b84de292ab3948ff8d7ba83c52f1c4c3a9"
+  "permissionsConfigHash": "0x720285ae261c81362ed48124d8f1d830df7f26b27db1c95adf6bef04b8479d5c"
 }

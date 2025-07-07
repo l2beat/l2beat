@@ -1,0 +1,26 @@
+{
+  "Relayer1": {
+    "hash": "0xdb6862dac51a4a0c4557ac12d22d60dacbe7086552ee860e94d311508d27862c",
+    "address": "0xd91C07a7e8FCb1039fE326e6dE274fD0F3307350",
+    "chain": "ethereum",
+    "blockNumber": 22823809
+  },
+  "Relayer3": {
+    "hash": "0x71fef919ee98513b92f3201b728bedde3148dcf73156bc42ab0fb2273a0ddd50",
+    "address": "0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9",
+    "chain": "ethereum",
+    "blockNumber": 22823809
+  },
+  "Relayer5": {
+    "hash": "0x06a889d020b7a23683b5ac7ead2e75691788f53221e130558d8fb7d7c343ed57",
+    "address": "0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78",
+    "chain": "ethereum",
+    "blockNumber": 22823809
+  },
+  "Relayer10": {
+    "hash": "0xff5700176e3e8e2bcfd99d769eb287166500ca4f9652023c0d9e62f3765a7219",
+    "address": "0xb82e63585e53C47Ee83104f22c21ab1FE76F2EAE",
+    "chain": "ethereum",
+    "blockNumber": 22823809
+  }
+}

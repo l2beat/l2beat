@@ -2,7 +2,7 @@
   "name": "hyperlane",
   "chain": "ethereum",
   "blockNumber": 22823856,
-  "configHash": "0x622cc5a249586363db423201c6942bab5cb906f0fe29d63fd40700e35e09e704",
+  "configHash": "0x33ed0c24f23219b04ce699ae0224744ac11e6d002c5ce24183c045ff79f1c535",
   "entries": [
     {
       "address": "0x003DDD9eEAb62013b7332Ab4CC6B10077a8ca961",
@@ -18,11 +18,11 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "from": "eth:0xc005dc82818d67AF737725bD4bf75435d065D239",
           "description": "verify messages for destination contracts that do not specify a custom ISM.",
           "role": ".defaultIsm"
         }
@@ -76,7 +76,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "from": "eth:0xef899e92DA472E014bE795Ecce948308958E25A2",
           "role": "admin"
         }
       ],
@@ -97,7 +97,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "from": "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
           "role": ".validators"
         }
       ]
@@ -115,25 +115,25 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "from": "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "from": "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "from": "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "from": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         }
@@ -210,7 +210,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "from": "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
           "role": ".validators"
         }
       ]
@@ -228,61 +228,61 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "from": "eth:0xc005dc82818d67AF737725bD4bf75435d065D239",
           "description": "change the default ISM and hooks for this chain that are used for all connected contracts that do not override them.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8",
+          "from": "eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8",
           "description": "manage the domain -> ISM contract mapping.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "from": "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
+            { "address": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "from": "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
+            { "address": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "from": "eth:0xc005dc82818d67AF737725bD4bf75435d065D239",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
+            { "address": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "from": "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
+            { "address": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "from": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
+            { "address": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
+          "from": "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659",
           "role": ".owner"
         }
       ],
@@ -420,27 +420,27 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
+          "from": "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543",
+          "from": "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239",
+          "from": "eth:0xc005dc82818d67AF737725bD4bf75435d065D239",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
+          "from": "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
+          "from": "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7",
           "role": "admin"
         }
       ],
@@ -501,7 +501,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "from": "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
           "role": "admin"
         }
       ],
@@ -524,7 +524,7 @@
         "0xb5f4ee6e43e09d3581b620b0fd361aedc8805270a57297bc93bbec4e6a9fc6e9"
       ],
       "proxyType": "immutable",
-      "description": "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message.",
+      "description": "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.",
       "sinceTimestamp": 1726246067,
       "sinceBlock": 20742981,
       "values": {
@@ -544,10 +544,10 @@
         "threshold": 1
       },
       "fieldMeta": {
-        "modules": { "severity": "HIGH" },
         "modulesAndThreshold": {
           "description": "The modules and threshold of a random bridging tx from eclipse to ethereum."
-        }
+        },
+        "modules": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0xA2d8EBB801c632517Ff35b97Dea0685abc41494c": "StaticAggregationIsm"
@@ -566,23 +566,23 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "from": "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
+          "from": "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x9Fca159607687AE26367d66166e680A930af0780" }
+            { "address": "eth:0x9Fca159607687AE26367d66166e680A930af0780" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x9Fca159607687AE26367d66166e680A930af0780",
+          "from": "eth:0x9Fca159607687AE26367d66166e680A930af0780",
           "role": ".owner"
         }
       ],
@@ -780,23 +780,23 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "from": "eth:0xef899e92DA472E014bE795Ecce948308958E25A2",
           "description": "change the ISM and hooks, whitelist new routes and update destination fees.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2",
+          "from": "eth:0xef899e92DA472E014bE795Ecce948308958E25A2",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08" }
+            { "address": "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
+          "from": "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08",
           "role": ".owner"
         }
       ],
@@ -974,7 +974,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "from": "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
           "role": ".validators"
         }
       ]
@@ -986,7 +986,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge2",
-          "from": "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
+          "from": "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e",
           "role": ".validators"
         }
       ]
@@ -1533,5 +1533,5 @@
     "hyperlane/HypERC20Collateral": "0x74c72cea4d402a1c731e811f347b7c5add14af56aa440d3b0ec6f95034b4dd1b",
     "hyperlane/StaticAggregationIsm": "0x2d6b11f237adf34ab464f429543446907842de31b085be3d3676ddc30bcf6449"
   },
-  "permissionsConfigHash": "0x95b67f67235266ab147f5197e947674dafaa9fdde838c0d291f905c2b7b4fd3a"
+  "permissionsConfigHash": "0x642c5bd18a91dc1b3d49d1d10c1c6c27a8e01940ad0d790cdbebab4bc8e92dee"
 }

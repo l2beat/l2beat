@@ -1,3 +1,240 @@
+Generated with discovered.json: 0x19dab1e0a9ddd0bc5dd3d332a534456c68489f00
+
+# Diff at Fri, 04 Jul 2025 12:19:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22823856
+- current block number: 22823856
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823856 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+      receivedPermissions.0.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2"
++        "eth:0xef899e92DA472E014bE795Ecce948308958E25A2"
+    }
+```
+
+```diff
+    EOA  (0x3571223e745dC0fCbDEFa164C9B826B90c0d2DAc) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+    }
+```
+
+```diff
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.1.from:
+-        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.2.from:
+-        "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      receivedPermissions.3.from:
+-        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+    }
+```
+
+```diff
+    EOA  (0x4d4629F5bfeABe66Edc7A78da26Ef5273C266f97) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+    }
+```
+
+```diff
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.1.from:
+-        "ethereum:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
++        "eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      receivedPermissions.2.from:
+-        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      receivedPermissions.3.from:
+-        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      receivedPermissions.4.via.0.address:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      receivedPermissions.4.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      receivedPermissions.5.from:
+-        "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+      receivedPermissions.6.from:
+-        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
++        "eth:0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
++        "eth:0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x647C621CEb36853Ef6A907E397Adf18568E70543"
++        "eth:0x647C621CEb36853Ef6A907E397Adf18568E70543"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0xc005dc82818d67AF737725bD4bf75435d065D239"
++        "eth:0xc005dc82818d67AF737725bD4bf75435d065D239"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
++        "eth:0xc2495f3183F043627CAECD56dAaa726e3B2D9c09"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
++        "eth:0xe1De9910fe71cC216490AC7FCF019e13a34481D7"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
++        "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
++        "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x9Fca159607687AE26367d66166e680A930af0780"
++        "eth:0x9Fca159607687AE26367d66166e680A930af0780"
+      receivedPermissions.1.from:
+-        "ethereum:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
++        "eth:0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x9Fca159607687AE26367d66166e680A930af0780"
++        "eth:0x9Fca159607687AE26367d66166e680A930af0780"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2"
++        "eth:0xef899e92DA472E014bE795Ecce948308958E25A2"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
++        "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+      receivedPermissions.1.from:
+-        "ethereum:0xef899e92DA472E014bE795Ecce948308958E25A2"
++        "eth:0xef899e92DA472E014bE795Ecce948308958E25A2"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
++        "eth:0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08"
+    }
+```
+
+```diff
+    EOA  (0xEa83086a62617A7228ce4206FAe2ea8b0ab23513) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+    }
+```
+
+```diff
+    EOA  (0xebB52D7eaa3ff7A5A6260bfe5111CE52D57401d0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
++        "eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e"
+    }
+```
+
+Generated with discovered.json: 0x08a7b696c74bc58e54890b5909a70ada849891d6
+
+# Diff at Thu, 03 Jul 2025 10:57:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22823856
+- current block number: 22823856
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823856 (main branch discovery), not current.
+
+```diff
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+      description:
+-        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message."
+    }
+```
+
+```diff
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c) {
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+      description:
+-        "This specific Interchain Security Model (ISM) contract is a simple 't of n' module that verifies that a threshold of t out of n ISM contracts successfully verified a message."
++        "This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse."
+    }
+```
+
 Generated with discovered.json: 0xd782d212e5151fe80d1fd2e9351623fa13f689b6
 
 # Diff at Tue, 01 Jul 2025 10:41:26 GMT:

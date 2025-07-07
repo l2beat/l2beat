@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xfe3f01b46d88ceb2a6de88e663f77b1a4a289b19
+
+# Diff at Fri, 04 Jul 2025 12:19:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22630381
+- current block number: 22630381
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630381 (main branch discovery), not current.
+
+```diff
+    contract Wonder Multisig (0x4665ad531c35b02dE090E21FC57B69946434bf2b) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
+      receivedPermissions.0.from:
+-        "ethereum:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
++        "eth:0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+    }
+```
+
+```diff
+    contract ChainAdmin (0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
++        "eth:0xC8C4cB5AF7c723c7EfD360898B47920679f92C92"
+    }
+```
+
+```diff
+    EOA  (0xAd0a80a085095ECa46De3053C345516f1c722D2a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    EOA  (0xB76e732643A4956a71Ac1BB0E507126651a2FC66) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
 Generated with discovered.json: 0xc48a27f1a2be67b2ec24e5cab1cff65bc229f565
 
 # Diff at Wed, 25 Jun 2025 07:17:44 GMT:

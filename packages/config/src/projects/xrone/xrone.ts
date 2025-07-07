@@ -27,7 +27,7 @@ export const xrone: ScalingProject = underReviewL3({
       websites: ['https://saltwatergames.com/'],
       bridges: [],
       documentation: ['https://xr-one.gitbook.io/xr'],
-      explorers: [],
+      explorers: ['https://xr1.calderaexplorer.xyz/'],
       socialMedia: [
         'https://x.com/xr_foundation',
         'https://discord.com/invite/W4BdM6N8xb',
@@ -41,6 +41,7 @@ export const xrone: ScalingProject = underReviewL3({
   chainConfig: {
     name: 'xrone',
     chainId: 273,
+    gasTokens: ['XR1'],
     apis: [
       {
         type: 'rpc',

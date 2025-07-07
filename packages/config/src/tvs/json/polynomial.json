@@ -85,6 +85,25 @@
     },
     {
       "mode": "auto",
+      "id": "polynomial-rsETH-2",
+      "priceId": "kelp-dao-restaked-eth",
+      "symbol": "rsETH",
+      "name": "rsETH",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "amount": {
+        "type": "balanceOfEscrow",
+        "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+        "chain": "ethereum",
+        "escrowAddress": "0x8309E63F777805f362d42f5B5f2D1A20287d5Df2",
+        "decimals": 18,
+        "sinceTimestamp": 1751017763
+      },
+      "category": "ether",
+      "source": "external",
+      "isAssociated": false
+    },
+    {
+      "mode": "auto",
       "id": "polynomial-sDAI-2",
       "priceId": "savings-dai",
       "symbol": "sDAI",

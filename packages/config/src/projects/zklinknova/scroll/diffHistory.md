@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xe18aedddc442ddab1864e0ed4a7c6058441016a9
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 13963893
+- current block number: 13963893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13963893 (main branch discovery), not current.
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "scroll:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
++        "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+    }
+```
+
+```diff
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "scroll:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
++        "scr:0x119B9459D9119D07c23aD06778AeaBec804Fd1a2"
+      receivedPermissions.1.via.0.address:
+-        "scroll:0xC4673dAbfAf04D2A430e244B63F040D27199102f"
++        "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f"
+      receivedPermissions.1.from:
+-        "scroll:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
++        "scr:0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"
+      receivedPermissions.2.from:
+-        "scroll:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
++        "scr:0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
+      directlyReceivedPermissions.0.from:
+-        "scroll:0xC4673dAbfAf04D2A430e244B63F040D27199102f"
++        "scr:0xC4673dAbfAf04D2A430e244B63F040D27199102f"
+    }
+```
+
 Generated with discovered.json: 0xfec80eab3b98d0bce09d30018673d404744ee094
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

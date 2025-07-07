@@ -36,6 +36,7 @@ export const bitlazer: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'bitlazer',
+    gasTokens: ['lzrBTC'],
     chainId: 14235,
     apis: [
       {

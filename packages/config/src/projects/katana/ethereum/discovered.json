@@ -1,8 +1,8 @@
 {
   "name": "katana",
   "chain": "ethereum",
-  "blockNumber": 22825494,
-  "configHash": "0x42118c883f3b8de6957ab367864d96f74a19596ab4ad8fab895d6bf69edaf443",
+  "blockNumber": 22837267,
+  "configHash": "0x44b18d24f77a4c2e3089b9fa2b30dd1303f49a5eac66a6a69c8e21a035513b9d",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -78,11 +78,11 @@
         "lastAccInputHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
-        "latestBlockNumber": 4597088,
-        "latestOutputIndex": 101,
+        "latestBlockNumber": 4777088,
+        "latestOutputIndex": 131,
         "networkName": "katana",
-        "nextBlockNumber": 4597089,
-        "nextOutputIndex": 102,
+        "nextBlockNumber": 4777089,
+        "nextOutputIndex": 132,
         "optimisticMode": false,
         "optimisticModeManager": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
         "pendingAdmin": "0x0000000000000000000000000000000000000000",
@@ -104,11 +104,17 @@
         "vKeyManager": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a"
       },
       "fieldMeta": {
+        "optimisticMode": {
+          "severity": "HIGH",
+          "description": "degrades the system into a permissioned finalization mode without validity proofs. the state root in the aggchain proof in optimistic mode does not need an op succinct validity proof, but only a signature of the trustedSequencer."
+        },
         "aggregationVkey": {
-          "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key."
+          "severity": "HIGH",
+          "description": "Verification key for the aggregation step which aggregates multiple range proofs into a single proof. The aggregation proof ensures that all range proofs in a given block range are linked and use the `rangeVkeyCommitment` as the verification key. This proof is in turn wrapped by the aggchainVkey."
         },
         "rangeVkeyCommitment": {
-          "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks."
+          "severity": "HIGH",
+          "description": "Verification key for the OP Stack derivation + STF proof for a range of blocks. This proof is the bottom level proof, wrapped by the aggregationVkey."
         }
       },
       "implementationNames": {
@@ -129,7 +135,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
           "role": "admin"
         }
       ],
@@ -180,7 +186,7 @@
         "0x15a32FCeA89617Ff450F094cDE102CCa46598B7F": "Proxy",
         "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d": "L1ERC721Bridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "Yearn Strategist Multisig",
@@ -232,54 +238,54 @@
       "directlyReceivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
+          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
           "description": "set and change address mappings.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
+          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
+          "from": "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5",
+          "from": "eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
+          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
           "role": "admin"
         }
       ],
@@ -312,7 +318,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
           "role": ".batcherHash"
         }
       ]
@@ -366,7 +372,7 @@
         "0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": "ResolvedDelegateProxy",
         "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65": "L1CrossDomainMessenger"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x227D9Ea843910Edd305c42e7bB9Ce6D9f369238c",
@@ -383,7 +389,7 @@
         "0x1e6e48895b45b98acfe8b9c9f4568d3662e2932d82019f4ea721e2f7b57a58fc"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "[PAUSED] The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits.",
+      "description": "The OptimismPortal contract usually is the main entry point to deposit funds from L1 to L2 or for finalizing withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame. This specific fork of the standard contract **disables the depositTransaction() function**, which prevents users from sending or forcing any transactions from L1 to L2, including token deposits. It is instead used for configuration and administration of the system.",
       "ignoreInWatchMode": ["params", "balance"],
       "sinceTimestamp": 1746742811,
       "sinceBlock": 22441727,
@@ -457,7 +463,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
+          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
           "role": "admin"
         }
       ],
@@ -473,12 +479,7 @@
       }
     },
     {
-      "address": "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbWBTC",
       "address": "0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -487,6 +488,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge WBTC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbWBTC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -529,7 +531,7 @@
           }
         },
         "asset": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "backingDifference": { "positive": true, "difference": 24215 },
+        "backingDifference": { "positive": true, "difference": 45129 },
         "decimals": 8,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0x7317613d3079fd0c32c0dda038dce0e4bd277cdaa8af2d5aece3fd671e98171d",
@@ -554,13 +556,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 20640516757,
+        "stakedAssets": 20640542097,
         "symbol": "vbWBTC",
-        "totalAssets": 20640516757,
-        "totalSupply": 20640492542,
+        "totalAssets": 20640542097,
+        "totalSupply": 20640496968,
         "underlyingToken": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
         "version": "0.5.0",
-        "yield": 24215,
+        "yield": 45129,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x812B2C6Ab3f4471c0E43D4BB61098a9211017427",
@@ -569,7 +571,8 @@
       "implementationNames": {
         "0x2C24B57e2CCd1f273045Af6A5f632504C432374F": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x2C2dc95F8C8060a7e3B354c1B9540881AEa1613C",
@@ -674,7 +677,7 @@
       ]
     },
     {
-      "name": "VbETH",
+      "name": "vbETH",
       "address": "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -683,6 +686,7 @@
         "0x4988be5ea9a1e587b7ad36189901d0e442b1905a12fcfb0f0896de5d089234cd"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge ETH) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbETH-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -727,7 +731,7 @@
         "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "backingDifference": {
           "positive": true,
-          "difference": "1096879632175077718"
+          "difference": "2673418809329762803"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -753,13 +757,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "19724996544185655354149",
+        "stakedAssets": "19726581288772810039234",
         "symbol": "vbETH",
-        "totalAssets": "19724996544185655354149",
-        "totalSupply": "19723899664553480276431",
+        "totalAssets": "19726581288772810039234",
+        "totalSupply": "19723907869963480276431",
         "underlyingToken": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "version": "0.5.0",
-        "yield": "1096879632175077718",
+        "yield": "2673418809329762803",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x31A5684983EeE865d943A696AAC155363bA024f9",
@@ -768,10 +772,11 @@
       "implementationNames": {
         "0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF": "TransparentUpgradeableProxy",
         "0x81c16F89222C32806Daf01f5129937dFE19D525e": "VbETH"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana vaultBridge Multisig 1",
       "address": "0x2De242e27386e224E5fbF110EA8406d5B70740ec",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -783,43 +788,43 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69" }
+            { "address": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
+          "from": "eth:0x2DC70fb75b88d2eB4715bc06E1595E6D97c34DFF",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x14Be6579A41342ca6B402ec85E7be538e6Ade951" }
+            { "address": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010" }
+            { "address": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x14Be6579A41342ca6B402ec85E7be538e6Ade951",
+          "from": "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "ethereum:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010",
+          "from": "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "ethereum:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69",
+          "from": "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69",
           "role": ".owner"
         }
       ],
@@ -851,7 +856,7 @@
       "name": "SuperchainConfig",
       "address": "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
       "type": "Contract",
-      "template": "opstack/SuperchainConfigFake",
+      "template": "opstack/SuperchainConfigNoGuard",
       "sourceHashes": [
         "0x7913a1d7d0c47796c94eb6f8fd87a89ae9f2716eda57c9be4fd2b27c70bed617",
         "0x3f0bcc82f3184c1cb2e9aa6d3ecdd7c863186eea851dda56dd7e100d9174b840"
@@ -891,7 +896,7 @@
         "0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": "Proxy",
         "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A": "SuperchainConfig"
       },
-      "category": { "name": "Governance", "priority": 3 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "ProxyAdmin",
@@ -905,7 +910,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
+          "from": "eth:0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
           "role": "admin"
         }
       ],
@@ -931,7 +936,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDS",
       "address": "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -940,6 +945,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDS) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDS-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -984,7 +990,7 @@
         "asset": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "backingDifference": {
           "positive": true,
-          "difference": 4805819053511497
+          "difference": "11217348534115588"
         },
         "decimals": 18,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -1010,13 +1016,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": "33268832410298613995",
+        "stakedAssets": "33275243939779218086",
         "symbol": "vbUSDS",
-        "totalAssets": "33268832410298613995",
+        "totalAssets": "33275243939779218086",
         "totalSupply": "33264026591245102498",
         "underlyingToken": "0xdC035D45d973E3EC169d2276DDab16f1e407384F",
         "version": "0.5.0",
-        "yield": 4805819053511497,
+        "yield": "11217348534115588",
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0x0868076663Bbc6638ceDd27704cc8F0Fa53d5b81",
@@ -1025,30 +1031,13 @@
       "implementationNames": {
         "0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "address": "0x4082A1D91A353b16e112FbE36b55d222bF417919",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Accountant",
-      "address": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xbb98e3f17e055525db245944fa9a4119607271391cfde74fa3cacf1d99676704"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$immutable": true,
-        "DEPOSIT_RELAYER": "0xB01dADEC98308528ee57A17b24A473213c1704bb"
-      },
-      "implementationNames": {
-        "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D": "Accountant"
-      }
     },
     {
       "name": "MigrationManager",
@@ -1060,6 +1049,7 @@
         "0x9b0e45306537c9239f8f5b642a4beaafd206728e42a557b88f1eeccee5647066"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "Helper contract for the vaultBridge tokens on Layer 2. If any vbTokens are minted 'natively' on Layer 2, this contract can receive the underlying assets and lock them in the Layer 1 vaults.",
       "sinceTimestamp": 1747909835,
       "sinceBlock": 22537828,
       "values": {
@@ -1092,7 +1082,8 @@
       "implementationNames": {
         "0x417d01B64Ea30C4E163873f3a1f77b727c689e02": "TransparentUpgradeableProxy",
         "0xC6dD6399eAE419A0a33A8dc307f4c1dB26D30e45": "MigrationManager"
-      }
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "ProxyAdmin",
@@ -1106,7 +1097,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
+          "from": "eth:0x2C24B57e2CCd1f273045Af6A5f632504C432374F",
           "role": "admin"
         }
       ],
@@ -1125,68 +1116,6 @@
       "address": "0x450A3A6AE85904cb4Aa0809Fb41E53B687a28397",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Katana Pre-Deposit USDT Token",
-      "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
-      "type": "Contract",
-      "template": "yearn/vaultv3",
-      "sourceHashes": [
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "ignoreInWatchMode": [
-        "pricePerShare",
-        "totalAssets",
-        "totalDebt",
-        "totalIdle",
-        "totalSupply"
-      ],
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
-        "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
-        "apiVersion": "3.0.4",
-        "asset": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "auto_allocate": false,
-        "decimals": 6,
-        "default_queue": [
-          "0x310B7Ea7475A0B449Cfd73bE81522F1B88eFAFaa",
-          "0xBC64210D565aabca8eb6Eb795833Cc505ac3647F"
-        ],
-        "deposit_limit": 0,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0xceed67918f219b820ec939ec0af1492ad306b9bf8570309bf979e8d2c4c4dd31",
-        "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
-        "fullProfitUnlockDate": 0,
-        "future_role_manager": "0x0000000000000000000000000000000000000000",
-        "get_default_queue": [
-          "0x310B7Ea7475A0B449Cfd73bE81522F1B88eFAFaa",
-          "0xBC64210D565aabca8eb6Eb795833Cc505ac3647F"
-        ],
-        "isShutdown": false,
-        "lastProfitUpdate": 0,
-        "minimum_total_idle": 0,
-        "name": "Katana Pre-Deposit USDT",
-        "pricePerShare": 1000000,
-        "profitMaxUnlockTime": 86400,
-        "profitUnlockingRate": 0,
-        "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
-        "symbol": "kpdUSDT",
-        "totalAssets": 18061039851207,
-        "totalDebt": 18061039851207,
-        "totalIdle": 0,
-        "totalSupply": 18061039851207,
-        "unlockedShares": 0,
-        "use_default_queue": false,
-        "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb": "Yearn V3 Vault",
-        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
-      }
     },
     {
       "name": "Conduit Multisig 1",
@@ -1241,7 +1170,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Katana Multisig 2",
+      "name": "Katana Foundation Engineering/Security Multisig",
       "address": "0x4e981bAe8E3cd06Ca911ffFE5504B2653ac1C38a",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1252,122 +1181,129 @@
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
-          "permission": "guard",
-          "from": "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
-          "role": ".guardian"
+          "permission": "interact",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "change the op-succinct related verification keys (aggregationVkey, rangeVkeyCommitment) and the rollupConfigHash.",
+          "role": ".aggchainManager"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "toggle the 'optimisticMode'.",
+          "role": ".optimisticModeManager"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
           "description": "can pull funds from the contract in case of emergency.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
           "description": "it can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
+          "from": "eth:0xEaB94275eD336D80d4F46EA8Ea0427e351f11D65",
           "description": "set and change address mappings.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
+          "from": "eth:0x15a32FCeA89617Ff450F094cDE102CCa46598B7F",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
+          "from": "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
+          "from": "eth:0x250D30c523104bf0a06825e7eAdE4Dc46EdfE40E",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
+          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x6d0ff67fb427422AfF35EEa8596949B374b09a52" }
+            { "address": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
+          "from": "eth:0x74034597d29613CC8C0BDc8780e1d292A553Bd32",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5",
+          "from": "eth:0x79ecD8d8040496014bcD3bA16AdF3914b23f8Fd5",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
+          "from": "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC",
           "description": "upgrading the bridge implementation can give access to all funds escrowed therein.",
           "role": ".$admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
+          "from": "eth:0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
+          "from": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
+          "from": "eth:0xe06278351d120288eDfCB963F934113Ca3C21AFe",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
+            { "address": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
+          "from": "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832",
           "role": ".owner"
         },
         {
           "permission": "act",
-          "from": "ethereum:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
+          "from": "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52",
           "role": ".owner"
         }
       ],
@@ -1389,7 +1325,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1403,7 +1339,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDC",
       "address": "0x53E82ABbb12638F09d9e624578ccB666217a765e",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -1412,6 +1348,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDC) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDC-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1454,7 +1391,7 @@
           }
         },
         "asset": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "backingDifference": { "positive": true, "difference": 6262821295 },
+        "backingDifference": { "positive": true, "difference": 17151937625 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xf208e01223892bb2dfb35c2d306f682552de4492b4e45dff4876243fc048a8c2",
@@ -1479,13 +1416,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 74936400150777,
+        "stakedAssets": 75257582481452,
         "symbol": "vbUSDC",
-        "totalAssets": 74936400150777,
-        "totalSupply": 74930137329482,
+        "totalAssets": 75257582481452,
+        "totalSupply": 75240430543827,
         "underlyingToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
         "version": "0.5.0",
-        "yield": 6262821295,
+        "yield": 17151937625,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0xBEefb9f61CC44895d8AEc381373555a64191A9c4",
@@ -1494,12 +1431,8 @@
       "implementationNames": {
         "0x53E82ABbb12638F09d9e624578ccB666217a765e": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
-      }
-    },
-    {
-      "address": "0x5Db9926c93085a92F14A85daBF6FF27b07362Cae",
-      "type": "EOA",
-      "proxyType": "EOA"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "MIPS",
@@ -1520,10 +1453,11 @@
       },
       "implementationNames": {
         "0x5fE03a12C1236F9C22Cb6479778DDAa4bce6299C": "MIPS"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana yieldRecipient Mulsitig",
       "address": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1568,7 +1502,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
+          "from": "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811",
           "role": "admin"
         }
       ],
@@ -1585,7 +1519,7 @@
       }
     },
     {
-      "name": "GenericVaultBridgeToken",
+      "name": "vbUSDT",
       "address": "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC",
       "type": "Contract",
       "template": "polygon-cdk/GenericVaultBridgeToken",
@@ -1594,6 +1528,7 @@
         "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "This token contract uses a standard 'vault bridge token' implementation created by Agglayer CDK. It keeps deposited assets in a vault and issues an IOU token (Vault Bridge USDT) which can be deposited to Agglayer. The underlying asset is generating yield, which does not accrue to the vbUSDT-IOU but is sent to 0x67C912fF560951526BffDff66dFbD4DF8AE23756.",
       "ignoreInWatchMode": [
         "backingDifference",
         "stakedAssets",
@@ -1636,7 +1571,7 @@
           }
         },
         "asset": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "backingDifference": { "positive": true, "difference": 1423371363 },
+        "backingDifference": { "positive": true, "difference": 3917508769 },
         "decimals": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DOMAIN_SEPARATOR": "0xb80a4f7d2a2cc76fdaf2e936f017dddaca3e63f59cc318bc7506fafc54b81d3c",
@@ -1661,13 +1596,13 @@
         "REBALANCER_ROLE": "0xccc64574297998b6c3edf6078cc5e01268465ff116954e3af02ff3a70a730f46",
         "reservedAssets": 0,
         "reservePercentage": 0,
-        "stakedAssets": 19813027984716,
+        "stakedAssets": 19565522133122,
         "symbol": "vbUSDT",
-        "totalAssets": 19813027984716,
-        "totalSupply": 19811604613353,
+        "totalAssets": 19565522133122,
+        "totalSupply": 19561604624353,
         "underlyingToken": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
         "version": "0.5.0",
-        "yield": 1423371363,
+        "yield": 3917508769,
         "YIELD_COLLECTOR_ROLE": "0x4a43bb67995c7ae052564b1795e7bc07c4a74f92efdf2192466c19356570d627",
         "yieldRecipient": "0x67C912fF560951526BffDff66dFbD4DF8AE23756",
         "yieldVault": "0xc54b4E08C1Dcc199fdd35c6b5Ab589ffD3428a8d",
@@ -1676,17 +1611,8 @@
       "implementationNames": {
         "0x6d4f9f9f8f0155509ecd6Ac6c544fF27999845CC": "TransparentUpgradeableProxy",
         "0xcC865B0324121b43728176024f58bdbB3afd6f29": "GenericVaultBridgeToken"
-      }
-    },
-    {
-      "address": "0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x700F1a984C962b447CcDb95c4c2D8074C65098a3",
-      "type": "EOA",
-      "proxyType": "EOA"
+      },
+      "category": { "name": "External Bridges", "priority": 1 }
     },
     {
       "name": "DelayedWETH",
@@ -1725,7 +1651,8 @@
       "implementationNames": {
         "0x74034597d29613CC8C0BDc8780e1d292A553Bd32": "Proxy",
         "0x71e966Ae981d1ce531a7b6d23DC0f27B38409087": "DelayedWETH"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0x787aba336583f4A1D4f8cBBFDFFD49f3a38De665",
@@ -1767,74 +1694,12 @@
       }
     },
     {
-      "name": "Katana Pre-Deposit USDC Token",
-      "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
-      "type": "Contract",
-      "template": "yearn/vaultv3",
-      "sourceHashes": [
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "ignoreInWatchMode": [
-        "pricePerShare",
-        "totalAssets",
-        "totalDebt",
-        "totalIdle",
-        "totalSupply"
-      ],
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
-        "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
-        "apiVersion": "3.0.4",
-        "asset": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "auto_allocate": false,
-        "decimals": 6,
-        "default_queue": [
-          "0xBe53A109B494E5c9f97b9Cd39Fe969BE68BF6204",
-          "0x63a028963907F5a0c1cEb7e47100f52DfC611117"
-        ],
-        "deposit_limit": 0,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0x322b414561eb64090f902726b7fbcea41c4778b3768590cfd0609983e943de68",
-        "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
-        "fullProfitUnlockDate": 0,
-        "future_role_manager": "0x0000000000000000000000000000000000000000",
-        "get_default_queue": [
-          "0xBe53A109B494E5c9f97b9Cd39Fe969BE68BF6204",
-          "0x63a028963907F5a0c1cEb7e47100f52DfC611117"
-        ],
-        "isShutdown": false,
-        "lastProfitUpdate": 0,
-        "minimum_total_idle": 0,
-        "name": "Katana Pre-Deposit USDC",
-        "pricePerShare": 1000000,
-        "profitMaxUnlockTime": 86400,
-        "profitUnlockingRate": 0,
-        "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
-        "symbol": "kpdUSDC",
-        "totalAssets": 70387003627447,
-        "totalDebt": 70387003627447,
-        "totalIdle": 0,
-        "totalSupply": 70387003627447,
-        "unlockedShares": 0,
-        "use_default_queue": false,
-        "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": "Yearn V3 Vault",
-        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
-      }
-    },
-    {
       "address": "0x81175155D85377C337d92f1FA52Da166C3A4E7Ac",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Katana Steakhouse Financial / Morpho Multisig",
       "address": "0x827e86072B06674a077f592A531dcE4590aDeCdB",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -1869,24 +1734,6 @@
       }
     },
     {
-      "name": "ShareReceiver",
-      "address": "0x836304B832687f3811a0dF935934C724B40578eB",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x9dff5b57cc06152f55c03a3315607e71aea85a8c2a650034f40bba879a5c7725"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$immutable": true,
-        "DEPOSIT_RELAYER": "0xB01dADEC98308528ee57A17b24A473213c1704bb"
-      },
-      "implementationNames": {
-        "0x836304B832687f3811a0dF935934C724B40578eB": "ShareReceiver"
-      }
-    },
-    {
       "address": "0x860e06Fe384D1A3340111e7D142E02642178c053",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1903,7 +1750,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
           "role": "admin"
         }
       ],
@@ -1917,73 +1764,6 @@
       "implementationNames": {
         "0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": "ProxyAdmin"
       }
-    },
-    {
-      "name": "Katana Pre-Deposit WBTC Token",
-      "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
-      "type": "Contract",
-      "template": "yearn/vaultv3",
-      "sourceHashes": [
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "ignoreInWatchMode": [
-        "pricePerShare",
-        "totalAssets",
-        "totalDebt",
-        "totalIdle",
-        "totalSupply"
-      ],
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
-        "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
-        "apiVersion": "3.0.4",
-        "asset": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
-        "auto_allocate": false,
-        "decimals": 8,
-        "default_queue": [
-          "0x751F0cC6115410A3eE9eC92d08f46Ff6Da98b708",
-          "0xb3760eD42E9e87497A371697fF4F08b510C93Df1"
-        ],
-        "deposit_limit": 0,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0xbb571004f8dd36f597d2192502ac7651ce590edbc8ed1060b44fd538fb68a8ce",
-        "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
-        "fullProfitUnlockDate": 0,
-        "future_role_manager": "0x0000000000000000000000000000000000000000",
-        "get_default_queue": [
-          "0x751F0cC6115410A3eE9eC92d08f46Ff6Da98b708",
-          "0xb3760eD42E9e87497A371697fF4F08b510C93Df1"
-        ],
-        "isShutdown": false,
-        "lastProfitUpdate": 0,
-        "minimum_total_idle": 0,
-        "name": "Katana Pre-Deposit WBTC",
-        "pricePerShare": 100000000,
-        "profitMaxUnlockTime": 86400,
-        "profitUnlockingRate": 0,
-        "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
-        "symbol": "kpdWBTC",
-        "totalAssets": 18192326705,
-        "totalDebt": 18192326705,
-        "totalIdle": 0,
-        "totalSupply": 18192326705,
-        "unlockedShares": 0,
-        "use_default_queue": false,
-        "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728": "Yearn V3 Vault",
-        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
-      }
-    },
-    {
-      "address": "0x962228a90eaC69238c7D1F216d80037e61eA9255",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "L1StandardBridge",
@@ -2016,12 +1796,7 @@
         "0x98906C3f90A06B5484DD67bf32938815d2993dBC": "L1ChugSplashProxy",
         "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF": "L1StandardBridge"
       },
-      "category": { "name": "Canonical Bridges", "priority": 2 }
-    },
-    {
-      "address": "0x99BC02c239025E431D5741cC1DbA8CE77fc51CE3",
-      "type": "EOA",
-      "proxyType": "EOA"
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "name": "PreimageOracle",
@@ -2049,10 +1824,11 @@
       },
       "implementationNames": {
         "0x9c065e11870B891D214Bc2Da7EF1f9DDFA1BE277": "PreimageOracle"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Polygon Multisig 2",
+      "name": "Polygon Labs Engineering/Security Multisig",
       "address": "0x9d851f8b8751c5FbC09b9E74E6e68E9950949052",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2064,17 +1840,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
+          "from": "eth:0x417d01B64Ea30C4E163873f3a1f77b727c689e02",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x263b251D67BB154DD6b8352539466ACE7948ED56" }
+            { "address": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x263b251D67BB154DD6b8352539466ACE7948ED56",
+          "from": "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56",
           "role": ".owner"
         }
       ],
@@ -2155,10 +1931,11 @@
       "implementationNames": {
         "0xA84C37cD0b9bA1B43276C11976DBE9d1344C7f4E": "Proxy",
         "0xE01efbeb1089D1d1dB9c6c8b135C934C0734c846": "OptimismMintableERC20Factory"
-      }
+      },
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "Safe",
+      "name": "Katana vaultBridge Multisig 2",
       "address": "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2170,17 +1947,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xD1e389c046FB734D2a0c7C390312210c408ba832" }
+            { "address": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xD1e389c046FB734D2a0c7C390312210c408ba832",
+          "from": "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832",
           "role": ".owner"
         }
       ],
@@ -2206,34 +1983,6 @@
       "implementationNames": {
         "0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "name": "DepositRelayer",
-      "address": "0xB01dADEC98308528ee57A17b24A473213c1704bb",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x7187bf2c2da4631859d47dd91211b499a54042901f34845f027d43591743c7eb"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$immutable": true,
-        "acrossBridge": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-        "governance": "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52",
-        "pdVaultUSDC": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
-        "pdVaultUSDT": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
-        "pdVaultWBTC": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
-        "pdVaultWETH": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF",
-        "pendingGovernance": "0x0000000000000000000000000000000000000000",
-        "PRE_DEPOSIT_FACTORY": "0x9d770717d63e32089B2E11E4Ce927C1dCe8A023d",
-        "relayLinkBridge": "0xeeeeee9eC4769A09a76A83C7bC42b185872860eE",
-        "SHARE_RECEIVER": "0x836304B832687f3811a0dF935934C724B40578eB",
-        "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "implementationNames": {
-        "0xB01dADEC98308528ee57A17b24A473213c1704bb": "DepositRelayer"
       }
     },
     {
@@ -2283,8 +2032,8 @@
         "blobbasefeeScalar": 801949,
         "DISPUTE_GAME_FACTORY_SLOT": "0x52322a25d9f59ea17656545543306b7aef62bc0cc53a0e65ccfa0c75b97aa906",
         "disputeGameFactory": "0xe06278351d120288eDfCB963F934113Ca3C21AFe",
-        "eip1559Denominator": 0,
-        "eip1559Elasticity": 0,
+        "eip1559Denominator": 250,
+        "eip1559Elasticity": 60,
         "gasLimit": 60000000,
         "gasPayingToken": {
           "addr_": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
@@ -2352,7 +2101,16 @@
     {
       "address": "0xC1E65a0cEbF95f56Cd8729f7e37CB33eD94d6439",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x100d3ca4f97776A40A7D93dB4AbF0FEA34230666",
+          "description": "finalize any state root with only their signature.",
+          "role": ".trustedSequencer",
+          "condition": "optimisticMode is enabled by the optimisticModeManager."
+        }
+      ]
     },
     {
       "address": "0xcB1e45481461aeF38E6B0a34F1444E9C5D647645",
@@ -2360,100 +2118,9 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Katana Pre-Deposit WETH Token",
-      "address": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF",
-      "type": "Contract",
-      "template": "yearn/vaultv3",
-      "sourceHashes": [
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461",
-        "0x5d40986c3a1dd9125adfec96b4aec8a7336eb319d3c4cdde3e55bb1096c11461"
-      ],
-      "proxyType": "EIP1167 proxy",
-      "ignoreInWatchMode": [
-        "pricePerShare",
-        "totalAssets",
-        "totalDebt",
-        "totalIdle",
-        "totalSupply"
-      ],
-      "sinceTimestamp": 1747148987,
-      "sinceBlock": 22475100,
-      "values": {
-        "$implementation": "0xd8063123BBA3B480569244AE66BFE72B6c84b00d",
-        "accountant": "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D",
-        "apiVersion": "3.0.4",
-        "asset": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "auto_allocate": false,
-        "decimals": 18,
-        "default_queue": [
-          "0xc56413869c6CDf96496f2b1eF801fEDBdFA7dDB0",
-          "0x30EAaCaD508BA57B30edafa1aD6bD337B211A9DE"
-        ],
-        "deposit_limit": 0,
-        "deposit_limit_module": "0x0000000000000000000000000000000000000000",
-        "DOMAIN_SEPARATOR": "0x9b264ab674ac2118d2624b8c7681d9d4b279aaa47cab9910c25a0bf902d1aebf",
-        "FACTORY": "0x770D0d1Fb036483Ed4AbB6d53c1C88fb277D812F",
-        "fullProfitUnlockDate": 0,
-        "future_role_manager": "0x0000000000000000000000000000000000000000",
-        "get_default_queue": [
-          "0xc56413869c6CDf96496f2b1eF801fEDBdFA7dDB0",
-          "0x30EAaCaD508BA57B30edafa1aD6bD337B211A9DE"
-        ],
-        "isShutdown": false,
-        "lastProfitUpdate": 0,
-        "minimum_total_idle": 0,
-        "name": "Katana Pre-Deposit WETH",
-        "pricePerShare": "1000000000000000000",
-        "profitMaxUnlockTime": 86400,
-        "profitUnlockingRate": 0,
-        "role_manager": "0xb3bd6B2E61753C311EFbCF0111f75D29706D9a41",
-        "symbol": "kpdWETH",
-        "totalAssets": "18861218641101260273088",
-        "totalDebt": "18861218641101260273088",
-        "totalIdle": 0,
-        "totalSupply": "18861218641101260273088",
-        "unlockedShares": 0,
-        "use_default_queue": false,
-        "withdraw_limit_module": "0x0000000000000000000000000000000000000000"
-      },
-      "implementationNames": {
-        "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF": "Yearn V3 Vault",
-        "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": "Yearn V3 Vault"
-      }
-    },
-    {
       "address": "0xcC771952fdE840E30C6802734e5ad20479c2959f",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "AllowanceModule",
-      "address": "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x739427cbd7c2389a7c03972460f1e89b911776b7fdd5332f544dac83493eabb1"
-      ],
-      "proxyType": "immutable",
-      "directlyReceivedPermissions": [
-        {
-          "permission": "act",
-          "from": "ethereum:0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52",
-          "role": ".GnosisSafe_modules"
-        }
-      ],
-      "sinceTimestamp": 1603880884,
-      "sinceBlock": 11144602,
-      "values": {
-        "$immutable": true,
-        "ALLOWANCE_TRANSFER_TYPEHASH": "0x80b006280932094e7cc965863eb5118dc07e5d272c6670c4a7c87299e04fceeb",
-        "DOMAIN_SEPARATOR_TYPEHASH": "0x47e79534a245952e8b16893a336b85a3d9ea9fa8c573f3d803afb92a79469218",
-        "getChainId": 1,
-        "NAME": "Allowance Module",
-        "VERSION": "0.1.0"
-      },
-      "implementationNames": {
-        "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": "AllowanceModule"
-      }
     },
     {
       "address": "0xd0002c648CCa8DeE2f2b8D70D542Ccde8ad6EC03",
@@ -2461,7 +2128,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Safe",
+      "name": "Polygon Multisig 2",
       "address": "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2505,7 +2172,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
+          "from": "eth:0x3DD459dE96F9C28e3a343b831cbDC2B93c8C4855",
           "role": "admin"
         }
       ],
@@ -2562,15 +2229,10 @@
         "0xe06278351d120288eDfCB963F934113Ca3C21AFe": "Proxy",
         "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B": "DisputeGameFactory"
       },
-      "category": { "name": "Local Infrastructure", "priority": 5 }
+      "category": { "name": "Spam", "priority": -1 }
     },
     {
       "address": "0xE3fCEE6B6cd564E073346f71394f60eC9aDf5120",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0xeA6c0837fef621E77329f85820F503cA09f2B3a9",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2596,25 +2258,6 @@
       "category": { "name": "Spam", "priority": -1 }
     },
     {
-      "name": "ERC20Router",
-      "address": "0xeeeeee9eC4769A09a76A83C7bC42b185872860eE",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xc901cf186fa1d7d3e12a4c7a4087ce98ea46bf3ba7ae2e354fab1569c009b9fe"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1741021415,
-      "sinceBlock": 21967727,
-      "values": {
-        "_EIP_712_RELAYER_WITNESS_TYPE_HASH": "0x4910260415865c6d3ecf96968c7d912a0d533a72c3479ab1e1df0f4eb86fb008",
-        "_RELAYER_WITNESS_TYPE_STRING": "RelayerWitness witness)RelayerWitness(address relayer)TokenPermissions(address token,uint256 amount)",
-        "$immutable": true
-      },
-      "implementationNames": {
-        "0xeeeeee9eC4769A09a76A83C7bC42b185872860eE": "ERC20Router"
-      }
-    },
-    {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
       "type": "EOA",
       "proxyType": "EOA"
@@ -2630,7 +2273,7 @@
       "proxyType": "EOA"
     },
     {
-      "name": "Katana Multisig",
+      "name": "Katana vaultBridge Multisig 3",
       "address": "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E",
       "type": "Contract",
       "template": "GnosisSafe",
@@ -2642,17 +2285,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x53E82ABbb12638F09d9e624578ccB666217a765e",
+          "from": "eth:0x53E82ABbb12638F09d9e624578ccB666217a765e",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30" }
+            { "address": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30",
+          "from": "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30",
           "role": ".owner"
         }
       ],
@@ -2678,51 +2321,6 @@
       "implementationNames": {
         "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": "SafeProxy",
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
-      }
-    },
-    {
-      "address": "0xf5D3dbda5F41A0E26D71B948e29522398e71cFaE",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "name": "Yearn Treasury Multisig",
-      "address": "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0xd5a33441170541b7df25812e0e3dff6562b2f09ab835a6b431cb9e7198a47605",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1595301010,
-      "sinceBlock": 10500302,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xf5D3dbda5F41A0E26D71B948e29522398e71cFaE",
-          "0xeA6c0837fef621E77329f85820F503cA09f2B3a9",
-          "0x6F2A8Ee9452ba7d336b3fba03caC27f7818AeAD6",
-          "0x2B888954421b424C5D3D9Ce9bB67c9bD47537d12",
-          "0xFe45baf0F18c207152A807c1b05926583CFE2e4b",
-          "0x962228a90eaC69238c7D1F216d80037e61eA9255",
-          "0x99BC02c239025E431D5741cC1DbA8CE77fc51CE3",
-          "0x5Db9926c93085a92F14A85daBF6FF27b07362Cae",
-          "0x700F1a984C962b447CcDb95c4c2D8074C65098a3"
-        ],
-        "$threshold": 6,
-        "domainSeparator": "0x88fbc465dedd7fe71b7baef26a1f46cdaadd50b95c77cbe88569195a9fe589ab",
-        "getChainId": 1,
-        "GnosisSafe_modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
-        "multisigThreshold": "6 of 9 (67%)",
-        "nonce": 2169,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52": "Proxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     }
   ],
@@ -3015,12 +2613,6 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
-    "0x40a87104AEb279C061Af6b7C48F7E08c4A6e388D": [
-      "constructor(address _depositRelayer)",
-      "function DEPOSIT_RELAYER() view returns (address)",
-      "function report(address, uint256 _gain, uint256 _loss) returns (uint256 totalFees, uint256)",
-      "function sweep(address _token)"
-    ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
       "event AddedOwner(address indexed owner)",
@@ -3090,121 +2682,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb": [
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
-      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
-      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
-      "event RoleSet(address indexed account, uint256 indexed role)",
-      "event UpdateFutureRoleManager(address indexed future_role_manager)",
-      "event UpdateRoleManager(address indexed role_manager)",
-      "event UpdateAccountant(address indexed accountant)",
-      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
-      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
-      "event UpdateDefaultQueue(address[] new_default_queue)",
-      "event UpdateUseDefaultQueue(bool use_default_queue)",
-      "event UpdateAutoAllocate(bool auto_allocate)",
-      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
-      "event UpdateDepositLimit(uint256 deposit_limit)",
-      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
-      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
-      "event DebtPurchased(address indexed strategy, uint256 amount)",
-      "event Shutdown()",
-      "constructor()",
-      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
-      "function setName(string name)",
-      "function setSymbol(string symbol)",
-      "function set_accountant(address new_accountant)",
-      "function set_default_queue(address[] new_default_queue)",
-      "function set_use_default_queue(bool use_default_queue)",
-      "function set_auto_allocate(bool auto_allocate)",
-      "function set_deposit_limit(uint256 deposit_limit)",
-      "function set_deposit_limit(uint256 deposit_limit, bool override)",
-      "function set_deposit_limit_module(address deposit_limit_module)",
-      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
-      "function set_withdraw_limit_module(address withdraw_limit_module)",
-      "function set_minimum_total_idle(uint256 minimum_total_idle)",
-      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
-      "function set_role(address account, uint256 role)",
-      "function add_role(address account, uint256 role)",
-      "function remove_role(address account, uint256 role)",
-      "function transfer_role_manager(address role_manager)",
-      "function accept_role_manager()",
-      "function isShutdown() view returns (bool)",
-      "function unlockedShares() view returns (uint256)",
-      "function pricePerShare() view returns (uint256)",
-      "function get_default_queue() view returns (address[])",
-      "function process_report(address strategy) returns (uint256, uint256)",
-      "function buy_debt(address strategy, uint256 amount)",
-      "function add_strategy(address new_strategy)",
-      "function add_strategy(address new_strategy, bool add_to_queue)",
-      "function revoke_strategy(address strategy)",
-      "function force_revoke_strategy(address strategy)",
-      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
-      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
-      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
-      "function shutdown_vault()",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transfer(address receiver, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
-      "function balanceOf(address addr) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalAssets() view returns (uint256)",
-      "function totalIdle() view returns (uint256)",
-      "function totalDebt() view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function maxDeposit(address receiver) view returns (uint256)",
-      "function maxMint(address receiver) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function FACTORY() view returns (address)",
-      "function apiVersion() pure returns (string)",
-      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
-      "function profitMaxUnlockTime() view returns (uint256)",
-      "function fullProfitUnlockDate() view returns (uint256)",
-      "function profitUnlockingRate() view returns (uint256)",
-      "function lastProfitUpdate() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function asset() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
-      "function default_queue(uint256 arg0) view returns (address)",
-      "function use_default_queue() view returns (bool)",
-      "function auto_allocate() view returns (bool)",
-      "function allowance(address arg0, address arg1) view returns (uint256)",
-      "function minimum_total_idle() view returns (uint256)",
-      "function deposit_limit() view returns (uint256)",
-      "function accountant() view returns (address)",
-      "function deposit_limit_module() view returns (address)",
-      "function withdraw_limit_module() view returns (address)",
-      "function roles(address arg0) view returns (uint256)",
-      "function role_manager() view returns (address)",
-      "function future_role_manager() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function nonces(address arg0) view returns (uint256)"
     ],
     "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
       "constructor(address _singleton)"
@@ -3352,121 +2829,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x7B5A0182E400b241b317e781a4e9dEdFc1429822": [
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
-      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
-      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
-      "event RoleSet(address indexed account, uint256 indexed role)",
-      "event UpdateFutureRoleManager(address indexed future_role_manager)",
-      "event UpdateRoleManager(address indexed role_manager)",
-      "event UpdateAccountant(address indexed accountant)",
-      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
-      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
-      "event UpdateDefaultQueue(address[] new_default_queue)",
-      "event UpdateUseDefaultQueue(bool use_default_queue)",
-      "event UpdateAutoAllocate(bool auto_allocate)",
-      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
-      "event UpdateDepositLimit(uint256 deposit_limit)",
-      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
-      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
-      "event DebtPurchased(address indexed strategy, uint256 amount)",
-      "event Shutdown()",
-      "constructor()",
-      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
-      "function setName(string name)",
-      "function setSymbol(string symbol)",
-      "function set_accountant(address new_accountant)",
-      "function set_default_queue(address[] new_default_queue)",
-      "function set_use_default_queue(bool use_default_queue)",
-      "function set_auto_allocate(bool auto_allocate)",
-      "function set_deposit_limit(uint256 deposit_limit)",
-      "function set_deposit_limit(uint256 deposit_limit, bool override)",
-      "function set_deposit_limit_module(address deposit_limit_module)",
-      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
-      "function set_withdraw_limit_module(address withdraw_limit_module)",
-      "function set_minimum_total_idle(uint256 minimum_total_idle)",
-      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
-      "function set_role(address account, uint256 role)",
-      "function add_role(address account, uint256 role)",
-      "function remove_role(address account, uint256 role)",
-      "function transfer_role_manager(address role_manager)",
-      "function accept_role_manager()",
-      "function isShutdown() view returns (bool)",
-      "function unlockedShares() view returns (uint256)",
-      "function pricePerShare() view returns (uint256)",
-      "function get_default_queue() view returns (address[])",
-      "function process_report(address strategy) returns (uint256, uint256)",
-      "function buy_debt(address strategy, uint256 amount)",
-      "function add_strategy(address new_strategy)",
-      "function add_strategy(address new_strategy, bool add_to_queue)",
-      "function revoke_strategy(address strategy)",
-      "function force_revoke_strategy(address strategy)",
-      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
-      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
-      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
-      "function shutdown_vault()",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transfer(address receiver, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
-      "function balanceOf(address addr) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalAssets() view returns (uint256)",
-      "function totalIdle() view returns (uint256)",
-      "function totalDebt() view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function maxDeposit(address receiver) view returns (uint256)",
-      "function maxMint(address receiver) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function FACTORY() view returns (address)",
-      "function apiVersion() pure returns (string)",
-      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
-      "function profitMaxUnlockTime() view returns (uint256)",
-      "function fullProfitUnlockDate() view returns (uint256)",
-      "function profitUnlockingRate() view returns (uint256)",
-      "function lastProfitUpdate() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function asset() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
-      "function default_queue(uint256 arg0) view returns (address)",
-      "function use_default_queue() view returns (bool)",
-      "function auto_allocate() view returns (bool)",
-      "function allowance(address arg0, address arg1) view returns (uint256)",
-      "function minimum_total_idle() view returns (uint256)",
-      "function deposit_limit() view returns (uint256)",
-      "function accountant() view returns (address)",
-      "function deposit_limit_module() view returns (address)",
-      "function withdraw_limit_module() view returns (address)",
-      "function roles(address arg0) view returns (uint256)",
-      "function role_manager() view returns (address)",
-      "function future_role_manager() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function nonces(address arg0) view returns (uint256)"
     ],
     "0x81c16F89222C32806Daf01f5129937dFE19D525e": [
       "constructor()",
@@ -3623,10 +2985,6 @@
     "0x827e86072B06674a077f592A531dcE4590aDeCdB": [
       "constructor(address _singleton)"
     ],
-    "0x836304B832687f3811a0dF935934C724B40578eB": [
-      "constructor()",
-      "function DEPOSIT_RELAYER() view returns (address)"
-    ],
     "0x838897A86Cb4F130D0eFC1203d7dA6D0db4bEd1A": [
       "constructor()",
       "event ConfigUpdate(uint8 indexed updateType, bytes data)",
@@ -3652,121 +3010,6 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
-    ],
-    "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728": [
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
-      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
-      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
-      "event RoleSet(address indexed account, uint256 indexed role)",
-      "event UpdateFutureRoleManager(address indexed future_role_manager)",
-      "event UpdateRoleManager(address indexed role_manager)",
-      "event UpdateAccountant(address indexed accountant)",
-      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
-      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
-      "event UpdateDefaultQueue(address[] new_default_queue)",
-      "event UpdateUseDefaultQueue(bool use_default_queue)",
-      "event UpdateAutoAllocate(bool auto_allocate)",
-      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
-      "event UpdateDepositLimit(uint256 deposit_limit)",
-      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
-      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
-      "event DebtPurchased(address indexed strategy, uint256 amount)",
-      "event Shutdown()",
-      "constructor()",
-      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
-      "function setName(string name)",
-      "function setSymbol(string symbol)",
-      "function set_accountant(address new_accountant)",
-      "function set_default_queue(address[] new_default_queue)",
-      "function set_use_default_queue(bool use_default_queue)",
-      "function set_auto_allocate(bool auto_allocate)",
-      "function set_deposit_limit(uint256 deposit_limit)",
-      "function set_deposit_limit(uint256 deposit_limit, bool override)",
-      "function set_deposit_limit_module(address deposit_limit_module)",
-      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
-      "function set_withdraw_limit_module(address withdraw_limit_module)",
-      "function set_minimum_total_idle(uint256 minimum_total_idle)",
-      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
-      "function set_role(address account, uint256 role)",
-      "function add_role(address account, uint256 role)",
-      "function remove_role(address account, uint256 role)",
-      "function transfer_role_manager(address role_manager)",
-      "function accept_role_manager()",
-      "function isShutdown() view returns (bool)",
-      "function unlockedShares() view returns (uint256)",
-      "function pricePerShare() view returns (uint256)",
-      "function get_default_queue() view returns (address[])",
-      "function process_report(address strategy) returns (uint256, uint256)",
-      "function buy_debt(address strategy, uint256 amount)",
-      "function add_strategy(address new_strategy)",
-      "function add_strategy(address new_strategy, bool add_to_queue)",
-      "function revoke_strategy(address strategy)",
-      "function force_revoke_strategy(address strategy)",
-      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
-      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
-      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
-      "function shutdown_vault()",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transfer(address receiver, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
-      "function balanceOf(address addr) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalAssets() view returns (uint256)",
-      "function totalIdle() view returns (uint256)",
-      "function totalDebt() view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function maxDeposit(address receiver) view returns (uint256)",
-      "function maxMint(address receiver) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function FACTORY() view returns (address)",
-      "function apiVersion() pure returns (string)",
-      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
-      "function profitMaxUnlockTime() view returns (uint256)",
-      "function fullProfitUnlockDate() view returns (uint256)",
-      "function profitUnlockingRate() view returns (uint256)",
-      "function lastProfitUpdate() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function asset() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
-      "function default_queue(uint256 arg0) view returns (address)",
-      "function use_default_queue() view returns (bool)",
-      "function auto_allocate() view returns (bool)",
-      "function allowance(address arg0, address arg1) view returns (uint256)",
-      "function minimum_total_idle() view returns (uint256)",
-      "function deposit_limit() view returns (uint256)",
-      "function accountant() view returns (address)",
-      "function deposit_limit_module() view returns (address)",
-      "function withdraw_limit_module() view returns (address)",
-      "function roles(address arg0) view returns (uint256)",
-      "function role_manager() view returns (address)",
-      "function future_role_manager() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function nonces(address arg0) view returns (uint256)"
     ],
     "0x98906C3f90A06B5484DD67bf32938815d2993dBC": [
       "constructor(address _owner)",
@@ -3976,43 +3219,6 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
     ],
-    "0xB01dADEC98308528ee57A17b24A473213c1704bb": [
-      "constructor(address _governance, address _acrossBridge, address _relayLinkBridge)",
-      "event AcrossBridgeSet(address indexed acrossBridge)",
-      "event DepositCapSet(address indexed asset, uint256 indexed cap)",
-      "event DepositProcessed(address indexed asset, address indexed user, uint256 indexed amount, uint256 originChainId, address referral)",
-      "event GovernanceTransferred(address indexed previousGovernance, address indexed newGovernance)",
-      "event RelayLinkBridgeSet(address indexed relayLinkBridge)",
-      "event UpdatePendingGovernance(address indexed newPendingGovernance)",
-      "event VaultSet(address indexed asset, address indexed vault)",
-      "function PRE_DEPOSIT_FACTORY() view returns (address)",
-      "function SHARE_RECEIVER() view returns (address)",
-      "function WETH() view returns (address)",
-      "function acceptGovernance()",
-      "function acrossBridge() view returns (address)",
-      "function deposit(address _asset, uint256 _amount)",
-      "function deposit(address _asset, uint256 _amount, address _referral)",
-      "function depositCap(address) view returns (uint256)",
-      "function depositEth() payable",
-      "function depositEth(address _referral) payable",
-      "function deposited(address, address) view returns (uint256)",
-      "function governance() view returns (address)",
-      "function handleRelayLinkDeposit(address _asset, uint256 _amount, address _user, uint256 _originChainId, address _referral)",
-      "function handleV3AcrossMessage(address _asset, uint256 _amount, address, bytes _message)",
-      "function maxDeposit(address _asset) view returns (uint256)",
-      "function newVault(address _asset, address _vault, address _stbStrategy)",
-      "function pendingGovernance() view returns (address)",
-      "function preDepositVault(address) view returns (address)",
-      "function relayLinkBridge() view returns (address)",
-      "function rescue(address _token)",
-      "function setAcrossBridge(address _acrossBridge)",
-      "function setDepositCap(address _asset, uint256 _cap)",
-      "function setRelayLinkBridge(address _relayLinkBridge)",
-      "function setVault(address _asset, address _vault)",
-      "function stbDepositor(address) view returns (address)",
-      "function totalDeposited(address) view returns (uint256)",
-      "function transferGovernance(address _newGovernance)"
-    ],
     "0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -4093,121 +3299,6 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function unpause()",
       "function version() pure returns (string)"
-    ],
-    "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF": [
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
-      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
-      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
-      "event RoleSet(address indexed account, uint256 indexed role)",
-      "event UpdateFutureRoleManager(address indexed future_role_manager)",
-      "event UpdateRoleManager(address indexed role_manager)",
-      "event UpdateAccountant(address indexed accountant)",
-      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
-      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
-      "event UpdateDefaultQueue(address[] new_default_queue)",
-      "event UpdateUseDefaultQueue(bool use_default_queue)",
-      "event UpdateAutoAllocate(bool auto_allocate)",
-      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
-      "event UpdateDepositLimit(uint256 deposit_limit)",
-      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
-      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
-      "event DebtPurchased(address indexed strategy, uint256 amount)",
-      "event Shutdown()",
-      "constructor()",
-      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
-      "function setName(string name)",
-      "function setSymbol(string symbol)",
-      "function set_accountant(address new_accountant)",
-      "function set_default_queue(address[] new_default_queue)",
-      "function set_use_default_queue(bool use_default_queue)",
-      "function set_auto_allocate(bool auto_allocate)",
-      "function set_deposit_limit(uint256 deposit_limit)",
-      "function set_deposit_limit(uint256 deposit_limit, bool override)",
-      "function set_deposit_limit_module(address deposit_limit_module)",
-      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
-      "function set_withdraw_limit_module(address withdraw_limit_module)",
-      "function set_minimum_total_idle(uint256 minimum_total_idle)",
-      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
-      "function set_role(address account, uint256 role)",
-      "function add_role(address account, uint256 role)",
-      "function remove_role(address account, uint256 role)",
-      "function transfer_role_manager(address role_manager)",
-      "function accept_role_manager()",
-      "function isShutdown() view returns (bool)",
-      "function unlockedShares() view returns (uint256)",
-      "function pricePerShare() view returns (uint256)",
-      "function get_default_queue() view returns (address[])",
-      "function process_report(address strategy) returns (uint256, uint256)",
-      "function buy_debt(address strategy, uint256 amount)",
-      "function add_strategy(address new_strategy)",
-      "function add_strategy(address new_strategy, bool add_to_queue)",
-      "function revoke_strategy(address strategy)",
-      "function force_revoke_strategy(address strategy)",
-      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
-      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
-      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
-      "function shutdown_vault()",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transfer(address receiver, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
-      "function balanceOf(address addr) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalAssets() view returns (uint256)",
-      "function totalIdle() view returns (uint256)",
-      "function totalDebt() view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function maxDeposit(address receiver) view returns (uint256)",
-      "function maxMint(address receiver) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function FACTORY() view returns (address)",
-      "function apiVersion() pure returns (string)",
-      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
-      "function profitMaxUnlockTime() view returns (uint256)",
-      "function fullProfitUnlockDate() view returns (uint256)",
-      "function profitUnlockingRate() view returns (uint256)",
-      "function lastProfitUpdate() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function asset() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
-      "function default_queue(uint256 arg0) view returns (address)",
-      "function use_default_queue() view returns (bool)",
-      "function auto_allocate() view returns (bool)",
-      "function allowance(address arg0, address arg1) view returns (uint256)",
-      "function minimum_total_idle() view returns (uint256)",
-      "function deposit_limit() view returns (uint256)",
-      "function accountant() view returns (address)",
-      "function deposit_limit_module() view returns (address)",
-      "function withdraw_limit_module() view returns (address)",
-      "function roles(address arg0) view returns (uint256)",
-      "function role_manager() view returns (address)",
-      "function future_role_manager() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function nonces(address arg0) view returns (uint256)"
     ],
     "0xcC865B0324121b43728176024f58bdbB3afd6f29": [
       "constructor()",
@@ -4356,34 +3447,6 @@
       "function yieldVault() view returns (address)",
       "function yieldVaultMaximumSlippagePercentage() view returns (uint256)"
     ],
-    "0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134": [
-      "event AddDelegate(address indexed safe, address delegate)",
-      "event DeleteAllowance(address indexed safe, address delegate, address token)",
-      "event ExecuteAllowanceTransfer(address indexed safe, address delegate, address token, address to, uint96 value, uint16 nonce)",
-      "event PayAllowanceTransfer(address indexed safe, address delegate, address paymentToken, address paymentReceiver, uint96 payment)",
-      "event RemoveDelegate(address indexed safe, address delegate)",
-      "event ResetAllowance(address indexed safe, address delegate, address token)",
-      "event SetAllowance(address indexed safe, address delegate, address token, uint96 allowanceAmount, uint16 resetTime)",
-      "function ALLOWANCE_TRANSFER_TYPEHASH() view returns (bytes32)",
-      "function DOMAIN_SEPARATOR_TYPEHASH() view returns (bytes32)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function addDelegate(address delegate)",
-      "function allowances(address, address, address) view returns (uint96 amount, uint96 spent, uint16 resetTimeMin, uint32 lastResetMin, uint16 nonce)",
-      "function delegates(address, uint48) view returns (address delegate, uint48 prev, uint48 next)",
-      "function delegatesStart(address) view returns (uint48)",
-      "function deleteAllowance(address delegate, address token)",
-      "function executeAllowanceTransfer(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, address delegate, bytes signature)",
-      "function generateTransferHash(address safe, address token, address to, uint96 amount, address paymentToken, uint96 payment, uint16 nonce) view returns (bytes32)",
-      "function getChainId() pure returns (uint256)",
-      "function getDelegates(address safe, uint48 start, uint8 pageSize) view returns (address[] results, uint48 next)",
-      "function getTokenAllowance(address safe, address delegate, address token) view returns (uint256[5])",
-      "function getTokens(address safe, address delegate) view returns (address[])",
-      "function removeDelegate(address delegate, bool removeAllowances)",
-      "function resetAllowance(address delegate, address token)",
-      "function setAllowance(address delegate, address token, uint96 allowanceAmount, uint16 resetTimeMin, uint32 resetBaseMin)",
-      "function tokens(address, address, uint256) view returns (address)"
-    ],
     "0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC": [
       "constructor(address _singleton)"
     ],
@@ -4428,121 +3491,6 @@
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)",
       "function xDomainMessageSender() view returns (address)"
-    ],
-    "0xd8063123BBA3B480569244AE66BFE72B6c84b00d": [
-      "event Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)",
-      "event Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)",
-      "event Transfer(address indexed sender, address indexed receiver, uint256 value)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event StrategyChanged(address indexed strategy, uint256 indexed change_type)",
-      "event StrategyReported(address indexed strategy, uint256 gain, uint256 loss, uint256 current_debt, uint256 protocol_fees, uint256 total_fees, uint256 total_refunds)",
-      "event DebtUpdated(address indexed strategy, uint256 current_debt, uint256 new_debt)",
-      "event RoleSet(address indexed account, uint256 indexed role)",
-      "event UpdateFutureRoleManager(address indexed future_role_manager)",
-      "event UpdateRoleManager(address indexed role_manager)",
-      "event UpdateAccountant(address indexed accountant)",
-      "event UpdateDepositLimitModule(address indexed deposit_limit_module)",
-      "event UpdateWithdrawLimitModule(address indexed withdraw_limit_module)",
-      "event UpdateDefaultQueue(address[] new_default_queue)",
-      "event UpdateUseDefaultQueue(bool use_default_queue)",
-      "event UpdateAutoAllocate(bool auto_allocate)",
-      "event UpdatedMaxDebtForStrategy(address indexed sender, address indexed strategy, uint256 new_debt)",
-      "event UpdateDepositLimit(uint256 deposit_limit)",
-      "event UpdateMinimumTotalIdle(uint256 minimum_total_idle)",
-      "event UpdateProfitMaxUnlockTime(uint256 profit_max_unlock_time)",
-      "event DebtPurchased(address indexed strategy, uint256 amount)",
-      "event Shutdown()",
-      "constructor()",
-      "function initialize(address asset, string name, string symbol, address role_manager, uint256 profit_max_unlock_time)",
-      "function setName(string name)",
-      "function setSymbol(string symbol)",
-      "function set_accountant(address new_accountant)",
-      "function set_default_queue(address[] new_default_queue)",
-      "function set_use_default_queue(bool use_default_queue)",
-      "function set_auto_allocate(bool auto_allocate)",
-      "function set_deposit_limit(uint256 deposit_limit)",
-      "function set_deposit_limit(uint256 deposit_limit, bool override)",
-      "function set_deposit_limit_module(address deposit_limit_module)",
-      "function set_deposit_limit_module(address deposit_limit_module, bool override)",
-      "function set_withdraw_limit_module(address withdraw_limit_module)",
-      "function set_minimum_total_idle(uint256 minimum_total_idle)",
-      "function setProfitMaxUnlockTime(uint256 new_profit_max_unlock_time)",
-      "function set_role(address account, uint256 role)",
-      "function add_role(address account, uint256 role)",
-      "function remove_role(address account, uint256 role)",
-      "function transfer_role_manager(address role_manager)",
-      "function accept_role_manager()",
-      "function isShutdown() view returns (bool)",
-      "function unlockedShares() view returns (uint256)",
-      "function pricePerShare() view returns (uint256)",
-      "function get_default_queue() view returns (address[])",
-      "function process_report(address strategy) returns (uint256, uint256)",
-      "function buy_debt(address strategy, uint256 amount)",
-      "function add_strategy(address new_strategy)",
-      "function add_strategy(address new_strategy, bool add_to_queue)",
-      "function revoke_strategy(address strategy)",
-      "function force_revoke_strategy(address strategy)",
-      "function update_max_debt_for_strategy(address strategy, uint256 new_max_debt)",
-      "function update_debt(address strategy, uint256 target_debt) returns (uint256)",
-      "function update_debt(address strategy, uint256 target_debt, uint256 max_loss) returns (uint256)",
-      "function shutdown_vault()",
-      "function deposit(uint256 assets, address receiver) returns (uint256)",
-      "function mint(uint256 shares, address receiver) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function withdraw(uint256 assets, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss) returns (uint256)",
-      "function redeem(uint256 shares, address receiver, address owner, uint256 max_loss, address[] strategies) returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function transfer(address receiver, uint256 amount) returns (bool)",
-      "function transferFrom(address sender, address receiver, uint256 amount) returns (bool)",
-      "function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s) returns (bool)",
-      "function balanceOf(address addr) view returns (uint256)",
-      "function totalSupply() view returns (uint256)",
-      "function totalAssets() view returns (uint256)",
-      "function totalIdle() view returns (uint256)",
-      "function totalDebt() view returns (uint256)",
-      "function convertToShares(uint256 assets) view returns (uint256)",
-      "function previewDeposit(uint256 assets) view returns (uint256)",
-      "function previewMint(uint256 shares) view returns (uint256)",
-      "function convertToAssets(uint256 shares) view returns (uint256)",
-      "function maxDeposit(address receiver) view returns (uint256)",
-      "function maxMint(address receiver) view returns (uint256)",
-      "function maxWithdraw(address owner) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxWithdraw(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function maxRedeem(address owner) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss) view returns (uint256)",
-      "function maxRedeem(address owner, uint256 max_loss, address[] strategies) view returns (uint256)",
-      "function previewWithdraw(uint256 assets) view returns (uint256)",
-      "function previewRedeem(uint256 shares) view returns (uint256)",
-      "function FACTORY() view returns (address)",
-      "function apiVersion() pure returns (string)",
-      "function assess_share_of_unrealised_losses(address strategy, uint256 assets_needed) view returns (uint256)",
-      "function profitMaxUnlockTime() view returns (uint256)",
-      "function fullProfitUnlockDate() view returns (uint256)",
-      "function profitUnlockingRate() view returns (uint256)",
-      "function lastProfitUpdate() view returns (uint256)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function asset() view returns (address)",
-      "function decimals() view returns (uint8)",
-      "function strategies(address arg0) view returns (tuple(uint256 activation, uint256 last_report, uint256 current_debt, uint256 max_debt))",
-      "function default_queue(uint256 arg0) view returns (address)",
-      "function use_default_queue() view returns (bool)",
-      "function auto_allocate() view returns (bool)",
-      "function allowance(address arg0, address arg1) view returns (uint256)",
-      "function minimum_total_idle() view returns (uint256)",
-      "function deposit_limit() view returns (uint256)",
-      "function accountant() view returns (address)",
-      "function deposit_limit_module() view returns (address)",
-      "function withdraw_limit_module() view returns (address)",
-      "function roles(address arg0) view returns (uint256)",
-      "function role_manager() view returns (address)",
-      "function future_role_manager() view returns (address)",
-      "function name() view returns (string)",
-      "function symbol() view returns (string)",
-      "function nonces(address arg0) view returns (uint256)"
     ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
@@ -4807,37 +3755,8 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ],
-    "0xeeeeee9eC4769A09a76A83C7bC42b185872860eE": [
-      "constructor(address permit2)",
-      "error AddressEmptyCode(address target)",
-      "error AddressInsufficientBalance(address account)",
-      "error ArrayLengthsMismatch()",
-      "error FailedInnerCall()",
-      "error InvalidMsgSender(address storedSender, address actualSender)",
-      "error InvalidRecipient(address recipient)",
-      "error InvalidTarget(address target)",
-      "error NativeTransferFailed()",
-      "error NoRecipientSet()",
-      "error OnlyDirectCalls()",
-      "error SafeERC20FailedOperation(address token)",
-      "error TStoreAlreadyActivated()",
-      "error TStoreNotSupported()",
-      "error TloadTestContractDeploymentFailed()",
-      "function _EIP_712_RELAYER_WITNESS_TYPE_HASH() view returns (bytes32)",
-      "function _RELAYER_WITNESS_TYPE_STRING() view returns (string)",
-      "function __activateTstore()",
-      "function cleanupERC20(address token, address refundTo)",
-      "function delegatecallMulticall(address[] targets, bytes[] datas, uint256[] values, address refundTo) payable returns (bytes[])",
-      "function onERC1155BatchReceived(address, address, uint256[] _ids, uint256[] _values, bytes _data) returns (bytes4)",
-      "function onERC1155Received(address, address, uint256 _id, uint256 _value, bytes _data) returns (bytes4)",
-      "function onERC721Received(address, address, uint256 _tokenId, bytes _data) returns (bytes4)",
-      "function permitMulticall(address user, tuple(tuple(address token, uint256 amount)[] permitted, uint256 nonce, uint256 deadline) permit, address[] targets, bytes[] datas, uint256[] values, address refundTo, bytes permitSignature) payable returns (bytes[])"
-    ],
     "0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E": [
       "constructor(address _singleton)"
-    ],
-    "0xFEB4acf3df3cDEA7399794D0869ef76A6EfAff52": [
-      "constructor(address _masterCopy)"
     ]
   },
   "usedTemplates": {
@@ -4855,12 +3774,11 @@
     "opstack/OptimismPortal2_noForce": "0x7ac072ef679e441e8543bbc677bcba6f25016b1232f4ee456519a28e3c3e2dee",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
+    "opstack/SuperchainConfigNoGuard": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "polygon-cdk/AggchainFEP": "0x1e4701c3d602b2895102d018f1b9a77f0e5c63866dc391fe59b351c8a0bb4e99",
+    "polygon-cdk/AggchainFEP": "0xcee497f8f6d1aab075ec58d3f3ed5451d07ac7a9ecbf5fa3ba1014f46d2af06c",
     "polygon-cdk/GenericVaultBridgeToken": "0xd2f17c711d335952bd81aea0281b2e00062cc2cadf4fceec51609fb741d004a7",
-    "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384",
-    "yearn/vaultv3": "0xfa2c8148050d24bcc2f100b33c5f19da7574046371aa1b2622d2944f4facb0ff"
+    "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
-  "permissionsConfigHash": "0xda80a781ed91e762be47409b499a4ae6ac576565b0b6175f4e1c5a50ae4fb306"
+  "permissionsConfigHash": "0x29f4ff6a1514440991ea48c0371e98f12c18a19f099d8fbd201be09add537db9"
 }

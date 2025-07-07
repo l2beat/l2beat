@@ -73,9 +73,6 @@
               ]
             }
           }
-        },
-        "0x085b8B6407f150D62adB1EF926F7f304600ec714": {
-          "description": "This timelock has a minimum delay of {{getMinDelay_formatted}}. It does not have the L2_SENDER_ROLE yet."
         }
       }
     },

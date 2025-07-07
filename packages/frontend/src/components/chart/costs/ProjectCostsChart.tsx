@@ -76,7 +76,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
               : unit === 'eth'
                 ? overheadEth
                 : overheadGas,
-          posted: posted ?? null,
+          posted,
           notSyncedPosted:
             !allDataPostedSynced &&
             lastDataPosted &&

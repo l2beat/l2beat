@@ -108,7 +108,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+          "from": "eth:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
           "role": "admin"
         }
       ],
@@ -2370,12 +2370,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
+          "from": "eth:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5a54fe5234E811466D5366846283323c954310B2",
+          "from": "eth:0x5a54fe5234E811466D5366846283323c954310B2",
           "role": "admin"
         }
       ],
@@ -2431,12 +2431,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+          "from": "eth:0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x902F09715B6303d4173037652FA7377e5b98089E",
+          "from": "eth:0x902F09715B6303d4173037652FA7377e5b98089E",
           "role": "admin"
         }
       ],
@@ -3518,5 +3518,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xb51473f2f56293adb3b99b2d0d5f0d001b0e7fcc80e9a6ccd0243637f68fd07a"
+  "permissionsConfigHash": "0xe12af3b6bc7a3e185378cb39ae00130d23c746d6233351a8dcbae68bb6035a14"
 }

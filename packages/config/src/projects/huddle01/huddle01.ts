@@ -44,6 +44,7 @@ export const huddle01: ScalingProject = underReviewL3({
   chainConfig: {
     name: 'huddle01',
     chainId: 12323,
+    gasTokens: ['ETH'],
     apis: [
       {
         type: 'rpc',

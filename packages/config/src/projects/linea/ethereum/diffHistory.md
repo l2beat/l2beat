@@ -1,3 +1,150 @@
+Generated with discovered.json: 0xe92de2ef8956dd39f3816bc745167e8e5459129c
+
+# Diff at Fri, 04 Jul 2025 12:19:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22673062
+- current block number: 22673062
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22673062 (main branch discovery), not current.
+
+```diff
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D) {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    EOA  (0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF24f1DC519d88246809B660eb56D94048575d083"
++        "eth:0xF24f1DC519d88246809B660eb56D94048575d083"
+    }
+```
+
+```diff
+    EOA  (0x46d2F319fd42165D4318F099E143dEA8124E9E3e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    EOA  (0x52FF08F313A00A54e3Beffb5C4a7F7446eFb6754) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
+```diff
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.1.from:
+-        "ethereum:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
++        "eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB"
+      receivedPermissions.2.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      receivedPermissions.3.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.4.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.5.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.6.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.7.via.1.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      receivedPermissions.7.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      receivedPermissions.8.via.1.address:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      receivedPermissions.8.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574) {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
++        "eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xd6B95c960779c72B8C6752119849318E5d550574"
++        "eth:0xd6B95c960779c72B8C6752119849318E5d550574"
+    }
+```
+
+```diff
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083) {
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
++        "eth:0x892bb7EeD71efB060ab90140e7825d8127991DD3"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
++        "eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
++        "eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+    }
+```
+
 Generated with discovered.json: 0xbb32dad497b3f3d10f705237f59f3503b54dd98e
 
 # Diff at Tue, 10 Jun 2025 08:47:10 GMT:

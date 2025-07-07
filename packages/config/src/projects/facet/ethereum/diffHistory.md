@@ -1,3 +1,188 @@
+Generated with discovered.json: 0xe97e41029573e01c2c917e569473ceadea2f15f9
+
+# Diff at Fri, 04 Jul 2025 12:34:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@34cb32da9aba13b54692a657031c317903866c59 block: 22367347
+- current block number: 22367347
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+    contract FacetEtherBridgeV6 (0x0000000000000b07ED001607f5263D85bf28Ce4C) {
+    +++ description: Official Facet implementation of the Ether Bridge.
+      sourceHashes.0:
+-        "0x60cd8a11d99e2d3ed98fa2bbd47ef1096acb4bc535c5520343ae45cea6436e7b"
++        "0x64951d7e399d4852270a3959b8d5a2e1cab268e252375816e78ad88ab3d971e2"
+      implementationNames.0x0000000000000b07ED001607f5263D85bf28Ce4C:
+-        ""
++        "ERC1967Factory"
+      references:
+-        [{"text":"Source Code","href":"https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"}]
+    }
+```
+
+Generated with discovered.json: 0xfef5cf3def59f7ea8f916f1ee67b3d5df3b76041
+
+# Diff at Fri, 04 Jul 2025 12:19:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22367347
+- current block number: 22367347
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22367347 (main branch discovery), not current.
+
+```diff
+    EOA  (0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      receivedPermissions.1.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      receivedPermissions.2.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      receivedPermissions.3.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+    }
+```
+
+```diff
+    EOA  (0x314d660b083675f415cCAA9c545FeedF377d1006) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x0000000000000b07ED001607f5263D85bf28Ce4C"
++        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C"
+    }
+```
+
+```diff
+    contract FacetSafeModule (0x3235AdE33cF7013f5b5A51089390396e931e6BCF) {
+    +++ description: Module that allows the Safe to send Facet transactions.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+    }
+```
+
+```diff
+    contract Facet Multisig (0xb2B01DeCb6cd36E7396b78D3744482627F22C525) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
++        "eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
+      receivedPermissions.1.from:
+-        "ethereum:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      receivedPermissions.2.from:
+-        "ethereum:0x0000000000000b07ED001607f5263D85bf28Ce4C"
++        "eth:0x0000000000000b07ED001607f5263D85bf28Ce4C"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.3.from:
+-        "ethereum:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
++        "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
+      receivedPermissions.4.from:
+-        "ethereum:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
++        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.5.from:
+-        "ethereum:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
++        "eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.6.from:
+-        "ethereum:0x8F75466D69a52EF53C7363F38834bEfC027A2909"
++        "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.7.from:
+-        "ethereum:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
++        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.8.from:
+-        "ethereum:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
++        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      receivedPermissions.9.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.9.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      receivedPermissions.10.via.0.address:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+      receivedPermissions.10.from:
+-        "ethereum:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
++        "eth:0xe2A3bda6CD571943DD4224d0B8872e221EB5997C"
+    }
+```
+
+```diff
+    contract EthscriptionsSafeModule (0xDB866fD9241cd32851Df760c1Ec536f3199B22cE) {
+    +++ description: Module that allows the Safe to interact with Ethscriptions.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
++        "eth:0xb2B01DeCb6cd36E7396b78D3744482627F22C525"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xe2A3bda6CD571943DD4224d0B8872e221EB5997C) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
++        "eth:0x2D96455AAbb3206f77E7CdC8E4E5c29F76FD33aA"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
++        "eth:0x8649Db4A287413567E8dc0EBe1dd62ee02B71eDD"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x8F75466D69a52EF53C7363F38834bEfC027A2909"
++        "eth:0x8F75466D69a52EF53C7363F38834bEfC027A2909"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
++        "eth:0xa1233c2DB638D41893a101B0e9dd44cb681270E8"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
++        "eth:0xC1E935F25f9c1198200ec442c6F02f1A2F04534e"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
++        "eth:0xD1e4cf142fDf7688A9f7734A5eE74d079696C5A6"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
++        "eth:0xec3a1bd0B6d435Fe8A6e0de728AE87229176EA59"
+    }
+```
+
 Generated with discovered.json: 0xb29eb1e8d04c8ff4a7f42ebc347eb766940e1758
 
 # Diff at Mon, 16 Jun 2025 08:41:57 GMT:

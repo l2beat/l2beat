@@ -33,6 +33,7 @@ export const skynet: ScalingProject = underReviewL3({
   },
   chainConfig: {
     name: 'skynet',
+    gasTokens: ['sUSD'],
     chainId: 619,
     apis: [
       {

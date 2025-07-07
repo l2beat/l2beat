@@ -1,5 +1,5 @@
+import type { Logger } from '@l2beat/backend-tools'
 import type { DiscoveryPaths } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
 import { computeStackSimilarity } from './common'
 import { generateAndOpenGraph } from './graph'
 import { colorMap } from './output'
@@ -9,7 +9,7 @@ export interface CompareAllCommand {
   minProjectSimilarity: number
   minClusterSimilarity: number
   showGraph: boolean
-  logger: CliLogger
+  logger: Logger
 }
 
 export async function executeCompareAll(
@@ -27,7 +27,7 @@ export async function executeCompareAll(
   )
 
   for (const cluster of clusters) {
-    command.logger.logLine(`:: === (${cluster.length} projects) === ::`)
+    command.logger.info(`:: === (${cluster.length} projects) === ::`)
     const longestItem = cluster.reduce((acc, i) => Math.max(acc, i.length), 0)
 
     cluster
@@ -40,21 +40,21 @@ export async function executeCompareAll(
       })
       .sort((a, b) => b.average - a.average)
       .forEach((i) =>
-        command.logger.logLine(
+        command.logger.info(
           `${i.item.padEnd(longestItem)} ${colorMap(i.average)}`,
         ),
       )
   }
 
-  command.logger.logLine(':: === (unique) === ::')
+  command.logger.info(':: === (unique) === ::')
   for (const item of unique) {
-    command.logger.logLine(item)
+    command.logger.info(item)
   }
 
-  command.logger.logLine('STATS:')
-  command.logger.logLine(`projects: ${Object.keys(matrix).length}`)
-  command.logger.logLine(`clusters: ${clusters.length}`)
-  command.logger.logLine(`unique: ${unique.length}`)
+  command.logger.info('STATS:')
+  command.logger.info(`projects: ${Object.keys(matrix).length}`)
+  command.logger.info(`clusters: ${clusters.length}`)
+  command.logger.info(`unique: ${unique.length}`)
 
   if (command.showGraph) {
     await generateAndOpenGraph(matrix, clusters)

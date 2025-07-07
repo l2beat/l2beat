@@ -126,18 +126,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -150,7 +150,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".operators"
         }
       ]
@@ -162,24 +162,24 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         },
         {
           "permission": "operateStarknet",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".operators"
         },
         {
           "permission": "operateStarknet",
-          "from": "ethereum:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
+          "from": "eth:0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
           "role": ".operators"
         }
       ]
@@ -234,7 +234,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarknet",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".operators"
         }
       ]
@@ -457,18 +457,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -683,18 +683,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
+          "from": "eth:0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
           "delay": 1209600,
           "role": ".$admin"
         }
@@ -1356,5 +1356,5 @@
     "starkex/GpsFactRegistryAdapter": "0x1ad87511dd3212f3837ce0d97076154480b4909b6970ad7fb66342c32f61b0bb",
     "starkex/StarkPerpetual": "0x2c320b80005728ab66e5a80a93fb2a160ce7cd11e884bbe1e399562c8b0c52d6"
   },
-  "permissionsConfigHash": "0x94decf238b2e5bf9f1358ebe5f659ea1239de32a2c0805cdba197256ee0336c7"
+  "permissionsConfigHash": "0x6ef3447bcd1cc08beffd87577cb02b6de74718f9859f9ec293bd3dfd8a3e00ab"
 }
