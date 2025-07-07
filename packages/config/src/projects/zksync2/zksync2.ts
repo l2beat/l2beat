@@ -4,6 +4,8 @@ import {
   ProjectId,
   UnixTime,
   rawAddress,
+  ChainSpecificAddress,
+  fromParts,
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
@@ -30,7 +32,7 @@ const validatorsVTLold = () => {
 const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
 // Extract addresses from new validators and convert to lowercase for comparison
 const newValidatorAddresses = validatorsVTLnew.map((v) =>
-  v.address.toLowerCase(),
+  fromParts('eth', v.address).toLowerCase(),
 )
 const oldValidators = validatorsVTLold()
 

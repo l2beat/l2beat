@@ -1,9 +1,5 @@
-import {
-  type EntryParameters,
-  type ReceivedPermission,
-  getChainShortName,
-} from '@l2beat/discovery'
-import { ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
+import type { EntryParameters, ReceivedPermission } from '@l2beat/discovery'
+import { type ChainSpecificAddress, formatSeconds } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import sum from 'lodash/sum'
 import type { PermissionRegistry } from './PermissionRegistry'
@@ -190,10 +186,6 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
   }
 
   getUltimatelyIssuedPermissions(fromAddress: ChainSpecificAddress) {
-    const shortChain = getChainShortName(this.projectDiscovery.chain)
-    const prefixedFromAddress = ChainSpecificAddress(
-      `${shortChain}:${fromAddress}`,
-    )
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) =>
@@ -202,16 +194,10 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         })),
       )
-      .filter(
-        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
   }
 
   getIssuedPermissions(fromAddress: ChainSpecificAddress) {
-    const shortChain = getChainShortName(this.projectDiscovery.chain)
-    const prefixedFromAddress = ChainSpecificAddress(
-      `${shortChain}:${fromAddress}`,
-    )
     return this.projectDiscovery
       .getEntries()
       .flatMap((c) => {
@@ -224,9 +210,7 @@ export class PermissionsFromDiscovery implements PermissionRegistry {
           ...p,
         }))
       })
-      .filter(
-        (receivedPermission) => receivedPermission.from === prefixedFromAddress,
-      )
+      .filter((receivedPermission) => receivedPermission.from === fromAddress)
   }
 
   getUpgradableBy(
