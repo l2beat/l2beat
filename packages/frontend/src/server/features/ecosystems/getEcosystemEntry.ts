@@ -75,6 +75,7 @@ export interface EcosystemEntry {
     topDelegates: string
   }
   milestones: EcosystemMilestone[]
+  ecosystemMilestones: EcosystemMilestone[]
 }
 
 export interface EcosystemProjectEntry extends ScalingSummaryEntry {
@@ -183,6 +184,7 @@ export async function getEcosystemEntry(
       })
       .sort(compareStageAndTvs),
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
+    ecosystemMilestones: getMilestones([ecosystem]),
     images: {
       buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
       topDelegates: getStaticAsset(`/partners/governance-delegates.png`),

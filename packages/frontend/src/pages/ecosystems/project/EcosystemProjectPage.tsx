@@ -64,12 +64,14 @@ export function EcosystemProjectPage({
                   name={ecosystem.name}
                   entries={ecosystem.projects}
                   allScalingProjectsTvs={ecosystem.allScalingProjects.tvs}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6"
                 />
                 <EcosystemsActivityChart
                   name={ecosystem.name}
                   entries={ecosystem.projects}
                   allScalingProjectsUops={ecosystem.allScalingProjects.uops}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6"
                 />
                 <div className="col-span-12 grid gap-[--spacing] lg:hidden lg:grid-cols-2">
@@ -102,6 +104,7 @@ export function EcosystemProjectPage({
                 />
                 <EcosystemsProjectsChart
                   data={ecosystem.projectsChartData}
+                  ecosystemMilestones={ecosystem.ecosystemMilestones}
                   className="col-span-12 md:col-span-6 min-[1440px]:col-span-12"
                 />
                 <EcosystemToken
