@@ -18,12 +18,10 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
     encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
   ) {
     const data = decodeEventLog({
-      //TODO: pass ABI object
-      abi: parseAbi([
-        'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
-      ]),
+      abi: ABI,
       data: log.data,
       topics: log.topics,
+      eventName: 'FundsDeposited',
     })
 
     const destination = CHAINS.find(
@@ -51,12 +49,10 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
     encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
   ) {
     const data = decodeEventLog({
-      //TODO: pass ABI object
-      abi: parseAbi([
-        'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
-      ]),
+      abi: ABI,
       data: log.data,
       topics: log.topics,
+      eventName: 'FilledRelay',
     })
 
     const origin = CHAINS.find(
@@ -69,8 +65,8 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
       destination: chain.name,
       token: extractAddressFromPadded(data.args.outputToken),
       amount: data.args.inputAmount.toString(),
-      sender: undefined,
-      receiver: undefined,
+      sender: extractAddressFromPadded(data.args.depositor),
+      receiver: extractAddressFromPadded(data.args.recipient),
       txHash: log.transactionHash ?? undefined,
       type: 'FilledRelay',
       id: data.args.depositId.toString(),

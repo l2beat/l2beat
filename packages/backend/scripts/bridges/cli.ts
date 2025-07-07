@@ -77,13 +77,15 @@ const cmd = command({
             const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
             const amount = await getTokenAmount(r.rpc, decoded, start)
 
-            logger.info(decoded.protocol, {
-              source: decoded.origin,
+            logger.info(`${decoded.protocol} ${decoded.type ?? ''}`, {
+              origin: decoded.origin,
               destination: decoded.destination,
               token: tokenSymbol,
               amount: amount,
-              ...(decoded.type ? { type: decoded.type } : {}),
+              ...(decoded.sender ? { sender: decoded.sender } : {}),
+              ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
               ...(decoded.txHash ? { hash: decoded.txHash } : {}),
+              ...(decoded.id ? { id: decoded.id } : {}),
             })
           }
         }
