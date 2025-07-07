@@ -29,7 +29,7 @@ export const acrossV3: Bridge = {
   id: ProjectId('across-v3'),
   addedAt: UnixTime(1712746402), // 2024-04-10T10:53:22Z
   display: {
-    name: 'Across V3',
+    name: 'Across',
     slug: 'acrossv3',
     category: 'Liquidity Network',
     links: {
@@ -45,9 +45,9 @@ export const acrossV3: Bridge = {
       ],
     },
     description:
-      'Across V3 is a cross-chain optimistic bridge that uses actors called Relayers to fulfill user transfer requests (intents) on the destination chain.',
+      'Across is a multichain optimistic bridge that uses actors called Relayers to fulfill user transfer requests (intents) on the destination chain.',
     detailedDescription:
-      'Relayers are later reimbursed by providing an assertion to an Optimistic Oracle on Ethereum. Relayer reimbursements over a specific block range are bundled and posted onchain as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using mainly canonical bridges.',
+      'Relayers are later reimbursed by providing an assertion to an optimistic oracle (HubPool) on Ethereum. Relayer reimbursements over a specific block range are bundled and posted on Ethereum as merkle roots which uniquely identify the set of all repayments and rebalance instructions. The architecture leverages a single liquidity pool on Ethereum and separate deposit/reimburse pools on destination chains that are rebalanced using mainly canonical bridges.',
   },
   config: {
     escrows: [
@@ -162,17 +162,21 @@ export const acrossV3: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed on a chain of their choosing and from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
+      description: `This bridge performs cross-chain swaps by borrowing liquidity from a network of Relayers who are later reimbursed from a common liquidity pool (which consists of user deposits and deposits of independent Liquidity Providers).
 
-Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. The content is a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halts finalization of the root bundle and escalates the dispute to the UMA Optimistic Oracle.
+Specifically, when a user deposits funds into a dedicated pool on the origin chain, a Relayer pays the user on the requested destination chain (fills their intent). A permissioned proposer can then post an assertion to the HubPool on Ethereum. This is called a 'root bundle', which contains a merkle root of all Relayer reimbursements and an obligatory bond of ${hubPoolBondAmt} ABT (an ETH wrapper). It is validated optimistically in the HubPool contract and becomes executable after ${finalizationDelay} (refunding the bond to the proposer) if not challenged. A challenge by anyone posting the same bond amount halts finalization of the root bundle and escalates the dispute to the UMA DVM.
 
-The UMA oracle settles disputes by UMA token voting, with a commit- and reveal phase of ${umaDelay} each. A settlement slashes the stake of the losing party and rewards the winning party with both bond amounts minus fees.
+UMA settles disputes by UMA token voting, with a commit- and reveal phase of ${umaDelay} each. A settlement slashes the stake of the losing party and rewards the winning party with both bond amounts minus fees.
 
-Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters.`,
+On finalization, a rootBundle can be 1) relayed to remote SpokePools and 2) executed. Execution at a chosen SpokePool contract allows Relayers to be reimbursed.
+
+Relaying a rootBundle to a SpokePool is either done via canonical bridges or via a zk light client that is proven in the SP1Helios contract (based on the SP1 zkVM and the Helios Ethereum light client).
+
+Liquidity used for reimbursements is rebalanced between a main pool on Ethereum (called Hub Pool) and pools on destination chains (called Spoke Pools) via canonical chain bridges and others using adapters. For some chains, liquidity is not rebalanced and relayers are always reimbursed where the user deposited their funds.`,
       references: [
         {
-          title: 'Across V3 Architecture',
-          url: 'https://github.com/UMAprotocol/UMIPs/blob/master/UMIPs/umip-179.md',
+          title: 'Across V4 Architecture',
+          url: 'https://docs.across.to/exclusive/what-is-across-v4#across-protocol-v4-architecture',
         },
       ],
       risks: [
@@ -186,7 +190,7 @@ Liquidity used for reimbursements is rebalanced between a main pool on Ethereum 
         },
         {
           category: 'Funds can be lost if',
-          text: 'third-party bridge infrastructure is compromised, such as canonical messaging services, Linea USDC bridge, and USDC Cross-Chain Transfer Protocol (CCTP) infrastructure.',
+          text: 'third-party bridge infrastructure is compromised, such as canonical messaging services, SP1Helios verifier, and USDC Cross-Chain Transfer Protocol (CCTP) infrastructure.',
         },
       ],
     },
@@ -229,4 +233,14 @@ Liquidity used for reimbursements is rebalanced between a main pool on Ethereum 
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   discoveryInfo: getDiscoveryInfo([discovery]),
+  milestones: [
+    {
+      title: 'Across v4',
+      date: '2025-07-02T00:00:00.00Z',
+      url: 'https://docs.across.to/exclusive/what-is-across-v4',
+      description:
+        'Features a new path to relay root bundles to destination chains using zk proofs (uses SP1Helios).',
+      type: 'general',
+    },
+  ],
 }
