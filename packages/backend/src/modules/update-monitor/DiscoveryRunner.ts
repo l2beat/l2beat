@@ -99,15 +99,11 @@ export class DiscoveryRunner {
       permissionsOutput,
     )
 
+    assert(projectDiscovery.analysis)
     // TODO: Should not be here - drop it and use implementation name once it's ready
     // if somebody changes the name and decides to re-colorize
     // then .flat folder will be incorrect
     // Duplicated from saveDiscoveryResult.ts
-    if (projectDiscovery.analysis === undefined) {
-      throw new Error(
-        `Discovery for ${projectName} on ${projectChain} has no analysis.`,
-      )
-    }
     const remappedResults = remapNames(
       projectDiscovery.analysis,
       projectDiscovery.discoveryOutput,
