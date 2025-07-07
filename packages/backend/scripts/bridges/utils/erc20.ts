@@ -18,26 +18,30 @@ export async function getTokenAmount(
   decoded: BridgeTransfer,
   start: number,
 ) {
-  const decimals = await rpc.call(
-    {
-      to: EthereumAddress(decoded?.token),
-      data: Bytes.fromHex(
-        encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
-      ),
-    },
-    start,
-  )
+  try {
+    const decimals = await rpc.call(
+      {
+        to: EthereumAddress(decoded.token),
+        data: Bytes.fromHex(
+          encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
+        ),
+      },
+      start,
+    )
 
-  const dec = decodeFunctionResult({
-    abi: ERC20,
-    functionName: 'decimals',
-    data: decimals.toString() as unknown as Hex,
-  })
+    const dec = decodeFunctionResult({
+      abi: ERC20,
+      functionName: 'decimals',
+      data: decimals.toString() as unknown as Hex,
+    })
 
-  const decimalShift = BigInt(dec) - 4n
-  const divisor = decimalShift > 0n ? 10n ** decimalShift : 1n
-  const amount = Number(BigInt(decoded.amount) / divisor) / 10000
-  return amount
+    const decimalShift = BigInt(dec) - 4n
+    const divisor = decimalShift > 0n ? 10n ** decimalShift : 1n
+    const amount = Number(BigInt(decoded.amount) / divisor) / 10000
+    return amount
+  } catch {
+    return `(failed to calculate) ${decoded.amount}`
+  }
 }
 
 export async function getTokenSymbol(
@@ -45,20 +49,24 @@ export async function getTokenSymbol(
   decoded: BridgeTransfer,
   start: number,
 ) {
-  const symbol = await rpc.call(
-    {
-      to: EthereumAddress(decoded?.token),
-      data: Bytes.fromHex(
-        encodeFunctionData({ abi: ERC20, functionName: 'symbol' }),
-      ),
-    },
-    start,
-  )
+  try {
+    const symbol = await rpc.call(
+      {
+        to: EthereumAddress(decoded.token),
+        data: Bytes.fromHex(
+          encodeFunctionData({ abi: ERC20, functionName: 'symbol' }),
+        ),
+      },
+      start,
+    )
 
-  const token = decodeFunctionResult({
-    abi: ERC20,
-    functionName: 'symbol',
-    data: symbol.toString() as unknown as Hex,
-  })
-  return token
+    const token = decodeFunctionResult({
+      abi: ERC20,
+      functionName: 'symbol',
+      data: symbol.toString() as unknown as Hex,
+    })
+    return token
+  } catch {
+    return decoded?.token
+  }
 }

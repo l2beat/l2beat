@@ -5,13 +5,10 @@ import { extractAddressFromPadded } from '../../utils/viem'
 
 export const ACROSS = {
   name: 'across',
-  decode: decodeAcross,
+  decoder: decoder,
 }
 
-export function decodeAcross(
-  chainName: string,
-  log: Log,
-): BridgeTransfer | undefined {
+function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
   const chain = CHAINS.find((c) => c.name === chainName)
 
   if (!chain || EthereumAddress(log.address) !== chain.bridge) return undefined
@@ -21,6 +18,7 @@ export function decodeAcross(
     encodeEventTopics({ abi: ABI, eventName: 'FundsDeposited' })[0]
   ) {
     const data = decodeEventLog({
+      //TODO: pass ABI object
       abi: parseAbi([
         'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
       ]),
@@ -30,12 +28,12 @@ export function decodeAcross(
 
     const destination = CHAINS.find(
       (c) => c.id === +data.args.destinationChainId.toString(),
-    )
+    )?.name
 
     return {
       protocol: ACROSS.name,
-      source: chain.name,
-      destination: destination?.name ?? data.args.destinationChainId.toString(),
+      origin: chain.name,
+      destination: destination ?? data.args.destinationChainId.toString(),
       token: extractAddressFromPadded(data.args.inputToken),
       amount: data.args.inputAmount.toString(),
       sender: log.topics[3]
@@ -43,14 +41,47 @@ export function decodeAcross(
         : undefined,
       receiver: extractAddressFromPadded(data.args.recipient),
       txHash: log.transactionHash ?? undefined,
+      type: 'FundsDeposited',
+      id: data.args.depositId.toString(),
     }
   }
 
+  if (
+    log.topics[0] ===
+    encodeEventTopics({ abi: ABI, eventName: 'FilledRelay' })[0]
+  ) {
+    const data = decodeEventLog({
+      //TODO: pass ABI object
+      abi: parseAbi([
+        'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
+      ]),
+      data: log.data,
+      topics: log.topics,
+    })
+
+    const origin = CHAINS.find(
+      (c) => c.id === +data.args.originChainId.toString(),
+    )?.name
+
+    return {
+      protocol: ACROSS.name,
+      origin: origin ?? data.args.originChainId.toString(),
+      destination: chain.name,
+      token: extractAddressFromPadded(data.args.outputToken),
+      amount: data.args.inputAmount.toString(),
+      sender: undefined,
+      receiver: undefined,
+      txHash: log.transactionHash ?? undefined,
+      type: 'FilledRelay',
+      id: data.args.depositId.toString(),
+    }
+  }
   return undefined
 }
 
 const ABI = parseAbi([
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
+  'event FilledRelay(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 repaymentChainId, uint256 indexed originChainId, uint256 indexed depositId, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 exclusiveRelayer, bytes32 indexed relayer, bytes32 depositor, bytes32 recipient, bytes32 messageHash, (bytes32 updatedRecipient, bytes32 updatedMessageHash, uint256 updatedOutputAmount, uint8 fillType) relayExecutionInfo)',
 ])
 
 const CHAINS = [

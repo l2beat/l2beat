@@ -78,11 +78,12 @@ const cmd = command({
             const amount = await getTokenAmount(r.rpc, decoded, start)
 
             logger.info(decoded.protocol, {
-              source: decoded.source,
+              source: decoded.origin,
               destination: decoded.destination,
               token: tokenSymbol,
               amount: amount,
-              hash: decoded.txHash,
+              ...(decoded.type ? { type: decoded.type } : {}),
+              ...(decoded.txHash ? { hash: decoded.txHash } : {}),
             })
           }
         }
