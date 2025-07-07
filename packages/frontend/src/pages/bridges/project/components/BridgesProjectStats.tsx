@@ -11,7 +11,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { ProjectStat } from '~/pages/scaling/project/components/ScalingProjectStats'
+import { ProjectSummaryStat } from '~/pages/scaling/project/components/ScalingProjectStats'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
@@ -26,7 +26,7 @@ export function BridgesProjectStats({ project }: Props) {
 
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-4">
-      <ProjectStat
+      <ProjectSummaryStat
         title="Total value secured"
         shortTitle="TVS"
         valueClassName="md:w-full"
@@ -73,7 +73,7 @@ export function BridgesProjectStats({ project }: Props) {
           )
         }
       />
-      <ProjectStat
+      <ProjectSummaryStat
         title="Destination"
         value={
           <Tooltip>
@@ -90,7 +90,7 @@ export function BridgesProjectStats({ project }: Props) {
           </Tooltip>
         }
       />
-      <ProjectStat
+      <ProjectSummaryStat
         title="Validated by"
         tooltip="How are the messages sent via this bridge checked?"
         value={
@@ -105,7 +105,7 @@ export function BridgesProjectStats({ project }: Props) {
           )
         }
       />
-      <ProjectStat title="Type" value={project.header.category} />
+      <ProjectSummaryStat title="Type" value={project.header.category} />
     </div>
   )
 }

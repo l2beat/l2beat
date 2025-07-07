@@ -43,7 +43,7 @@ export async function getDataAvailabilityProjectData(
       page: 'DataAvailabilityProjectPage',
       props: {
         ...appLayoutProps,
-        projectEntry,
+        entry: projectEntry,
         queryState: helpers.dehydrate(),
       },
     },

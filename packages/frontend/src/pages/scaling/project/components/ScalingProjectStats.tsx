@@ -26,7 +26,7 @@ interface Props {
 
 export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
-    <ProjectStat
+    <ProjectSummaryStat
       key="tvs"
       title="Total Value Secured"
       value={
@@ -58,7 +58,7 @@ export function ProjectScalingStats({ project, className }: Props) {
         )
       }
     />,
-    <ProjectStat
+    <ProjectSummaryStat
       key="ops-count"
       title="Past day UOPS"
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
@@ -77,7 +77,7 @@ export function ProjectScalingStats({ project, className }: Props) {
       }
     />,
     project.stageConfig.stage !== 'NotApplicable' ? (
-      <ProjectStat
+      <ProjectSummaryStat
         title="Stage"
         className="md:gap-2.5"
         valueClassName="max-md:-mt-0.5"
@@ -93,27 +93,27 @@ export function ProjectScalingStats({ project, className }: Props) {
       />
     ) : undefined,
     project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
-      <ProjectStat
+      <ProjectSummaryStat
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
         value={project.header.gasTokens.join(', ')}
       />
     ) : undefined,
-    <ProjectStat
+    <ProjectSummaryStat
       key="type"
       title="Type"
       value={<TypeInfo>{project.header.category}</TypeInfo>}
     />,
 
-    <ProjectStat
+    <ProjectSummaryStat
       key="purpose"
       title={pluralize(project.header.purposes.length, 'Purpose')}
       value={project.header.purposes.join(', ')}
     />,
     project.header.hostChain ? (
-      <ProjectStat title="Host chain" value={project.header.hostChain} />
+      <ProjectSummaryStat title="Host chain" value={project.header.hostChain} />
     ) : undefined,
     project.header.chainId ? (
-      <ProjectStat title="Chain ID" value={project.header.chainId} />
+      <ProjectSummaryStat title="Chain ID" value={project.header.chainId} />
     ) : undefined,
   ])
 
@@ -123,7 +123,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   return (
     <div
       className={cn(
-        'grid h-fit grid-cols-1 gap-x-6 gap-y-3 rounded-lg',
+        'grid h-fit grid-cols-1 gap-x-6 gap-y-3',
         groups === 2 && 'md:grid-cols-2',
         groups === 4 && 'md:grid-cols-4',
         className,
@@ -147,7 +147,7 @@ export function ProjectScalingStats({ project, className }: Props) {
   )
 }
 
-interface ProjectStat {
+export interface ProjectSummaryStat {
   title: string
   shortTitle?: string
   value: ReactNode
@@ -156,7 +156,7 @@ interface ProjectStat {
   valueClassName?: string
 }
 
-export function ProjectStat(props: ProjectStat) {
+export function ProjectSummaryStat(props: ProjectSummaryStat) {
   return (
     <li
       key={props.title}

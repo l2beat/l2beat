@@ -63,7 +63,7 @@ export function RiskAnalysisSection({
       )}
       <div className="space-y-6">
         {Object.values(rosetteValues).map((value) => (
-          <RiskBanner key={value.name} {...value} />
+          <RiskBanner key={value.name} {...value} size="large" />
         ))}
       </div>
     </ProjectSection>

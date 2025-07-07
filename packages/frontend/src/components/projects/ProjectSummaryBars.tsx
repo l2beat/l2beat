@@ -24,7 +24,9 @@ export function ProjectSummaryBars({ project }: { project: Project }) {
     !project.archivedAt &&
     !project.isUpcoming &&
     !project.underReviewStatus &&
-    !project.header?.warning
+    !project.header?.warning &&
+    !project.header?.redWarning &&
+    !project.header?.emergencyWarning
   ) {
     return null
   }

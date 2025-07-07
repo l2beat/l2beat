@@ -41,13 +41,12 @@ export function ScalingProjectPage({
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-[18px] max-md:bg-surface-primary max-md:px-4">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-[18px]">
               <ProjectHeader project={projectEntry} className="pb-6" />
               <ProjectSummaryBars project={projectEntry} />
               <div className="mb-3 max-md:hidden">
                 <DesktopProjectLinks
                   projectLinks={projectEntry.header.links}
-                  variant="primary"
                   discoUiHref={projectEntry.discoUiHref}
                 />
               </div>
