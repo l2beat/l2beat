@@ -101,6 +101,10 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
+  colors: {
+    primary: '#6258FF',
+    secondary: '#6258FF',
+  },
   daLayer: {
     type: 'DA Service',
     systemCategory: 'public',

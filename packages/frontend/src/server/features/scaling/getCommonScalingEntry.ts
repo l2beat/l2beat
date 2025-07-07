@@ -10,7 +10,7 @@ import { getProjectIcon } from '../utils/getProjectIcon'
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }
@@ -94,13 +94,13 @@ export function getCommonScalingEntry({
 
 export function getScalingTab(
   project: Project<'scalingInfo' | 'statuses'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview' {
+): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
   return project.statuses.reviewStatus === 'initialReview'
-    ? 'underReview'
+    ? 'notReviewed'
     : project.scalingInfo.type === 'Other'
       ? 'others'
       : isRollup

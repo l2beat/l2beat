@@ -9,6 +9,7 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
+import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -101,6 +102,9 @@ export interface BaseProject {
 
   // zk catalog data
   proofVerification?: ProjectProofVerification
+
+  // zk catalog v2 data
+  proofSystem?: ProjectProofSystem
 
   // feature configs
   tvsInfo?: ProjectTvsInfo
@@ -208,6 +212,13 @@ export type BadgeFilterId =
   | 'infrastructure'
   | 'vm'
   | 'other'
+
+export interface ZkCatalogTag {
+  id: string
+  type: string
+  name: string
+  description: string
+}
 
 export interface Milestone {
   title: string
@@ -734,6 +745,31 @@ export interface RequiredTool {
   version: string
   link?: string
 }
+// #endregion
+
+// #region zk catalog v2 data
+export interface ProjectProofSystem {
+  creator?: string
+  techStack: {
+    zkVM?: ZkCatalogTag[]
+    finalWrap?: ZkCatalogTag[]
+  }
+  proofSystemInfo: string
+  trustedSetup: {
+    risk: 'green' | 'yellow' | 'red'
+    shortDescription: string
+    longDescription: string
+  }
+  verifierHashes: {
+    hash: string
+    explorerLink: string
+    verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+    usedBy: ProjectId[]
+    verificationSteps?: string
+    attesters: ZkCatalogAttester[]
+  }[]
+}
+
 // #endregion
 
 // #region feature configs
