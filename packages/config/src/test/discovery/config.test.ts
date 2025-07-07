@@ -258,7 +258,9 @@ describe('discovery config.jsonc', () => {
       )
       const hash = generatePermissionConfigHash(clingoInput)
       assert(
-        hash === discoveries.get(c.name, c.chain)?.permissionsConfigHash,
+        hash ===
+          discoveries.get(c.name, c.chain)?.discoveryOutput
+            .permissionsConfigHash,
         [
           '',
           `Permissions model of "${c.name}" is not up to date.`,

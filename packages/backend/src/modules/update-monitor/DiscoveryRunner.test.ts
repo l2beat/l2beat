@@ -39,6 +39,7 @@ describe(DiscoveryRunner.name, () => {
         Logger.SILENT,
         1,
         10,
+        {},
         getMockConfigReader(),
       )
 
@@ -73,6 +74,7 @@ describe(DiscoveryRunner.name, () => {
           Logger.SILENT,
           2,
           10,
+          {},
           getMockConfigReader(),
         )
 
@@ -108,6 +110,7 @@ describe(DiscoveryRunner.name, () => {
               Logger.SILENT,
               1,
               10,
+              {},
               getMockConfigReader(),
             ),
         ).toBeRejectedWith('error')
@@ -130,6 +133,7 @@ const getMockConfig = () => {
 const getMockConfigReader = () => {
   return mockObject<ConfigReader>({
     readConfig: () => getMockConfig(),
+    readRawConfig: () => getMockConfig(),
     getProjectPath: () => '/tmp/discovery',
   })
 }
