@@ -45,7 +45,7 @@ const cmd = command({
       : CHAINS
 
     const rpcs = chains.map((c) => ({
-      chain: c.name,
+      ...c,
       rpc: new RpcClient({
         url: env.string(`${c.name.toUpperCase()}_RPC_URL`),
         sourceName: c.name,
@@ -72,7 +72,7 @@ const cmd = command({
 
       for (const l of logs) {
         for (const decoder of decoders) {
-          const decoded = decoder(r.chain, logToViemLog(l))
+          const decoded = decoder(r.name, logToViemLog(l))
           if (decoded) {
             const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
             const amount = await getTokenAmount(r.rpc, decoded, start)
@@ -84,7 +84,10 @@ const cmd = command({
               amount: amount,
               ...(decoded.sender ? { sender: decoded.sender } : {}),
               ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
-              ...(decoded.txHash ? { hash: decoded.txHash } : {}),
+              ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
+              ...(decoded.txHash
+                ? { explorerLink: r.getTxUrl(decoded.txHash) }
+                : {}),
               ...(decoded.id ? { id: decoded.id } : {}),
             })
           }
