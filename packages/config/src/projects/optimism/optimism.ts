@@ -257,15 +257,15 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://vote.optimism.io/proposals/95528263587371532982719325402371584327430753545162858644972401153516332664853',
       date: '2025-04-12T00:00:00Z',
       description:
-        'Optimism introduces MT-Cannon and the Operator Fee',
+        'Optimism introduces MT-Cannon and the Operator Fee.',
       type: 'general',
     },
            {
-      title: 'Upgrade #13 OPCM and Incident Response improvements',
+      title: 'Upgrade #13 OPCM',
       url: 'https://vote.optimism.io/proposals/84511922734478887667300419900648701566511387783615524992018614345859900443455',
       date: '2025-03-22T00:00:00Z',
       description:
-        'Optimism introduces a new system for upgrading L1 contracts across the Superchain and a new Safe module.',
+        'Optimism introduces a new system for upgrading L1 contracts across the Superchain.',
       type: 'general',
     },
        {
@@ -301,7 +301,7 @@ export const optimism: ScalingProject = opStackL2({
       type: 'general',
     },
     {
-      title: 'Fallback to permissioned proposals for 26 days.',
+      title: 'Fallback to permissioned proposals for 26 days',
       url: 'https://x.com/Optimism/status/1824560759747256596',
       date: '2024-08-16T00:00:00Z',
       description:
