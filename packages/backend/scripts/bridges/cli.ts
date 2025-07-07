@@ -17,19 +17,20 @@ const args = {
   range: option({
     type: optional(number),
     long: 'range',
-    description: 'Specify how many blocks to fetch. Defaults to 100.',
+    description:
+      'Specify how many blocks to fetch (starting from starting block). Defaults to 100.',
   }),
   chains: option({
     type: optional(string),
     long: 'chains',
     description:
-      'Comma-separated list of chains, runs script only for them. If not provided will run for all chains with envs configured.',
+      'Comma-separated list of chains, runs script only for them. If not provided will run for all chains. See chains.ts for possible values.',
   }),
   protocols: option({
     type: optional(string),
     long: 'protocols',
     description:
-      'Comma-separated list of protocols, runs script only for them. If not provided will run for all protocols with decoders configured.',
+      'Comma-separated list of protocols, runs script only for them. If not provided will run for all protocols with decoders configured. See protocols.ts for possible values.',
   }),
 }
 
