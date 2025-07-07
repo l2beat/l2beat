@@ -48,6 +48,7 @@ const schema = {
   customDa: 'TEXT',
 
   proofVerification: 'TEXT',
+  proofSystem: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
