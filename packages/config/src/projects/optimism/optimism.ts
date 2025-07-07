@@ -293,7 +293,7 @@ export const optimism: ScalingProject = opStackL2({
       url: 'https://vote.optimism.io/proposals/46514799174839131952937755475635933411907395382311347042580299316635260952272',
       date: '2024-08-28T00:00:00Z',
       description:
-       'Fraud proofs reenabled after Granite upgrade successfully passes through OP governance.',
+        'Fraud proofs reenabled after Granite upgrade successfully passes through OP governance.',
       type: 'general',
     },
     {
