@@ -248,14 +248,16 @@ export const optimism: ScalingProject = opStackL2({
       title: 'Upgrade #15  Isthmus Hard Fork',
       url: 'https://vote.optimism.io/proposals/8705916809146420472067303211131851783087744913535435360574720946039078686841',
       date: '2025-04-12T00:00:00Z',
-      description:'Optimism introduces the Isthmus hard fork and its features.',
+      description:
+      'Optimism introduces the Isthmus hard fork and its features.',
       type: 'general',
     },
     {
       title: 'Upgrade #14  Isthmus L1 Contracts + MT-Cannon',
       url: 'https://vote.optimism.io/proposals/95528263587371532982719325402371584327430753545162858644972401153516332664853',
       date: '2025-04-12T00:00:00Z',
-      description:'Optimism introduces MT-Cannon and the Operator Fee.',
+      description:
+      'Optimism introduces MT-Cannon and the Operator Fee.',
       type: 'general',
     },
     {
