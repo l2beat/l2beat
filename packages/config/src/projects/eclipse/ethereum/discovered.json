@@ -273,6 +273,12 @@
         {
           "permission": "interact",
           "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
           "description": "withdraw ETH from the contract.",
           "role": ".withdrawerAC"
         },
@@ -520,6 +526,12 @@
       "description": "This contract was used for an upgrade an still retains its permissions and permissioned actors.",
       "directlyReceivedPermissions": [
         {
+          "permission": "interact",
+          "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
+          "description": "withdraw ETH from the contract, even when it is paused.",
+          "role": ".emergencyAC"
+        },
+        {
           "permission": "upgrade",
           "from": "eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644",
           "role": ".upgraderAC"
@@ -650,6 +662,10 @@
         ],
         "DEPOSITOR_ROLE": "0xd50fd8c1b5fa5213a5974932fcc33d2992a99225bc9319caf7cf652d0d2b9acf",
         "EMERGENCY_ROLE": "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d",
+        "emergencyAC": [
+          "0xD02f545d57536BC1E8F12D867731F006AacE71E3",
+          "0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"
+        ],
         "getVersionComponents": { "major": 2, "minor": 0, "patch": 0 },
         "paused": false,
         "PAUSER_ROLE": "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626",
@@ -1065,9 +1081,9 @@
     "eclipse/CanonicalBridge": "0x3028ad5c23ba079d10065324a135b092e75a5ca419cdb7ac0587074e3053d640",
     "eclipse/EtherBridge": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
     "eclipse/Mailbox": "0x9e0ad9f10767611f57df498651c22d2f5668f4627bccc8e46d0f43a58a845525",
-    "eclipse/Treasury": "0xb05708704d4397114043f375547c06d0a95c1bea6e18d9a438d789170bc4cc6c",
+    "eclipse/Treasury": "0x08a8222e3c470e18a1546220ba08a53b24e40935a0cb002af4a516050794b89a",
     "eclipse/Upgrader0to1": "0x62b4c472e65c2ae7518c7fb7fa8791913f6109336e1376e07f6b5a001a5f2e8b",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xd249d47cf5d3851724e7679055693633a513c9c7d4623a6b6c3f977e3f365955"
+  "permissionsConfigHash": "0x14c70c5d671ea28d67c532f3f799c82d1ce057e6ef4105fbc34c0890308d0bdc"
 }

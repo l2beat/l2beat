@@ -44,6 +44,21 @@
         }
       ]
     },
+    "emergencyAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x9e97963c33348a1cae64c3216747be51682ee42f36d1ed282cb81018cdb30e3d": "EMERGENCY_ROLE"
+        },
+        "pickRoleMembers": "EMERGENCY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "withdraw ETH from the contract, even when it is paused."
+        }
+      ]
+    },
     "accessControl": {
       "handler": {
         "type": "accessControl",

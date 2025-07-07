@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x52434924e62b9ac77adc8ecd688ed47152bb47b9
+
+# Diff at Mon, 07 Jul 2025 17:17:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1cd210776b4b1299634c153aa4f4e97a22ce39c6 block: 22868281
+- current block number: 22868281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22868281 (main branch discovery), not current.
+
+```diff
+    contract Eclipse Multisig 2 (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644","description":"withdraw ETH from the contract, even when it is paused.","role":".emergencyAC"}
+    }
+```
+
+```diff
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3) {
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+      directlyReceivedPermissions.0:
++        {"permission":"interact","from":"eth:0xD7E4b67E735733aC98a88F13d087D8aac670E644","description":"withdraw ETH from the contract, even when it is paused.","role":".emergencyAC"}
+    }
+```
+
+```diff
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644) {
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+      values.emergencyAC:
++        ["0xD02f545d57536BC1E8F12D867731F006AacE71E3","0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC"]
+    }
+```
+
 Generated with discovered.json: 0x8100beb322891a9d6f0f3285b2beb23d8ed97e7c
 
 # Diff at Mon, 07 Jul 2025 17:02:21 GMT:
