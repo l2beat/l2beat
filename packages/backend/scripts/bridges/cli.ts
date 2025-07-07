@@ -1,27 +1,16 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
-import { HttpClient, RpcClient } from '@l2beat/shared'
+import { type EVMLog, HttpClient, RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import {
   type Hex,
+  type Log,
   decodeFunctionResult,
   encodeFunctionData,
   parseAbi,
 } from 'viem'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols'
-
-export interface BridgeTransfer {
-  protocol: string
-  source: string
-  destination: string
-  token: string
-  amount: string
-  sender: string
-  receiver: string
-  txHash: string
-  id?: string
-}
 
 const args = {
   start: option({
@@ -88,10 +77,12 @@ const cmd = command({
       const start = args.start
         ? args.start
         : (await r.rpc.getLatestBlockNumber()) - range
+
       const logs = await r.rpc.getLogs(start, start + range)
+
       for (const l of logs) {
         for (const decoder of decoders) {
-          const decoded = decoder(r.chain, l)
+          const decoded = decoder(r.chain, logToViemLog(l))
           if (decoded) {
             const symbol = await r.rpc.call(
               {
@@ -150,3 +141,19 @@ const ERC20 = parseAbi([
   'function decimals() view returns (uint8)',
   'function symbol() view returns (string)',
 ])
+
+function logToViemLog(log: EVMLog): Log {
+  return {
+    blockNumber: BigInt(log.blockNumber),
+    transactionHash: log.transactionHash as Hex,
+    address: log.address as Hex,
+    topics: log.topics as [Hex, ...Hex[]] | [],
+    data: log.data as Hex,
+
+    // Unsupported values for now
+    blockHash: 'UNSUPPORTED' as Hex,
+    logIndex: -1,
+    transactionIndex: -1,
+    removed: false,
+  }
+}

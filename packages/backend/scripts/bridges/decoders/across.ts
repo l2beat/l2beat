@@ -1,7 +1,12 @@
-import type { EVMLog } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { type Hex, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
-import type { BridgeTransfer } from '../cli'
+import {
+  type Hex,
+  type Log,
+  decodeEventLog,
+  encodeEventTopics,
+  parseAbi,
+} from 'viem'
+import type { BridgeTransfer } from '../types/BridgeTransfer'
 
 const ABI = parseAbi([
   'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
@@ -22,7 +27,7 @@ const CHAIN_IDS = [
 
 export function decodeAcross(
   chain: string,
-  log: EVMLog,
+  log: Log,
 ): BridgeTransfer | undefined {
   if (
     EthereumAddress(log.address) !==
@@ -38,8 +43,8 @@ export function decodeAcross(
       abi: parseAbi([
         'event FundsDeposited(bytes32 inputToken, bytes32 outputToken, uint256 inputAmount, uint256 outputAmount, uint256 indexed destinationChainId, uint256 indexed depositId, uint32 quoteTimestamp, uint32 fillDeadline, uint32 exclusivityDeadline, bytes32 indexed depositor, bytes32 recipient, bytes32 exclusiveRelayer, bytes message)',
       ]),
-      data: log.data as unknown as `0x${string}`,
-      topics: log.topics as [Hex, Hex, Hex, ...Hex[]],
+      data: log.data,
+      topics: log.topics,
     })
 
     const destination = CHAIN_IDS.find(
@@ -52,9 +57,11 @@ export function decodeAcross(
       destination: destination?.name ?? data.args.destinationChainId.toString(),
       token: extractAddressFromPaddedBytes32(data.args.inputToken),
       amount: data.args.inputAmount.toString(),
-      sender: extractAddressFromPaddedBytes32(log.topics[3] as Hex),
+      sender: log.topics[3]
+        ? extractAddressFromPaddedBytes32(log.topics[3])
+        : undefined,
       receiver: extractAddressFromPaddedBytes32(data.args.recipient),
-      txHash: log.transactionHash,
+      txHash: log.transactionHash ?? undefined,
     }
   }
 
@@ -70,5 +77,5 @@ export function extractAddressFromPaddedBytes32(bytes32String: Hex): Hex {
 
   const addressPart = bytes32String.slice(-40)
 
-  return `0x${addressPart}` as Hex
+  return `0x${addressPart}`
 }
