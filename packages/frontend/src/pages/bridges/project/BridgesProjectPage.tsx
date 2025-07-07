@@ -1,6 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/ContentWrapper'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
@@ -65,32 +64,30 @@ export function BridgesProjectPage({
                 />
               </div>
             </div>
-            <ContentWrapper mobileFull className="!px-0">
-              {isNavigationEmpty ? (
-                <ProjectDetails items={projectEntry.sections} />
-              ) : (
-                <div className="gap-x-6 md:flex">
-                  <div className="w-full">
-                    <BridgesProjectSummary project={projectEntry} />
+            {isNavigationEmpty ? (
+              <ProjectDetails items={projectEntry.sections} />
+            ) : (
+              <div className="gap-x-6 md:flex">
+                <div className="w-full">
+                  <BridgesProjectSummary project={projectEntry} />
 
-                    <HighlightableLinkContextProvider>
-                      <ProjectDetails items={projectEntry.sections} />
-                    </HighlightableLinkContextProvider>
-                  </div>
-                  <div className="mt-2 hidden shrink-0 lg:block">
-                    <DesktopProjectNavigation
-                      project={{
-                        title: projectEntry.shortName ?? projectEntry.name,
-                        slug: projectEntry.slug,
-                        isUnderReview: !!projectEntry.underReviewStatus,
-                        icon: projectEntry.icon,
-                      }}
-                      sections={navigationSections}
-                    />
-                  </div>
+                  <HighlightableLinkContextProvider>
+                    <ProjectDetails items={projectEntry.sections} />
+                  </HighlightableLinkContextProvider>
                 </div>
-              )}
-            </ContentWrapper>
+                <div className="mt-2 hidden shrink-0 lg:block">
+                  <DesktopProjectNavigation
+                    project={{
+                      title: projectEntry.shortName ?? projectEntry.name,
+                      slug: projectEntry.slug,
+                      isUnderReview: !!projectEntry.underReviewStatus,
+                      icon: projectEntry.icon,
+                    }}
+                    sections={navigationSections}
+                  />
+                </div>
+              </div>
+            )}
             <ScrollToTopButton />
           </div>
         </SideNavLayout>

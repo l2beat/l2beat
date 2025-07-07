@@ -1,6 +1,5 @@
 import type { DehydratedState } from '@tanstack/react-query'
 import { HydrationBoundary } from '@tanstack/react-query'
-import { ContentWrapper } from '~/components/ContentWrapper'
 import { ScrollToTopButton } from '~/components/ScrollToTopButton'
 import { WhyAmIHereNotice } from '~/components/countdowns/other-migration/WhyAmIHereNotice'
 import { StageOneRequirementsChangeNotice } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeNotice'
@@ -53,48 +52,46 @@ export function ScalingProjectPage({
                 />
               </div>
             </div>
-            <ContentWrapper mobileFull className="!px-0">
-              {isNavigationEmpty ? (
-                <ProjectDetails items={projectEntry.sections} />
-              ) : (
-                <div className="gap-x-6 md:flex">
-                  <div className="w-full">
-                    <ProjectScalingSummary project={projectEntry} />
+            {isNavigationEmpty ? (
+              <ProjectDetails items={projectEntry.sections} />
+            ) : (
+              <div className="gap-x-6 md:flex">
+                <div className="w-full">
+                  <ProjectScalingSummary project={projectEntry} />
 
-                    {projectEntry.header.category === 'Other' &&
-                      projectEntry.reasonsForBeingOther &&
-                      projectEntry.reasonsForBeingOther.length > 0 && (
-                        <WhyAmIHereNotice
-                          reasons={projectEntry.reasonsForBeingOther}
-                        />
-                      )}
-                    {projectEntry.stageConfig.stage !== 'NotApplicable' &&
-                      projectEntry.stageConfig.stage !== 'UnderReview' &&
-                      projectEntry.stageConfig.downgradePending && (
-                        <StageOneRequirementsChangeNotice
-                          downgradePending={
-                            projectEntry.stageConfig.downgradePending
-                          }
-                        />
-                      )}
-                    <HighlightableLinkContextProvider>
-                      <ProjectDetails items={projectEntry.sections} />
-                    </HighlightableLinkContextProvider>
-                  </div>
-                  <div className="mt-2 hidden shrink-0 md:block">
-                    <DesktopProjectNavigation
-                      project={{
-                        title: projectEntry.shortName ?? projectEntry.name,
-                        slug: projectEntry.slug,
-                        isUnderReview: !!projectEntry.underReviewStatus,
-                        icon: projectEntry.icon,
-                      }}
-                      sections={navigationSections}
-                    />
-                  </div>
+                  {projectEntry.header.category === 'Other' &&
+                    projectEntry.reasonsForBeingOther &&
+                    projectEntry.reasonsForBeingOther.length > 0 && (
+                      <WhyAmIHereNotice
+                        reasons={projectEntry.reasonsForBeingOther}
+                      />
+                    )}
+                  {projectEntry.stageConfig.stage !== 'NotApplicable' &&
+                    projectEntry.stageConfig.stage !== 'UnderReview' &&
+                    projectEntry.stageConfig.downgradePending && (
+                      <StageOneRequirementsChangeNotice
+                        downgradePending={
+                          projectEntry.stageConfig.downgradePending
+                        }
+                      />
+                    )}
+                  <HighlightableLinkContextProvider>
+                    <ProjectDetails items={projectEntry.sections} />
+                  </HighlightableLinkContextProvider>
                 </div>
-              )}
-            </ContentWrapper>
+                <div className="mt-2 hidden shrink-0 md:block">
+                  <DesktopProjectNavigation
+                    project={{
+                      title: projectEntry.shortName ?? projectEntry.name,
+                      slug: projectEntry.slug,
+                      isUnderReview: !!projectEntry.underReviewStatus,
+                      icon: projectEntry.icon,
+                    }}
+                    sections={navigationSections}
+                  />
+                </div>
+              </div>
+            )}
             <ScrollToTopButton />
           </div>
         </SideNavLayout>
