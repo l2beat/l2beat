@@ -29,6 +29,8 @@ import chalk from 'chalk'
 import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from './hashing'
 import { rediscoverStructureOnBlock } from './rediscoverStructureOnBlock'
+import { getPlainLogger } from '../common/getPlainLogger'
+import type { Logger } from '@l2beat/backend-tools'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
 
@@ -36,6 +38,7 @@ export async function updateDiffHistory(
   projectName: string,
   description?: string,
   overwriteCache: boolean = false,
+  logger: Logger = getPlainLogger(),
 ) {
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
@@ -47,6 +50,7 @@ export async function updateDiffHistory(
       chain,
       description,
       overwriteCache,
+      logger,
     )
   }
 }
@@ -57,9 +61,10 @@ export async function updateDiffHistoryForChain(
   chain: string,
   description?: string,
   overwriteCache: boolean = false,
+  logger: Logger = getPlainLogger(),
 ) {
   // Get discovered.json from main branch and compare to current
-  console.log(`Updating diffHistory for: ${projectName} on ${chain}`)
+  logger.info(`Updating diffHistory for: ${projectName} on ${chain}`)
   const paths = getDiscoveryPaths()
   const curDiscovery = configReader.readDiscovery(projectName, chain)
   const discoveryFolder =
@@ -67,7 +72,7 @@ export async function updateDiffHistoryForChain(
     path.sep +
     relative(process.cwd(), join(paths.discovery, projectName, chain))
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
-    getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
+    getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`, logger)
   const discoveryFromMainBranch =
     discoveryJsonFromMainBranch === ''
       ? undefined
@@ -94,6 +99,7 @@ export async function updateDiffHistoryForChain(
       saveSources,
       overwriteCache,
       configReader,
+      logger,
     )
     codeDiff = rerun.codeDiff
 
@@ -106,7 +112,7 @@ export async function updateDiffHistoryForChain(
       rerun.prevDiscovery?.entries ?? [],
     )
   } else {
-    console.log(
+    logger.info(
       'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
@@ -119,8 +125,10 @@ export async function updateDiffHistoryForChain(
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
 
   const diffHistoryPath = `${discoveryFolder}/diffHistory.md`
-  const { content: historyFileFromMainBranch } =
-    getFileVersionOnMainBranch(diffHistoryPath)
+  const { content: historyFileFromMainBranch } = getFileVersionOnMainBranch(
+    diffHistoryPath,
+    logger,
+  )
 
   let previousDescription = undefined
   const diffHistoryExists =
@@ -131,6 +139,7 @@ export async function updateDiffHistoryForChain(
       diffHistoryPath,
       diskDiffHistory,
       historyFileFromMainBranch,
+      logger,
     )
   }
 
@@ -142,6 +151,7 @@ export async function updateDiffHistoryForChain(
       diff,
       configRelatedDiff,
       mainBranchHash,
+      logger,
       codeDiff,
       description ?? previousDescription,
     )
@@ -153,7 +163,7 @@ export async function updateDiffHistoryForChain(
 
     writeFileSync(diffHistoryPath, diffHistory)
   } else {
-    console.log('No changes found.')
+    logger.info('No changes found.')
     await revertDiffHistory(diffHistoryPath, historyFileFromMainBranch)
   }
 
@@ -197,9 +207,10 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   saveSources: boolean,
   overwriteCache: boolean,
   configReader: ConfigReader,
+  logger: Logger,
 ) {
   if (discoveryFromMainBranch === undefined) {
-    console.log(`No previous discovery found for ${projectName} on ${chain}`)
+    logger.info(`No previous discovery found for ${projectName} on ${chain}`)
     return { prevDiscovery: undefined, codeDiff: undefined }
   }
 
@@ -223,7 +234,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
       // We rediscover on the past block number, but with current configs and dependencies.
       // Those dependencies might not have been referenced in the old discovery.
       // In that case we don't fail - the diff will show all those "added".
-      console.log(
+      logger.info(
         `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
       )
       continue
@@ -263,6 +274,7 @@ async function performDiscoveryOnPreviousBlockButWithCurrentConfigs(
   const flatDiff = compareFolders(
     `${discoveryFolder}/.flat@${discoveryFromMainBranch.blockNumber}`,
     `${discoveryFolder}/.flat`,
+    logger,
   )
 
   return { prevDiscovery, codeDiff: flatDiff === '' ? undefined : flatDiff }
@@ -280,7 +292,7 @@ function getMainBranchName(): 'main' | 'master' {
   }
 }
 
-function compareFolders(path1: string, path2: string): string {
+function compareFolders(path1: string, path2: string, logger: Logger): string {
   try {
     return execSync(`git diff --no-index --stat ${path1} ${path2}`).toString()
   } catch (error) {
@@ -293,7 +305,7 @@ function compareFolders(path1: string, path2: string): string {
     }
     if (execSyncError.stderr && execSyncError.stderr.toString().trim() !== '') {
       const errorMessage = `Error with git diff: ${execSyncError.stderr.toString()}`
-      console.log(errorMessage)
+      logger.info(errorMessage)
       return errorMessage
     }
     if (execSyncError.stdout) {
@@ -303,7 +315,10 @@ function compareFolders(path1: string, path2: string): string {
   }
 }
 
-function getFileVersionOnMainBranch(filePath: string): {
+function getFileVersionOnMainBranch(
+  filePath: string,
+  logger: Logger,
+): {
   content: string
   mainBranchHash: string
 } {
@@ -330,7 +345,7 @@ function getFileVersionOnMainBranch(filePath: string): {
       mainBranchHash,
     }
   } catch {
-    console.log(`No previous version of ${filePath} found`)
+    logger.info(`No previous version of ${filePath} found`)
     return {
       content: '',
       mainBranchHash: '',
@@ -338,13 +353,13 @@ function getFileVersionOnMainBranch(filePath: string): {
   }
 }
 
-function getGitUser(): { name: string; email: string } {
+function getGitUser(logger: Logger): { name: string; email: string } {
   try {
     const name = execSync('git config user.name').toString().trim()
     const email = execSync('git config user.email').toString().trim()
     return { name, email }
   } catch {
-    console.log('No git user found')
+    logger.info('No git user found')
     return { name: 'unknown', email: 'unknown' }
   }
 }
@@ -355,6 +370,7 @@ function generateDiffHistoryMarkdown(
   diffs: DiscoveryDiff[],
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
+  logger: Logger,
   codeDiff?: string,
   description?: string,
 ): string {
@@ -364,7 +380,7 @@ function generateDiffHistoryMarkdown(
   const now = new Date().toUTCString()
   result.push(`${FIRST_SECTION_PREFIX} ${now}:`)
   result.push('')
-  const { name, email } = getGitUser()
+  const { name, email } = getGitUser(logger)
   result.push(`- author: ${name} (<${email}>)`)
   if (blockNumberFromMainBranchDiscovery !== undefined) {
     result.push(
@@ -433,6 +449,7 @@ function findDescription(
   diskDiffHistoryPath: string,
   diskDiffHistory: string,
   masterDiffHistory: string,
+  logger: Logger,
 ): string | undefined {
   const masterDiffLines = masterDiffHistory.split('\n')
   const latestSectionIndex = masterDiffLines.findIndex((l) =>
@@ -465,7 +482,7 @@ function findDescription(
         ),
       ])
 
-      console.log(errorMessage)
+      logger.info(errorMessage)
       throw new Error()
     }
     lines = diskLines.slice(0, lastCommittedIndex)
