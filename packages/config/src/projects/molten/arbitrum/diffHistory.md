@@ -1,3 +1,119 @@
+Generated with discovered.json: 0x7265ea1d547ac4eea6effe9461052b959f7792c9
+
+# Diff at Mon, 07 Jul 2025 07:35:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 353119902
+- current block number: 355123264
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      template:
+-        "orbitstack/SequencerInbox"
+      sourceHashes.1:
+-        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
++        "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
+      values.$implementation:
+-        "0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607"
++        "0x481863c96f949F5E13932ec2F65470C0CF83808d"
+      values.$pastUpgrades.4:
++        ["2025-07-01T16:17:10.000Z","0x6e4d22b6b61eeffdbd42e8fe52446bb966dd46592ba723bc43edaf1a7cc4f678",["0x481863c96f949F5E13932ec2F65470C0CF83808d"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.batchCount:
+-        92106
++        92625
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
+      values.batchPosters:
+-        ["0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"]
+      values.dacKeyset:
+-        {"requiredSignatures":1,"membersCount":1,"blsSignatures":["YAqQTw4ByRTsc9900Jqz1uF86NCR0qf4Qorr6m+4UMuebljjJmkm9ao1wgU9YMVsiAQiJZW5V0wv3eSEoHEOfpL4KesBDWtj3Dxlie526tY8MGcEruvE+/+yWenFV64DjgSIEgMvQWcMEnYuBeuIcPq3iFWoPlZ5xjrFq3TC3pg/4vNdHyraTaGAoSE1kpr95QJjp3pjuOh8EpCD1i4skjJP4YVjtsui7a8t3s8TTwTo3QYk/HTPLAJ8e15iBTin/xcbxa8wfNTBespH4pXgIQBYT/M2kyNWURyaJGz/Uk0ecJPEVtTwNPedztrARTHgkAiCDWd63/ekdUN0plGc8G4aWWg/MJN1X3UZwSUf5Z6PIG/9qtBgtijcxx2UvCjvyw=="]}
+      values.keySetUpdates:
+-        1
+      values.maxTimeVariation:
+-        {"delayBlocks":17280,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
++        [17280,48,86400,3600]
+      values.postsBlobs:
+-        false
+      values.sequencerVersion:
+-        "0x63"
+      values.setIsBatchPosterCount:
+-        1
+      values.totalDelayedMessagesRead:
+-        40415
++        40495
+      values.BLOBSTREAM:
++        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
+      values.espressoTEEVerifier:
++        "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3"
+      values.inboxAccs:
++        ["0xe8e405be3df80cc9654644c4e76487b9de37449f285c5c94da805297643d3181","0xf1644dfda933cf923b51e699e8bb087265ea3cbc1fb9650a04a3e1c633e50474","0xaa8e95a2f4b5e3614d5be6c0011a1f19870c6067ee7dc878f79a94de07ab51a9","0x54ed2ce167c8e35fa9b1e16b9a813a3125fe7d358e3d8ca4a473b4fec0b71b0c","0xcfcc678791e7e6af2619e453fa293553cc4c409e21abd9e53fc098335466436f"]
+      fieldMeta:
+-        {"maxTimeVariation":{"description":"Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."}}
+      implementationNames.0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607:
+-        "SequencerInbox"
+      implementationNames.0x481863c96f949F5E13932ec2F65470C0CF83808d:
++        "SequencerInbox"
+      category:
+-        {"name":"Local Infrastructure","priority":5}
+      errors:
++        {"inboxAccs":"Processing error occurred."}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../projects/molten/arbitrum/.flat/CertManager.sol | 1966 ++++++++++++++++++++
+ .../arbitrum/.flat/EspressoNitroTEEVerifier.sol    | 1941 +++++++++++++++++++
+ .../arbitrum/.flat/EspressoSGXTEEVerifier.sol      |  697 +++++++
+ .../molten/arbitrum/.flat/EspressoTEEVerifier.sol  |  884 +++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  269 ++-
+ 5 files changed, 5741 insertions(+), 16 deletions(-)
+```
+
 Generated with discovered.json: 0xfde13256afcb1bc645b9179bf78825e35680dfc3
 
 # Diff at Fri, 04 Jul 2025 12:19:09 GMT:
