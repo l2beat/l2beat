@@ -9,7 +9,7 @@ import {
   type UnixTime,
 } from '@l2beat/shared-pure'
 import { type Parser, v } from '@l2beat/validate'
-import type { ZkCatalogAttester } from './common/attesters'
+import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'

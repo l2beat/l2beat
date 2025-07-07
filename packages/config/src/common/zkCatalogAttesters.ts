@@ -4,7 +4,7 @@ export interface ZkCatalogAttester {
   link: string
 }
 
-export const ATTESTERS = {
+export const ZK_CATALOG_ATTESTERS = {
   L2BEAT: {
     id: 'l2beat',
     name: 'L2BEAT',
