@@ -1,15 +1,19 @@
 import {
+  fromParts,
   type Hash256,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
+import { getChainShortName } from '../../config/config.discovery'
 import { recalculateSourceHashes } from '../../flatten/utils'
 import type { Analysis } from '../analysis/AddressAnalyzer'
 import { hashJsonStable } from '../config/hashJsonStable'
-import type { StructureConfig } from '../config/StructureConfig'
+import {
+  migrateImplementationNames,
+  migrateValues,
+} from './chainSpecificMigration'
 import type { EntryParameters, StructureOutput } from './types'
-import { getChainShortName } from '../../config/config.discovery'
-import { migrateImplementationNames } from './chainSpecificMigration'
+import { StructureConfig } from '../config/StructureConfig'
 
 export function getStructureOutput(
   config: StructureConfig,
@@ -51,7 +55,7 @@ export function processAnalysis(
       .map((x): EntryParameters => {
         return withoutUndefinedKeys({
           name: x.name,
-          address: x.address,
+          address: fromParts(shortChainName, x.address),
           type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
@@ -65,7 +69,7 @@ export function processAnalysis(
           values:
             Object.keys(x.values).length === 0
               ? undefined
-              : sortByKeys(x.values),
+              : sortByKeys(migrateValues(x.values, shortChainName)),
           errors:
             Object.keys(x.errors).length === 0
               ? undefined

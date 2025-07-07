@@ -3,6 +3,7 @@ import {
   EthereumAddress,
   formatJson,
   Hash256,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import type { Parser } from '@l2beat/validate'
 import {
@@ -264,7 +265,7 @@ export class TemplateService {
       const sourcesHash = Hash256(hash)
       const matchingTemplates = this.findMatchingTemplatesByHash(
         sourcesHash,
-        contract.address,
+        rawAddress(contract.address),
       )
 
       if (

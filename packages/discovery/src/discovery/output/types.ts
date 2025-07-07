@@ -1,8 +1,4 @@
-import type {
-  ChainSpecificAddress,
-  EthereumAddress,
-  Hash256,
-} from '@l2beat/shared-pure'
+import type { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
 import type { ContractValueType } from '../config/ColorConfig'
 import type { Permission } from '../config/PermissionConfig'
 import type { ContractFieldSeverity } from '../config/StructureConfig'
@@ -81,7 +77,7 @@ export interface ContractCategory {
 
 export type StructureEntry = {
   type: 'Contract' | 'EOA'
-  address: EthereumAddress
+  address: ChainSpecificAddress
   name?: string
   implementationNames?: Record<ChainSpecificAddress, string>
   template?: string

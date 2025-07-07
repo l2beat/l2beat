@@ -1,3 +1,4 @@
+import { rawAddress } from '@l2beat/shared-pure'
 import { resolveCategory } from '../analysis/category'
 import type { TemplateService } from '../analysis/TemplateService'
 import type {
@@ -25,7 +26,7 @@ export function colorize(
   for (const e of structure.entries) {
     const entryConfig = makeEntryColorConfig(
       config,
-      e.address,
+      rawAddress(e.address),
       templateService.loadContractTemplateColor(e.template),
     )
 

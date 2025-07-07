@@ -1,5 +1,10 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, type EthereumAddress, formatJson } from '@l2beat/shared-pure'
+import {
+  assert,
+  type EthereumAddress,
+  formatJson,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -199,7 +204,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
+      (e) => rawAddress(e.address) === entry.address,
     )
 
     if (!matchingEntry) {

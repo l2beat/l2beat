@@ -4,28 +4,28 @@ import type { ContractValue } from '../output/types'
 export function get$Implementations(
   values: Record<string, ContractValue | undefined> | undefined,
 ): EthereumAddress[] {
-  return toAddressArray(values?.$implementation)
+  return toAddressArrayPrivate(values?.$implementation)
 }
 
 export function get$Beacons(
   values: Record<string, ContractValue | undefined> | undefined,
 ): EthereumAddress[] {
-  return toAddressArray(values?.$beacon)
+  return toAddressArrayPrivate(values?.$beacon)
 }
 
 export function get$PastUpgrades(
   values: Record<string, ContractValue | undefined> | undefined,
 ): [string, Hash256, EthereumAddress[]][] {
-  return toAddressRecord(values?.$pastUpgrades)
+  return toAddressRecordPrivate(values?.$pastUpgrades)
 }
 
 export function get$Admins(
   values: Record<string, ContractValue | undefined> | undefined,
 ): EthereumAddress[] {
-  return toAddressArray(values?.$admin)
+  return toAddressArrayPrivate(values?.$admin)
 }
 
-export function toAddressRecord(value: ContractValue | undefined) {
+export function toAddressRecordPrivate(value: ContractValue | undefined) {
   if (Array.isArray(value) && value.every((v) => Array.isArray(v))) {
     return value.map(
       (e) =>
@@ -39,14 +39,14 @@ export function toAddressRecord(value: ContractValue | undefined) {
   return []
 }
 
-export function toAddressArray(
+export function toAddressArrayPrivate(
   value: ContractValue | undefined,
 ): EthereumAddress[] {
   if (Array.isArray(value)) {
-    return value.flatMap((v) => toAddressArray(v))
+    return value.flatMap((v) => toAddressArrayPrivate(v))
   }
   if (typeof value === 'object') {
-    return Object.values(value).flatMap((v) => toAddressArray(v))
+    return Object.values(value).flatMap((v) => toAddressArrayPrivate(v))
   }
   if (typeof value === 'string') {
     try {

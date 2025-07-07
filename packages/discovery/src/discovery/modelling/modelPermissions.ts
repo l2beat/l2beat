@@ -251,7 +251,7 @@ export function generateClingoForProjectOnChain(
   const generatedClingo: string[] = []
 
   const shortChain = getChainShortName(discovery.chain)
-  const addressToNameMap = buildAddressToNameMap(shortChain, discovery.entries)
+  const addressToNameMap = buildAddressToNameMap(discovery.entries)
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))
