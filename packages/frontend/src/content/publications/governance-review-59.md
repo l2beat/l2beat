@@ -45,7 +45,7 @@ You can find us to discuss everything related to Arbitrum’s governance, from c
 
 **Upcoming Events (Times in UTC):**
 
-[Arbitrum Reporting Governance Call (GRC)]( meet.google.com/ouo-uskg-niq) - on 9.7 at 15:00.
+[Arbitrum Reporting Governance Call (GRC)](meet.google.com/ouo-uskg-niq) - on 9.7 at 15:00.
 
 [Bi-Weekly ARDC Office Hours](meet.google.com/wah-hwxm-rqk) - on 10.7 at 16:00.
 
