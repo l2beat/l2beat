@@ -8,6 +8,8 @@ import type { Analysis } from '../analysis/AddressAnalyzer'
 import { hashJsonStable } from '../config/hashJsonStable'
 import type { StructureConfig } from '../config/StructureConfig'
 import type { EntryParameters, StructureOutput } from './types'
+import { getChainShortName } from '../../config/config.discovery'
+import { migrateImplementationNames } from './chainSpecificMigration'
 
 export function getStructureOutput(
   config: StructureConfig,
@@ -20,7 +22,7 @@ export function getStructureOutput(
     blockNumber,
     configHash: hashJsonStable(config),
     sharedModules: undefinedIfEmpty(config.sharedModules),
-    ...processAnalysis(results),
+    ...processAnalysis(results, config.chain),
     usedTemplates: collectUsedTemplatesWithHashes(results),
   })
 }
@@ -38,7 +40,9 @@ function collectUsedTemplatesWithHashes(
 
 export function processAnalysis(
   results: Analysis[],
+  chain: string,
 ): Pick<StructureOutput, 'entries' | 'abis'> {
+  const shortChainName = getChainShortName(chain)
   const { contracts, abis } = getEntries(results)
 
   return {
@@ -66,7 +70,10 @@ export function processAnalysis(
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
-          implementationNames: x.implementationNames,
+          implementationNames: migrateImplementationNames(
+            x.implementationNames,
+            shortChainName,
+          ),
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies EntryParameters)
       }),
