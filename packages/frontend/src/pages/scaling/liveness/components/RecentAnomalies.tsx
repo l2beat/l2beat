@@ -37,17 +37,44 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
       />
     )
   }
+  const firstColumns = projectsWithAnomalies.filter(
+    (_, index) => index % 3 === 0,
+  )
+  const secondColumns = projectsWithAnomalies.filter(
+    (_, index) => index % 3 === 1,
+  )
+  const thirdColumns = projectsWithAnomalies.filter(
+    (_, index) => index % 3 === 2,
+  )
 
   return (
     <PrimaryCard className={className}>
       <h2 className="font-bold text-lg">Recent major anomalies</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {projectsWithAnomalies.map((projectWithAnomalies) => (
-          <AnomalyCollapsible
-            key={projectWithAnomalies.name}
-            projectWithAnomalies={projectWithAnomalies}
-          />
-        ))}
+        <div className="space-y-3">
+          {firstColumns.map((projectWithAnomalies) => (
+            <AnomalyCollapsible
+              key={projectWithAnomalies.name}
+              projectWithAnomalies={projectWithAnomalies}
+            />
+          ))}
+        </div>
+        <div className="space-y-3">
+          {secondColumns.map((projectWithAnomalies) => (
+            <AnomalyCollapsible
+              key={projectWithAnomalies.name}
+              projectWithAnomalies={projectWithAnomalies}
+            />
+          ))}
+        </div>
+        <div className="space-y-3">
+          {thirdColumns.map((projectWithAnomalies) => (
+            <AnomalyCollapsible
+              key={projectWithAnomalies.name}
+              projectWithAnomalies={projectWithAnomalies}
+            />
+          ))}
+        </div>
       </div>
     </PrimaryCard>
   )
