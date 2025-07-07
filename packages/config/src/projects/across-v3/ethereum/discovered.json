@@ -68,7 +68,7 @@
       "name": "Zora_Adapter",
       "address": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x6d9e4b79712a4e81c51941fb986f4c55774da36be108106577ca01ccb35a0f87"
       ],
@@ -99,7 +99,7 @@
       "name": "Soneium_Adapter",
       "address": "0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
@@ -131,7 +131,7 @@
       "name": "Arbitrum_Adapter",
       "address": "0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0xa1c171564a6e837069132a07b8c6d217e08cf53cd6a43151a7f497440d2f1e33"
       ],
@@ -167,7 +167,7 @@
       "name": "Redstone_Adapter",
       "address": "0x188F8C95B7cfB7993B53a4F643efa687916f73fA",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x0c32a0cfde3cb87843b5521bf184be1dd2b0031a8e91c2bc7885a2e10db010c1"
       ],
@@ -203,7 +203,7 @@
         "0x64b6ef7e9493ba6f142060c8e818ecec991f8f8044b1713489114bec6633a256"
       ],
       "proxyType": "immutable",
-      "description": "Simple data store used by the Universal_Adapter to store message calldata hashes.",
+      "description": "Simple data store used by the Universal_Adapter to store message calldata hashes. The content of this calldata can be proven by Ethereum zk light clients on remote chains and then executed to relay root bundles or arbitrary messages.",
       "sinceTimestamp": 1745854319,
       "sinceBlock": 22368469,
       "values": {
@@ -212,7 +212,8 @@
       },
       "implementationNames": {
         "0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61": "HubPoolStore"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
@@ -223,16 +224,12 @@
       "name": "Universal_Adapter",
       "address": "0x22001f37B586792F25Ef9d19d99537C6446e0833",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/universalAdapter",
       "sourceHashes": [
         "0x45811d7c7fb7a921f66322f37a63fe336a5df0b31563d9ad40192b65a612b905"
       ],
       "proxyType": "immutable",
-      "description": "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.",
-      "ignoreInWatchMode": [
-        "L2_MESSAGE_RELAY_GAS_LIMIT",
-        "L2_TOKEN_RELAY_GAS_LIMIT"
-      ],
+      "description": "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the 0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain.",
       "sinceTimestamp": 1745855255,
       "sinceBlock": 22368546,
       "values": {
@@ -246,7 +243,7 @@
       "implementationNames": {
         "0x22001f37B586792F25Ef9d19d99537C6446e0833": "Universal_Adapter"
       },
-      "category": { "name": "External Bridges", "priority": 1 }
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x2bAaA41d155ad8a4126184950B31F50A1513cE25",
@@ -265,7 +262,7 @@
       "name": "Scroll_Adapter",
       "address": "0x2DA799c2223c6ffB595e578903AE6b95839160d8",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x56586e3315f76ed277970410b47da25a0980ca9400f2a97fd38139e2a1f2dc5e"
       ],
@@ -294,7 +291,7 @@
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x9f8b082009430546d55daaa8e166eca77ef9ca17f7831f03de4635bdc4a32b31"
       ],
@@ -639,7 +636,7 @@
       "name": "Ethereum_Adapter",
       "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x14afbe84cefefdcb06132c680d267b8892f0834a39fc23ca0ea563758653a21a"
       ],
@@ -690,7 +687,7 @@
       "name": "Linea_Adapter",
       "address": "0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x0252bdb116e29cf6cc0b6de4ebf9589fcc53281458cb80f4db7a91a866d9eb46"
       ],
@@ -821,7 +818,7 @@
       "name": "ZkStack_CustomGasToken_Adapter",
       "address": "0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x949e41ae655aafeb048cfa1c491186b6582bd4f6028227ed0ce17a012456e675"
       ],
@@ -858,7 +855,7 @@
       "name": "Alephzero_Adapter",
       "address": "0x6F4083304C2cA99B077ACE06a5DcF670615915Af",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x1ccce681c671e5131c390787ccaa619eb4c4ee20d444e73484078b4770b12ea1"
       ],
@@ -990,7 +987,7 @@
       "name": "Ink_Adapter",
       "address": "0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0xa11a006e88b4bc29596c25023695ef9026e9dc97dfd50ba059ee6b3e23a44008"
       ],
@@ -1168,7 +1165,7 @@
       "name": "WorldChain_Adapter",
       "address": "0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x1cb72676cfb98558060e29bb95cd793731c85797f35025b1f2dfb383499f55a3"
       ],
@@ -1270,7 +1267,7 @@
       "name": "Solana_Adapter",
       "address": "0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0xd9ba616630e494fc819ca66efe5c5ed40e5ed274cb568c605ecf8a609d88f738"
       ],
@@ -1303,7 +1300,7 @@
       "name": "ZkStack_Adapter",
       "address": "0xA374585E6062517Ee367ee5044946A6fBe17724f",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x6b9289adba88945bc716d68cbdde1a68c52429766cef73d7c17fe4ca6dd7cc59"
       ],
@@ -1334,7 +1331,7 @@
       "name": "Polygon_Adapter",
       "address": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0xf598be4ed345b6b3e83e04dff2cb5472dc4df0b8476f8f74a4c75c473dee6347"
       ],
@@ -2244,7 +2241,7 @@
       "name": "Base_Adapter",
       "address": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x172a1f27f0fecf665d90a6adc1287223f05a73acd9ed19d9c446972880ccce0f"
       ],
@@ -2275,7 +2272,7 @@
       "name": "Optimism_Adapter",
       "address": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x59784b70d01278196c00fbfe1f237b01ec891dca28b0542cdf8dcc9e672b3849"
       ],
@@ -2361,7 +2358,7 @@
       "name": "Lisk_Adapter",
       "address": "0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x9c8e20215aa548a11ed98c8333dbfbaa36143263b4de43d8f73a57b19ec7cea6"
       ],
@@ -2394,7 +2391,7 @@
       "name": "Mode_Adapter",
       "address": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x1b1b271fd3f736024fda7dd869d78943819efee5dcbf6f4075af9647cfb16cac"
       ],
@@ -2425,7 +2422,7 @@
       "name": "Blast_Adapter",
       "address": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x596bdc0b39f0ff19cde625424cdc037dd3e79355ee2c845bd8a6e5e42b3bc332"
       ],
@@ -2476,7 +2473,7 @@
       "name": "DoctorWho_Adapter",
       "address": "0xFADcC43096756e1527306FD92982FEbBe3c629Fa",
       "type": "Contract",
-      "template": "acrossv3/adapter",
+      "template": "acrossv3/Adapter",
       "sourceHashes": [
         "0x26a48559a60b482a96526e1ee27fef2111bb46e40395ee2122284141ffc30e14"
       ],
@@ -3557,11 +3554,12 @@
   },
   "usedTemplates": {
     "acrossv3/AcrossConfigStore": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "acrossv3/adapter": "0xcfbc484c1ad9933519bb20dea0ebbd045fcbbac723bb8c52058345cfa473f8df",
+    "acrossv3/Adapter": "0xcfbc484c1ad9933519bb20dea0ebbd045fcbbac723bb8c52058345cfa473f8df",
     "acrossv3/BondToken": "0x9bbb4f401a9c199b2f0dd48f9f1279e769c7040bdbc6ff1619b1eca5cf91a19a",
-    "acrossv3/HubPool": "0x88041cb87c7b8bfa14c528c9c6a13530bd02686140611aff8e1ccb544fa88872",
+    "acrossv3/HubPool": "0x7faf23c33c8701a2210dc2c5ca33da02e4eebfbe13ae24bf3b5ac1507061bd16",
     "acrossv3/HubPoolStore": "0x3642c36edf2d3a762a4ba62c17f663d8b14f65861115a98004718b3c91ba7ac8",
     "acrossv3/SpokePool": "0x129b82fd3037f5f22d4fc04c875c2da6b18d7fcf7cce7e51cce9126a2ed485d9",
+    "acrossv3/universalAdapter": "0x0fe89d590abc56ee5cbf6e99497eeaeeecb6fff890d94a83dfd30ead4463b7e8",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "uma/AddressWhitelist": "0x69e6632f3173e459b6788df25788c8e5a53fc171a191bcdc60dbf6573a17ef38",
     "uma/EmergencyProposer": "0x2cf4d5496e11daf1a1ea3a68bde77a515235544c5b17addbedd4d2be5b04091a",
