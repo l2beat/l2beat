@@ -1398,5 +1398,8 @@
   "static/images/monthly-updates/nethermind.png": "1476c8dba69c7900343700d7f426f8b2",
   "static/meta-images/monthly-updates/opengraph-image.png": "a44569db4b1c62092a1e64447d6e0ccf",
   "static/images/architecture/katana.png": "b24d89c2cf83a97357d39c9a4e1e010e",
-  "static/images/upgrades-and-governance/agglayer-algateway.png": "fff000f36b5221a4d9106362ce648ee5"
+  "static/images/upgrades-and-governance/agglayer-algateway.png": "fff000f36b5221a4d9106362ce648ee5",
+  "static/meta-images/bridges/projects/across/opengraph-image.png": "db2e43cf2b9e8b5796ddfca142d798b6",
+  "static/icons/across.png": "56c807bf14a2929d9d25fc3f4cc5844e",
+  "static/images/architecture/across.png": "ce36b80e01ab2e33c57b5b6db8e64f43"
 }

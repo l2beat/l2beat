@@ -30,7 +30,7 @@ export const acrossV3: Bridge = {
   addedAt: UnixTime(1712746402), // 2024-04-10T10:53:22Z
   display: {
     name: 'Across',
-    slug: 'acrossv3',
+    slug: 'across',
     category: 'Liquidity Network',
     links: {
       websites: ['https://across.to/'],
@@ -209,7 +209,7 @@ Liquidity used for reimbursements is rebalanced between a main pool on Ethereum 
       ],
       references: [
         {
-          title: 'Across V3 Optimistic Oracle documentation',
+          title: 'Across Optimistic Oracle documentation',
           url: 'https://docs.across.to/reference/security-model-and-verification',
         },
       ],
