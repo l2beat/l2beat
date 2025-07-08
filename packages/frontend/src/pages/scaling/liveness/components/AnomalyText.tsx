@@ -14,7 +14,7 @@ export function AnomalyText({
 }) {
   if (anomaly.end === undefined) {
     return (
-      <p className={cn('paragraph-13', className)}>
+      <p className={cn('text-paragraph-13', className)}>
         No{' '}
         <span className="font-medium lowercase">
           {anomalySubtypeToLabel(anomaly.subtype)}
@@ -47,7 +47,7 @@ export function AnomalyText({
   }
 
   return (
-    <p className={cn('paragraph-13', className)}>
+    <p className={cn('text-paragraph-13', className)}>
       No{' '}
       <span className="font-medium lowercase">
         {anomalySubtypeToLabel(anomaly.subtype)}

@@ -11,13 +11,13 @@ export function OfficeHoursSection() {
       className="flex flex-col justify-between lg:col-span-3"
     >
       <div className="flex flex-col gap-4">
-        <div className="heading-24 md:heading-32">Office hours</div>
-        <p className="paragraph-16 text-balance font-bold">
+        <div className="text-heading-24 md:text-heading-32">Office hours</div>
+        <p className="text-balance font-bold text-paragraph-16">
           To promote transparency and communication as delegates, we&apos;re
           hosting recurring Office Hours on Google Meets.
         </p>
         <OfficeHoursIllustration className="w-full" />
-        <p className="paragraph-15">
+        <p className="text-paragraph-15">
           During the Office Hours, anyone is able to reach L2BEAT&apos;s
           governance team, which consists of{' '}
           <span className="underline">Kaereste</span> (Krzysztof Urbanski),{' '}
@@ -25,7 +25,7 @@ export function OfficeHoursSection() {
           and <span className="underline">Manugotsuka</span> (Manuel Gonzalez)
           and discuss our activity as delegates.
         </p>
-        <p className="paragraph-15">
+        <p className="text-paragraph-15">
           To allow enough time for constructive discussion, each Office Hours
           call will be specifically targeted at one of the protocols we&apos;re
           delegates in.

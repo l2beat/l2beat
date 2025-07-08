@@ -92,12 +92,12 @@ function AnomalyTooltipContent(props: {
               {anomaly.end === undefined ? (
                 <div className="mb-1 flex items-center gap-1">
                   <LiveIndicator />
-                  <span className="subtitle-12 text-negative uppercase leading-none">
+                  <span className="text-negative text-subtitle-12 uppercase leading-none">
                     Ongoing anomaly
                   </span>
                 </div>
               ) : (
-                <span className="subtitle-12 text-secondary uppercase leading-none">
+                <span className="text-secondary text-subtitle-12 uppercase leading-none">
                   Resolved
                 </span>
               )}

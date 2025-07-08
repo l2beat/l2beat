@@ -54,8 +54,9 @@ export function LinkWithThumbnail({
           {props.topAccessory && <div>{props.topAccessory}</div>}
           <p
             className={cn(
-              orientation === 'vertical' && 'heading-20 mt-2',
-              orientation === 'horizontal' && 'heading-16 md:heading-18',
+              orientation === 'vertical' && 'mt-2 text-heading-20',
+              orientation === 'horizontal' &&
+                'text-heading-16 md:text-heading-18',
               'text-balance',
             )}
           >
@@ -65,7 +66,7 @@ export function LinkWithThumbnail({
             <div className="hidden md:block">
               <p
                 className={cn(
-                  'paragraph-14 text-secondary',
+                  'text-paragraph-14 text-secondary',
                   orientation === 'horizontal' && 'line-clamp-1',
                   orientation === 'vertical' && 'mt-3 line-clamp-3',
                 )}
@@ -75,7 +76,7 @@ export function LinkWithThumbnail({
             </div>
           )}
         </div>
-        <p className="label-value-14-bold flex flex-wrap items-center gap-1 text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
+        <p className="flex flex-wrap items-center gap-1 font-bold text-label-value-14 text-link underline transition-colors group-hover:text-blue-550 md:mt-3">
           Learn more
           <ArrowRightIcon className="fill-current" />
         </p>

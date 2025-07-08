@@ -17,8 +17,8 @@ const rosetteVariants = cva(
   {
     variants: {
       size: {
-        small: 'subtitle-10',
-        regular: 'subtitle-14',
+        small: 'text-subtitle-10',
+        regular: 'text-subtitle-14',
       },
     },
     defaultVariants: {
