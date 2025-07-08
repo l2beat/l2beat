@@ -74,16 +74,8 @@ describe(DiscoveryRunner.name, () => {
       )
 
       expect(allProvidersMock.get).toHaveBeenCalledTimes(2)
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(
-        1,
-        'arbitrum',
-        123,
-      )
-      expect(allProvidersMock.get).toHaveBeenNthCalledWith(
-        2,
-        'ethereum',
-        1,
-      )
+      expect(allProvidersMock.get).toHaveBeenNthCalledWith(1, 'arbitrum', 123)
+      expect(allProvidersMock.get).toHaveBeenNthCalledWith(2, 'ethereum', 1)
       expect(engine.discover).toHaveBeenCalledTimes(2)
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
