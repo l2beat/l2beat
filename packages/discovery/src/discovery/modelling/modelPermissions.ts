@@ -129,6 +129,9 @@ export function getDependenciesToDiscoverForProject(
   return configReader
     .readAllDiscoveredChainsForProject(project)
     .map((chain) => ({ project, chain }))
+    .sort((a, b) =>
+      `${a.chain}-${a.project}`.localeCompare(`${b.chain}-${b.project}`),
+    )
 }
 
 export function buildPermissionsOutput(
