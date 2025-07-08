@@ -22,7 +22,7 @@ describe(getNiceEventDate.name, () => {
         endDate: new Date('2021-01-13T14:00:00.000Z'),
       },
     })
-    expect(getNiceEventDate(event)).toEqual('2021 Jan 13\n13:00 - 14:00 (UTC)')
+    expect(getNiceEventDate(event)).toEqual('2021 Jan 13\n13:00 - 14:00 UTC')
   })
 
   it('should return startDate date and time if there is no end date', () => {
@@ -31,6 +31,6 @@ describe(getNiceEventDate.name, () => {
         startDate: new Date('2021-01-13T13:00:00.000Z'),
       },
     })
-    expect(getNiceEventDate(event)).toEqual('2021 Jan 13, 13:00 (UTC)')
+    expect(getNiceEventDate(event)).toEqual('2021 Jan 13, 13:00 UTC')
   })
 })
