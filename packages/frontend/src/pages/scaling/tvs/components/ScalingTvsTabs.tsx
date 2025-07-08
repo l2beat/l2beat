@@ -1,8 +1,8 @@
 import type { Milestone } from '@l2beat/config'
 import {
+  NotReviewedInfo,
   OthersInfo,
   RollupsInfo,
-  UnderReviewInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
@@ -32,7 +32,7 @@ export function ScalingTvsTabs(props: Props) {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
 
   const initialSort = {
@@ -47,7 +47,7 @@ export function ScalingTvsTabs(props: Props) {
           ...props.rollups,
           ...props.validiumsAndOptimiums,
           ...props.others,
-          ...props.underReview,
+          ...props.notReviewed,
         ]}
       />
       <DirectoryTabs defaultValue="rollups">
@@ -62,10 +62,10 @@ export function ScalingTvsTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.underReview.length > 0 && (
-            <DirectoryTabsTrigger value="underReview">
-              Under initial review
-              <CountBadge>{entries.underReview.length}</CountBadge>
+          {entries.notReviewed.length > 0 && (
+            <DirectoryTabsTrigger value="notReviewed">
+              Not reviewed
+              <CountBadge>{entries.notReviewed.length}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -106,9 +106,9 @@ export function ScalingTvsTabs(props: Props) {
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview" className="pt-5">
-            <UnderReviewInfo />
-            <ScalingTvsTable entries={entries.underReview} underReview />
+          <DirectoryTabsContent value="notReviewed" className="pt-5">
+            <NotReviewedInfo />
+            <ScalingTvsTable entries={entries.notReviewed} notReviewed />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

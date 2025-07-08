@@ -36,6 +36,12 @@ export const cheese: ScalingProject = underReviewL3({
       ],
     },
   },
+  chainConfig: {
+    name: 'cheese',
+    chainId: undefined,
+    gasTokens: ['CHEESE'],
+    apis: [],
+  },
   ecosystemInfo: {
     id: ProjectId('arbitrum-orbit'),
   },

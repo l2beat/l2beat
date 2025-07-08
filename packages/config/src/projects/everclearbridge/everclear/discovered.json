@@ -1,7 +1,7 @@
 {
   "name": "everclearbridge",
   "chain": "everclear",
-  "blockNumber": 1122116,
+  "blockNumber": 1846362,
   "configHash": "0x28722c147bec42a5913187cfed740c0bda49a00ec6a6a5eb7ea42a875a971652",
   "entries": [
     {
@@ -80,14 +80,14 @@
           "1": ["0xBF67dfcdC720E7bcaAdca6e1092f3A65207b7874"],
           "2": ["0xba1c05257B3a9Bb8f822e164913a3eE1198411Ed"]
         },
-        "epochLength": 40,
+        "epochLength": 20,
         "expiryTimeBuffer": 43200,
         "gasConfig": {
           "settlementBaseGasUnits": 40000,
           "averageGasUnitsPerSettlement": 50000,
           "bufferDBPS": 10000
         },
-        "getCurrentEpoch": 201755,
+        "getCurrentEpoch": 217277,
         "hubGateway": "0xEFfAB7cCEBF63FbEFB4884964b12259d4374FaAa",
         "initialized": false,
         "lighthouse": "0x38f188953f1E3afE83327C78AAeF72e0498da2C6",
@@ -692,5 +692,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xb72b3d399c322b88f0b38d5957a0350a0cb84f9f8bce4efee97fb643ff052179"
+  "permissionsConfigHash": "0xbe21026ad51732d7421ad94bd97c42fff43a798027757232394b65dc5b2de8d9"
 }

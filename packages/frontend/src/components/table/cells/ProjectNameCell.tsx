@@ -19,12 +19,14 @@ export interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
   className?: string
   withInfoTooltip?: boolean
+  ignoreUnderReviewIcon?: boolean
 }
 
 export function ProjectNameCell({
   project,
   className,
   withInfoTooltip,
+  ignoreUnderReviewIcon,
 }: ProjectCellProps) {
   return (
     <div className={className}>
@@ -53,7 +55,7 @@ export function ProjectNameCell({
             <TooltipContent>{project.statuses.redWarning}</TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.underReview && (
+        {project.statuses?.underReview && !ignoreUnderReviewIcon && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />

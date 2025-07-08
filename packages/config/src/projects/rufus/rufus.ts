@@ -37,6 +37,7 @@ export const rufus: ScalingProject = underReviewL2({
   associatedTokens: ['ELON'],
   chainConfig: {
     name: 'rufus',
+    gasTokens: ['ELON'],
     chainId: 2420,
     apis: [
       {

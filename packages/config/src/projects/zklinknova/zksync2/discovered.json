@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "zksync2",
   "blockNumber": 57470008,
-  "configHash": "0x8bd7ec1ed4cae7833bbeadafd029241ac03f04bacbf1091a98b8ddbbba644647",
+  "configHash": "0xa9f13b63c56b0aa040652f746599aa51c18f35796d579f184920f55429f115de",
   "entries": [
     {
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -22,22 +22,22 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "zksync2:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "from": "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
           "role": "admin",
           "via": [
-            { "address": "zksync2:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }
+            { "address": "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "zksync2:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
+          "from": "zksync:0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "zksync2:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
+          "from": "zksync:0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98",
           "role": ".owner"
         }
       ],
@@ -177,7 +177,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "zksync2:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
+          "from": "zksync:0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08",
           "role": "admin"
         }
       ],
@@ -279,5 +279,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
 }

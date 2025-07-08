@@ -1,3 +1,315 @@
+Generated with discovered.json: 0x11d23d550ccc303c9c15ec63838f1d42ee3c8a9b
+
+# Diff at Fri, 04 Jul 2025 12:18:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22795725
+- current block number: 22795725
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22795725 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+    }
+```
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract DeputyPauseModule (0x126a736B18E0a64fBA19D421647A530E327E112C) {
+    +++ description: Allows 0x352f1defB49718e7Ea411687E850aA8d6299F7aC, called the deputy pauser, to act on behalf of the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A if set as its Safe module.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+    }
+```
+
+```diff
+    EOA  (0x2b8733E8c60A928b19BB7db1D79b918e8E09AC8c) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+    }
+```
+
+```diff
+    EOA Optimism EOA 1 (0x352f1defB49718e7Ea411687E850aA8d6299F7aC) {
+    +++ description: None
+      receivedPermissions.0.via.1.address:
+-        "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      receivedPermissions.0.from:
+-        "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5"
++        "eth:0x80533687a66A1bB366094A9B622873a6CA8415a5"
+      receivedPermissions.1.via.3.address:
+-        "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+      receivedPermissions.1.via.2.address:
+-        "ethereum:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
+      receivedPermissions.1.via.1.address:
+-        "ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
++        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.1.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x126a736B18E0a64fBA19D421647A530E327E112C"
++        "eth:0x126a736B18E0a64fBA19D421647A530E327E112C"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.0.from:
+-        "ethereum:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
++        "eth:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
+      receivedPermissions.1.from:
+-        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
++        "eth:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.2.from:
+-        "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.3.from:
+-        "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
++        "eth:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
+      receivedPermissions.4.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.4.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.5.from:
+-        "ethereum:0x564Eb0CeFCcA86160649a8986C419693c82F3678"
++        "eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678"
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.6.from:
+-        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
++        "eth:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.7.from:
+-        "ethereum:0x658656A14AFdf9c507096aC406564497d13EC754"
++        "eth:0x658656A14AFdf9c507096aC406564497d13EC754"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.8.from:
+-        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "eth:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      receivedPermissions.9.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.9.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      receivedPermissions.10.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.10.from:
+-        "ethereum:0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
++        "eth:0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
+      receivedPermissions.11.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.11.from:
+-        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
++        "eth:0xB20f99b598E8d888d1887715439851BC68806b22"
+      receivedPermissions.12.via.0.address:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+      receivedPermissions.12.from:
+-        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "eth:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
++        "eth:0xEEFD1782D70824CBcacf9438afab7f353F1797F0"
+    }
+```
+
+```diff
+    EOA  (0x5f16E66D8736B689a430564a31c8d887ca357CD8) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5"
++        "eth:0x80533687a66A1bB366094A9B622873a6CA8415a5"
+    }
+```
+
+```diff
+    contract OpFoundationUpgradeSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      receivedPermissions.0.via.2.address:
+-        "ethereum:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+      receivedPermissions.0.via.1.address:
+-        "ethereum:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
++        "eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03"
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
++        "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748"
+    }
+```
+
+```diff
+    contract OpFoundationOperationsSafe (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x80533687a66A1bB366094A9B622873a6CA8415a5"
++        "eth:0x80533687a66A1bB366094A9B622873a6CA8415a5"
+      receivedPermissions.1.via.1.address:
+-        "ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
++        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.1.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
++        "eth:0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B"
+    }
+```
+
+```diff
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0xc6901F65369FC59fC1B4D6D6bE7A2318Ff38dB5B) {
+    +++ description: allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A, called the deputy guardian, to act on behalf of the Gnosis Safe.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xEEFD1782D70824CBcacf9438afab7f353F1797F0) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
++        "eth:0x1cb5FB7Da1444e2d895420442D246787B7aFA95D"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
++        "eth:0x0BE364912219bC74760f1d1c25F4866b328eBfC6"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
++        "eth:0x34A564BbD863C4bf73Eca711Cf38a77C4Ccbdd6A"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x564Eb0CeFCcA86160649a8986C419693c82F3678"
++        "eth:0x564Eb0CeFCcA86160649a8986C419693c82F3678"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
++        "eth:0x5e062522fE9D9E0dc651B5D368a4A2Eb41038F87"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0x658656A14AFdf9c507096aC406564497d13EC754"
++        "eth:0x658656A14AFdf9c507096aC406564497d13EC754"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
++        "eth:0x924911E2CCAdB4638447ccD00b6cFb040Cc08560"
+      directlyReceivedPermissions.7.from:
+-        "ethereum:0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
++        "eth:0xa33f75a3A2babD502cbC1A6F54345B529C1F306E"
+      directlyReceivedPermissions.8.from:
+-        "ethereum:0xB20f99b598E8d888d1887715439851BC68806b22"
++        "eth:0xB20f99b598E8d888d1887715439851BC68806b22"
+      directlyReceivedPermissions.9.from:
+-        "ethereum:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
++        "eth:0xbc404ae11E4E9DA3Ea9276Aa6DCcA31097D4f4Ee"
+    }
+```
+
 Generated with discovered.json: 0x7c590631cd205c06aefc25952360c0f75524784f
 
 # Diff at Fri, 27 Jun 2025 12:18:41 GMT:

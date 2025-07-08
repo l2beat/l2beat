@@ -7,6 +7,7 @@ export const clique: ScalingProject = underReviewL3({
   id: 'clique',
   capability: 'universal',
   addedAt: UnixTime(1726595996), // 2024-09-17T17:59:56Z
+  archivedAt: UnixTime(1751896254), // 2025-07-07T13:50:54Z
   hostChain: ProjectId('base'),
   badges: [
     BADGES.L3ParentChain.Base,

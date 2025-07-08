@@ -6,7 +6,7 @@
 # Code walkthroughs
 
 - [Arbitrum](./code_walkthroughs/arbitrum/README.md)
-    - [Forced transactions](./code_walkthroughs/arbitrum/forced_txs.md)
+    - [Sequencing](./code_walkthroughs/arbitrum/sequencing.md)
     - [Proof system](./code_walkthroughs/arbitrum/proof_system.md)
     - [Admin operations](./code_walkthroughs/arbitrum/admin_ops.md)
 

@@ -22,6 +22,7 @@ export const AVAILABLE_CHAINS = [
   { name: 'mantapacific', chainId: 169, shortName: 'manta' },
   { name: 'blast', chainId: 81457, shortName: 'blastmainnet' },
   { name: 'kinto', chainId: 7887, shortName: 'kinto' },
+  { name: 'katana', chainId: 747474, shortName: 'katana' },
   { name: 'unichain', chainId: 130, shortName: 'unichain' },
   { name: 'ink', chainId: 57073, shortName: 'ink' },
   { name: 'everclear', chainId: 25327, shortName: 'everclear' },

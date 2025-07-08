@@ -2,7 +2,7 @@
   "name": "witness",
   "chain": "ethereum",
   "blockNumber": 21736867,
-  "configHash": "0x44121fe580ae76548c835a8221747df9bf639164902f6685d11466bb606ed26c",
+  "configHash": "0x4da4101162630878535cf19cf32170a8fb5d9fff5a566eb89707ca875342ec04",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -30,7 +30,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "role": ".trustedSequencer"
         }
       ]
@@ -117,7 +117,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "role": "admin"
         }
       ],
@@ -185,17 +185,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }
+            { "address": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
+          "from": "eth:0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
           "role": ".owner"
         }
       ]
@@ -212,19 +212,19 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
+          "from": "eth:0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "from": "eth:0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         }
@@ -417,5 +417,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x17e19bf84853d3854b6658aa25869ca1261f35e79bf999243244f489c1d713df"
+  "permissionsConfigHash": "0xd7d6b1899109995993b59de482b2232fe0aef8ed850bd935611dcc22b52b9b04"
 }

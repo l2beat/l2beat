@@ -1,3 +1,84 @@
+Generated with discovered.json: 0x6017668d3ac327d1574427f8736ba6c8b8a1fc82
+
+# Diff at Fri, 04 Jul 2025 12:19:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22796150
+- current block number: 22796150
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22796150 (main branch discovery), not current.
+
+```diff
+    contract Optimism Guardian Multisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935"
++        "eth:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.0.from:
+-        "ethereum:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
++        "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.1.from:
+-        "ethereum:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935"
++        "eth:0x8062AbC286f5e7D9428a0Ccb9AbD71e50d93b935"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      receivedPermissions.2.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+    }
+```
+
+```diff
+    contract Optimism Security Council (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      receivedPermissions.0.from:
+-        "ethereum:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
 Generated with discovered.json: 0x9b2a9929dfd615d870ecf182333a66747f06d800
 
 # Diff at Fri, 27 Jun 2025 14:09:47 GMT:

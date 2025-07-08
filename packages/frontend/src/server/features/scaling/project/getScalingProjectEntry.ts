@@ -143,12 +143,12 @@ export async function getScalingProjectEntry(
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     helpers.tvs.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
     }),
     helpers.activity.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
     }),
     project.scalingInfo.layer === 'layer2'

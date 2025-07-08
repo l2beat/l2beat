@@ -42,7 +42,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -152,13 +152,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "can freeze the bridge contract and update the list of authorized relayers.",
           "role": ".guardians"
         },
         {
           "permission": "upgrade",
-          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "role": "admin"
         }
       ],
@@ -211,7 +211,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
+          "from": "arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794",
           "description": "it is a 'Relayer' and can call commitHeaderRange() to commit block ranges. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
           "role": ".relayers"
         }
@@ -316,7 +316,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
@@ -547,5 +547,5 @@
     "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x70bc22e2afb82cc25ed86534f4fbff438b16798b3fd2ccb1d90d96dd71cf0304"
+  "permissionsConfigHash": "0x8ba25eb1c0a8c501544a12fd392afd8ff200ef19eecbc9bc42025419a511b39e"
 }

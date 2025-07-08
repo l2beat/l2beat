@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xcea6a27b19caf783b12748471d07bddcbca8cac4
+
+# Diff at Fri, 04 Jul 2025 12:19:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21981156
+- current block number: 21981156
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981156 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    EOA  (0x5918481F777dBe437De249492B90AffB4e655de4) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+      receivedPermissions.1.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+      receivedPermissions.2.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    EOA  (0x63881ac44293E22F3c3183a0C4113586ABb3e653) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    EOA  (0x7F6d06eCd94bD899872cd2768e41B7d33EC13e19) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    EOA  (0xA5dAd8339d9279c2F16d02F2e903AB4B79a72815) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
+```diff
+    contract SorareAdminMultisig (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+      receivedPermissions.1.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+      receivedPermissions.2.from:
+-        "ethereum:0xF5C9F957705bea56a7e806943f98F7777B995826"
++        "eth:0xF5C9F957705bea56a7e806943f98F7777B995826"
+    }
+```
+
 Generated with discovered.json: 0x7e9548bdbbc8ea5346a46297fcfdbf46f95a1c82
 
 # Diff at Tue, 27 May 2025 08:29:50 GMT:

@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x41c719a671d52cb8e276099b91ac094e7d8df909
+
+# Diff at Fri, 04 Jul 2025 12:18:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22796394
+- current block number: 22796394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22796394 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x9C07A72177c5A05410cA338823e790876E79D73B"
++        "eth:0x9C07A72177c5A05410cA338823e790876E79D73B"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x54D7aE423Edb07282645e740C046B9373970a168"
++        "eth:0x54D7aE423Edb07282645e740C046B9373970a168"
+    }
+```
+
 Generated with discovered.json: 0xb3ebc1562bdf94963aedddd3799066185e0d1384
 
 # Diff at Fri, 27 Jun 2025 14:33:20 GMT:

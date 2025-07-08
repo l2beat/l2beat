@@ -562,7 +562,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
+          "from": "eth:0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
           "role": "admin"
         }
       ],
@@ -613,7 +613,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x173272739Bd7Aa6e4e214714048a9fE699453059",
+          "from": "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059",
           "role": "admin"
         }
       ],
@@ -2195,5 +2195,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0xe196bd73ed03a687a9bc1c7e0216d6d52eecb7c7eecaf7e52492a3abb125d1ed"
+  "permissionsConfigHash": "0x7cd3eace0795fe1a80c52fedb74caa27f99acc4a937fd489145b37a82eb29db5"
 }

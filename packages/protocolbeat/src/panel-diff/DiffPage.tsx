@@ -14,10 +14,10 @@ export function DiffPage() {
   const response = useQuery({
     queryKey: ['flat-source', address1, address2],
     queryFn: async () => {
-      return [
-        await getFlatSource(address1),
-        await getFlatSource(address2),
-      ] as const
+      return await Promise.all([
+        getFlatSource(address1),
+        getFlatSource(address2),
+      ] as const)
     },
   })
 

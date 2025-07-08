@@ -13,10 +13,10 @@ import { getScalingActivityColumns } from './Columns'
 interface Props {
   entries: ScalingActivityEntry[]
   rollups?: boolean
-  underReview?: boolean
+  notReviewed?: boolean
 }
 
-export function ScalingActivityTable({ entries, rollups, underReview }: Props) {
+export function ScalingActivityTable({ entries, rollups, notReviewed }: Props) {
   const { metric } = useActivityMetricContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -30,6 +30,7 @@ export function ScalingActivityTable({ entries, rollups, underReview }: Props) {
   const table = useTable({
     columns: getScalingActivityColumns(metric, {
       activity: true,
+      ignoreUnderReviewIcon: notReviewed,
     }),
     data: tableEntries,
     getCoreRowModel: getCoreRowModel(),
@@ -49,7 +50,7 @@ export function ScalingActivityTable({ entries, rollups, underReview }: Props) {
   ) : (
     <BasicTable
       table={table}
-      rowColoringMode={underReview ? 'ignore-colors' : undefined}
+      rowColoringMode={notReviewed ? 'ignore-colors' : undefined}
     />
   )
 }
