@@ -127,54 +127,7 @@ function AnomalyCollapsible({
               <div key={anomaly.start} className="text-xs">
                 <HorizontalSeparator className="my-3 first:mt-0" />
                 {anomaly.end === undefined && <OngoingAnomalyBanner />}
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-secondary">Type:</span>
-                  <span className="font-bold">
-                    {anomalySubtypeToLabel(anomaly.subtype)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-secondary">Duration:</span>
-                  <span
-                    className={cn(
-                      'font-bold',
-                      getDurationColorClassName(anomaly.durationInSeconds),
-                    )}
-                  >
-                    {formatDuration(anomaly.durationInSeconds)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-secondary">
-                    Avg. interval:
-                  </span>
-                  <span
-                    className={cn(
-                      'font-bold',
-                      getDurationColorClassName(anomaly.avgInterval),
-                    )}
-                  >
-                    {formatDuration(anomaly.avgInterval)}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="font-medium text-secondary">Start:</span>
-                  <span className="font-bold">
-                    {formatTimestamp(anomaly.start, {
-                      mode: 'datetime',
-                    })}
-                  </span>
-                </div>
-                {anomaly.end && (
-                  <div className="flex items-center justify-between">
-                    <span className="font-medium text-secondary">End:</span>
-                    <span className="font-bold">
-                      {formatTimestamp(anomaly.end, {
-                        mode: 'datetime',
-                      })}
-                    </span>
-                  </div>
-                )}
+                <AnomalyText anomaly={anomaly} />
               </div>
             )
           })}
@@ -191,5 +144,77 @@ function AnomalyCollapsible({
         </Button>
       </CollapsibleContent>
     </Collapsible>
+  )
+}
+
+function AnomalyText({ anomaly }: { anomaly: LivenessAnomaly }) {
+  if (anomaly.end === undefined) {
+    return (
+      <p className="text-balance">
+        No{' '}
+        <span className="font-medium lowercase">
+          {anomalySubtypeToLabel(anomaly.subtype)}
+        </span>{' '}
+        have been performed for{' '}
+        <span
+          className={cn(
+            'text-nowrap font-medium',
+            getDurationColorClassName(anomaly.durationInSeconds),
+          )}
+        >
+          {formatDuration(anomaly.durationInSeconds)}
+        </span>
+        : from{' '}
+        <span className="font-medium ">
+          {formatTimestamp(anomaly.start, { mode: 'datetime' })}
+        </span>
+        . These typically occur every{' '}
+        <span
+          className={cn(
+            'text-nowrap font-medium',
+            getDurationColorClassName(anomaly.avgInterval),
+          )}
+        >
+          {formatDuration(anomaly.avgInterval)}
+        </span>{' '}
+        on average.
+      </p>
+    )
+  }
+
+  return (
+    <p>
+      No{' '}
+      <span className="font-medium">
+        {anomalySubtypeToLabel(anomaly.subtype)}
+      </span>{' '}
+      were performed for{' '}
+      <span
+        className={cn(
+          'text-nowrap font-medium',
+          getDurationColorClassName(anomaly.durationInSeconds),
+        )}
+      >
+        {formatDuration(anomaly.durationInSeconds)}
+      </span>
+      : from{' '}
+      <span className="font-medium">
+        {formatTimestamp(anomaly.start, { mode: 'datetime' })}
+      </span>{' '}
+      until{' '}
+      <span className="font-medium">
+        {formatTimestamp(anomaly.end, { mode: 'datetime' })}
+      </span>
+      . These typically occur every{' '}
+      <span
+        className={cn(
+          'text-nowrap font-medium',
+          getDurationColorClassName(anomaly.avgInterval),
+        )}
+      >
+        {formatDuration(anomaly.avgInterval)}
+      </span>{' '}
+      on average.
+    </p>
   )
 }
