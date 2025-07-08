@@ -11,7 +11,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.now()
-  const DATA: RealTimeAnomalyRecord[] = [
+  const DATA = [
     {
       start: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
@@ -30,7 +30,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       subtype: 'proofSubmissions',
       status: 'recovered',
     },
-  ]
+  ] as const satisfies RealTimeAnomalyRecord[]
 
   beforeEach(async function () {
     this.timeout(10000)
@@ -104,12 +104,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all ongoing anomalies', async () => {
       const results = await repository.getOngoingAnomalies()
 
-      expect(results).toEqualUnsorted(
-        DATA.filter((e) => e.status !== 'recovered').map((e) => ({
-          ...e,
-          end: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted([DATA[0], DATA[1]])
     })
   })
 
