@@ -1,11 +1,14 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
+import {
+  type ScalingLivenessEntry,
+  getScalingLivenessEntries,
+} from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
+import type { TabbedScalingEntries } from '../utils/groupByScalingTabs'
 
 export async function getScalingLivenessData(
   req: Request,
@@ -24,13 +27,35 @@ export async function getScalingLivenessData(
     ),
   ])
 
-  const projectsWithAnomalies = Object.values(entries)
+  return {
+    head: {
+      manifest,
+      metadata: getMetadata(manifest, {
+        openGraph: {
+          url: req.originalUrl,
+          image: '/meta-images/scaling/liveness/opengraph-image.png',
+        },
+      }),
+    },
+    ssr: {
+      page: 'ScalingLivenessPage',
+      props: {
+        ...appLayoutProps,
+        entries,
+        projectsWithAnomalies: getProjectsWithAnomalies(entries),
+      },
+    },
+  }
+}
+
+function getProjectsWithAnomalies(
+  entries: TabbedScalingEntries<ScalingLivenessEntry>,
+) {
+  return Object.values(entries)
     .flat()
     .flatMap((entry) => {
       const recentAnomalies = entry.anomalies.filter(
-        (anomaly) =>
-          anomaly.end === undefined ||
-          anomaly.end > UnixTime.now() - UnixTime.DAY * 2,
+        (anomaly) => anomaly.end === undefined,
       )
 
       if (recentAnomalies.length === 0) {
@@ -62,24 +87,4 @@ export async function getScalingLivenessData(
       return 0
     })
     .filter((entry) => entry !== undefined)
-
-  return {
-    head: {
-      manifest,
-      metadata: getMetadata(manifest, {
-        openGraph: {
-          url: req.originalUrl,
-          image: '/meta-images/scaling/liveness/opengraph-image.png',
-        },
-      }),
-    },
-    ssr: {
-      page: 'ScalingLivenessPage',
-      props: {
-        ...appLayoutProps,
-        entries,
-        projectsWithAnomalies,
-      },
-    },
-  }
 }
