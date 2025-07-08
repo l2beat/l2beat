@@ -96,7 +96,7 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className="label-value-14-bold md:label-value-16-bold text-left">
+          <span className="text-left font-bold text-label-value-14 md:text-label-value-16">
             {projectWithAnomalies.name}
           </span>
         </div>
@@ -114,12 +114,12 @@ function AnomalyCollapsible({
                 {anomaly.end === undefined ? (
                   <div className="mb-1 flex items-center gap-1">
                     <LiveIndicator />
-                    <span className="subtitle-12 text-negative uppercase leading-none">
+                    <span className="text-negative text-subtitle-12 uppercase leading-none">
                       Ongoing anomaly
                     </span>
                   </div>
                 ) : (
-                  <span className="subtitle-12 text-secondary uppercase leading-none">
+                  <span className="text-secondary text-subtitle-12 uppercase leading-none">
                     Resolved
                   </span>
                 )}

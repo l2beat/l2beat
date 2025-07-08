@@ -17,7 +17,7 @@ export function NoAnomaliesState({
       )}
     >
       <VerifiedIcon className="size-5 fill-positive" />
-      <span className="label-value-14-bold md:label-value-15-bold text-center text-positive">
+      <span className="text-center font-bold text-label-value-14 text-positive md:text-label-value-15">
         No {type} anomalies detected
       </span>
     </PrimaryCard>
