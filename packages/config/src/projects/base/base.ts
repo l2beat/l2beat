@@ -20,7 +20,7 @@ export const base: ScalingProject = opStackL2({
     slug: 'base',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
     links: {

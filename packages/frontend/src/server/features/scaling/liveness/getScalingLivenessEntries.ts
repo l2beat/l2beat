@@ -58,7 +58,7 @@ export async function getScalingLivenessEntries() {
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
   category: ProjectScalingCategory
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
@@ -96,7 +96,7 @@ function getScalingLivenessEntry(
   return {
     ...getCommonScalingEntry({ project, changes, syncWarning }),
     category: project.scalingInfo.type,
-    stack: project.scalingInfo.stack,
+    stacks: project.scalingInfo.stacks,
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,

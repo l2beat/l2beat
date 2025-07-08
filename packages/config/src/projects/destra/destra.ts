@@ -13,7 +13,7 @@ export const destra: ScalingProject = upcomingL2({
       'Destra Network pioneers true Decentralized computing solutions for the emerging AI economy.',
     purposes: ['AI'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://destra.network/'],
       bridges: ['https://ocai.destranetwork.io/'],
