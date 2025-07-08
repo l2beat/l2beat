@@ -1,7 +1,7 @@
 import { createHash } from 'crypto'
 import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
-import type { BlobCache, DaBlob, DaProvider } from '@l2beat/shared'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
 import {
   type Configuration,
   EthereumAddress,
@@ -19,6 +19,7 @@ import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import type { DaService } from '../services/DaService'
 import { DaIndexer } from './DaIndexer'
 
+// All test cases work on one layer.
 // DaIndexer assumes that all configurations will have the same layer.
 // Rest of the code is generic and works the same regardless of layer type (see DaService)
 const DA_LAYER = 'test-layer'
@@ -65,115 +66,6 @@ describe(DaIndexer.name, () => {
       expect(repository.upsertMany).toHaveBeenOnlyCalledWith(generatedRecords)
 
       expect(safeHeight).toEqual(150)
-    })
-
-    it('uses cache (no blobs)', async () => {
-      const blobs = [
-        mockObject<DaBlob>({
-          blockTimestamp: 100,
-          blockNumber: 100,
-        }),
-        mockObject<DaBlob>({
-          blockTimestamp: 200,
-          blockNumber: 101,
-        }),
-      ]
-
-      const blobCache = mockObject<BlobCache>({
-        read: mockFn().resolvesTo([]),
-        write: mockFn().resolvesTo(undefined),
-        getHeight: mockFn().resolvesTo(99),
-      })
-
-      const { indexer, daProvider } = mockIndexer({
-        blobs,
-        blobCache,
-      })
-
-      await indexer.multiUpdate(100, 200, [])
-
-      expect(blobCache.getHeight).toHaveBeenCalled()
-      expect(blobCache.read).not.toHaveBeenCalled()
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(blobCache.write).toHaveBeenOnlyCalledWith(blobs)
-    })
-
-    it('uses cache (some blobs)', async () => {
-      const cacheHeight = 150
-
-      const blobs = [
-        mockObject<DaBlob>({
-          blockTimestamp: 300,
-          blockNumber: 151,
-        }),
-        mockObject<DaBlob>({
-          blockTimestamp: 400,
-          blockNumber: 152,
-        }),
-      ]
-
-      const blobCache = mockObject<BlobCache>({
-        read: mockFn().resolvesTo([
-          mockObject<DaBlob>({
-            blockTimestamp: 100,
-            blockNumber: 100,
-          }),
-          mockObject<DaBlob>({
-            blockTimestamp: 200,
-            blockNumber: 150,
-          }),
-        ]),
-        write: mockFn().resolvesTo(undefined),
-        getHeight: mockFn().resolvesTo(cacheHeight),
-      })
-
-      const { indexer, daProvider } = mockIndexer({
-        blobs,
-        blobCache,
-      })
-
-      await indexer.multiUpdate(100, 200, [])
-
-      expect(blobCache.getHeight).toHaveBeenCalled()
-      expect(blobCache.read).toHaveBeenOnlyCalledWith(
-        DA_LAYER,
-        100,
-        cacheHeight,
-      )
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
-        DA_LAYER,
-        cacheHeight + 1,
-        200,
-      )
-      expect(blobCache.write).toHaveBeenOnlyCalledWith(blobs)
-    })
-
-    it('uses cache (all blobs)', async () => {
-      const blobCache = mockObject<BlobCache>({
-        read: mockFn().resolvesTo([
-          mockObject<DaBlob>({
-            blockTimestamp: 100,
-            blockNumber: 100,
-          }),
-          mockObject<DaBlob>({
-            blockTimestamp: 200,
-            blockNumber: 200,
-          }),
-        ]),
-        write: mockFn().resolvesTo(undefined),
-        getHeight: mockFn().resolvesTo(300),
-      })
-
-      const { indexer, daProvider } = mockIndexer({
-        blobCache,
-      })
-
-      await indexer.multiUpdate(100, 200, [])
-
-      expect(blobCache.getHeight).toHaveBeenCalled()
-      expect(blobCache.read).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(daProvider.getBlobs).not.toHaveBeenCalled()
-      expect(blobCache.write).not.toHaveBeenCalled()
     })
 
     describe('handles batch size', () => {
@@ -268,7 +160,6 @@ function mockIndexer($: {
   blobs?: DaBlob[]
   previousRecords?: DataAvailabilityRecord[]
   generatedRecords?: DataAvailabilityRecord[]
-  blobCache?: BlobCache
 }) {
   const repository = mockObject<Database['dataAvailability']>({
     deleteByConfigurationId: mockFn().resolvesTo({}),
@@ -301,7 +192,6 @@ function mockIndexer($: {
     db: mockDatabase({
       dataAvailability: repository,
     }),
-    blobCache: $.blobCache,
   })
 
   return { repository, indexer, daService, daProvider }

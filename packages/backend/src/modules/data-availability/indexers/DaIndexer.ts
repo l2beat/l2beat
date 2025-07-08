@@ -1,15 +1,15 @@
-import type { BlobCache, DaBlob, DaProvider } from '@l2beat/shared'
-import {
-  assert,
-  type Configuration,
-  type RemovalConfiguration,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import type { EthereumDaTrackingConfig } from '@l2beat/config'
+import type { DaBlob, DaProvider } from '@l2beat/shared'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import type { BlockDaIndexedConfig } from '../../../config/Config'
 import { INDEXER_NAMES } from '../../../tools/uif/indexerIdentity'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
-import type { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
+import type {
+  Configuration,
+  ManagedMultiIndexerOptions,
+  RemovalConfiguration,
+} from '../../../tools/uif/multi/types'
 import type { DaService } from '../services/DaService'
 
 export interface Dependencies
@@ -18,7 +18,6 @@ export interface Dependencies
   daProvider: DaProvider
   daLayer: string
   batchSize: number
-  blobCache?: BlobCache
 }
 
 export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
@@ -46,7 +45,29 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
     const adjustedTo =
       from + this.$.batchSize < to ? from + this.$.batchSize : to
 
-    const blobs = await this.getBlobs(from, adjustedTo)
+    const logFilters = configurations
+      .filter(
+        (c) => c.properties.type === 'ethereum' && c.properties.topics?.length,
+      )
+      .map((c) => {
+        const ethereumConfig = c.properties as EthereumDaTrackingConfig
+        return {
+          address: ethereumConfig.inbox,
+          topics: ethereumConfig.topics ?? [],
+        }
+      })
+
+    this.logger.info('Fetching blobs', {
+      from,
+      to: adjustedTo,
+      filters: logFilters.length,
+    })
+
+    const blobs = await this.$.daProvider.getBlobs(
+      this.daLayer,
+      from,
+      adjustedTo,
+    )
 
     if (blobs.length === 0) {
       this.logger.info('Empty blobs response received', {
@@ -57,6 +78,10 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
         return Promise.resolve(adjustedTo)
       }
     }
+
+    this.logger.info('Fetched blobs', {
+      blobs: blobs.length,
+    })
 
     const previousRecords = await this.getPreviousRecordsInBlobsRange(blobs)
 
@@ -99,70 +124,6 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       from,
       to,
     )
-  }
-
-  private async getBlobs(from: number, adjustedTo: number): Promise<DaBlob[]> {
-    this.logger.info('Fetching blobs', {
-      from,
-      to: adjustedTo,
-    })
-
-    if (!this.$.blobCache) {
-      return this.getBlobsOnChain(from, adjustedTo)
-    }
-
-    const cacheHeight = await this.$.blobCache.getHeight(this.$.daLayer)
-    if (cacheHeight >= adjustedTo) {
-      return this.getBlobsFromCache(from, adjustedTo)
-    } else if (cacheHeight < from) {
-      const onChainBlobs = await this.getBlobsOnChain(from, adjustedTo)
-      await this.writeBlobsToCache(onChainBlobs)
-      return onChainBlobs
-    } else {
-      const cachedBlobs = await this.getBlobsFromCache(from, cacheHeight)
-      const onChainBlobs = await this.getBlobsOnChain(
-        cacheHeight + 1,
-        adjustedTo,
-      )
-      await this.writeBlobsToCache(onChainBlobs)
-      return [...cachedBlobs, ...onChainBlobs]
-    }
-  }
-
-  private async getBlobsOnChain(from: number, to: number): Promise<DaBlob[]> {
-    const blobs = await this.$.daProvider.getBlobs(this.daLayer, from, to)
-
-    this.logger.info('Fetched blobs from chain', {
-      from,
-      to,
-      count: blobs.length,
-    })
-
-    return blobs
-  }
-
-  private async getBlobsFromCache(from: number, to: number): Promise<DaBlob[]> {
-    if (!this.$.blobCache) return []
-
-    const blobs = await this.$.blobCache.read(this.$.daLayer, from, to)
-
-    this.logger.info('Fetched blobs from cache', {
-      from,
-      to,
-      count: blobs.length,
-    })
-
-    return blobs
-  }
-
-  private async writeBlobsToCache(blobs: DaBlob[]) {
-    if (!this.$.blobCache) return
-
-    this.logger.info('Writing blobs to cache', {
-      count: blobs.length,
-    })
-
-    await this.$.blobCache.write(blobs)
   }
 
   override async removeData(

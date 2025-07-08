@@ -15,7 +15,6 @@ import { DaIndexer } from './indexers/DaIndexer'
 import { EigenDaLayerIndexer } from './indexers/eigen-da/EigenDaLayerIndexer'
 import { EigenDaProjectsIndexer } from './indexers/eigen-da/EigenDaProjectsIndexer'
 import { DaService } from './services/DaService'
-import { DbBlobCache } from './services/DbBlobCache'
 
 export function initDataAvailabilityModule(
   config: Config,
@@ -122,8 +121,6 @@ function createIndexers(
       parents: [targetIndexer],
       indexerService,
       db: database,
-      blobCache:
-        daLayer.type === 'ethereum' ? new DbBlobCache(database) : undefined,
     })
 
     daIndexers.push(indexer)
