@@ -1,7 +1,7 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { RiskBanner } from '~/components/projects/RiskBanner'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
-import type { ProjectSummaryStat } from '~/pages/scaling/project/components/ScalingProjectStats'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
 import { MultipleBridgeDetails } from './MultipleBridgeDetails'

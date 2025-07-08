@@ -2,8 +2,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { Fragment } from 'react'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { EM_DASH } from '~/consts/characters'
-import { ProjectSummaryStat } from '~/pages/scaling/project/components/ScalingProjectStats'
 import type {
   DaProjectPageEntry,
   EthereumDaProjectPageEntry,

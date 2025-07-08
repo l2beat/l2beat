@@ -12,10 +12,10 @@ import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../RosetteTooltipContext'
+import { rosetteParameters } from '../parameters'
 import type { RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './PizzaRosetteIcon'
 import { PizzaRosetteLabels } from './PizzaRosetteLabels'
-import { rosetteParameters } from '../parameters'
 
 export interface BigPizzaRosetteProps {
   values: RosetteValue[]

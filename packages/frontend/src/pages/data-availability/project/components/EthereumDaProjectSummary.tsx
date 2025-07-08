@@ -1,7 +1,7 @@
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import type { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
-import type { ProjectSummaryStat } from '~/pages/scaling/project/components/ScalingProjectStats'
 import type { EthereumDaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'
 import { InfoCallout } from './InfoCallout'

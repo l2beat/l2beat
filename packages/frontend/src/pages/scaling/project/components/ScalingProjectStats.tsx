@@ -2,7 +2,7 @@ import { pluralize } from '@l2beat/shared-pure'
 import chunk from 'lodash/chunk'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
-import { Fragment, type ReactNode } from 'react'
+import { Fragment } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
@@ -10,10 +10,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { TypeInfo } from '~/components/table/cells/TypeInfo'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { StageCell } from '~/components/table/cells/stage/StageCell'
-import { InfoIcon } from '~/icons/Info'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { ProjectScalingEntry } from '~/server/features/scaling/project/getScalingProjectEntry'
 import { cn } from '~/utils/cn'
@@ -144,54 +144,5 @@ export function ProjectScalingStats({ project, className }: Props) {
         )
       })}
     </div>
-  )
-}
-
-export interface ProjectSummaryStat {
-  title: string
-  shortTitle?: string
-  value: ReactNode
-  tooltip?: string
-  className?: string
-  valueClassName?: string
-}
-
-export function ProjectSummaryStat(props: ProjectSummaryStat) {
-  return (
-    <li
-      key={props.title}
-      className={cn(
-        'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
-        props.className,
-      )}
-    >
-      <div className="flex flex-row gap-1.5">
-        <span
-          className={cn(
-            'paragraph-12-medium text-nowrap text-secondary',
-            props.shortTitle && 'max-md:hidden',
-          )}
-        >
-          {props.title}
-        </span>
-        {props.shortTitle && (
-          <span className="paragraph-12-medium text-secondary md:hidden">
-            {props.shortTitle}
-          </span>
-        )}
-        {props.tooltip && (
-          <Tooltip>
-            <TooltipTrigger className="size-3">
-              <InfoIcon className="size-3" variant="gray" />
-            </TooltipTrigger>
-            <TooltipContent>{props.tooltip}</TooltipContent>
-          </Tooltip>
-        )}
-      </div>
-
-      <span className={cn('label-value-16-bold', props.valueClassName)}>
-        {props.value}
-      </span>
-    </li>
   )
 }

@@ -9,9 +9,9 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
+import { ProjectSummaryStat } from '~/components/projects/ProjectSummaryStat'
 import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { ProjectSummaryStat } from '~/pages/scaling/project/components/ScalingProjectStats'
 import type { BridgesProjectEntry } from '~/server/features/bridges/project/getBridgesProjectEntry'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 
