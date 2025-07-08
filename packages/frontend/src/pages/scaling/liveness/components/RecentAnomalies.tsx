@@ -1,5 +1,4 @@
 import { LiveIndicator } from '~/components/LiveIndicator'
-import { formatDuration } from '~/components/chart/liveness/LivenessChart'
 import { Button } from '~/components/core/Button'
 import {
   Collapsible,
@@ -11,9 +10,7 @@ import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
-import { anomalySubtypeToLabel } from './AnomalyIndicator'
-import { getDurationColorClassName } from './LivenessDurationCell'
+import { AnomalyText } from './AnomalyText'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
 
 export interface ProjectWithAnomaly {
@@ -143,77 +140,5 @@ function AnomalyCollapsible({
         </Button>
       </CollapsibleContent>
     </Collapsible>
-  )
-}
-
-function AnomalyText({ anomaly }: { anomaly: LivenessAnomaly }) {
-  if (anomaly.end === undefined) {
-    return (
-      <p className="paragraph-13">
-        No{' '}
-        <span className="font-medium lowercase">
-          {anomalySubtypeToLabel(anomaly.subtype)}
-        </span>{' '}
-        have been performed for the past{' '}
-        <span
-          className={cn(
-            'text-nowrap font-medium',
-            getDurationColorClassName(anomaly.durationInSeconds),
-          )}
-        >
-          {formatDuration(anomaly.durationInSeconds)}
-        </span>
-        : from{' '}
-        <span className="font-medium ">
-          {formatTimestamp(anomaly.start, { mode: 'datetime' })}
-        </span>
-        . These typically occur every{' '}
-        <span
-          className={cn(
-            'text-nowrap font-medium',
-            getDurationColorClassName(anomaly.avgInterval),
-          )}
-        >
-          {formatDuration(anomaly.avgInterval)}
-        </span>{' '}
-        on average.
-      </p>
-    )
-  }
-
-  return (
-    <p className="paragraph-13">
-      No{' '}
-      <span className="font-medium lowercase">
-        {anomalySubtypeToLabel(anomaly.subtype)}
-      </span>{' '}
-      were performed for{' '}
-      <span
-        className={cn(
-          'text-nowrap font-medium',
-          getDurationColorClassName(anomaly.durationInSeconds),
-        )}
-      >
-        {formatDuration(anomaly.durationInSeconds)}
-      </span>
-      : from{' '}
-      <span className="font-medium">
-        {formatTimestamp(anomaly.start, { mode: 'datetime' })}
-      </span>{' '}
-      until{' '}
-      <span className="font-medium">
-        {formatTimestamp(anomaly.end, { mode: 'datetime' })}
-      </span>
-      . These typically occur every{' '}
-      <span
-        className={cn(
-          'text-nowrap font-medium',
-          getDurationColorClassName(anomaly.avgInterval),
-        )}
-      >
-        {formatDuration(anomaly.avgInterval)}
-      </span>{' '}
-      on average.
-    </p>
   )
 }
