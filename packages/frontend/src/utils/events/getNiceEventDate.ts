@@ -17,7 +17,7 @@ export function getNiceEventDate(event: OneTimeEvent) {
       mode: 'date',
     })}\n${formatTimestamp(startTimestamp, { mode: 'time' }).slice(
       0,
-      -6,
+      -4,
     )} - ${formatTimestamp(endTimestamp, { mode: 'time' })}`
   }
 

@@ -9,7 +9,12 @@ export function ChartControlsWrapper({
   className?: string
 }) {
   return (
-    <div className={cn('flex justify-between gap-2 md:gap-4', className)}>
+    <div
+      className={cn(
+        'flex justify-between gap-x-2 gap-y-2 md:gap-x-4',
+        className,
+      )}
+    >
       {children}
     </div>
   )

@@ -1,6 +1,7 @@
 import type {
   AnomalyRecord,
   IndexerConfigurationRecord,
+  RealTimeAnomalyRecord,
 } from '@l2beat/database'
 import type { AggregatedLivenessRecord } from '@l2beat/database/dist/other/aggregated-liveness/entity'
 import type { ProjectId, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
@@ -58,39 +59,51 @@ async function getLivenessData(projectId?: ProjectId) {
     'day',
   )
 
-  const [last30DaysRecords, last90DaysRecords, lastMaxRecords, anomalyRecords] =
-    await Promise.all([
-      db.aggregatedLiveness.getAggregatesByTimeRange(
-        [targetTimestamp - 30 * UnixTime.DAY, targetTimestamp],
-        projectId,
-      ),
-      db.aggregatedLiveness.getAggregatesByTimeRange(
-        [targetTimestamp - 90 * UnixTime.DAY, targetTimestamp],
-        projectId,
-      ),
-      db.aggregatedLiveness.getAggregatesByTimeRange(
-        [null, targetTimestamp],
-        projectId,
-      ),
-      db.anomalies.getByProjectIdsFrom(
-        projectId ? [projectId] : projectIds,
-        last30Days,
-      ),
-    ])
+  const [
+    last30DaysRecords,
+    last90DaysRecords,
+    lastMaxRecords,
+    anomalyRecords,
+    realTimeAnomalyRecords,
+  ] = await Promise.all([
+    db.aggregatedLiveness.getAggregatesByTimeRange(
+      [targetTimestamp - 30 * UnixTime.DAY, targetTimestamp],
+      projectId,
+    ),
+    db.aggregatedLiveness.getAggregatesByTimeRange(
+      [targetTimestamp - 90 * UnixTime.DAY, targetTimestamp],
+      projectId,
+    ),
+    db.aggregatedLiveness.getAggregatesByTimeRange(
+      [null, targetTimestamp],
+      projectId,
+    ),
+    db.anomalies.getByProjectIdsFrom(
+      projectId ? [projectId] : projectIds,
+      last30Days,
+    ),
+    db.realTimeAnomalies.getApprovedAndRecoveredAnomaliesByProjectIds(
+      projectId ? [projectId] : projectIds,
+    ),
+  ])
 
   const groupedLast30Days = groupBy(last30DaysRecords, (r) => r.projectId)
   const groupedLast90Days = groupBy(last90DaysRecords, (r) => r.projectId)
   const groupedMax = groupBy(lastMaxRecords, (r) => r.projectId)
   const anomaliesByProjectId = groupBy(anomalyRecords, (r) => r.projectId)
+  const realTimeAnomaliesByProjectId = groupBy(
+    realTimeAnomalyRecords,
+    (r) => r.projectId,
+  )
 
-  for (const project of trackedTxsProjects) {
+  for (const trackedTxProject of trackedTxsProjects) {
     const livenessConfig = livenessProjects.find(
-      (p) => p.id === project.id,
+      (p) => p.id === trackedTxProject.id,
     )?.livenessConfig
 
-    const project30Days = groupedLast30Days?.[project.id]
-    const project90Days = groupedLast90Days?.[project.id]
-    const projectMax = groupedMax?.[project.id]
+    const project30Days = groupedLast30Days?.[trackedTxProject.id]
+    const project90Days = groupedLast90Days?.[trackedTxProject.id]
+    const projectMax = groupedMax?.[trackedTxProject.id]
     if (
       isEmpty(project30Days) &&
       isEmpty(project90Days) &&
@@ -98,7 +111,9 @@ async function getLivenessData(projectId?: ProjectId) {
     ) {
       continue
     }
-    const anomalies = anomaliesByProjectId[project.id] ?? []
+    const anomalies = anomaliesByProjectId[trackedTxProject.id] ?? []
+    const realTimeAnomalies =
+      realTimeAnomaliesByProjectId[trackedTxProject.id] ?? []
 
     const livenessData: LivenessProject = {
       stateUpdates: mapAggregatedLivenessRecords(
@@ -106,7 +121,7 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'stateUpdates',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
@@ -115,7 +130,7 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'batchSubmissions',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
@@ -124,11 +139,11 @@ async function getLivenessData(projectId?: ProjectId) {
         project90Days,
         projectMax,
         'proofSubmissions',
-        project,
+        trackedTxProject,
         configurations,
         anomalies,
       ),
-      anomalies: mapAnomalyRecords(anomalies),
+      anomalies: getAnomalies(anomalies, realTimeAnomalies, project30Days),
     }
     // duplicate data from one subtype to another if configured
     if (livenessConfig) {
@@ -138,7 +153,7 @@ async function getLivenessData(projectId?: ProjectId) {
       livenessData[to] = { ...data }
     }
 
-    projects[project.id.toString()] = livenessData
+    projects[trackedTxProject.id.toString()] = livenessData
   }
 
   return projects
@@ -204,13 +219,66 @@ function mapAggregatedLivenessRecords(
   }
 }
 
-function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
-  return records.map((a) => ({
-    // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-    timestamp: a.timestamp,
-    durationInSeconds: a.duration,
-    type: a.subtype,
-  }))
+function getAnomalies(
+  anomalies: AnomalyRecord[],
+  realTimeAnomalies: RealTimeAnomalyRecord[],
+  project30Days:
+    | Omit<AggregatedLivenessRecord, 'timestamp' | 'numberOfRecords'>[]
+    | undefined,
+): LivenessAnomaly[] {
+  if (!project30Days) {
+    return []
+  }
+
+  const filteredAnomalies = anomalies.filter((a) => {
+    const record = realTimeAnomalies.find((r) => r.start === a.timestamp)
+    const alreadyExists =
+      record?.subtype === a.subtype && record.projectId === a.projectId
+    return !alreadyExists
+  })
+
+  return [
+    ...filteredAnomalies.map((a) => {
+      const avgInterval = project30Days.find(
+        (r) => r.subtype === a.subtype,
+      )?.avg
+      assert(avgInterval, 'Avg interval must exist')
+      return {
+        start: a.timestamp,
+        durationInSeconds: a.duration,
+        end: a.timestamp + a.duration,
+        subtype: a.subtype,
+        avgInterval,
+      }
+    }),
+    ...realTimeAnomalies.map((a) => {
+      const avgInterval = project30Days.find(
+        (r) => r.subtype === a.subtype,
+      )?.avg
+      assert(avgInterval, 'Avg interval must exist')
+
+      return {
+        start: a.start,
+        end: a.end,
+        durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
+        subtype: a.subtype,
+        avgInterval,
+      }
+    }),
+  ].sort(sortAnomalies)
+}
+
+function sortAnomalies(a: LivenessAnomaly, b: LivenessAnomaly) {
+  if (a.end === undefined && b.end === undefined) {
+    return b.start - a.start
+  }
+  if (a.end === undefined) {
+    return -1
+  }
+  if (b.end === undefined) {
+    return 1
+  }
+  return b.end - a.end
 }
 
 function getMockLivenessData(): LivenessResponse {
@@ -294,7 +362,7 @@ function generateMockData(): LivenessProject {
       max: generateDataPoint(),
       syncedUntil: UnixTime.toStartOf(UnixTime.now(), 'hour'),
     },
-    anomalies: generateAnomalies(),
+    anomalies: generateAnomalies().sort(sortAnomalies),
   }
 }
 
@@ -313,20 +381,23 @@ function generateDataPoint(): LivenessDataPoint | undefined {
 function generateAnomalies(): LivenessAnomaly[] {
   const anomaliesCount = Math.round(Math.random() * 15)
   return anomaliesCount !== 0
-    ? range(anomaliesCount).map(
-        () =>
-          ({
-            type: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
+    ? range(anomaliesCount).map(() => {
+        const isOngoing = Math.random() < 0.05
 
-            timestamp:
-              UnixTime.now() +
-              // TODO: (liveness) should we include current day
-              UnixTime(Math.round(Math.random() * -29) - 1) * UnixTime.DAY +
-              UnixTime(Math.round(Math.random() * 172800)),
+        const start =
+          UnixTime.now() +
+          UnixTime(Math.round(Math.random() * -29) - 1) * UnixTime.DAY +
+          UnixTime(Math.round(Math.random() * 172800))
+        const end = start + UnixTime(Math.round(Math.random() * 172800))
 
-            durationInSeconds: generateRandomTime(),
-          }) as const,
-      )
+        return {
+          subtype: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
+          start,
+          end: isOngoing ? undefined : end,
+          durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
+          avgInterval: generateRandomTime(),
+        } as const
+      })
     : []
 }
 
