@@ -1,3 +1,4 @@
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -85,6 +86,14 @@ export function ProjectNameCell({
         <span className="block font-medium text-[0.8125rem] text-secondary leading-[0.9375rem]">
           {project.nameSecondLine}
         </span>
+      )}
+      {project.statuses?.ongoingAnomaly && (
+        <div className="flex items-center justify-center gap-1 text-negative">
+          <LiveIndicator />
+          <span className="font-medium text-[11px] uppercase leading-none">
+            Ongoing anomaly
+          </span>
+        </div>
       )}
     </div>
   )

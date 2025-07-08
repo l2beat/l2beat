@@ -94,15 +94,15 @@ describe('dates', () => {
           it('returns date with short month name and time', () => {
             const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
             expect(formatTimestamp(date1, { mode: 'datetime' })).toEqual(
-              '2021 Apr 21, 12:00 (UTC)',
+              '2021 Apr 21, 12:00 UTC',
             )
             const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
             expect(formatTimestamp(date2, { mode: 'datetime' })).toEqual(
-              '1968 Dec 31, 11:30 (UTC)',
+              '1968 Dec 31, 11:30 UTC',
             )
             const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
             expect(formatTimestamp(date3, { mode: 'datetime' })).toEqual(
-              '2030 Jan 01, 05:00 (UTC)',
+              '2030 Jan 01, 05:00 UTC',
             )
           })
         })
@@ -111,15 +111,15 @@ describe('dates', () => {
           it('returns time', () => {
             const date1 = UnixTime.fromDate(new Date('2021-04-21T12:00:00Z'))
             expect(formatTimestamp(date1, { mode: 'time' })).toEqual(
-              '12:00 (UTC)',
+              '12:00 UTC',
             )
             const date2 = UnixTime.fromDate(new Date('1968-12-31T11:30:00Z'))
             expect(formatTimestamp(date2, { mode: 'time' })).toEqual(
-              '11:30 (UTC)',
+              '11:30 UTC',
             )
             const date3 = UnixTime.fromDate(new Date('2030-01-01T05:00:00Z'))
             expect(formatTimestamp(date3, { mode: 'time' })).toEqual(
-              '05:00 (UTC)',
+              '05:00 UTC',
             )
           })
         })
