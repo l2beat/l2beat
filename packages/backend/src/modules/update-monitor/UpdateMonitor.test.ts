@@ -529,7 +529,7 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
         undefined,
         undefined,
-        'useCurrentBlockNumber'
+        'useCurrentBlockNumber',
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)

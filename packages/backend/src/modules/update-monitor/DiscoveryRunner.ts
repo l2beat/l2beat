@@ -159,7 +159,7 @@ export class DiscoveryRunner {
           continue
         }
       }
-      
+
       const dependencyConfig = configReader.readConfig(
         dependency.project,
         dependency.chain,
