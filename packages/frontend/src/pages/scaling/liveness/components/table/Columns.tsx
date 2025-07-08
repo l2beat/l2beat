@@ -70,7 +70,7 @@ export const columns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,

@@ -6,20 +6,20 @@ import { EcosystemWidget } from './EcosystemWidget'
 
 export interface EcosystemGovernanceLinks {
   review: string
-  topDelegates: string
+  delegateToL2BEAT: string
   proposals: string
   bankImage: ImageParams
 }
 
 interface Props {
   links: EcosystemGovernanceLinks
-  topDelegatesBackgroundImage: string
+  delegateToL2BEATBackgroundImage: string
   className?: string
 }
 
 export function EcosystemGovernanceLinks({
   links,
-  topDelegatesBackgroundImage,
+  delegateToL2BEATBackgroundImage,
   className,
 }: Props) {
   return (
@@ -34,9 +34,9 @@ export function EcosystemGovernanceLinks({
         bankImage={links.bankImage}
         className="sm:row-span-2"
       />
-      <TopDelegatesLink
-        href={links.topDelegates}
-        backgroundImage={topDelegatesBackgroundImage}
+      <DelegateToL2BEATLink
+        href={links.delegateToL2BEAT}
+        backgroundImage={delegateToL2BEATBackgroundImage}
       />
       <ProposalsLink href={links.proposals} />
     </div>
@@ -81,7 +81,7 @@ function GovernanceLink({
   )
 }
 
-function TopDelegatesLink({
+function DelegateToL2BEATLink({
   href,
   backgroundImage,
   className,
@@ -107,7 +107,7 @@ function TopDelegatesLink({
             Governance
           </div>
           <div className="group-hover:-translate-y-2 origin-left font-bold text-xl transition-all ease-in-out will-change-transform group-hover:translate-x-4 group-hover:scale-125">
-            Top Delegates
+            Delegate to L2BEAT
           </div>
         </div>
       </CustomLink>

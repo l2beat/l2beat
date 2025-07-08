@@ -58,7 +58,7 @@ export async function getScalingLivenessEntries() {
 
 export interface ScalingLivenessEntry extends CommonScalingEntry {
   category: ProjectScalingCategory
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   data: LivenessData
   explanation: string | undefined
   anomalies: LivenessAnomaly[]
@@ -94,9 +94,14 @@ function getScalingLivenessEntry(
   const syncWarning = getLivenessSyncWarning(lowestSyncedUntil)
   const data = transformLivenessData(liveness, project, !syncWarning)
   return {
-    ...getCommonScalingEntry({ project, changes, syncWarning }),
+    ...getCommonScalingEntry({
+      project,
+      changes,
+      syncWarning,
+      ongoingAnomaly: liveness.anomalies.some((a) => a.end === undefined),
+    }),
     category: project.scalingInfo.type,
-    stack: project.scalingInfo.stack,
+    stacks: project.scalingInfo.stacks,
     data,
     explanation: project.livenessInfo?.explanation,
     anomalies: liveness.anomalies,

@@ -14,7 +14,7 @@ export const syndr: ScalingProject = upcomingL3({
       'Syndr is an upcoming Layer 3 - an institutional-grade, high-performance Options and Futures exchange powered by Arbitrum Orbit.',
     purposes: ['Universal'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://syndr.com/'],
       documentation: ['https://docs.syndr.com'],

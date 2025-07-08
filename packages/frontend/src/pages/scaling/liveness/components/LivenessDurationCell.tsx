@@ -30,7 +30,7 @@ function getDurationText(
   return amount > 0 ? `${amount} ${pluralize(amount, unit)}` : ''
 }
 
-function getDurationColorClassName(durationInSeconds: number) {
+export function getDurationColorClassName(durationInSeconds: number) {
   if (durationInSeconds < UnixTime.MINUTE) {
     return 'text-positive'
   }

@@ -13,7 +13,7 @@ export const creatorchain: ScalingProject = upcomingL2({
       'Creator is a Layer 2 blockchain built on the OP Stack. Creator is designed for speed, affordability, and scalability, it empowers developers with revenue-sharing smart contracts and incentivizes users with exclusive Phantom X NFTs that generate ongoing profits.',
     purposes: ['Universal', 'NFT'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://creatorchain.io/'],
       bridges: ['https://bridge.creatorchain.io/'],
