@@ -107,14 +107,6 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
-  describe(BlobsRepository.prototype.getLatest.name, () => {
-    it('should return all rows for related entity', async () => {
-      const result = await repository.getLatest('avail')
-
-      expect(result).toEqual(DATA[2]!)
-    })
-  })
-
   describe(BlobsRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
@@ -122,6 +114,16 @@ describeDatabase(BlobsRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toEqual([])
+    })
+  })
+
+  describe(BlobsRepository.prototype.deleteAfter.name, () => {
+    it('should delete all rows', async () => {
+      await repository.deleteAfter('avail', 2000)
+
+      const results = await repository.getAll()
+
+      expect(results).toEqual(DATA.slice(0, 2))
     })
   })
 })

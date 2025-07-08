@@ -25,9 +25,3 @@ export interface CelestiaBlob extends DaBlobBase {
 }
 
 export type DaBlob = EthereumBlob | AvailBlob | CelestiaBlob
-
-export interface BlobCache {
-  write(blobs: DaBlob[]): Promise<void>
-  read(daLayer: string, from: number, to: number): Promise<DaBlob[]>
-  getHeight(daLayer: string): Promise<number>
-}

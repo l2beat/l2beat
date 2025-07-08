@@ -14,16 +14,6 @@ export class BlobsRepository extends BaseRepository {
     return rows.length
   }
 
-  async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('Blob').executeTakeFirst()
-
-    const resetIdQuuery =
-      sql`ALTER SEQUENCE public."Blob_id_seq" RESTART WITH 1`.compile(this.db)
-    await this.db.executeQuery(resetIdQuuery)
-
-    return Number(result.numDeletedRows)
-  }
-
   async getAll(): Promise<BlobRecord[]> {
     const rows = await this.db.selectFrom('Blob').select(selectBlob).execute()
 
@@ -45,14 +35,23 @@ export class BlobsRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getLatest(daLayer: string): Promise<BlobRecord | undefined> {
-    const row = await this.db
-      .selectFrom('Blob')
-      .select(selectBlob)
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('Blob').executeTakeFirst()
+
+    const resetIdQuuery =
+      sql`ALTER SEQUENCE public."Blob_id_seq" RESTART WITH 1`.compile(this.db)
+    await this.db.executeQuery(resetIdQuuery)
+
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteAfter(daLayer: string, blockNumber: number): Promise<number> {
+    const result = await this.db
+      .deleteFrom('Blob')
       .where('daLayer', '=', daLayerToNumber(daLayer))
-      .orderBy('blockNumber', 'desc')
-      .limit(1)
+      .where('blockNumber', '>', blockNumber)
       .executeTakeFirst()
-    return row ? toRecord(row) : undefined
+
+    return Number(result.numDeletedRows)
   }
 }
