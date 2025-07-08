@@ -42,7 +42,11 @@ export function ScalingProjectPage({
               </div>
             )}
             <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-[18px]">
-              <ProjectHeader project={projectEntry} className="pb-6" />
+              <ProjectHeader
+                project={projectEntry}
+                ongoingAnomaly={projectEntry.header.ongoingAnomaly}
+                className="pb-6"
+              />
               <ProjectSummaryBars project={projectEntry} />
               <div className="mb-3 max-md:hidden">
                 <DesktopProjectLinks
