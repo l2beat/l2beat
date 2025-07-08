@@ -16,7 +16,7 @@ export function getActivityForProjectAndRange(
 
   const db = getDb()
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax(range, resolution)
+  const [from, to] = getRangeWithMax({ type: range }, resolution)
 
   return db.activity.getByProjectAndTimeRange(ProjectId(projectId), [
     from ? UnixTime.toStartOf(from, 'day') : null,

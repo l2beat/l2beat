@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xf71739e5f801415ded7233d58a1c8e0df389301e
+
+# Diff at Mon, 07 Jul 2025 06:54:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 20089055
+- current block number: 22865659
+
+## Description
+
+Someone [initialized](https://etherscan.io/tx/0x261d7ca1a3326f4fe9a27cca14c2e6b225285bf2f4c34f3993685f1c0cd54678) the reference implementation for portal wrapped tokens. the initializer is public. this should have no effect because this contract's state is not used.
+
+## Watched changes
+
+```diff
+    contract TokenImplementation (0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6) {
+    +++ description: None
+      values.chainId:
+-        0
++        1
+      values.decimals:
+-        0
++        8
+      values.DOMAIN_SEPARATOR:
+-        "0x0cf2c709fa7ea9acd67676f52f3dbf86e5aff34b6cdc82219ec4212ea2e0569f"
++        "0x1c8e76e5f40d08a95d7af41535ef711c3020f4c03c197e1c5c46b8d4295e427e"
+      values.eip712Domain.domainName:
+-        ""
++        "Wormhole"
+      values.eip712Domain.domainSalt:
+-        "0xbf53adb76067fdab0d008aef3ad8b28bbb63c2ce4c2b63394ede73f01a70c865"
++        "0xc2e0a663467400f3348de72376f987f67f07ee0c9108ac366a3d1a6134ad0c68"
+      values.name:
+-        ""
++        "Wormhole"
+      values.nativeContract:
+-        "0x0000000000000000000000000000000000000000000000000000000000000000"
++        "0x3ee18b2214aff97000d974cf647e7c347e8fa585000000000000000000000000"
+      values.owner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e"
+      values.symbol:
+-        ""
++        "WORM"
+      values.totalSupply:
+-        0
++        10000000
+    }
+```
+
 Generated with discovered.json: 0x4da52a37cd6a44b01d4307b4b4d6ad0e67f25aa5
 
 # Diff at Fri, 04 Jul 2025 12:19:16 GMT:

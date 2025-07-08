@@ -19,9 +19,6 @@
         "0x383eFE8D410285c5CbE1B4F296022640759aA834": {
           "ignoreMethods": ["challenges"]
         },
-        "0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0": {
-          "extends": "orbitstack/RollupProxy"
-        },
         "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83": {
           "ignoreMethods": ["spent", "isSpent"]
         },
@@ -32,10 +29,13 @@
             "sequencerMessageCount",
             "sequencerReportedSubMessageCount"
           ],
-          "ignoreRelatives": ["nativeToken"]
+          "ignoreRelatives": ["nativeToken"],
+          "fields": {
+            "rollup": { "template": "orbitstack/RollupProxy" },
+            "sequencerInbox": { "template": "orbitstack/SequencerInbox" }
+          }
         },
         "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77": {
-          "extends": "orbitstack/SequencerInbox",
           "fields": {
             "maxTimeVariation": {
               "handler": {

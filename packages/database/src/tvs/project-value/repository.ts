@@ -152,6 +152,7 @@ export class ProjectValueRepository extends BaseRepository {
     latestTimestamp: number,
     types: ProjectValueType[],
     projectIds?: string[],
+    cutOffTimestamp?: number,
   ): Promise<ProjectValueRecord[]> {
     if (types.length === 0) {
       return []
@@ -174,7 +175,13 @@ export class ProjectValueRepository extends BaseRepository {
 
       query = query
         // We dont need to query whole database, we can limit it to 30 days
-        .where('timestamp', '>=', sql<Date>`NOW() - INTERVAL '30 days'`)
+        .where(
+          'timestamp',
+          '>=',
+          cutOffTimestamp
+            ? UnixTime.toDate(cutOffTimestamp)
+            : sql<Date>`NOW() - INTERVAL '30 days'`,
+        )
         .where('timestamp', '<=', UnixTime.toDate(timestamp))
         .groupBy(['project', 'type'])
       return query

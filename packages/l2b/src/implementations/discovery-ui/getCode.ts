@@ -4,6 +4,7 @@ import { isDeepStrictEqual } from 'util'
 import {
   type ConfigReader,
   type DiscoveryPaths,
+  combineImplementationHashes,
   flatteningHash,
   get$Implementations,
   getChainFullName,
@@ -56,8 +57,15 @@ function isFlatCodeCurrent(
   const flatHashes = codePaths.map(({ path }) =>
     flatteningHash(readFileSync(path, 'utf-8')),
   )
+  const [proxy, ...implementations] = flatHashes
+  const calculatedHashes = [proxy]
+  if (implementations.length === 1) {
+    calculatedHashes.push(implementations[0])
+  } else if (implementations.length > 1) {
+    calculatedHashes.push(combineImplementationHashes(implementations))
+  }
 
-  return isDeepStrictEqual(discoHashes.sort(), flatHashes.sort())
+  return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
 }
 
 export function getCode(

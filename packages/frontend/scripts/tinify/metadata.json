@@ -1390,6 +1390,13 @@
   "static/icons/namechain.png": "c5363aadef772854308a934717c22118",
   "static/meta-images/scaling/projects/namechain/opengraph-image.png": "a4cba131615b3b341f8842d32e868b63",
   "static/meta-images/governance/publications/governance-review-58.png": "f1031c8117490966ac0496b9488a2524",
+  "static/images/monthly-updates/agglayer.png": "b1ed8ea2dcb53a60b09aa43af165f2d7",
+  "static/images/monthly-updates/arbitrum-orbit.png": "42386723ccd408e48dc18cd3d472bb27",
+  "static/images/monthly-updates/superchain.png": "b2cdaf058f4b6cf3d3da365657521e0e",
+  "static/images/monthly-updates/the-elastic-network.png": "6ef576424599e1b4fd80be6376032d43",
+  "static/images/monthly-updates/eigenda.png": "55d15e6902f37b0e7b4287df987511cb",
+  "static/images/monthly-updates/nethermind.png": "1476c8dba69c7900343700d7f426f8b2",
+  "static/meta-images/monthly-updates/opengraph-image.png": "a44569db4b1c62092a1e64447d6e0ccf",
   "static/images/architecture/katana.png": "b24d89c2cf83a97357d39c9a4e1e010e",
   "static/images/upgrades-and-governance/agglayer-algateway.png": "fff000f36b5221a4d9106362ce648ee5"
 }

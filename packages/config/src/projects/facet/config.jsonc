@@ -15,10 +15,7 @@
       },
       "overrides": {
         "0x0000000000000b07ED001607f5263D85bf28Ce4C": {
-          "extends": "facet/FacetEtherBridge",
-          "manualSourcePaths": {
-            "0x0000000000000b07ED001607f5263D85bf28Ce4C": "https://github.com/vectorized/solady/blob/main/src/utils/ERC1967Factory.sol"
-          }
+          "ignoreMethods": ["initCodeHash"]
         },
         "0xC1E935F25f9c1198200ec442c6F02f1A2F04534e": {
           "ignoreInWatchMode": ["scalar", "overhead"],

@@ -2,11 +2,11 @@
   "title": "Monthly Updates - June 2025",
   "startDate": "2025-06-01",
   "endDate": "2025-06-30",
-  "reports": [
+  "publishedOn": "2025-07-01",
+  "updates": [
     {
-      "name": "Orbit",
       "type": "ecosystem",
-      "ecosystemId": "orbit",
+      "ecosystemId": "arbitrum-orbit",
       "news": [
         {
           "title": "Quorum-threshold reduction proposal",
@@ -44,10 +44,8 @@
       ]
     },
     {
-      "name": "Elastic Network",
       "type": "ecosystem",
       "ecosystemId": "the-elastic-network",
-      "newProjectsIds": [],
       "news": [
         {
           "title": "ZKsync Gateway is live",
@@ -77,7 +75,6 @@
       ]
     },
     {
-      "name": "Superchain",
       "type": "ecosystem",
       "ecosystemId": "superchain",
       "news": [
@@ -121,7 +118,6 @@
       ]
     },
     {
-      "name": "Agglayer",
       "type": "ecosystem",
       "ecosystemId": "agglayer",
       "newProjectsIds": ["katana"],
@@ -146,7 +142,6 @@
       ]
     },
     {
-      "name": "EigenLayer",
       "type": "data-availability",
       "daLayerId": "eigenda",
       "news": [
@@ -171,7 +166,7 @@
     {
       "name": "Nethermind",
       "type": "upcoming-project",
-      "projectId": "surge",
+      "projectId": "nethermind",
       "news": [
         {
           "title": "Nethermind’s April Feature: “Surge — A Based Rollup for Ethereum’s Future”",
@@ -183,8 +178,7 @@
         },
         {
           "title": "Nethermind Secures Pimlico’s Cross-Chain Account Abstraction Infrastructure",
-          "content": "Pimlico [partnered](https://www.nethermind.io/blog/securing-pimlicos-account-abstraction-infrastructure?utm_source=chatgpt.com) with Nethermind Security to audit its ERC-4337 cross-chain infrastructure.",
-          "tags": ["other"]
+          "content": "Pimlico [partnered](https://www.nethermind.io/blog/securing-pimlicos-account-abstraction-infrastructure?utm_source=chatgpt.com) with Nethermind Security to audit its ERC-4337 cross-chain infrastructure."
         }
       ]
     }

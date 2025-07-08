@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { PARTNERS_ORDER } from '~/consts/partnersOrder'
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
 import { getEcosystemLogo } from '~/server/features/ecosystems/getEcosystemLogo'
@@ -7,6 +8,7 @@ import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { type Manifest, manifest } from '~/utils/Manifest'
+import { createOrderedSort } from '~/utils/sort'
 
 export async function getDonateData(
   manifest: Manifest,
@@ -62,6 +64,7 @@ async function getPartners() {
         ),
       }
     })
+    .sort(createOrderedSort(PARTNERS_ORDER, (item) => item.slug))
 
   const innovatorPartners = partners
     .map((e) => {
