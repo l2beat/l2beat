@@ -15,6 +15,7 @@ upgrade which adds a celestia + blobstream integration (celestia nitro 3.2.1) wi
 - add TEE verification support for blobs `addSequencerL2BatchFromBlobs()` (not supported on arb obv)
 
 EspressoTEEVerifier([new](https://flat.l2beat.com/address/arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)):
+- gateway contract in front of the 2 different TEE verifiers
 - instead of attestations for every sig verification, registerSigner() allows to register an ephemeral signer with an attestation from the TEE. subsequent signatures can then be trivially verified to have come from that ephemeral signer inside the TEE without a formal TEE attestation.
 
 [EspressoSGXTEEVerifier](https://disco.l2beat.com/diff/arb1:0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb/arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297):
