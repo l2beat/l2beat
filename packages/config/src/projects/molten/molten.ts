@@ -70,6 +70,14 @@ export const molten: ScalingProject = orbitStackL3({
   ],
   milestones: [
     {
+      title: 'Molten integrates Espresso sequencer',
+      url: 'https://x.com/EspressoSys/status/1929531777686630866',
+      date: '2025-01-30T00:00:00.00Z',
+      description:
+        'Molten adds the Espresso TEE sequencer to their Celestia DA with Blobstream.',
+      type: 'general',
+    },
+    {
       title: 'Mainnet Launch',
       url: 'https://x.com/MoltenL3/status/1774485708742205545',
       date: '2024-03-31T00:00:00Z',

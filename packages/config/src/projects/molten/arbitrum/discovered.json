@@ -1,8 +1,8 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 355488012,
-  "configHash": "0xc7ff40e4ad194431ae603f2a81ccb1bf4b174ab8565ebe4fe2ca63a88aca5dfd",
+  "blockNumber": 355528153,
+  "configHash": "0x541049d8dc723e0542d850757b8a11078d540dd8ea9339772662ecc67172bbd0",
   "entries": [
     {
       "name": "RollupProxy",
@@ -149,11 +149,18 @@
       "name": "SequencerInbox",
       "address": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
       "type": "Contract",
+      "template": "orbitstack/SequencerInbox_Celestia_Espresso",
       "sourceHashes": [
         "0xa7e3f6c355703ed46fcb2156862c4f01792b87beb10a87a81ce3bd5beee79b67",
         "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
       ],
       "proxyType": "EIP1967 proxy",
+      "description": "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.",
+      "ignoreInWatchMode": [
+        "batchCount",
+        "totalDelayedMessagesRead",
+        "postsBlobs"
+      ],
       "sinceTimestamp": 1712019082,
       "sinceBlock": 196643801,
       "values": {
@@ -187,38 +194,53 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 92769,
+        "batchCount": 92786,
         "batchPosterManager": "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
+        "batchPosters": ["0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
         "bridge": "0xE1d32C985825562edAa906fAC39295370Db72195",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "CELESTIA_MESSAGE_HEADER_FLAG": "0x63",
+        "dacKeyset": {
+          "requiredSignatures": 1,
+          "membersCount": 1,
+          "blsSignatures": [
+            "YAqQTw4ByRTsc9900Jqz1uF86NCR0qf4Qorr6m+4UMuebljjJmkm9ao1wgU9YMVsiAQiJZW5V0wv3eSEoHEOfpL4KesBDWtj3Dxlie526tY8MGcEruvE+/+yWenFV64DjgSIEgMvQWcMEnYuBeuIcPq3iFWoPlZ5xjrFq3TC3pg/4vNdHyraTaGAoSE1kpr95QJjp3pjuOh8EpCD1i4skjJP4YVjtsui7a8t3s8TTwTo3QYk/HTPLAJ8e15iBTin/xcbxa8wfNTBespH4pXgIQBYT/M2kyNWURyaJGz/Uk0ecJPEVtTwNPedztrARTHgkAiCDWd63/ekdUN0plGc8G4aWWg/MJN1X3UZwSUf5Z6PIG/9qtBgtijcxx2UvCjvyw=="
+          ]
+        },
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "espressoTEEVerifier": "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3",
         "HEADER_LENGTH": 40,
-        "inboxAccs": [
-          "0xe8e405be3df80cc9654644c4e76487b9de37449f285c5c94da805297643d3181",
-          "0xf1644dfda933cf923b51e699e8bb087265ea3cbc1fb9650a04a3e1c633e50474",
-          "0xaa8e95a2f4b5e3614d5be6c0011a1f19870c6067ee7dc878f79a94de07ab51a9",
-          "0x54ed2ce167c8e35fa9b1e16b9a813a3125fe7d358e3d8ca4a473b4fec0b71b0c",
-          "0xcfcc678791e7e6af2619e453fa293553cc4c409e21abd9e53fc098335466436f"
-        ],
         "isUsingFeeToken": true,
+        "keySetUpdates": 1,
         "maxDataSize": 104857,
-        "maxTimeVariation": [17280, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 17280,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
+        "postsBlobs": false,
         "reader4844": "0x0000000000000000000000000000000000000000",
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
+        "sequencerVersion": "0x63",
+        "setIsBatchPosterCount": 3,
         "totalDelayedMessagesRead": 40520,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
-      "errors": { "inboxAccs": "Processing error occurred." },
+      "fieldMeta": {
+        "maxTimeVariation": {
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+        }
+      },
       "implementationNames": {
         "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2": "TransparentUpgradeableProxy",
         "0x481863c96f949F5E13932ec2F65470C0CF83808d": "SequencerInbox"
-      }
+      },
+      "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
@@ -264,6 +286,11 @@
       "implementationNames": {
         "0x1A484E3f74984d29EBC39909535D45896502a3E7": "CertManager"
       }
+    },
+    {
+      "address": "0x1a5d5faF7F5a88D9FbE172B5913228a8157F1936",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Inbox",
@@ -338,7 +365,21 @@
     {
       "address": "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
+          "description": "Add/remove batchPosters (Sequencers).",
+          "role": ".batchPosterManager"
+        },
+        {
+          "permission": "sequence",
+          "from": "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     },
     {
       "name": "Caldera",
@@ -352,7 +393,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x5385dbedf0A337F0aA6Bf203736c69348C5eC6Ff",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x56f4046f9271Ec59787Ecd22b00630c028D93301",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x59B66e87A7f7E512822cE7bfe68c9fFe81b002c7",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -411,7 +462,12 @@
       "category": { "name": "Canonical Bridges", "priority": 2 }
     },
     {
-      "name": "",
+      "address": "0x6329186d6e5a4A90c6c983871d1Fa49D9C673ce3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "QuoteVerifier",
       "address": "0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
       "type": "Contract",
       "unverified": true,
@@ -569,10 +625,12 @@
       "name": "EspressoTEEVerifier",
       "address": "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3",
       "type": "Contract",
+      "template": "espresso/Sequencing/EspressoTEEVerifier_gateway",
       "sourceHashes": [
         "0x6ccdd5bbf0ec94df446cc0d8fb3fc929c373c8d1dcbaced844d6e39997b294cb"
       ],
       "proxyType": "immutable",
+      "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.",
       "sinceTimestamp": 1750089606,
       "sinceBlock": 348001898,
       "values": {
@@ -581,6 +639,11 @@
         "espressoSGXTEEVerifier": "0xEA25045bC30ceE23A280c51020F0bBb78781A297",
         "owner": "0x8Cde072E84932857262648C100d0A2227c495a55",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "espressoNitroTEEVerifier": { "severity": "HIGH" },
+        "espressoSGXTEEVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3": "EspressoTEEVerifier"
@@ -681,6 +744,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x824998d29b4b6209791De9c8b009818eeAD941a2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "ProxyAdmin",
       "address": "0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238",
       "type": "Contract",
@@ -749,7 +817,27 @@
     {
       "address": "0x8Cde072E84932857262648C100d0A2227c495a55",
       "type": "EOA",
-      "proxyType": "EOA"
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3",
+          "description": "change the modular TEE verifier contracts.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        },
+        {
+          "permission": "interact",
+          "from": "arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5",
+          "description": "set the enclaveHash (hash of enclave's code and initial data) and delete all registered signers.",
+          "role": ".owner"
+        }
+      ]
     },
     {
       "name": "UpgradeExecutor",
@@ -915,6 +1003,11 @@
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
+      "address": "0xAed65C27daadf4D6c854fda7b406b4A0996bAe99",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Outbox",
       "address": "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B",
       "type": "Contract",
@@ -961,6 +1054,26 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xc1Cd231FB7C8744548603038b06104Ce0f7cc9F2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD45Aa46e2496dFa1300305a705739FE5023b6f3A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xD6F4Bd156D2099b91DBda1982016685f188083a0",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xd7d94B63F021ebD45d2ADd7E5DABf36C981e5878",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Bridge",
       "address": "0xE1d32C985825562edAa906fAC39295370Db72195",
       "type": "Contract",
@@ -1000,7 +1113,7 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 40521,
+        "delayedMessageCount": 40523,
         "inboxHistory": [
           "0x235000876bd58336C802B3546Fc0250f285fCc79",
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1010,8 +1123,8 @@
         "outboxHistory": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 92769,
-        "sequencerReportedSubMessageCount": 54115908
+        "sequencerMessageCount": 92786,
+        "sequencerReportedSubMessageCount": 54189739
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1058,17 +1171,41 @@
       "name": "EspressoSGXTEEVerifier",
       "address": "0xEA25045bC30ceE23A280c51020F0bBb78781A297",
       "type": "Contract",
+      "template": "espresso/Sequencing/EspressoSGXTEEVerifier",
       "sourceHashes": [
         "0xb506b0038120d7c5021a0964fa2fa3ac35c16fe8c6d8942f99102c158074d57a"
       ],
       "proxyType": "immutable",
+      "description": "Verifies attestations of an Intel SGX TEE.",
       "sinceTimestamp": 1750089457,
       "sinceBlock": 348001309,
       "values": {
         "$immutable": true,
         "owner": "0x8Cde072E84932857262648C100d0A2227c495a55",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "quoteVerifier": "0x69523d25E25e5c78d828Df90459b75F189D40Cf7"
+        "quoteVerifier": "0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
+        "registeredSigners": [
+          "0x1a5d5faF7F5a88D9FbE172B5913228a8157F1936",
+          "0xAed65C27daadf4D6c854fda7b406b4A0996bAe99",
+          "0x5385dbedf0A337F0aA6Bf203736c69348C5eC6Ff",
+          "0x6329186d6e5a4A90c6c983871d1Fa49D9C673ce3",
+          "0xD45Aa46e2496dFa1300305a705739FE5023b6f3A",
+          "0x824998d29b4b6209791De9c8b009818eeAD941a2",
+          "0x59B66e87A7f7E512822cE7bfe68c9fFe81b002c7",
+          "0xc1Cd231FB7C8744548603038b06104Ce0f7cc9F2",
+          "0xd7d94B63F021ebD45d2ADd7E5DABf36C981e5878",
+          "0xD6F4Bd156D2099b91DBda1982016685f188083a0"
+        ],
+        "validEnclaveHashes": [
+          "0x1b8a2dea9244fbc6465f287be7a0888fdee26dc7ed87d76a461da1696f9004c9",
+          "0x1d51625c44bb173b9546b82e03483b12bb766ae89d9e071777da66509c738dad",
+          "0x4572e4569ca2733f1503274cdc24f79f68e8130ddd41d3dade2566437dde38c7",
+          "0xae7a41441d0c4473390ebc33b9bb562af2d63806e36cbe8bfd01bbacff745d89"
+        ]
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "validEnclaveHashes": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0xEA25045bC30ceE23A280c51020F0bBb78781A297": "EspressoSGXTEEVerifier"
@@ -1083,10 +1220,12 @@
       "name": "EspressoNitroTEEVerifier",
       "address": "0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5",
       "type": "Contract",
+      "template": "espresso/Sequencing/EspressoNitroTEEVerifier",
       "sourceHashes": [
         "0xe64963c6654f34a2c879b9fa397e7374d9b37c4af728e9c38e8e8ccd67f6e128"
       ],
       "proxyType": "immutable",
+      "description": "Verifies attestations of an AWS Nitro TEE.",
       "sinceTimestamp": 1750089063,
       "sinceBlock": 347999742,
       "values": {
@@ -1103,8 +1242,14 @@
         "PCRS_KEY": "0x61585f8bc67a4b6d5891a4639a074964ac66fc2241dc0b36c157dc101325367a",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "PUBLIC_KEY_KEY": "0xc7b28019ccfdbd30ffc65951d94bb85c9e2b8434111a000b5afd533ce65f57a4",
+        "registeredSigners": [],
         "TIMESTAMP_KEY": "0x4ebf727c48eac2c66272456b06a885c5cc03e54d140f63b63b6fd10c1227958e",
-        "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a"
+        "USER_DATA_KEY": "0x5e4ea5393e4327b3014bc32f2264336b0d1ee84a4cfd197c8ad7e1e16829a16a",
+        "validEnclaveHashes": []
+      },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "validEnclaveHashes": { "severity": "HIGH" }
       },
       "implementationNames": {
         "0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5": "EspressoNitroTEEVerifier"
@@ -1915,6 +2060,9 @@
     ]
   },
   "usedTemplates": {
+    "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
+    "espresso/Sequencing/EspressoSGXTEEVerifier": "0xb68630d9063a61fc60fef06ed62b0405d30da56a34ab33892cccd6da35665639",
+    "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
@@ -1930,8 +2078,9 @@
     "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
     "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/RollupProxy_fastConfirm": "0x44444b0ddf0730808af44c1a9ff9b9295a98d4ce2f5d1f6c550448dbd39a6c72",
+    "orbitstack/SequencerInbox_Celestia_Espresso": "0x7652f5e8fb9924eee81c6f067f2c2447575233e52bff6752146c910af2b070e2",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x5947f704cfe4a0a058ed740f2c304ee57b5f9f58a34c1c228c93874f81868e70"
+  "permissionsConfigHash": "0xa0dc32a70df89afa489c08aeb8190e4f651e836f20e2971a4661eb61231c3a01"
 }
