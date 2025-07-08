@@ -60,7 +60,7 @@ export async function getScalingFinalityEntries() {
 
 export interface ScalingFinalityEntry extends CommonScalingEntry {
   category: ProjectScalingCategory
-  stack: ProjectScalingStack | undefined
+  stack: ProjectScalingStack[] | undefined
   dataAvailabilityMode: TableReadyValue | undefined
   data: {
     timeToInclusion: {

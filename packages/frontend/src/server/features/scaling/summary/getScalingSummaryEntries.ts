@@ -59,7 +59,7 @@ export interface ScalingSummaryEntry extends CommonScalingEntry {
   stage: ProjectScalingStage
   category: ProjectScalingCategory
   purposes: ProjectScalingPurpose[]
-  stack: ProjectScalingStack | undefined
+  stack: ProjectScalingStack[] | undefined
   dataAvailability: ProjectScalingDa | undefined
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   tvs: {

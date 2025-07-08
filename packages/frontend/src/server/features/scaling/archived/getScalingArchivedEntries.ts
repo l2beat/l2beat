@@ -39,7 +39,7 @@ export async function getScalingArchivedEntries() {
 export interface ScalingArchivedEntry extends CommonScalingEntry {
   category: ProjectScalingCategory
   purposes: string[]
-  stack: ProjectScalingStack | undefined
+  stack: ProjectScalingStack[] | undefined
   risks: RosetteValue[] | undefined
   totalTvs: number | undefined
   tvsOrder: number

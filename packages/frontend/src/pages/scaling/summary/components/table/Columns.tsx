@@ -48,7 +48,7 @@ export const scalingSummaryColumns = [
     cell: (ctx) => (
       <TwoRowCell>
         <TwoRowCell.First>
-          <TypeInfo stack={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+          <TypeInfo stacks={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
         </TwoRowCell.First>
         {ctx.row.original.capability === 'appchain' && (
           <TwoRowCell.Second>

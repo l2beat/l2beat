@@ -14,7 +14,7 @@ export interface ScalingApiEntry {
   type: 'layer2' | 'layer3'
   hostChain: string | undefined
   category: string
-  provider: string | undefined
+  provider: string[] | undefined
   purposes: string[]
   isArchived: boolean
   isUpcoming: boolean

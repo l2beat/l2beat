@@ -24,7 +24,7 @@ export async function getScalingUpcomingEntries() {
 export interface ScalingUpcomingEntry extends CommonScalingEntry {
   initialOrder: number
   category: ProjectScalingCategory
-  stack: ProjectScalingStack | undefined
+  stack: ProjectScalingStack[] | undefined
   purposes: string[]
 }
 
