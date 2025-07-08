@@ -1,1 +1,34 @@
-{ "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json", "displayName": "PredicateServiceManager" }
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "PredicateServiceManager",
+  "ignoreMethods": [
+    "getRestakeableStrategies",
+    "strategies",
+    "delegationManager",
+    "avsDirectory",
+    "stakeRegistry"
+  ],
+  "fields": {
+    "intmaxThreshold": {
+      "handler": {
+        "type": "call",
+        "method": "policyIdToThreshold",
+        "args": [
+          "x-intmax-42efa3d6c0609ea6"
+        ]
+      }
+    },
+    "permissionedOperators": {
+      "handler": {
+        "type": "event",
+        "select": "operators",
+        "add": {
+          "event": "PermissionedOperatorsAdded"
+        },
+        "remove": {
+          "event": "PermissionedOperatorsRemoved"
+        }
+      }
+    }
+  }
+}
