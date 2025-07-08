@@ -47,7 +47,7 @@ export function StageTooltip({
           appchainClassName="text-sm md:text-sm font-bold"
           inline
         />
-        <div className="heading-16 inline-block">
+        <div className="inline-block text-heading-16">
           {getStageName(stageConfig.stage)}
         </div>
       </div>
@@ -98,7 +98,7 @@ export function StageTooltip({
           )}
           {stageConfig.missing && (
             <div>
-              <span className="label-value-14-bold mb-2 block">
+              <span className="mb-2 block font-bold text-label-value-14">
                 Items missing for{' '}
                 <span
                   className={getColorClassName(stageConfig.missing.nextStage)}

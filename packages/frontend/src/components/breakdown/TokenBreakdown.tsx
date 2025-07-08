@@ -82,9 +82,11 @@ export function TokenBreakdownTooltipContent({
                 >
                   <span className="flex items-center gap-1">
                     <Square variant={v.variant} size="small" />
-                    <span className="label-value-14-medium">{v.title}</span>
+                    <span className="font-medium text-label-value-14">
+                      {v.title}
+                    </span>
                   </span>
-                  <span className="label-value-15-medium">
+                  <span className="font-medium text-label-value-15">
                     {((v.value / total) * 100).toFixed(2)}%
                   </span>
                 </div>

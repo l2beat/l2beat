@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
 
@@ -13,7 +13,7 @@ export const prom: ScalingProject = underReviewL2({
       'Prom is the primary access point to the Web3 gaming ecosystem, a cutting-edge Zero-Knowledge (ZK) blockchain developed using the Polygon CDK.',
     purposes: ['Gaming', 'NFT'],
     category: 'ZK Rollup',
-    stack: 'Agglayer CDK',
+    stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://prom.io/'],
       bridges: ['https://prom.io/bridge'],
@@ -28,6 +28,9 @@ export const prom: ScalingProject = underReviewL2({
         'https://medium.com/@prom-io',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
   associatedTokens: ['PROM'],
   chainConfig: {

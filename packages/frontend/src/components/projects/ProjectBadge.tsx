@@ -55,7 +55,9 @@ export function ProjectBadge({
       <TooltipTrigger className="shrink-0">{component}</TooltipTrigger>
       <TooltipPortal>
         <TooltipContent>
-          <span className="label-value-14-medium mb-1 block">{badge.name}</span>
+          <span className="mb-1 block font-medium text-label-value-14">
+            {badge.name}
+          </span>
           <span>{badge.description}</span>
         </TooltipContent>
       </TooltipPortal>

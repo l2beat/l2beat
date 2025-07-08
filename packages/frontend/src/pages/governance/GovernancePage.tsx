@@ -62,7 +62,7 @@ function Header({
       <h1 className="mb-4 font-bold text-3xl md:hidden">Governance</h1>
       <div className="flex w-full items-center justify-between gap-5">
         <div className="flex flex-col gap-6">
-          <p className="paragraph-18">
+          <p className="text-paragraph-18">
             By delegating your governance votes to L2BEAT, you&apos;re
             supporting our mission to protect the interests of the Ethereum
             community and uphold our shared values. Together, we can lead the L2
@@ -92,7 +92,7 @@ function Header({
               ))}
             </div>
           </div>
-          <p className="paragraph-15">
+          <p className="text-paragraph-15">
             If you&apos;d like to see us act as a delegate in another protocol,
             please let us know and we&apos;ll see what we can do.
           </p>

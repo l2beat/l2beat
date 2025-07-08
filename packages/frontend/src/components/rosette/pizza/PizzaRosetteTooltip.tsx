@@ -15,7 +15,7 @@ export function PizzaRosetteTooltip({
     return (
       <div className="w-[300px]">
         <div className="mb-3">
-          <span className="heading-16">Risk analysis</span> is{' '}
+          <span className="text-heading-16">Risk analysis</span> is{' '}
           <UnderReviewBadge />
         </div>
 
@@ -31,7 +31,7 @@ export function PizzaRosetteTooltip({
 
   return (
     <div className="flex flex-col">
-      <span className="heading-16 mb-2">Risk analysis</span>
+      <span className="mb-2 text-heading-16">Risk analysis</span>
       <div className="flex items-center gap-6">
         <div className="relative flex size-[200px] items-center justify-center">
           <PizzaRosetteIcon

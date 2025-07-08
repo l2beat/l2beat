@@ -24,7 +24,8 @@ export const theElasticNetwork: BaseProject = {
     links: {
       buildOn: 'https://docs.zksync.io/',
       learnMore: 'https://zksync.io/',
-      governanceTopDelegates: 'https://www.tally.xyz/gov/zksync/delegates',
+      governanceDelegateToL2BEAT:
+        'https://www.tally.xyz/gov/zksync/delegate/delegate.l2beat.eth',
       governanceProposals: 'https://www.tally.xyz/gov/zksync/proposals',
     },
     token: {

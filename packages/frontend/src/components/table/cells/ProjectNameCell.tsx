@@ -1,3 +1,4 @@
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -86,6 +87,14 @@ export function ProjectNameCell({
           {project.nameSecondLine}
         </span>
       )}
+      {project.statuses?.ongoingAnomaly && (
+        <div className="flex items-center justify-center gap-1 text-negative">
+          <LiveIndicator />
+          <span className="font-medium text-[11px] uppercase leading-none">
+            Ongoing anomaly
+          </span>
+        </div>
+      )}
     </div>
   )
 }
@@ -115,7 +124,7 @@ function NameWithProjectInfoTooltip({
       <TooltipTrigger>{projectName}</TooltipTrigger>
       <TooltipPortal>
         <TooltipContent className="flex flex-col gap-2">
-          <span className="heading-18">What is {projectName}?</span>
+          <span className="text-heading-18">What is {projectName}?</span>
           <p>{project.description}</p>
           <div className="!max-w-screen-xs flex flex-row flex-wrap">
             {project.badges?.map((badge, key) => (

@@ -32,7 +32,7 @@ export const layer2financezk: ScalingProject = {
     description:
       'Celer’s ScalingProject.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],

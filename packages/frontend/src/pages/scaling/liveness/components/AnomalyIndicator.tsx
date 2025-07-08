@@ -2,6 +2,7 @@ import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -10,8 +11,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
-import { LivenessDurationCell } from './LivenessDurationCell'
+import { AnomalyText } from './AnomalyText'
 
 const SHOWN_ANOMALIES = 4
 
@@ -47,22 +47,21 @@ export function AnomalyIndicator({
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <div
-          className="flex h-6 w-min cursor-pointer gap-x-0.5"
-          title="Anomalies in the last 30 days"
-        >
+        <div className="flex h-6 w-min cursor-pointer gap-x-0.5">
           {indicators.map((indicator, i) => (
             <div
               key={i}
               className={cn(
                 'w-0.5 rounded-full',
-                indicator ? 'bg-orange-400' : 'bg-blue-500',
+                indicator === 'none' && 'bg-blue-500',
+                indicator === 'recovered' && 'bg-orange-400',
+                indicator === 'ongoing' && 'bg-negative',
               )}
             />
           ))}
         </div>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent className="max-xs:max-w-[300px]">
         <AnomalyTooltipContent
           anomalies={anomalies}
           hasTrackedContractsChanged={hasTrackedContractsChanged}
@@ -76,9 +75,7 @@ function AnomalyTooltipContent(props: {
   anomalies: LivenessAnomaly[]
   hasTrackedContractsChanged: boolean
 }) {
-  const anomalies = props.anomalies.reverse()
-
-  if (anomalies.length === 0) {
+  if (props.anomalies.length === 0) {
     return <div>No anomalies detected in the last 30 days</div>
   }
 
@@ -86,109 +83,76 @@ function AnomalyTooltipContent(props: {
     <>
       <span>Anomalies from last 30 days:</span>
       <div className="-mx-4 mt-2 list-disc">
-        {anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
-          const endDate = anomaly.timestamp + anomaly.durationInSeconds
-          const endDateUnixTime = UnixTime(endDate)
-          const isLive = UnixTime.now() - 4 * UnixTime.HOUR <= endDateUnixTime
+        {props.anomalies.slice(0, SHOWN_ANOMALIES).map((anomaly) => {
           return (
             <div
               className="space-y-0.5 border-divider border-t px-4 py-2"
-              key={anomaly.timestamp}
+              key={anomaly.start}
             >
-              {isLive && (
-                <div className="mb-1 flex items-center justify-center gap-2 rounded bg-red-500/10 py-1 text-red-500">
-                  <span className="relative flex size-2">
-                    <span className="absolute inline-flex size-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-                    <span className="relative inline-flex size-2 rounded-full bg-red-500"></span>
-                  </span>
-                  <span className="font-medium">Ongoing anomaly</span>
-                </div>
-              )}
-              {isLive && props.hasTrackedContractsChanged && (
-                <Callout
-                  className="rounded px-3 py-2 text-[13px] leading-[130%]"
-                  color="yellow"
-                  small
-                  icon={
-                    <RoundedWarningIcon
-                      className="size-4"
-                      sentiment="warning"
-                    />
-                  }
-                  body={
-                    <>
-                      There are implementation changes, data might be incorrect.
-                    </>
-                  }
-                />
-              )}
-              <div className="flex justify-between gap-2">
-                Start:
-                <span>
-                  {formatTimestamp(anomaly.timestamp, {
-                    mode: 'datetime',
-                  })}
-                </span>
-              </div>
-              {isLive ? (
-                <div className="flex justify-between gap-2">
-                  Last synced:
-                  <span>
-                    {formatTimestamp(endDate, {
-                      mode: 'datetime',
-                    })}
+              {anomaly.end === undefined ? (
+                <div className="mb-1 flex items-center gap-1">
+                  <LiveIndicator />
+                  <span className="text-negative text-subtitle-12 uppercase leading-none">
+                    Ongoing anomaly
                   </span>
                 </div>
               ) : (
-                <div className="flex justify-between gap-2">
-                  End:
-                  <span>
-                    {formatTimestamp(endDate, {
-                      mode: 'datetime',
-                    })}
-                  </span>
-                </div>
+                <span className="text-secondary text-subtitle-12 uppercase leading-none">
+                  Resolved
+                </span>
               )}
-              <div className="flex justify-between gap-2">
-                Duration:
-                <LivenessDurationCell
-                  durationInSeconds={anomaly.durationInSeconds}
-                />
-              </div>
-              <div className="flex justify-between gap-2">
-                Type: <AnomalyTypeBadge type={anomaly.type} />
-              </div>
+              {anomaly.end === undefined &&
+                props.hasTrackedContractsChanged && (
+                  <Callout
+                    className="rounded px-3 py-2 text-[13px] leading-[130%]"
+                    color="yellow"
+                    small
+                    icon={
+                      <RoundedWarningIcon
+                        className="size-4"
+                        sentiment="warning"
+                      />
+                    }
+                    body={
+                      <>
+                        There are implementation changes, data might be
+                        incorrect.
+                      </>
+                    }
+                  />
+                )}
+              <AnomalyText anomaly={anomaly} />
             </div>
           )
         })}
       </div>
-      {anomalies.length > 4 && (
+      {props.anomalies.length > 4 && (
         <div className="-mx-4 border-divider border-t px-4 pt-2">
-          And {anomalies.length - SHOWN_ANOMALIES} more
+          And {props.anomalies.length - SHOWN_ANOMALIES} more
         </div>
       )}
     </>
   )
 }
 
-function AnomalyTypeBadge(props: {
-  type: LivenessAnomaly['type']
+export function AnomalyTypeBadge(props: {
+  type: LivenessAnomaly['subtype']
 }) {
   return (
-    <span className="w-max rounded bg-orange-400 px-1.5 text-black">
-      {typeToLabel(props.type)}
+    <span className="w-max rounded bg-orange-400 px-1.5 text-black uppercase">
+      {anomalySubtypeToLabel(props.type)}
     </span>
   )
 }
 
-function typeToLabel(type: LivenessAnomaly['type']) {
+export function anomalySubtypeToLabel(type: LivenessAnomaly['subtype']) {
   switch (type) {
     case 'batchSubmissions':
-      return 'TX DATA SUBMISSIONS'
+      return 'Tx data submissions'
     case 'proofSubmissions':
-      return 'PROOF SUBMISSIONS'
+      return 'Proof submissions'
     case 'stateUpdates':
-      return 'STATE UPDATES'
+      return 'State updates'
     default:
       assertUnreachable(type)
   }
@@ -199,22 +163,21 @@ function toAnomalyIndicatorEntries(anomalies: LivenessAnomaly[]) {
   // We want to show last 30 days with today included so we start 29 days ago
   const thirtyDaysAgo = now - 29 * UnixTime.DAY
   let dayInLoop = thirtyDaysAgo
-  const result: boolean[] = []
+  const result: ('none' | 'recovered' | 'ongoing')[] = []
 
   while (dayInLoop <= now) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
-      const startDate = UnixTime(a.timestamp)
-      const endDate = startDate + a.durationInSeconds
       return (
-        dayInLoop >= UnixTime.toStartOf(startDate, 'day') &&
-        dayInLoop <= UnixTime.toEndOf(endDate, 'day')
+        dayInLoop >= UnixTime.toStartOf(a.start, 'day') &&
+        (!a.end || dayInLoop <= UnixTime.toEndOf(a.end, 'day'))
       )
     })
 
     if (anomaliesInGivenDay.length === 0) {
-      result.push(false)
+      result.push('none')
     } else {
-      result.push(true)
+      const isAnyOngoing = anomaliesInGivenDay.some((a) => a.end === undefined)
+      result.push(isAnyOngoing ? 'ongoing' : 'recovered')
     }
 
     dayInLoop = dayInLoop + 1 * UnixTime.DAY

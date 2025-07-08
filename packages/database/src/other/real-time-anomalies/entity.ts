@@ -4,16 +4,18 @@ import type { RealTimeAnomaly } from '../../kysely/generated/types'
 
 export type RealTimeAnomalyStatus = 'ongoing' | 'approved' | 'recovered'
 
-export interface RealTimeAnomalyRecord {
+export interface RealTimeAnomalyRecord<
+  T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus,
+> {
   start: UnixTime
   projectId: string
   subtype: TrackedTxsConfigSubtype
-  status: RealTimeAnomalyStatus
+  status: T
   end?: UnixTime
 }
 
-export function toRow(
-  record: RealTimeAnomalyRecord,
+export function toRow<T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus>(
+  record: RealTimeAnomalyRecord<T>,
 ): Insertable<RealTimeAnomaly> {
   return {
     ...record,
@@ -22,14 +24,14 @@ export function toRow(
   }
 }
 
-export function toRecord(
+export function toRecord<T extends RealTimeAnomalyStatus>(
   row: Selectable<RealTimeAnomaly>,
-): RealTimeAnomalyRecord {
+): RealTimeAnomalyRecord<T> {
   return {
     ...row,
     start: UnixTime.fromDate(row.start),
     end: row.end ? UnixTime.fromDate(row.end) : undefined,
     subtype: row.subtype as TrackedTxsConfigSubtype,
-    status: row.status as RealTimeAnomalyStatus,
+    status: row.status as T,
   }
 }
