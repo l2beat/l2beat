@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc2c43f69c221d03ae4abc5e3f5990be64afb4cc0
+Generated with discovered.json: 0xc3ed7e80aaeb4e54c9e5492b6f5727eb77df8d70
 
-# Diff at Tue, 08 Jul 2025 06:37:48 GMT:
+# Diff at Tue, 08 Jul 2025 09:47:42 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 22872700
@@ -565,7 +565,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ServiceManager (0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2)
+    contract PredicateServiceManager (0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2)
     +++ description: None
 ```
 

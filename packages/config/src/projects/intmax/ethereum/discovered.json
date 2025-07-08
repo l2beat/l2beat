@@ -6219,9 +6219,10 @@
       }
     },
     {
-      "name": "ServiceManager",
+      "name": "PredicateServiceManager",
       "address": "0xf6f4A30EeF7cf51Ed4Ee1415fB3bFDAf3694B0d2",
       "type": "Contract",
+      "template": "eigenlayer/PredicateServiceManager",
       "sourceHashes": [
         "0x525b22d02f8b39d3432dfaf0061e3d91caa10d282e86ec7abeb4ca11790f6762",
         "0x55b4084f8591b2c3c51011b50fe478e7761ce2cab412359b4df3b6941fcba322"
@@ -11390,6 +11391,7 @@
     "eigenlayer/IndexRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/PaymentVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/PermissionController": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "eigenlayer/PredicateServiceManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/RegistryCoordinator": "0xeef8d3302c7236f5745dd51b4d6b05b44a371c9708994d86a8d2b7e4b573dedc",
     "eigenlayer/SocketRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "eigenlayer/StakeRegistry": "0x354e5717008504cef09d88027f76fe2fe308210a96b59fce263f4d8ec5868080",
@@ -11413,5 +11415,5 @@
     "tokens/Lido/ValidatorsExitBusOracle": "0x11365707f780cd17f5f0f1cc48c59745a28a1f5725b533c928cdaac71c9e3938",
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816"
   },
-  "permissionsConfigHash": "0xb6603dde33d98d8c8ef4a1d1fe4824fb53eb2eb997cc078361784fcd81281104"
+  "permissionsConfigHash": "0x2f9b6e73defcfbe274a019d02ffba940a10b637ea8992e6d00bd9ee51289f0b5"
 }
