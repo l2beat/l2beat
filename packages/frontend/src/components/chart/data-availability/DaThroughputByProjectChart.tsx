@@ -171,7 +171,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-2" />
@@ -194,11 +194,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {formattedValue} {unit}
               </span>
             </div>

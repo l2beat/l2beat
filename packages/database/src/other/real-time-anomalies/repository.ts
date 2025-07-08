@@ -33,13 +33,28 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getOngoingAnomalies(): Promise<RealTimeAnomalyRecord[]> {
+  async getOngoingAnomalies(): Promise<
+    RealTimeAnomalyRecord<'ongoing' | 'approved'>[]
+  > {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
       .select(selectRealtimeAnomaly)
-      .where((eb) =>
-        eb.or([eb('status', '=', 'ongoing'), eb('status', '=', 'approved')]),
-      )
+      .where('status', 'in', ['ongoing', 'approved'])
+      .execute()
+
+    return rows.map((r) => toRecord(r))
+  }
+
+  async getApprovedAndRecoveredAnomaliesByProjectIds(
+    projectIds: string[],
+  ): Promise<RealTimeAnomalyRecord[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('RealTimeAnomaly')
+      .select(selectRealtimeAnomaly)
+      .where('status', 'in', ['approved', 'recovered'])
+      .where('projectId', 'in', projectIds)
       .execute()
 
     return rows.map(toRecord)

@@ -85,7 +85,7 @@ export function TvsCustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-28 flex-col">
-        <div className="label-value-14-medium mb-3 text-secondary">
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, {
             longMonthName: true,
             mode: fullDate ? 'datetime' : undefined,
@@ -108,11 +108,11 @@ export function TvsCustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {formatCurrency(entry.value, unit)}
                 </span>
               </div>

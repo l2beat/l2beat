@@ -43,11 +43,13 @@ function PublicationHeader({
 }: { publication: GovernancePublicationEntry }) {
   return (
     <div>
-      <p className="subtitle-12 text-brand uppercase">
+      <p className="text-brand text-subtitle-12 uppercase">
         {publication.readTimeInMinutes} min read • Published on{' '}
         {publication.publishedOn}
       </p>
-      <h1 className="md:heading-32 heading-24 mt-2">{publication.title}</h1>
+      <h1 className="mt-2 text-heading-24 md:text-heading-32">
+        {publication.title}
+      </h1>
       <div className="mt-6 flex items-center justify-start">
         <img
           {...publication.author.avatar}
@@ -55,10 +57,10 @@ function PublicationHeader({
           className="mr-2 size-10 rounded-full"
         />
         <div>
-          <p className="label-value-16-bold">
+          <p className="font-bold text-label-value-16">
             {publication.author.firstName} {publication.author.lastName}
           </p>
-          <p className="label-value-12-bold mt-1 text-zinc-500 dark:text-gray-50">
+          <p className="mt-1 font-bold text-label-value-12 text-zinc-500 dark:text-gray-50">
             {publication.author.role}
           </p>
         </div>

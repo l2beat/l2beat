@@ -338,7 +338,7 @@ function orbitStackCommon(
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
-    | 'stack'
+    | 'stacks'
     | 'category'
     | 'warning'
   >
@@ -473,7 +473,7 @@ function orbitStackCommon(
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      stack: 'Arbitrum',
+      stacks: ['Arbitrum'],
       category:
         templateVars.display.category ??
         (templateVars.reasonsForBeingOther

@@ -28,8 +28,8 @@ export const superchain: BaseProject = {
     links: {
       buildOn: 'https://superchain.eco/develop',
       learnMore: 'https://superchain.eco/',
-      governanceTopDelegates:
-        'https://vote.optimism.io/delegates?orderBy=most_voting_power',
+      governanceDelegateToL2BEAT:
+        'https://vote.optimism.io/delegates/0x1b686ee8e31c5959d9f5bbd8122a58682788eead',
       governanceProposals: 'https://vote.optimism.io/proposals',
     },
     token: {
