@@ -17,18 +17,21 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
       status: 'ongoing',
+      end: undefined,
     },
     {
       start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'batchSubmissions',
       status: 'approved',
+      end: undefined,
     },
     {
       start: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       status: 'recovered',
+      end: START,
     },
   ] as const satisfies RealTimeAnomalyRecord[]
 
@@ -75,7 +78,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           status: 'recovered',
-          end: undefined,
+          end: START,
         },
         { ...newRows[1]!, end: undefined },
       ])
@@ -90,12 +93,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-          end: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted(DATA)
     })
   })
 
