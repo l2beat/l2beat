@@ -82,6 +82,7 @@ describe(DaIndexer.name, () => {
       const blobCache = mockObject<BlobCache>({
         read: mockFn().resolvesTo([]),
         write: mockFn().resolvesTo(undefined),
+        getHeight: mockFn().resolvesTo(99),
       })
 
       const { indexer, daProvider } = mockIndexer({
@@ -91,12 +92,15 @@ describe(DaIndexer.name, () => {
 
       await indexer.multiUpdate(100, 200, [])
 
-      expect(blobCache.read).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
+      expect(blobCache.getHeight).toHaveBeenCalled()
+      expect(blobCache.read).not.toHaveBeenCalled()
       expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(blobCache.write).toHaveBeenOnlyCalledWith(blobs)
     })
 
     it('uses cache (some blobs)', async () => {
+      const cacheHeight = 150
+
       const blobs = [
         mockObject<DaBlob>({
           blockTimestamp: 300,
@@ -120,6 +124,7 @@ describe(DaIndexer.name, () => {
           }),
         ]),
         write: mockFn().resolvesTo(undefined),
+        getHeight: mockFn().resolvesTo(cacheHeight),
       })
 
       const { indexer, daProvider } = mockIndexer({
@@ -129,8 +134,17 @@ describe(DaIndexer.name, () => {
 
       await indexer.multiUpdate(100, 200, [])
 
-      expect(blobCache.read).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 151, 200)
+      expect(blobCache.getHeight).toHaveBeenCalled()
+      expect(blobCache.read).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        100,
+        cacheHeight,
+      )
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
+        DA_LAYER,
+        cacheHeight + 1,
+        200,
+      )
       expect(blobCache.write).toHaveBeenOnlyCalledWith(blobs)
     })
 
@@ -147,6 +161,7 @@ describe(DaIndexer.name, () => {
           }),
         ]),
         write: mockFn().resolvesTo(undefined),
+        getHeight: mockFn().resolvesTo(300),
       })
 
       const { indexer, daProvider } = mockIndexer({
@@ -155,6 +170,7 @@ describe(DaIndexer.name, () => {
 
       await indexer.multiUpdate(100, 200, [])
 
+      expect(blobCache.getHeight).toHaveBeenCalled()
       expect(blobCache.read).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(daProvider.getBlobs).not.toHaveBeenCalled()
       expect(blobCache.write).not.toHaveBeenCalled()

@@ -107,55 +107,62 @@ export class DaIndexer extends ManagedMultiIndexer<BlockDaIndexedConfig> {
       to: adjustedTo,
     })
 
-    const blobs = []
-
-    let adjustedFrom = from
-    // get as much as we can from cache
-    if (this.$.blobCache) {
-      const cachedBlobs = await this.$.blobCache.read(
-        this.$.daLayer,
-        from,
-        adjustedTo,
-      )
-
-      if (cachedBlobs.length > 0) {
-        cachedBlobs.sort((a, b) => b.blockNumber - a.blockNumber)
-        const cachedUpTo = cachedBlobs[0].blockNumber
-        this.logger.info('Fetched blobs from cache', {
-          from,
-          to: cachedUpTo,
-          count: cachedBlobs.length,
-        })
-        adjustedFrom = cachedUpTo + 1
-        blobs.push(...cachedBlobs)
-      }
+    if (!this.$.blobCache) {
+      return this.getBlobsOnChain(from, adjustedTo)
     }
 
-    // get the rest from provider
-    if (adjustedFrom < adjustedTo) {
-      const onchainBlobs = await this.$.daProvider.getBlobs(
-        this.daLayer,
-        adjustedFrom,
+    const cacheHeight = await this.$.blobCache.getHeight(this.$.daLayer)
+    if (cacheHeight >= adjustedTo) {
+      return this.getBlobsFromCache(from, adjustedTo)
+    } else if (cacheHeight < from) {
+      const onChainBlobs = await this.getBlobsOnChain(from, adjustedTo)
+      await this.writeBlobsToCache(onChainBlobs)
+      return onChainBlobs
+    } else {
+      const cachedBlobs = await this.getBlobsFromCache(from, cacheHeight)
+      const onChainBlobs = await this.getBlobsOnChain(
+        cacheHeight + 1,
         adjustedTo,
       )
-
-      this.logger.info('Fetched blobs from chain', {
-        from: adjustedFrom,
-        to: adjustedTo,
-        count: onchainBlobs.length,
-      })
-
-      if (this.$.blobCache) {
-        this.logger.info('Writing blobs to cache', {
-          count: blobs.length,
-        })
-        await this.$.blobCache.write(onchainBlobs)
-      }
-
-      blobs.push(...onchainBlobs)
+      await this.writeBlobsToCache(onChainBlobs)
+      return [...cachedBlobs, ...onChainBlobs]
     }
+  }
+
+  private async getBlobsOnChain(from: number, to: number): Promise<DaBlob[]> {
+    const blobs = await this.$.daProvider.getBlobs(this.daLayer, from, to)
+
+    this.logger.info('Fetched blobs from chain', {
+      from,
+      to,
+      count: blobs.length,
+    })
 
     return blobs
+  }
+
+  private async getBlobsFromCache(from: number, to: number): Promise<DaBlob[]> {
+    if (!this.$.blobCache) return []
+
+    const blobs = await this.$.blobCache.read(this.$.daLayer, from, to)
+
+    this.logger.info('Fetched blobs from cache', {
+      from,
+      to,
+      count: blobs.length,
+    })
+
+    return blobs
+  }
+
+  private async writeBlobsToCache(blobs: DaBlob[]) {
+    if (!this.$.blobCache) return
+
+    this.logger.info('Writing blobs to cache', {
+      count: blobs.length,
+    })
+
+    await this.$.blobCache.write(blobs)
   }
 
   override async removeData(

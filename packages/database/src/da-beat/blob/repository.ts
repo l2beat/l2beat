@@ -44,4 +44,15 @@ export class BlobsRepository extends BaseRepository {
       .execute()
     return rows.map(toRecord)
   }
+
+  async getLatest(daLayer: string): Promise<BlobRecord | undefined> {
+    const row = await this.db
+      .selectFrom('Blob')
+      .select(selectBlob)
+      .where('daLayer', '=', daLayerToNumber(daLayer))
+      .orderBy('blockNumber', 'desc')
+      .limit(1)
+      .executeTakeFirst()
+    return row ? toRecord(row) : undefined
+  }
 }

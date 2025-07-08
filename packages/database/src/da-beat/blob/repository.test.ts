@@ -107,6 +107,14 @@ describeDatabase(BlobsRepository.name, (db) => {
     })
   })
 
+  describe(BlobsRepository.prototype.getLatest.name, () => {
+    it('should return all rows for related entity', async () => {
+      const result = await repository.getLatest('avail')
+
+      expect(result).toEqual(DATA[2]!)
+    })
+  })
+
   describe(BlobsRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()

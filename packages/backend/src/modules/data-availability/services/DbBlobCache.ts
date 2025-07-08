@@ -47,4 +47,12 @@ export class DbBlobCache implements BlobCache {
       topics: record.topics ?? [],
     }))
   }
+
+  async getHeight(daLayer: string): Promise<number> {
+    const latestBlob = await this.db.blobs.getLatest(daLayer)
+    if (!latestBlob) {
+      return 0
+    }
+    return latestBlob.blockNumber
+  }
 }
