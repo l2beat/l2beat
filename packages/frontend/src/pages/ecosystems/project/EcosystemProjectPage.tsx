@@ -133,7 +133,9 @@ export function EcosystemProjectPage({
                 />
                 <EcosystemGovernanceLinks
                   links={ecosystem.links.governance}
-                  topDelegatesBackgroundImage={ecosystem.images.topDelegates}
+                  delegateToL2BEATBackgroundImage={
+                    ecosystem.images.delegateToL2BEAT
+                  }
                   className="col-span-12 lg:col-span-8"
                 />
               </main>
