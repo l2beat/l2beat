@@ -37,7 +37,7 @@ export const scalingFinalityColumns = [
   columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => (
-      <TypeInfo stacks={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,

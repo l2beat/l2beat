@@ -52,7 +52,7 @@ export function getCommonScalingEntry({
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
-      ...(project.scalingInfo.stack ?? ['No stack']).map((stack) => ({
+      ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({
         id: 'stack' as const,
         value: stack,
       })),

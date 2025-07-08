@@ -55,7 +55,7 @@ export const katana: ScalingProject = {
       'Katana is a Layer 2 specializing on DeFi. Its unique architecture combines an OP stack base with Agglayer shared bridge interoperability and OP-Succinct SP1 validity proofs.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: ['Agglayer CDK', 'OP Stack'],
+    stacks: ['Agglayer CDK', 'OP Stack'],
     upgradesAndGovernanceImage: 'agglayer-algateway',
     links: {
       websites: ['https://katana.network/'],

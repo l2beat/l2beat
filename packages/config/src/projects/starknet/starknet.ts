@@ -194,7 +194,7 @@ export const starknet: ScalingProject = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
-    stack: ['SN Stack'],
+    stacks: ['SN Stack'],
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],

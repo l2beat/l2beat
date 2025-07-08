@@ -70,7 +70,7 @@ export const kroma: ScalingProject = {
       'Kroma aims to develop a universal ZK Rollup based on the Optimism Bedrock architecture. Currently, Kroma operates as an Optimistic Rollup with ZK fault proofs, utilizing a zkEVM based on Scroll and a zkVM based proven with SP1.',
     purposes: ['Universal'],
     category: 'Other',
-    stack: ['OP Stack'],
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://kroma.network/'],
       bridges: ['https://kroma.network/bridge/'],

@@ -122,7 +122,7 @@ export const apex: ScalingProject = {
       two independent StarkEx instances, one for USDC and one for USDT, but that
       technical distinction is not visible to the user.`,
     purposes: ['Exchange'],
-    stack: ['StarkEx'],
+    stacks: ['StarkEx'],
     category: 'Other',
     links: {
       websites: ['https://apex.exchange/'],

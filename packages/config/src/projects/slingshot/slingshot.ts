@@ -11,7 +11,7 @@ export const slingshot: ScalingProject = upcomingL3({
     name: 'Slingshot',
     slug: 'slingshot',
     category: 'Optimium',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     description:
       'Slingshot is a Roblox AI Game Launcher built on Arbitrum, allowing users to bet on and interact with next-generation AI-powered games.',
     purposes: ['AI', 'Gaming'],

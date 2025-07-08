@@ -105,7 +105,7 @@ export const taiko: ScalingProject = {
   display: {
     name: 'Taiko Alethia',
     slug: 'taiko',
-    stack: ['Taiko'],
+    stacks: ['Taiko'],
     description:
       'Taiko Alethia is an Ethereum-equivalent rollup on the Ethereum network. Taiko combines based sequencing and a multi-proof system through SP1, RISC0 and TEEs.',
     purposes: ['Universal'],

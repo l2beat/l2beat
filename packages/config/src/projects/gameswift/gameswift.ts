@@ -13,7 +13,7 @@ export const gameswift: ScalingProject = upcomingL2({
       'GameSwift Modular Chain is a Layer 2 solution built using the OP Stack. The GameSwift Modular Chain focuses on gaming, tailored to meet the specific needs and challenges of game developers.',
     purposes: ['Gaming'],
     category: 'Optimistic Rollup',
-    stack: ['OP Stack'],
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://gameswift.io/'],
       bridges: ['https://platform.gameswift.io/games'],

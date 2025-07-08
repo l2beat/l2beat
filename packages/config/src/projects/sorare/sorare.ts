@@ -66,7 +66,7 @@ export const sorare: ScalingProject = {
     description:
       'Sorare is a global fantasy football game where you can play with officially licensed digital cards.',
     purposes: ['NFT', 'Exchange'],
-    stack: ['StarkEx'],
+    stacks: ['StarkEx'],
     category: 'Other',
     links: {
       websites: ['https://sorare.com/'],

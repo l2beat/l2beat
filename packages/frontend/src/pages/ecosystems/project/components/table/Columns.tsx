@@ -44,7 +44,7 @@ export function getEcosystemProjectsColumns(ecosystemId: ProjectId) {
       cell: (ctx) => (
         <TwoRowCell>
           <TwoRowCell.First>
-            <TypeInfo stacks={ctx.row.original.stack}>
+            <TypeInfo stacks={ctx.row.original.stacks}>
               {ctx.getValue()}
             </TypeInfo>
           </TwoRowCell.First>

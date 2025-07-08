@@ -13,7 +13,7 @@ export const hook: ScalingProject = underReviewL3({
     name: 'Hook',
     slug: 'hook',
     category: 'Optimistic Rollup',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     description:
       'Hook is an Orbit stack L3 Appchain on Arbitrum powering a perpetuals DEX for tokens and NFTs.',
     headerWarning:

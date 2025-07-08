@@ -25,7 +25,7 @@ export async function getDiscolupeProjects() {
       display: {
         name: project.name,
         slug: project.slug,
-        stack: project.scalingInfo.stack,
+        stacks: project.scalingInfo.stacks,
         category: project.scalingInfo.type,
       },
       type: project.scalingInfo.layer === 'layer2' ? 'L2' : 'L3',

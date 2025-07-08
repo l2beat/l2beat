@@ -13,7 +13,7 @@ export const liftchain: ScalingProject = upcomingL2({
       'LIFTChain is a Layer 2 solution built on the ZK Stack leveraging zkEVM in Validium mode. It serves as a Hyperchain allowing anyone to build gaming apps (gApps) on top of their favourite AAA games.',
     purposes: ['Gaming', 'Universal'],
     category: 'Validium',
-    stack: ['ZK Stack'],
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://liftdata.ai/'],
       documentation: ['https://docs.liftdata.ai/'],

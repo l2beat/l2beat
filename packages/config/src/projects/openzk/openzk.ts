@@ -21,7 +21,7 @@ export const openzk: ScalingProject = underReviewL2({
       'OpenZK is a ZK rollup that unites native ETH staking, liquid restaking, and stablecoin staking in one seamless platform.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: ['ZK Stack'],
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://openzk.net/'],
       bridges: [

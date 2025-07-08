@@ -11,7 +11,7 @@ export const nal: ScalingProject = underReviewL2({
     name: 'Nal',
     slug: 'nal',
     category: 'Optimistic Rollup',
-    stack: ['OP Stack'],
+    stacks: ['OP Stack'],
     description:
       'Nal is a general-purpose OP stack chain. It aims to facilitate the creation and trading of new assets, including AIGC and physical-to-digital transformations.',
     purposes: ['Universal'],

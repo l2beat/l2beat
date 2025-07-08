@@ -14,7 +14,7 @@ export const forta: ScalingProject = underReviewL3({
       'Forta is a Layer 3 powered by Arbitrum Orbit. It is being built to support the Forta Firewall, which screens high-risk transactions, ensuring a safer blockchain environment. The Forta Chain records critical data like analyzed transaction batches, delayed/blocked transactions, and maintains a decentralized inbox for delayed transactions.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://forta.org/'],
       bridges: [

@@ -14,7 +14,7 @@ export interface ScalingApiEntry {
   type: 'layer2' | 'layer3'
   hostChain: string | undefined
   category: string
-  provider: string[] | undefined
+  providers: string[] | undefined
   purposes: string[]
   isArchived: boolean
   isUpcoming: boolean
@@ -57,7 +57,7 @@ export async function getScalingApiEntries(): Promise<ScalingApiEntry[]> {
         type: project.scalingInfo.layer,
         hostChain: project.scalingInfo.hostChain.name,
         category: project.scalingInfo.type,
-        provider: project.scalingInfo.stack,
+        providers: project.scalingInfo.stacks,
         purposes: project.scalingInfo.purposes,
         isArchived: false,
         isUpcoming: false,

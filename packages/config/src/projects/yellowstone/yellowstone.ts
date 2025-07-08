@@ -14,7 +14,7 @@ export const yellowstone: ScalingProject = upcomingL3({
       "Chronicle Yellowstone is Lit Protocol's custom EVM rollup which is superseding the Chronicle blockchain, allowing for a more performant and stable backend for Lit's infrastructure.",
     purposes: ['Universal'],
     category: 'Optimium',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://litprotocol.com/'],
       documentation: ['https://developer.litprotocol.com/'],

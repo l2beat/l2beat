@@ -27,7 +27,7 @@ export const columns = [
       tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
-      <TypeInfo stacks={ctx.row.original.stack}>{ctx.getValue()}</TypeInfo>
+      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
     ),
     sortingFn: (a, b) => {
       const categoryCompare = a.original.category.localeCompare(
@@ -37,8 +37,8 @@ export const columns = [
         return categoryCompare
       }
 
-      const stackCompare = (a.original.stack?.[0] ?? '').localeCompare(
-        b.original.stack?.[0] ?? '',
+      const stackCompare = (a.original.stacks?.[0] ?? '').localeCompare(
+        b.original.stacks?.[0] ?? '',
       )
       return stackCompare
     },

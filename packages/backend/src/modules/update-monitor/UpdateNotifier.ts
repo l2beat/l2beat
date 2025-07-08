@@ -280,7 +280,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
   const stacks: ProjectScalingStack[] = [
     ...new Set(
       scaling
-        .flatMap((p) => p.scalingInfo.stack)
+        .flatMap((p) => p.scalingInfo.stacks)
         .filter((p) => p !== undefined),
     ),
   ]
@@ -293,7 +293,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
 
   for (const stack of stacks) {
     const isFullyTemplatized = scaling
-      .filter((p) => p.scalingInfo.stack?.includes(stack))
+      .filter((p) => p.scalingInfo.stacks?.includes(stack))
       .map((p) => p.discoveryInfo.isDiscoDriven)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length

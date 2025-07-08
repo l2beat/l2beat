@@ -21,7 +21,7 @@ export const appchain: ScalingProject = orbitStackL2({
     slug: 'appchain',
     description:
       'AppChain is an incentivized Layer 2 that allows developers to capture the value their dApps create, enabling sustainable economic models.',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://appchain.xyz/'],
       documentation: ['https://docs.appchain.xyz/'],

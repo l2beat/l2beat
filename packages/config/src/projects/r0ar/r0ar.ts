@@ -20,7 +20,7 @@ export const r0ar: ScalingProject = opStackL2({
       'R0ar is an Optimistic Rollup utilizing the OP Stack focusing on DeFi.',
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
-    stack: ['OP Stack'],
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://r0ar.io/'],
       bridges: ['https://r0arbridge.io/'],

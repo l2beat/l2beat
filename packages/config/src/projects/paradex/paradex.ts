@@ -75,7 +75,7 @@ export const paradex: ScalingProject = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    stack: ['SN Stack'],
+    stacks: ['SN Stack'],
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],

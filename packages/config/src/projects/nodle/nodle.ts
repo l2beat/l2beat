@@ -13,7 +13,7 @@ export const nodle: ScalingProject = upcomingL2({
       'Nodle is a decentralized wireless network for IoT devices built on zkSync.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: ['ZK Stack'],
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://nodle.com/'],
       documentation: ['https://docs.nodle.com/'],

@@ -13,7 +13,7 @@ export const xpla: ScalingProject = upcomingL2({
       "XPLA is a global content powerhouse acting as the hub for digital media. The zkXPLA chain, built on ZKsync's ZK Stack technology, will optimize the deployment of games by publishers and developers and offer a seamless end-to-end gaming environment.",
     purposes: ['Universal', 'Gaming'],
     category: 'Validium',
-    stack: ['ZK Stack'],
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://xpla.io'],
       bridges: ['https://vault.xpla.io/'],

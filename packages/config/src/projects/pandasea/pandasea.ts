@@ -16,7 +16,7 @@ export const pandasea: ScalingProject = underReviewL2({
       'PandaSea.io is a Layer 2 Web3 platform focused on integrating social finance and sports engagement.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: ['OP Stack'],
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://pandasea.io/'],
       explorers: ['https://pandaseascan.com/'],

@@ -84,7 +84,7 @@ export async function getScalingDaEntries() {
 export interface ScalingDaEntry extends CommonScalingEntry {
   category: ProjectScalingCategory
   dataAvailability: ProjectScalingDa
-  stack: ProjectScalingStack[] | undefined
+  stacks: ProjectScalingStack[] | undefined
   tvsOrder: number
   risks: EntryRisks | undefined
   daHref:
@@ -110,7 +110,7 @@ function getScalingDaEntry(
     category: project.scalingInfo.type,
     dataAvailability: project.scalingDa,
     daHref: getDaHref(project, daLayers),
-    stack: project.scalingInfo.stack,
+    stacks: project.scalingInfo.stacks,
     risks,
     tvsOrder: tvs ?? -1,
   }

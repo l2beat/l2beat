@@ -17,7 +17,7 @@ export const cheese: ScalingProject = underReviewL3({
   ],
   display: {
     category: 'Optimium',
-    stack: ['Arbitrum'],
+    stacks: ['Arbitrum'],
     name: 'CheeseChain',
     slug: 'cheese',
     description: 'CheeseChain is an Orbit stack Optimium using $CHEESE.',

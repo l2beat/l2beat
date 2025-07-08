@@ -79,7 +79,7 @@ function layer2Or3ToProject(
       capability: p.capability,
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
-      stack: p.display.stack,
+      stacks: p.display.stacks,
       raas: getRaas(p.badges),
       infrastructure: getInfrastructure(p.badges),
       vm: getVM(p.badges),

@@ -129,8 +129,8 @@ export interface ProjectScalingDisplay {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ProjectScalingCategory
-  /** Technological stack */
-  stack?: ProjectScalingStack[]
+  /** Technological stacks */
+  stacks?: ProjectScalingStack[]
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
