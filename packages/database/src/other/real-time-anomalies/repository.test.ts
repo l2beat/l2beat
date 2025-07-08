@@ -96,7 +96,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all ongoing anomalies', async () => {
       const results = await repository.getOngoingAnomalies()
 
-      expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+      expect(results).toEqualUnsorted([DATA[0], DATA[1], DATA[2]])
     })
   })
 
