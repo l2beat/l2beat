@@ -67,7 +67,7 @@ export const brine: ScalingProject = {
     description: 'tanX is a DEX powered by StarkEx technology.',
     purposes: ['Exchange'],
     category: 'Other',
-    stack: 'StarkEx',
+    stack: ['StarkEx'],
     links: {
       websites: ['https://tanx.fi/'],
       bridges: ['https://trade.tanx.fi/'],

@@ -353,7 +353,7 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: ProjectScalingStack | undefined
+  stack: ProjectScalingStack[] | undefined
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]

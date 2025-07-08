@@ -15,7 +15,7 @@ export const pay: ScalingProject = upcomingL2({
       'Pay is a zkEVM blockchain by Wirex, powered by the Polygon CDK stack. It aims to be a decentralized payments network.',
     purposes: ['Payments'],
     category: 'ZK Rollup',
-    stack: 'Agglayer CDK',
+    stack: ['Agglayer CDK'],
     links: {
       websites: ['https://wirexpaychain.com/'],
       documentation: [],

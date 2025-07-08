@@ -13,7 +13,7 @@ export const axonum: ScalingProject = upcomingL2({
       'Axonum is an OP Stack L2 with a precompile to access AI inference directly from smart contracts.',
     purposes: ['Universal', 'AI'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stack: ['OP Stack'],
     links: {
       websites: ['https://axonum.io'],
       bridges: ['https://app.axonum.io/bridge/deposit'],

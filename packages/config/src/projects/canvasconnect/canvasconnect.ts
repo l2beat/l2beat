@@ -54,7 +54,7 @@ export const canvasconnect: ScalingProject = {
     description:
       'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
     purposes: ['Privacy', 'Exchange'],
-    stack: 'StarkEx',
+    stack: ['StarkEx'],
     category: 'Validium',
     links: {
       websites: ['https://canvas.co/'],

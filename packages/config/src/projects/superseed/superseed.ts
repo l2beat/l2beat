@@ -18,7 +18,7 @@ export const superseed: ScalingProject = opStackL2({
     slug: 'superseed',
     description:
       'Superseed is an Optimistic Rollup utilizing the OP Stack, aiming to provide a CDP lending platform enshrined in the protocol and redistribution of Layer 2 fees to its users.',
-    stack: 'OP Stack',
+    stack: ['OP Stack'],
     links: {
       websites: ['https://superseed.xyz/'],
       bridges: ['https://bridge.superseed.xyz/'],

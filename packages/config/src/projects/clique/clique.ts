@@ -20,7 +20,7 @@ export const clique: ScalingProject = underReviewL3({
     name: 'Clique',
     slug: 'clique',
     category: 'Optimium',
-    stack: 'OP Stack',
+    stack: ['OP Stack'],
     description:
       'Clique is an OP stack Optimium built on Base and using Celestia for DA. The project aims to provide an environment that meets the needs of both onchain gaming and AI technologies. The team is also building their own onchain game called Eternal Legacy.',
     purposes: ['AI', 'Gaming'],
@@ -32,6 +32,9 @@ export const clique: ScalingProject = underReviewL3({
       repositories: ['https://github.com/STPDevteam/'],
       socialMedia: ['https://x.com/STP_Network', 'https://t.me/STPofficial'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
   chainConfig: {
     name: 'clique',

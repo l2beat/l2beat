@@ -13,7 +13,7 @@ export const union: ScalingProject = upcomingL2({
       'Union Chain is a ZK Chain designed to bridge the worlds of Crypto and Traditional Finance (TradFi) by uniting top centralized crypto exchanges (CEXs) and licensed RWA tokenization leaders with top Blockchain technology to build, issue, distribute, and transact on one chain.',
     purposes: ['Universal', 'RWA'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stack: ['ZK Stack'],
     links: {
       websites: ['https://unionchain.io/'],
       socialMedia: [

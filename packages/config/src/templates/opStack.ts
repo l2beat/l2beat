@@ -277,7 +277,7 @@ function opStackCommon(
         fraudProofType === 'Permissionless')
           ? 'opfp'
           : undefined,
-      stack: 'OP Stack',
+      stack: ['OP Stack'],
       category:
         templateVars.display.category ??
         (templateVars.reasonsForBeingOther

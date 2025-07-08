@@ -13,7 +13,7 @@ export const allo: ScalingProject = upcomingL2({
       'Allo is an OP Stack L2 which will be a part of Superchain. It is used to tokenize Real World Assets seamlessly - unlocking reduced transaction times and lower costs.',
     purposes: ['RWA'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stack: ['OP Stack'],
     links: {
       websites: ['https://allo.xyz'],
       bridges: ['https://app.allo.xyz/'],

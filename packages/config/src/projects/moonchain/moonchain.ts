@@ -11,7 +11,7 @@ export const moonchain: ScalingProject = underReviewL3({
     name: 'MXCzkEVM Moonchain',
     shortName: 'Moonchain',
     slug: 'moonchain',
-    stack: 'Taiko',
+    stack: ['Taiko'],
     description:
       'MXCzkEVM Moonchain is a Layer3 Ethereum-compatible Optimistic Rollup on Arbitrum, focused on data exchange and communication in the IoT DePIN sector.',
     purposes: ['Universal'],

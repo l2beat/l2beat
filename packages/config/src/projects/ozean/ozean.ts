@@ -13,7 +13,7 @@ export const ozean: ScalingProject = upcomingL2({
       "Ozean is Clearpool's new Layer 2 blockchain focused on integrating RWAs into DeFi. Built on the OP Stack.",
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stack: ['OP Stack'],
     links: {
       websites: ['https://ozean.finance/'],
       documentation: ['https://docs.ozean.finance/'],

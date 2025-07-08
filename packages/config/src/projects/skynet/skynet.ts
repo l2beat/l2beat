@@ -16,7 +16,7 @@ export const skynet: ScalingProject = underReviewL3({
       'Skynet is a scaling solution built on the Orbit stack that aims to act as infrastructure for AI Agents.',
     purposes: ['Universal'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stack: ['Arbitrum'],
     links: {
       websites: ['https://skynet.io/'],
       explorers: ['https://explorer.skynet.io/'],

@@ -17,7 +17,7 @@ export const rufus: ScalingProject = underReviewL2({
     name: 'Rufus',
     slug: 'rufus',
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stack: ['Arbitrum'],
     description:
       'Rufus is an Orbit stack L2 with AnyTrust DA created for gaming by the team behind the Dogelon (ELON) token.',
     purposes: ['Gaming'],

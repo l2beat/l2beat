@@ -17,7 +17,7 @@ export const pmon: ScalingProject = underReviewL3({
   ],
   display: {
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stack: ['Arbitrum'],
     name: 'PMON Chain',
     slug: 'pmon',
     description:

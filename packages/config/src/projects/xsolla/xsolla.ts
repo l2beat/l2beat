@@ -12,7 +12,7 @@ export const xsolla: ScalingProject = upcomingL2({
     description: 'Xsolla ZK is a Layer 2 gaming platform powered by ZKsync.',
     purposes: ['Gaming'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stack: ['ZK Stack'],
     links: {
       websites: ['https://xsolla.com/zk'],
       documentation: ['https://developers.xsolla.com/'],

@@ -70,7 +70,7 @@ describe('layer2s', () => {
     describe('every escrow in new format resolves to discovery entry', () => {
       for (const layer2 of layer2s) {
         // NOTE(radomski): PolygonCDK projects have a shared escrow
-        if (layer2.display.stack === 'Agglayer CDK') continue
+        if (layer2.display.stack?.includes('Agglayer CDK')) continue
 
         try {
           const discovery = new ProjectDiscovery(layer2.id.toString())
@@ -259,7 +259,7 @@ describe('layer2s', () => {
       const opAndArbL2sWithActivity = layer2s
         .filter((layer2) => {
           const { stack } = layer2.display
-          return stack === 'Arbitrum' || stack === 'OP Stack'
+          return stack?.includes('Arbitrum') || stack?.includes('OP Stack')
         })
         .flatMap((layer2) => {
           const { activityConfig } = layer2.config

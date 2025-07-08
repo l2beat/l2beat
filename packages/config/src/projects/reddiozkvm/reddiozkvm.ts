@@ -14,7 +14,7 @@ export const reddiozkvm: ScalingProject = upcomingL2({
       'Reddio zkVM is an upcoming ZK Rollup focused on general use cases like Games and Apps, powered by Starknet Stack.',
     purposes: ['Universal', 'Gaming'],
     category: 'ZK Rollup',
-    stack: 'SN Stack',
+    stack: ['SN Stack'],
     links: {
       websites: ['https://reddio.com'],
       documentation: [

@@ -14,7 +14,7 @@ export const evedex: ScalingProject = upcomingL3({
       'EVEDEX is a Perpetual DEX & Next-Gen Web3 financial ecosystem built on its own L3 blockchain.',
     purposes: ['Exchange'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stack: ['Arbitrum'],
     links: {
       websites: ['https://evedex.com/'],
       bridges: ['https://demo-exchange.evedex.com/'],
