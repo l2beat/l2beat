@@ -47,7 +47,7 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
     <PrimaryCard className={className}>
       <div className="flex items-center gap-2">
         <LiveIndicator size="md" />
-        <h2 className="font-bold text-lg text-negative">
+        <h2 className="text-heading-18 text-negative">
           Major ongoing anomalies
         </h2>
       </div>
