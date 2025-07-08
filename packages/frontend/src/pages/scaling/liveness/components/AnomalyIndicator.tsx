@@ -2,6 +2,7 @@ import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 
 import { Callout } from '~/components/Callout'
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
@@ -10,9 +11,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import type { LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import { cn } from '~/utils/cn'
-import { formatTimestamp } from '~/utils/dates'
-import { LivenessDurationCell } from './LivenessDurationCell'
-import { OngoingAnomalyBanner } from './OngoingAnomalyBanner'
+import { AnomalyText } from './AnomalyText'
 
 const SHOWN_ANOMALIES = 4
 
@@ -62,7 +61,7 @@ export function AnomalyIndicator({
           ))}
         </div>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent className="max-xs:max-w-[300px]">
         <AnomalyTooltipContent
           anomalies={anomalies}
           hasTrackedContractsChanged={hasTrackedContractsChanged}
@@ -90,7 +89,18 @@ function AnomalyTooltipContent(props: {
               className="space-y-0.5 border-divider border-t px-4 py-2"
               key={anomaly.start}
             >
-              {anomaly.end === undefined && <OngoingAnomalyBanner />}
+              {anomaly.end === undefined ? (
+                <div className="mb-1 flex items-center gap-1">
+                  <LiveIndicator />
+                  <span className="subtitle-12 text-negative uppercase leading-none">
+                    Ongoing anomaly
+                  </span>
+                </div>
+              ) : (
+                <span className="subtitle-12 text-secondary uppercase leading-none">
+                  Resolved
+                </span>
+              )}
               {anomaly.end === undefined &&
                 props.hasTrackedContractsChanged && (
                   <Callout
@@ -111,37 +121,7 @@ function AnomalyTooltipContent(props: {
                     }
                   />
                 )}
-              <div className="flex justify-between gap-2">
-                Start:
-                <span>
-                  {formatTimestamp(anomaly.start, {
-                    mode: 'datetime',
-                  })}
-                </span>
-              </div>
-              {anomaly.end ? (
-                <div className="flex justify-between gap-2">
-                  End:
-                  <span>
-                    {formatTimestamp(anomaly.end, {
-                      mode: 'datetime',
-                    })}
-                  </span>
-                </div>
-              ) : null}
-              <div className="flex justify-between gap-2">
-                Duration:
-                <LivenessDurationCell
-                  durationInSeconds={anomaly.durationInSeconds}
-                />
-              </div>
-              <div className="flex justify-between gap-2">
-                Avg. interval:
-                <LivenessDurationCell durationInSeconds={anomaly.avgInterval} />
-              </div>
-              <div className="flex justify-between gap-2">
-                Type: <AnomalyTypeBadge type={anomaly.subtype} />
-              </div>
+              <AnomalyText anomaly={anomaly} />
             </div>
           )
         })}
