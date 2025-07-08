@@ -15,7 +15,7 @@ export const dodochain: ScalingProject = underReviewL3({
     description:
       'DODOchain is an Omni-Trading Layer-3 connecting liquidity from all chains including BTC and ETH L2s.',
     purposes: ['Universal', 'Interoperability'],
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://dodochain.com/'],
       documentation: ['https://docs.dodochain.com/en/dodochain'],
@@ -27,5 +27,8 @@ export const dodochain: ScalingProject = underReviewL3({
         'https://discord.com/invite/tyKReUK',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

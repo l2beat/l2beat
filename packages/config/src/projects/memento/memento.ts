@@ -13,7 +13,7 @@ export const memento: ScalingProject = upcomingL2({
       'Memento ZKchain is a ZK Rollup dedicated to institutional DeFi and digital asset management, providing a secure, permissioned environment for digital investment funds and asset distribution.',
     purposes: ['Interoperability', 'Privacy', 'RWA'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://mementoblockchain.com/'],
       socialMedia: [

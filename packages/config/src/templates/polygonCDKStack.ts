@@ -184,7 +184,7 @@ export function polygonCDKStack(
         templateVars.daProvider !== undefined)
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
-      stack: 'Agglayer CDK',
+      stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
       finality: templateVars.display.finality ?? {
         finalizationPeriod,

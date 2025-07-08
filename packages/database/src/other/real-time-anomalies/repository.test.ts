@@ -11,7 +11,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.now()
-  const DATA: RealTimeAnomalyRecord[] = [
+  const DATA = [
     {
       start: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
@@ -40,7 +40,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       status: 'recovered',
       end: START,
     },
-  ]
+  ] as const satisfies RealTimeAnomalyRecord[]
 
   beforeEach(async function () {
     this.timeout(10000)
@@ -96,12 +96,24 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
     it('should return all ongoing anomalies', async () => {
       const results = await repository.getOngoingAnomalies()
 
-      expect(results).toEqualUnsorted(
-        DATA.filter((e) => e.status !== 'recovered').map((e) => ({
-          ...e,
-          end: undefined,
-        })),
-      )
+      expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+    })
+  })
+
+  describe(RealTimeAnomaliesRepository.prototype
+    .getApprovedAndRecoveredAnomaliesByProjectIds.name, () => {
+    it('should return all approved and resolved anomalies', async () => {
+      const results =
+        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([
+          PROJECT_B,
+        ])
+      expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
+    })
+
+    it('should return empty array if no project ids', async () => {
+      const results =
+        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([])
+      expect(results).toEqual([])
     })
   })
 

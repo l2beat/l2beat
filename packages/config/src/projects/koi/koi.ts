@@ -13,7 +13,7 @@ export const koi: ScalingProject = upcomingL2({
       'Koi Finance is a DEX, farming platform, and Bond platform built on zkRollup and zkSync.',
     purposes: ['Exchange'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://koi.finance/'],
       bridges: ['https://dapp.koi.finance/'],

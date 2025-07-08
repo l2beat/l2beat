@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import type { ScalingProject } from '../../internalTypes'
 import { underReviewL2 } from '../../templates/underReview'
@@ -21,7 +21,7 @@ export const openzk: ScalingProject = underReviewL2({
       'OpenZK is a ZK rollup that unites native ETH staking, liquid restaking, and stablecoin staking in one seamless platform.',
     purposes: ['Universal'],
     category: 'ZK Rollup',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://openzk.net/'],
       bridges: [
@@ -37,6 +37,9 @@ export const openzk: ScalingProject = underReviewL2({
         'https://t.me/OpenZkNetwork',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
   chainConfig: {
     name: 'openzk',

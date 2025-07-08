@@ -202,7 +202,7 @@ function opStackCommon(
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
-    | 'stack'
+    | 'stacks'
     | 'category'
     | 'warning'
   >
@@ -277,7 +277,7 @@ function opStackCommon(
         fraudProofType === 'Permissionless')
           ? 'opfp'
           : undefined,
-      stack: 'OP Stack',
+      stacks: ['OP Stack'],
       category:
         templateVars.display.category ??
         (templateVars.reasonsForBeingOther

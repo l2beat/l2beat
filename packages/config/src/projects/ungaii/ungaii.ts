@@ -14,7 +14,7 @@ export const ungaii: ScalingProject = upcomingL3({
       'Ungaii Chain, along with its game publishing, arm Ungaii brings over 13 years experience in gaming deal making and a network of large userbase gaming companies onto web3.',
     purposes: ['Gaming'],
     category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://ungaii.io/'],
       bridges: [

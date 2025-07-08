@@ -13,7 +13,7 @@ export const rise: ScalingProject = upcomingL2({
       'RISE is a Parallel EVM Rollup that intends to unlock a new era of performance for Ethereum.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://riselabs.xyz/'],
       documentation: ['https://docs.riselabs.xyz/'],
