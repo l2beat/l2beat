@@ -127,7 +127,7 @@ export function EcosystemProjectPage({
                   />
                 </div>
                 <EcosystemMilestonesAndIncidents
-                  milestones={ecosystem.milestones}
+                  milestones={ecosystem.allMilestones}
                   className="col-span-12"
                 />
                 <EcosystemProjectsByRaas
