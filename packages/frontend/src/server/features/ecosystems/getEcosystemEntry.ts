@@ -72,7 +72,7 @@ export interface EcosystemEntry {
   }
   images: {
     buildOn: string
-    topDelegates: string
+    delegateToL2BEAT: string
   }
   milestones: EcosystemMilestone[]
 }
@@ -185,7 +185,9 @@ export async function getEcosystemEntry(
     milestones: getMilestones([ecosystem, ...ecosystemProjects]),
     images: {
       buildOn: getStaticAsset(`/partners/${slug}/build-on.png`),
-      topDelegates: getStaticAsset(`/partners/governance-delegates.png`),
+      delegateToL2BEAT: getStaticAsset(
+        `/partners/governance-delegate-to-l2beat.png`,
+      ),
     },
   }
 }
@@ -224,7 +226,8 @@ function getGovernanceLinks(
   assert(bankImage, 'Bank image not found')
 
   return {
-    topDelegates: ecosystem.ecosystemConfig.links.governanceTopDelegates,
+    delegateToL2BEAT:
+      ecosystem.ecosystemConfig.links.governanceDelegateToL2BEAT,
     proposals: ecosystem.ecosystemConfig.links.governanceProposals,
     review: `/governance/publications/${lastPublication.id}`,
     bankImage,

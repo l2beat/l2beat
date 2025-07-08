@@ -969,7 +969,7 @@ export interface ProjectEcosystemConfig {
   links: {
     buildOn: string
     learnMore: string
-    governanceTopDelegates: string
+    governanceDelegateToL2BEAT: string
     governanceProposals: string
     tools?: string[]
     grants?: string
