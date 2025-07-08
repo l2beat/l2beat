@@ -179,6 +179,7 @@ export class UpdateMonitor {
       this.logger.info('Project update started', {
         chain: runner.chain,
         project: projectConfig.name,
+        currentBlock: blockNumber,
       })
 
       const projectFinished = projectGauge.startTimer({
@@ -228,13 +229,14 @@ export class UpdateMonitor {
       runner,
       projectConfig,
     )
+
     const { discovery } = await runner.discoverWithRetry(
       projectConfig,
       blockNumber,
       this.logger,
       undefined,
       undefined,
-      previousDiscovery?.dependentDiscoveries,
+      'useCurrentBlockNumber', // this is for dependent discoveries
     )
 
     if (!previousDiscovery || !discovery) return
@@ -300,6 +302,10 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
   ): Promise<DiscoveryOutput | undefined> {
+    this.logger.info('Getting previous discovery', {
+      chain: runner.chain,
+      project: projectConfig.name,
+    })
     const projectPair = { chain: runner.chain, project: projectConfig.name }
 
     const databaseEntry = await this.db.updateMonitor.findLatest(

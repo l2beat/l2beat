@@ -54,33 +54,48 @@ export class DiscoveryRunner {
     projectName: string,
     projectChain: string,
     discoveryBlockNumber: number,
-    dependentDiscoveries: DiscoveryBlockNumbers = {},
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers = {},
+    logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
+    logger.info(
+      `Attempting discovery of ${projectName} on ${projectChain} at block ${discoveryBlockNumber}`,
+    )
+
     const discoveryPaths = getDiscoveryPaths()
     configReader ??= new ConfigReader(discoveryPaths.discovery)
     const rawConfig = configReader.readRawConfig(projectName)
 
     let toDiscover: { project: string; chain: string }[] = []
     if (rawConfig.modelCrossChainPermissions) {
+      logger.info('Discovering dependencies for cross-chain modelling')
       toDiscover = getDependenciesToDiscoverForProject(
         projectName,
         configReader,
       )
+      logger.info(`Dependent project:`, toDiscover)
+      logger.info(
+        `Requested dependent block numbers:`,
+        dependentDiscoveries ?? 'none',
+      )
     } else {
+      logger.info('Discovering only current project - no cross-chain modelling')
       toDiscover.push({ project: projectName, chain: projectChain })
     }
 
-    // Always default the discovery of current project to discoveryBlockNumber
-    dependentDiscoveries[projectName] ??= {}
-    dependentDiscoveries[projectName][projectChain] ??= {
-      blockNumber: discoveryBlockNumber,
+    if (dependentDiscoveries !== 'useCurrentBlockNumber') {
+      // Always default the discovery of current project to discoveryBlockNumber
+      dependentDiscoveries[projectName] ??= {}
+      dependentDiscoveries[projectName][projectChain] ??= {
+        blockNumber: discoveryBlockNumber,
+      }
     }
 
     const discoveries = await this.discoverMany(
       toDiscover,
       dependentDiscoveries,
       configReader,
+      logger,
     )
 
     setDiscoveryMetrics(this.allProviders.getStats(projectChain), projectChain)
@@ -118,24 +133,33 @@ export class DiscoveryRunner {
 
   private async discoverMany(
     toDiscover: { project: string; chain: string }[],
-    dependentDiscoveries: DiscoveryBlockNumbers | undefined,
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers = {},
     configReader: ConfigReader,
+    logger: Logger,
   ) {
     const discoveries = new DiscoveryRegistry()
     for (const dependency of toDiscover) {
-      const dependencyBlockNumber =
-        dependentDiscoveries?.[dependency.project]?.[dependency.chain]
-          ?.blockNumber
-
-      if (dependencyBlockNumber === undefined) {
-        // We rediscover on the past block number, but with current configs and dependencies.
-        // Those dependencies might not have been referenced in the old discovery.
-        // In that case we don't fail - the diff will show all those "added".
-        console.log(
-          `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+      let dependencyBlockNumber
+      if (dependentDiscoveries === 'useCurrentBlockNumber') {
+        dependencyBlockNumber = await this.allProviders.getLatestBlockNumber(
+          dependency.chain,
         )
-        continue
+      } else {
+        dependencyBlockNumber =
+          dependentDiscoveries?.[dependency.project]?.[dependency.chain]
+            ?.blockNumber
+
+        if (dependencyBlockNumber === undefined) {
+          // We rediscover on the past block number, but with current configs and dependencies.
+          // Those dependencies might not have been referenced in the old discovery.
+          // In that case we don't fail - the diff will show all those "added".
+          logger.info(
+            `No block number found for dependency ${dependency.project} on ${dependency.chain}, skipping its rediscovery.`,
+          )
+          continue
+        }
       }
+      
       const dependencyConfig = configReader.readConfig(
         dependency.project,
         dependency.chain,
@@ -143,6 +167,9 @@ export class DiscoveryRunner {
       const provider = this.allProviders.get(
         dependency.chain,
         dependencyBlockNumber,
+      )
+      logger.info(
+        `Discovering ${dependencyConfig.name} on ${dependencyConfig.chain} at block ${provider.blockNumber}`,
       )
       const analysis = await this.discoveryEngine.discover(
         provider,
@@ -165,7 +192,7 @@ export class DiscoveryRunner {
     logger: Logger,
     maxRetries = MAX_RETRIES,
     delayMs = RETRY_DELAY_MS,
-    dependentDiscoveries?: DiscoveryBlockNumbers,
+    dependentDiscoveries?: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
     let result: DiscoveryRunResult | undefined = undefined
@@ -178,6 +205,7 @@ export class DiscoveryRunner {
           config.chain,
           blockNumber,
           dependentDiscoveries,
+          logger,
           configReader,
         )
         break
