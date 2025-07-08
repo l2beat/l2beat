@@ -33,12 +33,12 @@ export function MultipleBridgeDetails({ project }: Props) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <div className="paragraph-13 text-blue-700 italic">
+        <div className="text-blue-700 text-paragraph-13 italic">
           Please select DA bridge to view detailed risks & characteristics.
           Bridge selection will define total DA risks.
         </div>
         <div className="flex flex-col rounded-lg bg-surface-secondary">
-          <div className="subtitle-12 !leading-none hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary px-4 py-2 text-secondary uppercase md:flex md:border-b">
+          <div className="!leading-none hidden flex-row gap-4 rounded-t-lg border-divider bg-surface-tertiary px-4 py-2 text-secondary text-subtitle-12 uppercase md:flex md:border-b">
             <div className="w-12"></div>
             <div className="flex-1">DA Bridge</div>
             <div className="flex-1 text-center">DA Risks</div>

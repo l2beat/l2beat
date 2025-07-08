@@ -57,7 +57,7 @@ export function RiskBanner({
           <div
             className={cn(
               'text-left uppercase',
-              size === 'regular' && 'subtitle-10',
+              size === 'regular' && 'text-subtitle-10',
               size === 'large' &&
                 'font-semibold text-3xs uppercase md:text-2xs',
             )}
@@ -67,7 +67,7 @@ export function RiskBanner({
           <div
             className={cn(
               'text-left',
-              size === 'regular' && 'label-value-14-bold',
+              size === 'regular' && 'font-bold text-label-value-14',
               size === 'large' && '!leading-none font-bold text-sm md:text-lg',
               sentimentToTextColor(adjSentiment, { vibrant: true }),
             )}

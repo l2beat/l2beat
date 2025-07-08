@@ -44,7 +44,7 @@ export function BridgesProjectStats({ project }: Props) {
                   )}
                   <ValueWithPercentageChange
                     className="!text-base !font-medium !leading-[100%]"
-                    changeClassName="label-value-14-bold"
+                    changeClassName="text-label-value-14 font-bold"
                     change={project.header.tvs.tvsBreakdown.totalChange}
                   >
                     {formatCurrency(

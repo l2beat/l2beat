@@ -11,7 +11,7 @@ export function BadgesSection({ badges, hideTitle }: BadgesSectionProps) {
   return (
     <div className="flex shrink-0 flex-col gap-2 lg:min-w-[288px]">
       {!hideTitle && (
-        <h2 className="subtitle-12 text-secondary uppercase">Badges</h2>
+        <h2 className="text-secondary text-subtitle-12 uppercase">Badges</h2>
       )}
       <OverflowWrapper className="-m-4">
         <div className="flex flex-row gap-1 p-4 lg:flex-wrap">

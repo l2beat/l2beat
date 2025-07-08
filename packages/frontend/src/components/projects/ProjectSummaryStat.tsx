@@ -28,14 +28,14 @@ export function ProjectSummaryStat(props: ProjectSummaryStat) {
       <div className="flex flex-row gap-1.5">
         <span
           className={cn(
-            'paragraph-12-medium text-nowrap text-secondary',
+            'text-nowrap font-medium text-paragraph-12 text-secondary',
             props.shortTitle && 'max-md:hidden',
           )}
         >
           {props.title}
         </span>
         {props.shortTitle && (
-          <span className="paragraph-12-medium text-secondary md:hidden">
+          <span className="font-medium text-paragraph-12 text-secondary md:hidden">
             {props.shortTitle}
           </span>
         )}
@@ -49,7 +49,9 @@ export function ProjectSummaryStat(props: ProjectSummaryStat) {
         )}
       </div>
 
-      <span className={cn('label-value-16-bold', props.valueClassName)}>
+      <span
+        className={cn('font-bold text-label-value-16', props.valueClassName)}
+      >
         {props.value}
       </span>
     </li>

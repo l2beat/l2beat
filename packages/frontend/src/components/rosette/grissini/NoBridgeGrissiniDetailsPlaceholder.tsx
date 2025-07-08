@@ -32,14 +32,17 @@ export function NoBridgeGrissiniDetailsPlaceholder({
         <div
           className={cn(
             'mb-1',
-            size === 'regular' && 'label-value-14-bold',
+            size === 'regular' && 'font-bold text-label-value-14',
             size === 'large' && 'text-sm md:text-lg',
           )}
         >
           {TITLE}
         </div>
         <div
-          className={cn('paragraph-12-medium', sentimentToTextColor('neutral'))}
+          className={cn(
+            'font-medium text-paragraph-12',
+            sentimentToTextColor('neutral'),
+          )}
         >
           {DESCRIPTION}
         </div>

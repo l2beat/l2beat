@@ -56,7 +56,7 @@ export function ProjectScalingSummary({ project }: Props) {
             <div>
               <p
                 className={cn(
-                  'label-value-12-medium text-secondary',
+                  'font-medium text-label-value-12 text-secondary',
                   !hasTokenWarnings && 'mb-2',
                 )}
               >
@@ -101,7 +101,7 @@ export function ProjectScalingSummary({ project }: Props) {
               </Tooltip>
             </div>
             <div>
-              <p className="label-value-12-medium mb-2 text-secondary">
+              <p className="mb-2 font-medium text-label-value-12 text-secondary">
                 Value secured breakdown
               </p>
               <Tooltip>

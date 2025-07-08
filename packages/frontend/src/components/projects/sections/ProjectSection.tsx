@@ -78,14 +78,16 @@ function ProjectDetailsSectionHeader(props: ProjectDetailsSectionHeaderProps) {
       {props.sectionOrder && (
         <div
           className={cn(
-            'heading-18 hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 font-bold text-secondary tabular-nums md:flex',
+            'hidden size-[26px] items-center justify-center rounded bg-surface-secondary px-3 font-bold text-heading-18 text-secondary tabular-nums md:flex',
             props.nested && 'h-8 w-11 text-xl',
           )}
         >
           {props.sectionOrder}
         </div>
       )}
-      <span className={cn('heading-24', props.nested && 'text-xl md:text-3xl')}>
+      <span
+        className={cn('text-heading-24', props.nested && 'text-xl md:text-3xl')}
+      >
         {props.title}
       </span>
     </a>
