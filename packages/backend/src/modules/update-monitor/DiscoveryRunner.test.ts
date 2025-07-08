@@ -17,9 +17,7 @@ describe(DiscoveryRunner.name, () => {
   describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
-      const sourceConfig: ConfigRegistry = new ConfigRegistry({
-        ...getMockConfig().structure,
-      })
+      const sourceConfig: ConfigRegistry = getMockConfig()
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
