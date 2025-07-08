@@ -15,7 +15,6 @@ import { formatTimestamp } from '~/utils/dates'
 import { anomalySubtypeToLabel } from './AnomalyIndicator'
 import { getDurationColorClassName } from './LivenessDurationCell'
 import { NoAnomaliesState } from './NoRecentAnomaliesState'
-import { OngoingAnomalyBanner } from './OngoingAnomalyBanner'
 
 export interface ProjectWithAnomaly {
   name: string
@@ -100,23 +99,12 @@ function AnomalyCollapsible({
             alt={projectWithAnomalies.name}
             className="size-5"
           />
-          <span className="text-left font-bold text-base leading-none">
+          <span className="label-value-14-bold md:label-value-16-bold text-left">
             {projectWithAnomalies.name}
           </span>
         </div>
         <div className="flex items-center gap-4">
-          {isAnyOngoing ? (
-            <div className="flex items-center gap-1">
-              <LiveIndicator />
-              <span className="font-medium text-2xs text-negative uppercase">
-                Ongoing
-              </span>
-            </div>
-          ) : (
-            <span className="font-medium text-2xs text-secondary uppercase">
-              Resolved
-            </span>
-          )}
+          {isAnyOngoing && <LiveIndicator />}
           <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
         </div>
       </CollapsibleTrigger>
@@ -126,7 +114,18 @@ function AnomalyCollapsible({
             return (
               <div key={anomaly.start} className="text-xs">
                 <HorizontalSeparator className="my-3 first:mt-0" />
-                {anomaly.end === undefined && <OngoingAnomalyBanner />}
+                {anomaly.end === undefined ? (
+                  <div className="mb-1 flex items-center gap-1">
+                    <LiveIndicator />
+                    <span className="subtitle-12 text-negative uppercase leading-none">
+                      Ongoing anomaly
+                    </span>
+                  </div>
+                ) : (
+                  <span className="subtitle-12 text-secondary uppercase leading-none">
+                    Resolved
+                  </span>
+                )}
                 <AnomalyText anomaly={anomaly} />
               </div>
             )
@@ -150,12 +149,12 @@ function AnomalyCollapsible({
 function AnomalyText({ anomaly }: { anomaly: LivenessAnomaly }) {
   if (anomaly.end === undefined) {
     return (
-      <p className="text-balance">
+      <p className="paragraph-13">
         No{' '}
         <span className="font-medium lowercase">
           {anomalySubtypeToLabel(anomaly.subtype)}
         </span>{' '}
-        have been performed for{' '}
+        have been performed for the past{' '}
         <span
           className={cn(
             'text-nowrap font-medium',
@@ -183,9 +182,9 @@ function AnomalyText({ anomaly }: { anomaly: LivenessAnomaly }) {
   }
 
   return (
-    <p>
+    <p className="paragraph-13">
       No{' '}
-      <span className="font-medium">
+      <span className="font-medium lowercase">
         {anomalySubtypeToLabel(anomaly.subtype)}
       </span>{' '}
       were performed for{' '}
