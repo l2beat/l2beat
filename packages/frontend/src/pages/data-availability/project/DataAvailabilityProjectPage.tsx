@@ -85,8 +85,6 @@ export function DataAvailabilityProjectPage({
                 </div>
               </div>
             )}
-
-            <ScrollToTopButton />
           </div>
           <ScrollToTopButton />
         </SideNavLayout>
