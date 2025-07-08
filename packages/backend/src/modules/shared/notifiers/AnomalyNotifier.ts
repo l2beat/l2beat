@@ -157,7 +157,7 @@ export class AnomalyNotifier {
         formatDuration(anomaly.duration),
         anomaly.projectId,
         anomaly.subtype,
-        anomaly.status,
+        anomaly.status === 'ongoing' ? 'not approved' : anomaly.status,
       ])
 
     const table = formatAsAsciiTable(headers, rows)
