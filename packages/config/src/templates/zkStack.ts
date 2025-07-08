@@ -262,7 +262,7 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ...(templateVars.additionalPurposes ?? []),
       ],
       upgradesAndGovernanceImage: 'zkstack',
-      stack: 'ZK Stack',
+      stacks: ['ZK Stack'],
       architectureImage:
         templateVars.daProvider !== undefined
           ? 'zkstack-validium'

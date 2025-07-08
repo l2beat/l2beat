@@ -13,7 +13,7 @@ export const sovrun: ScalingProject = upcomingL2({
       'Shaping the future of gaming through AI, Blockchain & Autonomous Worlds.',
     purposes: ['AI', 'Gaming'],
     category: 'Optimistic Rollup',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://sovrun.org/'],
       explorers: ['https://testnet-l2-explorer-hyperliquid.sovrun.org/'],

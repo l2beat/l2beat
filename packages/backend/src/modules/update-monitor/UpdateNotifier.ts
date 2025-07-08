@@ -11,7 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 import isEmpty from 'lodash/isEmpty'
 
-import { ProjectService } from '@l2beat/config'
+import { type ProjectScalingStack, ProjectService } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import {
   type Channel,
@@ -277,10 +277,10 @@ export async function generateTemplatizedStatus(): Promise<string> {
     whereNot: ['isUpcoming', 'archivedAt'],
   })
 
-  const stacks: string[] = [
+  const stacks: ProjectScalingStack[] = [
     ...new Set(
       scaling
-        .map((p) => p.scalingInfo.stack?.toString())
+        .flatMap((p) => p.scalingInfo.stacks)
         .filter((p) => p !== undefined),
     ),
   ]
@@ -293,7 +293,7 @@ export async function generateTemplatizedStatus(): Promise<string> {
 
   for (const stack of stacks) {
     const isFullyTemplatized = scaling
-      .filter((p) => p.scalingInfo.stack === stack)
+      .filter((p) => p.scalingInfo.stacks?.includes(stack))
       .map((p) => p.discoveryInfo.isDiscoDriven)
 
     const fullyTemplatizedCount = isFullyTemplatized.filter((t) => t).length

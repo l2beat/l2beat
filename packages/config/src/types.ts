@@ -353,7 +353,7 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
@@ -969,7 +969,7 @@ export interface ProjectEcosystemConfig {
   links: {
     buildOn: string
     learnMore: string
-    governanceTopDelegates: string
+    governanceDelegateToL2BEAT: string
     governanceProposals: string
     tools?: string[]
     grants?: string

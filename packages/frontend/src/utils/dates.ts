@@ -47,9 +47,9 @@ function formatTimeAndDate(
     case 'date':
       return date
     case 'time':
-      return `${time} (UTC)`
+      return `${time} UTC`
     case 'datetime':
-      return `${date}, ${time} (UTC)`
+      return `${date}, ${time} UTC`
   }
 }
 

@@ -32,7 +32,7 @@ export const zkswap: ScalingProject = {
     description:
       'ZKSwap is a fork of ZKsync with added AMM functionality. Based on ZK Rollup technology, ZKSwap aims to execute the full functionality of Uniswap on Layer 2, but increase the TPS, and make transaction processing cheaper.',
     purposes: ['Payments', 'Exchange'],
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     category: 'ZK Rollup',
 
     links: {
