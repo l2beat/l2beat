@@ -163,7 +163,7 @@ export function ProjectDaThroughputCustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-2" />
@@ -184,16 +184,16 @@ export function ProjectDaThroughputCustomTooltip({
                   type={configEntry.indicatorType}
                   backgroundColor={configEntry.color}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
               {!isSynced && configEntry.label === 'Actual data size' ? (
-                <span className="label-value-15-medium text-primary tabular-nums">
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   Not synced
                 </span>
               ) : (
-                <span className="label-value-15-medium text-primary tabular-nums">
+                <span className="font-medium text-label-value-15 text-primary tabular-nums">
                   {(entry.value ?? 0).toFixed(2)} {unit}
                 </span>
               )}

@@ -8,7 +8,9 @@ import type { RosetteValue } from './types'
 export function RiskValue(props: RosetteValue) {
   return (
     <div className="font-medium">
-      <span className="subtitle-10 mb-0.5 block uppercase">{props.name}</span>
+      <span className="mb-0.5 block text-subtitle-10 uppercase">
+        {props.name}
+      </span>
       {props.sentiment === 'UnderReview' ? (
         <UnderReviewBadge />
       ) : (
@@ -16,7 +18,7 @@ export function RiskValue(props: RosetteValue) {
           <SentimentText
             sentiment={props.sentiment ?? 'neutral'}
             vibrant={true}
-            className="label-value-15-medium"
+            className="font-medium text-label-value-15"
           >
             {props.value}
           </SentimentText>

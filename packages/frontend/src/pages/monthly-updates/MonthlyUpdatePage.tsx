@@ -31,10 +31,12 @@ export function MonthlyUpdatePage({ entry, ...props }: Props) {
         <MainPageHeader>Monthly Updates</MainPageHeader>
         <PrimaryCard className="md:p-8">
           <div>
-            <p className="subtitle-12 text-brand uppercase">
+            <p className="text-brand text-subtitle-12 uppercase">
               Published on {entry.publishedOn}
             </p>
-            <h1 className="md:heading-32 heading-24 mt-2">{entry.title}</h1>
+            <h1 className="mt-2 text-heading-24 md:text-heading-32">
+              {entry.title}
+            </h1>
           </div>
           <HorizontalSeparator className="my-6 md:my-8" />
           <div className="mx-auto mt-6 max-w-[960px] md:mt-8">

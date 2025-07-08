@@ -9,7 +9,7 @@ interface Props {
 export function News({ news }: Props) {
   return (
     <div className="mt-6 md:mt-8">
-      <h2 className="heading-24 md:heading-36 mb-3 md:mb-6">News</h2>
+      <h2 className="mb-3 text-heading-24 md:mb-6 md:text-heading-36">News</h2>
       <div className="space-y-10">
         {news.map((item) => (
           <div key={item.title}>
@@ -18,7 +18,7 @@ export function News({ news }: Props) {
                 <Tag key={tag} tag={tag} />
               ))}
             </div>
-            <div className="heading-20 md:heading-28 mt-3 mb-2 leading-none">
+            <div className="mt-3 mb-2 text-heading-20 leading-none md:text-heading-28">
               {item.title}
             </div>
             <Article>{item.content}</Article>

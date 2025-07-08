@@ -227,13 +227,13 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex min-w-44 flex-col">
-        <div className="label-value-14-medium mb-3 text-secondary">
+        <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {formatTimestamp(label, {
             mode: resolution === 'daily' ? 'date' : 'datetime',
             longMonthName: resolution === 'daily',
           })}
         </div>
-        <div className="heading-16 flex w-full items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-2 text-heading-16">
           <span>Total</span>
           <span className="whitespace-nowrap text-primary tabular-nums">
             {formatCostValue(total, unit, 'total')}
@@ -254,11 +254,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </span>
-                <span className="label-value-15-medium whitespace-nowrap">
+                <span className="whitespace-nowrap font-medium text-label-value-15">
                   {entry.name === 'posted' || entry.name === 'notSyncedPosted'
                     ? formatBytes(entry.value)
                     : formatCostValue(entry.value, unit, 'total')}

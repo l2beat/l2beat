@@ -135,7 +135,7 @@ function CustomTooltip({
 
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
@@ -160,11 +160,11 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
                 {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)} {unit}
               </span>
             </div>
@@ -172,7 +172,7 @@ function CustomTooltip({
         })}
       </div>
       {includeScalingOnly && isCurrentDay && (
-        <div className="label-value-13-medium mt-2 max-w-[230px] text-secondary leading-[130%]">
+        <div className="mt-2 max-w-[230px] font-medium text-label-value-13 text-secondary leading-[130%]">
           Scaling project usage data for EigenDA is only available for the past
           day.
         </div>
