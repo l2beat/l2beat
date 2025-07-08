@@ -12,7 +12,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 describe(DiscoveryRunner.name, () => {
-  const MOCK_PROVIDER = mockObject<IProvider>({})
+  const MOCK_PROVIDER = mockObject<IProvider>({ blockNumber: 123 })
 
   describe(DiscoveryRunner.prototype.discoverWithRetry.name, () => {
     it('does not modify the source config', async () => {

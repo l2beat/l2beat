@@ -299,7 +299,7 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
         undefined,
         undefined,
-        undefined,
+        'useCurrentBlockNumber',
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
@@ -317,7 +317,7 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
         undefined,
         undefined,
-        undefined,
+        'useCurrentBlockNumber',
       )
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(2)
@@ -529,7 +529,7 @@ describe(UpdateMonitor.name, () => {
         LOGGER,
         undefined,
         undefined,
-        undefined,
+        'useCurrentBlockNumber'
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
