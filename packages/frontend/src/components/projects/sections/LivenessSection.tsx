@@ -38,9 +38,9 @@ export function LivenessSection({
     <ProjectSection {...sectionProps}>
       <p className="mb-4 text-base">
         This section shows how &quot;live&quot; the project&apos;s operators are
-        are by displaying how frequently they submit transactions of the
-        selected type. It also highlights anomalies - significant deviations
-        from their typical schedule.
+        by displaying how frequently they submit transactions of the selected
+        type. It also highlights anomalies - significant deviations from their
+        typical schedule.
       </p>
       <OngoingAnomalies anomalies={ongoingAnomalies} />
 

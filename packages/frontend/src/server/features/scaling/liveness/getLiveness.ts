@@ -382,7 +382,7 @@ function generateAnomalies(): LivenessAnomaly[] {
   const anomaliesCount = Math.round(Math.random() * 15)
   return anomaliesCount !== 0
     ? range(anomaliesCount).map(() => {
-        const isOngoing = Math.random() > 0.05
+        const isOngoing = Math.random() < 0.05
 
         const start =
           UnixTime.now() +
@@ -393,7 +393,7 @@ function generateAnomalies(): LivenessAnomaly[] {
         return {
           subtype: Math.random() > 0.5 ? 'batchSubmissions' : 'stateUpdates',
           start,
-          end: isOngoing ? end : undefined,
+          end: isOngoing ? undefined : end,
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
         } as const
