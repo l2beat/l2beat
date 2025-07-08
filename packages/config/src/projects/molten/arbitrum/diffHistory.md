@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7265ea1d547ac4eea6effe9461052b959f7792c9
+Generated with discovered.json: 0x532545c7afa836ca5a95d00b22806b8fdea953e4
 
-# Diff at Mon, 07 Jul 2025 07:35:52 GMT:
+# Diff at Tue, 08 Jul 2025 09:05:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 353119902
-- current block number: 355123264
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 353119902
+- current block number: 355488012
 
 ## Description
 
@@ -32,7 +32,7 @@ Provide description of changes. This section will be preserved.
 +        5
       values.batchCount:
 -        92106
-+        92625
++        92769
       values.batchPosterManager:
 -        "0x0000000000000000000000000000000000000000"
 +        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
@@ -53,7 +53,7 @@ Provide description of changes. This section will be preserved.
 -        1
       values.totalDelayedMessagesRead:
 -        40415
-+        40495
++        40520
       values.BLOBSTREAM:
 +        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
       values.espressoTEEVerifier:
