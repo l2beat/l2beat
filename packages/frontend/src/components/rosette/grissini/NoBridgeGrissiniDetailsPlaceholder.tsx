@@ -19,14 +19,12 @@ export function NoBridgeGrissiniDetailsPlaceholder({
     <div
       className={cn(
         'flex flex-row items-stretch rounded bg-header-secondary',
-        size === 'regular' && 'h-16',
-        size === 'large' && 'h-[5.125rem]',
         className,
       )}
     >
       <GrissiniStick
         sentiment="neutral"
-        className="h-full shrink-0 max-md:w-1"
+        className="h-[unset] shrink-0 self-stretch max-md:w-1"
       />
       <div className={cn('p-4', contentClassName)}>
         <div
