@@ -17,6 +17,12 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummaryStat(props: ProjectSummaryStat) {
+  console.log(
+    cn(
+      'text-nowrap font-medium text-paragraph-12 text-secondary',
+      props.shortTitle && 'max-md:hidden',
+    ),
+  )
   return (
     <li
       key={props.title}
