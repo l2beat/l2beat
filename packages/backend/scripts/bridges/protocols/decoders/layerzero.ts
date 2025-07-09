@@ -27,9 +27,16 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
 
     const decodedPacket = decodePacket(data.args.encodedPayload)
 
+    console.log(decodedPacket)
+
     const destination = CHAINS.find(
       (c) => c.eid === decodedPacket.packetHeader.dstEid,
     )?.name
+
+    // 1. get all events from this tx
+    // for every OFTSent
+    //  - get amount etc.
+    //  - get address of emitter -> call token() for underlying token -> call symbol()
 
     return {
       protocol: LAYER_ZERO.name,
@@ -46,35 +53,37 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
     }
   }
 
-  if (
-    log.topics[0] ===
-    encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
-  ) {
-    const data = decodeEventLog({
-      abi: ABI,
-      data: log.data,
-      topics: log.topics,
-      eventName: 'PacketDelivered',
-    })
+  // if (
+  //   log.topics[0] ===
+  //   encodeEventTopics({ abi: ABI, eventName: 'PacketDelivered' })[0]
+  // ) {
+  //   const data = decodeEventLog({
+  //     abi: ABI,
+  //     data: log.data,
+  //     topics: log.topics,
+  //     eventName: 'PacketDelivered',
+  //   })
 
-    const origin = CHAINS.find(
-      (c) => c.eid === data.args.origin.srcEid,
-    )?.name
+  //   console.log(data)
 
-    return {
-      protocol: LAYER_ZERO.name,
-      chain: chainName,
-      origin: origin ?? data.args.origin.srcEid.toString(),
-      destination: chain.name,
-      token: 'token',
-      amount: '0',
-      sender: 'sender',
-      receiver: 'receiver',
-      txHash: log.transactionHash ?? undefined,
-      type: 'PacketDelivered',
-      matchingId: undefined,
-    }
-  }
+  //   const origin = CHAINS.find(
+  //     (c) => c.eid === data.args.origin.srcEid,
+  //   )?.name
+
+  //   return {
+  //     protocol: LAYER_ZERO.name,
+  //     chain: chainName,
+  //     origin: origin ?? data.args.origin.srcEid.toString(),
+  //     destination: chain.name,
+  //     token: 'token',
+  //     amount: '0',
+  //     sender: 'sender',
+  //     receiver: 'receiver',
+  //     txHash: log.transactionHash ?? undefined,
+  //     type: 'PacketDelivered',
+  //     matchingId: undefined,
+  //   }
+  // }
 
   return undefined
 }
