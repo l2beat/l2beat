@@ -31,7 +31,7 @@ export function CostsBreakdown(props: CostsBreakdownProps) {
 
   return (
     <Breakdown
-      className="h-[3px] w-[119px] xl:w-[180px]"
+      className="2xlw-[180px] h-[3px] w-[119px]"
       gap={1}
       values={groups}
     />

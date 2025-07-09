@@ -396,7 +396,7 @@ const config: Config = {
       sm: '550px',
       md: '768px',
       lg: '1200px',
-      xl: '1920px',
+      '2xl': '1920px',
     },
     zIndex: {
       1: '1',

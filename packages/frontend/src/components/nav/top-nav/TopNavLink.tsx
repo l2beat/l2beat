@@ -22,7 +22,7 @@ export function TopNavLink({
           'flex h-full items-center font-medium',
           large
             ? 'pr-2 text-base group-last/top-nav-link:pr-0 md:pr-6 md:text-lg'
-            : 'pr-3 group-last/top-nav-link:pr-0 max-xl:text-sm',
+            : 'max-2xltext-sm pr-3 group-last/top-nav-link:pr-0',
           pathname.startsWith(href) && [
             'pt-0.5 text-brand',
             !withoutUnderline && 'border-current border-b-2',

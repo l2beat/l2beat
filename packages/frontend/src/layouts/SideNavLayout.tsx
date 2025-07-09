@@ -12,7 +12,7 @@ export function SideNavLayout({
   return (
     <NavLayout
       logoLink="/scaling/summary"
-      topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
+      topChildren={<Banner className="2xlrounded-br-none lg:rounded-b-xl" />}
       childrenWrapperClassName={childrenWrapperClassName}
     >
       <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0">

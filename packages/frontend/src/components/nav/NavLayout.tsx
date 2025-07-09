@@ -232,7 +232,7 @@ export function NavLayout({
           )}
         >
           {topChildren && (
-            <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
+            <div className="2xlmr-0 hidden lg:mr-3 lg:block">{topChildren}</div>
           )}
           {children}
         </div>
