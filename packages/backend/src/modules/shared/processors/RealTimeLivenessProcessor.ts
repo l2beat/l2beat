@@ -215,6 +215,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           projectId: group.projectId,
           subtype: group.subtype,
           status: 'ongoing',
+          isApproved: false,
         }
 
         await this.notifier?.anomalyDetected(

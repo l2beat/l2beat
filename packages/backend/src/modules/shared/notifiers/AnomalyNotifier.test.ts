@@ -53,6 +53,7 @@ describe(AnomalyNotifier.name, () => {
         projectId,
         subtype,
         status: 'ongoing',
+        isApproved: false,
       }
 
       await notifier.anomalyDetected(
@@ -306,6 +307,7 @@ describe(AnomalyNotifier.name, () => {
         projectId,
         subtype,
         status: 'ongoing',
+        isApproved: false,
       }
 
       await notifier.anomalyRecovered(ongoingAnomaly, 60, block, lastRecord)
@@ -363,6 +365,7 @@ describe(AnomalyNotifier.name, () => {
             projectId: 'project-1',
             subtype: 'batchSubmissions',
             status: 'ongoing',
+            isApproved: false,
             start: UnixTime.now(),
           },
         ] as RealTimeAnomalyRecord[]),

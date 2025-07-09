@@ -17,6 +17,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
       status: 'ongoing',
+      isApproved: false,
       end: undefined,
     },
     {
@@ -24,6 +25,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       projectId: PROJECT_B,
       subtype: 'stateUpdates',
       status: 'ongoing',
+      isApproved: false,
       end: undefined,
     },
     {
@@ -31,6 +33,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       projectId: PROJECT_B,
       subtype: 'batchSubmissions',
       status: 'approved',
+      isApproved: false,
       end: undefined,
     },
     {
@@ -38,6 +41,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       status: 'recovered',
+      isApproved: false,
       end: START,
     },
   ] as const satisfies RealTimeAnomalyRecord[]
@@ -57,6 +61,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
           status: 'approved',
+          isApproved: false,
           end: undefined,
         },
         //to add
@@ -65,6 +70,8 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           status: 'ongoing',
+          isApproved: false,
+          end: undefined,
         },
       ]
 
