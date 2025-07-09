@@ -81,7 +81,7 @@ const cmd = command({
 
       for (const l of logs) {
         for (const decoder of decoders) {
-          const decoded = decoder(r.name, logToViemLog(l))
+          const decoded = await decoder(r.name, logToViemLog(l), r.rpc)
           if (decoded) {
             const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
             const amount = await getTokenAmount(r.rpc, decoded, start)

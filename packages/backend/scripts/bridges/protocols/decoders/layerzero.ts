@@ -1,19 +1,33 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { type Hex, type Log, decodeAbiParameters, decodeEventLog, encodeEventTopics, parseAbi, parseAbiParameters } from 'viem'
+import type { RpcClient } from '@l2beat/shared'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  type Hex,
+  type Log,
+  decodeAbiParameters,
+  decodeEventLog,
+  encodeEventTopics,
+  parseAbi,
+  parseAbiParameters,
+} from 'viem'
 import type { BridgeTransfer } from '../../types/BridgeTransfer'
+import { extractAddressFromPadded } from '../../utils/viem'
 
 export const LAYER_ZERO = {
   name: 'layer_zero',
   decoder: decoder,
 }
 
-function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
+async function decoder(
+  chainName: string,
+  log: Log,
+  rpc: RpcClient,
+): Promise<BridgeTransfer | undefined> {
   const chain = CHAINS.find((c) => c.name === chainName)
 
   if (!chain || EthereumAddress(log.address) !== chain.endpoint) {
     return undefined
   }
-  
+
   if (
     log.topics[0] ===
     encodeEventTopics({ abi: ABI, eventName: 'PacketSent' })[0]
@@ -25,31 +39,52 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
       eventName: 'PacketSent',
     })
 
-    const decodedPacket = decodePacket(data.args.encodedPayload)
+    assert(log.transactionHash)
+    const events = await rpc.getTransactionReceipt(log.transactionHash)
 
-    console.log(decodedPacket)
+    const oftSent = events.logs.find(
+      (l) =>
+        l.topics[0] ===
+        encodeEventTopics({ abi: ABI, eventName: 'OFTSent' })[0],
+    )
+
+    if (!oftSent) return undefined
+
+    const oftData = decodeEventLog({
+      abi: ABI,
+      data: oftSent.data as Hex,
+      topics: oftSent.topics as [signature: Hex, ...args: Hex[]] | [],
+      eventName: 'OFTSent',
+    })
+
+    assert(log.blockNumber)
+
+    const token = await rpc.call(
+      {
+        to: EthereumAddress(oftSent.address),
+        data: Bytes.fromHex('0xfc0c546a'),
+      },
+      Number(log.blockNumber),
+    )
+
+    const decodedPacket = decodePacket(data.args.encodedPayload)
 
     const destination = CHAINS.find(
       (c) => c.eid === decodedPacket.packetHeader.dstEid,
     )?.name
-
-    // 1. get all events from this tx
-    // for every OFTSent
-    //  - get amount etc.
-    //  - get address of emitter -> call token() for underlying token -> call symbol()
 
     return {
       protocol: LAYER_ZERO.name,
       chain: chainName,
       origin: chain.name,
       destination: destination ?? decodedPacket.packetHeader.dstEid.toString(),
-      token: 'token',
-      amount: '0',
-      sender: 'sender',
+      token: extractAddressFromPadded(token.toString() as Hex),
+      amount: oftData.args.amountSentLD.toString(),
+      sender: oftData.args.fromAddress,
       receiver: 'receiver',
       txHash: log.transactionHash ?? undefined,
-      type: 'PacketSent',
-      matchingId: undefined,
+      type: 'StargatePacketSent',
+      matchingId: oftData.args.guid,
     }
   }
 
@@ -91,9 +126,8 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
 const ABI = parseAbi([
   'event PacketSent(bytes encodedPayload, bytes options, address sendLibrary)',
   'event PacketDelivered((uint32 srcEid, bytes32 sender, uint64 nonce) origin, address receiver)',
+  'event OFTSent(bytes32 indexed guid, uint32 dstEid, address indexed fromAddress, uint256 amountSentLD, uint256 amountReceivedLD)',
 ])
-
-
 
 const CHAINS = [
   {
@@ -150,32 +184,32 @@ const CHAINS = [
 
 function decodePacket(encodedData: string) {
   const data = encodedData.startsWith('0x') ? encodedData.slice(2) : encodedData
-  
+
   const packetVersion = parseInt(data.slice(0, 2), 16)
-  
+
   const nonce = BigInt('0x' + data.slice(2, 18))
-  
+
   const srcEid = parseInt(data.slice(18, 26), 16)
-  
+
   const senderBytes32 = '0x' + data.slice(26, 90)
   const sender = '0x' + senderBytes32.slice(-40)
-  
+
   const dstEid = parseInt(data.slice(90, 98), 16)
-  
+
   const receiver = '0x' + data.slice(98, 138)
-  
+
   const payload = '0x' + data.slice(138)
-  
+
   let decodedPayload
   try {
     decodedPayload = decodeAbiParameters(
       parseAbiParameters('bytes32, address, uint256'),
-      payload as Hex
+      payload as Hex,
     )
-  } catch  {
+  } catch {
     decodedPayload = { raw: payload }
   }
-  
+
   return {
     packetHeader: {
       packetVersion,
@@ -183,8 +217,8 @@ function decodePacket(encodedData: string) {
       srcEid,
       sender,
       dstEid,
-      receiver
+      receiver,
     },
-    payload: decodedPayload
+    payload: decodedPayload,
   }
 }
