@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -21,5 +21,8 @@ export const solo: ScalingProject = upcomingL2({
       explorers: ['https://solo-testnet.explorer.caldera.xyz/'],
       socialMedia: ['https://x.com/SoloDePIN', 'https://t.me/SoloDePIN'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

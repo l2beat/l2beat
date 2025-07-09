@@ -40,14 +40,6 @@ export const polynomial: ScalingProject = opStackL2({
       },
     ],
   },
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1718038175),
-    minTimestamp: UnixTime(1718049059),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   isNodeAvailable: 'UnderReview',
   genesisTimestamp: UnixTime(1718038307),
   milestones: [

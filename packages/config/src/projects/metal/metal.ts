@@ -51,17 +51,6 @@ export const metal: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1711567115),
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   genesisTimestamp: UnixTime(1711567115),
-  //   minTimestamp: UnixTime(1711565399), //first blob: https://etherscan.io/tx/0x24a3a82c9030b664159be27407ba980c663ccb9bc12b1e448b97b1741d8cefc0
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
-
-  // Set explicitly since finality calculation returns weird results
-  finality: undefined,
   isNodeAvailable: true,
   stateDerivation: DERIVATION.OPSTACK('METAL'),
   milestones: [

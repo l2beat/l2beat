@@ -7427,18 +7427,10 @@
     },
     {
       "symbol": "AUSD",
-      "coingeckoId": "agora-dollar",
       "category": "stablecoin",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Agglayer shared bridge (custom L2 contract)"
-          }
-        ]
-      }
+      "source": "native",
+      "supply": "totalSupply" // minted like an RWA (backed by RWA)
     }
   ]
 }

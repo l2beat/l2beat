@@ -95,15 +95,6 @@ export const blast: ScalingProject = opStackL2({
       { type: 'etherscan', chainId },
     ],
   },
-  finality: {
-    type: 'OPStack',
-    // timestamp of the first blob tx
-    minTimestamp: UnixTime(1716846455),
-    l2BlockTimeSeconds: 2,
-    genesisTimestamp: UnixTime(1708809815),
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   genesisTimestamp: UnixTime(1708825259), //First sequencer transaction
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

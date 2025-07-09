@@ -21,7 +21,6 @@ import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
 import { ScalingDataAvailabilityPage } from './scaling/data-availability/ScalingDataAvailabilityPage'
-import { ScalingFinalityPage } from './scaling/finality/ScalingFinalityPage'
 import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
 import { ScalingProjectPage } from './scaling/project/ScalingProjectPage'
 import { ScalingProjectTvsBreakdownPage } from './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
@@ -50,7 +49,6 @@ const pages = {
   ScalingActivityPage,
   ScalingDataAvailabilityPage,
   ScalingLivenessPage,
-  ScalingFinalityPage,
   ScalingCostsPage,
   ScalingArchivedPage,
   ScalingUpcomingPage,

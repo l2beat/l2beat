@@ -1,5 +1,4 @@
 import { getCostsProjects } from '~/server/features/scaling/costs/utils/getCostsProjects'
-import { getFinalityProjects } from '~/server/features/scaling/finality/getScalingFinalityEntries'
 import { getLiveness } from '~/server/features/scaling/liveness/getLiveness'
 import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
@@ -11,7 +10,6 @@ export async function getDiscolupeProjects() {
   const tvs = await get7dTvsBreakdown({ type: 'layer2' })
   const costs = (await getCostsProjects()).map((p) => p.id.toString())
   const liveness = Object.keys(await getLiveness())
-  const finality = (await getFinalityProjects()).map((f) => f.id.toString())
 
   const projects = await ps.getProjects({
     select: ['statuses', 'scalingInfo', 'scalingTechnology'],
@@ -39,7 +37,6 @@ export async function getDiscolupeProjects() {
 
       costsConfigured: costs.includes(project.id.toString()),
       livenessConfigured: liveness.includes(project.id.toString()),
-      finalityConfigured: finality.includes(project.id.toString()),
       milestonesConfigured: (project.milestones ?? []).length > 0,
       operatorConfigured: getOperatorSection(project) !== undefined,
       withdrawalsConfigured: getWithdrawalsSection(project) !== undefined,

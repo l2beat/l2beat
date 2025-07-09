@@ -271,6 +271,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           projectId: projectId,
           subtype: subtype,
           status: 'ongoing',
+          isApproved: false,
         },
       ])
 
@@ -317,6 +318,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
             projectId: projectId,
             subtype: subtype,
             status: 'ongoing',
+            isApproved: false,
           },
         ] as RealTimeAnomalyRecord[]),
         upsertMany: mockFn().resolvesTo(undefined),
@@ -373,7 +375,8 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
     it('should recover from anomaly', async () => {
       const projectId = ProjectId('project-id')
       const configurationId = 'tracked-tx-1'
-      const subtype = 'stateUpdates'
+      const configurationId2 = 'tracked-tx-1'
+
       const startTimestamp = UnixTime.now() - 5 * UnixTime.HOUR
       const lastTxTimestamp = UnixTime.now() - 5 * UnixTime.MINUTE
 
@@ -382,7 +385,14 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           {
             timestamp: UnixTime.now(),
             projectId,
-            subtype,
+            subtype: 'stateUpdates',
+            mean: 10,
+            stdDev: 20,
+          },
+          {
+            timestamp: UnixTime.now(),
+            projectId,
+            subtype: 'proofSubmissions',
             mean: 10,
             stdDev: 20,
           },
@@ -399,6 +409,12 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
             blockNumber: 123,
             timestamp: lastTxTimestamp,
           },
+          {
+            configurationId: configurationId2,
+            txHash: '0x123',
+            blockNumber: 123,
+            timestamp: lastTxTimestamp - 1 * UnixTime.MINUTE,
+          },
         ] as RealTimeLivenessRecord[]),
       })
 
@@ -409,8 +425,16 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           {
             start: startTimestamp,
             projectId: projectId,
-            subtype: subtype,
+            subtype: 'stateUpdates',
             status: 'ongoing',
+            isApproved: false,
+          },
+          {
+            start: startTimestamp - 1 * UnixTime.MINUTE,
+            projectId: projectId,
+            subtype: 'proofSubmissions',
+            status: 'ongoing',
+            isApproved: true,
           },
         ] as RealTimeAnomalyRecord[]),
         upsertMany: mockFn().resolvesTo(undefined),
@@ -422,6 +446,18 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           id: configurationId,
           projectId,
           subtype: 'stateUpdates' as const,
+          sinceTimestamp: UnixTime.now(),
+          params: {
+            formula: 'transfer' as const,
+            from: EthereumAddress.random(),
+            to: EthereumAddress.random(),
+          },
+        },
+        {
+          type: 'liveness' as const,
+          id: configurationId2,
+          projectId,
+          subtype: 'proofSubmissions' as const,
           sinceTimestamp: UnixTime.now(),
           params: {
             formula: 'transfer' as const,
@@ -464,8 +500,17 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
         {
           start: startTimestamp,
           projectId: projectId,
-          subtype: subtype,
+          subtype: 'stateUpdates',
           status: 'recovered',
+          isApproved: false,
+          end: lastTxTimestamp,
+        },
+        {
+          start: startTimestamp - 1 * UnixTime.MINUTE,
+          projectId: projectId,
+          subtype: 'proofSubmissions',
+          status: 'recovered',
+          isApproved: true,
           end: lastTxTimestamp,
         },
       ])

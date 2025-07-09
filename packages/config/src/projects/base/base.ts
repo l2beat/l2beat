@@ -74,14 +74,6 @@ export const base: ScalingProject = opStackL2({
       sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
     },
   ],
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1710375515),
-    genesisTimestamp: UnixTime(1686789347),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [

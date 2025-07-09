@@ -6,7 +6,6 @@ export type DiagramType =
   | 'architecture'
   | 'upgrades-and-governance'
   | 'state-validation'
-  | 'finality'
   | 'da-layer-technology'
   | 'da-bridge-technology'
   | 'sequencing'
@@ -15,7 +14,6 @@ const diagramTypeToCaption: Record<DiagramType, string> = {
   architecture: 'A diagram of the smart contract architecture',
   'upgrades-and-governance': 'A diagram of the upgrades and governance',
   'state-validation': 'A diagram of the state validation',
-  finality: 'A diagram of the finality',
   'da-layer-technology': 'A diagram of the DA layer technology',
   'da-bridge-technology': 'A diagram of the DA bridge technology',
   sequencing: 'A diagram of the sequencing technology',

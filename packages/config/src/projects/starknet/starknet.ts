@@ -223,9 +223,6 @@ export const starknet: ScalingProject = {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
-    finality: {
-      finalizationPeriod,
-    },
     costsWarning: {
       sentiment: 'warning',
       value:
@@ -563,12 +560,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ],
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1724856347),
-      stateUpdate: 'disabled',
-    },
     trackedTxs: [
       {
         uses: [

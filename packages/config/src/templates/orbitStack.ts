@@ -42,7 +42,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectFinalityConfig,
   ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
@@ -127,7 +126,6 @@ interface OrbitStackConfigCommon {
   }
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
-  finality?: ProjectFinalityConfig
   rollupProxy: EntryParameters
   sequencerInbox: EntryParameters
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
@@ -797,7 +795,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     display: {
       ...common.display,
       ...templateVars.display,
-      finality: { finalizationPeriod: challengePeriodSeconds },
       liveness: ifPostsToEthereum(
         templateVars,
         templateVars.display.liveness ?? {
@@ -817,7 +814,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     config: {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
-      finality: templateVars.finality,
     },
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),

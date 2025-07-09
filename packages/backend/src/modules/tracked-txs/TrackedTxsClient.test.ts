@@ -13,6 +13,7 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import { v } from '@l2beat/validate'
+import type { TrackedTxProject } from '../../config/Config'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -39,7 +40,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getData.name, () => {
     it('filters configurations and calls big query, parses results', async () => {
       const bigquery = getMockBiqQuery([TRANSFERS_RESPONSE, FUNCTIONS_RESPONSE])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       const data = await trackedTxsClient.getData(
         CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
@@ -55,12 +56,33 @@ describe(TrackedTxsClient.name, () => {
       // returns parsed data returned from internal methods
       expect(data).toEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
     })
+
+    it('filters configurations from archived projects', async () => {
+      const projects = [
+        mockObject<TrackedTxProject>({
+          id: ProjectId('project1'),
+          isArchived: true,
+        }),
+      ]
+      const bigquery = getMockBiqQuery([])
+
+      const trackedTxsClient = new TrackedTxsClient(bigquery, projects)
+
+      const data = await trackedTxsClient.getData(
+        CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
+        FROM,
+        TO,
+      )
+
+      expect(bigquery.query).not.toHaveBeenCalled()
+      expect(data).toEqual([])
+    })
   })
 
   describe(TrackedTxsClient.prototype.getTransfers.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       await trackedTxsClient.getTransfers([], FROM, TO)
 
@@ -71,7 +93,7 @@ describe(TrackedTxsClient.name, () => {
   describe(TrackedTxsClient.prototype.getFunctionCalls.name, () => {
     it('does not call query when empty config', async () => {
       const bigquery = getMockBiqQuery([])
-      const trackedTxsClient = new TrackedTxsClient(bigquery)
+      const trackedTxsClient = new TrackedTxsClient(bigquery, PROJECTS)
 
       await trackedTxsClient.getFunctionCalls([], [], [], FROM, TO)
 
@@ -201,6 +223,13 @@ const CONFIGURATIONS = [
     TrackedTxConfigEntry & { params: TrackedTxSharedBridgeConfig }
   >,
 ] as const
+
+const PROJECTS = [
+  mockObject<TrackedTxProject>({
+    id: ProjectId('project1'),
+    isArchived: false,
+  }),
+]
 
 const TRANSFERS_RESPONSE = [
   {
