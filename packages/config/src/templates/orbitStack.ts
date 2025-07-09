@@ -808,7 +808,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
             templateVars.display.name
           } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
             selfSequencingDelaySeconds,
-          )}. The state root gets finalized ${formatSeconds(
+          )}. The state root is settled ${formatSeconds(
             challengePeriodSeconds,
           )} after it has been posted.`,
         },
