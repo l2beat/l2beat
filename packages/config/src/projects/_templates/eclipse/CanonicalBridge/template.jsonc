@@ -1,0 +1,63 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.",
+  "category": "core",
+  "canActIndependently": false,
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE",
+          "0xac6a94bcd1ac2877eda181de9748e5972fc07f76d4864cecf836b3fca185e53c": "STARTER_ROLE",
+          "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE",
+          "0x49d85f38d8d200e3ac71b7ada9a2786ccb6d016b3c28e43e8057f6bbae438adc": "CLAIM_AUTHORITY_ROLE",
+          "0xb7a383a5ef6cc414a168844ee7da5cf32b44a10145b4d0cc573e1b7c231d3040": "WITHDRAW_CANCELLER_ROLE",
+          "0xe68a6574a7e933010135bdcdb85f5b60aed1ee2a05b00c7c3b88734a75706cf0": "FRAUD_WINDOW_SETTER_ROLE"
+        }
+      }
+    },
+    "withdrawAuthorityAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xfe482b7b16acc2ea6eda181934b481a09d50ed8e3579b43c531bc57b84336c53": "WITHDRAW_AUTHORITY_ROLE"
+        },
+        "pickRoleMembers": "WITHDRAW_AUTHORITY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "authorize withdrawals to any address."
+        }
+      ]
+    },
+    "pauserAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x39935d86204acf3d77da26425d7a46606d2550568c6b1876f3a2e76c804c7626": "PAUSER_ROLE"
+        },
+        "pickRoleMembers": "PAUSER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "pause the contract for deposits and withdrawals."
+        }
+      ]
+    },
+    "defaultAdminAC": {
+      "handler": {
+        "type": "accessControl",
+        "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "grant / revoke all access control roles and thus access all permissioned functions in the contract."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "This contract was used for an upgrade an still retains its permissions and permissioned actors.",
+  "canActIndependently": false,
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE"
+        }
+      }
+    },
+    "upgraderAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0fb7166d9f681d2bd296a45a1a2e81365c392be30b6156d73b45df44e85cdb9f": "UPGRADER_ROLE"
+        },
+        "pickRoleMembers": "UPGRADER_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "start an upgrade of the core contracts."
+        }
+      ]
+    }
+  }
+}
