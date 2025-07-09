@@ -72,6 +72,11 @@ const cmd = command({
         ? args.start
         : (await r.rpc.getLatestBlockNumber()) - range
 
+      logger.info(`Fetching logs for ${r.name}`, {
+        from: start,
+        to: start + range,
+      })
+
       const logs = await r.rpc.getLogs(start, start + range)
 
       for (const l of logs) {
@@ -113,7 +118,6 @@ const cmd = command({
 
     const transfersCountByProtocol: Record<string, number> = {}
 
-    logger.info('--- Related transfers (same protocol and ID) ---')
     for (const [key, transfers] of Object.entries(transfersByProtocolAndId)) {
       if (transfers.length > 1) {
         const [protocol, id] = key.split(':')
