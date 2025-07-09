@@ -27,7 +27,7 @@ export class TrackedTxsClient {
   constructor(
     private readonly bigquery: BigQueryClient,
     private readonly projects: TrackedTxProject[],
-  ) { }
+  ) {}
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
