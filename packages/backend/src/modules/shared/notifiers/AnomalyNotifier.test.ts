@@ -156,6 +156,7 @@ describe(AnomalyNotifier.name, () => {
         projectId,
         subtype,
         status: 'ongoing',
+        isApproved: false,
         start: lastRecord.timestamp,
       })
 
@@ -391,9 +392,9 @@ describe(AnomalyNotifier.name, () => {
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
           '### Ongoing anomalies:\n' +
-          '```|  Duration | ProjectId |          Subtype |       Status |\n' +
-          '|-----------|-----------|------------------|--------------|\n' +
-          '| 0 seconds | project-1 | batchSubmissions | not approved |```',
+          '```|  Duration | ProjectId |          Subtype |  Status |     Approval |\n' +
+          '|-----------|-----------|------------------|---------|--------------|\n' +
+          '| 0 seconds | project-1 | batchSubmissions | ongoing | not approved |```',
       )
     })
   })

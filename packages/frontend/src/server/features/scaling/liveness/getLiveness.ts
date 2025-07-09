@@ -82,7 +82,7 @@ async function getLivenessData(projectId?: ProjectId) {
       projectId ? [projectId] : projectIds,
       last30Days,
     ),
-    db.realTimeAnomalies.getApprovedAndRecoveredAnomaliesByProjectIds(
+    db.realTimeAnomalies.getApprovedAnomaliesByProjectIds(
       projectId ? [projectId] : projectIds,
     ),
   ])
@@ -233,7 +233,9 @@ function getAnomalies(
   const filteredAnomalies = anomalies.filter((a) => {
     const record = realTimeAnomalies.find((r) => r.start === a.timestamp)
     const alreadyExists =
-      record?.subtype === a.subtype && record.projectId === a.projectId
+      record?.start === a.timestamp &&
+      record?.subtype === a.subtype &&
+      record?.projectId === a.projectId
     return !alreadyExists
   })
 
