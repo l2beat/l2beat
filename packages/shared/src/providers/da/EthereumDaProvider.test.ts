@@ -14,20 +14,11 @@ describe(EthereumDaProvider.name, () => {
       const versionedHash2 = '0x0123'
 
       const txHash = '0xtx1'
-      const mockLogFilters = [
-        {
-          address: 'inbox1',
-          topics: ['topic1-1', 'topic1-2'],
-        },
-        {
-          address: 'inbox2',
-          topics: ['topic2-1', 'topic2-2'],
-        },
-      ]
 
       const mockRpcClient = mockObject<RpcClient>({
         getBlock: mockFn().resolvesTo({
           timestamp: UnixTime.fromDate(mockDate),
+          number: 1,
           transactions: [
             {
               hash: txHash,
@@ -53,14 +44,9 @@ describe(EthereumDaProvider.name, () => {
         'ethereum',
       )
 
-      const result = await provider.getBlobs(1, 1, mockLogFilters)
+      const result = await provider.getBlobs(1, 1)
 
-      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(
-        1,
-        1,
-        ['inbox1', 'inbox2'],
-        ['topic1-1', 'topic1-2', 'topic2-1', 'topic2-2'],
-      )
+      expect(mockRpcClient.getLogs).toHaveBeenCalledWith(1, 1)
 
       expect(result).toEqual([
         {
@@ -70,6 +56,7 @@ describe(EthereumDaProvider.name, () => {
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
+          blockNumber: 1,
           size: 131072n,
         } as EthereumBlob,
         {
@@ -79,6 +66,7 @@ describe(EthereumDaProvider.name, () => {
           sequencer: '0xfrom1',
           topics: ['topic1-1'],
           blockTimestamp: UnixTime.fromDate(mockDate),
+          blockNumber: 1,
           size: 131072n,
         } as EthereumBlob,
       ])
