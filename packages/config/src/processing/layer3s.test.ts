@@ -4,6 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
+import { ecosystems } from './ecosystems'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 
@@ -44,6 +45,17 @@ describe('layer3s', () => {
       it(`every Other project has reasonsForBeingOther configured: ${layer3.display.name}`, () => {
         if (layer3.display.category === 'Other') {
           expect(!!layer3.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
+  describe('ecosystems', () => {
+    const ecosystemIds = ecosystems.map((e) => e.id)
+    for (const layer3 of layer3s) {
+      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer3.display.name}`, () => {
+        if (layer3.ecosystemInfo) {
+          expect(ecosystemIds).toInclude(layer3.ecosystemInfo.id)
         }
       })
     }
