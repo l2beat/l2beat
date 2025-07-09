@@ -272,7 +272,6 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           subtype: subtype,
           status: 'ongoing',
           isApproved: false,
-          isApproved: false,
         },
       ])
 
