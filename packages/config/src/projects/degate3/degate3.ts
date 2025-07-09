@@ -99,6 +99,7 @@ const timelockUpgrades2 = {
 }
 
 export const degate3: ScalingProject = {
+  archivedAt: UnixTime(1752041971), // Wednesday, July 9, 2025 6:19:31 AM UTC
   type: 'layer2',
   id: ProjectId('degate3'),
   capability: 'appchain',
