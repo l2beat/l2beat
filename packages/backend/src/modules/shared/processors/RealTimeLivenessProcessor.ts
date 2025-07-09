@@ -214,7 +214,8 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
           start: latestRecord.timestamp,
           projectId: group.projectId,
           subtype: group.subtype,
-          status: 'ongoing',
+          isOngoing: true,
+          isApproved: false,
         }
 
         await this.notifier?.anomalyDetected(
@@ -242,7 +243,7 @@ export class RealTimeLivenessProcessor implements BlockProcessor {
 
         const recoveredAnomaly: RealTimeAnomalyRecord = {
           ...ongoingAnomaly,
-          status: 'recovered',
+          isOngoing: false,
           end: latestRecord.timestamp,
         }
 
