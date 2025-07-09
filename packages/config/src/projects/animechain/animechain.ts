@@ -20,4 +20,7 @@ export const animechain: ScalingProject = upcomingL3({
       socialMedia: ['https://x.com/animecoin'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

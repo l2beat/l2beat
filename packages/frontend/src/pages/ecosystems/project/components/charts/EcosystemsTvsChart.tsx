@@ -36,7 +36,7 @@ export function EcosystemsTvsChart({
   ecosystemMilestones,
 }: {
   name: string
-  entries: EcosystemEntry['projects']
+  entries: EcosystemEntry['liveProjects']
   allScalingProjectsTvs: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]

@@ -21,4 +21,7 @@ export const unite: ScalingProject = upcomingL3({
       websites: ['https://unite.io/'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
+  },
 })
