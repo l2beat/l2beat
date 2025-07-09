@@ -2,20 +2,17 @@ import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { RealTimeAnomaly } from '../../kysely/generated/types'
 
-export type RealTimeAnomalyStatus = 'ongoing' | 'approved' | 'recovered'
-
-export interface RealTimeAnomalyRecord<
-  T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus,
-> {
+export interface RealTimeAnomalyRecord {
   start: UnixTime
   projectId: string
   subtype: TrackedTxsConfigSubtype
-  status: T
+  isOngoing: boolean
+  isApproved: boolean
   end?: UnixTime
 }
 
-export function toRow<T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus>(
-  record: RealTimeAnomalyRecord<T>,
+export function toRow(
+  record: RealTimeAnomalyRecord,
 ): Insertable<RealTimeAnomaly> {
   return {
     ...record,
@@ -24,14 +21,13 @@ export function toRow<T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus>(
   }
 }
 
-export function toRecord<T extends RealTimeAnomalyStatus>(
+export function toRecord(
   row: Selectable<RealTimeAnomaly>,
-): RealTimeAnomalyRecord<T> {
+): RealTimeAnomalyRecord {
   return {
     ...row,
     start: UnixTime.fromDate(row.start),
     end: row.end ? UnixTime.fromDate(row.end) : undefined,
     subtype: row.subtype as TrackedTxsConfigSubtype,
-    status: row.status as T,
   }
 }
