@@ -271,6 +271,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           projectId: projectId,
           subtype: subtype,
           status: 'ongoing',
+          isApproved: false,
         },
       ])
 
@@ -317,6 +318,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
             projectId: projectId,
             subtype: subtype,
             status: 'ongoing',
+            isApproved: false,
           },
         ] as RealTimeAnomalyRecord[]),
         upsertMany: mockFn().resolvesTo(undefined),
@@ -411,6 +413,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
             projectId: projectId,
             subtype: subtype,
             status: 'ongoing',
+            isApproved: false,
           },
         ] as RealTimeAnomalyRecord[]),
         upsertMany: mockFn().resolvesTo(undefined),
@@ -466,6 +469,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
           projectId: projectId,
           subtype: subtype,
           status: 'recovered',
+          isApproved: false,
           end: lastTxTimestamp,
         },
       ])

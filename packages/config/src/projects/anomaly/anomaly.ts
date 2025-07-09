@@ -21,4 +21,7 @@ export const anomaly: ScalingProject = upcomingL3({
       socialMedia: ['https://twitter.com/anomalygamesinc'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

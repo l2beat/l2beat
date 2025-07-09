@@ -31,14 +31,6 @@ export const soneium = opStackL2({
     },
   },
   hasSuperchainScUpgrades: true,
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1733134753),
-    genesisTimestamp: UnixTime(1733134753),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   isNodeAvailable: 'UnderReview',
   stateDerivation: DERIVATION.OPSTACK('SONEIUM'),
   chainConfig: {

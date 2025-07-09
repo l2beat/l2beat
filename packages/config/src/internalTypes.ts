@@ -20,8 +20,6 @@ import type {
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -116,8 +114,6 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
-  /** Configuration for getting finality data */
-  finality?: ProjectFinalityConfig
 }
 
 export interface ProjectScalingDisplay {
@@ -159,7 +155,6 @@ export interface ProjectScalingDisplay {
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
-  finality?: ProjectFinalityInfo
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }

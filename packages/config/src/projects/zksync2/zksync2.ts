@@ -392,12 +392,6 @@ export const zksync2: ScalingProject = zkStackL2({
       },
     },
   ],
-  finality: {
-    type: 'zkSyncEra',
-    stateUpdate: 'zeroed',
-    minTimestamp: UnixTime(1708556400),
-    lag: 0,
-  },
   milestones: [
     {
       title: 'ZK token minter key compromised',

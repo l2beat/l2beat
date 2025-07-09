@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -19,5 +19,8 @@ export const zklighter: ScalingProject = upcomingL2({
       documentation: ['https://zk.lighter.xyz/developers'],
       socialMedia: ['https://twitter.com/lighter_xyz'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

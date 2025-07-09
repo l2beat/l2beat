@@ -7,7 +7,6 @@ import { getChainConfig } from './chain/getChainConfig'
 import { getActivityConfig } from './features/activity'
 import { getDaTrackingConfig } from './features/da'
 import { getDaBeatConfig } from './features/dabeat'
-import { getFinalityConfig } from './features/finality'
 import { getTrackedTxsConfig } from './features/trackedTxs'
 import { getTvsConfig } from './features/tvs'
 import { getUpdateMonitorConfig } from './features/updateMonitor'
@@ -112,8 +111,6 @@ export async function makeConfig(
     trackedTxsConfig:
       flags.isEnabled('tracked-txs') &&
       (await getTrackedTxsConfig(ps, env, flags)),
-    finality:
-      flags.isEnabled('finality') && (await getFinalityConfig(ps, env, flags)),
     activity:
       flags.isEnabled('activity') && (await getActivityConfig(ps, env, flags)),
     verifiers: flags.isEnabled('verifiers') && (await getVerifiersConfig(ps)),
@@ -130,24 +127,12 @@ export async function makeConfig(
     daBeat: flags.isEnabled('da-beat') && (await getDaBeatConfig(ps, env)),
     chainConfig: await getChainConfig(ps, env),
     beaconApi: {
-      url: env.optionalString([
-        'ETHEREUM_BEACON_API_URL_FOR_FINALITY',
-        'ETHEREUM_BEACON_API_URL',
-      ]),
+      url: env.optionalString(['ETHEREUM_BEACON_API_URL']),
       callsPerMinute: env.integer(
-        [
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_CALLS_PER_MINUTE',
-        ],
+        ['ETHEREUM_BEACON_API_CALLS_PER_MINUTE'],
         600,
       ),
-      timeout: env.integer(
-        [
-          'ETHEREUM_BEACON_API_TIMEOUT_FOR_FINALITY',
-          'ETHEREUM_BEACON_API_TIMEOUT',
-        ],
-        10000,
-      ),
+      timeout: env.integer(['ETHEREUM_BEACON_API_TIMEOUT'], 10000),
     },
     da: flags.isEnabled('da') && (await getDaTrackingConfig(ps, env)),
     shared: flags.isEnabled('shared') && {

@@ -144,15 +144,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
-    finality: { finalizationPeriod: challengeWindowSeconds },
-  },
-  finality: {
-    type: 'Arbitrum',
-    // First blob tx from arbitrum
-    // https://etherscan.io/tx/0x5969e9d520e138e6eeb5c020a75635fd2fdc15803f707dce7909c1bf062b32d0
-    minTimestamp: UnixTime(1710427823),
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'arbitrum',

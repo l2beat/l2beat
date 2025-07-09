@@ -100,16 +100,6 @@ export const kroma: ScalingProject = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
-    finality: {
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'neutral',
-          value:
-            "It's assumed that transaction data batches are submitted sequentially.",
-        },
-      },
-      finalizationPeriod,
-    },
   },
   ecosystemInfo: {
     id: ProjectId('superchain'),
@@ -198,15 +188,6 @@ export const kroma: ScalingProject = {
         },
       },
     ],
-    finality: {
-      type: 'OPStack',
-      // timestamp of the first blob tx
-      minTimestamp: UnixTime(1714032407),
-      l2BlockTimeSeconds: 2,
-      genesisTimestamp: UnixTime(1693880387),
-      lag: 0,
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

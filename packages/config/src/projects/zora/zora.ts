@@ -35,14 +35,6 @@ export const zora: ScalingProject = opStackL2({
     },
   },
   hasSuperchainScUpgrades: true,
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1686693839),
-    minTimestamp: UnixTime(1710386579),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   chainConfig: {
     name: 'zora',
     chainId: 7777777,
