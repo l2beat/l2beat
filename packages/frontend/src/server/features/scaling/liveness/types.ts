@@ -14,6 +14,7 @@ export interface LivenessAnomaly {
   durationInSeconds: number
   subtype: TrackedTxsConfigSubtype
   avgInterval: number
+  isApproved: boolean
 }
 
 export interface LivenessDetails {

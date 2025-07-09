@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -24,7 +23,6 @@ type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
   const filterEntries = useFilterEntries()
-  const [tab, setTab] = useState('rollups')
 
   const entries = {
     rollups: props.rollups.filter(filterEntries),
@@ -38,14 +36,6 @@ export function ScalingLivenessTables(props: Props) {
     desc: false,
   }
 
-  useEffect(() => {
-    if (tab === 'others' && entries.others.length === 0) {
-      setTab('rollups')
-    }
-  }, [entries.others, tab])
-
-  const showOthers = entries.others.length > 0
-
   return (
     <>
       <Controls
@@ -55,7 +45,7 @@ export function ScalingLivenessTables(props: Props) {
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
+      <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
@@ -64,11 +54,9 @@ export function ScalingLivenessTables(props: Props) {
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -82,14 +70,12 @@ export function ScalingLivenessTables(props: Props) {
             <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingLivenessTable entries={entries.others} others />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingLivenessTable entries={entries.others} others />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )
