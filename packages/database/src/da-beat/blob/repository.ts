@@ -1,7 +1,6 @@
 import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type BlobRecord, daLayerToNumber, toRecord, toRow } from './entity'
-import { selectBlob } from './select'
 
 export class BlobsRepository extends BaseRepository {
   async insertMany(records: Omit<BlobRecord, 'id'>[]): Promise<number> {
@@ -15,7 +14,7 @@ export class BlobsRepository extends BaseRepository {
   }
 
   async getAll(): Promise<BlobRecord[]> {
-    const rows = await this.db.selectFrom('Blob').select(selectBlob).execute()
+    const rows = await this.db.selectFrom('Blob').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -27,7 +26,7 @@ export class BlobsRepository extends BaseRepository {
   ): Promise<BlobRecord[]> {
     const rows = await this.db
       .selectFrom('Blob')
-      .select(selectBlob)
+      .selectAll()
       .where('daLayer', '=', daLayerToNumber(daLayer))
       .where('blockNumber', '>=', from)
       .where('blockNumber', '<=', to)

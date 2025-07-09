@@ -1,6 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type NotificationRecord, toRecord, toRow } from './entity'
-import { selectNotification } from './select'
 
 export class NotificationsRepository extends BaseRepository {
   async insertMany(records: NotificationRecord[]): Promise<number> {
@@ -19,10 +18,7 @@ export class NotificationsRepository extends BaseRepository {
   }
 
   async getAll(): Promise<NotificationRecord[]> {
-    const rows = await this.db
-      .selectFrom('Notification')
-      .select(selectNotification)
-      .execute()
+    const rows = await this.db.selectFrom('Notification').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -32,7 +28,7 @@ export class NotificationsRepository extends BaseRepository {
   ): Promise<NotificationRecord[]> {
     const rows = await this.db
       .selectFrom('Notification')
-      .select(selectNotification)
+      .selectAll()
       .where('relatedEntityId', '=', relatedEntityId)
       .execute()
     return rows.map(toRecord)

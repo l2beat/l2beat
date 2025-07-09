@@ -1,7 +1,6 @@
 import { type ChainId, Hash256 } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type FlatSourcesRecord, toRecord, toRow } from './entity'
-import { selectFlatSources } from './select'
 
 export class FlatSourcesRepository extends BaseRepository {
   async upsert(record: FlatSourcesRecord): Promise<void> {
@@ -38,10 +37,7 @@ export class FlatSourcesRepository extends BaseRepository {
   }
 
   async getAll(): Promise<FlatSourcesRecord[]> {
-    const rows = await this.db
-      .selectFrom('FlatSources')
-      .select(selectFlatSources)
-      .execute()
+    const rows = await this.db.selectFrom('FlatSources').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -52,7 +48,7 @@ export class FlatSourcesRepository extends BaseRepository {
   ): Promise<FlatSourcesRecord | undefined> {
     const row = await this.db
       .selectFrom('FlatSources')
-      .select(selectFlatSources)
+      .selectAll()
       .where('projectId', '=', projectId)
       .where('chainId', '=', +chainId)
       .executeTakeFirst()

@@ -1,7 +1,6 @@
 import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type AnomalyRecord, toRecord, toRow } from './entity'
-import { selectAnomaly } from './select'
 
 export class AnomaliesRepository extends BaseRepository {
   async upsert(record: AnomalyRecord): Promise<void> {
@@ -34,10 +33,7 @@ export class AnomaliesRepository extends BaseRepository {
   }
 
   async getAll(): Promise<AnomalyRecord[]> {
-    const rows = await this.db
-      .selectFrom('Anomaly')
-      .select(selectAnomaly)
-      .execute()
+    const rows = await this.db.selectFrom('Anomaly').selectAll().execute()
 
     return rows.map(toRecord)
   }
@@ -48,7 +44,7 @@ export class AnomaliesRepository extends BaseRepository {
   ): Promise<AnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('Anomaly')
-      .select(selectAnomaly)
+      .selectAll()
       .where('projectId', '=', projectId)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .execute()
@@ -61,7 +57,7 @@ export class AnomaliesRepository extends BaseRepository {
   ): Promise<AnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('Anomaly')
-      .select(selectAnomaly)
+      .selectAll()
       .where('projectId', 'in', projectIds)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .execute()
