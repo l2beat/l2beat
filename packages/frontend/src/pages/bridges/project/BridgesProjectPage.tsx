@@ -36,16 +36,16 @@ export function BridgesProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout>
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div className="smooth-scroll">
             <BridgesMvpWarning className="w-full" />
             {!isNavigationEmpty && (
-              <div className="sticky top-0 z-100 md:hidden">
+              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
 
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-[18px]">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
               <ProjectHeader project={projectEntry} className="mb-6" />
               <ProjectSummaryBars project={projectEntry} />
 

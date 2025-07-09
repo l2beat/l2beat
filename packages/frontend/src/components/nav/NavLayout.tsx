@@ -14,23 +14,22 @@ import { HiringBadge } from '../badge/HiringBadge'
 import { SidebarProvider } from '../core/Sidebar'
 import { MobileTopNavbar } from './mobile/MobileTopNavbar'
 import { NavSidebar } from './sidebar/NavSidebar'
-import { TopNavbar } from './top-nav/TopNavbar'
 import type { NavGroup } from './types'
 
 interface Props {
   children: ReactNode
   className?: string
   logoLink: string
-  topNavbar?: boolean
   topChildren?: ReactNode
+  childrenWrapperClassName?: string
 }
 
 export function NavLayout({
   children,
   className,
   logoLink,
-  topNavbar,
   topChildren,
+  childrenWrapperClassName,
 }: Props) {
   const groups = compact<NavGroup>([
     {
@@ -222,40 +221,17 @@ export function NavLayout({
 
   return (
     <SidebarProvider>
-      <div
-        className={cn(
-          'relative flex flex-col lg:flex-row',
-          topNavbar && 'lg:flex-col',
-          className,
-        )}
-      >
-        {!!topNavbar && (
-          <>
-            {topChildren}
-            <TopNavbar
-              logoLink={logoLink}
-              groups={groups}
-              sideLinks={sideLinks}
-            />
-          </>
-        )}
-        {!topNavbar && topChildren && (
-          <div className="block lg:hidden">{topChildren}</div>
-        )}
+      <div className={cn('relative flex flex-col lg:flex-row', className)}>
+        {topChildren && <div className="block lg:hidden">{topChildren}</div>}
         <MobileTopNavbar groups={groups} logoLink={logoLink} />
-        <NavSidebar
-          logoLink={logoLink}
-          groups={groups}
-          sideLinks={sideLinks}
-          topNavbar={!!topNavbar}
-        />
+        <NavSidebar logoLink={logoLink} groups={groups} sideLinks={sideLinks} />
         <div
           className={cn(
-            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
-            !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
+            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden md:pt-5 lg:ml-3 lg:pt-0',
+            childrenWrapperClassName,
           )}
         >
-          {!topNavbar && topChildren && (
+          {topChildren && (
             <div className="hidden lg:mr-3 lg:block xl:mr-0">{topChildren}</div>
           )}
           {children}

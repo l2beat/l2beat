@@ -2,11 +2,18 @@ import { Banner } from '~/components/Banner'
 import { Footer } from '~/components/Footer'
 import { NavLayout } from '~/components/nav/NavLayout'
 
-export function SideNavLayout({ children }: { children: React.ReactNode }) {
+export function SideNavLayout({
+  children,
+  childrenWrapperClassName,
+}: {
+  children: React.ReactNode
+  childrenWrapperClassName?: string
+}) {
   return (
     <NavLayout
       logoLink="/scaling/summary"
       topChildren={<Banner className="lg:rounded-b-xl xl:rounded-br-none" />}
+      childrenWrapperClassName={childrenWrapperClassName}
     >
       <div className="mx-auto min-h-screen max-w-screen-lg md:px-6 lg:pl-0">
         {children}

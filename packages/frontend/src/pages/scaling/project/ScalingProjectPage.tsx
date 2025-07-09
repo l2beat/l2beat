@@ -34,14 +34,14 @@ export function ScalingProjectPage({
   return (
     <AppLayout {...props}>
       <HydrationBoundary state={queryState}>
-        <SideNavLayout>
+        <SideNavLayout childrenWrapperClassName="md:pt-0">
           <div className="smooth-scroll">
             {!isNavigationEmpty && (
-              <div className="sticky top-0 z-100 md:hidden">
+              <div className="md:-mx-6 sticky top-0 z-100 lg:hidden">
                 <MobileProjectNavigation sections={navigationSections} />
               </div>
             )}
-            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-[18px]">
+            <div className="pt-6 max-md:bg-surface-primary max-md:px-4 md:pt-6 lg:pt-[18px]">
               <ProjectHeader
                 project={projectEntry}
                 ongoingAnomaly={projectEntry.header.ongoingAnomaly}
@@ -82,7 +82,7 @@ export function ScalingProjectPage({
                     <ProjectDetails items={projectEntry.sections} />
                   </HighlightableLinkContextProvider>
                 </div>
-                <div className="mt-2 hidden shrink-0 md:block">
+                <div className="mt-2 hidden shrink-0 lg:block">
                   <DesktopProjectNavigation
                     project={{
                       title: projectEntry.shortName ?? projectEntry.name,
