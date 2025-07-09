@@ -136,5 +136,11 @@
     "address": "0x78FFE9209dFF6Fe1c9B6F3EFdF996BeE60346D0e",
     "chain": "ethereum",
     "blockNumber": 22779924
+  },
+  "SystemConfig_v2_5_0_celo": {
+    "hash": "0xde1dd3a62e9db0a611ef7256805eb375a1fa1a6c8fa0ba6afc44df5b3cd7d8be",
+    "address": "0x9c61C5a8FF9408B83ac92571278550097A9d2BB5",
+    "chain": "ethereum",
+    "blockNumber": 22882513
   }
 }
