@@ -14690,24 +14690,17 @@
     },
     {
       "name": "AUSD",
-      "coingeckoId": "agora-dollar",
+      "coingeckoId": "agora-ausd-katana",
       "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
       "symbol": "AUSD",
       "decimals": 6,
       "deploymentTimestamp": 1748541168,
-      "coingeckoListingTimestamp": 1722729600,
+      "coingeckoListingTimestamp": 1751587200,
       "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/39284/large/Circle_Agora_White_on_Olive_1080px.png?1722961274",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67047/large/ausd.png?1751587801",
       "chainId": 747474,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridges": [
-          {
-            "name": "Agglayer shared bridge (custom L2 contract)"
-          }
-        ]
-      }
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Vault Bridge ETH",
