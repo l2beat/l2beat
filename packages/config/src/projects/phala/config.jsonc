@@ -4,6 +4,7 @@
   "import": ["../globalConfig.jsonc"],
   "chains": {
     "ethereum": {
+      "sharedModules": ["sp1"],
       "maxDepth": 438,
       "initialAddresses": ["0x6A3444d11cA2697fe4A19AC8995ABDd8Dd301521"],
       "names": {

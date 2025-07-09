@@ -1,6 +1,13 @@
 import { ProjectId, UnixTime } from "@l2beat/shared-pure";
 import { ZK_CATALOG_TAGS } from "../../common/zkCatalogTags";
 import { BaseProject, ProjectProofSystem } from "../../types";
+import { ProjectDiscovery } from "../../discovery/ProjectDiscovery";
+import { ZK_CATALOG_ATTESTERS } from "../../common/zkCatalogAttesters";
+
+// const discoveryEth = new ProjectDiscovery('sp1');
+// const discoveryBase = new ProjectDiscovery('sp1', 'base');
+// const discoveryArb = new ProjectDiscovery('sp1', 'arbitrum');
+// get a value of a field of a contract: discoveryEth.getContractValue<string>('SP1Verifeir', 'VERIFIER_HASH');
 
 export const sp1: BaseProject = {
     id: ProjectId('sp1'),
@@ -83,6 +90,33 @@ export const sp1: BaseProject = {
             - Ceremony announcement with a call to participate: https://aztec.network/blog/announcing-ignition.
             `,
         },
-        verifierHashes: [],
+        verifierHashes: [
+            {
+                hash: '0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7',
+                explorerLink: 'https://etherscan.io/address/0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459',
+                verificationStatus: 'notVerified',
+                usedBy: [ProjectId('vector'), ProjectId('blobstream'), ProjectId('astarzkevm'), ProjectId('gpt'), ProjectId('katana'), ProjectId('kroma'), ProjectId('lumia'), ProjectId('polygonzkevm'), ProjectId('silicon'), ProjectId('ternoa'), ProjectId('wirex'), ProjectId('witness'), ProjectId('xlayer'), ProjectId('taiko')],
+            },
+            {
+                hash: '0x1b34fe11a637737f0c75c88241669dcf9ca3c03713659265b8241f398a2d286d',
+                explorerLink: 'https://etherscan.io/address/0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63',
+                verificationStatus: 'successful',
+                usedBy: [],
+                verificationSteps: `
+                - Check out [sp1 repo](https://github.com/succinctlabs/sp1) at commit \`76c28bf986ba102127788ce081c21fa09cf93b18\`.
+                - Set an environment variable by calling \`export SP1_ALLOW_DEPRECATED_HOOKS=true\`. It is needed for the correct execution of circuit building.
+                - Make sure that you have [go lang installed](https://go.dev/doc/install).
+                - From \`crates/prover\` call \`make build-circuits\`. Note that the execution could take a while.
+                `,
+                attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
+            },
+            {
+                hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
+                explorerLink: 'https://etherscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
+                verificationStatus: 'notVerified',
+                usedBy: [ProjectId('facet')],
+                attesters: [],
+            },
+        ],
     }
 }

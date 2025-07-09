@@ -1,8 +1,9 @@
 {
   "name": "kroma",
   "chain": "ethereum",
-  "blockNumber": 22780031,
-  "configHash": "0xea4b1193d73adace9eca58401dd0207ba70f4b0703c3df4b9a1ac144bcd97b62",
+  "blockNumber": 22882090,
+  "configHash": "0xb7009456d10a7e4ac6ced52d8c3657a728e2ce5f55327e09f0de4c71302051c8",
+  "sharedModules": ["sp1"],
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -42,27 +43,6 @@
       "implementationNames": {
         "0x005DDC466C804c79adB079c120347dDE48132105": "Proxy",
         "0x9f2Ec7196596581806218D3D183581b00e5a444E": "ZKProofVerifier"
-      }
-    },
-    {
-      "name": "SP1Verifier",
-      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
-      "type": "Contract",
-      "template": "succinct/SP1Verifier",
-      "sourceHashes": [
-        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
-      ],
-      "proxyType": "immutable",
-      "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550023,
-      "sinceBlock": 22590744,
-      "values": {
-        "$immutable": true,
-        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
-        "VERSION": "v5.0.0"
-      },
-      "implementationNames": {
-        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
     },
     {
@@ -122,12 +102,12 @@
         "COLOSSEUM": "0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a",
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 28477800,
-        "latestOutputIndex": 15821,
-        "nextBlockNumber": 28479600,
-        "nextFinalizeOutputIndex": 15654,
-        "nextOutputIndex": 15822,
-        "nextOutputMinL2Timestamp": 1750839589,
+        "latestBlockNumber": 28738800,
+        "latestOutputIndex": 15966,
+        "nextBlockNumber": 28740600,
+        "nextFinalizeOutputIndex": 15799,
+        "nextOutputIndex": 15967,
+        "nextOutputMinL2Timestamp": 1751361589,
         "startingBlockNumber": 0,
         "startingTimestamp": 1693880387,
         "SUBMISSION_INTERVAL": 1800,
@@ -280,7 +260,7 @@
         ],
         "$upgradeCount": 2,
         "activatedValidatorCount": 1,
-        "activatedValidatorTotalWeight": "2622216444085175329279671",
+        "activatedValidatorTotalWeight": "2628705828129982779161496",
         "ASSET_MANAGER": "0xa295310DE52b86F236A815AFb2f518F3C0F5A6D3",
         "BASE_REWARD": "400000000000000000000",
         "BOOSTED_REWARD_DENOM": 100,
@@ -294,7 +274,7 @@
         "MIN_ACTIVATE_AMOUNT": "10000000000000000000000",
         "MIN_REGISTER_AMOUNT": "10000000000000000000000",
         "MPT_FIRST_OUTPUT_INDEX": 12603,
-        "nextValidator": "0x3aa00bb915A8e78b0523E4c365e3E70A19d329e6",
+        "nextValidator": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "ROUND_DURATION_SECONDS": 1800,
         "RoundDurationFormatted": "30m",
         "SOFT_JAIL_PERIOD_SECONDS": 259200,
@@ -354,7 +334,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 200000,
-          "prevBlockNum": 22773695
+          "prevBlockNum": 22857722
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35",
@@ -478,82 +458,6 @@
           "role": ".tokenOwners"
         }
       ]
-    },
-    {
-      "name": "SP1VerifierGateway",
-      "address": "0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-      "type": "Contract",
-      "template": "succinct/SP1VerifierGateway",
-      "sourceHashes": [
-        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
-      ],
-      "proxyType": "immutable",
-      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "sinceTimestamp": 1720099223,
-      "sinceBlock": 20233410,
-      "values": {
-        "$immutable": true,
-        "activeVerifiers": [
-          {
-            "selector": "0xd4e8ecd2",
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
-          }
-        ],
-        "allVerifiers": [
-          {
-            "selector": "0x801c66ac",
-            "verifier": "0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
-          },
-          {
-            "selector": "0x8c5bc5e4",
-            "verifier": "0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
-          },
-          {
-            "selector": "0xfedc1fcc",
-            "verifier": "0x36B353776AF6EF3A2bD707049e783F52c4209017"
-          },
-          {
-            "selector": "0xc430ff7f",
-            "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
-          },
-          {
-            "selector": "0xc865c1b6",
-            "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
-          },
-          {
-            "selector": "0x4aca240a",
-            "verifier": "0x1764C29FBd94865198588f10FC75D4f6636d158d"
-          },
-          {
-            "selector": "0x09069090",
-            "verifier": "0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3"
-          },
-          {
-            "selector": "0x54bdcae3",
-            "verifier": "0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16"
-          },
-          {
-            "selector": "0x1b34fe11",
-            "verifier": "0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"
-          },
-          {
-            "selector": "0xd4e8ecd2",
-            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
-          }
-        ],
-        "owner": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878"
-      },
-      "fieldMeta": {
-        "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
-        },
-        "allVerifiers": {
-          "description": "All verifiers that were ever routed to by this gateway."
-        }
-      },
-      "implementationNames": {
-        "0x3B6041173B80E77f038f3F2C0f9744f04837185e": "SP1VerifierGateway"
-      }
     },
     {
       "name": "KromaSecurityCouncil",
@@ -984,11 +888,6 @@
       }
     },
     {
-      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A",
       "type": "EOA",
       "proxyType": "EOA",
@@ -1078,11 +977,6 @@
           "role": ".tokenOwners"
         }
       ]
-    },
-    {
-      "address": "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "address": "0x994C074BD9503e4f01CB834e2c409FA16b41E587",
@@ -1190,7 +1084,7 @@
         ],
         "$upgradeCount": 2,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
-        "clock": 22780031,
+        "clock": 22882090,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "eip712Domain": {
@@ -1220,56 +1114,9 @@
       }
     },
     {
-      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xc0ab283E81aE99197Cfe1C8BEE9C593CD4FF7FB3",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "SP1VerifierGatewayMultisig",
-      "address": "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878",
-      "type": "Contract",
-      "template": "GnosisSafe",
-      "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
-      ],
-      "proxyType": "gnosis safe",
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
-          "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
-          "role": ".owner"
-        }
-      ],
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1724204135,
-      "sinceBlock": 20573748,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$members": [
-          "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
-          "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-          "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
-        ],
-        "$threshold": 2,
-        "domainSeparator": "0x9ce9716cc3ee4040796acdd48cea971343ff05b11468ce9e8d815c2ce3fc8b9e",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
-        "VERSION": "1.3.0"
-      },
-      "implementationNames": {
-        "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
-      }
     },
     {
       "address": "0xD417Ff17bf3cFD7260a4De20C6864090aA0503cC",
@@ -1548,7 +1395,7 @@
           ]
         ],
         "$upgradeCount": 2,
-        "clock": 22780031,
+        "clock": 22882090,
         "CLOCK_MODE": "mode=blocknumber&from=default",
         "DOMAIN_SEPARATOR": "0x1630586f33defc933258f4512df143dd6bf7adb1b4d039178e748d4cac4813b8",
         "eip712Domain": {
@@ -1627,7 +1474,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -1686,7 +1533,7 @@
         "$upgradeCount": 4,
         "L2_ORACLE": "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
         "MAX_UNBOND": 10,
-        "nextValidator": "0x42a4f1958A5d99A62C50eb24a80d1D8b142ea3A1",
+        "nextValidator": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "PORTAL": "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
         "REQUIRED_BOND_AMOUNT": "200000000000000000",
         "ROUND_DURATION": 1800,
@@ -1709,6 +1556,11 @@
       "address": "0xfF00000000000000000000000000000000000255",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
+      "type": "EOA",
+      "proxyType": "EOA"
     }
   ],
   "abis": {
@@ -1721,15 +1573,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
-      "error InvalidProof()",
-      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
-      "function VERIFIER_HASH() pure returns (bytes32)",
-      "function VERSION() pure returns (string)",
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x108eDc4Df0b9B04dcE9f6FFBD65Dd9895562c14C": [
       "constructor()",
@@ -1870,25 +1713,6 @@
       "function implementation() returns (address)",
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
-    ],
-    "0x3B6041173B80E77f038f3F2C0f9744f04837185e": [
-      "constructor(address initialOwner)",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error RouteAlreadyExists(address verifier)",
-      "error RouteIsFrozen(bytes4 selector)",
-      "error RouteNotFound(bytes4 selector)",
-      "error SelectorCannotBeZero()",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event RouteAdded(bytes4 selector, address verifier)",
-      "event RouteFrozen(bytes4 selector, address verifier)",
-      "function addRoute(address verifier)",
-      "function freezeRoute(bytes4 selector)",
-      "function owner() view returns (address)",
-      "function renounceOwnership()",
-      "function routes(bytes4) view returns (address verifier, bool frozen)",
-      "function transferOwnership(address newOwner)",
-      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x3de211088dF516da72efe68D386b561BEE256Ec4": [
       "constructor(address _admin)",
@@ -2354,9 +2178,6 @@
       "function verifiedPublicInputs(bytes32) view returns (bool)",
       "function version() view returns (string)"
     ],
-    "0xCafEf00d348Adbd57c37d1B77e0619C6244C6878": [
-      "constructor(address _singleton)"
-    ],
     "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
       "constructor()",
       "event AddedOwner(address owner)",
@@ -2597,9 +2418,7 @@
     "opstack/L1CrossDomainMessenger": "0x595eac283f949c40d81ad81550396e35b3345dca8e49cfca901122a2b4046561",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
     "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
+    "opstack/SystemConfig": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3"
   },
-  "permissionsConfigHash": "0x0e56f70a06ed4650778a9f1d51f6314740eb7e907d4c380c28dc4ccddf4793ce"
+  "permissionsConfigHash": "0x0d3c5900a8a843b006aedc31346dcde90bba1db2192858c70b01ed1e64cc7c54"
 }

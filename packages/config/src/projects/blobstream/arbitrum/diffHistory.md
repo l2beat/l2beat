@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x874fd8e381212176523d2adfe5efc160687cf685
+
+# Diff at Wed, 09 Jul 2025 14:01:29 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 350984309
+- current block number: 355902087
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 350984309 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe1cd4082f74299474fee25d08a6085797aa6e0b5
 
 # Diff at Fri, 04 Jul 2025 12:18:54 GMT:
