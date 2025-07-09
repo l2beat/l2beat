@@ -27,8 +27,8 @@ export function BridgesProjectStats({ project }: Props) {
   return (
     <div className="grid grid-cols-1 gap-x-6 gap-y-3 md:grid-cols-4">
       <ProjectSummaryStat
-        title="Total value secured"
-        shortTitle="TVS"
+        key="tvs"
+        title="Total Value Secured"
         valueClassName="md:w-full"
         tooltip="Total value secured in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago."
         value={
@@ -74,6 +74,7 @@ export function BridgesProjectStats({ project }: Props) {
         }
       />
       <ProjectSummaryStat
+        key="destination"
         title="Destination"
         value={
           <Tooltip>
@@ -91,6 +92,7 @@ export function BridgesProjectStats({ project }: Props) {
         }
       />
       <ProjectSummaryStat
+        key="validated-by"
         title="Validated by"
         tooltip="How are the messages sent via this bridge checked?"
         value={
@@ -105,7 +107,11 @@ export function BridgesProjectStats({ project }: Props) {
           )
         }
       />
-      <ProjectSummaryStat title="Type" value={project.header.category} />
+      <ProjectSummaryStat
+        key="type"
+        title="Type"
+        value={project.header.category}
+      />
     </div>
   )
 }

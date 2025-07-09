@@ -16,6 +16,7 @@ export function RegularDaProjectSummary({ project }: Props) {
   const stats: ProjectSummaryStat[] = [
     ...getCommonDaProjectStats(project),
     {
+      key: 'used-by',
       title: 'Used by',
       value: (
         <ProjectsUsedIn

@@ -1,3 +1,4 @@
+import { Slot } from '@radix-ui/react-slot'
 import type { ReactNode } from 'react'
 import {
   Tooltip,
@@ -8,8 +9,8 @@ import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 
 export interface ProjectSummaryStat {
-  title: string
-  shortTitle?: string
+  key: string
+  title: ReactNode
   value: ReactNode
   tooltip?: string
   className?: string
@@ -17,34 +18,21 @@ export interface ProjectSummaryStat {
 }
 
 export function ProjectSummaryStat(props: ProjectSummaryStat) {
-  console.log(
-    cn(
-      'text-nowrap font-medium text-paragraph-12 text-secondary',
-      props.shortTitle && 'max-md:hidden',
-    ),
-  )
+  const Comp = typeof props.title === 'string' ? 'span' : Slot
   return (
     <li
-      key={props.title}
+      key={props.key}
       className={cn(
         'flex items-center justify-between md:flex-col md:items-start md:justify-start md:gap-3',
         props.className,
       )}
     >
       <div className="flex flex-row gap-1.5">
-        <span
-          className={cn(
-            'text-nowrap font-medium text-paragraph-12 text-secondary',
-            props.shortTitle && 'max-md:hidden',
-          )}
+        <Comp
+          className={'text-nowrap font-medium text-paragraph-12 text-secondary'}
         >
           {props.title}
-        </span>
-        {props.shortTitle && (
-          <span className="font-medium text-paragraph-12 text-secondary md:hidden">
-            {props.shortTitle}
-          </span>
-        )}
+        </Comp>
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="size-3">

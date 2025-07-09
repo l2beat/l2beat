@@ -14,10 +14,12 @@ export function EthereumDaProjectSummary({ project }: Props) {
   const stats: ProjectSummaryStat[] = [
     ...getCommonDaProjectStats(project),
     {
+      key: 'da-bridge',
       title: 'DA Bridge',
       value: project.header.bridgeName,
     },
     {
+      key: 'used-by',
       title: 'Used by',
       value: (
         <ProjectsUsedIn

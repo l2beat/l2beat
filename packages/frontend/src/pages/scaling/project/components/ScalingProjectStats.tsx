@@ -28,7 +28,12 @@ export function ProjectScalingStats({ project, className }: Props) {
   const stats = compact([
     <ProjectSummaryStat
       key="tvs"
-      title="Total Value Secured"
+      title={
+        <div>
+          <span className="lg:max-xl:hidden">Total Value Secured</span>
+          <span className="max-lg:hidden xl:hidden">TVS</span>
+        </div>
+      }
       value={
         project.header.tvs?.breakdown ? (
           <span className="mb-0.5 flex items-center gap-2">
@@ -60,7 +65,12 @@ export function ProjectScalingStats({ project, className }: Props) {
     />,
     <ProjectSummaryStat
       key="ops-count"
-      title="Past day UOPS"
+      title={
+        <div>
+          <span className="lg:max-xl:hidden">Past day UOPS</span>
+          <span className="max-lg:hidden xl:hidden">Daily UOPS</span>
+        </div>
+      }
       tooltip="User operations per second averaged over the past day displayed together with a percentage change compared to 7D ago."
       value={
         project.header.activity ? (
@@ -78,6 +88,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     />,
     project.stageConfig.stage !== 'NotApplicable' ? (
       <ProjectSummaryStat
+        key="stage"
         title="Stage"
         className="md:gap-2.5"
         valueClassName="max-md:-mt-0.5"
@@ -94,6 +105,7 @@ export function ProjectScalingStats({ project, className }: Props) {
     ) : undefined,
     project.header.gasTokens && !isEmpty(project.header.gasTokens) ? (
       <ProjectSummaryStat
+        key="gas-tokens"
         title={`Gas ${pluralize(project.header.gasTokens.length, 'token')}`}
         value={project.header.gasTokens.join(', ')}
       />
@@ -110,21 +122,29 @@ export function ProjectScalingStats({ project, className }: Props) {
       value={project.header.purposes.join(', ')}
     />,
     project.header.hostChain ? (
-      <ProjectSummaryStat title="Host chain" value={project.header.hostChain} />
+      <ProjectSummaryStat
+        key="host-chain"
+        title="Host chain"
+        value={project.header.hostChain}
+      />
     ) : undefined,
     project.header.chainId ? (
-      <ProjectSummaryStat title="Chain ID" value={project.header.chainId} />
+      <ProjectSummaryStat
+        key="chain-id"
+        title="Chain ID"
+        value={project.header.chainId}
+      />
     ) : undefined,
   ])
 
-  const groups = stats.length > 4 ? 4 : 2
+  const groups = stats.length > 4 ? 4 : 3
   const partitioned = chunk(stats, groups)
 
   return (
     <div
       className={cn(
         'grid h-fit grid-cols-1 gap-x-6 gap-y-3',
-        groups === 2 && 'md:grid-cols-2',
+        groups === 3 && 'md:grid-cols-3',
         groups === 4 && 'md:grid-cols-4',
         className,
       )}

@@ -27,7 +27,7 @@ export function DaProjectStats({ stats }: Props) {
         return (
           <Fragment key={i}>
             {statGroup.map((stat) => (
-              <ProjectSummaryStat key={stat.title} {...stat} />
+              <ProjectSummaryStat {...stat} />
             ))}
             {!isLastGroup && (
               <HorizontalSeparator className="col-span-full my-1 max-md:hidden" />
@@ -55,13 +55,15 @@ export function getCommonDaProjectStats(
 
   // Type
   stats.push({
+    key: 'type',
     title: 'Type',
     value: project.type,
   })
 
   // TVS
   stats.push({
-    title: 'TVS',
+    key: 'tvs',
+    title: 'Total Value Secured',
     value: formatCurrency(project.header.tvs, 'usd'),
     tooltip:
       'Total value secured (TVS) is the sum of the total value secured across all L2s & L3s that use this DA layer and are listed on L2BEAT. It does not include the TVS of sovereign rollups.',
@@ -69,6 +71,7 @@ export function getCommonDaProjectStats(
 
   // Economic security
   stats.push({
+    key: 'economic-security',
     title: 'Economic security',
     value: // EC not set
       project.header.economicSecurity
@@ -96,12 +99,14 @@ export function getCommonDaProjectStats(
         }
 
   stats.push({
+    key: 'duration-of-storage',
     title: 'Duration of storage',
     ...durationOfStorage,
   })
 
   if (project.header.maxThroughputPerSecond) {
     stats.push({
+      key: 'max-throughput',
       title: 'Max throughput',
       value: formatBpsToMbps(project.header.maxThroughputPerSecond),
     })
