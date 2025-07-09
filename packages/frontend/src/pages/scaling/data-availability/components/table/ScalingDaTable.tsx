@@ -4,18 +4,19 @@ import { RollupsTable } from '~/components/table/RollupsTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingDaEntry } from '~/server/features/scaling/data-availability/getScalingDaEntries'
-import { columns } from './Columns'
+import { getScalingDataAvailabilityColumns } from './Columns'
 
 export interface Props {
   entries: ScalingDaEntry[]
   rollups?: boolean
+  others?: boolean
 }
 
-export function ScalingDaTable({ entries, rollups }: Props) {
+export function ScalingDaTable({ entries, rollups, others }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: columns,
+    columns: getScalingDataAvailabilityColumns(others),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

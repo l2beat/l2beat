@@ -70,7 +70,7 @@ export function ScalingDaTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <ScalingDaTable entries={entries.others} />
+            <ScalingDaTable entries={entries.others} others />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
