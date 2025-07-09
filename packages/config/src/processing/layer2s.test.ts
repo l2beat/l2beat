@@ -243,17 +243,6 @@ describe('layer2s', () => {
     })
   })
 
-  describe('finality', () => {
-    describe('every project with finality enabled has finalizationPeriod property', () => {
-      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
-      for (const project of projectsWithFinality) {
-        it(project.id.toString(), () => {
-          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
-        })
-      }
-    })
-  })
-
   describe('activity', () => {
     describe('all arbitrum and op stack chains have the assessCount defined', () => {
       const opAndArbL2sWithActivity = layer2s

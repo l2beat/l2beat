@@ -114,8 +114,6 @@ export interface BaseProject {
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  finalityInfo?: ProjectFinalityInfo
-  finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -858,56 +856,6 @@ export interface ProjectLivenessConfig {
 export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
 }
-
-export interface ProjectFinalityInfo {
-  /** Warning tooltip content for finality tab for given project */
-  warnings?: {
-    timeToInclusion?: WarningWithSentiment
-    stateUpdateDelay?: WarningWithSentiment
-  }
-  /** Finalization period displayed in table for given project (time in seconds) */
-  finalizationPeriod?: number
-}
-
-export type ProjectFinalityConfig =
-  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
-  | {
-      type:
-        | 'Linea'
-        | 'zkSyncEra'
-        | 'Scroll'
-        | 'zkSyncLite'
-        | 'Starknet'
-        | 'Arbitrum'
-        | 'Loopring'
-        | 'Degate'
-        | 'PolygonZkEvm'
-
-      minTimestamp: UnixTime
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
-  | {
-      type: 'OPStack'
-      minTimestamp: UnixTime
-      lag: number
-      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-      // you can get this values by calling the RPC method optimism_rollupConfig
-      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-      // <rpc-url> | jq
-      genesisTimestamp: UnixTime
-      l2BlockTimeSeconds: number
-      stateUpdate: StateUpdateMode
-    }
-
-/**
- * Determines how the state update should be handled.
- * - `analyze`: The state update delay should be analyzed as a part of the update.
- * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
- * - `disabled`: The state update analyzer will not be run.
- */
-export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
 
 export type ProjectDaTrackingConfig =
   | BlockDaTrackingConfig

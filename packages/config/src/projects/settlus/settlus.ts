@@ -30,14 +30,6 @@ export const settlus: ScalingProject = opStackL2({
       ],
     },
   },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 1,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   chainConfig: {
     name: 'settlus',
     chainId: 5371,

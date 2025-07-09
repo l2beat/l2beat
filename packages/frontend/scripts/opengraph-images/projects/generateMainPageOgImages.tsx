@@ -33,10 +33,6 @@ const mainPages: MainPage[] = [
   },
   {
     type: 'scaling',
-    title: 'Finality',
-  },
-  {
-    type: 'scaling',
     title: 'Costs',
   },
   {

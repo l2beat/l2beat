@@ -33,14 +33,6 @@ export const shape: ScalingProject = opStackL2({
       ],
     },
   },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1721744473),
-    genesisTimestamp: UnixTime(1721744473),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   isNodeAvailable: true,
   chainConfig: {
     name: 'shape',

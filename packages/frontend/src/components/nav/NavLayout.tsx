@@ -69,10 +69,6 @@ export function NavLayout({
           href: '/scaling/liveness',
         },
         {
-          title: 'Finality',
-          href: '/scaling/finality',
-        },
-        {
           title: 'Costs',
           href: '/scaling/costs',
         },

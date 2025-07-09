@@ -42,8 +42,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLivenessInfo,
   ProjectReviewStatus,
   ProjectRisk,
@@ -131,7 +129,6 @@ interface OpStackConfigCommon {
   optimismPortalPremintedTokens?: string[]
   activityConfig?: ProjectActivityConfig
   genesisTimestamp: UnixTime
-  finality?: ProjectFinalityConfig
   l2OutputOracle?: EntryParameters
   disputeGameFactory?: EntryParameters
   portal?: EntryParameters
@@ -442,12 +439,10 @@ export function opStackL2(templateVars: OpStackConfigL2): ScalingProject {
       ...templateVars.display,
       warning: templateVars.display.warning,
       liveness: getLiveness(templateVars),
-      finality: getFinality(templateVars),
     },
     config: {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
-      finality: ifPostsToEthereum(templateVars, templateVars.finality),
     },
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
   }
@@ -1150,23 +1145,6 @@ function getLiveness(
     )} or until it gets published. The state root gets finalized ${formatSeconds(
       finalizationPeriod,
     )} after it has been posted.`,
-  })
-}
-
-function getFinality(
-  templateVars: OpStackConfigCommon,
-): ProjectFinalityInfo | undefined {
-  const finalizationPeriod = getFinalizationPeriod(templateVars)
-
-  return ifPostsToEthereum(templateVars, {
-    warnings: {
-      timeToInclusion: {
-        sentiment: 'neutral',
-        value:
-          "It's assumed that transaction data batches are submitted sequentially.",
-      },
-    },
-    finalizationPeriod: finalizationPeriod,
   })
 }
 

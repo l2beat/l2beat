@@ -106,15 +106,6 @@ export const optimism: ScalingProject = opStackL2({
       sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
     },
   ],
-  finality: {
-    type: 'OPStack',
-    // timestamp of the first blob tx
-    minTimestamp: UnixTime(1710375155),
-    l2BlockTimeSeconds: 2,
-    genesisTimestamp: UnixTime(1686068903),
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
