@@ -251,6 +251,7 @@ function getAnomalies(
         end: a.timestamp + a.duration,
         subtype: a.subtype,
         avgInterval,
+        isApproved: false,
       }
     }),
     ...realTimeAnomalies.map((a) => {
@@ -265,6 +266,7 @@ function getAnomalies(
         durationInSeconds: a.end ? a.end - a.start : UnixTime.now() - a.start,
         subtype: a.subtype,
         avgInterval,
+        isApproved: true,
       }
     }),
   ].sort(sortAnomalies)
@@ -398,6 +400,7 @@ function generateAnomalies(): LivenessAnomaly[] {
           end: isOngoing ? undefined : end,
           durationInSeconds: isOngoing ? UnixTime.now() - start : end - start,
           avgInterval: generateRandomTime(),
+          isApproved: isOngoing,
         } as const
       })
     : []
