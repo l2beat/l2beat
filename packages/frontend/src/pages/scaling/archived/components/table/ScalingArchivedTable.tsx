@@ -7,15 +7,15 @@ import { getScalingArchivedColumns } from './Columns'
 
 interface Props {
   entries: ScalingArchivedEntry[]
-  others?: boolean
+  hideType?: boolean
 }
 
-export function ScalingArchivedTable({ entries, others }: Props) {
+export function ScalingArchivedTable({ entries, hideType }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
   const table = useTable({
     data: entries,
-    columns: getScalingArchivedColumns(others),
+    columns: getScalingArchivedColumns(hideType),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

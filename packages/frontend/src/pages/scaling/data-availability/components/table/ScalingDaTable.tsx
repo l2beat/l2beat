@@ -9,14 +9,14 @@ import { getScalingDataAvailabilityColumns } from './Columns'
 export interface Props {
   entries: ScalingDaEntry[]
   rollups?: boolean
-  others?: boolean
+  hideType?: boolean
 }
 
-export function ScalingDaTable({ entries, rollups, others }: Props) {
+export function ScalingDaTable({ entries, rollups, hideType }: Props) {
   const { sorting, setSorting } = useTableSorting()
   const table = useTable({
     data: entries,
-    columns: getScalingDataAvailabilityColumns(others),
+    columns: getScalingDataAvailabilityColumns(hideType),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

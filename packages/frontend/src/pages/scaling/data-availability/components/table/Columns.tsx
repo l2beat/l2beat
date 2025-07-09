@@ -17,13 +17,13 @@ import type { ScalingDaEntry } from '~/server/features/scaling/data-availability
 
 const columnHelper = createColumnHelper<ScalingDaEntry>()
 
-export function getScalingDataAvailabilityColumns(others?: boolean) {
+export function getScalingDataAvailabilityColumns(hideType?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
       (row) => `/scaling/projects/${row.slug}`,
     ),
-    !others &&
+    !hideType &&
       columnHelper.accessor('category', {
         header: 'Type',
         meta: {

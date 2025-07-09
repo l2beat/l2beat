@@ -18,7 +18,7 @@ import type { ScalingLivenessTableEntry } from './toTableEntry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
-export function getScalingLivenessColumns(others?: boolean) {
+export function getScalingLivenessColumns(hideType?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -69,7 +69,7 @@ export function getScalingLivenessColumns(others?: boolean) {
         }),
       ],
     }),
-    !others &&
+    !hideType &&
       columnHelper.accessor('category', {
         header: 'Type',
         cell: (ctx) => (

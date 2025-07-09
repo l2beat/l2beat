@@ -11,7 +11,7 @@ import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValue
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
-export function getScalingArchivedColumns(others?: boolean) {
+export function getScalingArchivedColumns(hideType?: boolean) {
   return compact([
     ...getScalingCommonProjectColumns(
       columnHelper,
@@ -37,7 +37,7 @@ export function getScalingArchivedColumns(others?: boolean) {
         cellClassName: 'justify-center',
       },
     }),
-    !others &&
+    !hideType &&
       columnHelper.accessor('category', {
         header: 'Type',
         cell: (ctx) => (

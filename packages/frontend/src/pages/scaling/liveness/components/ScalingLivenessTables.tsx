@@ -73,7 +73,7 @@ export function ScalingLivenessTables(props: Props) {
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="others">
             <OthersInfo />
-            <ScalingLivenessTable entries={entries.others} others />
+            <ScalingLivenessTable entries={entries.others} hideType />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>
