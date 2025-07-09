@@ -5,7 +5,6 @@ import {
   toRecordWithoutIndexerId,
   toRow,
 } from './entity'
-import { selectIndexerConfiguration } from './select'
 
 export class IndexerConfigurationRepository extends BaseRepository {
   async upsertMany(record: IndexerConfigurationRecord[]): Promise<number> {
@@ -46,7 +45,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   ): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
       .selectFrom('IndexerConfiguration')
-      .select(selectIndexerConfiguration)
+      .selectAll()
       .where('indexerId', '=', indexerId)
       .execute()
     return rows.map(toRecord)
@@ -57,7 +56,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('IndexerConfiguration')
-      .select(selectIndexerConfiguration)
+      .selectAll()
       .where('indexerId', 'in', indexerIds)
       .execute()
     return rows.map(toRecord)
@@ -80,7 +79,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('IndexerConfiguration')
-      .select(selectIndexerConfiguration)
+      .selectAll()
       .where('id', 'in', configurationIds)
       .execute()
     return rows.map(toRecord)
@@ -139,7 +138,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   async getAll(): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
       .selectFrom('IndexerConfiguration')
-      .select(selectIndexerConfiguration)
+      .selectAll()
       .execute()
     return rows.map(toRecord)
   }

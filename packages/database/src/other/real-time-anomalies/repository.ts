@@ -1,6 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type RealTimeAnomalyRecord, toRecord, toRow } from './entity'
-import { selectRealtimeAnomaly } from './select'
 
 export class RealTimeAnomaliesRepository extends BaseRepository {
   async upsert(record: RealTimeAnomalyRecord): Promise<void> {
@@ -30,7 +29,7 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
   async getAll(): Promise<RealTimeAnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
+      .selectAll()
       .execute()
 
     return rows.map(toRecord)
@@ -39,7 +38,7 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
   async getOngoingAnomalies(): Promise<RealTimeAnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
+      .selectAll()
       .where('status', '=', 'ongoing')
       .execute()
 
@@ -53,7 +52,7 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
+      .selectAll()
       .where('isApproved', '=', true)
       .where('projectId', 'in', projectIds)
       .execute()
