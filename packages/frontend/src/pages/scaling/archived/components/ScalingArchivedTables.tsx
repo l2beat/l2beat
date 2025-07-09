@@ -83,7 +83,7 @@ export function ScalingArchivedTables(
           <TableSortingProvider initialSort={initialSort}>
             <DirectoryTabsContent value="others">
               <OthersInfo />
-              <ScalingArchivedTable entries={entries.others} />
+              <ScalingArchivedTable entries={entries.others} others />
             </DirectoryTabsContent>
           </TableSortingProvider>
         )}

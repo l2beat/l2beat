@@ -3,18 +3,19 @@ import { BasicTable } from '~/components/table/BasicTable'
 import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { scalingArchivedColumns } from './Columns'
+import { getScalingArchivedColumns } from './Columns'
 
 interface Props {
   entries: ScalingArchivedEntry[]
+  others?: boolean
 }
 
-export function ScalingArchivedTable({ entries }: Props) {
+export function ScalingArchivedTable({ entries, others }: Props) {
   const { sorting, setSorting } = useTableSorting()
 
   const table = useTable({
     data: entries,
-    columns: scalingArchivedColumns,
+    columns: getScalingArchivedColumns(others),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,

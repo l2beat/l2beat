@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import compact from 'lodash/compact'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { PizzaRosetteCell } from '~/components/rosette/pizza/PizzaRosetteCell'
 import { TypeExplanationTooltip } from '~/components/table/cells/TypeInfo'
@@ -10,74 +11,77 @@ import { formatDollarValueNumber } from '~/utils/number-format/formatDollarValue
 
 const columnHelper = createColumnHelper<ScalingArchivedEntry>()
 
-export const scalingArchivedColumns = [
-  ...getScalingCommonProjectColumns(
-    columnHelper,
-    (row) => `/scaling/projects/${row.slug}`,
-  ),
-  columnHelper.display({
-    header: 'Risks',
-    cell: (ctx) => {
-      const risks = ctx.row.original.risks
-      if (!risks) {
-        return EM_DASH
-      }
-
-      return (
-        <PizzaRosetteCell
-          href={`/scaling/projects/${ctx.row.original.slug}#risk-analysis`}
-          values={risks}
-          isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
-        />
-      )
-    },
-    meta: {
-      cellClassName: 'justify-center',
-    },
-  }),
-  columnHelper.accessor('category', {
-    header: 'Type',
-    cell: (ctx) => (
-      <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+export function getScalingArchivedColumns(others?: boolean) {
+  return compact([
+    ...getScalingCommonProjectColumns(
+      columnHelper,
+      (row) => `/scaling/projects/${row.slug}`,
     ),
-    meta: {
-      tooltip: <TypeExplanationTooltip />,
-    },
-  }),
-  columnHelper.display({
-    header: 'Purpose',
-    cell: (ctx) => ctx.row.original.purposes.join(', '),
-  }),
-  columnHelper.accessor('totalTvs', {
-    id: 'total',
-    header: 'Total value secured',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (value === undefined) {
-        return <NoDataBadge />
-      }
+    columnHelper.display({
+      header: 'Risks',
+      cell: (ctx) => {
+        const risks = ctx.row.original.risks
+        if (!risks) {
+          return EM_DASH
+        }
 
-      return (
-        <span className="font-bold md:text-base">
-          {formatDollarValueNumber(value)}
-        </span>
-      )
-    },
-    sortUndefined: 'last',
-    sortingFn: ({ original: a }, { original: b }) => {
-      const aTvs = a.totalTvs ?? 0
-      const bTvs = b.totalTvs ?? 0
+        return (
+          <PizzaRosetteCell
+            href={`/scaling/projects/${ctx.row.original.slug}#risk-analysis`}
+            values={risks}
+            isUnderReview={ctx.row.original.statuses?.underReview === 'config'}
+          />
+        )
+      },
+      meta: {
+        cellClassName: 'justify-center',
+      },
+    }),
+    !others &&
+      columnHelper.accessor('category', {
+        header: 'Type',
+        cell: (ctx) => (
+          <TypeInfo stacks={ctx.row.original.stacks}>{ctx.getValue()}</TypeInfo>
+        ),
+        meta: {
+          tooltip: <TypeExplanationTooltip />,
+        },
+      }),
+    columnHelper.display({
+      header: 'Purpose',
+      cell: (ctx) => ctx.row.original.purposes.join(', '),
+    }),
+    columnHelper.accessor('totalTvs', {
+      id: 'total',
+      header: 'Total value secured',
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        if (value === undefined) {
+          return <NoDataBadge />
+        }
 
-      if (aTvs === bTvs) {
-        return b.name.localeCompare(a.name)
-      }
+        return (
+          <span className="font-bold md:text-base">
+            {formatDollarValueNumber(value)}
+          </span>
+        )
+      },
+      sortUndefined: 'last',
+      sortingFn: ({ original: a }, { original: b }) => {
+        const aTvs = a.totalTvs ?? 0
+        const bTvs = b.totalTvs ?? 0
 
-      return aTvs - bTvs
-    },
-    meta: {
-      align: 'right',
-      tooltip:
-        'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
-    },
-  }),
-]
+        if (aTvs === bTvs) {
+          return b.name.localeCompare(a.name)
+        }
+
+        return aTvs - bTvs
+      },
+      meta: {
+        align: 'right',
+        tooltip:
+          'Total value secured is calculated as the sum of canonically bridged tokens, externally bridged tokens, and native tokens.',
+      },
+    }),
+  ])
+}
