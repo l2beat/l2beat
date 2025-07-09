@@ -125,7 +125,7 @@ export function ProjectScalingSummary({ project }: Props) {
             </div>
           </div>
         </div>
-        <VerticalSeparator className="mr-8 ml-12 self-stretch max-lg:hidden" />
+        <VerticalSeparator className="mr-8 ml-12 h-[unset] self-stretch max-lg:hidden" />
 
         <ProjectScalingRosette project={project} size="small" />
       </div>
