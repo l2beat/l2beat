@@ -6,15 +6,16 @@ import { useTableSorting } from '~/components/table/sorting/TableSortingContext'
 import { useTable } from '~/hooks/useTable'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
 import { useLivenessTimeRangeContext } from '../LivenessTimeRangeContext'
-import { columns } from './Columns'
+import { getScalingLivenessColumns } from './Columns'
 import { toLivenessTableEntry } from './toTableEntry'
 
 export interface Props {
   entries: ScalingLivenessEntry[]
   rollups?: boolean
+  others?: boolean
 }
 
-export function ScalingLivenessTable({ entries, rollups }: Props) {
+export function ScalingLivenessTable({ entries, rollups, others }: Props) {
   const { timeRange } = useLivenessTimeRangeContext()
   const { sorting, setSorting } = useTableSorting()
 
@@ -25,7 +26,7 @@ export function ScalingLivenessTable({ entries, rollups }: Props) {
 
   const table = useTable({
     data: tableEntries,
-    columns: columns,
+    columns: getScalingLivenessColumns(others),
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     manualFiltering: true,
