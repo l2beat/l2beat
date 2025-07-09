@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -24,5 +24,8 @@ export const mawari: ScalingProject = upcomingL2({
         'https://linkedin.com/company/mawari/',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

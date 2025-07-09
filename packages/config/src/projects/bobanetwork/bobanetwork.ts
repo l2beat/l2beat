@@ -36,16 +36,6 @@ export const bobanetwork: ScalingProject = opStackL2({
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   minTimestamp: UnixTime(1713303530),
-  //   genesisTimestamp: UnixTime(1635393439),
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
-  // Explicitly set since we are getting weird results from the finality calculation
-  finality: undefined,
   genesisTimestamp: UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',

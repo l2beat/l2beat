@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -25,5 +25,8 @@ export const koi: ScalingProject = upcomingL2({
         'https://discord.com/invite/tCCXxp5yS8',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

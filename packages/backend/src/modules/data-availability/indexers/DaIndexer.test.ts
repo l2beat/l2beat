@@ -51,9 +51,7 @@ describe(DaIndexer.name, () => {
       )
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150, [
-        { address: mockInbox, topics: ['topic'] },
-      ])
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
       expect(repository.getForDaLayerInTimeRange).toHaveBeenOnlyCalledWith(
         DA_LAYER,
         UnixTime.toStartOf(100, 'hour'),
@@ -79,12 +77,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
-          DA_LAYER,
-          100,
-          150,
-          [],
-        )
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 150)
         expect(safeHeight).toEqual(150)
       })
 
@@ -96,12 +89,7 @@ describe(DaIndexer.name, () => {
         const updateCallback = await indexer.multiUpdate(100, 200, [])
         const safeHeight = await updateCallback()
 
-        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
-          DA_LAYER,
-          100,
-          200,
-          [],
-        )
+        expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
         expect(safeHeight).toEqual(200)
       })
     })
@@ -115,12 +103,7 @@ describe(DaIndexer.name, () => {
       const updateCallback = await indexer.multiUpdate(100, 200, [])
       const safeHeight = await updateCallback()
 
-      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(
-        DA_LAYER,
-        100,
-        200,
-        [],
-      )
+      expect(daProvider.getBlobs).toHaveBeenOnlyCalledWith(DA_LAYER, 100, 200)
       expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
@@ -231,6 +214,7 @@ function blob(timestamp: number, size: number): DaBlob {
   return {
     daLayer: DA_LAYER,
     blockTimestamp: UnixTime(timestamp),
+    blockNumber: 1,
     size: BigInt(size),
     type: 'ethereum',
     inbox: '',

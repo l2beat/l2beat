@@ -27,4 +27,7 @@ export const yellowstone: ScalingProject = upcomingL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

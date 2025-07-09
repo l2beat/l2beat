@@ -67,7 +67,6 @@ export async function getHotPages() {
     '/scaling/activity',
     '/scaling/data-availability',
     '/scaling/liveness',
-    '/scaling/finality',
     '/scaling/costs',
     '/scaling/upcoming',
     '/scaling/archived',

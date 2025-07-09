@@ -1,17 +1,16 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type StakeRecord, toRecord, toRow } from './entity'
-import { selectStake } from './select'
 
 export class StakeRepository extends BaseRepository {
   async getAll(): Promise<StakeRecord[]> {
-    const rows = await this.db.selectFrom('Stake').select(selectStake).execute()
+    const rows = await this.db.selectFrom('Stake').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async findById(id: string): Promise<StakeRecord | undefined> {
     const row = await this.db
       .selectFrom('Stake')
-      .select(selectStake)
+      .selectAll()
       .where('id', '=', id)
       .limit(1)
       .executeTakeFirst()
@@ -23,7 +22,7 @@ export class StakeRepository extends BaseRepository {
 
     const res = await this.db
       .selectFrom('Stake')
-      .select(selectStake)
+      .selectAll()
       .where('id', 'in', ids)
       .execute()
     return res.map(toRecord)

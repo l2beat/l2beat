@@ -1,3 +1,239 @@
+Generated with discovered.json: 0x64ab6887390487b6249dc7e7781de4a348253a25
+
+# Diff at Mon, 07 Jul 2025 14:54:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@7d0fdd1242b42b3e5413cd39140cefe4c5d9eb10 block: 22865552
+- current block number: 22867011
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865552 (main branch discovery), not current.
+
+```diff
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Soneium_Adapter (0x0c9d064523177dBB55CFE52b9D0c485FBFc35FD2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Arbitrum_Adapter (0x100EDfCf3af2B4625Fca4EaF6C533703e71F7210) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract HubPoolStore (0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61) {
+    +++ description: Simple data store used by the Universal_Adapter to store message calldata hashes. The content of this calldata can be proven by Ethereum zk light clients on remote chains and then executed to relay root bundles or arbitrary messages.
+      description:
+-        "Simple data store used by the Universal_Adapter to store message calldata hashes."
++        "Simple data store used by the Universal_Adapter to store message calldata hashes. The content of this calldata can be proven by Ethereum zk light clients on remote chains and then executed to relay root bundles or arbitrary messages."
+      category:
++        {"name":"Local Infrastructure","priority":5}
+    }
+```
+
+```diff
+    contract Universal_Adapter (0x22001f37B586792F25Ef9d19d99537C6446e0833) {
+    +++ description: This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the 0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/universalAdapter"
+      description:
+-        "Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges."
++        "This adapter can be used to send messages / root bundles to chains that do not have a canonical adapter. It stores calldata in the 0x1Ace3BbD69b63063F859514Eca29C9BDd8310E61 on Ethereum, which can then be zk proven on a remote chain."
+      category.name:
+-        "External Bridges"
++        "Local Infrastructure"
+      category.priority:
+-        1
++        5
+    }
+```
+
+```diff
+    contract Scroll_Adapter (0x2DA799c2223c6ffB595e578903AE6b95839160d8) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Boba_Adapter (0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Ethereum_Adapter (0x527E872a5c3f0C7c24Fe33F2593cFB890a285084) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Linea_Adapter (0x5A44A32c13e2C43416bFDE5dDF5DCb3880c42787) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract ZkStack_CustomGasToken_Adapter (0x5e0B7e20a77BDf11812837D30F1326068Bcf24Cf) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Alephzero_Adapter (0x6F4083304C2cA99B077ACE06a5DcF670615915Af) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Ink_Adapter (0x7e90A40c7519b041A7DF6498fBf5662e8cFC61d2) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract WorldChain_Adapter (0x8bbdD67102D743b8533c1277a4ffdA04Dea158D1) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Solana_Adapter (0x9F788694934fD2Ed34D5340B9a76EB34f2bFD7B3) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract ZkStack_Adapter (0xA374585E6062517Ee367ee5044946A6fBe17724f) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Polygon_Adapter (0xb4AeF0178f5725392A26eE18684C2aB62adc912e) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Base_Adapter (0xE1421233BF7158A19f89F17c9735F9cbd3D9529c) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Optimism_Adapter (0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Lisk_Adapter (0xF039AdCC74936F90fE175e8b3FE0FdC8b8E0c73b) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Mode_Adapter (0xf1B59868697f3925b72889ede818B9E7ba0316d0) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
+```diff
+    contract DoctorWho_Adapter (0xFADcC43096756e1527306FD92982FEbBe3c629Fa) {
+    +++ description: Modular, chain-specific contract that abstracts the communication logic for settlement between the HubPool and various SpokePools and their Relayers, often via canonical bridges.
+      template:
+-        "acrossv3/adapter"
++        "acrossv3/Adapter"
+    }
+```
+
 Generated with discovered.json: 0x4de0b28750bf8d639de102e7af84feb054207e56
 
 # Diff at Mon, 07 Jul 2025 06:37:18 GMT:

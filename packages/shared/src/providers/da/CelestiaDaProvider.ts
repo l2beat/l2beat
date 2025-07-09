@@ -48,6 +48,7 @@ export class CelestiaDaProvider implements DaBlobProvider {
         daLayer: this.daLayer,
         namespace,
         blockTimestamp,
+        blockNumber,
         size: BigInt(sizes[i]),
       }))
     })

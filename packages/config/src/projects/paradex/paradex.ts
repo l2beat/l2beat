@@ -94,9 +94,6 @@ export const paradex: ScalingProject = {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
     },
-    finality: {
-      finalizationPeriod,
-    },
   },
   chainConfig: {
     name: 'paradex',
@@ -278,12 +275,6 @@ export const paradex: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1725811667),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

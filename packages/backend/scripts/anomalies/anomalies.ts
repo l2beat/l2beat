@@ -138,7 +138,7 @@ const cmd = command({
       console.log(
         `Approving anomaly for project ${toApprove.projectId} and subtype ${toApprove.subtype}...`,
       )
-      toApprove.status = 'approved'
+      toApprove.isApproved = true
 
       await db.realTimeAnomalies.upsertMany([toApprove])
       console.log('Done')
@@ -150,7 +150,7 @@ const cmd = command({
           anomaly.subtype === args.remove?.subtype,
       )
 
-      if (!toRemove || toRemove.status !== 'approved') {
+      if (!toRemove || !toRemove.isApproved) {
         console.error(
           `No approved anomaly found for project ${args.remove.projectId} and subtype ${args.remove.subtype}.`,
         )
@@ -160,7 +160,7 @@ const cmd = command({
       console.log(
         `Removing approval of anomaly for project ${toRemove.projectId} and subtype ${toRemove.subtype}...`,
       )
-      toRemove.status = 'ongoing'
+      toRemove.isApproved = false
 
       await db.realTimeAnomalies.upsertMany([toRemove])
       console.log('Done')
