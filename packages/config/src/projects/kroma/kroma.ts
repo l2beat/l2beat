@@ -51,6 +51,7 @@ const finalizationPeriod = discovery.getContractValue<number>(
 const chainId = 255
 
 export const kroma: ScalingProject = {
+  archivedAt: UnixTime(1752041971), // Wednesday, July 9, 2025 6:19:31 AM UTC
   type: 'layer2',
   id: ProjectId('kroma'),
   addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
