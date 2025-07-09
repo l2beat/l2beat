@@ -1,13 +1,7 @@
 import { ProjectId, UnixTime } from "@l2beat/shared-pure";
 import { ZK_CATALOG_TAGS } from "../../common/zkCatalogTags";
 import { BaseProject, ProjectProofSystem } from "../../types";
-import { ProjectDiscovery } from "../../discovery/ProjectDiscovery";
 import { ZK_CATALOG_ATTESTERS } from "../../common/zkCatalogAttesters";
-
-// const discoveryEth = new ProjectDiscovery('sp1');
-// const discoveryBase = new ProjectDiscovery('sp1', 'base');
-// const discoveryArb = new ProjectDiscovery('sp1', 'arbitrum');
-// get a value of a field of a contract: discoveryEth.getContractValue<string>('SP1Verifeir', 'VERIFIER_HASH');
 
 export const sp1: BaseProject = {
     id: ProjectId('sp1'),

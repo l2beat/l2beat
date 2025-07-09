@@ -7,7 +7,7 @@ Generated with discovered.json: 0xfa9b7ecc9a1b037aaf2f37927fc2ced1e6562c3b
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Created sp1 discovery as a shared module.
 
 ## Initial discovery
 

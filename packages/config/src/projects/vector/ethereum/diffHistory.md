@@ -8,7 +8,7 @@ Generated with discovered.json: 0x35d6904d06c57d180e4af10e26b9ededbbd01029
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Moved SP1 verifier into shared module.
 
 ## Config/verification related changes
 
