@@ -80,9 +80,6 @@ export const termstructure: ScalingProject = {
       explanation:
         'Term Structure is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
     },
-    finality: {
-      finalizationPeriod: 0,
-    },
   },
   config: {
     escrows: [

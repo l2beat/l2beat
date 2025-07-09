@@ -60,8 +60,6 @@ describe('layer3s', () => {
       expect(layer3.config.trackedTxs).toEqual(undefined)
       expect(layer3.config.liveness).toEqual(undefined)
       expect(layer3.display.liveness).toEqual(undefined)
-      expect(layer3.config.finality).toEqual(undefined)
-      expect(layer3.display.finality).toEqual(undefined)
     }
   })
 

@@ -42,14 +42,6 @@ export const swell = opStackL2({
       ],
     },
   },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1732701647),
-    genesisTimestamp: UnixTime(1732696703),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   stateDerivation: DERIVATION.OPSTACK('SWELL'),
   isNodeAvailable: true,
   chainConfig: {

@@ -54,14 +54,6 @@ export const worldchain = opStackL2({
       },
     ],
   },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   stateDerivation: DERIVATION.OPSTACK('WORLD'),
   isNodeAvailable: 'UnderReview',
   milestones: [

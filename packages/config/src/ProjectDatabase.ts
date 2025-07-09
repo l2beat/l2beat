@@ -57,8 +57,6 @@ const schema = {
   livenessConfig: 'TEXT',
   costsInfo: 'TEXT',
   trackedTxsConfig: 'TEXT',
-  finalityInfo: 'TEXT',
-  finalityConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
   ecosystemInfo: 'TEXT',
   ecosystemConfig: 'TEXT',
