@@ -268,7 +268,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "katana-vbUSDC",
       "priceId": "usd-coin",
       "symbol": "vbUSDC",
@@ -281,6 +281,35 @@
         "decimals": 6,
         "sinceTimestamp": 1748343387
       },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
+              "chain": "katana",
+              "decimals": 6,
+              "sinceTimestamp": 1748343387
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usd-coin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xfd415D011FfaA8e6f17fa753CdB080d1dE266784",
+              "chain": "katana",
+              "decimals": 6,
+              "sinceTimestamp": 1748343387,
+              "escrowAddress": "0x97a3500083348A147F419b8a65717909762c389f"
+            }
+          }
+        ]
+      },
       "category": "stablecoin",
       "source": "external",
       "isAssociated": false,
@@ -293,7 +322,7 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
       "id": "katana-vbUSDS",
       "priceId": "usds",
       "symbol": "vbUSDS",
@@ -306,30 +335,34 @@
         "decimals": 18,
         "sinceTimestamp": 1748347232
       },
-      "category": "stablecoin",
-      "source": "external",
-      "isAssociated": false,
-      "bridgedUsing": {
-        "bridges": [
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
           {
-            "name": "Agglayer shared bridge (custom L2 contract)"
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3",
+              "chain": "katana",
+              "decimals": 18,
+              "sinceTimestamp": 1748347232
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "usds",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0x2134866886ce784fE2E0DE819118E4D32b4Be32C",
+              "chain": "katana",
+              "decimals": 18,
+              "sinceTimestamp": 1748347232,
+              "escrowAddress": "0x639f13D5f30B47c792b6851238c05D0b623C77DE"
+            }
           }
         ]
-      }
-    },
-    {
-      "mode": "auto",
-      "id": "katana-vbUSDT",
-      "priceId": "tether",
-      "symbol": "vbUSDT",
-      "name": "Vault Bridge USDT",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-      "amount": {
-        "type": "totalSupply",
-        "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
-        "chain": "katana",
-        "decimals": 6,
-        "sinceTimestamp": 1748354917
       },
       "category": "stablecoin",
       "source": "external",
@@ -343,7 +376,61 @@
       }
     },
     {
-      "mode": "auto",
+      "mode": "custom",
+      "id": "katana-vbUSDT",
+      "priceId": "tether",
+      "symbol": "vbUSDT",
+      "name": "Vault Bridge USDT",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "amount": {
+        "type": "totalSupply",
+        "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+        "chain": "katana",
+        "decimals": 6,
+        "sinceTimestamp": 1748354917
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+              "chain": "katana",
+              "decimals": 6,
+              "sinceTimestamp": 1748354917
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "tether",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xf44e3BCB7A2461CC08185E127B324f2486a74E20",
+              "chain": "katana",
+              "decimals": 6,
+              "sinceTimestamp": 1748354917,
+              "escrowAddress": "0x053FA9b934b83E1E0ffc7e98a41aAdc3640bB462"
+            }
+          }
+        ]
+      },
+      "category": "stablecoin",
+      "source": "external",
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "mode": "custom",
       "id": "katana-vbWBTC",
       "priceId": "wrapped-bitcoin",
       "symbol": "vbWBTC",
@@ -355,6 +442,35 @@
         "chain": "katana",
         "decimals": 8,
         "sinceTimestamp": 1748346847
+      },
+      "valueForProject": {
+        "type": "calculation",
+        "operator": "diff",
+        "arguments": [
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "totalSupply",
+              "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
+              "chain": "katana",
+              "decimals": 8,
+              "sinceTimestamp": 1748346847
+            }
+          },
+          {
+            "type": "value",
+            "priceId": "wrapped-bitcoin",
+            "amount": {
+              "type": "balanceOfEscrow",
+              "address": "0xB33e43A3F276e8e75792b941bccC996EcB2c0bBD",
+              "chain": "katana",
+              "decimals": 8,
+              "sinceTimestamp": 1748346847,
+              "escrowAddress": "0xb00aa68b87256E2F22058fB2Ba3246EEc54A44fc"
+            }
+          }
+        ]
       },
       "category": "other",
       "source": "external",
