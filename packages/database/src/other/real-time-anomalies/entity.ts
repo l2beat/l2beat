@@ -11,6 +11,7 @@ export interface RealTimeAnomalyRecord<
   projectId: string
   subtype: TrackedTxsConfigSubtype
   status: T
+  isApproved: boolean
   end?: UnixTime
 }
 
