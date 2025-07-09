@@ -45,7 +45,6 @@ export const katana: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
     BADGES.Infra.AggLayer,
-    BADGES.Other.SharedBridge,
     BADGES.Stack.OPStack,
   ],
   display: {
