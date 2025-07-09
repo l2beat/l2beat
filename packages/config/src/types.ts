@@ -764,7 +764,7 @@ export interface ProjectProofSystem {
     verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
     usedBy: ProjectId[]
     verificationSteps?: string
-    attesters: ZkCatalogAttester[]
+    attesters?: ZkCatalogAttester[]
   }[]
 }
 
