@@ -15,6 +15,7 @@ import { createApiRouter } from './routers/ApiRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
+import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
@@ -42,6 +43,7 @@ export function createServer(logger: Logger) {
   app.use(MetricsMiddleware(appLogger))
 
   app.use('/', createMigratedProjectsRouter())
+  app.use('/', createLegacyPathsRouter())
   app.use('/api/trpc', createTrpcRouter())
   app.use('/', createServerPageRouter(manifest, renderToHtml))
   app.use('/', createApiRouter())
