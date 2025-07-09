@@ -91,9 +91,6 @@ export const zksync: ScalingProject = {
       explanation:
         'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
     },
-    finality: {
-      finalizationPeriod,
-    },
   },
   chainConfig: {
     name: 'zksync',
@@ -164,12 +161,6 @@ export const zksync: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'zkSyncLite',
-      minTimestamp: UnixTime(1592218708),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,

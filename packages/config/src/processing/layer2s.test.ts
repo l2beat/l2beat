@@ -15,6 +15,7 @@ import { checkRisk } from '../test/helpers'
 import { getTokenList } from '../tokens/tokens'
 import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
+import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
 
 const tokenList = getTokenList(chains)
@@ -38,6 +39,17 @@ describe('layer2s', () => {
       it(`every Other project has reasonsForBeingOther configured: ${layer2.display.name}`, () => {
         if (layer2.display.category === 'Other') {
           expect(!!layer2.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
+  describe('ecosystems', () => {
+    const ecosystemIds = ecosystems.map((e) => e.id)
+    for (const layer2 of layer2s) {
+      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer2.display.name}`, () => {
+        if (layer2.ecosystemInfo) {
+          expect(ecosystemIds).toInclude(layer2.ecosystemInfo.id)
         }
       })
     }
@@ -238,17 +250,6 @@ describe('layer2s', () => {
               discovery.getContractByAddress(a)
             })
           }
-        })
-      }
-    })
-  })
-
-  describe('finality', () => {
-    describe('every project with finality enabled has finalizationPeriod property', () => {
-      const projectsWithFinality = layer2s.filter((p) => p.config.finality)
-      for (const project of projectsWithFinality) {
-        it(project.id.toString(), () => {
-          expect(project.display.finality?.finalizationPeriod).not.toBeNullish()
         })
       }
     })

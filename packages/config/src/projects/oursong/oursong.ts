@@ -20,4 +20,7 @@ export const oursong: ScalingProject = upcomingL3({
       socialMedia: ['https://x.com/oursong'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

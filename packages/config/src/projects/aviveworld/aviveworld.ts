@@ -20,4 +20,7 @@ export const aviveworld: ScalingProject = upcomingL3({
       socialMedia: ['https://twitter.com/Avive_World'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

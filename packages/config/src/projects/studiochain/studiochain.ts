@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -19,5 +19,8 @@ export const studiochain: ScalingProject = upcomingL2({
       explorers: ['https://studio-chain.explorer.caldera.xyz'],
       socialMedia: ['https://twitter.com/karratcoin'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
   },
 })

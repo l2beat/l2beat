@@ -121,7 +121,6 @@ function layer2Or3ToProject(
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
-    ...getFinality(p),
     trackedTxsConfig: toBackendTrackedTxsConfig(
       p.id,
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
@@ -157,22 +156,6 @@ function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
       warning: p.display.costsWarning,
     }
   }
-}
-
-function getFinality(
-  p: ScalingProject,
-): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
-  if (
-    p.type === 'layer2' &&
-    p.config.trackedTxs !== undefined &&
-    p.config.finality !== undefined
-  ) {
-    return {
-      finalityInfo: p.display.finality ?? {},
-      finalityConfig: p.config.finality,
-    }
-  }
-  return {}
 }
 
 function bridgeToProject(p: Bridge): BaseProject {

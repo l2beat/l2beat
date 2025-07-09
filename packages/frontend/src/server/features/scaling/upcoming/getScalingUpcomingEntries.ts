@@ -28,7 +28,7 @@ export interface ScalingUpcomingEntry extends CommonScalingEntry {
   purposes: string[]
 }
 
-function getScalingUpcomingEntry(
+export function getScalingUpcomingEntry(
   project: Project<'scalingInfo' | 'statuses' | 'display'>,
 ): ScalingUpcomingEntry {
   return {

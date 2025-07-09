@@ -319,3 +319,16 @@ model Notification {
 
   @@id([id])
 }
+
+model Blob {
+  id          Int      @id @default(autoincrement())
+  blockNumber Int
+  timestamp   DateTime @db.Timestamp(6)
+  daLayer     Int
+  from        String   @db.VarChar(255)
+  to          String?  @db.VarChar(255)
+  topics      String?
+  size        BigInt?
+
+  @@index([blockNumber])
+}

@@ -27,4 +27,7 @@ export const spheron: ScalingProject = upcomingL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

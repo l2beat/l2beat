@@ -26,4 +26,7 @@ export const mindchain: ScalingProject = upcomingL3({
       ],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

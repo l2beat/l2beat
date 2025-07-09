@@ -23,6 +23,7 @@ describe(AvailDaProvider.name, () => {
           daLayer: 'avail',
           appId: '1',
           blockTimestamp: UnixTime(1720092420),
+          blockNumber: 291,
           size: 64n,
         } as AvailBlob,
         {
@@ -30,6 +31,7 @@ describe(AvailDaProvider.name, () => {
           daLayer: 'avail',
           appId: '2',
           blockTimestamp: UnixTime(1720092420),
+          blockNumber: 291,
           size: 77n,
         } as AvailBlob,
       ])

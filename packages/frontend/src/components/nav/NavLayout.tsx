@@ -69,10 +69,6 @@ export function NavLayout({
           href: '/scaling/liveness',
         },
         {
-          title: 'Finality',
-          href: '/scaling/finality',
-        },
-        {
           title: 'Costs',
           href: '/scaling/costs',
         },
@@ -251,7 +247,7 @@ export function NavLayout({
         />
         <div
           className={cn(
-            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-hidden',
+            'min-w-0 flex-1 has-[[data-hide-overflow-x]]:overflow-x-clip',
             !topNavbar && 'md:pt-5 lg:ml-3 lg:pt-0',
           )}
         >

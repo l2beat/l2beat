@@ -31,15 +31,6 @@ export const optopia: ScalingProject = opStackL2({
   },
   associatedTokens: ['OPAI'],
   genesisTimestamp: UnixTime(1715333977),
-  // failing, needs different analyzer?
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   genesisTimestamp: UnixTime(1715333977),
-  //   minTimestamp: UnixTime(1715336651), // first blob
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
   isNodeAvailable: true,
   chainConfig: {
     name: 'optopia',

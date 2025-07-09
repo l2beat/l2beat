@@ -20,4 +20,7 @@ export const mvchain: ScalingProject = upcomingL3({
       socialMedia: ['https://x.com/genso_meta'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

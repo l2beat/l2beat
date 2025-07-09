@@ -39,12 +39,6 @@ export const searchBarPages = withIndex([
   },
   {
     category: 'scaling',
-    name: 'Finality',
-    tags: ['pages', 'scaling'],
-    href: '/scaling/finality',
-  },
-  {
-    category: 'scaling',
     name: 'Costs',
     tags: ['pages', 'scaling'],
     href: '/scaling/costs',

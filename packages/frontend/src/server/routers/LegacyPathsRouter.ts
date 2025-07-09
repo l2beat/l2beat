@@ -27,5 +27,9 @@ export function createLegacyPathsRouter() {
     res.redirect(301, `/scaling/projects/${req.params.name}`)
   })
 
+  router.get('/scaling/finality', (_, res) => {
+    res.redirect(301, '/scaling/summary')
+  })
+
   return router
 }
