@@ -52,7 +52,8 @@ describe(AnomalyNotifier.name, () => {
         start: lastRecord.timestamp,
         projectId,
         subtype,
-        status: 'ongoing',
+        isOngoing: true,
+        isApproved: false,
       }
 
       await notifier.anomalyDetected(
@@ -154,7 +155,8 @@ describe(AnomalyNotifier.name, () => {
       const ongoingAnomaly = mockObject<RealTimeAnomalyRecord>({
         projectId,
         subtype,
-        status: 'ongoing',
+        isOngoing: true,
+        isApproved: false,
         start: lastRecord.timestamp,
       })
 
@@ -305,7 +307,8 @@ describe(AnomalyNotifier.name, () => {
         start: lastRecord.timestamp,
         projectId,
         subtype,
-        status: 'ongoing',
+        isOngoing: true,
+        isApproved: false,
       }
 
       await notifier.anomalyRecovered(ongoingAnomaly, 60, block, lastRecord)
@@ -362,7 +365,8 @@ describe(AnomalyNotifier.name, () => {
           {
             projectId: 'project-1',
             subtype: 'batchSubmissions',
-            status: 'ongoing',
+            isOngoing: true,
+            isApproved: false,
             start: UnixTime.now(),
           },
         ] as RealTimeAnomalyRecord[]),
@@ -388,9 +392,9 @@ describe(AnomalyNotifier.name, () => {
       expect(mockSendDiscordNotification).toHaveBeenCalledWith(
         `# Daily report @ ${UnixTime.toYYYYMMDD(UnixTime.now())}\n` +
           '### Ongoing anomalies:\n' +
-          '```|  Duration | ProjectId |          Subtype |       Status |\n' +
-          '|-----------|-----------|------------------|--------------|\n' +
-          '| 0 seconds | project-1 | batchSubmissions | not approved |```',
+          '```|  Duration | ProjectId |          Subtype |  Status |     Approval |\n' +
+          '|-----------|-----------|------------------|---------|--------------|\n' +
+          '| 0 seconds | project-1 | batchSubmissions | ongoing | not approved |```',
       )
     })
   })

@@ -146,7 +146,7 @@ export class AnomalyNotifier {
     const now = UnixTime.now()
     const date = UnixTime.toYYYYMMDD(UnixTime.now())
 
-    const headers = ['Duration', 'ProjectId', 'Subtype', 'Status']
+    const headers = ['Duration', 'ProjectId', 'Subtype', 'Status', 'Approval']
 
     const rows = ongoingAnomalies
       .map((anomaly) => ({
@@ -158,7 +158,8 @@ export class AnomalyNotifier {
         formatDuration(anomaly.duration),
         anomaly.projectId,
         anomaly.subtype,
-        anomaly.status === 'ongoing' ? 'not approved' : anomaly.status,
+        anomaly.isOngoing ? 'ongoing' : 'resolved',
+        anomaly.isApproved ? 'approved' : 'not approved',
       ])
 
     const table = formatAsAsciiTable(headers, rows)
