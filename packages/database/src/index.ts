@@ -16,10 +16,6 @@ export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entit
 export type { AnomalyRecord } from './other/anomalies/entity'
 export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
 export type { RealTimeAnomalyRecord } from './other/real-time-anomalies/entity'
-export type {
-  FinalityRecord,
-  ProjectFinalityRecord,
-} from './other/finality/entity'
 export type { L2CostPriceRecord } from './other/l2-cost-price/entity'
 export type { L2CostRecord } from './other/l2-cost/entity'
 export type { LivenessRecord } from './other/liveness/entity'

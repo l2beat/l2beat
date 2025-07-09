@@ -16,7 +16,6 @@ import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repositor
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
 import { AnomalyStatsRepository } from './other/anomaly-stats/repository'
-import { FinalityRepository } from './other/finality/repository'
 import { L2CostPriceRepository } from './other/l2-cost-price/repository'
 import { L2CostRepository } from './other/l2-cost/repository'
 import { LivenessRepository } from './other/liveness/repository'
@@ -71,7 +70,6 @@ export function createDatabase(config?: PoolConfig & { log?: LogConfig }) {
     anomalies: new AnomaliesRepository(db),
     realTimeAnomalies: new RealTimeAnomaliesRepository(db),
     anomalyStats: new AnomalyStatsRepository(db),
-    finality: new FinalityRepository(db),
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
     liveness: new LivenessRepository(db),
