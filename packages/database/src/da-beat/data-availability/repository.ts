@@ -7,7 +7,6 @@ import {
   toRecord,
   toRow,
 } from './entity'
-import { selectDataAvailability } from './select'
 
 export class DataAvailabilityRepository extends BaseRepository {
   async upsertMany(records: DataAvailabilityRecord[]): Promise<number> {
@@ -37,7 +36,7 @@ export class DataAvailabilityRepository extends BaseRepository {
   ): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
       .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
+      .selectAll()
       .where('daLayer', '=', daLayer)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
@@ -51,7 +50,7 @@ export class DataAvailabilityRepository extends BaseRepository {
   ): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
       .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
+      .selectAll()
       .where('daLayer', '=', daLayer)
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .execute()
@@ -66,7 +65,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
+      .selectAll()
       .where('projectId', 'in', projectIds)
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
@@ -120,7 +119,7 @@ export class DataAvailabilityRepository extends BaseRepository {
     const [from, to] = timeRange
     let query = this.db
       .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
+      .selectAll()
       .where('daLayer', 'in', daLayers)
       .where('timestamp', '<', UnixTime.toDate(to))
       .orderBy('timestamp', 'asc')
@@ -146,7 +145,7 @@ export class DataAvailabilityRepository extends BaseRepository {
   async getAll(): Promise<DataAvailabilityRecord[]> {
     const rows = await this.db
       .selectFrom('DataAvailability')
-      .select(selectDataAvailability)
+      .selectAll()
       .execute()
     return rows.map(toRecord)
   }

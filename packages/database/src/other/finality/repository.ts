@@ -7,14 +7,10 @@ import {
   toRecord,
   toRow,
 } from './entity'
-import { selectFinality } from './select'
 
 export class FinalityRepository extends BaseRepository {
   async getAll(): Promise<FinalityRecord[]> {
-    const rows = await this.db
-      .selectFrom('Finality')
-      .select(selectFinality)
-      .execute()
+    const rows = await this.db.selectFrom('Finality').selectAll().execute()
     return rows.map(toRecord)
   }
 
@@ -23,7 +19,7 @@ export class FinalityRepository extends BaseRepository {
   ): Promise<FinalityRecord | undefined> {
     const row = await this.db
       .selectFrom('Finality')
-      .select(selectFinality)
+      .selectAll()
       .where('projectId', '=', projectId)
       .orderBy('timestamp', 'desc')
       .limit(1)
@@ -37,7 +33,7 @@ export class FinalityRepository extends BaseRepository {
   ): Promise<ProjectFinalityRecord | undefined> {
     const row = await this.db
       .selectFrom('Finality')
-      .select(selectFinality)
+      .selectAll()
       .where('timestamp', '=', UnixTime.toDate(timestamp))
       .where('projectId', '=', projectId.toString())
       .limit(1)
@@ -66,7 +62,7 @@ export class FinalityRepository extends BaseRepository {
           .onRef('f.projectId', '=', 'maxF.projectId')
           .onRef('f.timestamp', '=', 'maxF.maxTimestamp'),
       )
-      .select(selectFinality.map((column) => `f.${column}` as const))
+      .selectAll('f')
       .execute()
 
     return rows.map(toRecord)
