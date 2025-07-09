@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -20,5 +20,8 @@ export const layerai: ScalingProject = upcomingL2({
       documentation: ['https://docs.layerai.org/'],
       socialMedia: ['https://t.me/LayerAI_org', 'https://x.com/LayerAIorg'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('agglayer'),
   },
 })

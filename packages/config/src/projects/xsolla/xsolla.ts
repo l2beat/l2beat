@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -18,5 +18,8 @@ export const xsolla: ScalingProject = upcomingL2({
       documentation: ['https://developers.xsolla.com/'],
       socialMedia: ['https://x.com/xsolla'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })
