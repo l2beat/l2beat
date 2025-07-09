@@ -207,11 +207,13 @@ model Anomaly {
 }
 
 model RealTimeAnomaly {
-  start     DateTime  @db.Timestamp(6)
-  projectId String    @db.VarChar(255)
-  subtype   String    @db.VarChar(255)
-  status    String    @db.VarChar(255)
-  end       DateTime? @db.Timestamp(6)
+  start      DateTime  @db.Timestamp(6)
+  projectId  String    @db.VarChar(255)
+  subtype    String    @db.VarChar(255)
+  status     String    @db.VarChar(255)
+  isOngoing  Boolean   @default(false)
+  isApproved Boolean   @default(false)
+  end        DateTime? @db.Timestamp(6)
 
   @@id([start, projectId, subtype])
 }
