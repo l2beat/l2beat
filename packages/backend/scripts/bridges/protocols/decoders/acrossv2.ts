@@ -3,8 +3,8 @@ import { type Log, decodeEventLog, encodeEventTopics, parseAbi } from 'viem'
 import type { BridgeTransfer } from '../../types/BridgeTransfer'
 import { extractAddressFromPadded } from '../../utils/viem'
 
-export const ACROSS = {
-  name: 'across',
+export const ACROSS_V2 = {
+  name: 'across_v2',
   decoder: decoder,
 }
 
@@ -29,7 +29,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
     )?.name
 
     return {
-      protocol: ACROSS.name,
+      protocol: ACROSS_V2.name,
       chain: chainName,
       origin: chain.name,
       destination: destination ?? data.args.destinationChainId.toString(),
@@ -61,7 +61,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
     )?.name
 
     return {
-      protocol: ACROSS.name,
+      protocol: ACROSS_V2.name,
       chain: chainName,
       origin: origin ?? data.args.originChainId.toString(),
       destination: chain.name,
@@ -74,6 +74,7 @@ function decoder(chainName: string, log: Log): BridgeTransfer | undefined {
       matchingId: data.args.depositId.toString(),
     }
   }
+
   return undefined
 }
 
