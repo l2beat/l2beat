@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x0dd0a79f53f883cf8c3801e23bf876431bdf01d0
+
+# Diff at Wed, 09 Jul 2025 09:25:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@9fc7d86984262816c25132a2cdce848ac9abc774 block: 21981180
+- current block number: 22880718
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PerpetualEscapeVerifier (0xaadFdB9CAc145c65f2284fBe24600d07fb37F7BD) {
+    +++ description: Special verifier for the escape() function.
+      values.hasRegisteredFact:
+-        false
++        true
+    }
+```
+
+```diff
+    contract StarkPerpetualUSDT (0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b) {
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+      values.isFrozen:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x3287a6041ea81fa5a46c93ab5ac1d21d2ed6cf1a
 
 # Diff at Fri, 04 Jul 2025 12:18:51 GMT:
