@@ -8,7 +8,9 @@ Generated with discovered.json: 0x0dd0a79f53f883cf8c3801e23bf876431bdf01d0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+USDT StarkEx instance frozen, project archived.
+
+Apex Pro, the app on this StarkEx Validium, is EOL: https://www.apex.exchange/blog/detail/ApeX-Pro-Sunset-Delisting-Timeline-for-Trading-Pairs.
 
 ## Watched changes
 
