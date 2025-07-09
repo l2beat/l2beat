@@ -141,6 +141,7 @@ export const katana: ScalingProject = {
   chainConfig: {
     name: 'katana',
     chainId: 747474,
+    coingeckoPlatform: 'katana',
     explorerUrl: 'https://explorer.katanarpc.com',
     sinceTimestamp: UnixTime(1746742811),
     apis: [

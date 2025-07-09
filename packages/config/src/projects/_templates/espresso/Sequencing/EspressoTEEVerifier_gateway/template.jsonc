@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.",
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "change the modular TEE verifier contracts."
+        }
+      ]
+    },
+    "espressoNitroTEEVerifier": {
+      "severity": "HIGH"
+    },
+    "espressoSGXTEEVerifier": {
+      "severity": "HIGH"
+    }
+  }
+}

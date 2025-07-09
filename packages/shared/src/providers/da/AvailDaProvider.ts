@@ -63,6 +63,7 @@ export class AvailDaProvider implements DaBlobProvider {
         type: 'avail',
         daLayer: this.daLayer,
         blockTimestamp: timestamp,
+        blockNumber: number,
         size: BigInt(sizeInBytes),
         appId: appIndex[index].appId.toString(),
       })

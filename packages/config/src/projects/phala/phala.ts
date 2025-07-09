@@ -82,7 +82,6 @@ export const phala: ScalingProject = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
-    finality: { finalizationPeriod: finalizationPeriod },
   },
   chainConfig: {
     name: 'phala',

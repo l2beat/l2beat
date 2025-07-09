@@ -16,10 +16,6 @@ export type { AggregatedLivenessRecord } from './other/aggregated-liveness/entit
 export type { AnomalyRecord } from './other/anomalies/entity'
 export type { AnomalyStatsRecord } from './other/anomaly-stats/entity'
 export type { RealTimeAnomalyRecord } from './other/real-time-anomalies/entity'
-export type {
-  FinalityRecord,
-  ProjectFinalityRecord,
-} from './other/finality/entity'
 export type { L2CostPriceRecord } from './other/l2-cost-price/entity'
 export type { L2CostRecord } from './other/l2-cost/entity'
 export type { LivenessRecord } from './other/liveness/entity'
@@ -35,3 +31,4 @@ export type { TokenValueRecord } from './tvs/token-value/entity'
 export type { ProjectValueRecord } from './tvs/project-value/entity'
 export type { UpdateDiffRecord } from './discovery/update-diff/entity'
 export type { NotificationRecord } from './other/notifications/entity'
+export type { BlobRecord } from './da-beat/blob/entity'

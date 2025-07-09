@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type L2CostPriceRecord, toRecord, toRow } from './entity'
-import { selectL2CostPrice } from './select'
 
 export class L2CostPriceRepository extends BaseRepository {
   async getAll(): Promise<L2CostPriceRecord[]> {
@@ -15,7 +14,7 @@ export class L2CostPriceRepository extends BaseRepository {
   ): Promise<L2CostPriceRecord[]> {
     const rows = await this.db
       .selectFrom('L2CostPrice')
-      .select(selectL2CostPrice)
+      .selectAll()
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(to))
       .execute()

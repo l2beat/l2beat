@@ -10,7 +10,7 @@ import {
 } from '~/components/core/tooltip/Tooltip'
 import { useIsClient } from '~/hooks/useIsClient'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
-import { DurationCell } from '~/pages/scaling/finality/components/table/DurationCell'
+import { DurationCell } from '~/pages/scaling/liveness/components/table/DurationCell'
 import type { LivenessDataPoint } from '~/server/features/scaling/liveness/types'
 import { LivenessDurationCell } from '../LivenessDurationCell'
 import { IntervalsHeader } from './IntervalsHeader'

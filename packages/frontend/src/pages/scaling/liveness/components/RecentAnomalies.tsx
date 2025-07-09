@@ -45,12 +45,7 @@ export function RecentAnomalies({ projectsWithAnomalies, className }: Props) {
 
   return (
     <PrimaryCard className={className}>
-      <div className="flex items-center gap-2">
-        <LiveIndicator size="md" />
-        <h2 className="text-heading-18 text-negative">
-          Major ongoing anomalies
-        </h2>
-      </div>
+      <h2 className="text-heading-18">Recent major anomalies</h2>
       <div className="mt-4 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-3">
           {firstColumns.map((projectWithAnomalies) => (
@@ -86,6 +81,9 @@ function AnomalyCollapsible({
 }: {
   projectWithAnomalies: ProjectWithAnomaly
 }) {
+  const isAnyOngoing = projectWithAnomalies.recentAnomalies.some(
+    (anomaly) => anomaly.end === undefined,
+  )
   return (
     <Collapsible
       key={projectWithAnomalies.name}
@@ -102,7 +100,10 @@ function AnomalyCollapsible({
             {projectWithAnomalies.name}
           </span>
         </div>
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
+        <div className="flex items-center gap-4">
+          {isAnyOngoing && <LiveIndicator />}
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 size-3 fill-brand transition-transform duration-300" />
+        </div>
       </CollapsibleTrigger>
       <CollapsibleContent className="space-y-3 px-4 pb-3">
         <div className="flex flex-col gap-2">
@@ -110,6 +111,18 @@ function AnomalyCollapsible({
             return (
               <div key={anomaly.start} className="text-xs">
                 <HorizontalSeparator className="my-3 first:mt-0" />
+                {anomaly.end === undefined ? (
+                  <div className="mb-1 flex items-center gap-1">
+                    <LiveIndicator />
+                    <span className="subtitle-12 text-negative uppercase leading-none">
+                      Ongoing anomaly
+                    </span>
+                  </div>
+                ) : (
+                  <span className="subtitle-12 text-secondary uppercase leading-none">
+                    Resolved
+                  </span>
+                )}
                 <AnomalyText anomaly={anomaly} />
               </div>
             )

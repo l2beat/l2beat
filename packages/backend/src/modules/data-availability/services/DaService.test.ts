@@ -21,6 +21,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(100),
         } as EthereumBlob,
         // blob matching project-ethereum-1
@@ -31,6 +32,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(200),
         } as EthereumBlob,
         // blob matching project-ethereum-1 by topic
@@ -41,6 +43,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: ['0x1234'],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(100),
         } as EthereumBlob,
         // blob matching project-ethereum-2
@@ -51,6 +54,7 @@ describe(DaService.name, () => {
           sequencer: 'any',
           topics: [],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(300),
         } as EthereumBlob,
         // blob not matching any project
@@ -62,6 +66,7 @@ describe(DaService.name, () => {
           topics: [],
           size: BigInt(400),
           blockTimestamp: TIME,
+          blockNumber: 1,
         } as EthereumBlob,
       ]
 
@@ -108,6 +113,7 @@ describe(DaService.name, () => {
           daLayer: 'celestia',
           namespace: 'celestia-1',
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(100),
         } as CelestiaBlob,
         // blob not matching any project
@@ -206,6 +212,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(100),
         } as EthereumBlob,
         // blob matching project-ethereum-1 on current hour
@@ -216,6 +223,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME,
+          blockNumber: 1,
           size: BigInt(200),
         } as EthereumBlob,
         // blob matching project-ethereum-1 on previous hour
@@ -226,6 +234,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME - 1 * UnixTime.HOUR,
+          blockNumber: 1,
           size: BigInt(300),
         } as EthereumBlob,
         // blob matching project-ethereum-1 on next hour
@@ -236,6 +245,7 @@ describe(DaService.name, () => {
           sequencer: 'ethereum-1-seq1',
           topics: [],
           blockTimestamp: TIME + 1 * UnixTime.HOUR,
+          blockNumber: 1,
           size: BigInt(400),
         } as EthereumBlob,
       ]

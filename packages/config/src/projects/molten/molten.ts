@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
+import { ESPRESSO } from '../../common/sequencing'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { orbitStackL3 } from '../../templates/orbitStack'
@@ -17,7 +18,7 @@ export const molten: ScalingProject = orbitStackL3({
     shortName: 'Molten',
     slug: 'molten',
     description:
-      'Molten is an Orbit stack L3 on Arbitrum with AnyTrust DA, created by the UniDex team.',
+      'Molten is an Orbit stack L3 on Arbitrum with Celestia DA, created by the UniDex team.',
     links: {
       websites: ['https://moltennetwork.com/'],
       bridges: [
@@ -52,6 +53,9 @@ export const molten: ScalingProject = orbitStackL3({
     ],
     gasTokens: ['MOLTEN'],
   },
+  nonTemplateTechnology: {
+    sequencing: ESPRESSO,
+  },
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
@@ -65,6 +69,14 @@ export const molten: ScalingProject = orbitStackL3({
     }),
   ],
   milestones: [
+    {
+      title: 'Molten integrates Espresso sequencer',
+      url: 'https://x.com/EspressoSys/status/1929531777686630866',
+      date: '2025-01-30T00:00:00.00Z',
+      description:
+        'Molten adds the Espresso TEE sequencer to their Celestia DA with Blobstream.',
+      type: 'general',
+    },
     {
       title: 'Mainnet Launch',
       url: 'https://x.com/MoltenL3/status/1774485708742205545',

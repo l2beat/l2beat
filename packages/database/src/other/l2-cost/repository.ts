@@ -3,7 +3,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type L2CostRecord, toRecord, toRow } from './entity'
-import { selectL2Cost } from './select'
 
 export class L2CostRepository extends BaseRepository {
   async getAll() {
@@ -28,7 +27,7 @@ export class L2CostRepository extends BaseRepository {
       .selectFrom('L2Cost')
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<=', UnixTime.toDate(to))
-      .select([...selectL2Cost.map((column) => `L2Cost.${column}` as const)])
+      .selectAll()
       .distinctOn('txHash')
       .orderBy('txHash', 'asc')
       .orderBy('timestamp', 'asc')

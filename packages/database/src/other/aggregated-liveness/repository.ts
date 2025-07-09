@@ -6,7 +6,6 @@ import {
 import { sql } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
 import { type AggregatedLivenessRecord, toRecord, toRow } from './entity'
-import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLivenessRepository extends BaseRepository {
   async upsertMany(records: AggregatedLivenessRecord[]): Promise<number> {
@@ -42,7 +41,7 @@ export class AggregatedLivenessRepository extends BaseRepository {
   async getAll(): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
       .selectFrom('AggregatedLiveness')
-      .select(selectAggregatedLiveness)
+      .selectAll()
       .execute()
     return rows.map(toRecord)
   }
@@ -56,7 +55,7 @@ export class AggregatedLivenessRepository extends BaseRepository {
 
     let query = this.db
       .selectFrom('AggregatedLiveness')
-      .select(selectAggregatedLiveness)
+      .selectAll()
       .where('projectId', '=', projectId)
       .where('subtype', '=', subtype)
       .where('timestamp', '<=', UnixTime.toDate(to))

@@ -44,7 +44,7 @@ export function EcosystemsActivityChart({
   ecosystemMilestones,
 }: {
   name: string
-  entries: EcosystemEntry['projects']
+  entries: EcosystemEntry['liveProjects']
   allScalingProjectsUops: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
