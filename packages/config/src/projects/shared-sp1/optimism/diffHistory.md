@@ -1,13 +1,13 @@
-Generated with discovered.json: 0x92fd85198c1693bc2e15a78676443ee8931ec128
+Generated with discovered.json: 0xb59b2ef6eee3de7fd6b0df7f032bd08e3c5cbecc
 
-# Diff at Wed, 09 Jul 2025 09:29:28 GMT:
+# Diff at Wed, 09 Jul 2025 15:09:45 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
-- current block number: 32632005
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- current block number: 138237502
 
 ## Description
 
-Created sp1 discovery as a shared module.
+Provide description of changes. This section will be preserved.
 
 ## Initial discovery
 

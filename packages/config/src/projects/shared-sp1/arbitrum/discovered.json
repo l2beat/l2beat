@@ -1,8 +1,8 @@
 {
-  "name": "sp1",
-  "chain": "optimism",
-  "blockNumber": 138227291,
-  "configHash": "0x66313197d12129ebb989ae7a0f6ea7de64c987b05a8d42acc0adbb3cd83c7b60",
+  "name": "shared-sp1",
+  "chain": "arbitrum",
+  "blockNumber": 355918538,
+  "configHash": "0xf41d7b7f59f7d34511724efbd46f26c9d7ff74bffcd4b8b545b76426a7a04c92",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -14,8 +14,8 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550033,
-      "sinceBlock": 136475628,
+      "sinceTimestamp": 1748550052,
+      "sinceBlock": 341867465,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
@@ -35,8 +35,8 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "sinceTimestamp": 1725923405,
-      "sinceBlock": 125162314,
+      "sinceTimestamp": 1719523665,
+      "sinceBlock": 226384983,
       "values": {
         "$immutable": true,
         "activeVerifiers": [
@@ -46,6 +46,22 @@
           }
         ],
         "allVerifiers": [
+          {
+            "selector": "0x8c5bc5e4",
+            "verifier": "0x331b350dDA287d0A65ce43103984CD44cb4Da9f0"
+          },
+          {
+            "selector": "0x801c66ac",
+            "verifier": "0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2"
+          },
+          {
+            "selector": "0xfedc1fcc",
+            "verifier": "0x36B353776AF6EF3A2bD707049e783F52c4209017"
+          },
+          {
+            "selector": "0xc430ff7f",
+            "verifier": "0xc350F063C13a3Ca21331610fe159E697a5c9c2FB"
+          },
           {
             "selector": "0xc865c1b6",
             "verifier": "0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc"
@@ -113,14 +129,14 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "oeth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1725923539,
-      "sinceBlock": 125162381,
+      "sinceTimestamp": 1724204782,
+      "sinceBlock": 245028307,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -130,11 +146,11 @@
           "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
         ],
         "$threshold": 2,
-        "domainSeparator": "0xa01816ca2ca0b3afcc429ef573cdea41fae4cf53c0dcd13529ed53cd0c0c1cdd",
-        "getChainId": 10,
+        "domainSeparator": "0x185e357963cf69402f9a4921a2354b8685eb211841dd51a3bffb313a342335ab",
+        "getChainId": 42161,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 9,
+        "nonce": 11,
         "VERSION": "1.3.0"
       },
       "implementationNames": {

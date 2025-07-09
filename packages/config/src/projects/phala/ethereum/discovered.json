@@ -2,8 +2,8 @@
   "name": "phala",
   "chain": "ethereum",
   "blockNumber": 22882050,
-  "configHash": "0xf4001eb256b53bf9f711e0b072c57993076037a54ce9af161ef09f4f45353fbf",
-  "sharedModules": ["sp1"],
+  "configHash": "0xe10f512e6592cfc70557cfded3e9fb6e388274da629d1bace1e7f407f00e5458",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

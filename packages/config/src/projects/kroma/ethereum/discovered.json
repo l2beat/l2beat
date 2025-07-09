@@ -2,8 +2,8 @@
   "name": "kroma",
   "chain": "ethereum",
   "blockNumber": 22882090,
-  "configHash": "0xb7009456d10a7e4ac6ced52d8c3657a728e2ce5f55327e09f0de4c71302051c8",
-  "sharedModules": ["sp1"],
+  "configHash": "0x5687f060a90f3268f397f4c0433880da0820f96dfc5461f8282e34b7d462cef6",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",

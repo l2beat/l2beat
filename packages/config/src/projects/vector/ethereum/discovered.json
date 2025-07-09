@@ -2,8 +2,8 @@
   "name": "vector",
   "chain": "ethereum",
   "blockNumber": 22882091,
-  "configHash": "0x57233c4f0a808d4db7456cc9d94f310d1dba3ce680e1266d1372840814ea570a",
-  "sharedModules": ["sp1"],
+  "configHash": "0x6917991c950f196af6b5b8f46ce7fb74aa46b7cba91de62c0f8cc0b04bc41461",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "name": "Vector",

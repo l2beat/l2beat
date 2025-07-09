@@ -2,8 +2,8 @@
   "name": "blobstream",
   "chain": "base",
   "blockNumber": 32640167,
-  "configHash": "0xf758094730d8941f401e1307bcae4b305eecd47d5b9a380e15958f64365aef7a",
-  "sharedModules": ["sp1"],
+  "configHash": "0x8a3a32e5a68db44d13add6ac24fbab5bfdff1ed37b56bb01e9915e7ce50d4925",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",

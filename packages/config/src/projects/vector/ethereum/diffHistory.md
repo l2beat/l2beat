@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x35d6904d06c57d180e4af10e26b9ededbbd01029
+Generated with discovered.json: 0xf66dae769acb818d1676f99aaceffd4713363fa1
 
-# Diff at Wed, 09 Jul 2025 14:01:59 GMT:
+# Diff at Wed, 09 Jul 2025 15:10:16 GMT:
 
-- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
 - comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780010
 - current block number: 22882091
 

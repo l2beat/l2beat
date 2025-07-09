@@ -2,8 +2,8 @@
   "name": "blobstream",
   "chain": "ethereum",
   "blockNumber": 22882089,
-  "configHash": "0x6cc12ea1ef4b0dc3f54daeb4e8685dd58945c025687f7af3b64aaa5bfd9ca238",
-  "sharedModules": ["sp1"],
+  "configHash": "0xb76768c7ec77523b31f3467567efd3d48515b33b673ae547b71c007f2cb4e6d4",
+  "sharedModules": ["shared-sp1"],
   "entries": [
     {
       "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",

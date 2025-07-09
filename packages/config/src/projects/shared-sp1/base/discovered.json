@@ -1,8 +1,8 @@
 {
-  "name": "sp1",
-  "chain": "arbitrum",
-  "blockNumber": 355836884,
-  "configHash": "0x5f4504deb647cd5c41aa52f20d7bd34f30c777630240bff272973308c9ddbbac",
+  "name": "shared-sp1",
+  "chain": "base",
+  "blockNumber": 32642215,
+  "configHash": "0xf3715773a68c7f55bcac84e0f53db5fb99b01a69d067d361fcbc83dca1c54495",
   "entries": [
     {
       "name": "SP1Verifier",
@@ -14,8 +14,8 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
-      "sinceTimestamp": 1748550052,
-      "sinceBlock": 341867465,
+      "sinceTimestamp": 1748550043,
+      "sinceBlock": 30880348,
       "values": {
         "$immutable": true,
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
@@ -35,8 +35,8 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
-      "sinceTimestamp": 1719523665,
-      "sinceBlock": 226384983,
+      "sinceTimestamp": 1719523667,
+      "sinceBlock": 16367160,
       "values": {
         "$immutable": true,
         "activeVerifiers": [
@@ -129,14 +129,14 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arb1:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+          "from": "base:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
           "description": "affect the liveness and safety of the gateway - can transfer ownership, add and freeze verifier routes.",
           "role": ".owner"
         }
       ],
       "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1724204782,
-      "sinceBlock": 245028307,
+      "sinceTimestamp": 1724206353,
+      "sinceBlock": 18708503,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
@@ -146,8 +146,8 @@
           "0x9395e83720bf2D8ac6435f9c520b48E289Cb8885"
         ],
         "$threshold": 2,
-        "domainSeparator": "0x185e357963cf69402f9a4921a2354b8685eb211841dd51a3bffb313a342335ab",
-        "getChainId": 42161,
+        "domainSeparator": "0x29c0e10a02cbb7ea0a33470bec57a3f470dfc0e226a22a30f58cce014ff1ac28",
+        "getChainId": 8453,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
         "nonce": 11,
