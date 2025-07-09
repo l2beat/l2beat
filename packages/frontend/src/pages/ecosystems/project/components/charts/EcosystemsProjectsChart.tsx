@@ -104,7 +104,7 @@ function Header({
   marketShare: number
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Projects count</div>
         <EcosystemChartTimeRange range={range} />
