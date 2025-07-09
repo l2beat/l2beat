@@ -1,8 +1,8 @@
 {
   "name": "facet",
   "chain": "ethereum",
-  "blockNumber": 22367347,
-  "configHash": "0x3d29ae86420cf41b6638e3e14e40372e14131609edf9979c281cd2acba6c281a",
+  "blockNumber": 22880623,
+  "configHash": "0x713ac98081b38f9d90fd8a9142c7a8fb148f09f0fbec40b81d888337ffe7b17e",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000dEaD",
@@ -78,6 +78,81 @@
       ]
     },
     {
+      "name": "SP1Verifier",
+      "address": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459",
+      "type": "Contract",
+      "template": "succinct/SP1Verifier",
+      "sourceHashes": [
+        "0x3ffef9f4f4cd24743e4612a4c1011ca13c0b983c52bbe8f4a6d40a58e5eeae42"
+      ],
+      "proxyType": "immutable",
+      "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "sinceTimestamp": 1748550023,
+      "sinceBlock": 22590744,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
+      }
+    },
+    {
+      "name": "Rollup",
+      "address": "0x101e853255f3a0cA1dd3772d00893A103A6d0261",
+      "type": "Contract",
+      "template": "facet/Rollup",
+      "sourceHashes": [
+        "0xd216d1bc3ddc27353a122901c9226323aaff4c9ca1da61b91c7e1baf40b4c9b1"
+      ],
+      "proxyType": "immutable",
+      "description": "Rollup contract for Facet",
+      "sinceTimestamp": 1751482343,
+      "sinceBlock": 22833445,
+      "values": {
+        "$immutable": true,
+        "AGG_VKEY": "0x00a133aaa30298590731a9ac4edce773ba91365e7bcdc7cf1aaca780104efffc",
+        "anchorProposalId": 0,
+        "CHALLENGER_BOND": "5000000000000000000",
+        "computeL2Timestamp": [],
+        "FALLBACK_TIMEOUT_SECS": 1209600,
+        "getAnchorProposal": {
+          "rootClaim": "0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7",
+          "l1Head": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "proposer": "0x0000000000000000000000000000000000000000",
+          "l2BlockNumber": 1467888,
+          "parentIndex": 0,
+          "deadline": 0,
+          "resolvedAt": 0,
+          "proposalStatus": 4,
+          "resolutionStatus": 1,
+          "challenger": "0x0000000000000000000000000000000000000000",
+          "prover": "0x0000000000000000000000000000000000000000"
+        },
+        "getAnchorRoot": [
+          "0x502d6539c2a9a22d13bcc281c8b1f528a0f5ded3d89ccb46e645801d8b40c4a7",
+          1467888
+        ],
+        "getProposalsLength": 28,
+        "L2_BLOCK_TIME": 12,
+        "L2_START_TIMESTAMP": 1751459195,
+        "l2BlockAge": [],
+        "MAX_CHALLENGE_SECS": 604800,
+        "MAX_PROVE_SECS": 259200,
+        "owner": "0xb2B01DeCb6cd36E7396b78D3744482627F22C525",
+        "PROPOSAL_INTERVAL": 1800,
+        "PROPOSER_BOND": 1000000000000000,
+        "RANGE_VKEY_COMMITMENT": "0x086ab4d935fcdee448c15bd365c3de90508ce1db1aa66b4f65bac4d7642a7d93",
+        "ROLLUP_CONFIG_HASH": "0x9554c3fe04d8bd05d2dff01471781e1d9fbbdcfa58bda686ad883fe5451fd97c",
+        "VERIFIER": "0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
+        "version": "1.0.0"
+      },
+      "implementationNames": {
+        "0x101e853255f3a0cA1dd3772d00893A103A6d0261": "Rollup"
+      }
+    },
+    {
       "address": "0x1673540243E793B0e77C038D4a88448efF524DcE",
       "type": "EOA",
       "proxyType": "EOA"
@@ -141,6 +216,73 @@
       },
       "implementationNames": {
         "0x3235AdE33cF7013f5b5A51089390396e931e6BCF": "FacetSafeModule"
+      }
+    },
+    {
+      "name": "SP1Verifier",
+      "address": "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x3a6132d983fd1e502fe3b75fbf74f0debc0d183b404d144b5220d8d5b3645582"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1748550083,
+      "sinceBlock": 22590749,
+      "values": {
+        "$immutable": true,
+        "VERIFIER_HASH": "0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913",
+        "VERSION": "v5.0.0"
+      },
+      "implementationNames": {
+        "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": "SP1Verifier"
+      }
+    },
+    {
+      "name": "SP1VerifierGateway",
+      "address": "0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66",
+      "type": "Contract",
+      "template": "succinct/SP1VerifierGateway",
+      "sourceHashes": [
+        "0xc651adcd746b8794c5b6c418aeb146f1b13b207cc9d2712ba66a42bd4b29af37"
+      ],
+      "proxyType": "immutable",
+      "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "sinceTimestamp": 1751301179,
+      "sinceBlock": 22818451,
+      "values": {
+        "$immutable": true,
+        "activeVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          }
+        ],
+        "allVerifiers": [
+          {
+            "selector": "0xd4e8ecd2",
+            "verifier": "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459"
+          },
+          {
+            "selector": "0xa4594c59",
+            "verifier": "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5"
+          }
+        ],
+        "owner": "0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "activeVerifiers": {
+          "description": "Verifiers that are routed to by their selector and not frozen."
+        },
+        "allVerifiers": {
+          "description": "All verifiers that were ever routed to by this gateway."
+        }
+      },
+      "implementationNames": {
+        "0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
       }
     },
     {
@@ -403,7 +545,7 @@
           "0xDB866fD9241cd32851Df760c1Ec536f3199B22cE"
         ],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 301,
+        "nonce": 306,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -548,10 +690,10 @@
         "finalizationPeriodSeconds": 12,
         "L2_BLOCK_TIME": 12,
         "l2BlockTime": 12,
-        "latestBlockNumber": 994445,
-        "latestOutputIndex": 137,
-        "nextBlockNumber": 1001645,
-        "nextOutputIndex": 138,
+        "latestBlockNumber": 1462445,
+        "latestOutputIndex": 202,
+        "nextBlockNumber": 1469645,
+        "nextOutputIndex": 203,
         "proposer": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
         "PROPOSER": "0x034B0a32395D15C0F63F3e88931Bf7e1D9627eE3",
         "startingBlockNumber": 845,
@@ -740,6 +882,15 @@
       "function upgrade(address proxy, address implementation) payable",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ],
+    "0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": [
+      "error InvalidProof()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0x059249eBf6e7F1B6c7E7bFb9079f6BCd8581635E": [
       "constructor()",
       "error BadTarget()",
@@ -783,6 +934,69 @@
       "function superchainConfig() view returns (address)",
       "function systemConfig() view returns (address)",
       "function version() pure returns (string)"
+    ],
+    "0x101e853255f3a0cA1dd3772d00893A103A6d0261": [
+      "constructor(uint256 _challengeSecs, uint256 _proveSecs, uint256 _challengerBond, uint256 _proposerBond, uint256 _fallbackTimeout, uint256 _proposalInterval, bytes32 _startRoot, uint128 _startBlock, uint256 _l2StartTimestamp, uint256 _l2BlockTime, address _verifier, bytes32 _rollupHash, bytes32 _aggVkey, bytes32 _rangeCommit)",
+      "error AlreadyChallenged()",
+      "error AlreadyResolved()",
+      "error BadAuth()",
+      "error BadCadence()",
+      "error GameNotOver()",
+      "error GameOver()",
+      "error IncorrectBondAmount()",
+      "error InvalidParentGame()",
+      "error InvalidProposalStatus()",
+      "error NoCredit()",
+      "error NotFinalized()",
+      "error ParentGameNotResolved()",
+      "error ParentNotResolved()",
+      "error TransferFailed()",
+      "event AnchorUpdated(uint256 indexed proposalId, bytes32 root, uint128 l2BlockNumber)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event ProposalChallenged(uint256 indexed proposalId, address indexed challenger)",
+      "event ProposalClosed(uint256 indexed proposalId)",
+      "event ProposalProven(uint256 indexed proposalId, address indexed prover)",
+      "event ProposalResolved(uint256 indexed proposalId, uint8 status)",
+      "event ProposalSubmitted(uint256 indexed proposalId, uint256 indexed parentId, address indexed proposer, bytes32 root, uint128 l2BlockNumber)",
+      "event ProposerPermissionUpdated(address indexed proposer, bool allowed)",
+      "function AGG_VKEY() view returns (bytes32)",
+      "function CHALLENGER_BOND() view returns (uint256)",
+      "function FALLBACK_TIMEOUT_SECS() view returns (uint256)",
+      "function L2_BLOCK_TIME() view returns (uint256)",
+      "function L2_START_TIMESTAMP() view returns (uint256)",
+      "function MAX_CHALLENGE_SECS() view returns (uint256)",
+      "function MAX_PROVE_SECS() view returns (uint256)",
+      "function PROPOSAL_INTERVAL() view returns (uint256)",
+      "function PROPOSER_BOND() view returns (uint256)",
+      "function RANGE_VKEY_COMMITMENT() view returns (bytes32)",
+      "function ROLLUP_CONFIG_HASH() view returns (bytes32)",
+      "function VERIFIER() view returns (address)",
+      "function allowedProposer(address a) view returns (bool)",
+      "function anchorProposalId() view returns (uint32)",
+      "function challengeProposal(uint256 id) payable",
+      "function claimCredit(address recipient)",
+      "function computeL2Timestamp(uint256 _l2BlockNumber) view returns (uint256)",
+      "function credit(address) view returns (uint256)",
+      "function gameOver(uint256 proposalId) view returns (bool)",
+      "function getAnchorProposal() view returns (tuple(bytes32 rootClaim, bytes32 l1Head, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint64 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function getAnchorRoot() view returns (bytes32, uint128)",
+      "function getProposal(uint256 id) view returns (tuple(bytes32 rootClaim, bytes32 l1Head, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint64 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover))",
+      "function getProposals(uint256[] ids) view returns (tuple(bytes32 rootClaim, bytes32 l1Head, address proposer, uint32 l2BlockNumber, uint32 parentIndex, uint32 deadline, uint64 resolvedAt, uint8 proposalStatus, uint8 resolutionStatus, address challenger, address prover)[] out)",
+      "function getProposalsLength() view returns (uint256)",
+      "function isResolvable(uint256 proposalId) view returns (bool)",
+      "function l2BlockAge(uint256 l2BlockNumber) view returns (uint256)",
+      "function latestProposals(uint256 count) view returns (uint256[] ids)",
+      "function needsDefense(uint256 proposalId) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proposalAuthorized(address proposer, uint256 proposedL2BlockNumber) view returns (bool)",
+      "function proveProposal(uint256 id, bytes proof)",
+      "function renounceOwnership()",
+      "function resolveProposal(uint256 id)",
+      "function setProposer(address proposer, bool allowed)",
+      "function submitProposal(bytes32 root, uint128 l2BlockNumber, uint32 parentId) payable returns (uint256 proposalId)",
+      "function transferOwnership(address newOwner)",
+      "function version() view returns (string)",
+      "function whitelistedProposer(address) view returns (bool)"
     ],
     "0x12df0dfDb02cf4FB18d13eA133Ad9C0F9284f267": [
       "constructor()",
@@ -860,6 +1074,19 @@
       "function unsafeBlockSigner() view returns (address addr_)",
       "function version() pure returns (string)"
     ],
+    "0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5": [
+      "error InvalidProof()",
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "error WrongVerifierSelector(bytes4 received, bytes4 expected)",
+      "function VERIFIER_HASH() pure returns (bytes32)",
+      "function VERSION() pure returns (string)",
+      "function Verify(uint256[8] proof, uint256[2] input) view",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function hashPublicValues(bytes publicValues) pure returns (bytes32)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[2] input) view",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
+    ],
     "0x68c56f4D88846A4Cdce966d92D92a0636baf40FE": [
       "constructor()",
       "error FeatureDisabled()",
@@ -883,6 +1110,25 @@
       "function processedWithdraws(bytes32 withdrawalId) view returns (bool)",
       "function setAdmin(address admin)",
       "function withdraw(tuple(address recipient, uint256 amount, bytes32 withdrawalId, bytes32 blockHash, uint256 blockNumber, bytes signature) req)"
+    ],
+    "0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": [
+      "constructor(address initialOwner)",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RouteAlreadyExists(address verifier)",
+      "error RouteIsFrozen(bytes4 selector)",
+      "error RouteNotFound(bytes4 selector)",
+      "error SelectorCannotBeZero()",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RouteAdded(bytes4 selector, address verifier)",
+      "event RouteFrozen(bytes4 selector, address verifier)",
+      "function addRoute(address verifier)",
+      "function freezeRoute(bytes4 selector)",
+      "function owner() view returns (address)",
+      "function renounceOwnership()",
+      "function routes(bytes4) view returns (address verifier, bool frozen)",
+      "function transferOwnership(address newOwner)",
+      "function verifyProof(bytes32 programVKey, bytes publicValues, bytes proofBytes) view"
     ],
     "0x77764Bdf2B52C4B2635A73927945541B65DF74E9": [
       "constructor()",
@@ -1138,6 +1384,7 @@
     "facet/FacetEtherBridge": "0xbb9993b8f35798795519db980c5342ad5d79a1fa8975ca041dfa3b6910c8b229",
     "facet/FacetSafeModule": "0x6f2371af8e7f8af4e383d97b7ac36a626827fbe25be6bd42613bed29ed5b9df2",
     "facet/FacetSafeProxy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "facet/Rollup": "0x97e2d6006f5d50b6ff45a428f59c03833f2d002664487a192f5d5d6dbde401c8",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -1146,7 +1393,9 @@
     "opstack/L2OutputOracle": "0xa2cc6168170a36a722f835a7b21e69ad8bd33ba742127e8b51bf2c53fb0258b7",
     "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
     "opstack/SuperchainConfigFake": "0xeb14939081b4e8063f0b74396af70ab91d44b37fbac0e77fa06c8f48eed71b6c",
-    "opstack/SystemConfig_facet": "0x721992f38caef4e0321cea669e040f798ff17f94e596c853b4dea0ec6468c81f"
+    "opstack/SystemConfig_facet": "0x721992f38caef4e0321cea669e040f798ff17f94e596c853b4dea0ec6468c81f",
+    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "succinct/SP1VerifierGateway": "0x9dd3e588fb5bceb40abbb60a0e68e868c7e81a6959705eb6f5f2c53651d5e85c"
   },
-  "permissionsConfigHash": "0x0d1bb03b343115e471505d915fbd6bc9e3fc8815d714cde7945ff142bb018822"
+  "permissionsConfigHash": "0x4172e1ac216260fc1c5b99e07256a09e8e109d3dadb261c3a8672f5ba0d5627e"
 }
