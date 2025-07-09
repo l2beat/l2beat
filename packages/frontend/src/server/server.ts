@@ -12,10 +12,10 @@ import { ErrorHandler } from './middlewares/ErrorHandler'
 import { MetricsMiddleware } from './middlewares/MetricsMiddleware'
 import { SafeSendHandler } from './middlewares/SafeSendHandler'
 import { createApiRouter } from './routers/ApiRouter'
+import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 import { createMigratedProjectsRouter } from './routers/MigratedProjectsRouter'
 import { createPlausibleRouter } from './routers/PlausibleRouter'
 import { createTrpcRouter } from './routers/TrpcRouter'
-import { createLegacyPathsRouter } from './routers/LegacyPathsRouter'
 
 const isProduction = process.env.NODE_ENV === 'production'
 const port = process.env.PORT ?? 3000
