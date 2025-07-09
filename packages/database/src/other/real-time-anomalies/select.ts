@@ -4,6 +4,7 @@ export const selectRealtimeAnomaly = [
   'start',
   'projectId',
   'subtype',
-  'status',
+  'isOngoing',
+  'isApproved',
   'end',
 ] as const satisfies (keyof RealTimeAnomaly)[]

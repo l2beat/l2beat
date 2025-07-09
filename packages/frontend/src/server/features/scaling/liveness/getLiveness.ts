@@ -82,7 +82,7 @@ async function getLivenessData(projectId?: ProjectId) {
       projectId ? [projectId] : projectIds,
       last30Days,
     ),
-    db.realTimeAnomalies.getApprovedAndRecoveredAnomaliesByProjectIds(
+    db.realTimeAnomalies.getApprovedAnomaliesByProjectIds(
       projectId ? [projectId] : projectIds,
     ),
   ])

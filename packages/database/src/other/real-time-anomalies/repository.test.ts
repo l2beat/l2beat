@@ -16,28 +16,32 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
       start: START - 1 * UnixTime.HOUR,
       projectId: PROJECT_A,
       subtype: 'batchSubmissions',
-      status: 'ongoing',
+      isOngoing: true,
+      isApproved: false,
       end: undefined,
     },
     {
       start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'stateUpdates',
-      status: 'ongoing',
+      isOngoing: true,
+      isApproved: false,
       end: undefined,
     },
     {
       start: START - 2 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'batchSubmissions',
-      status: 'approved',
+      isOngoing: true,
+      isApproved: true,
       end: undefined,
     },
     {
       start: START - 3 * UnixTime.HOUR,
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
-      status: 'recovered',
+      isOngoing: false,
+      isApproved: true,
       end: START,
     },
   ] as const satisfies RealTimeAnomalyRecord[]
@@ -56,7 +60,8 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           start: START - 1 * UnixTime.HOUR,
           projectId: PROJECT_A,
           subtype: 'batchSubmissions',
-          status: 'approved',
+          isOngoing: true,
+          isApproved: true,
           end: undefined,
         },
         //to add
@@ -64,7 +69,9 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           start: START - 4 * UnixTime.HOUR,
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
-          status: 'ongoing',
+          isOngoing: true,
+          isApproved: false,
+          end: undefined,
         },
       ]
 
@@ -101,35 +108,31 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
   })
 
   describe(RealTimeAnomaliesRepository.prototype
-    .getApprovedAndRecoveredAnomaliesByProjectIds.name, () => {
+    .getApprovedAnomaliesByProjectIds.name, () => {
     it('should return all approved and resolved anomalies', async () => {
-      const results =
-        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([
-          PROJECT_B,
-        ])
+      const results = await repository.getApprovedAnomaliesByProjectIds([
+        PROJECT_B,
+      ])
       expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
     })
 
     it('should return empty array if no project ids', async () => {
-      const results =
-        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([])
+      const results = await repository.getApprovedAnomaliesByProjectIds([])
       expect(results).toEqual([])
     })
   })
 
   describe(RealTimeAnomaliesRepository.prototype
-    .getApprovedAndRecoveredAnomaliesByProjectIds.name, () => {
+    .getApprovedAnomaliesByProjectIds.name, () => {
     it('should return all approved and resolved anomalies', async () => {
-      const results =
-        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([
-          PROJECT_B,
-        ])
+      const results = await repository.getApprovedAnomaliesByProjectIds([
+        PROJECT_B,
+      ])
       expect(results).toEqualUnsorted([DATA[2]!, DATA[3]!])
     })
 
     it('should return empty array if no project ids', async () => {
-      const results =
-        await repository.getApprovedAndRecoveredAnomaliesByProjectIds([])
+      const results = await repository.getApprovedAnomaliesByProjectIds([])
       expect(results).toEqual([])
     })
   })
