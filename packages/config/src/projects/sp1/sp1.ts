@@ -110,13 +110,6 @@ export const sp1: BaseProject = {
                 `,
                 attesters: [ZK_CATALOG_ATTESTERS.L2BEAT],
             },
-            {
-                hash: '0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913',
-                explorerLink: 'https://etherscan.io/address/0x50ACFBEdecf4cbe350E1a86fC6f03a821772f1e5',
-                verificationStatus: 'notVerified',
-                usedBy: [ProjectId('facet')],
-                attesters: [],
-            },
         ],
     }
 }
