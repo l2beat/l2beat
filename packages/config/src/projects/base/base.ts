@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -75,8 +76,12 @@ export const base: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: discovery.getContractValue('SystemConfig', 'sequencerInbox'),
-      sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
+      inbox: rawAddress(
+        discovery.getContractValue('SystemConfig', 'sequencerInbox'),
+      ),
+      sequencers: [
+        rawAddress(discovery.getContractValue('SystemConfig', 'batcherHash')),
+      ],
     },
   ],
   nonTemplateTrackedTxs: [
@@ -87,13 +92,17 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: rawAddress(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: rawAddress(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },
