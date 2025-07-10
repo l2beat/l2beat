@@ -9,14 +9,15 @@ export async function getZkCatalogData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, zkCatalogProjects] = await Promise.all([
+  const [appLayoutProps, zkCatalogProjects, allProjects] = await Promise.all([
     getAppLayoutProps(),
     ps.getProjects({
-      select: ['proofSystem', 'display'],
+      select: ['proofSystem', 'display', 'statuses'],
     }),
+    ps.getProjects({}),
   ])
 
-  const entries = getZkCatalogEntries(zkCatalogProjects)
+  const entries = getZkCatalogEntries(zkCatalogProjects, allProjects)
 
   return {
     head: {

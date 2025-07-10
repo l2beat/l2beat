@@ -1,4 +1,5 @@
 import { FullPageHeader } from '~/components/FullPageHeader'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { ArchivedBar } from '~/components/projects/ArchivedBar'
 import { ProjectHeader } from '~/components/projects/ProjectHeader'
@@ -6,7 +7,6 @@ import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectL
 import { DiscoUiLink } from '~/components/projects/links/DiscoUiLink'
 import { MobileProjectLinks } from '~/components/projects/links/MobileProjectLinks'
 import { GrissiniDetails } from '~/components/rosette/grissini/GrissiniDetails'
-import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import type { ProjectStat } from './DaProjectStats'
 import { DaProjectStats, getCommonDaProjectStats } from './DaProjectStats'

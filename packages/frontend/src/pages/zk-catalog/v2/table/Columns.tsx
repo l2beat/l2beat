@@ -1,4 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import {
   Tooltip,
   TooltipContent,
@@ -39,6 +40,13 @@ export const zkCatalogColumns = [
           {formatCurrency(ctx.row.original.tvs, 'usd')}
         </div>
       )
+    },
+  }),
+  columnHelper.accessor((row) => row.projectsUsedIn, {
+    id: 'used-in',
+    header: 'Used in',
+    cell: (ctx) => {
+      return <ProjectsUsedIn usedIn={ctx.row.original.projectsUsedIn} />
     },
   }),
   columnHelper.accessor((row) => row.attesters, {

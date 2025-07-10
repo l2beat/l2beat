@@ -1,5 +1,5 @@
 import type { Project } from '@l2beat/config'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import { getProjectIcon } from '../utils/getProjectIcon'
 
 export type ProjectByRaas = Record<
