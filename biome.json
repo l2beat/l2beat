@@ -1,7 +1,13 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
   "files": {
-    "ignore": ["node_modules/", ".cache/", "dist/", ".next/", "build/"]
+    "includes": [
+      "**",
+      "!**/node_modules/**",
+      "!**/.cache/**",
+      "!**/dist/**",
+      "!**/build/**"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -18,7 +24,7 @@
     "defaultBranch": "main",
     "useIgnoreFile": true
   },
-  "organizeImports": { "enabled": true },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -26,13 +32,12 @@
       "complexity": {
         "noBannedTypes": "error",
         "noExtraBooleanCast": "error",
-        "noMultipleSpacesInRegularExpressionLiterals": "error",
         "noStaticOnlyClass": "error",
         "noUselessCatch": "error",
         "noUselessConstructor": "error",
         "noUselessThisAlias": "error",
         "noUselessTypeConstraint": "error",
-        "noWith": "error"
+        "noAdjacentSpacesInRegex": "error"
       },
       "correctness": {
         "noUnusedImports": "error",
@@ -43,7 +48,6 @@
         "noGlobalObjectCalls": "error",
         "noInnerDeclarations": "error",
         "noInvalidConstructorSuper": "error",
-        "noNewSymbol": "error",
         "noNonoctalDecimalEscape": "error",
         "noPrecisionLoss": "error",
         "noSelfAssign": "error",
@@ -58,7 +62,9 @@
         "noUnusedVariables": "error",
         "useIsNan": "error",
         "useValidForDirection": "error",
-        "useYield": "error"
+        "useYield": "error",
+        "noInvalidBuiltinInstantiation": "error",
+        "useValidTypeof": "error"
       },
       "style": {
         "useForOf": "error",
@@ -67,14 +73,7 @@
         "noNonNullAssertion": "error",
         "useAsConstAssertion": "error",
         "useLiteralEnumMembers": "error",
-        "useImportType": "error"
-      },
-      "performance": {
-        "noAccumulatingSpread": "error",
-        "noDelete": "error"
-      },
-      "nursery": {
-        "noDuplicateElseIf": "error",
+        "useImportType": "error",
         "noRestrictedImports": {
           "level": "error",
           "options": {
@@ -86,7 +85,13 @@
               "lodash": "Use lodash/{module}"
             }
           }
-        },
+        }
+      },
+      "performance": {
+        "noAccumulatingSpread": "error",
+        "noDelete": "error"
+      },
+      "nursery": {
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
@@ -127,7 +132,8 @@
         "noUnsafeNegation": "error",
         "useAwait": "error",
         "useGetterReturn": "error",
-        "useValidTypeof": "error"
+        "noWith": "error",
+        "noDuplicateElseIf": "error"
       }
     }
   },
@@ -147,7 +153,7 @@
   },
   "overrides": [
     {
-      "include": ["**/test/**/*.ts", "*.test.ts"],
+      "includes": ["**/test/**/*.ts", "**/*.test.ts"],
       "linter": {
         "rules": {
           "style": { "noNonNullAssertion": "off" },
@@ -156,22 +162,20 @@
       }
     },
     {
-      "include": ["*.ts", "*.tsx", "*.mts", "*.cts"],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
       "linter": {
         "rules": {
           "correctness": {
             "noConstAssign": "off",
             "noGlobalObjectCalls": "off",
             "noInvalidConstructorSuper": "off",
-            "noNewSymbol": "off",
             "noSetterReturn": "off",
             "noUndeclaredVariables": "off",
             "noUnreachable": "off",
-            "noUnreachableSuper": "off"
+            "noUnreachableSuper": "off",
+            "noInvalidBuiltinInstantiation": "off"
           },
           "style": {
-            "noArguments": "error",
-            "noVar": "error",
             "useConst": "error"
           },
           "suspicious": {
@@ -182,36 +186,11 @@
             "noImportAssign": "off",
             "noRedeclare": "off",
             "noUnsafeNegation": "off",
-            "useGetterReturn": "off"
-          }
-        }
-      }
-    },
-    {
-      // I know it's dumb to do it here in overrides but if I place
-      // it in the frontend/biome.json, it will be ignored by the
-      // IDE extension as it only reads the root biome.json file.
-      // This will be fixed in biome 2.0 so remove this once we migrate.
-      "include": ["packages/frontend/src/**/*.tsx"],
-      "linter": {
-        "rules": {
-          "a11y": {
-            "noBlankTarget": "error"
+            "useGetterReturn": "off",
+            "noVar": "error"
           },
           "complexity": {
-            "noUselessFragments": "error"
-          },
-          "correctness": {
-            "useExhaustiveDependencies": "error",
-            "useHookAtTopLevel": "error",
-            "noChildrenProp": "error",
-            "noVoidElementsWithChildren": "error"
-          },
-          "suspicious": {
-            "noDuplicateJsxProps": "error"
-          },
-          "style": {
-            "useFragmentSyntax": "error"
+            "noArguments": "error"
           }
         }
       }

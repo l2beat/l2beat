@@ -1,12 +1,9 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.3/schema.json",
-  "extends": ["../../biome.jsonc"],
+  "extends": "//",
   "linter": {
     "enabled": true,
     "rules": {
-      "a11y": {
-        "noBlankTarget": "error"
-      },
+      "a11y": {},
       "complexity": {
         "noUselessFragments": "error"
       },
@@ -20,11 +17,24 @@
         "noDuplicateJsxProps": "error"
       },
       "style": {
-        "useFragmentSyntax": "error"
+        "useFragmentSyntax": "error",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
+      },
+      "security": {
+        "noBlankTarget": "error"
       }
     }
   },
   "files": {
-    "ignore": ["./static"]
+    "includes": ["**", "!static"]
   }
 }
