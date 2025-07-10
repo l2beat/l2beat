@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+
 .article > * {
   @apply mb-4;
 }
@@ -65,7 +67,7 @@
 }
 
 .article strong {
-  @apply text-opacity-100 text-primary font-semibold;
+  @apply text-primary font-semibold;
 }
 
 .article code {
