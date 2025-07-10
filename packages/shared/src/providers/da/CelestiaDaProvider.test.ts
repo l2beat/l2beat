@@ -16,6 +16,7 @@ describe(CelestiaDaProvider.name, () => {
           daLayer: 'celestia',
           namespace: 'namespace1',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+          blockNumber: 1,
           size: BigInt(100),
         },
         {
@@ -23,6 +24,7 @@ describe(CelestiaDaProvider.name, () => {
           daLayer: 'celestia',
           namespace: 'namespace2',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
+          blockNumber: 1,
           size: BigInt(200),
         },
         {
@@ -30,6 +32,7 @@ describe(CelestiaDaProvider.name, () => {
           daLayer: 'celestia',
           namespace: 'namespace3',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
+          blockNumber: 2,
           size: BigInt(300),
         },
         {
@@ -37,6 +40,7 @@ describe(CelestiaDaProvider.name, () => {
           daLayer: 'celestia',
           namespace: 'namespace4',
           blockTimestamp: UnixTime.fromDate(new Date('2024-01-02T12:00:00Z')),
+          blockNumber: 2,
           size: BigInt(400),
         },
       ])

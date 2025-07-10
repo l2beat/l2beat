@@ -5,7 +5,6 @@ export const pages = [
   '/scaling/activity',
   '/scaling/data-availability',
   '/scaling/liveness',
-  '/scaling/finality',
   '/scaling/costs',
   '/scaling/upcoming',
   '/scaling/archived',

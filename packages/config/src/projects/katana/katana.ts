@@ -45,7 +45,6 @@ export const katana: ScalingProject = {
     BADGES.DA.EthereumBlobs,
     BADGES.RaaS.Conduit,
     BADGES.Infra.AggLayer,
-    BADGES.Other.SharedBridge,
     BADGES.Stack.OPStack,
   ],
   display: {
@@ -141,6 +140,7 @@ export const katana: ScalingProject = {
   chainConfig: {
     name: 'katana',
     chainId: 747474,
+    coingeckoPlatform: 'katana',
     explorerUrl: 'https://explorer.katanarpc.com',
     sinceTimestamp: UnixTime(1746742811),
     apis: [

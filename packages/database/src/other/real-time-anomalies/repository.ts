@@ -1,6 +1,5 @@
 import { BaseRepository } from '../../BaseRepository'
 import { type RealTimeAnomalyRecord, toRecord, toRow } from './entity'
-import { selectRealtimeAnomaly } from './select'
 
 export class RealTimeAnomaliesRepository extends BaseRepository {
   async upsert(record: RealTimeAnomalyRecord): Promise<void> {
@@ -18,6 +17,7 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['start', 'projectId', 'subtype']).doUpdateSet((eb) => ({
             status: eb.ref('excluded.status'),
+            isApproved: eb.ref('excluded.isApproved'),
             end: eb.ref('excluded.end'),
           })),
         )
@@ -26,46 +26,44 @@ export class RealTimeAnomaliesRepository extends BaseRepository {
     return records.length
   }
 
-  async deleteAll(): Promise<number> {
-    const result = await this.db
-      .deleteFrom('RealTimeAnomaly')
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
-  }
-
-  async getOngoingAnomalies(): Promise<
-    RealTimeAnomalyRecord<'ongoing' | 'approved'>[]
-  > {
+  async getAll(): Promise<RealTimeAnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
-      .where('status', 'in', ['ongoing', 'approved'])
+      .selectAll()
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getOngoingAnomalies(): Promise<RealTimeAnomalyRecord[]> {
+    const rows = await this.db
+      .selectFrom('RealTimeAnomaly')
+      .selectAll()
+      .where('status', '=', 'ongoing')
       .execute()
 
     return rows.map((r) => toRecord(r))
   }
 
-  async getApprovedAndRecoveredAnomaliesByProjectIds(
+  async getApprovedAnomaliesByProjectIds(
     projectIds: string[],
   ): Promise<RealTimeAnomalyRecord[]> {
     if (projectIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
-      .where('status', 'in', ['approved', 'recovered'])
+      .selectAll()
+      .where('isApproved', '=', true)
       .where('projectId', 'in', projectIds)
       .execute()
 
     return rows.map(toRecord)
   }
 
-  async getAll(): Promise<RealTimeAnomalyRecord[]> {
-    const rows = await this.db
-      .selectFrom('RealTimeAnomaly')
-      .select(selectRealtimeAnomaly)
-      .execute()
-
-    return rows.map(toRecord)
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('RealTimeAnomaly')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

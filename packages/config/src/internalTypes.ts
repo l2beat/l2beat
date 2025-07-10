@@ -20,8 +20,6 @@ import type {
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -49,7 +47,7 @@ export interface ScalingProject {
   id: ProjectId
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
-  /** Is the project univeral or app specific (e.g. DEX) */
+  /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
@@ -116,8 +114,6 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
-  /** Configuration for getting finality data */
-  finality?: ProjectFinalityConfig
 }
 
 export interface ProjectScalingDisplay {
@@ -159,7 +155,6 @@ export interface ProjectScalingDisplay {
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
-  finality?: ProjectFinalityInfo
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }

@@ -55,7 +55,6 @@
       "edit": ["get", "spokePool"]
     },
     "Adapters": {
-      "template": "acrossv3/adapter",
       "handler": {
         "type": "event",
         "select": "adapter",

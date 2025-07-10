@@ -51,6 +51,7 @@ const finalizationPeriod = discovery.getContractValue<number>(
 const chainId = 255
 
 export const kroma: ScalingProject = {
+  archivedAt: UnixTime(1752041971), // Wednesday, July 9, 2025 6:19:31 AM UTC
   type: 'layer2',
   id: ProjectId('kroma'),
   addedAt: UnixTime(1686820004), // 2023-06-15T09:06:44Z
@@ -98,16 +99,6 @@ export const kroma: ScalingProject = {
       )} or until it gets published. The state root gets finalized ${formatSeconds(
         finalizationPeriod,
       )} after it has been posted.`,
-    },
-    finality: {
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'neutral',
-          value:
-            "It's assumed that transaction data batches are submitted sequentially.",
-        },
-      },
-      finalizationPeriod,
     },
   },
   ecosystemInfo: {
@@ -197,15 +188,6 @@ export const kroma: ScalingProject = {
         },
       },
     ],
-    finality: {
-      type: 'OPStack',
-      // timestamp of the first blob tx
-      minTimestamp: UnixTime(1714032407),
-      l2BlockTimeSeconds: 2,
-      genesisTimestamp: UnixTime(1693880387),
-      lag: 0,
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,

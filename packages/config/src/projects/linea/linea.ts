@@ -115,9 +115,6 @@ export const linea: ScalingProject = {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
     },
-    finality: {
-      finalizationPeriod,
-    },
   },
   config: {
     escrows: [
@@ -336,12 +333,6 @@ export const linea: ScalingProject = {
         from: 'stateUpdates',
         to: 'proofSubmissions',
       },
-    },
-    finality: {
-      type: 'Linea',
-      lag: 0,
-      minTimestamp: UnixTime(1717588271),
-      stateUpdate: 'disabled',
     },
   },
   chainConfig: {

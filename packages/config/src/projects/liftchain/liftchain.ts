@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -20,5 +20,8 @@ export const liftchain: ScalingProject = upcomingL2({
       repositories: ['https://github.com/PlayFi-Labs'],
       socialMedia: ['https://liftdata.ai'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

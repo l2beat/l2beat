@@ -36,7 +36,7 @@ export function EcosystemsTvsChart({
   ecosystemMilestones,
 }: {
   name: string
-  entries: EcosystemEntry['projects']
+  entries: EcosystemEntry['liveProjects']
   allScalingProjectsTvs: number
   className?: string
   ecosystemMilestones: EcosystemMilestone[]
@@ -140,7 +140,7 @@ function Header({
   unit: string
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
         <EcosystemChartTimeRange range={range} />

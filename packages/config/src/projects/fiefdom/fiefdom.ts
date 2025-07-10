@@ -20,4 +20,7 @@ export const fiefdom: ScalingProject = upcomingL3({
       socialMedia: ['https://twitter.com/fiefdomgg'],
     },
   },
+  ecosystemInfo: {
+    id: ProjectId('arbitrum-orbit'),
+  },
 })

@@ -22,16 +22,11 @@ export class DaProvider {
     this.providers = new Map(providers.map((p) => [p.daLayer, p]))
   }
 
-  async getBlobs(
-    daLayer: string,
-    from: number,
-    to: number,
-    logFilters?: LogsFilter[],
-  ): Promise<DaBlob[]> {
+  async getBlobs(daLayer: string, from: number, to: number): Promise<DaBlob[]> {
     const provider = this.providers.get(daLayer)
     assert(provider, `Missing DaProvider for ${daLayer}`)
 
-    return await provider.getBlobs(from, to, logFilters)
+    return await provider.getBlobs(from, to)
   }
 
   getDaProvider(daLayer: string): DaBlobProvider {

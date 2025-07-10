@@ -26,14 +26,14 @@ export async function getEcosystemProjectData(
       excludeAssociatedTokens: false,
       filter: {
         type: 'projects',
-        projectIds: ecosystem.projects.map((project) => project.id),
+        projectIds: ecosystem.liveProjects.map((project) => project.id),
       },
     }),
     helpers.activity.chart.prefetch({
       range: { type: '1y' },
       filter: {
         type: 'projects',
-        projectIds: ecosystem.projects.map((project) => project.id),
+        projectIds: ecosystem.liveProjects.map((project) => project.id),
       },
     }),
   ])

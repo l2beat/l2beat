@@ -1,3 +1,167 @@
+Generated with discovered.json: 0xf79139165dc203d83770aa83f5d89787bb43af62
+
+# Diff at Wed, 09 Jul 2025 15:59:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 355528153
+- current block number: 355930087
+
+## Description
+
+There were many discovered updates of validEnclaveHashes and registeredSigners, ignored in watch mode for now although they should be able to update them less often imo.
+
+quoteVerifier is now source-available and matches an existing template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 355528153 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      unverified:
+-        true
+      values.P256_VERIFIER:
++        "0x0000000000000000000000000000000000000100"
+      values.pccsRouter:
++        "0x0d089B3fA00CBAD0a5098025519e9e4620622acF"
+      values.quoteVersion:
++        3
+      implementationNames.0x69523d25E25e5c78d828Df90459b75F189D40Cf7:
+-        ""
++        "V3QuoteVerifier"
+      template:
++        "espresso/Sequencing/QuoteVerifier"
+      sourceHashes:
++        ["0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"]
+      description:
++        "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified."
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      fieldMeta.validEnclaveHashes:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x2a3c83f2d4b8f55a06b89108a65cd478da50e260
+
+# Diff at Tue, 08 Jul 2025 14:25:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 353119902
+- current block number: 355528153
+
+## Description
+
+upgrade which adds a celestia + blobstream integration (celestia nitro 3.2.1) with standard contracts and an espresso integration with new contracts.
+
+[SequencerInbox](https://disco.l2beat.com/diff/arb1:0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC/arb1:0x481863c96f949F5E13932ec2F65470C0CF83808d): 
+- replace the 'quote' (tee signature) with espressoMetadata consisting of (hotshotHeight, signature, teeType)
+- add TEE verification support for blobs `addSequencerL2BatchFromBlobs()` (not supported on arb obv)
+
+EspressoTEEVerifier([new](https://flat.l2beat.com/address/arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)):
+- gateway contract in front of the 2 different TEE verifiers
+- instead of attestations for every sig verification, registerSigner() allows to register an ephemeral signer with an attestation from the TEE. subsequent signatures can then be trivially verified to have come from that ephemeral signer inside the TEE without a formal TEE attestation.
+
+[EspressoSGXTEEVerifier](https://disco.l2beat.com/diff/arb1:0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb/arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297):
+- was prev named EspressoTEEVerifier (cp Rari deployment)
+- rename mrEnclave -> enclaveHash, mrSigner -> signature
+- support for new `registerSigner()`
+- UNVERIFIED [quoteVerifier contract](https://arbiscan.io/address/0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+
+EspressoNitroTEEVerifier([new](https://flat.l2beat.com/address/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)):
+- new contract with a similar usecase but vastly different source code to the SGX verifier, supposed to allow verifying AWS Nitro attestations (Amazon TEE) apparently based on https://github.com/base/nitro-validator
+- currently not used by molten
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      template:
+-        "orbitstack/SequencerInbox"
++        "orbitstack/SequencerInbox_Celestia_Espresso"
+      sourceHashes.1:
+-        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
++        "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia."
+      values.$implementation:
+-        "0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607"
++        "0x481863c96f949F5E13932ec2F65470C0CF83808d"
+      values.$pastUpgrades.4:
++        ["2025-07-01T16:17:10.000Z","0x6e4d22b6b61eeffdbd42e8fe52446bb966dd46592ba723bc43edaf1a7cc4f678",["0x481863c96f949F5E13932ec2F65470C0CF83808d"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
+      values.batchPosters.0:
+-        "0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"
++        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
+      values.setIsBatchPosterCount:
+-        1
++        3
+      values.BLOBSTREAM:
++        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
+      values.espressoTEEVerifier:
++        "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3"
+      implementationNames.0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607:
+-        "SequencerInbox"
+      implementationNames.0x481863c96f949F5E13932ec2F65470C0CF83808d:
++        "SequencerInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../projects/molten/arbitrum/.flat/CertManager.sol | 1966 ++++++++++++++++++++
+ .../arbitrum/.flat/EspressoNitroTEEVerifier.sol    | 1941 +++++++++++++++++++
+ .../arbitrum/.flat/EspressoSGXTEEVerifier.sol      |  697 +++++++
+ .../molten/arbitrum/.flat/EspressoTEEVerifier.sol  |  884 +++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  269 ++-
+ 5 files changed, 5741 insertions(+), 16 deletions(-)
+```
+
 Generated with discovered.json: 0xfde13256afcb1bc645b9179bf78825e35680dfc3
 
 # Diff at Fri, 04 Jul 2025 12:19:09 GMT:

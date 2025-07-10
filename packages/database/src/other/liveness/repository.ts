@@ -2,7 +2,6 @@ import type { TrackedTxId } from '@l2beat/shared'
 import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { type LivenessRecord, toRecord, toRow } from './entity'
-import { selectLiveness } from './select'
 
 export class LivenessRepository extends BaseRepository {
   async getAll(): Promise<LivenessRecord[]> {
@@ -18,7 +17,7 @@ export class LivenessRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('Liveness')
-      .select(selectLiveness)
+      .selectAll()
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(since))
       .distinctOn(['timestamp', 'configurationId'])
@@ -35,7 +34,7 @@ export class LivenessRepository extends BaseRepository {
 
     const rows = await this.db
       .selectFrom('Liveness')
-      .select(selectLiveness)
+      .selectAll()
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '<', UnixTime.toDate(to))
       .distinctOn(['timestamp', 'configurationId'])
@@ -54,7 +53,7 @@ export class LivenessRepository extends BaseRepository {
     assert(from < to, 'From must be less than to')
     const rows = await this.db
       .selectFrom('Liveness')
-      .select(selectLiveness)
+      .selectAll()
       .where('configurationId', 'in', configurationIds)
       .where('timestamp', '>=', UnixTime.toDate(from))
       .where('timestamp', '<', UnixTime.toDate(to))
@@ -97,7 +96,7 @@ export class LivenessRepository extends BaseRepository {
         .execute(),
       this.db
         .selectFrom('Liveness')
-        .select(selectLiveness)
+        .selectAll()
         .where('configurationId', 'in', configurationIds)
         .where('timestamp', '>=', UnixTime.toDate(from))
         .where('timestamp', '<', UnixTime.toDate(to))

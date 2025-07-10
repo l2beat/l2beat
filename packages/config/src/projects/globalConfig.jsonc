@@ -38,6 +38,7 @@
 
         "0xd512543315c95506E4209805b888414EEF15C8C4": "Katana Admin Multisig", // multichain multisig
         "0x03105070424FbA70E4FC37A674eB70eD5190F9A0": "Katana DeFi SC Multisig", // multichain multisig
+        "0xBe010A7e3686FdF65E93344ab664D065A0B02478": "LayerZero Multisig", // multichain multisig
         // eoa names (mostly for SCs)
         "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266": "FirstAnvilAddress", // aztec operator (private key is public)
         "0x352f1defB49718e7Ea411687E850aA8d6299F7aC": "Optimism EOA 1", // deputypauser

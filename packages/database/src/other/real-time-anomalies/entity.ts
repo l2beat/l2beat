@@ -2,7 +2,7 @@ import { type TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 import type { Insertable, Selectable } from 'kysely'
 import type { RealTimeAnomaly } from '../../kysely/generated/types'
 
-export type RealTimeAnomalyStatus = 'ongoing' | 'approved' | 'recovered'
+export type RealTimeAnomalyStatus = 'ongoing' | 'recovered'
 
 export interface RealTimeAnomalyRecord<
   T extends RealTimeAnomalyStatus = RealTimeAnomalyStatus,
@@ -11,6 +11,7 @@ export interface RealTimeAnomalyRecord<
   projectId: string
   subtype: TrackedTxsConfigSubtype
   status: T
+  isApproved: boolean
   end?: UnixTime
 }
 

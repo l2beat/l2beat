@@ -76,7 +76,7 @@ export function NodesAndConnections() {
             ? new Set([
                 ...selected,
                 ...visible
-                  .filter((n) => (selected.includes(n.id) ? n.fields : []))
+                  .filter((n) => selected.includes(n.id))
                   .flatMap((n) =>
                     n.fields
                       .filter((f) => !n.hiddenFields.includes(f.name))
