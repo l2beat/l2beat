@@ -47,7 +47,7 @@ function migrateValue(
   value: ContractValue,
   shortChainName: string,
 ): ContractValue {
-  if (typeof value === 'string' && EthereumAddress.check(value)) {
+  if (typeof value === 'string' && EthereumAddress.checkIgnoringCase(value)) {
     return fromParts(shortChainName, value)
   }
 
