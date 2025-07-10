@@ -5,6 +5,7 @@ import {
   assertUnreachable,
   fromParts,
   notUndefined,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
@@ -18,6 +19,7 @@ import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
 import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
+import { getChainShortName } from '@l2beat/discovery'
 
 const tokenList = getTokenList(chains)
 
@@ -95,7 +97,7 @@ describe('layer2s', () => {
               // try to resolve escrow by address
               // if it does not exist the assert will throw
               discovery.getContractByAddress(
-                fromParts(discovery.chain, escrow.address),
+                fromParts(getChainShortName(discovery.chain), escrow.address),
               )
             })
           }
@@ -300,7 +302,7 @@ describe('layer2s', () => {
             .flatMap((chain) =>
               new ProjectDiscovery(layer2.id, chain).getTopLevelAddresses(),
             )
-            .map((address) => address.toString().toLowerCase()),
+            .map((address) => rawAddress(address).toString().toLowerCase()),
         )
 
         const referencedAddresses = new Set(
