@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x2b696bc016296662f3308cff763ea93d832224ca
+
+# Diff at Thu, 10 Jul 2025 08:16:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 13963893
+- current block number: 13963893
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 13963893 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x119B9459D9119D07c23aD06778AeaBec804Fd1a2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollL2Gateway (0xd8428A59B60Df2d81514D429D57DF23293f1bCe7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollOwner (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe18aedddc442ddab1864e0ed4a7c6058441016a9
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

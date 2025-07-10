@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xe9709534f5ed624dfe67df52ac6bd432e994301f
+
+# Diff at Thu, 10 Jul 2025 08:13:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21981345
+- current block number: 21981345
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981345 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract DACommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
+-   Status: DELETED
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+```
+
+```diff
+-   Status: DELETED
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
++   Status: CREATED
+    contract StarkExchange (0x1390f521A79BaBE99b69B37154D63D431da27A07)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract DACommittee (0x4F8B2dd49D958b6ac3e5f4705Bf1a9aDA5Bc4446)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
++   Status: CREATED
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+```
+
+```diff
++   Status: CREATED
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
 Generated with discovered.json: 0x29ec00e42077d946f5815e0af06d2445e73e927c
 
 # Diff at Fri, 04 Jul 2025 12:18:55 GMT:

@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x10f2fa88e1aef8782ec7762aa9579bde18f70f05
+
+# Diff at Thu, 10 Jul 2025 08:16:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 4745686
+- current block number: 4745686
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 4745686 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x44a65dc12865A1e5249b45b4868f32b0E37168FF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xD784d7128B46B60Ca7d8BdC17dCEC94917455657)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantaL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x1d8e482612dca3553b3c4b736b8a6b1664a9f628
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

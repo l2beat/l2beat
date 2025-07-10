@@ -1,3 +1,201 @@
+Generated with discovered.json: 0x15592ecfb139d3a58d7e5fa11cf1bf942111bb23
+
+# Diff at Thu, 10 Jul 2025 08:13:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22624983
+- current block number: 22624983
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22624983 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x2dF7057d3F25212E51aFEA8dA628668229Ea423f)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x31B72D76FB666844C41EdF08dF0254875Dbb7edB)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0x3A44A3b263FB631cdbf25f339e2D29497511A81f)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20TokenBridge (0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+```diff
+-   Status: DELETED
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract L1OpUSDCBridgeAdapter (0xE3622468Ea7dD804702B56ca2a4f88C0936995e6)
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+```
+
+```diff
+-   Status: DELETED
+    contract L1OpEURCBridgeAdapter (0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677)
+    +++ description: Escrow for EURC that uses the canonical bridge for messaging but is governed externally.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xeC432c4F1d0E12737f3a42a459B84848Af979b2d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lisk Multisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x2658723Bf70c7667De6B25F99fcce13A16D25d08)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7)
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x2dF7057d3F25212E51aFEA8dA628668229Ea423f)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x31B72D76FB666844C41EdF08dF0254875Dbb7edB)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0x3A44A3b263FB631cdbf25f339e2D29497511A81f)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20TokenBridge (0x9348AF23B01F2B517AFE8f29B3183d2Bb7d69Fcf)
+    +++ description: Escrow for custom external tokens that use the canonical bridge for messaging but are governed externally.
+```
+
+```diff
++   Status: CREATED
+    contract Gelato Multisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0xc1dA06CC5DD5cE23bABa924463de7F762039252d)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L1OpUSDCBridgeAdapter (0xE3622468Ea7dD804702B56ca2a4f88C0936995e6)
+    +++ description: Escrow for USDC that uses the canonical bridge for messaging but is governed externally.
+```
+
+```diff
++   Status: CREATED
+    contract L1OpEURCBridgeAdapter (0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677)
+    +++ description: Escrow for EURC that uses the canonical bridge for messaging but is governed externally.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xeC432c4F1d0E12737f3a42a459B84848Af979b2d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lisk Multisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe2b75be4eef99669d0fff8f1f661c855c25a532c
 
 # Diff at Fri, 04 Jul 2025 12:19:07 GMT:

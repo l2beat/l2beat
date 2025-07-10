@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x598874e07da6761954d19f59e400655971aac649
+
+# Diff at Thu, 10 Jul 2025 08:13:16 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22868281
+- current block number: 22868281
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22868281 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalBridgeV1 (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
+-   Status: DELETED
+    contract Eclipse Multisig (0x4720342419C1D316B948690d12C86D5b485C64E0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Eclipse Multisig 2 (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+```
+
+```diff
+-   Status: DELETED
+    contract CanonicalBridgeV2 (0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
+-   Status: DELETED
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d)
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+```
+
+```diff
+-   Status: DELETED
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3)
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644)
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0706Ffc1722D53a85ba90f32807880ccee968Fed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV1 (0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
++   Status: CREATED
+    contract Eclipse Multisig (0x4720342419C1D316B948690d12C86D5b485C64E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Eclipse Multisig 2 (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherBridge (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
+    +++ description: (Deprecated) Entrypoint for depositing assets. This contract calls the Mailbox contract for each deposit. In practice this path is not used for deposits.
+```
+
+```diff
++   Status: CREATED
+    contract CanonicalBridgeV2 (0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51)
+    +++ description: Entry point to deposit and withdraw ETH. There is no canonical messaging system. Deposited funds are sent to a Treasury contract and withdrawals must be authorized by a permissioned actor.
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xb23B2492f7A9631104A5877F7FFA00633660968d)
+    +++ description: (Deprecated) Mailbox contract for L1 -> L2 messaging. There is no canonical way to send messages back.
+```
+
+```diff
++   Status: CREATED
+    contract Upgrader0to1 (0xD02f545d57536BC1E8F12D867731F006AacE71E3)
+    +++ description: This contract was used for an upgrade an still retains its permissions and permissioned actors.
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0xD7E4b67E735733aC98a88F13d087D8aac670E644)
+    +++ description: Permissioned escrow for assets bridged to Eclipse. There is no canonical messaging and users need to trust the bridge operators to process deposits and authorize withdrawals.
+```
+
 Generated with discovered.json: 0x52434924e62b9ac77adc8ecd688ed47152bb47b9
 
 # Diff at Mon, 07 Jul 2025 17:17:29 GMT:

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xf68eed05cb741d60a31a52281e00ad22d4f6b321
+
+# Diff at Thu, 10 Jul 2025 08:13:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21995404
+- current block number: 21995404
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21995404 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AxelarGatewayProxyMultisig (0x4F4495243837681061C4743b74B3eEdf548D56A5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RootAxelarBridgeAdaptor (0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChildERC20 (0x8804A8aA1F18f23aE8A456dD73806FdA3219FaD1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f5cccde02c834b7ccec85f0e136bf969eda3d4a
 
 # Diff at Fri, 04 Jul 2025 12:19:04 GMT:

@@ -1,3 +1,417 @@
+Generated with discovered.json: 0x7b4f090f25d90c03418ad5cc4721d75a28ab3781
+
+# Diff at Thu, 10 Jul 2025 08:15:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 17024223
+- current block number: 17024223
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 17024223 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4)
+    +++ description: Contract of the USDC token on Scroll.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B)
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockSCEmergency (0x1f807E2E8ab2e61230a0A9C271F90242831278b4)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockFast (0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376)
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0)
+    +++ description: Used to propose and manage onchain governance proposals.
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79)
+    +++ description: Counterpart to the L1GatewayRouter contract.
+```
+
+```diff
+-   Status: DELETED
+    contract L2MessageQueue (0x5300000000000000000000000000000000000000)
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC1155Gateway (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc)
+    +++ description: Counterpart to the L1ERC1155Gateway contract.
+```
+
+```diff
+-   Status: DELETED
+    contract L2CustomERC20Gateway (0x64CCBE37c9A82D85A1F2E74649b7A42923067988)
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollStandardERC20Factory (0x66e5312EDeEAef6e80759A0F789e7914Fb401484)
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0x69C2eD64171bF5737c2B78bdF722e68a032B2825)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0)
+    +++ description: Contract of the L2ScrollMessenger contract.
+```
+
+```diff
+-   Status: DELETED
+    contract L2ScrollMessenger (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockSCSlow (0x79D83D1518e2eAA64cdc0631df01b06e2762CC14)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC721Gateway (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582)
+    +++ description: Counterpart to the L1ERC721Gateway contract.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0x9479ABfebefEea3c846163012a472b44F305b3d7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockEmergency (0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE)
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0xC3eA7C657884BB380B66D79C36aDCb5658b01896)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ScrollStandardERC20 (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69)
+    +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
+```
+
+```diff
+-   Status: DELETED
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A)
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+```
+
+```diff
+-   Status: DELETED
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProposalTypesConfigurator (0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Scroll USDC (0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4)
+    +++ description: Contract of the USDC token on Scroll.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x11cd09a0c5B1dc674615783b0772a9bFD53e3A8F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollOwner (0x13D24a7Ff6F5ec5ff0e9C40Fc3B8C9c01c65437B)
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Security Council (0x1a37bF1Ccbf570C92FE2239FefaaAF861c2924DD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSCEmergency (0x1f807E2E8ab2e61230a0A9C271F90242831278b4)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 1 (0x1FF1fc1BB4d1f081f6E0a7E7E3240F3ECC5B236f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockFast (0x2b14d0E4b042d11C7e3Fc653132a2c82EFa7d376)
+    +++ description: A timelock with access control. The current minimum delay is 1d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x2B2A8546Df3B23535fffd75B4e312f3C5c7B4351)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AgoraGovernor (0x2f3F2054776bd3C2fc30d750734A8F539Bb214f0)
+    +++ description: Used to propose and manage onchain governance proposals.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0x4C0926FF5252A435FD19e10ED15e5a249Ba19d79)
+    +++ description: Counterpart to the L1GatewayRouter contract.
+```
+
+```diff
++   Status: CREATED
+    contract L2MessageQueue (0x5300000000000000000000000000000000000000)
+    +++ description: Used to append messages to the L2MessageQueue from the L2ScrollMessenger.
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC1155Gateway (0x62597Cc19703aF10B58feF87B0d5D29eFE263bcc)
+    +++ description: Counterpart to the L1ERC1155Gateway contract.
+```
+
+```diff
++   Status: CREATED
+    contract L2CustomERC20Gateway (0x64CCBE37c9A82D85A1F2E74649b7A42923067988)
+    +++ description: Counterpart to the L1CustomERC20Gateway contract.
+```
+
+```diff
++   Status: CREATED
+    contract ScrollStandardERC20Factory (0x66e5312EDeEAef6e80759A0F789e7914Fb401484)
+    +++ description: Contract used to deploy ScrollStandardERC20 tokens for L2StandardERC20Gateway.
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (0x69C2eD64171bF5737c2B78bdF722e68a032B2825)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ETHGateway (0x6EA73e05AdC79974B931123675ea8F78FfdacDF0)
+    +++ description: Contract of the L2ScrollMessenger contract.
+```
+
+```diff
++   Status: CREATED
+    contract L2ScrollMessenger (0x781e90f1c8Fc4611c9b7497C3B47F99Ef6969CbC)
+    +++ description: ETH is pre-minted to this contract in the genesis block and released on Scroll whenever corresponding deposits are made on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract TimelockSCSlow (0x79D83D1518e2eAA64cdc0631df01b06e2762CC14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC721Gateway (0x7bC08E1c04fb41d75F1410363F0c5746Eae80582)
+    +++ description: Counterpart to the L1ERC721Gateway contract.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x82e58e20Da6ecF4B07649C9B2237FAf27f02bC81)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (0x8edC4EADEE120d4C51923c515e7C3241c815C2BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (0x9479ABfebefEea3c846163012a472b44F305b3d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA76acF000C890b0DD7AEEf57627d9899F955d026)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockEmergency (0xA77D19C1F2B06C9aeA9bE88C17B771a33892734f)
+    +++ description: A timelock with access control. The current minimum delay is 0s. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0xb5cE5F2277CFc547F48aA8263838FAEd424ae4BE)
+    +++ description:  Contract that uses controllers to manage minters for USDC on Scroll.
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 2 (0xbdA143d49da40C2cDA27c40edfBbe8A0D4AE0cBc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (0xC3eA7C657884BB380B66D79C36aDCb5658b01896)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollStandardERC20 (0xC7d86908ccf644Db7C69437D5852CedBC1aD3f69)
+    +++ description: Contract of the ERC20 standard token used by the ERC20 factory.
+```
+
+```diff
++   Status: CREATED
+    contract SCRToken (0xd29687c813D741E2F938F4aC377128810E217b1b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xde4972789EA56c4e7ac7Ba655EaFe73a30155F1e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0xE2b4795039517653c5Ae8C2A9BFdd783b48f447A)
+    +++ description: Contract used to withdraw ERC20 tokens on L2 and finalize deposit the tokens from L1.
+```
+
+```diff
++   Status: CREATED
+    contract Scroll Multisig 3 (0xEfc9D1096fb65c832207E5e7F13C2D1102244dbe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProposalTypesConfigurator (0xfDa7cF1D9C51b3fab41E2e4093374DD8715D640E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe99e662f1a9426135c00d8b359caa3a8a6d59191
 
 # Diff at Mon, 07 Jul 2025 08:22:57 GMT:

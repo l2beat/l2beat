@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x99e614f55705ca1f1ef8ba1416023942b1c6c9e4
+
+# Diff at Thu, 10 Jul 2025 08:13:04 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AztecFeeDistributor (0x4cf32670a53657596E641DFCC6d40f01e4d64927)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefiBridgeProxy (0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier28x32 (0xb7baA1420f88b7758E341c93463426A2b7651CFB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupProcessorV3 (0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2f39ea16436b43ca9f6f83508cb30b67e0a10ed6
 
 # Diff at Fri, 04 Jul 2025 12:18:53 GMT:

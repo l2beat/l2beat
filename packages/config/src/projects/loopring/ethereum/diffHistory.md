@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x31c7ff19ff5d549a13cb837b000164b65c994d53
+
+# Diff at Thu, 10 Jul 2025 08:13:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22865639
+- current block number: 22865639
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865639 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringIOExchangeOwner (0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolFeeVault (0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470)
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+```
+
+```diff
+-   Status: DELETED
+    contract BlockVerifier (0x6150343E0F43A17519c0327c41eDd9eBE88D01ef)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DefaultDepositContract (0x674bdf20A0F284D710BC40872100128e2d66Bd3f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringCoin V2 Token (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LoopringV3 (0xe56D6ccab6551932C0356E4e8d5dAF0630920C71)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FastWithdrawalAgent (0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UserStakingPool (0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExchangeV3 (0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringIOExchangeOwner (0x153CdDD727e407Cb951f728F24bEB9A5FaaA8512)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AgentRegistry (0x39B9bf169a7e225ba037C443A40460c77438ea14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolFeeVault (0x4b89f8996892d137c3dE1312d1dD4E4F4fFcA171)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForcedWithdrawalAgent (0x52ea1971C05B0169c02a0bBeC05Fe8b5E3A24470)
+    +++ description: Auxiliary contract able to force withdrawals from L1 on behalf of users.
+```
+
+```diff
++   Status: CREATED
+    contract BlockVerifier (0x6150343E0F43A17519c0327c41eDd9eBE88D01ef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DefaultDepositContract (0x674bdf20A0F284D710BC40872100128e2d66Bd3f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringCoin V2 Token (0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringMultisig (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LoopringV3 (0xe56D6ccab6551932C0356E4e8d5dAF0630920C71)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FastWithdrawalAgent (0xec3Cc6Cf0252565b56FC7AC396017Df5b9B78a31)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UserStakingPool (0xF4662bB1C4831fD411a95b8050B3A5998d8A4A5b)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa1d20e15b657762c15eeb4e2f5725fc855c58298
 
 # Diff at Mon, 07 Jul 2025 06:50:43 GMT:

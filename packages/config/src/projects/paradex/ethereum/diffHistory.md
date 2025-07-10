@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xa811f5f692979f250e418ff58d8a1c693059e4cb
+
+# Diff at Thu, 10 Jul 2025 08:14:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22615702
+- current block number: 22615702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615702 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 0% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x700957dd46ee6b1092cee792ff3594c6547c0538
 
 # Diff at Fri, 04 Jul 2025 12:19:14 GMT:

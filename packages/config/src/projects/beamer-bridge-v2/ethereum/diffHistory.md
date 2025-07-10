@@ -1,3 +1,105 @@
+Generated with discovered.json: 0x10f0d1cbd5e575def1667f34e725941d37602c0e
+
+# Diff at Thu, 10 Jul 2025 08:13:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 19531448
+- current block number: 19531448
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531448 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EthereumL1Messenger (0x12B8489913E2afBCed131d52c345C380BBB65baf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthereumL2Messenger (0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismL1Messenger (0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ArbitrumL1Messenger (0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthereumRequestManager (0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Resolver (0xCb60516819a28431233195A8b7E0227C288B61AD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthereumFillManager (0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumL1Messenger (0x12B8489913E2afBCed131d52c345C380BBB65baf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumL2Messenger (0x3222C9a1e5d7856FCBc551A30a63634e7Fd634Da)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL1Messenger (0x4C366b0CA6F21BDFBb5c0554d818DD50C0519b34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL1Messenger (0x5911621aF8826d1AAA5B8B28d63c1e0096f7c0e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumRequestManager (0x7faEa6562a6cE991149F0167baF283E9aAc7Dc50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Resolver (0xCb60516819a28431233195A8b7E0227C288B61AD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumFillManager (0xD5EF34B499b6d64817CC70C3b0B8D9f807F06C29)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x31bc85104a5f5cc63ba7a6830f0e9ac0161ed95f
 
 # Diff at Tue, 04 Mar 2025 10:38:59 GMT:

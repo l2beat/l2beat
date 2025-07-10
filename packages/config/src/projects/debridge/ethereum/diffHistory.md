@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xdacbfd57dcdc768d0a61121d926eff8bf10eedaa
+
+# Diff at Thu, 10 Jul 2025 08:13:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 19531527
+- current block number: 19531527
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531527 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeBridgeToken (0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeGate (0x43dE2d77BF8027e25dBD179B491e8d64f38398aA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Admin Multisig (0x6bec1faF33183e1Bc316984202eCc09d46AC92D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeTokenDeployer (0x8244d6Ffe0695B30b2bAD424683Ee3bc534Ea464)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CallProxy (0x8a0C79F5532f3b2a16AD1E4282A5DAF81928a824)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SignatureVerifier (0x949b3B3c098348b879C9e4F15cecc8046d9C8A8c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xa0D6062Be29710c666aE850395Ac1A2AeCd14885)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleFeeProxy (0xC2bAC0DB5B18B0c3225581Ba14BD0B448c623636)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeBridgeToken (0xCAceBE8c354b70Fa6E3107f3F6F699e4Fbb3A98B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xE4427af3555CD9303D728C491364FAdFDD7494Fe)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x2aec27aa64c5336f9f1e1f2957396d766dc2b892
 
 # Diff at Fri, 04 Jul 2025 12:18:57 GMT:

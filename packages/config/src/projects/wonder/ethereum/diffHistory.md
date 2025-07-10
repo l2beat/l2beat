@@ -1,3 +1,129 @@
+Generated with discovered.json: 0xb9ede8544b3b6895d40e0580d174f91ee6b00adf
+
+# Diff at Thu, 10 Jul 2025 08:15:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22865742
+- current block number: 22865742
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22865742 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Wonder Multisig (0x4665ad531c35b02dE090E21FC57B69946434bf2b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
+-   Status: DELETED
+    contract ChainAdmin (0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract Wonder Multisig (0x4665ad531c35b02dE090E21FC57B69946434bf2b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A)
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract ChainAdmin (0x9381D943BcC1254723F85E9A85FFcc4Bb3C8deF6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkVmDiamond (0xC8C4cB5AF7c723c7EfD360898B47920679f92C92)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0xee06ab3043d80fa95f1a24d21a1261a0bc045c0b
 
 # Diff at Mon, 07 Jul 2025 07:11:14 GMT:

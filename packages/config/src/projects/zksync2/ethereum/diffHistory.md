@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x73a46df522f0ae82799388d1a2a5d4f341871a16
+
+# Diff at Thu, 10 Jul 2025 08:16:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22779919
+- current block number: 22779919
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22779919 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989)
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to 0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or 0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+```
+
+```diff
+-   Status: DELETED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: Old Governance contract for ZKsync Era allowing for proposals in form of transactions. The minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324)
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge_wstETH (0x41527B2d03844dB6b0945f25702cB958b6d55989)
+    +++ description: Bridge for depositing wrapped stETH (Lido) to ZKsync Era. These deposits and withdrawals do not go through the shared Bridge.
+```
+
+```diff
++   Status: CREATED
+    contract DualVerifier (0x53F5DE9De3B2DA90633a2c74BEb3b9912cdd1579)
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xD5dBE903F5382B052317D326FA1a7B63710C6a5b or eth:0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1 depending on the supplied proof type.
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063)
+    +++ description: Legacy bridge for depositing ERC20 tokens to ZKsync Era. Forwards deposits and withdrawals to the BridgeHub.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierPlonk (0x5BAfEF6729228add8775aF4Cecd2E68a51424Ee1)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the PlonK proof system.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564)
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorTimelock3 (0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD)
+    +++ description: Intermediary contract between the *Validators* and the ZKsync Era diamond that delays block execution (ie withdrawals and other L2 --> L1 messages) by 21h. This contract is a remnant from pre Elastic Chain times.
+```
+
+```diff
++   Status: CREATED
+    contract L1VerifierFflonk (0xD5dBE903F5382B052317D326FA1a7B63710C6a5b)
+    +++ description: Verifies a zk-SNARK proof using an implementation of the fflonk proof system.
+```
+
 Generated with discovered.json: 0xe15f99e7011bfc0f2182bd5f670959b1ccbc8eb4
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

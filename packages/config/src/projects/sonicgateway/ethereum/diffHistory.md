@@ -1,3 +1,129 @@
+Generated with discovered.json: 0x583a30e4d258213c0683713d710d93152897df4d
+
+# Diff at Thu, 10 Jul 2025 08:14:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22431552
+- current block number: 22431552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22431552 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ValidatorsRegistry (0x72965045A6691E5A74299D1e878f303264D4D910)
+    +++ description: Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).
+```
+
+```diff
+-   Status: DELETED
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306)
+    +++ description: Verifier contract for merkle proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20)
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+```
+
+```diff
+-   Status: DELETED
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4)
+    +++ description: Entry point for state (oracle) updates.
+```
+
+```diff
+-   Status: DELETED
+    contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f)
+    +++ description: Simple contract that saves the latest state root.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4)
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorsRegistry (0x72965045A6691E5A74299D1e878f303264D4D910)
+    +++ description: Registry of the current validator set. Validators can have different weights and be changed on each state update (signed by the current validators).
+```
+
+```diff
++   Status: CREATED
+    contract DirectExitAdministrator (0x7390251Bf35AA7eA7C196fc4750bd5d6c5918329)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SonicGatewayOpsMultisig (0x76d906837a073bF63f0c21d1d5bC2Fd14057EC3B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MPTProofVerifier (0x921B147a90Ef738BBb7c2c89D88ea9d8Af3e9306)
+    +++ description: Verifier contract for merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract SonicGatewayMultisig (0x9Fe65a5418850015a9D8ad3Ca50d6a0B9769FbE0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenDeposit (0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20)
+    +++ description: Escrows the tokens that are bridged to Sonic. Users call this contract to deposit when bridging to Sonic, and to withdraw when bridging back to Ethereum. Since this contract escrows all tokens and defines the oracle and verification contracts, an upgrade of this contract can overwrite the logic of the whole bridge and potentially steal all funds.
+```
+
+```diff
++   Status: CREATED
+    contract UpdateManager (0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4)
+    +++ description: Entry point for state (oracle) updates.
+```
+
+```diff
++   Status: CREATED
+    contract StateOracle (0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f)
+    +++ description: Simple contract that saves the latest state root.
+```
+
+```diff
++   Status: CREATED
+    contract TokenPairs (0xf2b1510c2709072C88C5b14db90Ec3b6297193e4)
+    +++ description: Token pairs are whitelisted in this contract for bridging through the Sonc Gateway.
+```
+
 Generated with discovered.json: 0x87d73135ef8a5c6f5eef01ce2a3d38e1e5a2037f
 
 # Diff at Fri, 04 Jul 2025 12:19:21 GMT:

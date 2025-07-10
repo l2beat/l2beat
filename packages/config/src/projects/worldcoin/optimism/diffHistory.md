@@ -1,3 +1,285 @@
+Generated with discovered.json: 0xb926ed8abb185c65d72db3b297b6c143185a96c8
+
+# Diff at Thu, 10 Jul 2025 08:15:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 133912814
+- current block number: 133912814
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SemaphoreVerifier (0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SemaphoreVerifier (0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OpWorldID_Zero (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SemaphoreVerifier (0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WLDGrant (0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RecurringGrantDrop (0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x7f26A7572E8B877654eeDcBc4E573657619FA3CE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierLookupTable (0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WLD token (0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierLookupTable (0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpWorldID_Zero (0x42FF98C4E85212a5D31358ACbFe76a621b50fC02)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIDRouterV1 (0x57f928158C3EE7CDad1e4D8642503c4D0201f611)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x5eB2c4a34A82a329C3E5D9F97F78Dc5446C3A9FB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WLDGrant (0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RecurringGrantDrop (0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x7f26A7572E8B877654eeDcBc4E573657619FA3CE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OpWorldID_One (0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d)
+    +++ description: A contract that manages the root history of the Semaphore identity merkle tree on Optimism.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WLD token (0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xabcbd421b763e4fb3312b3651f4a3a2714393682
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

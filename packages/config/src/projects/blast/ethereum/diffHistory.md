@@ -1,3 +1,225 @@
+Generated with discovered.json: 0x0e9b6e03052c0c1cc5ea1b2e1586798ca94d9db0
+
+# Diff at Thu, 10 Jul 2025 08:13:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21084957
+- current block number: 21084957
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21084957 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DSRYieldProvider (0x0733F618118bF420b6b604c969498ecf143681a8)
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115)
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+```
+
+```diff
+-   Status: DELETED
+    contract LidoYieldProvider (0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db)
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+```
+
+```diff
+-   Status: DELETED
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlastMultisig 2 (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE)
+    +++ description: Contract managing Yield Providers for ETH.
+```
+
+```diff
+-   Status: DELETED
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438)
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract DSRYieldProvider (0x0733F618118bF420b6b604c969498ecf143681a8)
+    +++ description: Yield Provider for DAI investing DAI into the MakerDAO DSR.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1BlastBridge (0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115)
+    +++ description: Custom bridge gateway for Blast that allows the Operators to reinvest L1 tokens while they are bridged to the L2.
+```
+
+```diff
++   Status: CREATED
+    contract LidoYieldProvider (0x4316A00D31da1313617DbB04fD92F9fF8D1aF7Db)
+    +++ description: Yield Provider for ETH investing ETH into stETH.
+```
+
+```diff
++   Status: CREATED
+    contract BlastMultisig 1 (0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract LaunchBridge (0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastMultisig 2 (0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0x697402166Fbf2F22E970df8a6486Ef171dbfc524)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x6B916DcCa661d23794e78509723A6f4348564847)
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE)
+    +++ description: Contract managing Yield Providers for ETH.
+```
+
+```diff
++   Status: CREATED
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438)
+    +++ description: Contract escrowing stablecoins and managing Yield Providers for stablecoins (like for example DAI).
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC721Bridge (0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975)
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0xE064B565Cf2A312a3e66Fe4118890583727380C0)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
 Generated with discovered.json: 0xdd814eb3e4d9b2bf9f9e37c4cef2dc8f8deedaea
 
 # Diff at Fri, 04 Jul 2025 12:18:54 GMT:

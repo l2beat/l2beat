@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x211bc7710708844324487433665204cc8dd1f659
+
+# Diff at Thu, 10 Jul 2025 08:12:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 343418956
+- current block number: 343418956
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 343418956 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract HyperliquidBridge (0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7)
+    +++ description: Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.
+```
+
+```diff
++   Status: CREATED
+    contract HyperliquidBridge (0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7)
+    +++ description: Single contract containing the logic for the Hyperliquid bridge. It manages deposits, withdrawals, the hot and cold validator sets, as well as the lockers, finalizers, and all the permissioned functions. The current locker threshold is 2 and the minimum validator threshold is 2/3*4.
+```
+
 Generated with discovered.json: 0x3cea14ddd5e6eb812985617f12574b667bb6eba3
 
 # Diff at Fri, 04 Jul 2025 12:19:03 GMT:

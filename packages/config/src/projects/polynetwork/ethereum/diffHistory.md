@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x012a1df3c3d62050263811140addd2b3cfe9cb30
+
+# Diff at Thu, 10 Jul 2025 08:14:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20675914
+- current block number: 20675914
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20675914 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C)
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 3 (0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb)
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 6 (0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2)
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManager (0x14413419452Aaf089762A0c5e95eD2A13bBC488C)
+    +++ description: Contract responsible for building cross-chain messages and validating incoming messages, including Merkle proofs.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 1 (0x250e76987d838a75310c34bf422ea9f1AC4Cc906)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 3 (0x3Ee764C95e9d2264DE3717a4CB45BCd3c5F00035)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 7 (0x51ba447DaD1de30b91286471BcB570F69ECE968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 4 (0x53D23ba1c38D6ECf2B7f213F7CF22b17AE3BB868)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainManagerProxy (0x5a51E2ebF8D136926b9cA7b59B60464E7C44d2Eb)
+    +++ description: Used to proxy requests from LockProxy to EthCrossChainManager and to pause/unpause it.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 6 (0x669E211454Ee9AAaf4C229A8985F5D20D3B5d1BC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 2 (0x7b9Bb72F187B3cb2CaA9Cf1cE95A938f0a66DB54)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCrossChainData (0xcF2afe102057bA5c16f899271045a0A37fCb10f2)
+    +++ description: Used to store Keepers’ signatures and other parameters used by EthCrossChainManager.
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 8 (0xead16Ae2c301C48Ea011A36Eef9337507673DFc0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lock Proxy 5 (0xf6378141BC900020a438F3914e4C3ceA29907b27)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc87e6b853f81d67370e6bb3d157da6a5e4055f47
 
 # Diff at Mon, 12 May 2025 13:48:15 GMT:

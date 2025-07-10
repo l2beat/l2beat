@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xc82e50dc18d764f30374fea8d7f1d606ff83d902
+
+# Diff at Thu, 10 Jul 2025 08:16:02 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 27445725
+- current block number: 27445725
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 27445725 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseL2Gateway (0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x80d12A78EfE7604F00ed07aB2f16F643301674D5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd92c542ff4905099a417694f17c9e5d88530f20e
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:

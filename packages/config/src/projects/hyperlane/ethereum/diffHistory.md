@@ -1,3 +1,261 @@
+Generated with discovered.json: 0xd599b0ef5edb94e58473cb8798f9d746a0d203bb
+
+# Diff at Thu, 10 Jul 2025 08:13:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22866629
+- current block number: 22866629
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22866629 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A)
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543)
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UnknownIsm (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
+-   Status: DELETED
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09)
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c)
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to 0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7)
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+```
+
+```diff
+-   Status: DELETED
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_default (0x1AB8c76BAD3829B46b738B61cC941b22bE82C16e)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 2 out of the [eth:0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50,eth:0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8] ISM contracts successfully verify a message.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x2FFC8e94edDda8356f6b66aa035B42b20CF24A08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HyperlaneMultisig (0x3965AC3D295641E452E0ea896a086A9cD7C6C5b6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Hyperlane Multisig (0x562Dfaac27A84be6C96273F5c9594DA1681C0DA7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x5B4e223DE74ef8c3218e66EEcC541003CAB3121A)
+    +++ description: Escrow for WBTC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0x647C621CEb36853Ef6A907E397Adf18568E70543)
+    +++ description: Escrow for USDT that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x75EE15Ee1B4A75Fa3e2fDF5DF3253c25599cc659)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9Fca159607687AE26367d66166e680A930af0780)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticAggregationIsm_eclipse (0xA2d8EBB801c632517Ff35b97Dea0685abc41494c)
+    +++ description: This specific Interchain Security Module (ISM) contract is a simple 't of n' module that checks that a threshold of 1 out of the [eth:0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e,eth:0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896] ISM contracts successfully verify a message. It is an example ISM currently configured for the message origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UnknownIsm (0xB82118FFB9AaC2A8462B10E585c2E7d9094d2C50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StaticMerkleRootMultisigIsm (0xbdf8DBfBe22D06ae7A3a9efFC669Ee32D0B99896)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time. In addition, this ISM also verifies the presence of the given bridge message ID in a merkle tree of bridge messages. Newer validator-signed checkpoints can thus be used to verify older messages, which prevents the validators from censoring specific bridge messages.
+```
+
+```diff
++   Status: CREATED
+    contract Mailbox (0xc005dc82818d67AF737725bD4bf75435d065D239)
+    +++ description: The Mailbox contract is deployed on each chain and is used as a central Endpoint of the Hyperlane protocol to dispatch outgoing or process incoming messages.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xc2495f3183F043627CAECD56dAaa726e3B2D9c09)
+    +++ description: Escrow for tETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCEA8039076E35a825854c5C2f85659430b06ec96)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xd34FE1685c28A68Bb4B8fAaadCb2769962AE737c)
+    +++ description: Escrow for apxETH that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract DomainRoutingIsm (0xdc210018B5ff5fdB6Fe66827EffcfdA81f879cc8)
+    +++ description: ISM contract that delegates message verification to other ISMs based on the origin of the message. Currently routing to eth:0xA2d8EBB801c632517Ff35b97Dea0685abc41494c for the origin Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xe1De9910fe71cC216490AC7FCF019e13a34481D7)
+    +++ description: Escrow for USDC that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract HypERC20Collateral (0xef899e92DA472E014bE795Ecce948308958E25A2)
+    +++ description: Escrow for weETHs that is bridged from Ethereum to Eclipse.
+```
+
+```diff
++   Status: CREATED
+    contract StaticMessageIdMultisigIsm (0xF6419b2d603f7D00C383FE8b43E75DD6C0C1D63e)
+    +++ description: An ISM contract that verifies if a threshold of 3 validators signed a message. The validator set is immutably defined at deployment time.
+```
+
 Generated with discovered.json: 0x472d075f54cd3da26b23135e954c3c7ea7c33c67
 
 # Diff at Mon, 07 Jul 2025 10:10:04 GMT:

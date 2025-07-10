@@ -1,3 +1,57 @@
+Generated with discovered.json: 0xf50c515bc86a8927c078fd9a1623908012644a45
+
+# Diff at Thu, 10 Jul 2025 08:13:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22545890
+- current block number: 22545890
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22545890 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Near Omni Multisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeToken (0xd5A0165BA4E83769AEF74e0855497258aCe4C88F)
+    +++ description: The standard implementation used for new tokens minted by the bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract OmniBridge (0xe00c629aFaCCb0510995A2B95560E446A24c85B9)
+    +++ description: Escrow for all tokens of the NEAR Omnibridge.
+```
+
+```diff
++   Status: CREATED
+    contract Near Omni Multisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeToken (0xd5A0165BA4E83769AEF74e0855497258aCe4C88F)
+    +++ description: The standard implementation used for new tokens minted by the bridge.
+```
+
+```diff
++   Status: CREATED
+    contract OmniBridge (0xe00c629aFaCCb0510995A2B95560E446A24c85B9)
+    +++ description: Escrow for all tokens of the NEAR Omnibridge.
+```
+
 Generated with discovered.json: 0xe1250502c44cbf27a24e300ee45e1fe76e1e7b22
 
 # Diff at Fri, 04 Jul 2025 12:19:10 GMT:

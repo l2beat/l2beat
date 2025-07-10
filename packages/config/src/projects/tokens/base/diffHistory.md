@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xf08d6eac8c0ad40e0696a813262d57a98ac154c1
+
+# Diff at Thu, 10 Jul 2025 08:15:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 30861907
+- current block number: 30861907
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 30861907 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenMessenger (0x1682Ae6375C4E4A97e4B583BC394c861A46D8962)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract MasterMinter (0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMessengerV2 (0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitterV2 (0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract USD Coin Token (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafeL2 (0x92A19381444A001d62cE67BaFF066fA1111d7202)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageTransmitter (0xAD09780d193884d503182aD4588450C416D6F9D4)
+    +++ description: Part of CCTP
+```
+
+```diff
+-   Status: DELETED
+    contract Wrapped OETH Token (0xD8724322f44E5c58D7A815F542036fb17DbbF839)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinter (0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
+-   Status: DELETED
+    contract L1Timelock (0xf817cb3092179083c48c014688D98B72fB61464f)
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+```
+
+```diff
+-   Status: DELETED
+    contract TokenMinterV2 (0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessenger (0x1682Ae6375C4E4A97e4B583BC394c861A46D8962)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract MasterMinter (0x2230393EDAD0299b7E7B59F20AA856cD1bEd52e1)
+    +++ description: Manager contract for minter management [sic].
+```
+
+```diff
++   Status: CREATED
+    contract TokenMessengerV2 (0x28b5a0e9C621a5BadaA536219b3a228C8168cf5d)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract SafeL2 (0x4FF1b9D9ba8558F5EAfCec096318eA0d8b541971)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitterV2 (0x81D40F21F12A8F0E3252Bccb954D722d4c464B64)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract USD Coin Token (0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0x92A19381444A001d62cE67BaFF066fA1111d7202)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageTransmitter (0xAD09780d193884d503182aD4588450C416D6F9D4)
+    +++ description: Part of CCTP
+```
+
+```diff
++   Status: CREATED
+    contract Wrapped OETH Token (0xD8724322f44E5c58D7A815F542036fb17DbbF839)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinter (0xe45B133ddc64bE80252b0e9c75A8E74EF280eEd6)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0xf817cb3092179083c48c014688D98B72fB61464f)
+    +++ description: A standard timelock with access control. The current minimum delay is 2d.
+```
+
+```diff
++   Status: CREATED
+    contract TokenMinterV2 (0xfd78EE919681417d192449715b2594ab58f5D002)
+    +++ description: Part of CCTP: Used for automated access control for minting.
+```
+
 Generated with discovered.json: 0x24c1af6fd42636d6f810aea4b17d8392c472ab48
 
 # Diff at Thu, 05 Jun 2025 08:23:04 GMT:

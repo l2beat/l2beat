@@ -1,3 +1,249 @@
+Generated with discovered.json: 0x5003f7f86081104cc94e1409d8475703a057facb
+
+# Diff at Thu, 10 Jul 2025 08:12:42 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 31729275
+- current block number: 31729275
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 31729275 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x173FCB92df1854c3B78dC8696C23B1c88437b892)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract UTBDecent (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+-   Status: DELETED
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract DegenFastConfirmerMultisig (0xc207cbC35DD3CD172059730380A45aE14eb0e403)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52)
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xFB48D385Fa3da33762B350e1d705b9E46054E677)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x15D2a9A14de6Ea03AADE944641eAb497a3A4c9DF)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x173FCB92df1854c3B78dC8696C23B1c88437b892)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x23b0348788b96ee1cE4e7DdED4AC2A99de516F51)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x320e29bc3f34bc6B8834bBD2B6b013ef6620E69F)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UTBDecent (0x43019F8BE1F192587883b67dEA2994999f5a2de2)
+    +++ description: The UTB contract serves as an L2<->L3 gateway by integrating with Decent (LayerZero app) to allow bridging and swapping in- and out of Degen L3. This is achieved using external modules (smart contracts) like swappers and bridgers that can be registered in the UTB contract.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x67812161Bbb6aCF891aA6028BC614a660961ceD8)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x766DD3A13d17C6D175975C89225bde89F052dBc4)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract AlchemyMultisig2 (0x871e290d5447b958131F6d44f915F10032436ee6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x97ba9522f2e5D67e96FeA6B612e794dc96637AAc)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0xaA3A7A2ec2477A61082E1C41a2c6710587917028)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract DegenFastConfirmerMultisig (0xc207cbC35DD3CD172059730380A45aE14eb0e403)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract OrbitERC20OFTAdapter (0xDb8E759859058952c34953c8469f464109826e52)
+    +++ description: As a designated allowed outbox, this contract can access all funds of the canonical bridge escrow. It also interfaces with the LayerZero AMB, giving this external bridge access to the Degen L3 canonical bridge and making canonical bridge security dependent on LayerZero security.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xDf6C4562e853C4F775285710B467e2EE4Ca8D22c)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0xe63ddb12FBb6211a73F12a4367b10dA0834B82da)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xFB48D385Fa3da33762B350e1d705b9E46054E677)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x18d01e4369d146a52c22359e5689f1ade37e50d1
 
 # Diff at Wed, 18 Jun 2025 11:58:52 GMT:

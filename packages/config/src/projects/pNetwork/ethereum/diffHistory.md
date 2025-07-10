@@ -1,3 +1,189 @@
+Generated with discovered.json: 0x69e2986e8379459b3afefbe1980aee1d0d7b5960
+
+# Diff at Thu, 10 Jul 2025 08:14:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V1 (0x112334f50Cb6efcff4e35Ae51A022dBE41a48135)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetworkDAOVoting (0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Kernel (0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVMScriptRegistry (0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UOS Vault (0x9f8622b11984AfC8f0a42A394928702017c5968D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeTokenFactory (0xA29EF584c389c67178aE9152aC9C543f9156E2B3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenManager (0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20 Vault V2 (0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MiniMeToken (0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthPntv2 (0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ACL (0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd10adfa0da55dda15dc5f517f5dca10c982b969c
 
 # Diff at Fri, 04 Jul 2025 12:19:13 GMT:

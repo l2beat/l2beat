@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x306452ea07ed24eb22c99a7294083eb81794a22d
+
+# Diff at Thu, 10 Jul 2025 08:13:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 16154924
+- current block number: 16154924
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16154924 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Erc20Vault (0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PlasmaFramework (0x0D4C1222f5e839a911e2053860e45F18921D72ac)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthVault (0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PaymentExitGame (0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ETHDepositVerifier (0x649f37203c365DE759c8fc8CA35beBF5448F70Be)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20DepositVerifier (0xD876aeb3a443FBC03B7349AAc115E9054563CD82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Erc20Vault (0x070cB1270A4B2bA53c81CeF89d0FD584Ed4F430B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PlasmaFramework (0x0D4C1222f5e839a911e2053860e45F18921D72ac)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthVault (0x3Eed23eA148D356a72CA695DBCe2fceb40a32ce0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PaymentExitGame (0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ETHDepositVerifier (0x649f37203c365DE759c8fc8CA35beBF5448F70Be)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20DepositVerifier (0xD876aeb3a443FBC03B7349AAc115E9054563CD82)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7c42df5a50647ccf64eea3493ecc9a7bf689e16d
 
 # Diff at Tue, 04 Mar 2025 10:39:30 GMT:

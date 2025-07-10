@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x6cd28a9b7147c676a8973595f5e0c7b3ec59a4cb
+
+# Diff at Thu, 10 Jul 2025 08:13:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21981354
+- current block number: 21981354
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21981354 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract DACommittee (0x1e601435E181423e7A8430813d7500012a6169cB)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
+-   Status: DELETED
+    contract StarkExchange (0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143)
+    +++ description: Adapter between the core contract and the 0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+```
+
+```diff
+-   Status: DELETED
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
+```diff
++   Status: CREATED
+    contract DACommittee (0x1e601435E181423e7A8430813d7500012a6169cB)
+    +++ description: Data Availability Committee (DAC) contract verifying and storing data availability claims from DAC Members (via a multisignature check). The threshold of valid signatures is 2.
+```
+
+```diff
++   Status: CREATED
+    contract StarkExchange (0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7)
+    +++ description: Central Validium contract. Receives (verified) state roots from the Operator, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract GpsFactRegistryAdapter (0x5339AB7557b3152b91A57D10B0Caf5da88Db5143)
+    +++ description: Adapter between the core contract and the eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60. Stores the Cairo programHash (`16830627573509542901909952446321116535677491650708854009406762893086223513`).
+```
+
+```diff
++   Status: CREATED
+    contract OrderRegistry (0x806d435a82B0381bD884540c2235147c13B97fe6)
+    +++ description: Helper contract for registering limit orders from L1.
+```
+
 Generated with discovered.json: 0x3b13df696c509b61c6c20b980d26b594f3dfe8a1
 
 # Diff at Fri, 04 Jul 2025 12:19:10 GMT:

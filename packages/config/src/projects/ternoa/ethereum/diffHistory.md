@@ -1,3 +1,69 @@
+Generated with discovered.json: 0xf8d4240e9c59942954724a6b27abb9e1b7d314ed
+
+# Diff at Thu, 10 Jul 2025 08:15:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22774947
+- current block number: 22774947
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22774947 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789)
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789)
+    +++ description: The main system contract defining the Ternoa Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x9B9671dB83CfcB4508bF361942488C5cA2b1286D)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0xB408a216927d31A27fd96176dbF1B825630f0301)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 1/1).
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xdc3ca9bc5d4bd22f151374acd46f55b1c050d849
 
 # Diff at Fri, 04 Jul 2025 12:19:25 GMT:

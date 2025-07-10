@@ -1,3 +1,321 @@
+Generated with discovered.json: 0xad6148caefbe136f4f76541b1ecc108f57c12b43
+
+# Diff at Thu, 10 Jul 2025 08:14:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22480922
+- current block number: 22480922
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22480922 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9)
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+```
+
+```diff
+-   Status: DELETED
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C)
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60)
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+```
+
+```diff
+-   Status: DELETED
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812)
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+```
+
+```diff
+-   Status: DELETED
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract Starkware Multisig 4 (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d)
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+```
+
+```diff
+-   Status: DELETED
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419)
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
+-   Status: DELETED
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c)
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+```
+
+```diff
+-   Status: DELETED
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+```
+
+```diff
+-   Status: DELETED
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
+-   Status: DELETED
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 2 (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LORDSBridge (0x023A2aAc5d0fa69E3243994672822BA43E34E5C9)
+    +++ description: Custom (and immutable) entry point contract and escrow for users depositing LORDS to via StarkGate to the L2.
+```
+
+```diff
++   Status: CREATED
+    contract DAIBridge (0x0437465dfb5B79726e35F08559B0cBea55bb585C)
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateManager (0x0c5aE94f8939182F2D06097025324D1E537d5B60)
+    +++ description: Acts as a central contract to manage StarkGate bridge escrows (add new ones, deactivate existing, change configs) when given the Manager role from the respective escrows.
+```
+
+```diff
++   Status: CREATED
+    contract StarkgateRegistry (0x1268cc171c54F2000402DfF20E93E60DF4c96812)
+    +++ description: A simple registry that maps tokens to their StarkGate escrows. It also keeps a list of tokens that are blocked from being added to StarkGate.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Security Council (0x15e8c684FD095d4796A0c0CF678554F4c1C7C361)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WBTCBridge (0x283751A21eafBFcD52297820D27C1f1963D9b5b4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract FXSBridge (0x66ba83ba3D3AD296424a2258145d9910E9E40B7C)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 4 (0x77Dd0cf03e1cCbDC750c9E5FDc34b8A3671f88c5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Starkware Multisig 1 (0x83C0A700114101D1283D1405E2c8f21D3F03e988)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DaiGateway (0x9F96fE0633eE838D0298E8b8980E6716bE81388d)
+    +++ description: Gateway contract that is the user entrypoint to deposit DAI to a custom escrow to bridge via StarkGate.
+```
+
+```diff
++   Status: CREATED
+    contract ETHBridge (0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419)
+    +++ description: Standard Starkware canonical bridge escrow for ETH. Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract USDTBridge (0xbb3400F107804DFB482565FF1Ec8D8aE66747605)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract wstETHBridge (0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4)
+    +++ description: Central rollup contract. Receives (verified) state roots from the Sequencer, allows users to consume L2 -> L1 messages and send L1 -> L2 messages. Critical configuration values for the L2's logic are defined here by various governance roles.
+```
+
+```diff
++   Status: CREATED
+    contract DelayedExecutor (0xCA112018fEB729458b628AadC8f996f9deCbCa0c)
+    +++ description: A simple Timelock contract with an immutable delay of 8d. The owner (eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988) can queue transactions.
+```
+
+```diff
++   Status: CREATED
+    contract STRKBridge (0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract rETHBridge (0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract sfrxETHBridge (0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract FRAXBridge (0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract LUSDBridge (0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract MultiBridge (0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb)
+    +++ description: Starkware Multibridge escrow. Withdrawals can be throttled to 5 of the locked funds per 24 hours for each token individually.
+```
+
+```diff
++   Status: CREATED
+    contract USDCBridge (0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
+```diff
++   Status: CREATED
+    contract Starkware SCMinority Multisig (0xF6b0B3e8f57396CecFD788D60499DB49Ee6AbC6B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UNIBridge (0xf76e6bF9e2df09D0f854F045A3B724074dA1236B)
+    +++ description: Standard Starkware bridge escrow (single token). Withdrawals can be throttled to 5% of the locked funds per 24 hours.
+```
+
 Generated with discovered.json: 0x79da2817a6d0f30802c0d4aa48b4bb67ec81ed29
 
 # Diff at Fri, 04 Jul 2025 12:19:23 GMT:

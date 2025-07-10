@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x14807f690e8a05c4b9f5b687a0a32c432972d83f
+
+# Diff at Thu, 10 Jul 2025 08:13:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882445
+- current block number: 22882445
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882445 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract LayerZero Proof Library (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenBridge (0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Proof Library (0x07245eEa05826F5984c7c3C8F478b04892e4df89)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Oracle (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Aptos Multisig (0x65bb797c2B9830d891D87288F029ed8dACc19705)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Relayer (0x902F09715B6303d4173037652FA7377e5b98089E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
 Generated with discovered.json: 0x714a08b5488cbde053ba5089b056dd25ec694aef
 
 # Diff at Wed, 09 Jul 2025 15:17:42 GMT:

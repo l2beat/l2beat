@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x31ec52c112d80fde1cad6ee76c51aeda7816f034
+
+# Diff at Thu, 10 Jul 2025 08:16:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 16435499
+- current block number: 16435499
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16435499 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastL2Gateway (0x3f64e2e09732969813904a8473074CFADeE66AF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x93a68943b669522577113ccb8863b9243952db5e
 
 # Diff at Fri, 04 Jul 2025 12:19:30 GMT:

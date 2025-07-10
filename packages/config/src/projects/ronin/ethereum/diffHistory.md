@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x2af367459a766aa4916c80b8a4750922fddd1f24
+
+# Diff at Thu, 10 Jul 2025 08:14:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22824247
+- current block number: 22824247
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22824247 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PauseEnforcer (0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RoninManagerMultiSig (0x2DA02aC5f19Ae362a4121718d990e655eB628D96)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RoninAdminMultisig (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MainchainGateway (0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WETH9 (0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PauseEnforcer (0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0712bb4f53355022bd44737c470ed1e7e561e2b6
 
 # Diff at Fri, 04 Jul 2025 12:19:18 GMT:

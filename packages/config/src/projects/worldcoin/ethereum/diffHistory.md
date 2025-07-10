@@ -1,3 +1,201 @@
+Generated with discovered.json: 0x686d0600792f2526b0644c1121e40e112353e821
+
+# Diff at Thu, 10 Jul 2025 08:15:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22438006
+- current block number: 22438006
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438006 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa)
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+```
+
+```diff
+-   Status: DELETED
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteIdentitiesVerifierLookupTable (0x39CcB3b670651a14da8b3835f42924f49C2C5986)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterIdentitiesVerifierLookupTable (0x4055B6d4018e92e4d000865e61e87B57A4E5Ab49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteVerifierSize100 (0x43B68ccBa7FC726540768fD1537c3179283140ed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize100 (0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeleteVerifierSize10 (0xCA7d6822b9c6913B1A1416cE30eF14c4e7f0bFb1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize1200 (0xE44c83b9e1971A24EC698829297A0C4026B0CeF9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIdIdentityManager2 (0xf7134CE138832c1456F2a91D64621eE90c2bddEa)
+    +++ description: Does what it says: Manages identities for Worldcoin. The identityOperator can register or delete identities by submitting zk proofs.
+```
+
+```diff
++   Status: CREATED
+    contract RegisterVerifierSize600 (0xFC1c26E964F791f81a33F49D91f79456891AA1c1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x530040c0e8239d66d75d114ba3de6d05219ba306
 
 # Diff at Fri, 04 Jul 2025 12:19:28 GMT:

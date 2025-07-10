@@ -1,3 +1,177 @@
+Generated with discovered.json: 0x125bfa5f39a5b862ee28faefbc40e73db32975e7
+
+# Diff at Thu, 10 Jul 2025 08:12:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22593366
+- current block number: 22593366
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593366 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GasOracle (0x0BdF6139F2841A7856Ca154D851182C52F5b96e0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OldAllbridgeMessenger (0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LPBridge (0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pool (0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WormholeMessenger (0x7f02294f065A605C8D21D9812b8d1De7E5E1da74)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Validator (0x93746538D4519C809827205Bd1C2c7a0E15bd74b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OldLPBridge (0xA314330482f325D38A83B492EF6B006224a3bea9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Pool (0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FeeOracle (0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CctpBridge (0xC51397b75B783E31469bFaADE79913F3f82210d6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OldWormholeMessenger (0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GasOracle (0x0BdF6139F2841A7856Ca154D851182C52F5b96e0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AllbridgeMessenger (0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OldAllbridgeMessenger (0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LPBridge (0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Pool (0x7DBF07Ad92Ed4e26D5511b4F285508eBF174135D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeMessenger (0x7f02294f065A605C8D21D9812b8d1De7E5E1da74)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validator (0x93746538D4519C809827205Bd1C2c7a0E15bd74b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OldLPBridge (0xA314330482f325D38A83B492EF6B006224a3bea9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Pool (0xa7062bbA94c91d565Ae33B893Ab5dFAF1Fc57C4d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FeeOracle (0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0xBBbD1BbB4f9b936C3604906D7592A644071dE884)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CctpBridge (0xC51397b75B783E31469bFaADE79913F3f82210d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OldWormholeMessenger (0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x04dc9a92884886ff70d0a8aa23c4236bd1ad263c
 
 # Diff at Fri, 30 May 2025 05:08:35 GMT:

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x92b423f31a3479a8554fa868c3bb5624ed2381a7
+
+# Diff at Thu, 10 Jul 2025 08:14:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98)
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987)
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB)
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01)
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract daiBridge (0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98)
+    +++ description: Custom Bridge escrow for DAI bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract PolygonZkEVM (0x519E42c24163192Dca44CD3fBDCEBF6be9130987)
+    +++ description: The main system contract defining the polygon zkEVM Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract usdcBridge (0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB)
+    +++ description: Custom Bridge escrow for USDC bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0xc521580cd8586Cc688A7430F9DcE0f6A803F2883)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract wstETHBridge (0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01)
+    +++ description: Custom Bridge escrow for wstETH bridged to PolygonZkEVM allowing for a custom L2 tokens contract.
+```
+
+```diff
++   Status: CREATED
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x0cde38f825e07fa5f7d4dbc20740139b49444fc1
 
 # Diff at Fri, 04 Jul 2025 12:19:15 GMT:

@@ -1,3 +1,177 @@
+Generated with discovered.json: 0xb3178bb58d543bddf813a23b3bc2f2304c7b09d4
+
+# Diff at Thu, 10 Jul 2025 08:15:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 884077
+- current block number: 884077
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 884077 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9)
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+```
+
+```diff
+-   Status: DELETED
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a)
+    +++ description: Governance contract allowing token- and NFT based voting.
+```
+
+```diff
+-   Status: DELETED
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd)
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+```
+
+```diff
+-   Status: DELETED
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb)
+    +++ description: Used as entrypoint to transact using smartwallets and UserOps.
+```
+
+```diff
+-   Status: DELETED
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc)
+    +++ description: Central contract for bridging via the external socket bridge.
+```
+
+```diff
+-   Status: DELETED
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b)
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+```
+
+```diff
+-   Status: DELETED
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828)
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+```
+
+```diff
+-   Status: DELETED
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75)
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+```
+
+```diff
+-   Status: DELETED
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739)
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7)
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+```
+
+```diff
++   Status: CREATED
+    contract NioGuardians (0x0100005D52Be9ab3ccE0C70Abf6F6FA2C48e91C9)
+    +++ description: Contract using NFTs as voting tokens to be used by Nio Guardians in the NioGovernor.
+```
+
+```diff
++   Status: CREATED
+    contract NioGovernor (0x010600ff5f36C8eF3b6Aaf2A88C2DE85C798594a)
+    +++ description: Governance contract allowing token- and NFT based voting.
+```
+
+```diff
++   Status: CREATED
+    contract Faucet (0x0719D47A213149E2Ef8d3f5afDaDA8a8E22dfc03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SponsorPaymaster (0x1842a4EFf3eFd24c50B63c3CF89cECEe245Fc2bd)
+    +++ description: Paymaster used for user transactions eligible for sponsorship.
+```
+
+```diff
++   Status: CREATED
+    contract EntryPoint (0x2843C269D2a64eCfA63548E8B3Fc0FD23B7F70cb)
+    +++ description: Used as entrypoint to transact using smartwallets and UserOps.
+```
+
+```diff
++   Status: CREATED
+    contract Kinto Multisig 2 (0x2e2B1c42E38f5af81771e65D87729E57ABD1337a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Socket (0x3e9727470C66B1e77034590926CDe0242B5A3dCc)
+    +++ description: Central contract for bridging via the external socket bridge.
+```
+
+```diff
++   Status: CREATED
+    contract KintoAppRegistry (0x5A2b641b84b0230C8e75F55d5afd27f4Dbd59d5b)
+    +++ description: Central system contract defining addresses that are allowed to be called by EOAs. The modified Kinto node reads this configuration and drops all other transactions from EOAs (enforced by a modified state transition function). As a result, users can only transact using a canonical smart wallet.
+```
+
+```diff
++   Status: CREATED
+    contract BeaconKintoWallet (0x87f0eE85bF3198654900a422832157abBba30828)
+    +++ description: Beacon proxy for the KintoWallet smartwallet implementation that is used for all users.
+```
+
+```diff
++   Status: CREATED
+    contract KintoWalletFactory (0x8a4720488CA32f1223ccFE5A087e250fE3BC5D75)
+    +++ description: Deploys new KintoWallet smartwallets for users upon passing KYC checks. Also manages the beacon implementation for all KintoWallets and their recovery logic. KintoWallets can be funded with ETH via this contract.
+```
+
+```diff
++   Status: CREATED
+    contract BundleBulker (0x8d2D899402ed84b6c0510bB1ad34ee436ADDD20d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AccessManager (0xacC000818e5Bbd911D5d449aA81CB5cA24024739)
+    +++ description: OpenZeppelin AccessManager contract: Serves as a proxy contract defining the roles, permissions and delays to call functions in target contracts.
+```
+
+```diff
++   Status: CREATED
+    contract KintoID (0xf369f78E3A0492CC4e96a90dae0728A38498e9c7)
+    +++ description: Manages Kinto's KYC system: The KYC_PROVIDER roles responsible for managing the KYC status and KYC metadata of user wallets. Each KintoWallet checks the KYC status of its user in this contract as part of the signature check.
+```
+
 Generated with discovered.json: 0x7354ff588844fb7a711d80da28e80d74f79b5f2c
 
 # Diff at Thu, 03 Jul 2025 10:57:03 GMT:

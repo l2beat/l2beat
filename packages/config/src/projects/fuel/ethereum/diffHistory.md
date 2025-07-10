@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x81d9a30bc33a3eb6018a7e645a9a471000c8462b
+
+# Diff at Thu, 10 Jul 2025 08:13:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21630407
+- current block number: 21630407
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21630407 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Fuel Security Council (0x32da601374b38154f05904B16F44A1911Aa6f314)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x446f9d40cA491cf0788dacCAc4D16d5d8B4015Cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelERC20Gateway (0xa4cA04d02bfdC3A2DF56B9b6994520E69dF43F67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelMessagePortal (0xAEB0c00D0125A8a788956ade4f4F12Ead9f65DDf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FuelChainState (0xf3D20Db1D16A4D0ad2f280A5e594FF3c7790f130)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8d508883bcc7966363ecc4a3400a79eebec4871e
 
 # Diff at Tue, 18 Mar 2025 08:12:49 GMT:

@@ -1,3 +1,333 @@
+Generated with discovered.json: 0x39f36f0da992723efbdcdad9258a64265c0415c4
+
+# Diff at Thu, 10 Jul 2025 08:15:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22730615
+- current block number: 22730615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22730615 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
+-   Status: DELETED
+    contract CustomGateway (0x23122da8C581AA7E0d07A36Ff1f16F799650232f)
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (0x304807A7ed6c1296df2128E6ff3836e477329CD2)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWallet (0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1DaiGateway (0x97f63339374fCe157Aa8Ee27830172d2AF76A786)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract L1Escrow (0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3)
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Gateway (0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (0xc4448b71118c9071Bcb9734A0EAc55D18A153949)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayRouter (0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorWalletCreator (0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EdgeChallengeManager (0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688)
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b)
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+```
+
+```diff
++   Status: CREATED
+    contract CustomGateway (0x23122da8C581AA7E0d07A36Ff1f16F799650232f)
+    +++ description: Escrows deposited assets for the canonical bridge that are externally governed or need custom token contracts with e.g. minting rights or upgradeability.
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x304807A7ed6c1296df2128E6ff3836e477329CD2)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x35FBC5F03d86E88973B06Fb9C5a913D54AbdF731)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x4397fE1E959Ba81B9D5f1A9679Ddd891955A42d6)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWallet (0x6Ab7A2f1a4febCD40A58b0205bFDA9CAf614b779)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1DaiGateway (0x97f63339374fCe157Aa8Ee27830172d2AF76A786)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0xa07cD154340CC74EcF156FFB9fb378Ee29Ca71Cf)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract L1Escrow (0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3)
+    +++ description: Simple escrow that accepts tokens and allows to configure permissioned addresses that can access the tokens.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xaB9596a0aaF28bc798c453434EC2DC0F8F0bF921)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0xc4448b71118c9071Bcb9734A0EAc55D18A153949)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorWalletCreator (0xe05465Aab36ba1277dAE36aa27a7B74830e74DE4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xe0ba77e0E24de5369e3B268Ea79fDe716e2EC48b)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49)
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0xE7E8cCC7c381809BDC4b213CE44016300707B7Bd)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EdgeChallengeManager (0xFE66b18Ef1B943F8594A2710376Af4B01AcfA688)
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+```
+
 Generated with discovered.json: 0x50464301e2ddc220c7026e8ff7763e931456f887
 
 # Diff at Fri, 04 Jul 2025 12:19:11 GMT:

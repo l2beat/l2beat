@@ -1,3 +1,513 @@
+Generated with discovered.json: 0x0929df412f4f77f779a7600df1ecdca336c5c56e
+
+# Diff at Thu, 10 Jul 2025 08:15:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22779828
+- current block number: 22779828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22779828 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x015318c16AE443a20DE0A776dB06a59F0D279057)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+```
+
+```diff
+-   Status: DELETED
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
+-   Status: DELETED
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+```
+
+```diff
+-   Status: DELETED
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1GenesisUpgrade (0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xCe7a3dFcc35602155809920Ff65e093aa726f6cf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB)
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45)
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6)
+    +++ description: A custom contract allowing a 3/3 of 0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, 0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and 0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the 0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ServerNotifier (0xfca808A744735D9919EEBe4660B8Fd897456Ce31)
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x015318c16AE443a20DE0A776dB06a59F0D279057)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x13f07d9BF17615f6a17F272fe1A913168C275A66)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x178D8Eb1A1fb81B5102808A83318Bb04C6a9fC6D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x2A90830083C5Ca1f18d7AA7fCDC2998f93475384)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraAdminProxy (0x2cf3bD6a9056b39999F3883955E183F655345063)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: The main registry (hub) for all the contracts in the ZK stack cluster and central entrypoint for bridge transactions. Stores important mappings like from chainId to diamond address, from chainId to parent CTM, from chainId to base token etc. A clone of Bridgehub is also deployed on each L2 chain, but this clone is only used on settlement layers.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x34Ea62D4b9bBB8AD927eFB6ab31E3Ab3474aC93a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x35eA56fd9eAd2567F339Eb9564B6940b9DD5653F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x3888777686F0b0d8c3108fc22ad8DE9E049bE26F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x538612F6eba6ff80FBD95D60dCDee16b8FfF2c0f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x55c671BcE13120387Ded710A1d1b80C0e3d8E857)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x590926dBCDfD19627c3BbD2A6Eb96DeC7a3AbF69)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageRoot (0x5Ce9257755391D1509cD4eC1899d3F88A57BB4aD)
+    +++ description: Aggregates remote bridge message roots from all ZK stack chains. To be used with the Gateway when deployed.
+```
+
+```diff
++   Status: CREATED
+    contract Guardians (0x600dA620Ab29F41ABC6596a15981e14cE58c86b8)
+    +++ description: Custom Multisig implementation that has a general threshold of 5 and a specific threshold for extending the legal voting period of 2.
+```
+
+```diff
++   Status: CREATED
+    contract CTMDeploymentTracker (0x6078F6B379f103de1Aa912dc46bb8Df0c8809860)
+    +++ description: Asset deployment tracker where the 'asset' is a ChainTypeManager. The registering of asset IDs for ChainTypeManagers is necessary to be able to migrate them to a given settlement layer, for example the Gateway.
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncil (0x66E4431266DC7E04E7d8b7FE9d2181253df7F410)
+    +++ description: Custom Multisig implementation that has a general threshold of 9 but also specific thresholds for upgrade approvals (6) or soft freezes (3).
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x69462a81ba94D64c404575f1899a464F123497A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6D26874130A174839b9cd8CB87Ed4E09D0c1a5f0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RollupL1DAValidator (0x72213dfe8CA61B0A782970dCFebFb877778f9119)
+    +++ description: Contract that verifies the data availability of ethereum calldata and blobs. Can be used by ZK stack rollups as the L1 part of a DAValidator pair.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x725065b4eB99294BaaE57AdDA9c32e42F453FA8A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1GenesisUpgrade (0x7Dde6ce8Ee4865f4BBD134d3BE827DBE5282100E)
+    +++ description: Diamond implementation code to initialize new ZK chains. Used to set their chainID.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x84BF0Ac41Eeb74373Ddddae8b7055Bf2bD3CE6E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1AssetRouter (0x8829AD80E425C646DAB305381ff105169FeEcE56)
+    +++ description: Part of the v26 upgrade: Canonical central asset router for all ZK stack chains (not escrowing funds).
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B39Ea22e838B316Ea7D74e7C4B07d91D51ccA88)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x9B8Be3278B7F0168D82059eb6BAc5991DcdfA803)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xB7aC3A79A23B148c85fba259712c5A1e7ad0ca44)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZK Foundation Multisig (0xbC1653bd3829dfEc575AfC3816D4899cd103B51c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1NativeTokenVault (0xbeD1EB542f9a5aA6419Ff3deb921A372681111f6)
+    +++ description: Canonical central asset escrow for all ZK stack chains.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainTypeManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: Defines L2 diamond contract versions, creation and upgrade data and the proof system for all ZK stack chains connected to it. ZK chains are children of this central contract and can only upgrade to versions that were previously registered here. The current protocol version is 0,28,0.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xc3Abc9f9AA75Be8341E831482cdA0125a7B1A23e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xCe7a3dFcc35602155809920Ff65e093aa726f6cf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1Nullifier (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB)
+    +++ description: Contract responsible for bookkeeping L1 bridging transactions. Used to finalize withdrawals and reclaim failed deposits. Does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract ProtocolUpgradeHandler (0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3)
+    +++ description: The central upgrade contract and Governance proxy for all ZK stack contracts. Accepts successful DAO proposals from L2 and emergency proposals from the EmergencyUpgradeBoard. The three members of the EmergencyUpgradeBoard also have special roles and permissions in this contract.
+```
+
+```diff
++   Status: CREATED
+    contract RollupDAManager (0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45)
+    +++ description: Simple registry for allowed DA address pairs for the 'rollup' data availability mode (can be permanently enforced with isPermanentRollup=true). Rollup DA address pairs (especially the L1 part) usually point to contracts that validate if data was made available on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyUpgradeBoard (0xECE8e30bFc92c2A8e11e6cb2e17B70868572E3f6)
+    +++ description: A custom contract allowing a 3/3 of eth:0x66E4431266DC7E04E7d8b7FE9d2181253df7F410, eth:0xbC1653bd3829dfEc575AfC3816D4899cd103B51c and eth:0x600dA620Ab29F41ABC6596a15981e14cE58c86b8 to `executeEmergencyUpgrade()` via the eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xFB90Da9DC45378A1B50775Beb03aD10C7E8DC231)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ServerNotifier (0xfca808A744735D9919EEBe4660B8Fd897456Ce31)
+    +++ description: A simple contract that can be called by the ChainAdmin to emit notifications about chain migrations.
+```
+
 Generated with discovered.json: 0x09a71207920680fae295ec6ddefb75a5616264a4
 
 # Diff at Fri, 04 Jul 2025 12:19:20 GMT:

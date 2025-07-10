@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x3cbf62ee0a5c85d16d0b7cfc232a83c83214dd1f
+
+# Diff at Thu, 10 Jul 2025 08:14:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22615678
+- current block number: 22615678
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615678 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract AddressManager (0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21)
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+```
+
+```diff
+-   Status: DELETED
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
+-   Status: DELETED
+    contract L1CrossDomainMessenger (0x97BAf688E5d0465E149d1d5B497Ca99392a6760e)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
+-   Status: DELETED
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
+```diff
++   Status: CREATED
+    contract AddressManager (0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e)
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract BalanceClaimer (0x0Ca4C7A370E0155c77a33e78443a54D749E0BC21)
+    +++ description: Allows proving ERC20 and/or ETH balances of L2 accounts with a merkle proof and without having to trigger a withdrawal transaction on the L2. The merkle root is immutable and set upon creation of this contract.
+```
+
+```diff
++   Status: CREATED
+    contract PgnMultisig (0x39E13D1AB040F6EA58CE19998edCe01B3C365f84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Conduit Multisig 1 (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SystemConfig (0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9)
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+```
+
+```diff
++   Status: CREATED
+    contract L1CrossDomainMessenger (0x97BAf688E5d0465E149d1d5B497Ca99392a6760e)
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+```
+
+```diff
++   Status: CREATED
+    contract L2OutputOracle (0xA38d0c4E6319F9045F20318BA5f04CDe94208608)
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots.
+```
+
+```diff
++   Status: CREATED
+    contract OptimismPortal (0xb26Fd985c5959bBB382BAFdD0b879E149e48116c)
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xc6A8d2c5d0F068BE745f6A770378F01ca1714cc4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1StandardBridge (0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b)
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+```
+
 Generated with discovered.json: 0x63daf3d7514f5b329e8deb6a89e142f234eebcb0
 
 # Diff at Fri, 04 Jul 2025 12:19:16 GMT:

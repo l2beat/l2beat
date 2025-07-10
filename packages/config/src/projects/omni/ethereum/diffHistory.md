@@ -1,3 +1,213 @@
+Generated with discovered.json: 0x9f73aef8d03352af94e6970b371d3be1bce5c90d
+
+# Diff at Thu, 10 Jul 2025 08:15:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22630069
+- current block number: 22630069
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22630069 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba)
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e)
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TokenFactory (0x71d5ba4e37de72415F685490B684538Aae8f0424)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroAdapter (0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PermittableToken (0x7c24d0061b484B267F286aa2DCe891220Db254b3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671)
+    +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9)
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+```
+
+```diff
+-   Status: DELETED
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+```
+
+```diff
+-   Status: DELETED
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8)
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    +++ description: Custom Multisignature contract for Validators.
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
+```diff
++   Status: CREATED
+    contract Yaru (0x30f64a297cc66a873FB603d1e89D5891962C25ba)
+    +++ description: Contract handling inbound messages for the Hashi protocol.
+```
+
+```diff
++   Status: CREATED
+    contract Gnosis Bridge Multisig (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DaiForeignBridge (0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016)
+    +++ description: Token bridge implementation and escrow for DAI-related tokens. Escrowed Dai can be invested in the Spark protocol for sDai.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignAMB (0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e)
+    +++ description: Arbitrary Message Bridge validated by the BridgeValidators. Can be used for token bridges or any other cross-chain messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Hashi Multisig (0x670a3e447F4DE92C012777Ac5591D81E12aD0957)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenFactory (0x71d5ba4e37de72415F685490B684538Aae8f0424)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroAdapter (0x7606e9d8655e48159E7beC8541C2E71A7Aa3E418)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermittableToken (0x7c24d0061b484B267F286aa2DCe891220Db254b3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ForeignOmnibridge (0x88ad09518695c6c3712AC10a214bE5109a655671)
+    +++ description: Token bridge implementation and escrow for ERC-20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager_Omni (0x93f6eE78451AaCc1Db1db49a12aBfCc4662B9Cc9)
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+```
+
+```diff
++   Status: CREATED
+    contract HashiManager_DAI (0x9acCFAD714A1e670CD1f6dc666FE892d1d5547BD)
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+```
+
+```diff
++   Status: CREATED
+    contract Hashi (0xA86bc62Ac53Dc86687AB6C15fdebC71ad51fB615)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Yaho (0xbAE4Ebbf42815BB9Bc3720267Ea4496277d60DB8)
+    +++ description: Contract handling outbound messages for the Hashi protocol.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators_DAI (0xe1579dEbdD2DF16Ebdb9db8694391fa74EeA201E)
+    +++ description: Custom Multisignature contract for Validators.
+```
+
+```diff
++   Status: CREATED
+    contract BridgeValidators_Omni (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064)
+    +++ description: Custom multisignature contract for Validator addresses.
+```
+
 Generated with discovered.json: 0xdba0cfe7b3a32d76a6203a8068736f66920d2351
 
 # Diff at Fri, 04 Jul 2025 12:19:11 GMT:

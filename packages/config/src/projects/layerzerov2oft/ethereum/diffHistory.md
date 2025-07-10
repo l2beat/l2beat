@@ -1,3 +1,561 @@
+Generated with discovered.json: 0x40df82298a3d25d29497cad24efd3a1c752239da
+
+# Diff at Thu, 10 Jul 2025 08:13:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22882451
+- current block number: 22882451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882451 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDT0DVN (0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7087B8011caC9541b388B639a1460D9cbA4eA0A2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
+-   Status: DELETED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WTIA_OFTAdapter (0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TBankOFT (0x1762c17f671FA27cE6C59256f5F28242de9274d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TRESTLE_OFTAdapter (0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlockedMessageLib (0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DineroOFTLockbox (0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedFraxEtherOFTAdapter (0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedUSDeOFTAdapter (0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FraxSharesOFTAdapter (0x23432452B720C80553458496D4D9d7C5003280d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmZkMptValidator (0x276816F1931aFac123BdaeA54afF02BE6fd73e14)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract HorizenDVN (0x380275805876Ff19055EA900CDb2B46a94ecF20D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EvmMptValidator (0x38C967856d17E900042Af447B3346bfF26C8ed4B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDT0DVN (0x3b0531eB02Ab4aD72e7a531180beeF9493a00dD2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CyberTokenAdapter (0x3d2fe83ea885C2E43A422C82C738847669708210)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MysoOFTAdapter (0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ENAOFTAdapter (0x58538e6A46E07434d7E7375Bc268D3cb839C0133)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZeroDVN (0x589dEDbD617e0CBcB916A9223F4d1300c294236b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDeOFTAdapter (0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ParamOFTAdapter (0x6182995916d79DeDb60db1570776F9994fCdCA0a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OAdapterUpgradeable (0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x7087B8011caC9541b388B639a1460D9cbA4eA0A2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MyOFTAdapter (0x801642B6efB861fE624dAD704b7A747779d9B433)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RSETH_OFTAdapter (0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolyhedraDVN (0x8ddF05F9A5c488b4973897E278B58895bF87Cb24)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVNFeeLib (0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WooTokenOFTAdapter (0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DVNFeeLib (0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+```diff
++   Status: CREATED
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CyberTokenAdapter (0xCB07992DE144bDeE56fDb66Fff2454B43243b052)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GoogleCloudDVN (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KinetixFinanceTokenOFTAdapter (0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract StakedFraxOFTAdapter (0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MaviaOFTAdapter (0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EtherFiOFTAdapter (0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x06c12da1b3d86c99be7c6149525a92d60a49982f
 
 # Diff at Wed, 09 Jul 2025 15:14:40 GMT:

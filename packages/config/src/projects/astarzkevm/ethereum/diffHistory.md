@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x135c14771808b02ba7914cd76a68822e6e6f4786
+
+# Diff at Thu, 10 Jul 2025 08:13:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+```
+
+```diff
+-   Status: DELETED
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x0775e11309d75aA6b0967917fB0213C5673eDf81)
+    +++ description: Verifies ZK proofs for state roots of this Layer 2 via the PolygonRollupManager.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Validium (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80)
+    +++ description: The main system contract defining the Astar zkEVM Layer 2 logic. Entry point for sequencing batches.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonDataCommittee (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0)
+    +++ description: Manages the members of the data availability committee (DAC) and the threshold for accepting commitments from them (Currently 5/3).
+```
+
+```diff
++   Status: CREATED
+    contract AstarMultisig (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x92ebd0b3af03d0ab10522bfab54a40c00ec8c50a
 
 # Diff at Fri, 04 Jul 2025 12:18:53 GMT:

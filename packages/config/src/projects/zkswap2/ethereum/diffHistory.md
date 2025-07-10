@@ -1,3 +1,141 @@
+Generated with discovered.json: 0x8bedcdbc767035a66c56484cfa8eac8e9cdbe88e
+
+# Diff at Thu, 10 Jul 2025 08:15:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 16767881
+- current block number: 16767881
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16767881 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract UpgradeGatekeeper (0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Verifier (0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkSync (0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Governance (0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkSwapListing (0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierExit (0xb56878d21F6b101f48bb55f1AA9D3F624f04E513)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkSyncExit (0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UniswapV2Factory (0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ZkSyncCommitBlock (0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Zks Token (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeGatekeeper (0x0DCCe462ddEA102D3ecf84A991d3ecFC251e02C7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Verifier (0x42F15EFE22993C88441EF3467f2E6Fa8FFA9ADef)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSync (0x6dE5bDC580f55Bc9dAcaFCB67b91674040A247e3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Governance (0x86E527BC3C43E6Ba3eFf3A8CAd54A7Ed09cD8E8B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSwapListing (0xb3BFC153d60f51Fb10E69B04f5f7D2735fA0619E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierExit (0xb56878d21F6b101f48bb55f1AA9D3F624f04E513)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSyncExit (0xC0221a4Dfb792AA71CE84C2687b1D2b1E7D3eea0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UniswapV2Factory (0xD2cbDcd7C6b3152BdFf6549C208052E4DBcd575D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkSyncCommitBlock (0xE26Ebb18144CD2d8DCB14cE87fdCfbEb81baCAD4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Zks Token (0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xea81adf3cc32cf30dae8dde40fe6ec638e860378
 
 # Diff at Fri, 04 Jul 2025 12:19:31 GMT:

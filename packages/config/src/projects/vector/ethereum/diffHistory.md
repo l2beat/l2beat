@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x9bf366ad824542ae30842710a85fb52132808d47
+
+# Diff at Thu, 10 Jul 2025 10:31:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@02e286046e930bb2f29cd437a366d7035cafe46c block: 22882091
+- current block number: 22882091
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22882091 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the 0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
+-   Status: DELETED
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Vector (0x02993cdC11213985b9B13224f3aF289F03bf298d)
+    +++ description: The Vector bridge contract that accepts and stores Avail data availability commitments on Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract AvailBridgeV1 (0x054fd961708D8E2B9c10a63F6157c74458889F0a)
+    +++ description: Bridge contract that verifies merkle proofs of inclusion in the proven data of the eth:0x02993cdC11213985b9B13224f3aF289F03bf298d DA- and arbitrary message bridge. Also used for token- and arbitrary message transfers between Avail and Ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487)
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+```
+
+```diff
++   Status: CREATED
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xf66dae769acb818d1676f99aaceffd4713363fa1
 
 # Diff at Wed, 09 Jul 2025 15:10:16 GMT:

@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x81b57c9a29f5fe1562712fe0b2e630f09a133c55
+
+# Diff at Thu, 10 Jul 2025 08:13:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22423754
+- current block number: 22423754
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22423754 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract NearProver (0x051AD3F020274910065Dcb421629cd2e6E5b46c4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NearProver (0x051AD3F020274910065Dcb421629cd2e6E5b46c4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Locker (0x23Ddd3e3692d1861Ed57EDE224608875809e127f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NearBridge (0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthCustodian (0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xa979a7c4c6a6787c854deee099c4fafdb0198089
 
 # Diff at Tue, 06 May 2025 09:24:59 GMT:

@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "NearProver",
-      "address": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4",
+      "address": "eth:0x051AD3F020274910065Dcb421629cd2e6E5b46c4",
       "type": "Contract",
       "sourceHashes": [
         "0xcd16841a968d4ea28094de73ada515cdb0661691dec1b02c5c9e86a08bcc5d06"
@@ -16,22 +16,22 @@
       "sinceBlock": 12040114,
       "values": {
         "$immutable": true,
-        "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
-        "bridge": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
+        "admin": "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+        "bridge": "eth:0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
         "paused": 0
       },
       "implementationNames": {
-        "0x051AD3F020274910065Dcb421629cd2e6E5b46c4": "NearProver"
+        "eth:0x051AD3F020274910065Dcb421629cd2e6E5b46c4": "NearProver"
       }
     },
     {
-      "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
+      "address": "eth:0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ERC20Locker",
-      "address": "0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
+      "address": "eth:0x23Ddd3e3692d1861Ed57EDE224608875809e127f",
       "type": "Contract",
       "sourceHashes": [
         "0x74501db8a51bd105da4453dc8907e59a99756bc2651ce3a861485f0ffe7cf724"
@@ -41,19 +41,19 @@
       "sinceBlock": 12044301,
       "values": {
         "$immutable": true,
-        "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+        "admin": "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "minBlockAcceptanceHeight_": 0,
         "nearTokenFactory_": "0x666163746f72792e6272696467652e6e656172",
         "paused": 1,
-        "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
+        "prover_": "eth:0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
       },
       "implementationNames": {
-        "0x23Ddd3e3692d1861Ed57EDE224608875809e127f": "ERC20Locker"
+        "eth:0x23Ddd3e3692d1861Ed57EDE224608875809e127f": "ERC20Locker"
       }
     },
     {
       "name": "BridgeAdminMultisig",
-      "address": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+      "address": "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -66,13 +66,13 @@
       "sinceBlock": 13896975,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "$members": [
-          "0xed9cB50304991951Cbee747900484E9a041DA464",
-          "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9",
-          "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
-          "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
-          "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6"
+          "eth:0xed9cB50304991951Cbee747900484E9a041DA464",
+          "eth:0xF58096A602C960c841Bd83A29DE21c808a9c1ac9",
+          "eth:0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
+          "eth:0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
+          "eth:0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6"
         ],
         "$threshold": 3,
         "domainSeparator": "0xadd1d90156bb9f0a8efcb7fdef0939a9c716c2510c568de7971a1235e7a17948",
@@ -83,13 +83,13 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Proxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1": "Proxy",
+        "eth:0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
       }
     },
     {
       "name": "NearBridge",
-      "address": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
+      "address": "eth:0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
       "type": "Contract",
       "sourceHashes": [
         "0x52e85c821a158edace9ff11f0bda7524bc7bee826844981293fd48259887aaf1"
@@ -100,7 +100,7 @@
       "sinceBlock": 15617816,
       "values": {
         "$immutable": true,
-        "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+        "admin": "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "bridgeState": {
           "currentHeight": 145275873,
           "nextTimestamp": 0,
@@ -115,12 +115,12 @@
         "replaceDuration": 18000000000000
       },
       "implementationNames": {
-        "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873": "NearBridge"
+        "eth:0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873": "NearBridge"
       }
     },
     {
       "name": "EthCustodian",
-      "address": "0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52",
+      "address": "eth:0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52",
       "type": "Contract",
       "sourceHashes": [
         "0x38ac1699854c55e7085ee14f17acf067140394f315915c61dbb7aed0ff7bce59"
@@ -130,33 +130,33 @@
       "sinceBlock": 12702964,
       "values": {
         "$immutable": true,
-        "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
+        "admin": "eth:0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
         "minBlockAcceptanceHeight_": 0,
         "nearProofProducerAccount_": "0x6175726f7261",
         "paused": 3,
-        "prover_": "0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
+        "prover_": "eth:0x051AD3F020274910065Dcb421629cd2e6E5b46c4"
       },
       "implementationNames": {
-        "0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52": "EthCustodian"
+        "eth:0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52": "EthCustodian"
       }
     },
     {
-      "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",
+      "address": "eth:0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
+      "address": "eth:0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xed9cB50304991951Cbee747900484E9a041DA464",
+      "address": "eth:0xed9cB50304991951Cbee747900484E9a041DA464",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9",
+      "address": "eth:0xF58096A602C960c841Bd83A29DE21c808a9c1ac9",
       "type": "EOA",
       "proxyType": "EOA"
     }
@@ -300,5 +300,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x41909351affa29d872c1c1c9eed1d36487d4932860568ff3d3dff8c192b484fd"
+  "permissionsConfigHash": "0xd31262ff8f3a3c7571455b90024c9dc6b5d2ac1554a1c6657e8364408d501793"
 }

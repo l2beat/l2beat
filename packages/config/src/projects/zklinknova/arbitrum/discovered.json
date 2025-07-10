@@ -5,13 +5,13 @@
   "configHash": "0x3c4e4c94b29d71fa64a25d066682ff534b64d08e809c9dd5338f8b77af694ec4",
   "entries": [
     {
-      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+      "address": "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ArbitrumProxyAdmin",
-      "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
+      "address": "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917",
       "type": "Contract",
       "template": "global/ProxyAdmin",
       "sourceHashes": [
@@ -29,36 +29,36 @@
       "sinceBlock": 186015816,
       "values": {
         "$immutable": true,
-        "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "owner": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "implementationNames": {
-        "0x48698A17D193bFc882395AC06a1DEdbb222F2917": "ProxyAdmin"
+        "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917": "ProxyAdmin"
       }
     },
     {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+      "address": "arb1:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
+      "address": "arb1:0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+      "address": "arb1:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
+      "address": "arb1:0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "ArbitrumL2Gateway",
-      "address": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+      "address": "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
       "type": "Contract",
       "template": "zklinknova/secondaryGateway",
       "sourceHashes": [
@@ -69,34 +69,34 @@
       "sinceTimestamp": 1709280477,
       "sinceBlock": 185950532,
       "values": {
-        "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
-        "$implementation": "0x413552461b0b2c13f117d885b52AaA2f23374B1D",
+        "$admin": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "$implementation": "arb1:0x413552461b0b2c13f117d885b52AaA2f23374B1D",
         "$pastUpgrades": [
           [
             "2024-03-01T08:07:57.000Z",
             "0xaa8e1f332b3da71bb09cffdf5b797cdf7bc285cfad780a78d294c02619dba31e",
-            ["0xA194FB4EaB262EC9886A119609bbB2800bdD3a2E"]
+            ["arb1:0xA194FB4EaB262EC9886A119609bbB2800bdD3a2E"]
           ],
           [
             "2024-03-09T10:55:57.000Z",
             "0x2bc75a8c67da17b0d0c4543bfc3bbc51248fba5b4430ecf3f8836fe83d7b065a",
-            ["0x413552461b0b2c13f117d885b52AaA2f23374B1D"]
+            ["arb1:0x413552461b0b2c13f117d885b52AaA2f23374B1D"]
           ]
         ],
         "$upgradeCount": 2,
-        "ARB_SYS": "0x0000000000000000000000000000000000000064",
-        "getRemoteGateway": "0x273D59aed2d793167c162E64b9162154B07583C0",
-        "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
-        "ZKLINK": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+        "ARB_SYS": "arb1:0x0000000000000000000000000000000000000064",
+        "getRemoteGateway": "arb1:0x273D59aed2d793167c162E64b9162154B07583C0",
+        "owner": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "ZKLINK": "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
       },
       "implementationNames": {
-        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a": "ERC1967Proxy",
-        "0x413552461b0b2c13f117d885b52AaA2f23374B1D": "ArbitrumL2Gateway"
+        "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a": "ERC1967Proxy",
+        "arb1:0x413552461b0b2c13f117d885b52AaA2f23374B1D": "ArbitrumL2Gateway"
       }
     },
     {
       "name": "ArbitrumOwner",
-      "address": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+      "address": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
       "type": "Contract",
       "template": "GnosisSafe",
       "sourceHashes": [
@@ -136,16 +136,16 @@
       "sinceBlock": 123482330,
       "values": {
         "$immutable": false,
-        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$implementation": "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "$members": [
-          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
-          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
-          "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-          "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
-          "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-          "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+          "arb1:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+          "arb1:0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "arb1:0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "arb1:0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "arb1:0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+          "arb1:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+          "arb1:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+          "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
         "$threshold": 5,
         "domainSeparator": "0x70189526041e726b8e6b9136d0cb3a30f79f9b1db8c058c5219e47af0665e3c5",
@@ -156,38 +156,38 @@
         "VERSION": "1.3.0"
       },
       "implementationNames": {
-        "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F": "GnosisSafeProxy",
-        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
+        "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F": "GnosisSafeProxy",
+        "arb1:0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
     },
     {
-      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
+      "address": "arb1:0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
+      "address": "arb1:0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
+      "address": "arb1:0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+      "address": "arb1:0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+      "address": "arb1:0xF801886AE2e127A269B0F11892edb54F692d02dF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "L1ERC20Bridge",
-      "address": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
+      "address": "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
       "type": "Contract",
       "sourceHashes": [
         "0x8c407edc4ac1fa1cea2c45903e2cf0158906a2ff39fc2eb92aca3ca9f0d43ed8",
@@ -197,33 +197,33 @@
       "sinceTimestamp": 1709296973,
       "sinceBlock": 186015816,
       "values": {
-        "$admin": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
-        "$implementation": "0x1202e0557A23531D09015C802e993d6423685FfB",
+        "$admin": "arb1:0x48698A17D193bFc882395AC06a1DEdbb222F2917",
+        "$implementation": "arb1:0x1202e0557A23531D09015C802e993d6423685FfB",
         "$pastUpgrades": [
           [
             "2024-03-01T12:42:53.000Z",
             "0x4879e7a6e35cdd40863e69eec2b64cafa514ca68ea8b4b9942c9624a18bfa2bf",
-            ["0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]
+            ["arb1:0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"]
           ],
           [
             "2024-04-04T06:25:57.000Z",
             "0x99c592973087e232fa0685460c1e5992ef3a5cd0d80e8c6739d738b08787bece",
-            ["0x1202e0557A23531D09015C802e993d6423685FfB"]
+            ["arb1:0x1202e0557A23531D09015C802e993d6423685FfB"]
           ]
         ],
         "$upgradeCount": 2,
-        "l2Bridge": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
-        "l2TokenBeacon": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
+        "l2Bridge": "arb1:0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
+        "l2TokenBeacon": "arb1:0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
       },
       "implementationNames": {
-        "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": "TransparentUpgradeableProxy",
-        "0x1202e0557A23531D09015C802e993d6423685FfB": "L1ERC20Bridge"
+        "arb1:0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585": "TransparentUpgradeableProxy",
+        "arb1:0x1202e0557A23531D09015C802e993d6423685FfB": "L1ERC20Bridge"
       }
     },
     {
       "name": "zkLink",
-      "address": "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
+      "address": "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
       "type": "Contract",
       "template": "zklinknova/secondaryZkLink",
       "sourceHashes": [
@@ -242,23 +242,23 @@
       "sinceTimestamp": 1709280428,
       "sinceBlock": 185950340,
       "values": {
-        "$admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
-        "$implementation": "0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305",
+        "$admin": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "$implementation": "arb1:0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305",
         "$pastUpgrades": [
           [
             "2024-03-01T08:07:08.000Z",
             "0x188f9617f4266ba6c55c01e49a2b918860f60ab012dd921f7a6bbf2478380b4b",
-            ["0x50efC7f1290479cb879473512D89fDC80B726211"]
+            ["arb1:0x50efC7f1290479cb879473512D89fDC80B726211"]
           ],
           [
             "2024-03-09T10:39:17.000Z",
             "0x2d6ab13f653c95e66eb8f995ecec5218aaa69dc457d8c314d5c0df3383b0a7eb",
-            ["0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"]
+            ["arb1:0x04C6a52f3bf9F73618cD70F234AdB95a73325D1e"]
           ],
           [
             "2024-04-22T02:29:43.000Z",
             "0x22f2009bf7f9c0cec80080ccd77d22c1bcf8e318cc2d2a442cae078746f19a6e",
-            ["0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305"]
+            ["arb1:0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305"]
           ]
         ],
         "$upgradeCount": 3,
@@ -271,15 +271,15 @@
           "minimalL2GasPrice": 250000000
         },
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "forwardFeeAllocator": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
-        "gateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
-        "getGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
-        "getGovernor": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "forwardFeeAllocator": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "gateway": "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+        "getGateway": "arb1:0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+        "getGovernor": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "getPriorityTxMaxGasLimit": 72000000,
         "getTotalBatchesExecuted": 50873,
         "getTotalPriorityTxs": 138989,
         "IS_ETH_GAS_TOKEN": true,
-        "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
+        "owner": "arb1:0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "paused": true,
         "totalBatchesExecuted": 50873,
         "totalPriorityTxs": 138989,
@@ -289,8 +289,8 @@
         "txGasPrice": 40000000000
       },
       "implementationNames": {
-        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A": "ERC1967Proxy",
-        "0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305": "ZkLink"
+        "arb1:0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A": "ERC1967Proxy",
+        "arb1:0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305": "ZkLink"
       }
     }
   ],
@@ -510,5 +510,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
+  "permissionsConfigHash": "0x73fcc5ebb0b1fa6ab40075101747c8672838deb8a3759b4285e52232d4995192"
 }

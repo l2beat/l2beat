@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x5f07edc9f21c1226bf5aafb36ed91f46db9db0b4
+
+# Diff at Thu, 10 Jul 2025 08:13:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22567327
+- current block number: 22567327
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567327 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainportCongressMembersRegistry (0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xefcc99e1fbccb81bd35016288c6eb6e5352be81c
 
 # Diff at Fri, 04 Jul 2025 12:18:56 GMT:

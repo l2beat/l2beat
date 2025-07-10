@@ -1,3 +1,189 @@
+Generated with discovered.json: 0x563b1cd62ca3a338aed5fe845402bd7e8b12f0b9
+
+# Diff at Thu, 10 Jul 2025 08:15:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 83594372
+- current block number: 83594372
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83594372 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
+-   Status: DELETED
+    contract StandardArbERC20 (0x53923A0d1f4805463584c91b2E55d6c600A94E91)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
+-   Status: DELETED
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BeaconProxyFactory (0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewayRouter (0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8)
+    +++ description: Router managing token <–> gateway mapping on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2SurplusFee (0x509386DbF5C0BE6fd68Df97A05fdB375136c32De)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract StandardArbERC20 (0x53923A0d1f4805463584c91b2E55d6c600A94E91)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WethGateway (0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD)
+    +++ description: Counterpart to the Bridge on L1. Mints and burns WETH on L2.
+```
+
+```diff
++   Status: CREATED
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract L2BaseFee (0x9fCB6F75D99029f28F6F4a1d277bae49c5CAC79f)
+    +++ description: This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.
+```
+
+```diff
++   Status: CREATED
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ARBGateway (0xbf544970E6BD77b21C6492C281AB60d0770451F4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ERC20Gateway (0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257)
+    +++ description: Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0xd31Ed16a8CeCe0A5070AC26024674eB680E3e639)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BeaconProxyFactory (0xD9D66e55227c7558f0dB52adD059057Eb9bd90a3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2ArbitrumToken (0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x3b7ba7ee34a4fc483164cd3e1fcfd325cc7f9544
 
 # Diff at Fri, 04 Jul 2025 12:19:11 GMT:

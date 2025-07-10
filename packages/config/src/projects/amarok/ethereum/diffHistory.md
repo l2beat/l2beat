@@ -1,3 +1,573 @@
+Generated with discovered.json: 0xc9b5ef6b45bf224f30074b92c02ff49d411603c3
+
+# Diff at Thu, 10 Jul 2025 08:12:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22823809
+- current block number: 22823809
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22823809 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460)
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 3d. The rules for proposals can be read directly from the contract values.
+```
+
+```diff
+-   Status: DELETED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract xLayerZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconProxy (0x28A9e7bbed277092E2431F186E1aF898962d4E92)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+```
+
+```diff
+-   Status: DELETED
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer3 (0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF)
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
+```
+
+```diff
+-   Status: DELETED
+    contract LineaHubConnector (0x56Ab287e5c33Ee70158c951f34818bd095446255)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MantleHubConnector (0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimismHubConnector (0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayerProxyHub1 (0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+```
+
+```diff
+-   Status: DELETED
+    contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeBeaconProxy (0x7D2596D7E44b0990611d390Fbb0Bd24e64845694)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonZkHubConnector (0x7ed49D0a13255802A281C08688563bd8D5f726b1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ArbitrumHubConnector (0x83096c7455f24E593aaC9A7c73f849d36d3EEb82)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by 0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MetisHubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract WormholeHubConnector (0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayerProxyHub2 (0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+```
+
+```diff
+-   Status: DELETED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer7 (0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PolygonHubConnector (0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisHubConnector (0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NewWormholeHubConnector (0xf5a3372ed529FCD0690b6013EAaE04170ec0626b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Relayer11 (0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+```
+
+```diff
++   Status: CREATED
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticGovernor (0x172fB6b07D6aB708dd67392a09e1c40d16dA0460)
+    +++ description: Optimistic Governance module allowing for proposals by anyone with a bond of 2 WETH. They become executable if not challenged within 3d. The rules for proposals can be read directly from the contract values.
+```
+
+```diff
++   Status: CREATED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract xLayerZkHubConnector (0x279fDA9AdDB854541f0bb86733d924e28c24c625)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x28A9e7bbed277092E2431F186E1aF898962d4E92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Registry (0x3e532e6222afe9Bcf02DCB87216802c75D5113aE)
+    +++ description: Registry for contracts that are allowed to call `requestPrice()` in the UMA voting contracts (ie. request dispute resolution by the UMA DVM).
+```
+
+```diff
++   Status: CREATED
+    contract Finder (0x40f941E48A552bF496B154Af6bf55725f18D77c3)
+    +++ description: Maps interface names to contract addresses (UMA protocol contracts).
+```
+
+```diff
++   Status: CREATED
+    contract Relayer3 (0x43100A190C3FeAE37Cb1f5d880e8fa8d81BE5CB9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProposerV2 (0x50efaC9619225d7fB4703C5872da978849B6E7cC)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000 UMA tokens.
+```
+
+```diff
++   Status: CREATED
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Store (0x54f44eA3D2e7aA0ac089c4d8F7C93C27844057BF)
+    +++ description: UMA protocol contract responsible for calculating and collecting regular and final fees for using the DVM.
+```
+
+```diff
++   Status: CREATED
+    contract LineaHubConnector (0x56Ab287e5c33Ee70158c951f34818bd095446255)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleHubConnector (0x5B0E1a507E786f0a7c11C972ad5F4dd254661e24)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismHubConnector (0x5c2149869146DeA55cDD1CF2DD828e4e1548bb2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer10 (0x75bA5Af8EFFDCFca32E1e288806d54277D1fde99)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub1 (0x75C6A865c30da54e365Cb5Def728890B3DD8BDC4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GovernorV2 (0x7b292034084A41B9D441B71b6E3557Edd0463fa8)
+    +++ description: Central UMA governance contract. It executes administrative proposals that have been passed by UMA token holder votes.
+```
+
+```diff
++   Status: CREATED
+    contract ModeHubConnector (0x7b2bE683266909A6a4068e743083dd40621d663E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeBeaconProxy (0x7D2596D7E44b0990611d390Fbb0Bd24e64845694)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonZkHubConnector (0x7ed49D0a13255802A281C08688563bd8D5f726b1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UMA Multisig (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumHubConnector (0x83096c7455f24E593aaC9A7c73f849d36d3EEb82)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmergencyProposer (0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748)
+    +++ description: Token governance contract allowing anyone to create a UMA governance proposal for a bond of 5,000,000 UMA tokens. This circumvents the UMA optimistic oracle but can only be executed or removed after 10d, and only by eth:0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a.
+```
+
+```diff
++   Status: CREATED
+    contract Relayer5 (0x9B077C59fDe7de5AdCeF8093Bc38B61d43FC7007)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MetisHubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer1 (0xaBcC9b596420A9E9172FD5938620E265a0f9Df92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WormholeHubConnector (0xae6B9cDE6191b710F5A18D82f751Ba52B78a99DA)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub3 (0xB4F8D176466f5F544bAd53737bffAaeA17185c05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xBE2Ac45e75c14e9EEf9712a94Dce355f0151f5B1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract RelayerProxyHub2 (0xcDbF9D438670D19d1Fb3954Abc8a13666b302b28)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract IdentifierWhitelist (0xcF649d9Da4D1362C4DAEa67573430Bd6f945e570)
+    +++ description: Keeps a list of whitelisted identifiers that are accepted by the UMA v3 protocol. Across uses the identifier `ACROSS-V2` for its disputes.
+```
+
+```diff
++   Status: CREATED
+    contract AllowanceModule (0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract AddressWhitelist (0xdBF90434dF0B98219f87d112F37d74B1D90758c7)
+    +++ description: Implements a simple address whitelist for tokens that can be used as bonds and fees.
+```
+
+```diff
++   Status: CREATED
+    contract Relayer7 (0xe8a5eE73f3c8F1Cd55915f6Eb5Fc7df4206f3C78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PolygonHubConnector (0xE8cF9EbB1cFB137c692a0a4E470E257B9417d116)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xeD5cF41b0fD6A3C564c17eE34d9D26Eafc30619b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SkinnyOptimisticOracle (0xeE3Afe347D5C74317041E2618C49534dAf887c24)
+    +++ description: Validates bridge messages by allowing proposers to make bonded assertions about crosschain events. It enforces a challenge period during which any invalid claims can be disputed and escalated to UMA's Data Verification Mechanism (DVM) for resolution.
+```
+
+```diff
++   Status: CREATED
+    contract GnosisHubConnector (0xF1c78967584D5E0ffF66dA103b8eb06c82EC020d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0xf2964cCcB7CDA9e808aaBe8DB0DDDAF7890dd378)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NewWormholeHubConnector (0xf5a3372ed529FCD0690b6013EAaE04170ec0626b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Relayer11 (0xF9D64d54D32EE2BDceAAbFA60C4C438E224427d0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimisticOracleV3 (0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE)
+    +++ description: Standard UMA optimistic oracle contract that allows anyone to make an arbitrary claim by posting a bond. The claim is considered true unless it is successfully disputed within a challenge window, with UMA's DVM acting as the final arbiter for disputes.
+```
+
 Generated with discovered.json: 0x5b8deccd3b07da4c71a6e6191bb7d5d93f5f27aa
 
 # Diff at Fri, 04 Jul 2025 13:01:58 GMT:

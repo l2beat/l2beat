@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x82cbb884284c44c28083af94df05646fe9d55b71
+
+# Diff at Thu, 10 Jul 2025 08:13:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22673062
+- current block number: 22673062
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22673062 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+```
+
+```diff
+-   Status: DELETED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+```
+
+```diff
+-   Status: DELETED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
+-   Status: DELETED
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: A beacon with an upgradeable implementation currently set as 0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+```
+
+```diff
+-   Status: DELETED
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F)
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+```
+
+```diff
+-   Status: DELETED
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
+-   Status: DELETED
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TokenBridge (0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319)
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+```
+
+```diff
++   Status: CREATED
+    contract CallForwardingProxy (0x3697bD0bC6C050135b8321F989a5316eACbF367D)
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+```
+
+```diff
++   Status: CREATED
+    contract BridgedToken (0x36f274C1C197F277EA3C57859729398FCc8a3763)
+    +++ description: Standard implementation used for assets that are native to the Linea L2 and bridged back to ethereum.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0x41A4d93d09f4718fe899D12A4aD2C8a09104bdc7)
+    +++ description: Smart contract used to verify the proofs of Linea zkEVM execution.
+```
+
+```diff
++   Status: CREATED
+    contract Linea Multisig 1 (0x892bb7EeD71efB060ab90140e7825d8127991DD3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableBeacon (0x971f46a2852d11D59dbF0909e837cfd06f357DeB)
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+```
+
+```diff
++   Status: CREATED
+    contract Linea Multisig 2 (0xB8F5524D73f549Cf14A0587a3C7810723f9c0051)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LineaRollup (0xd19d4B5d358258f05D7B411E21A1460D11B0876F)
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.
+```
+
+```diff
++   Status: CREATED
+    contract L1Timelock (0xd6B95c960779c72B8C6752119849318E5d550574)
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierMainnetFull (0xED39C0C41A7651006953AB58Ecb3039363620995)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Roles (0xF24f1DC519d88246809B660eb56D94048575d083)
+    +++ description: The Zodiac 'Roles' module for Safe multisigs allows defining roles that can call preconfigured targets on behalf of the Gnosis Safe.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe92de2ef8956dd39f3816bc745167e8e5459129c
 
 # Diff at Fri, 04 Jul 2025 12:19:07 GMT:

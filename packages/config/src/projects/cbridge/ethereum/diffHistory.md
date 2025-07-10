@@ -1,3 +1,165 @@
+Generated with discovered.json: 0xf1625523d16f3bb4d04203616041f2519647c751
+
+# Diff at Thu, 10 Jul 2025 08:13:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 21628437
+- current block number: 21628437
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70)
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+```
+
+```diff
+-   Status: DELETED
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PeggedTokenBridge (0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageBus (0x4066D196A423b2b3B8B054f4F40efB47a74E200C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PeggedTokenBridgeV2 (0x52E4f244f380f8fA51816c8a10A63105dd4De084)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Liquidity Network (0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MessageBusOwner (0x606d8cFd3f4Ed07314F5A1F1802dd4663308b175)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OriginalTokenVaultV2 (0x7510792A3B1969F9307F3845CE88e39578f2bAE1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TransferAgent (0x9b274BC73940d92d0Af292Bde759cbFCCE661a0b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OriginalTokenVault (0xB37D31b2A74029B5951a2778F959282E2D518595)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70)
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+```
+
+```diff
++   Status: CREATED
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xd4b45f8c094600657730f5662dde9b615a9ec81f
 
 # Diff at Fri, 04 Jul 2025 12:18:56 GMT:

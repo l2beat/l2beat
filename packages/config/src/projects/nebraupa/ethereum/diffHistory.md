@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x42b8c66b155263313eedf328bf7db6b15787426c
+
+# Diff at Thu, 10 Jul 2025 08:13:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 22666223
+- current block number: 22666223
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666223 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xE990F8e3505391d2b42C80683d403A8371Ee88B9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpaVerifier (0x3B946743DEB7B6C97F05B7a31B23562448047E3E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0xE990F8e3505391d2b42C80683d403A8371Ee88B9)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x7bc5f160b64914eb447a9937561e6d114996da69
 
 # Diff at Fri, 04 Jul 2025 12:19:10 GMT:

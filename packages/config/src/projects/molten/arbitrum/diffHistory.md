@@ -1,3 +1,297 @@
+Generated with discovered.json: 0xf25cfac2dd8ceb208415bbc80c6691f14b1de10c
+
+# Diff at Thu, 10 Jul 2025 08:12:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b92b4c59c14c9cd2f4e072498dc1bcf695d33787 block: 355930087
+- current block number: 355930087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 355930087 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
+-   Status: DELETED
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2)
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+```
+
+```diff
+-   Status: DELETED
+    contract CertManager (0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x59CDE86f1a538a7a2329269d3704CA302DF23736)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
+-   Status: DELETED
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
+-   Status: DELETED
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoTEEVerifier (0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
+-   Status: DELETED
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x7E67B50d510929610f840fb09707feA01b8E457B)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
+-   Status: DELETED
+    contract RollupEventInbox (0x9676D55Ccd46ce72235b16bA645008D1D3350B14)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorUtils (0x9e83136d4B3AD04C766591EA51712F9aEa3194C0)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
+-   Status: DELETED
+    contract GatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract Outbox (0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
+-   Status: DELETED
+    contract Bridge (0xE1d32C985825562edAa906fAC39295370Db72195)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xe3b13e7b160aE4b799A7B3F9877316e717706291)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
+-   Status: DELETED
+    contract EspressoNitroTEEVerifier (0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+```diff
++   Status: CREATED
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0)
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+```
+
+```diff
++   Status: CREATED
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2)
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Inbox (0x235000876bd58336C802B3546Fc0250f285fCc79)
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x23b7734232dA19D2Cf73010a25C8Ffc4eBfc2f5f)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0x59CDE86f1a538a7a2329269d3704CA302DF23736)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ERC20Gateway (0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80)
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (arb1:0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+```
+
+```diff
++   Status: CREATED
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract ChallengeManager (0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1)
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x7d46570d3Cd9D8F5e01bad3144141a031a94d7B8)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine. This version uses the Blobstream DA bridge (arb1:0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794) as source of truth for the DA referenced by the fault proof.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0x7E67B50d510929610f840fb09707feA01b8E457B)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d)
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+```
+
+```diff
++   Status: CREATED
+    contract RollupEventInbox (0x9676D55Ccd46ce72235b16bA645008D1D3350B14)
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+```
+
+```diff
++   Status: CREATED
+    contract ValidatorUtils (0x9e83136d4B3AD04C766591EA51712F9aEa3194C0)
+    +++ description: This contract implements view only utilities for validators.
+```
+
+```diff
++   Status: CREATED
+    contract GatewayRouter (0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF)
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+```
+
+```diff
++   Status: CREATED
+    contract Outbox (0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B)
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+```
+
+```diff
++   Status: CREATED
+    contract Bridge (0xE1d32C985825562edAa906fAC39295370Db72195)
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0xe3b13e7b160aE4b799A7B3F9877316e717706291)
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
 Generated with discovered.json: 0xf79139165dc203d83770aa83f5d89787bb43af62
 
 # Diff at Wed, 09 Jul 2025 15:59:47 GMT:

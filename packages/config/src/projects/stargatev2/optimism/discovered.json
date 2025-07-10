@@ -6,7 +6,7 @@
   "entries": [
     {
       "name": "StargatePoolMigratable",
-      "address": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+      "address": "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
       "type": "Contract",
       "template": "stargate/StargatePoolMigratable",
       "sourceHashes": [
@@ -26,39 +26,39 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "burnAdmin": "0x0000000000000000000000000000000000000000",
+        "burnAdmin": "oeth:0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "oeth:0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
-          "feeLib": "0x3da4f8E456AC648c489c286B99Ca37B666be7C4C",
-          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "treasurer": "0x644abb1e17291b4403966119d15Ab081e4a487e9",
-          "tokenMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "creditMessaging": "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
-          "lzToken": "0x0000000000000000000000000000000000000000"
+          "feeLib": "oeth:0x3da4f8E456AC648c489c286B99Ca37B666be7C4C",
+          "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
+          "tokenMessaging": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "creditMessaging": "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
+          "lzToken": "oeth:0x0000000000000000000000000000000000000000"
         },
         "getTransferGasLimit": 2300,
         "localEid": 30111,
-        "lpToken": "0x9f58A79D81477130C0C6D74b96e1397db9765ab1",
+        "lpToken": "oeth:0x9f58A79D81477130C0C6D74b96e1397db9765ab1",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
+        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
         "plannerFee": "773554268944870108",
         "poolBalance": 589752454457,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
-        "token": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+        "token": "oeth:0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
         "treasuryFee": 22389499788,
         "tvl": 255214195252
       },
       "implementationNames": {
-        "0x19cFCE47eD54a88614648DC3f19A5980097007dD": "StargatePoolMigratable"
+        "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD": "StargatePoolMigratable"
       }
     },
     {
       "name": "StargatePoolUSDC",
-      "address": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
+      "address": "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
       "type": "Contract",
       "template": "stargate/StargatePoolUSDC",
       "sourceHashes": [
@@ -78,44 +78,44 @@
       "values": {
         "$immutable": true,
         "approvalRequired": true,
-        "burnAdmin": "0x0000000000000000000000000000000000000000",
+        "burnAdmin": "oeth:0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
         "deficitOffset": 0,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "oeth:0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
-          "feeLib": "0x1F605162282570dFa6255D27895587f4117F52FA",
-          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "treasurer": "0x644abb1e17291b4403966119d15Ab081e4a487e9",
-          "tokenMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "creditMessaging": "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
-          "lzToken": "0x0000000000000000000000000000000000000000"
+          "feeLib": "oeth:0x1F605162282570dFa6255D27895587f4117F52FA",
+          "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
+          "tokenMessaging": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "creditMessaging": "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
+          "lzToken": "oeth:0x0000000000000000000000000000000000000000"
         },
         "getTransferGasLimit": 2300,
         "localEid": 30111,
-        "lpToken": "0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
+        "lpToken": "oeth:0x8D66Ff1845b1baCC6E87D867CA4680d05A349cA8",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
+        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
         "plannerFee": "773974583959492506",
         "poolBalance": 5246477734124,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
-        "token": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+        "token": "oeth:0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
         "treasuryFee": 44916486217,
         "tvl": 199968754796
       },
       "implementationNames": {
-        "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolUSDC"
+        "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0": "StargatePoolUSDC"
       }
     },
     {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+      "address": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "StargatePoolNative",
-      "address": "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
+      "address": "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
       "type": "Contract",
       "template": "stargate/StargatePoolNative",
       "sourceHashes": [
@@ -136,36 +136,36 @@
         "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "oeth:0x1a44076050125825900e736c501f859c50fE728c",
         "getAddressConfig": {
-          "feeLib": "0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161",
-          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "treasurer": "0x644abb1e17291b4403966119d15Ab081e4a487e9",
-          "tokenMessaging": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
-          "creditMessaging": "0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
-          "lzToken": "0x0000000000000000000000000000000000000000"
+          "feeLib": "oeth:0x80F755e3091b2Ad99c08Da8D13E9C7635C1b8161",
+          "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "oeth:0x644abb1e17291b4403966119d15Ab081e4a487e9",
+          "tokenMessaging": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+          "creditMessaging": "oeth:0xda82A31dF339BfDF0123661134b4DB63Cb1706f5",
+          "lzToken": "oeth:0x0000000000000000000000000000000000000000"
         },
         "getTransferGasLimit": 15000,
         "localEid": 30111,
-        "lpToken": "0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
+        "lpToken": "oeth:0x6Ea313859A5D9F6fF2a68f529e6361174bFD2225",
         "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
-        "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
+        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
         "plannerFee": "423951163233595528",
         "poolBalance": "1326034937000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
-        "token": "0x0000000000000000000000000000000000000000",
+        "token": "oeth:0x0000000000000000000000000000000000000000",
         "treasuryFee": 31736534,
         "tvl": "1329565938000000000000"
       },
       "implementationNames": {
-        "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"
+        "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3": "StargatePoolNative"
       }
     },
     {
       "name": "TokenMessaging",
-      "address": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+      "address": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
       "type": "Contract",
       "sourceHashes": [
         "0xd0e407d7588e82d593435d256d12b9da5c2c70686a62e24948a96fcbc1a463b4"
@@ -175,31 +175,31 @@
       "sinceBlock": 120619127,
       "values": {
         "$immutable": true,
-        "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
+        "endpoint": "oeth:0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 13,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
-        "oApp": "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
+        "oApp": "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6",
         "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
-        "owner": "0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
-        "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+        "owner": "oeth:0x392AC17A9028515a3bFA6CCe51F8b70306C6bd43",
+        "planner": "oeth:0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
-          "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
-          "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0x0000000000000000000000000000000000000000",
-          "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
+          "oeth:0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
+          "oeth:0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0x0000000000000000000000000000000000000000",
+          "oeth:0xe8CDF27AcD73a434D661C84887215F7598e7d0d3"
         ],
-        "preCrime": "0x0000000000000000000000000000000000000000",
+        "preCrime": "oeth:0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
       },
       "fieldMeta": {
@@ -208,7 +208,7 @@
         }
       },
       "implementationNames": {
-        "0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": "TokenMessaging"
+        "oeth:0xF1fCb4CBd57B67d683972A59B6a7b1e2E8Bf27E6": "TokenMessaging"
       }
     }
   ],
@@ -571,5 +571,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0x263764165f1a35168ec6d501e1b1578bc8decbb983705c69e5d9fce1b7df3f0c"
+  "permissionsConfigHash": "0x7b97ef39e9e0e698e6a747e70610e08bf07f57dbefe9f8fea2f6547a11cfc2e3"
 }
