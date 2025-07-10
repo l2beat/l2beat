@@ -1,16 +1,18 @@
-Generated with discovered.json: 0xbfab8b0d5ffe0008afd9b983762ed2351bad595b
+Generated with discovered.json: 0x469cd52bddd4fb88b4ac9afb0d865dd5ff260264
 
-# Diff at Thu, 10 Jul 2025 09:21:35 GMT:
+# Diff at Thu, 10 Jul 2025 09:50:11 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f69ff944dc2501a54a7c05f54d37308d5262553d block: 22615727
-- current block number: 22887760
+- current block number: 22887891
 
 ## Description
 
 lido update: 
 - recovery vault unset (was set to Lido DAO Agent.)
 - Lido Withdrawal vault now admin'd by Lido DAO Agent
+
+add PAXG
 
 ## Watched changes
 
@@ -137,6 +139,36 @@ lido update:
  .../Voting/AppProxyUpgradeable.p.sol => /dev/null  |  241 ---
  .../.flat@22615727/Voting/Voting.sol => /dev/null  | 1639 --------------------
  6 files changed, 3864 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615727 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SimpleMultiSig (0x38699d04656fF537ef8671b6b595402ebDBdf6f4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Paxos Gold Token (0x45804880De22913dAFE09f4980848ECE6EcbAf78)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x9af9ae61be52d74c0c9f9f0702de8de8e58778c4

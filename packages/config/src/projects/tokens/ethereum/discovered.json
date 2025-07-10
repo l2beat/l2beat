@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "ethereum",
-  "blockNumber": 22887760,
-  "configHash": "0x152d1c0c69c4c8972798abed5fb74f0a78f22460eeb0b5255bd031fc46322a44",
+  "blockNumber": 22887891,
+  "configHash": "0x68fb6b439c2d7c6a9c62e208afe47188679e9a144df84ae26c6b6f5afb14151e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x7d25210000000000",
-        "get_deposit_root": "0x839f75c6f2598d3d291e0ec116a781a5e30762081d4887f48b960d56846ceaf6"
+        "get_deposit_count": "0xbf25210000000000",
+        "get_deposit_root": "0xd68603d28eb39c442acc5b23c830e27e3d067aab128ce3000d0ef29600095a77"
       },
       "implementationNames": {
         "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -37,9 +37,62 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x01781c80785a679337De8c3df691cd5D15D36A6b",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x04D5b12b196a8CADEB2F476F22Ffb1334Ef9F94c",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x05824ab74d7D39BeeE6785e23D51De7bFA8967D6",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SimpleMultiSig",
+      "address": "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
+      "type": "Contract",
+      "template": "tokens/SimpleMultisig",
+      "sourceHashes": [
+        "0x6bc7d8216e748e0328df7fb13aaa1da4a5ea3a89b0918b80569c91386c4afe14"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1619019362,
+      "sinceBlock": 12284400,
+      "values": {
+        "$immutable": true,
+        "$members": [
+          "0x01781c80785a679337De8c3df691cd5D15D36A6b",
+          "0x2a7B42C764F31Ae54a3453e9aa6C2D1c67E9Ef9d",
+          "0x3bA2a97E12Cf715F60C9dBBED5105733B3A8Cf27",
+          "0x3Ec49d8Bef9746d7cf10D26c91526E9C1e9341D9",
+          "0x3eDD0d6562e9321Fb4a95e52576eE7f0b5Aa017e",
+          "0x44375aaE18B34bdF5c2C485DbAc932aB4D7D454f",
+          "0x4A49e050156d76590Ed9f12B06673E8C431754d1",
+          "0x5bcc4b324bFD0F5D7F0e9167beBe0456BE342686",
+          "0x5d21C8C9dD0692bdEb7AC1A3fB24DFC3500E4c3e",
+          "0x61efB23a6868a74A8DFE32651361a6165F6f173E",
+          "0x68B807482ffe50050a444f6610dE2F009e7CF760",
+          "0x795bF46361495271F39fdBb0AbCC263C8e5fB538",
+          "0x8CACd1De50937b16d11B5ba11A6efeEd7e561336",
+          "0x8D0f7E545B4545c7Fe06B489D93E4DA1B96dF296",
+          "0x99E55F86526e2aA2Abf63A7A562a46cE3bd3F8c3",
+          "0x9fCE35e475Fdd84DB06eEc4cbE65028d6F9C9d01",
+          "0xAad13BdEeC1F6e787b95F322eBb063bae5F1641a",
+          "0xb08B382f09029AB7cE3CD486540aed0ed62680E3",
+          "0xbbe25013fF925463aa6FAc0Cd90f5cf10fd4F442",
+          "0xC271e7e7EB9dEb8831C1d6e728BB7677cd0e8009"
+        ],
+        "$threshold": 3,
+        "nonce": 834
+      },
+      "implementationNames": {
+        "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33": "SimpleMultiSig"
+      }
     },
     {
       "address": "0x0762bCc4D604Aa3B5122C7D6571Cf5368EF3F09c",
@@ -121,9 +174,64 @@
       }
     },
     {
+      "address": "0x0f16C1250f2AedA677e2Ca97EF167B45735Bf282",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x10277B1922e56d1B69f4dCe5A35696C791F78cac",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "SimpleMultiSig",
+      "address": "0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713",
+      "type": "Contract",
+      "template": "tokens/SimpleMultisig",
+      "sourceHashes": [
+        "0x6bc7d8216e748e0328df7fb13aaa1da4a5ea3a89b0918b80569c91386c4afe14"
+      ],
+      "proxyType": "immutable",
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "from": "eth:0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+          "role": "admin"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1618595611,
+      "sinceBlock": 12252587,
+      "values": {
+        "$immutable": true,
+        "$members": [
+          "0x05824ab74d7D39BeeE6785e23D51De7bFA8967D6",
+          "0x0f16C1250f2AedA677e2Ca97EF167B45735Bf282",
+          "0x1f14112c418fAAe416101E58CdFBa3aF67Ea70Eb",
+          "0x3D7163C791951A55fEa279B6CA3e6c05f5e5F876",
+          "0x44f802506dd40405f640eE30cE13304c1Ce6A2bD",
+          "0x45b516231db24D03479a1fEBaA57Bcb58Cd79696",
+          "0x472481219B0f19B3a9e6875094deAaE8f793070B",
+          "0x505f07E9a14028dBd7c72904248a8d6506961921",
+          "0x76da59EeB0A6258F82B26f78CDD73f6f8627a078",
+          "0x9a396Cb5b589357C887549cbEaE54E445A7F8114",
+          "0x9BC2b8BBFC50f5Ec19bCe90627b45b4f1Fe435BA",
+          "0x9D39a8623e6093c074Dac0E9f2aF330D82E5645f",
+          "0xaE9cf54119fE761A4d84d5D839b715F75ccf2786",
+          "0xb04f132aDA70B39F6fBbA6f4Dd37E80Ce6058D83",
+          "0xbEc5fd85dc949D9F38dCFF6D48613e0Fcf873A96",
+          "0xD55F7d21e8057631a6A88A7FDdF82EeDB2C14e26",
+          "0xdd8fee09281D42F26e537e208c81772cB7FE16AD",
+          "0xDe27666796568984C40cD4A3630396B1570816B5",
+          "0xE8F167Ad63F0Ca84C41afcf7E7C8BA7c7482cb95",
+          "0xefB3Bed7dee14059C35c34CF289C46Ae0811654e"
+        ],
+        "$threshold": 3,
+        "nonce": 21
+      },
+      "implementationNames": {
+        "0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713": "SimpleMultiSig"
+      }
     },
     {
       "address": "0x14D5d5B71E048d2D75a39FfC5B407e3a3AB6F314",
@@ -131,7 +239,27 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x1652f3fb11331fD9f5e37052C1AD507DA0371052",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x16aB869E6dEe6eF9068E5cF75C1a5A57981257CD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x198839340407E6aEaCe31527b76B3bD76769a60A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1E65CB2bD3A119eA78959Dc1858E7b94AA818451",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x1f14112c418fAAe416101E58CdFBa3aF67Ea70Eb",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -149,6 +277,64 @@
       "address": "0x294ED1f214F4e0ecAE31C3Eae4F04EBB3b36C9d0",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "address": "0x2a7B42C764F31Ae54a3453e9aa6C2D1c67E9Ef9d",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2F11E51CAe96DCA0332e44c41B80b05BD8a41105",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x2fb074FA59c9294c71246825C1c9A0c7782d41a4",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "SimpleMultiSig",
+      "address": "0x38699d04656fF537ef8671b6b595402ebDBdf6f4",
+      "type": "Contract",
+      "template": "tokens/SimpleMultisig",
+      "sourceHashes": [
+        "0x6bc7d8216e748e0328df7fb13aaa1da4a5ea3a89b0918b80569c91386c4afe14"
+      ],
+      "proxyType": "immutable",
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1619019667,
+      "sinceBlock": 12284421,
+      "values": {
+        "$immutable": true,
+        "$members": [
+          "0x1652f3fb11331fD9f5e37052C1AD507DA0371052",
+          "0x198839340407E6aEaCe31527b76B3bD76769a60A",
+          "0x1E65CB2bD3A119eA78959Dc1858E7b94AA818451",
+          "0x2F11E51CAe96DCA0332e44c41B80b05BD8a41105",
+          "0x38AF28F88C8f7eb083630179E6647052b0e959f1",
+          "0x46E38dAA42aD10d333118D76A56068d0f25FB217",
+          "0x4C086857faED97b5e8bAcc81Cf41b523D4E0386B",
+          "0x619060F79Bef3bdBA987eb0697BeD5ADDdD9e55D",
+          "0x6D39f61703333D3E0D533be3B76161beCc96d861",
+          "0x7D70b773374AB8F07d60a05f833f7039beB7406d",
+          "0x7F3e4A8Cf64aa13DaD152D9a506c84f86488C74C",
+          "0x8cEE90e941778a3C56Ac075C4826C8C01b9e8B2B",
+          "0xA32328DE1247d04CB929408D7e5cC8AcC33f48Cd",
+          "0xAeb500D8EE2a0322CcE35233819e8D6bEA5c8c42",
+          "0xc8e590C88f1F4bC59353b400f0c0D1024288438C",
+          "0xcC9F578fA52beD1EeB8a8B78A8c3D14dF8f6e087",
+          "0xCe160F39Cb0ac01b7Ca755027827e8853b217086",
+          "0xD5353842ac6d8aC6e3E8fb1d0Cd7B27fE3d67c74",
+          "0xe41eAFB2746cb2Ac8A88eD8310e38501D7886330",
+          "0xea835d74f32BAfb03d59040bB67CC028ce1E6c31"
+        ],
+        "$threshold": 3,
+        "nonce": 46
+      },
+      "implementationNames": {
+        "0x38699d04656fF537ef8671b6b595402ebDBdf6f4": "SimpleMultiSig"
+      }
     },
     {
       "name": "LidoExecutionLayerRewardsVault",
@@ -170,6 +356,16 @@
       }
     },
     {
+      "address": "0x38AF28F88C8f7eb083630179E6647052b0e959f1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3bA2a97E12Cf715F60C9dBBED5105733B3A8Cf27",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "CSEarlyAdoption",
       "address": "0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E",
       "type": "Contract",
@@ -188,6 +384,11 @@
       "implementationNames": {
         "0x3D5148ad93e2ae5DedD1f7A8B3C19E7F67F90c0E": "CSEarlyAdoption"
       }
+    },
+    {
+      "address": "0x3D7163C791951A55fEa279B6CA3e6c05f5e5F876",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "Lido Dao Agent",
@@ -290,6 +491,16 @@
       }
     },
     {
+      "address": "0x3Ec49d8Bef9746d7cf10D26c91526E9C1e9341D9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x3eDD0d6562e9321Fb4a95e52576eE7f0b5Aa017e",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
       "type": "EOA",
       "proxyType": "EOA"
@@ -325,7 +536,7 @@
           "genesisTime": 1606824023
         },
         "getContractVersion": 4,
-        "getCurrentEpochId": 378422,
+        "getCurrentEpochId": 378426,
         "getCurrentFrame": {
           "frameEpochId": 378225,
           "frameStartTime": 1752062423,
@@ -353,6 +564,82 @@
         "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": "AppProxyUpgradeable",
         "0xa29b819654cE6224A222bb5f586920105E2D7E0E": "LegacyOracle"
       }
+    },
+    {
+      "address": "0x44375aaE18B34bdF5c2C485DbAc932aB4D7D454f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x44f802506dd40405f640eE30cE13304c1Ce6A2bD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "name": "Paxos Gold Token",
+      "address": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
+      "type": "Contract",
+      "template": "tokens/PAXG",
+      "sourceHashes": [
+        "0x7cc0fb4f4893cc8e36ad690609b0f963417b7ff77210b178db891f78063d0f19",
+        "0xd6b39fa677a25df3c81e5691e968ef872d663b63114a8c6658673d01f5a96661"
+      ],
+      "proxyType": "ZeppelinOS proxy",
+      "ignoreInWatchMode": ["totalSupply"],
+      "sinceTimestamp": 1566830180,
+      "sinceBlock": 8426430,
+      "values": {
+        "$admin": "0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713",
+        "$immutable": false,
+        "$implementation": "0x74271F2282eD7eE35c166122A60c9830354be42a",
+        "$pastUpgrades": [],
+        "$upgradeCount": 0,
+        "assetProtectionRole": "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
+        "betaDelegateWhitelister": "0x0000000000000000000000000000000000000000",
+        "decimals": 18,
+        "EIP712_DOMAIN_HASH": "0x24eb8005140c80e9b6a66ecb6e0eabdb00053030dbb6fa5467a9705999d563df",
+        "feeController": "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
+        "feeDecimals": 6,
+        "feeParts": 1000000,
+        "feeRate": 0,
+        "feeRecipient": "0x38699d04656fF537ef8671b6b595402ebDBdf6f4",
+        "name": "Paxos Gold",
+        "owner": "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33",
+        "paused": false,
+        "proposedOwner": "0x0000000000000000000000000000000000000000",
+        "supplyController": "0x2fb074FA59c9294c71246825C1c9A0c7782d41a4",
+        "symbol": "PAXG",
+        "totalSupply": "280171724000000000000000"
+      },
+      "implementationNames": {
+        "0x45804880De22913dAFE09f4980848ECE6EcbAf78": "AdminUpgradeabilityProxy",
+        "0x74271F2282eD7eE35c166122A60c9830354be42a": "PAXGImplementation"
+      }
+    },
+    {
+      "address": "0x45b516231db24D03479a1fEBaA57Bcb58Cd79696",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x46E38dAA42aD10d333118D76A56068d0f25FB217",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x472481219B0f19B3a9e6875094deAaE8f793070B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4A49e050156d76590Ed9f12B06673E8C431754d1",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x4C086857faED97b5e8bAcc81Cf41b523D4E0386B",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "CSFeeOracle",
@@ -463,6 +750,11 @@
       }
     },
     {
+      "address": "0x505f07E9a14028dBd7c72904248a8d6506961921",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "NodeOperatorsRegistry",
       "address": "0x55032650b14df07b85bF18A3a3eC8E0Af2e028d5",
       "type": "Contract",
@@ -528,7 +820,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x5bcc4b324bFD0F5D7F0e9167beBe0456BE342686",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x5C7DcaECB4D8e49Ea2487c5Cc23C5131Ddb2252F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5d21C8C9dD0692bdEb7AC1A3fB24DFC3500E4c3e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -538,7 +840,17 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x619060F79Bef3bdBA987eb0697BeD5ADDdD9e55D",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x61efB23a6868a74A8DFE32651361a6165F6f173E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -592,6 +904,16 @@
     },
     {
       "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x68B807482ffe50050a444f6610dE2F009e7CF760",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x6D39f61703333D3E0D533be3B76161beCc96d861",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -705,12 +1027,27 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x76da59EeB0A6258F82B26f78CDD73f6f8627a078",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x7912Fa976BcDe9c2cf728e213e892AD7588E6AaF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
+      "address": "0x795bF46361495271F39fdBb0AbCC263C8e5fB538",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x7A3a1bE19470919318aAD57ba162891a97e2982E",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x7D70b773374AB8F07d60a05f833f7039beB7406d",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -735,11 +1072,16 @@
         "stEthPerToken": "1207712498592475936",
         "symbol": "wstETH",
         "tokensPerStEth": "828011634528454661",
-        "totalSupply": "3404859425784368901881142"
+        "totalSupply": "3405299084809041863355028"
       },
       "implementationNames": {
         "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
       }
+    },
+    {
+      "address": "0x7F3e4A8Cf64aa13DaD152D9a506c84f86488C74C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "HashConsensus",
@@ -992,7 +1334,7 @@
         "getContractVersion": 1,
         "getLastFinalizedRequestId": 85457,
         "getLastRequestId": 85588,
-        "getLockedEtherAmount": "13353697569630792782675",
+        "getLockedEtherAmount": "13350516057884631202818",
         "getNFTDescriptorAddress": "0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1019,6 +1361,21 @@
         "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1": "OssifiableProxy",
         "0xE42C659Dc09109566720EA8b2De186c2Be7D94D9": "WithdrawalQueueERC721"
       }
+    },
+    {
+      "address": "0x8CACd1De50937b16d11B5ba11A6efeEd7e561336",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8cEE90e941778a3C56Ac075C4826C8C01b9e8B2B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x8D0f7E545B4545c7Fe06B489D93E4DA1B96dF296",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EIP712StETH",
@@ -1131,12 +1488,47 @@
       }
     },
     {
+      "address": "0x99E55F86526e2aA2Abf63A7A562a46cE3bd3F8c3",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9a396Cb5b589357C887549cbEaE54E445A7F8114",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9BC2b8BBFC50f5Ec19bCe90627b45b4f1Fe435BA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9D39a8623e6093c074Dac0E9f2aF330D82E5645f",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x9fCE35e475Fdd84DB06eEc4cbE65028d6F9C9d01",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA32328DE1247d04CB929408D7e5cC8AcC33f48Cd",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xa56b128Ea2Ea237052b0fA2a96a387C0E43157d8",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "address": "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAad13BdEeC1F6e787b95F322eBb063bae5F1641a",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1181,7 +1573,7 @@
           "beaconValidators": 397169,
           "beaconBalance": "9090523773299309000000000"
         },
-        "getBufferedEther": "3457094608859206864808",
+        "getBufferedEther": "3463523032665529906992",
         "getContractVersion": 2,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
@@ -1203,11 +1595,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999750000000000000000",
-          "prevStakeBlockNumber": 22887725
+          "prevStakeLimit": "149999605924555832642086",
+          "prevStakeBlockNumber": 22887889
         },
-        "getTotalPooledEther": "9129180867908168206864808",
-        "getTotalShares": "7559067972342538704521499",
+        "getTotalPooledEther": "9129187296331974529906992",
+        "getTotalShares": "7559073295152242019693715",
         "getTreasury": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -1224,7 +1616,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9129180867908168206864808",
+        "totalSupply": "9129187296331974529906992",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -1286,6 +1678,26 @@
         "0xaE7B191A31f627b4eB1d4DaC64eaB9976995b433": "AppProxyUpgradeable",
         "0x1770044a38402e3CfCa2Fcfa0C84a093c9B42135": "NodeOperatorsRegistry"
       }
+    },
+    {
+      "address": "0xaE9cf54119fE761A4d84d5D839b715F75ccf2786",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAeb500D8EE2a0322CcE35233819e8D6bEA5c8c42",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb04f132aDA70B39F6fBbA6f4Dd37E80Ce6058D83",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xb08B382f09029AB7cE3CD486540aed0ed62680E3",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
@@ -1390,6 +1802,16 @@
         "0xB9D7934878B5FB9610B3fE8A5e441e8fad7E293f": "WithdrawalsManagerProxy",
         "0xCC52f17756C04bBa7E377716d7062fC36D7f69Fd": "WithdrawalVault"
       }
+    },
+    {
+      "address": "0xbbe25013fF925463aa6FAc0Cd90f5cf10fd4F442",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xbEc5fd85dc949D9F38dCFF6D48613e0Fcf873A96",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "OracleDaemonConfig",
@@ -1508,7 +1930,17 @@
       }
     },
     {
+      "address": "0xC271e7e7EB9dEb8831C1d6e728BB7677cd0e8009",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xc8e590C88f1F4bC59353b400f0c0D1024288438C",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1594,6 +2026,16 @@
       }
     },
     {
+      "address": "0xcC9F578fA52beD1EeB8a8B78A8c3D14dF8f6e087",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xCe160F39Cb0ac01b7Ca755027827e8853b217086",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1640,6 +2082,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xD5353842ac6d8aC6e3E8fb1d0Cd7B27fE3d67c74",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "OpStackTokenRatePusher",
       "address": "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE",
       "type": "Contract",
@@ -1664,6 +2111,11 @@
       "implementationNames": {
         "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": "OpStackTokenRatePusher"
       }
+    },
+    {
+      "address": "0xD55F7d21e8057631a6A88A7FDdF82EeDB2C14e26",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "HashConsensus",
@@ -1879,6 +2331,21 @@
       }
     },
     {
+      "address": "0xdd8fee09281D42F26e537e208c81772cB7FE16AD",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xDe27666796568984C40cD4A3630396B1570816B5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe41eAFB2746cb2Ac8A88eD8310e38501D7886330",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1906,6 +2373,21 @@
       "implementationNames": {
         "0xe6793B9e4FbA7DE0ee833F9D02bba7DB5EB27823": "TokenRateNotifier"
       }
+    },
+    {
+      "address": "0xE8F167Ad63F0Ca84C41afcf7E7C8BA7c7482cb95",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xea835d74f32BAfb03d59040bB67CC028ce1E6c31",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xefB3Bed7dee14059C35c34CF289C46Ae0811654e",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0xF6AB8BD99EfE2515C45d6FeE8Ea32738877EFbD8",
@@ -2199,6 +2681,15 @@
       "function get_deposit_root() view returns (bytes32)",
       "function supportsInterface(bytes4 interfaceId) pure returns (bool)"
     ],
+    "0x0644Bd0248d5F89e4F6E845a91D15c23591e5D33": [
+      "function threshold() view returns (uint256)",
+      "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
+      "function ownersArr(uint256) view returns (address)",
+      "function owners() view returns (address[])",
+      "function nonce() view returns (uint256)",
+      "function setOwners(uint256 threshold_, address[] owners_)",
+      "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
+    ],
     "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e": [
       "constructor(address implementation_, address admin_, bytes data_)",
       "error NotAdmin()",
@@ -2304,6 +2795,15 @@
       "function submitReportExtraDataEmpty()",
       "function submitReportExtraDataList(bytes data)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0x137Dcd97872dE27a4d3bf36A4643c5e18FA40713": [
+      "function threshold() view returns (uint256)",
+      "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
+      "function ownersArr(uint256) view returns (address)",
+      "function owners() view returns (address[])",
+      "function nonce() view returns (uint256)",
+      "function setOwners(uint256 threshold_, address[] owners_)",
+      "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
     "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": [
       "function resume()",
@@ -2589,6 +3089,15 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
+    "0x38699d04656fF537ef8671b6b595402ebDBdf6f4": [
+      "function threshold() view returns (uint256)",
+      "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
+      "function ownersArr(uint256) view returns (address)",
+      "function owners() view returns (address[])",
+      "function nonce() view returns (uint256)",
+      "function setOwners(uint256 threshold_, address[] owners_)",
+      "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
+    ],
     "0x388C818CA8B9251b393131C08a736A67ccB19297": [
       "constructor(address _lido, address _treasury)",
       "event ERC20Recovered(address indexed requestedBy, address indexed token, uint256 amount)",
@@ -2760,6 +3269,16 @@
       "function kernel() view returns (address)",
       "constructor(address _kernel, bytes32 _appId, bytes _initializePayload)",
       "event ProxyDeposit(address sender, uint256 value)"
+    ],
+    "0x45804880De22913dAFE09f4980848ECE6EcbAf78": [
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function implementation() view returns (address)",
+      "function changeAdmin(address newAdmin)",
+      "function admin() view returns (address)",
+      "constructor(address _implementation)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event Upgraded(address implementation)"
     ],
     "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB": [
       "constructor(address implementation_, address admin_, bytes data_)",
@@ -3115,6 +3634,79 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function totalBondShares() view returns (uint256)",
       "function updateBondCurve(uint256 curveId, uint256[] bondCurve)"
+    ],
+    "0x74271F2282eD7eE35c166122A60c9830354be42a": [
+      "function disregardProposeOwner()",
+      "function name() view returns (string)",
+      "function reclaimPAXG()",
+      "function approve(address _spender, uint256 _value) returns (bool)",
+      "function assetProtectionRole() view returns (address)",
+      "function getFeeFor(uint256 _value) view returns (uint256)",
+      "function totalSupply() view returns (uint256)",
+      "function betaDelegatedTransferBatch(bytes32[] r, bytes32[] s, uint8[] v, address[] to, uint256[] value, uint256[] serviceFee, uint256[] seq, uint256[] deadline) returns (bool)",
+      "function betaDelegatedTransfer(bytes sig, address to, uint256 value, uint256 serviceFee, uint256 seq, uint256 deadline) returns (bool)",
+      "function transferFrom(address _from, address _to, uint256 _value) returns (bool)",
+      "function initializeDomainSeparator()",
+      "function decimals() view returns (uint8)",
+      "function setFeeController(address _newFeeController)",
+      "function unpause()",
+      "function setFeeRate(uint256 _newFeeRate)",
+      "function unfreeze(address _addr)",
+      "function feeRecipient() view returns (address)",
+      "function claimOwnership()",
+      "function setSupplyController(address _newSupplyController)",
+      "function feeParts() view returns (uint256)",
+      "function paused() view returns (bool)",
+      "function feeController() view returns (address)",
+      "function balanceOf(address _addr) view returns (uint256)",
+      "function initialize()",
+      "function pause()",
+      "function nextSeqOf(address target) view returns (uint256)",
+      "function setAssetProtectionRole(address _newAssetProtectionRole)",
+      "function freeze(address _addr)",
+      "function owner() view returns (address)",
+      "function symbol() view returns (string)",
+      "function feeRate() view returns (uint256)",
+      "function setBetaDelegateWhitelister(address _newWhitelister)",
+      "function decreaseSupply(uint256 _value) returns (bool success)",
+      "function isWhitelistedBetaDelegate(address _addr) view returns (bool)",
+      "function transfer(address _to, uint256 _value) returns (bool)",
+      "function whitelistBetaDelegate(address _addr)",
+      "function proposeOwner(address _proposedOwner)",
+      "function increaseSupply(uint256 _value) returns (bool success)",
+      "function betaDelegateWhitelister() view returns (address)",
+      "function feeDecimals() view returns (uint8)",
+      "function proposedOwner() view returns (address)",
+      "function unwhitelistBetaDelegate(address _addr)",
+      "function allowance(address _owner, address _spender) view returns (uint256)",
+      "function wipeFrozenAddress(address _addr)",
+      "function EIP712_DOMAIN_HASH() view returns (bytes32)",
+      "function isFrozen(address _addr) view returns (bool)",
+      "function setFeeRecipient(address _newFeeRecipient)",
+      "function supplyController() view returns (address)",
+      "constructor()",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event OwnershipTransferProposed(address indexed currentOwner, address indexed proposedOwner)",
+      "event OwnershipTransferDisregarded(address indexed oldProposedOwner)",
+      "event OwnershipTransferred(address indexed oldOwner, address indexed newOwner)",
+      "event Pause()",
+      "event Unpause()",
+      "event AddressFrozen(address indexed addr)",
+      "event AddressUnfrozen(address indexed addr)",
+      "event FrozenAddressWiped(address indexed addr)",
+      "event AssetProtectionRoleSet(address indexed oldAssetProtectionRole, address indexed newAssetProtectionRole)",
+      "event SupplyIncreased(address indexed to, uint256 value)",
+      "event SupplyDecreased(address indexed from, uint256 value)",
+      "event SupplyControllerSet(address indexed oldSupplyController, address indexed newSupplyController)",
+      "event BetaDelegatedTransfer(address indexed from, address indexed to, uint256 value, uint256 seq, uint256 serviceFee)",
+      "event BetaDelegateWhitelisterSet(address indexed oldWhitelister, address indexed newWhitelister)",
+      "event BetaDelegateWhitelisted(address indexed newDelegate)",
+      "event BetaDelegateUnwhitelisted(address indexed oldDelegate)",
+      "event FeeCollected(address indexed from, address indexed to, uint256 value)",
+      "event FeeRateSet(uint256 indexed oldFeeRate, uint256 indexed newFeeRate)",
+      "event FeeControllerSet(address indexed oldFeeController, address indexed newFeeController)",
+      "event FeeRecipientSet(address indexed oldFeeRecipient, address indexed newFeeRecipient)"
     ],
     "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": [
       "constructor(address _stETH)",
@@ -4555,7 +5147,9 @@
     "tokens/Lido/ValidatorsExitBusOracle": "0x11365707f780cd17f5f0f1cc48c59745a28a1f5725b533c928cdaac71c9e3938",
     "tokens/Lido/WithdrawalQueueERC721": "0xa1e1aabda76d31acb0074e52508c9fe4f357b9c4fc00e5cae52840093116c816",
     "tokens/Lido/wstETH": "0x9b708a05879c062566a96f737bd9998af0ceda3a51a54456a93cd24fd4c4dfdf",
+    "tokens/PAXG": "0xbaddc877142cb1e2bfbd3aa5c93b19e280abc65c15e6f9442afe096090437b4f",
+    "tokens/SimpleMultisig": "0x73e5a8496e19740524ebce826192ac009f1f6f859bb8266c5ded33163da586b8",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0xd762d9391ec2b0b4621d10992d16a394a5c5388dcbeb000be6319dbeceb7cb88"
+  "permissionsConfigHash": "0xec4ba2b837dc84f5c58220c5b6c2ed5a749a34d0528abfbed11a094270727924"
 }
