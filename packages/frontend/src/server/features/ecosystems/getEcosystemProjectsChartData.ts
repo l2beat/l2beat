@@ -1,6 +1,7 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import { generateTimestamps } from '../utils/generateTimestamps'
+import { getActiveEcosystemProjects } from './getActiveEcosystemProjects'
 
 export type EcosystemProjectsCountData = {
   chart: {
@@ -25,14 +26,7 @@ export function getEcosystemProjectsChartData(
     'daily',
   )
   const chart = timestamps.map((timestamp) => {
-    const projects = entries.filter((e) => {
-      const since = e.ecosystemInfo.sinceTimestamp ?? e.addedAt
-      const until = e.ecosystemInfo.untilTimestamp ?? e.archivedAt
-      return (
-        UnixTime.toStartOf(since, 'day') <= timestamp &&
-        (!until || UnixTime.toStartOf(until, 'day') > timestamp)
-      )
-    })
+    const projects = getActiveEcosystemProjects(entries, timestamp)
     return {
       timestamp,
       projectCount: projects.length,
