@@ -212,6 +212,10 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       to,
     )
 
+    if (lastIndex === 0) {
+      return { anomalies: [], stats: undefined }
+    }
+
     const currentRange = intervals.slice(0, lastIndex)
     currentRange.forEach((interval) => {
       const point = UnixTime.toStartOf(interval.record.timestamp, 'minute')
