@@ -5,7 +5,10 @@ import { type JSX, useState } from 'react'
 export function TransactionDetails({
   tx,
   chain,
-}: { tx: CountedTransaction; chain: Chain }) {
+}: {
+  tx: CountedTransaction
+  chain: Chain
+}) {
   const [modal, setModal] = useState(false)
 
   function printOperation(op: CountedOperation): JSX.Element {

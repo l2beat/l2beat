@@ -224,7 +224,10 @@ export class UpdateDiffer {
   getOnDiskDiscovery({
     name,
     chain,
-  }: { name: string; chain: string }): DiscoveryOutput {
+  }: {
+    name: string
+    chain: string
+  }): DiscoveryOutput {
     return this.configReader.readDiscovery(name, chain)
   }
 }

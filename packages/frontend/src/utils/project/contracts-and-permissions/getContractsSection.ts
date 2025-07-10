@@ -115,10 +115,7 @@ function makeTechnologyContract(
     item.chain
   ]?.becameVerified.includes(item.address)
 
-  const getAddress = (opts: {
-    address: EthereumAddress
-    name?: string
-  }) => {
+  const getAddress = (opts: { address: EthereumAddress; name?: string }) => {
     const name =
       opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
 

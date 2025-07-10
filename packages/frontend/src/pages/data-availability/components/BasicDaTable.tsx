@@ -11,6 +11,7 @@ import type { CSSProperties } from 'react'
 import React from 'react'
 import { getBasicTableGroupParams } from '~/components/table/BasicTable'
 import { useHighlightedTableRowContext } from '~/components/table/HighlightedTableRowContext'
+import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import {
   Table,
   TableBody,
@@ -21,7 +22,6 @@ import {
   TableRow,
 } from '~/components/table/Table'
 import { TableEmptyState } from '~/components/table/TableEmptyState'
-import { SortingArrows } from '~/components/table/sorting/SortingArrows'
 import { cn } from '~/utils/cn'
 
 interface BasicEntry {
@@ -310,6 +310,8 @@ export function getRowTypeClassNames({ isEthereum }: { isEthereum?: boolean }) {
 
 function getRowTypeClassNamesWithoutOpacity({
   isEthereum,
-}: { isEthereum?: boolean } = {}) {
+}: {
+  isEthereum?: boolean
+} = {}) {
   return cn('bg-surface-primary', isEthereum && 'bg-blue-400 dark:bg-blue-900')
 }

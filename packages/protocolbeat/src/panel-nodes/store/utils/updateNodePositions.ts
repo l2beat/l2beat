@@ -113,17 +113,20 @@ function processConnection(
       from: { direction: 'left', x: from.x, y: fromY },
       to: { direction: 'left', x: to.x, y: toY },
     }
-  } else if (min === leftToRight) {
+  }
+  if (min === leftToRight) {
     return {
       from: { direction: 'left', x: from.x, y: fromY },
       to: { direction: 'right', x: to.x + to.width, y: toY },
     }
-  } else if (min === rightToLeft) {
+  }
+  if (min === rightToLeft) {
     return {
       from: { direction: 'right', x: from.x + from.width, y: fromY },
       to: { direction: 'left', x: to.x, y: toY },
     }
-  } else if (min === rightToRight) {
+  }
+  if (min === rightToRight) {
     return {
       from: { direction: 'right', x: from.x + from.width, y: fromY },
       to: { direction: 'right', x: to.x + to.width, y: toY },

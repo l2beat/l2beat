@@ -10,6 +10,8 @@ import { VerticalSeparator } from '~/components/core/VerticalSeparator'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { CloseIcon } from '~/icons/Close'
 import { cn } from '~/utils/cn'
+import type { FilterableValueId } from './filterableValue'
+import { filterIdToLabel } from './filterableValue'
 import { useTableFilterContext } from './TableFilterContext'
 import {
   TableFilterInternalContextProvider,
@@ -18,8 +20,6 @@ import {
 import { TableFilterValue } from './TableFilterValue'
 import { TableFilterValueMenu } from './TableFilterValueMenu'
 import type { FilterValue } from './UseFilterState'
-import type { FilterableValueId } from './filterableValue'
-import { filterIdToLabel } from './filterableValue'
 
 interface Filter extends FilterValue {
   id: FilterableValueId

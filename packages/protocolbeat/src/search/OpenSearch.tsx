@@ -12,8 +12,8 @@ import {
   isCodeSearchTerm,
 } from './CodeSearchResultEntry'
 import { ContractSearchResultEntry } from './ContractSearchResultEntry'
-import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
 import { searchQuery } from './implementation'
+import { ProjectSearchResultEntry } from './ProjectSearchResultEntry'
 import { useSearchStore } from './store'
 
 interface OpenSearchProps {

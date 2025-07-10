@@ -1,5 +1,4 @@
-import React from 'react'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 export const DevAutoReloader = React.memo(() => {
   useEffect(() => {

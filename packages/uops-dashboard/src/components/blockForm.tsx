@@ -14,7 +14,9 @@ import { SubmitButton } from './submitButton'
 
 export function BlockForm({
   onComplete,
-}: { onComplete: (block: BlockWithChain | undefined) => void }) {
+}: {
+  onComplete: (block: BlockWithChain | undefined) => void
+}) {
   const [chainId, setChain] = useState<string>(SUPPORTED_CHAINS[0].id)
   const [blockNumber, setBlockNumber] = useState('')
 

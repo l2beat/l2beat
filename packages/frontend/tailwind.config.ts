@@ -1,7 +1,7 @@
 import containerQueries from '@tailwindcss/container-queries'
 import type { Config } from 'tailwindcss'
-import tailwindcssAnimate from 'tailwindcss-animate'
 import plugin from 'tailwindcss/plugin'
+import tailwindcssAnimate from 'tailwindcss-animate'
 
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}', './index.html'],

@@ -1,12 +1,12 @@
 import type { ProjectScalingStage, Stage } from '@l2beat/config'
-import { Callout } from '~/components/Callout'
-import { WarningBar } from '~/components/WarningBar'
 import {
-  StageBadge,
   getStageTextClassname,
+  StageBadge,
 } from '~/components/badge/StageBadge'
+import { Callout } from '~/components/Callout'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { StageOneRequirementsChangeTooltipContent } from '~/components/countdowns/stage-one-requirements-change/StageOneRequirementsChangeTooltipContent'
+import { WarningBar } from '~/components/WarningBar'
 import { featureFlags } from '~/consts/featureFlags'
 import { EmergencyIcon } from '~/icons/Emergency'
 import { InfoIcon } from '~/icons/Info'

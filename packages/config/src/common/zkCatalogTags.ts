@@ -247,7 +247,7 @@ export const ZK_CATALOG_TAGS: {
   if (!acc[zkCatalogTag.type]) acc[zkCatalogTag.type] = {}
   acc[zkCatalogTag.type][zkCatalogTag.id] = zkCatalogTag
   return acc
-  // biome-ignore lint/suspicious/noExplicitAny:
+  // biome-ignore lint/suspicious/noExplicitAny: needed any
 }, {} as any)
 
 export const zkCatalogTagTypeOrder = Object.values<string>(ZkCatalogTagType)

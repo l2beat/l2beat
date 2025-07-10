@@ -93,7 +93,10 @@ function SwitchInfoTooltip() {
 export function ScalingFactorTooltip({
   className,
   metric = 'uops',
-}: { className?: string; metric?: ActivityMetric }) {
+}: {
+  className?: string
+  metric?: ActivityMetric
+}) {
   return (
     <Tooltip>
       <TooltipTrigger>

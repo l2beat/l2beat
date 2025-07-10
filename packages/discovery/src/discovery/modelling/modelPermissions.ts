@@ -69,11 +69,7 @@ export class DiscoveryRegistry {
     return result
   }
 
-  getBlockNumbers(
-    options: {
-      skip?: { project: string; chain: string }
-    } = {},
-  ) {
+  getBlockNumbers(options: { skip?: { project: string; chain: string } } = {}) {
     const result: DiscoveryBlockNumbers = {}
     const skip = options.skip
 

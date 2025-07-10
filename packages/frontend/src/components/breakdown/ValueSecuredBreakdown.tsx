@@ -1,7 +1,7 @@
 import type { WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/RoundedWarning'
 import { cn } from '~/utils/cn'
-import { WarningBar, sentimentToWarningBarColor } from '../WarningBar'
+import { sentimentToWarningBarColor, WarningBar } from '../WarningBar'
 import { Breakdown } from './Breakdown'
 
 export interface ValueSecuredBreakdownProps {

@@ -229,7 +229,10 @@ function DecodedValueDisplay({ decoded, option }: DecodedValueDisplayProps) {
 function Collapsible({
   children,
   forBytes,
-}: { children: ReactNode; forBytes?: boolean }) {
+}: {
+  children: ReactNode
+  forBytes?: boolean
+}) {
   const [open, setOpen] = useState(true)
   return (
     <div

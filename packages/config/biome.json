@@ -13,7 +13,8 @@
       "!**/src/projects/**/.code",
       "!**/src/projects/**/.code@*",
       "!**/src/projects/**/.flat",
-      "!**/src/projects/**/.flat@*"
+      "!**/src/projects/**/.flat@*",
+      "!**/discovered.json"
     ]
   },
   "linter": {

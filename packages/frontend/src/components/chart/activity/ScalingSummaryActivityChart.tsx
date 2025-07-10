@@ -2,8 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { AreaChart } from 'recharts'
-import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { Skeleton } from '~/components/core/Skeleton'
 import type { ChartMeta } from '~/components/core/chart/Chart'
 import {
   ChartContainer,
@@ -27,6 +25,8 @@ import {
 } from '~/components/core/chart/defs/PinkGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
+import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
+import { Skeleton } from '~/components/core/Skeleton'
 import { CustomLink } from '~/components/link/CustomLink'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
