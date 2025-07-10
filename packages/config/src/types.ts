@@ -871,8 +871,8 @@ export type TimestampDaTrackingConfig = EigenDaTrackingConfig
 export interface EthereumDaTrackingConfig {
   type: 'ethereum'
   daLayer: ProjectId
-  inbox: string
-  sequencers?: string[]
+  inbox: EthereumAddress
+  sequencers?: EthereumAddress[]
   topics?: string[]
   sinceBlock: number
   untilBlock?: number

@@ -371,7 +371,7 @@ function getDaTracking(
     ).isSequencerSendingBlobTx
 
   if (usesBlobs) {
-    const sequencerInbox = systemConfig.getContractValue<string>(
+    const sequencerInbox = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'sequencerInbox',
     )
@@ -382,7 +382,7 @@ function getDaTracking(
         'startBlock',
       ) ?? 0
 
-    const sequencer = systemConfig.getContractValue<string>(
+    const sequencer = systemConfig.getContractValue<ChainSpecificAddress>(
       'SystemConfig',
       'batcherHash',
     )
@@ -392,8 +392,8 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxStartBlock,
-        inbox: sequencerInbox,
-        sequencers: [sequencer],
+        inbox: rawAddress(sequencerInbox),
+        sequencers: [rawAddress(sequencer)],
       },
     ]
   }

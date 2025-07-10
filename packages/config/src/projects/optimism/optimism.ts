@@ -107,8 +107,10 @@ export const optimism: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: '0xFF00000000000000000000000000000000000010',
-      sequencers: ['0x6887246668a3b87f54deb3b94ba47a6f63f32985'],
+      inbox: EthereumAddress('0xFF00000000000000000000000000000000000010'),
+      sequencers: [
+        EthereumAddress('0x6887246668a3b87f54deb3b94ba47a6f63f32985'),
+      ],
     },
   ],
   nonTemplateTrackedTxs: [
