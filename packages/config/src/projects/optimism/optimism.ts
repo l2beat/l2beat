@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -121,13 +122,17 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'batcherHash',
+        from: rawAddress(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'batcherHash',
+          ),
         ),
-        to: discovery.getContractValue<EthereumAddress>(
-          'SystemConfig',
-          'sequencerInbox',
+        to: rawAddress(
+          discovery.getContractValue<ChainSpecificAddress>(
+            'SystemConfig',
+            'sequencerInbox',
+          ),
         ),
         sinceTimestamp: genesisTimestamp,
       },

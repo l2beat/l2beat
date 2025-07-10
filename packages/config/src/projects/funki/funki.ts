@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
   formatSeconds,
@@ -21,13 +22,17 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('funki')
 const genesisTimestamp = UnixTime(1721211095)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'sequencerInbox',
+const sequencerInbox = rawAddress(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'sequencerInbox',
+  ),
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
-  'SystemConfig',
-  'batcherHash',
+const sequencerAddress = rawAddress(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'SystemConfig',
+    'batcherHash',
+  ),
 )
 
 const daChallengeWindow = formatSeconds(
