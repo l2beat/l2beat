@@ -124,10 +124,10 @@ export const allbridge: Bridge = {
     principleOfOperation: {
       name: 'Principle of operation',
       description: `
-      For USDC and USDT, Allbridge 'Core' offers three message protocols (AMBs) to choose from: Allbridge, Wormhole and Circle CCTP (USDC only).
+      For USDC and USDT, Allbridge 'Core' offers three message protocols (AMBs) to choose from: Allbridge, Wormhole and Circle CCTP (USDC only). 
       These two token classes can also simultaneously be swapped while bridging, tapping into the Allbridges multichain liquidity pools.
-
-      For other supported tokens, Allbridge offers a token bridge mode that locks tokens in the escrow on Ethereum and mints them at the destination.
+      
+      For other supported tokens, Allbridge offers a token bridge mode that locks tokens in the escrow on Ethereum and mints them at the destination. 
       The crosschain messages in this case are passed via either Allbridge AMB or Wormhole.`,
       references: [
         {
