@@ -9,6 +9,7 @@ import { getCommonProjectColumns } from '~/components/table/utils/common-project
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
 import type { ZkCatalogEntry } from '../utils/getZkCatalogEntries'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
@@ -47,6 +48,12 @@ export const zkCatalogColumns = [
     header: 'Used in',
     cell: (ctx) => {
       return <ProjectsUsedIn usedIn={ctx.row.original.projectsUsedIn} />
+    },
+  }),
+  columnHelper.accessor((row) => row.verifiers, {
+    id: 'verifiers',
+    cell: (ctx) => {
+      return <VerifiedCountWithDetails {...ctx.row.original.verifiers} />
     },
   }),
   columnHelper.accessor((row) => row.attesters, {

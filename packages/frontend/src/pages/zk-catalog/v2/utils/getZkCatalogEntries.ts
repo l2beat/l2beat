@@ -14,8 +14,9 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
   tvs: number
   projectsUsedIn: UsedInProjectWithIcon[]
   verifiers: {
-    verified: number
-    notVerified: number
+    successfulCount: number
+    unsuccessfulCount: number
+    notVerifiedCount: number
   }
   attesters: ZkCatalogAttester[]
   trustedSetup: ProjectProofSystem['trustedSetup']
@@ -35,13 +36,14 @@ export function getZkCatalogEntries(
       creator: project.proofSystem.creator,
       tvs: 100000,
       verifiers: {
-        verified: project.proofSystem.verifierHashes.filter(
+        successfulCount: project.proofSystem.verifierHashes.filter(
           (v) => v.verificationStatus === 'successful',
         ).length,
-        notVerified: project.proofSystem.verifierHashes.filter(
-          (v) =>
-            v.verificationStatus === 'notVerified' ||
-            v.verificationStatus === 'unsuccessful',
+        unsuccessfulCount: project.proofSystem.verifierHashes.filter(
+          (v) => v.verificationStatus === 'unsuccessful',
+        ).length,
+        notVerifiedCount: project.proofSystem.verifierHashes.filter(
+          (v) => v.verificationStatus === 'notVerified',
         ).length,
       },
       attesters: uniqBy(
