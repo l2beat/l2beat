@@ -4,6 +4,12 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
 import type { ContractValue } from '../output/types'
 
+export function get$ImplementationsPublic(
+  values: Record<string, ContractValue | undefined> | undefined,
+): ChainSpecificAddress[] {
+  return toAddressArray(values?.$implementation)
+}
+
 export function get$AdminsPublic(
   values: Record<string, ContractValue | undefined> | undefined,
 ): ChainSpecificAddress[] {
