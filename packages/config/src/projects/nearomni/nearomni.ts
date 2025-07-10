@@ -1,9 +1,8 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
@@ -16,7 +15,7 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('nearomni')
-const nearBridgeDerivedAddress = rawAddress(
+const nearBridgeDerivedAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'OmniBridge',
     'nearBridgeDerivedAddress',

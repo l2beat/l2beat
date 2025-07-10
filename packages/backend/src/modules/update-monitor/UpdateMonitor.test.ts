@@ -10,10 +10,10 @@ import {
 import {
   ChainConverter,
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
-  fromParts,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
@@ -1050,7 +1050,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address: fromParts('eth', address),
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

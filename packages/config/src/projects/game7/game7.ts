@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -53,7 +57,7 @@ export const game7: ScalingProject = orbitStackL3({
   associatedTokens: ['G7'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(L1OrbitERC20Gateway.address),
+      address: ChainSpecificAddress.address(L1OrbitERC20Gateway.address),
       name: L1OrbitERC20Gateway.name,
       description: L1OrbitERC20Gateway.description,
       tokens: '*',

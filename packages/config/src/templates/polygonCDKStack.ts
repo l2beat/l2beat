@@ -5,7 +5,6 @@ import {
   ProjectId,
   type UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -471,8 +470,8 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: polygonContract.sinceBlock ?? 0,
-        inbox: rawAddress(polygonContract.address),
-        sequencers: [rawAddress(sequencer)],
+        inbox: ChainSpecificAddress.address(polygonContract.address),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
       },
     ]
   }

@@ -1,9 +1,8 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW } from '../../common'
 import { getStage } from '../../common/stages/getStage'
@@ -76,11 +75,13 @@ export const base: ScalingProject = opStackL2({
       type: 'ethereum',
       daLayer: ProjectId('ethereum'),
       sinceBlock: 0, // Edge Case: config added @ DA Module start
-      inbox: rawAddress(
+      inbox: ChainSpecificAddress.address(
         discovery.getContractValue('SystemConfig', 'sequencerInbox'),
       ),
       sequencers: [
-        rawAddress(discovery.getContractValue('SystemConfig', 'batcherHash')),
+        ChainSpecificAddress.address(
+          discovery.getContractValue('SystemConfig', 'batcherHash'),
+        ),
       ],
     },
   ],
@@ -92,13 +93,13 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: rawAddress(
+        from: ChainSpecificAddress.address(
           discovery.getContractValue<ChainSpecificAddress>(
             'SystemConfig',
             'batcherHash',
           ),
         ),
-        to: rawAddress(
+        to: ChainSpecificAddress.address(
           discovery.getContractValue<ChainSpecificAddress>(
             'SystemConfig',
             'sequencerInbox',
@@ -129,7 +130,7 @@ export const base: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: rawAddress(
+        address: ChainSpecificAddress.address(
           discovery.getContract('DisputeGameFactory').address,
         ),
         selector: '0x82ecf2f6',

@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { DA_BRIDGES, DA_LAYERS, RISK_VIEW } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -101,7 +105,7 @@ export const lumia: ScalingProject = polygonCDKStack({
   associatedTokens: ['LUMIA'],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

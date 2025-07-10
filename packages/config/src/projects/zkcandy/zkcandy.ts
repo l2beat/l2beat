@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime, rawAddress } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
   DA_LAYERS,
@@ -54,7 +58,7 @@ export const zkcandy: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['ETH'],
       description:
         'Shared bridge for depositing tokens to zkCandy and other ZK stack chains.',

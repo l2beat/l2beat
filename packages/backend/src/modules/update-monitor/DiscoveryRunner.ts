@@ -17,7 +17,11 @@ import {
   modelPermissions,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, rawAddress, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  withoutUndefinedKeys,
+} from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -218,7 +222,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => rawAddress(e.address) === entry.address,
+      (e) => ChainSpecificAddress.address(e.address) === entry.address,
     )
 
     if (!matchingEntry) {

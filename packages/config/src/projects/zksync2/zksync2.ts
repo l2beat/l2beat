@@ -1,10 +1,9 @@
 import {
   assert,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  fromParts,
-  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { ESCROW } from '../../common'
@@ -31,7 +30,7 @@ const validatorsVTLold = () => {
 const validatorsVTLnew = discovery.getPermissionsByRole('validateZkStack')
 // Extract addresses from new validators and convert to lowercase for comparison
 const newValidatorAddresses = validatorsVTLnew.map((v) =>
-  fromParts('eth', v.address).toLowerCase(),
+  ChainSpecificAddress.from('eth', v.address).toLowerCase(),
 )
 const oldValidators = validatorsVTLold()
 
@@ -109,7 +108,7 @@ export const zksync2: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       description:
         'Shared bridge for depositing tokens to ZKsync Era and other ZK stack chains.',

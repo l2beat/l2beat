@@ -1,8 +1,8 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -57,7 +57,7 @@ export const abstract: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('AbstractZkEvm'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['ETH', 'YGG'],
       description:
         'Shared bridge for depositing tokens to Abstract and other ZK stack chains.',

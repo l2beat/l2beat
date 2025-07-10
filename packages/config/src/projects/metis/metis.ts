@@ -4,7 +4,6 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 
 import {
@@ -176,8 +175,8 @@ export const metis: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: rawAddress(ChainSpecificAddress(blobBatcher)),
-          to: rawAddress(ChainSpecificAddress(inboxAddress)),
+          from: ChainSpecificAddress.address(ChainSpecificAddress(blobBatcher)),
+          to: ChainSpecificAddress.address(ChainSpecificAddress(inboxAddress)),
           sinceTimestamp: UnixTime(1747234799),
         },
       },
@@ -188,7 +187,7 @@ export const metis: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: rawAddress(stateCommitmentChain.address),
+          address: ChainSpecificAddress.address(stateCommitmentChain.address),
           selector: '0x5b297172',
           functionSignature:
             'function appendStateBatch(bytes32[] _batch, uint256 _shouldStartAtElement, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',
@@ -203,7 +202,7 @@ export const metis: ScalingProject = {
         query: {
           // this query assumes that the chain id used is always metis' chain id (1088)
           formula: 'functionCall',
-          address: rawAddress(stateCommitmentChain.address),
+          address: ChainSpecificAddress.address(stateCommitmentChain.address),
           selector: '0x0a17d699',
           functionSignature:
             'function appendStateBatchByChainId(uint256 _chainId, bytes32[] _batch, uint256 _shouldStartAtElement, string _proposer, bytes32 _lastBatchBlockHash, uint256 _lastBatchBlockNumber)',

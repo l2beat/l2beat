@@ -1,4 +1,4 @@
-import { EthereumAddress, fromParts } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import type { EntryParameters } from '../output/types'
 import {
@@ -50,24 +50,41 @@ describe(interpolateModelTemplate.name, () => {
     `
     const contract: EntryParameters = {
       type: 'Contract',
-      address: fromParts('eth', EthereumAddress.from('0x123')),
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0x123')),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
       values: {
         $threshold: 2,
         $members: [
-          fromParts('eth', EthereumAddress.from('0x456')).toString(),
-          fromParts('eth', EthereumAddress.from('0x789')).toString(),
-          fromParts('eth', EthereumAddress.from('0xabc')).toString(),
+          ChainSpecificAddress.from(
+            'eth',
+            EthereumAddress.from('0x456'),
+          ).toString(),
+          ChainSpecificAddress.from(
+            'eth',
+            EthereumAddress.from('0x789'),
+          ).toString(),
+          ChainSpecificAddress.from(
+            'eth',
+            EthereumAddress.from('0xabc'),
+          ).toString(),
         ],
       },
     }
 
     const addressToNameMap = {
-      [fromParts('eth', EthereumAddress.from('0x123')).toString()]:
-        'ContactMsigA',
-      [fromParts('eth', EthereumAddress.from('0x456')).toString()]: 'MemberA',
-      [fromParts('eth', EthereumAddress.from('0x789')).toString()]: 'MemberB',
+      [ChainSpecificAddress.from(
+        'eth',
+        EthereumAddress.from('0x123'),
+      ).toString()]: 'ContactMsigA',
+      [ChainSpecificAddress.from(
+        'eth',
+        EthereumAddress.from('0x456'),
+      ).toString()]: 'MemberA',
+      [ChainSpecificAddress.from(
+        'eth',
+        EthereumAddress.from('0x789'),
+      ).toString()]: 'MemberB',
     }
 
     const values = contractValuesForInterpolation('ethereum', contract)
@@ -93,7 +110,7 @@ describe(interpolateModelTemplate.name, () => {
     const modelTemplate = `msg1("&msg|lower").msg2("&msg:raw|lower").`
     const contract: EntryParameters = {
       type: 'Contract',
-      address: fromParts('eth', EthereumAddress.from('0x123')),
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0x123')),
       name: 'ContractA',
       description: 'Description of ContractA',
       values: {
@@ -113,7 +130,7 @@ describe(interpolateModelTemplate.name, () => {
     `
     const contract: EntryParameters = {
       type: 'Contract',
-      address: fromParts('eth', EthereumAddress.from('0x123')),
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0x123')),
       name: 'ContactMsigA',
       description: 'Description of ContactMsigA',
       values: {
@@ -132,7 +149,7 @@ describe(contractValuesForInterpolation.name, () => {
   it('properly prepares values for interpolation', () => {
     const contract: EntryParameters = {
       type: 'Contract',
-      address: fromParts(
+      address: ChainSpecificAddress.from(
         'eth',
         EthereumAddress('0x00000000000000000000000000000000DeaDBeef'),
       ),

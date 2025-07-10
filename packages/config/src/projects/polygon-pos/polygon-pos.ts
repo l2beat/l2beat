@@ -1,9 +1,9 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { CONTRACTS, DA_MODES } from '../../common'
@@ -130,7 +130,9 @@ export const polygonpos: ScalingProject = {
         ],
         query: {
           formula: 'functionCall',
-          address: rawAddress(discovery.getContract('RootChain').address),
+          address: ChainSpecificAddress.address(
+            discovery.getContract('RootChain').address,
+          ),
           selector: '0x4e43e495',
           functionSignature:
             'function submitCheckpoint(bytes data, uint256[3][] sigs)',

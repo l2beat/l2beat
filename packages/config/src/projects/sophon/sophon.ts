@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -91,7 +90,7 @@ export const sophon: ScalingProject = zkStackL2({
   },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: [
         'ETH',
         'USDT',

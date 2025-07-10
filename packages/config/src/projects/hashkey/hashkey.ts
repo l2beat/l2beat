@@ -1,8 +1,7 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -12,13 +11,13 @@ const discovery = new ProjectDiscovery('hashkey')
 
 const genesisTimestamp = UnixTime(1734347135)
 const disputeGameFactory = discovery.getContract('DisputeGameFactory')
-const sequencerInbox = rawAddress(
+const sequencerInbox = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
     'sequencerInbox',
   ),
 )
-const sequencerAddress = rawAddress(
+const sequencerAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
     'batcherHash',
@@ -96,7 +95,7 @@ export const hashkey = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: rawAddress(disputeGameFactory.address),
+        address: ChainSpecificAddress.address(disputeGameFactory.address),
         selector: '0x82ecf2f6',
         functionSignature:
           'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

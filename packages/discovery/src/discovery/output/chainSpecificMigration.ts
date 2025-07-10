@@ -7,9 +7,8 @@
 
 import {
   assert,
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
-  fromParts,
 } from '@l2beat/shared-pure'
 import type { ContractValue } from './types'
 
@@ -23,7 +22,7 @@ export function migrateImplementationNames(
 
   return Object.fromEntries(
     Object.entries(implementationNames).map(([address, name]) => [
-      fromParts(shortChainName, address),
+      ChainSpecificAddress.from(shortChainName, address),
       name,
     ]),
   )
@@ -48,7 +47,7 @@ function migrateValue(
   shortChainName: string,
 ): ContractValue {
   if (typeof value === 'string' && EthereumAddress.checkIgnoringCase(value)) {
-    return fromParts(shortChainName, value)
+    return ChainSpecificAddress.from(shortChainName, value)
   }
 
   if (Array.isArray(value)) {
