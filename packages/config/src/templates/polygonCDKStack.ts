@@ -4,6 +4,8 @@ import {
   ChainSpecificAddress,
   ProjectId,
   type UnixTime,
+  formatSeconds,
+  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -458,18 +460,19 @@ function getDaTracking(
 
   if (templateVars.usesEthereumBlobs) {
     const polygonContract = templateVars.discovery.getContract('PolygonZkEVM')
-    const sequencer = templateVars.discovery.getContractValue<string>(
-      'PolygonZkEVM',
-      'trustedSequencer',
-    )
+    const sequencer =
+      templateVars.discovery.getContractValue<ChainSpecificAddress>(
+        'PolygonZkEVM',
+        'trustedSequencer',
+      )
 
     return [
       {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: polygonContract.sinceBlock ?? 0,
-        inbox: polygonContract.address,
-        sequencers: [sequencer],
+        inbox: rawAddress(polygonContract.address),
+        sequencers: [rawAddress(sequencer)],
       },
     ]
   }

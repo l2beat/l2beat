@@ -159,7 +159,7 @@ export const taiko: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 0, // Edge Case: config added @ DA Module start
-        inbox: '0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a',
+        inbox: EthereumAddress('0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a'),
         sequencers: [],
         topics: [
           '0xefe9c6c0b5cbd9c0eed2d1e9c00cfc1a010d6f1aff50f7facd665a639b622b26', // BlockProposedV2

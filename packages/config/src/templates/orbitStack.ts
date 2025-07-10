@@ -1,6 +1,7 @@
 import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
+  type ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
@@ -831,10 +832,12 @@ function getDaTracking(
   }
 
   if (templateVars.usesEthereumBlobs) {
-    const batchPosters = templateVars.discovery.getContractValue<string[]>(
-      'SequencerInbox',
-      'batchPosters',
-    )
+    const batchPosters = templateVars.discovery
+      .getContractValue<ChainSpecificAddress[]>(
+        'SequencerInbox',
+        'batchPosters',
+      )
+      .map((a) => rawAddress(a))
 
     const inboxDeploymentBlockNumber =
       templateVars.discovery.getContract('SequencerInbox').sinceBlock ?? 0
@@ -844,7 +847,7 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
-        inbox: templateVars.sequencerInbox.address,
+        inbox: rawAddress(templateVars.sequencerInbox.address),
         sequencers: batchPosters,
       },
     ]

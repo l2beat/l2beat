@@ -163,8 +163,10 @@ export const metis: ScalingProject = {
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: 22472728,
-        inbox: '0xFf00000000000000000000000000000000001088',
-        sequencers: ['0xae4d46bd9117cb017c5185844699c51107cb28a9'],
+        inbox: EthereumAddress('0xFf00000000000000000000000000000000001088'),
+        sequencers: [
+          EthereumAddress('0xae4d46bd9117cb017c5185844699c51107cb28a9'),
+        ],
       },
     ],
     trackedTxs: [
