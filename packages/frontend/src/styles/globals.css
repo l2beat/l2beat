@@ -23,6 +23,15 @@ body:has(.reading) {
   @apply bg-background-reading;
 }
 
+/* cursor: pointer by default for buttons */
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 :root {
   --primary: 260deg 7.69% 7.65%;
   --primary-invert: 0deg 0% 98%;
