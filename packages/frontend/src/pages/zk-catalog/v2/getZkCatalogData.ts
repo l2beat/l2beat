@@ -1,4 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -9,15 +10,19 @@ export async function getZkCatalogData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, zkCatalogProjects, allProjects] = await Promise.all([
-    getAppLayoutProps(),
-    ps.getProjects({
-      select: ['proofSystem', 'display', 'statuses'],
-    }),
-    ps.getProjects({}),
-  ])
+  const [appLayoutProps, zkCatalogProjects, allProjects, tvs] =
+    await Promise.all([
+      getAppLayoutProps(),
+      ps.getProjects({
+        select: ['proofSystem', 'display', 'statuses'],
+      }),
+      ps.getProjects({
+        optional: ['daBridge'],
+      }),
+      get7dTvsBreakdown({ type: 'layer2' }),
+    ])
 
-  const entries = getZkCatalogEntries(zkCatalogProjects, allProjects)
+  const entries = getZkCatalogEntries(zkCatalogProjects, allProjects, tvs)
 
   return {
     head: {
