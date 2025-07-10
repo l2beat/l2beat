@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x469cd52bddd4fb88b4ac9afb0d865dd5ff260264
+Generated with discovered.json: 0x02bf1be6fd9af766b8bebe01ecab7181d8165f4a
 
-# Diff at Thu, 10 Jul 2025 09:50:11 GMT:
+# Diff at Thu, 10 Jul 2025 14:36:38 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@f69ff944dc2501a54a7c05f54d37308d5262553d block: 22615727
-- current block number: 22887891
+- current block number: 22889418
 
 ## Description
 
@@ -78,6 +78,15 @@ add PAXG
       values.getRecoveryVault:
 -        "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
 +        "0x0000000000000000000000000000000000000000"
+    }
+```
+
+```diff
+    contract Token (0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80) {
+    +++ description: None
+      values.totalSupply:
+-        155138147587
++        142386083810
     }
 ```
 
@@ -161,13 +170,31 @@ discovery. Values are for block 22615727 (main branch discovery), not current.
 
 ```diff
 +   Status: CREATED
+    contract PermissionManager (0x344278aff344d6fb960705dc18a4912221608472)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract SimpleMultiSig (0x38699d04656fF537ef8671b6b595402ebDBdf6f4)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
+    contract ERC2771Forwarder (0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract Paxos Gold Token (0x45804880De22913dAFE09f4980848ECE6EcbAf78)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Token (0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80)
     +++ description: None
 ```
 

@@ -1,8 +1,8 @@
 {
   "name": "tokens",
   "chain": "ethereum",
-  "blockNumber": 22887891,
-  "configHash": "0x68fb6b439c2d7c6a9c62e208afe47188679e9a144df84ae26c6b6f5afb14151e",
+  "blockNumber": 22889418,
+  "configHash": "0xb7e1e4c078a213006201bf1019271a3ba10142403bdfd334486b9f8c4e0ca9de",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -24,8 +24,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xbf25210000000000",
-        "get_deposit_root": "0xd68603d28eb39c442acc5b23c830e27e3d067aab128ce3000d0ef29600095a77"
+        "get_deposit_count": "0x8426210000000000",
+        "get_deposit_root": "0xdfff416aca632c595e5129ffa7cba6321e694d1487da99940ab025c8175a9bc7"
       },
       "implementationNames": {
         "0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -138,17 +138,17 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "0x7FaDB6358950c5fAA66Cb5EB8eE5147De3df355a",
         "getConsensusReport": {
-          "hash": "0x8458a2d3d1fe6d43f5707d636e29c92bc39942728b65535af9cc760b35c91f0f",
-          "refSlot": 12107999,
-          "processingDeadlineTime": 1752148811,
+          "hash": "0xe65c4eabcd2dd256fac6c3b08fb210be3e2d068a915bb9703c7b8e45c9224247",
+          "refSlot": 12110399,
+          "processingDeadlineTime": 1752177611,
           "processingStarted": true
         },
         "getConsensusVersion": 3,
         "getContractVersion": 1,
         "getProcessingState": {
-          "currentFrameRefSlot": 12107999,
-          "processingDeadlineTime": 1752148811,
-          "dataHash": "0x8458a2d3d1fe6d43f5707d636e29c92bc39942728b65535af9cc760b35c91f0f",
+          "currentFrameRefSlot": 12110399,
+          "processingDeadlineTime": 1752177611,
+          "dataHash": "0xe65c4eabcd2dd256fac6c3b08fb210be3e2d068a915bb9703c7b8e45c9224247",
           "dataSubmitted": true,
           "dataFormat": 1,
           "requestsCount": 0,
@@ -292,6 +292,40 @@
       "address": "0x2fb074FA59c9294c71246825C1c9A0c7782d41a4",
       "type": "EOA",
       "proxyType": "EOA"
+    },
+    {
+      "name": "PermissionManager",
+      "address": "0x344278aff344d6fb960705dc18a4912221608472",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
+        "0x775ec46d31d03f2687835380ad135abaab92a7ad5cd897280e4b1551244a01a9"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1713539075,
+      "sinceBlock": 19690257,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
+        "$pastUpgrades": [
+          [
+            "2024-04-19T15:04:35.000Z",
+            "0x4569df1f9ad212c285db5a8d04a6eb4d3ae879ad396bdaff9b6f970f07fe95ff",
+            ["0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "ADMIN": 0,
+        "ADMIN_MASK": "0x0000000000000000000000000000000000000000000000000000000000000001",
+        "PUBLIC": 255,
+        "PUBLIC_MASK": "0x8000000000000000000000000000000000000000000000000000000000000000",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "0x344278aff344d6fb960705dc18a4912221608472": "ERC1967Proxy",
+        "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E": "PermissionManager"
+      }
     },
     {
       "name": "SimpleMultiSig",
@@ -506,6 +540,32 @@
       "proxyType": "EOA"
     },
     {
+      "name": "ERC2771Forwarder",
+      "address": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
+      "type": "Contract",
+      "sourceHashes": [
+        "0xd963334689b72982b22f867d721ae8835f1211822a60a265fd03620dc7262679"
+      ],
+      "proxyType": "immutable",
+      "sinceTimestamp": 1713539039,
+      "sinceBlock": 19690254,
+      "values": {
+        "$immutable": true,
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Forwarder",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        }
+      },
+      "implementationNames": {
+        "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3": "ERC2771Forwarder"
+      }
+    },
+    {
       "name": "LegacyOracle",
       "address": "0x442af784A788A5bd6F42A01Ebe9F287a871243fb",
       "type": "Contract",
@@ -536,15 +596,15 @@
           "genesisTime": 1606824023
         },
         "getContractVersion": 4,
-        "getCurrentEpochId": 378426,
+        "getCurrentEpochId": 378474,
         "getCurrentFrame": {
-          "frameEpochId": 378225,
-          "frameStartTime": 1752062423,
-          "frameEndTime": 1752148822
+          "frameEpochId": 378450,
+          "frameStartTime": 1752148823,
+          "frameEndTime": 1752235222
         },
         "getEVMScriptRegistry": "0x853cc0D5917f49B57B8e9F89e491F5E18919093A",
         "getInitializationBlock": 11473216,
-        "getLastCompletedEpochId": 378225,
+        "getLastCompletedEpochId": 378450,
         "getLastCompletedReportDelta": {
           "postTotalPooledEther": "9712033027760740633827249",
           "preTotalPooledEther": "9750705483524764079948551",
@@ -740,7 +800,7 @@
         "RESET_BOND_CURVE_ROLE": "0xb5dffea014b759c493d63b1edaceb942631d6468998125e1b4fe427c99082134",
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "SET_BOND_CURVE_ROLE": "0x645c9e6d2a86805cb5a28b1e4751c0dab493df7cf935070ce405489ba1a7bf72",
-        "totalBondShares": "9417724278474140074443",
+        "totalBondShares": "9393182013626716678269",
         "WITHDRAWAL_QUEUE": "0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
@@ -1069,10 +1129,10 @@
         "DOMAIN_SEPARATOR": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe",
         "name": "Wrapped liquid staked Ether 2.0",
         "stETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
-        "stEthPerToken": "1207712498592475936",
+        "stEthPerToken": "1207805461674523970",
         "symbol": "wstETH",
-        "tokensPerStEth": "828011634528454661",
-        "totalSupply": "3405299084809041863355028"
+        "tokensPerStEth": "827947903641354121",
+        "totalSupply": "3404860542289805663953701"
       },
       "implementationNames": {
         "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "WstETH"
@@ -1122,24 +1182,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 12107999,
-          "consensusReport": "0x8458a2d3d1fe6d43f5707d636e29c92bc39942728b65535af9cc760b35c91f0f",
+          "refSlot": 12110399,
+          "consensusReport": "0xe65c4eabcd2dd256fac6c3b08fb210be3e2d068a915bb9703c7b8e45c9224247",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 12107999,
-          "reportProcessingDeadlineSlot": 12110399
+          "refSlot": 12110399,
+          "reportProcessingDeadlineSlot": 12112799
         },
         "getFastLaneMembers": {
           "addresses": [
-            "0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB",
             "0x73181107c8D9ED4ce0bbeF7A0b4ccf3320C41d12",
             "0xA7410857ABbf75043d61ea54e07D57A6EB6EF186",
             "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
-            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78"
+            "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
+            "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5"
           ],
           "lastReportedRefSlots": [
-            12107999, 12107999, 12107999, 12107999, 12107999
+            12110399, 12110399, 12110399, 12110399, 12110399
           ]
         },
         "getFrameConfig": {
@@ -1161,7 +1221,7 @@
             "0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB"
           ],
           "lastReportedRefSlots": [
-            12107999, 12107999, 12107999, 12107999, 12100799, 12100799,
+            12110399, 12110399, 12110399, 12110399, 12110399, 12100799,
             12103199, 12105599, 12107999
           ]
         },
@@ -1169,7 +1229,7 @@
         "getReportProcessor": "0x0De4Ea0184c2ad0BacA7183356Aea5B8d5Bf5c6e",
         "getReportVariants": {
           "variants": [
-            "0x8458a2d3d1fe6d43f5707d636e29c92bc39942728b65535af9cc760b35c91f0f"
+            "0xe65c4eabcd2dd256fac6c3b08fb210be3e2d068a915bb9703c7b8e45c9224247"
           ],
           "support": [5]
         },
@@ -1224,17 +1284,17 @@
         "GENESIS_TIME": 1606824023,
         "getConsensusContract": "0xD624B08C83bAECF0807Dd2c6880C3154a5F0B288",
         "getConsensusReport": {
-          "hash": "0xe810875a3c2869bd44c1e4e701c953067d78714af954727153a7a535d6064464",
-          "refSlot": 12103199,
-          "processingDeadlineTime": 1752148811,
+          "hash": "0xd69e47954c2139905c33538c78adcef9f6c7154a0d01a51ec14ed0d6260fff59",
+          "refSlot": 12110399,
+          "processingDeadlineTime": 1752235211,
           "processingStarted": true
         },
         "getConsensusVersion": 3,
         "getContractVersion": 2,
         "getProcessingState": {
-          "currentFrameRefSlot": 12103199,
-          "processingDeadlineTime": 1752148811,
-          "mainDataHash": "0xe810875a3c2869bd44c1e4e701c953067d78714af954727153a7a535d6064464",
+          "currentFrameRefSlot": 12110399,
+          "processingDeadlineTime": 1752235211,
+          "mainDataHash": "0xd69e47954c2139905c33538c78adcef9f6c7154a0d01a51ec14ed0d6260fff59",
           "mainDataSubmitted": true,
           "extraDataHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "extraDataFormat": 0,
@@ -1332,9 +1392,9 @@
         "FINALIZE_ROLE": "0x485191a2ef18512555bd4426d18a716ce8e98c80ec2de16394dcf86d7d91bc80",
         "getBaseURI": "https://wq-api.lido.fi/v1/nft",
         "getContractVersion": 1,
-        "getLastFinalizedRequestId": 85457,
-        "getLastRequestId": 85588,
-        "getLockedEtherAmount": "13350516057884631202818",
+        "getLastFinalizedRequestId": 85538,
+        "getLastRequestId": 85633,
+        "getLockedEtherAmount": "14916684267115223518949",
         "getNFTDescriptorAddress": "0x0000000000000000000000000000000000000000",
         "getResumeSinceTimestamp": 1684163759,
         "isBunkerModeActive": false,
@@ -1353,8 +1413,8 @@
         "RESUME_ROLE": "0x2fc10cc8ae19568712f7a176fb4978616a610650813c9d05326c34abb62749c7",
         "STETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
         "symbol": "unstETH",
-        "unfinalizedRequestNumber": 131,
-        "unfinalizedStETH": "10304435415346215807074",
+        "unfinalizedRequestNumber": 95,
+        "unfinalizedStETH": "8351135220581902273514",
         "WSTETH": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
       },
       "implementationNames": {
@@ -1513,6 +1573,54 @@
       "proxyType": "EOA"
     },
     {
+      "name": "Token",
+      "address": "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
+        "0x95ca38921467c82db81aa7581b20ab8104b4a24de3baf525a0bbf527a33511f3"
+      ],
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1713539123,
+      "sinceBlock": 19690261,
+      "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74",
+        "$pastUpgrades": [
+          [
+            "2024-04-19T15:05:23.000Z",
+            "0xb2e107115e982912ef954fc10b23fa0bbc952cfe4e07e52d1494241a44cf0ba4",
+            ["0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74"]
+          ]
+        ],
+        "$upgradeCount": 1,
+        "authority": "0x344278aff344d6fb960705dc18a4912221608472",
+        "decimals": 5,
+        "DOMAIN_SEPARATOR": "0xfabbd99db0964438888bdd7f91124b4f6874282ee08abcb6a428a479b8e5545c",
+        "eip712Domain": {
+          "fields": "0x0f",
+          "name": "Spiko EU T-Bills Money Market Fund",
+          "version": "1",
+          "chainId": 1,
+          "verifyingContract": "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80",
+          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "extensions": []
+        },
+        "name": "Spiko EU T-Bills Money Market Fund",
+        "owner": "0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "symbol": "EUTBL",
+        "totalSupply": 142386083810,
+        "trustedForwarder": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
+        "UPGRADE_INTERFACE_VERSION": "5.0.0"
+      },
+      "errors": { "proxiableUUID": "Processing error occurred." },
+      "implementationNames": {
+        "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": "ERC1967Proxy",
+        "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74": "Token"
+      }
+    },
+    {
       "address": "0xA32328DE1247d04CB929408D7e5cC8AcC33f48Cd",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1571,9 +1679,9 @@
         "getBeaconStat": {
           "depositedValidators": 398269,
           "beaconValidators": 397169,
-          "beaconBalance": "9090523773299309000000000"
+          "beaconBalance": "9089794613977229000000000"
         },
-        "getBufferedEther": "3463523032665529906992",
+        "getBufferedEther": "3617047180321662928274",
         "getContractVersion": 2,
         "getCurrentStakeLimit": "150000000000000000000000",
         "getDepositableEther": 0,
@@ -1595,11 +1703,11 @@
           "currentStakeLimit": "150000000000000000000000",
           "maxStakeLimit": "150000000000000000000000",
           "maxStakeLimitGrowthBlocks": 6400,
-          "prevStakeLimit": "149999605924555832642086",
-          "prevStakeBlockNumber": 22887889
+          "prevStakeLimit": "149999990600000000000000",
+          "prevStakeBlockNumber": 22889405
         },
-        "getTotalPooledEther": "9129187296331974529906992",
-        "getTotalShares": "7559073295152242019693715",
+        "getTotalPooledEther": "9128611661157550662928274",
+        "getTotalShares": "7558014888011413332076914",
         "getTreasury": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "getWithdrawalCredentials": "0x010000000000000000000000b9d7934878b5fb9610b3fe8a5e441e8fad7e293f",
         "hasInitialized": true,
@@ -1616,7 +1724,7 @@
         "STAKING_CONTROL_ROLE": "0xa42eee1333c0758ba72be38e728b6dadb32ea767de5b4ddbaea1dae85b1b051f",
         "STAKING_PAUSE_ROLE": "0x84ea57490227bc2be925c684e2a367071d69890b629590198f4125a018eb1de8",
         "symbol": "stETH",
-        "totalSupply": "9129187296331974529906992",
+        "totalSupply": "9128611661157550662928274",
         "UNSAFE_CHANGE_DEPOSITED_VALIDATORS_ROLE": "0xe6dc5d79630c61871e99d341ad72c5a052bed2fc8c79e5a4480a7cd31117576c"
       },
       "implementationNames": {
@@ -2062,7 +2170,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getCoverSharesBurnt": "14684898881648297203",
         "getExcessStETH": 0,
-        "getNonCoverSharesBurnt": "9925985742280459307211542",
+        "getNonCoverSharesBurnt": "9930516656411734265314313",
         "getSharesRequestedToBurn": {
           "coverShares": 0,
           "nonCoverShares": "55988399618264595"
@@ -2156,24 +2264,24 @@
           "genesisTime": 1606824023
         },
         "getConsensusState": {
-          "refSlot": 12103199,
-          "consensusReport": "0xe810875a3c2869bd44c1e4e701c953067d78714af954727153a7a535d6064464",
+          "refSlot": 12110399,
+          "consensusReport": "0xd69e47954c2139905c33538c78adcef9f6c7154a0d01a51ec14ed0d6260fff59",
           "isReportProcessing": true
         },
         "getCurrentFrame": {
-          "refSlot": 12103199,
-          "reportProcessingDeadlineSlot": 12110399
+          "refSlot": 12110399,
+          "reportProcessingDeadlineSlot": 12117599
         },
         "getFastLaneMembers": {
           "addresses": [
-            "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
             "0x946D3b081ed19173dC83Cd974fC69e1e760B7d78",
             "0x007DE4a5F7bc37E2F26c0cb2E8A95006EE9B89b5",
             "0xc79F702202E3A6B0B6310B537E786B9ACAA19BAf",
-            "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8"
+            "0x61c91ECd902EB56e314bB2D5c5C07785444Ea1c8",
+            "0xe57B3792aDCc5da47EF4fF588883F0ee0c9835C9"
           ],
           "lastReportedRefSlots": [
-            12103199, 12052799, 12103199, 12103199, 11613599
+            12052799, 12110399, 12110399, 11613599, 12110399
           ]
         },
         "getFrameConfig": {
@@ -2195,17 +2303,17 @@
             "0x285f8537e1dAeEdaf617e96C742F2Cf36d63CcfB"
           ],
           "lastReportedRefSlots": [
-            12103199, 12103199, 12103199, 12052799, 12103199, 12103199,
-            11613599, 12095999, 12103199
+            12103199, 12110399, 12103199, 12052799, 12110399, 12110399,
+            11613599, 12110399, 12110399
           ]
         },
         "getQuorum": 5,
         "getReportProcessor": "0x852deD011285fe67063a08005c71a85690503Cee",
         "getReportVariants": {
           "variants": [
-            "0xe810875a3c2869bd44c1e4e701c953067d78714af954727153a7a535d6064464"
+            "0xd69e47954c2139905c33538c78adcef9f6c7154a0d01a51ec14ed0d6260fff59"
           ],
-          "support": [6]
+          "support": [5]
         },
         "MANAGE_FAST_LANE_CONFIG_ROLE": "0x4af6faa30fabb2c4d8d567d06168f9be8adb583156c1ecb424b4832a7e4d6717",
         "MANAGE_FRAME_CONFIG_ROLE": "0x921f40f434e049d23969cbe68d9cf3ac1013fbe8945da07963af6f3142de6afe",
@@ -2247,7 +2355,7 @@
         "ACCOUNTING": "0x4d72BFF1BeaC69925F8Bd12526a39BAAb069e5Da",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "ORACLE": "0x4D4074628678Bd302921c20573EEa1ed38DdF7FB",
-        "pendingSharesToDistribute": "3663148077489486594",
+        "pendingSharesToDistribute": "4440083156584759151",
         "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
         "proxy__getImplementation": "0x17Fc610ecbbAc3f99751b3B2aAc1bA2b22E444f0",
         "proxy__getIsOssified": false,
@@ -2805,6 +2913,81 @@
       "function setOwners(uint256 threshold_, address[] owners_)",
       "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
+    "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74": [
+      "constructor(address _authority, address _trustedForwarder)",
+      "error AddressEmptyCode(address target)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
+      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
+      "error ERC20InvalidApprover(address approver)",
+      "error ERC20InvalidReceiver(address receiver)",
+      "error ERC20InvalidSender(address sender)",
+      "error ERC20InvalidSpender(address spender)",
+      "error ERC2612ExpiredSignature(uint256 deadline)",
+      "error ERC2612InvalidSigner(address signer, address owner)",
+      "error EnforcedPause()",
+      "error ExpectedPause()",
+      "error FailedInnerCall()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidInitialization()",
+      "error NotInitializing()",
+      "error OwnableInvalidOwner(address owner)",
+      "error OwnableUnauthorizedAccount(address account)",
+      "error RestrictedAccess(address caller, address target, bytes4 selector)",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "error UnauthorizedFrom(address token, address user)",
+      "error UnauthorizedTo(address token, address user)",
+      "event Approval(address indexed owner, address indexed spender, uint256 value)",
+      "event EIP712DomainChanged()",
+      "event Initialized(uint64 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Transfer(address indexed from, address indexed to, uint256 value)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DOMAIN_SEPARATOR() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function allowance(address owner, address spender) view returns (uint256)",
+      "function approve(address spender, uint256 value) returns (bool)",
+      "function approveAndCall(address spender, uint256 value) returns (bool)",
+      "function approveAndCall(address spender, uint256 value, bytes data) returns (bool)",
+      "function authority() view returns (address)",
+      "function balanceOf(address account) view returns (uint256)",
+      "function burn(address from, uint256 amount)",
+      "function decimals() view returns (uint8)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function initialize(string _name, string _symbol, uint8 _decimals)",
+      "function isTrustedForwarder(address forwarder) view returns (bool)",
+      "function mint(address to, uint256 amount)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function name() view returns (string)",
+      "function nonces(address owner) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function setOwnership(address newOwner)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
+      "function symbol() view returns (string)",
+      "function totalSupply() view returns (uint256)",
+      "function transfer(address to, uint256 value) returns (bool)",
+      "function transferAndCall(address to, uint256 value) returns (bool)",
+      "function transferAndCall(address to, uint256 value, bytes data) returns (bool)",
+      "function transferFrom(address from, address to, uint256 value) returns (bool)",
+      "function transferFromAndCall(address from, address to, uint256 value, bytes data) returns (bool)",
+      "function transferFromAndCall(address from, address to, uint256 value) returns (bool)",
+      "function transferOwnership(address newOwner)",
+      "function trustedForwarder() view returns (address)",
+      "function unpause()",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": [
       "function resume()",
       "function name() pure returns (string)",
@@ -3089,6 +3272,12 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
+    "0x344278aff344d6fb960705dc18a4912221608472": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0x38699d04656fF537ef8671b6b595402ebDBdf6f4": [
       "function threshold() view returns (uint256)",
       "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
@@ -3260,6 +3449,25 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3": [
+      "constructor(string name)",
+      "error AddressInsufficientBalance(address account)",
+      "error ERC2771ForwarderExpiredRequest(uint48 deadline)",
+      "error ERC2771ForwarderInvalidSigner(address signer, address from)",
+      "error ERC2771ForwarderMismatchedValue(uint256 requestedValue, uint256 msgValue)",
+      "error ERC2771UntrustfulTarget(address target, address forwarder)",
+      "error FailedInnerCall()",
+      "error InvalidAccountNonce(address account, uint256 currentNonce)",
+      "error InvalidShortString()",
+      "error StringTooLong(string str)",
+      "event EIP712DomainChanged()",
+      "event ExecutedForwardRequest(address indexed signer, uint256 nonce, bool success)",
+      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
+      "function execute(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature) request) payable",
+      "function executeBatch(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature)[] requests, address refundReceiver) payable",
+      "function nonces(address owner) view returns (uint256)",
+      "function verify(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature) request) view returns (bool)"
     ],
     "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -4296,6 +4504,12 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
+    "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
     "0xa29b819654cE6224A222bb5f586920105E2D7E0E": [
       "function hasInitialized() view returns (bool)",
       "function getVersion() view returns (uint256)",
@@ -4710,6 +4924,41 @@
       "function requestBurnSharesForCover(address _from, uint256 _sharesAmountToBurn)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
+    "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E": [
+      "constructor()",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "error InvalidInitialization()",
+      "error MissingPermissions(address user, bytes32 permissions, bytes32 restriction)",
+      "error NotInitializing()",
+      "error UUPSUnauthorizedCallContext()",
+      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
+      "event GroupAdded(address indexed user, uint8 indexed group)",
+      "event GroupAdmins(uint8 indexed group, bytes32 admins)",
+      "event GroupRemoved(address indexed user, uint8 indexed group)",
+      "event Initialized(uint64 version)",
+      "event Requirements(address indexed target, bytes4 indexed selector, bytes32 groups)",
+      "event Upgraded(address indexed implementation)",
+      "function ADMIN() view returns (uint8)",
+      "function ADMIN_MASK() view returns (bytes32)",
+      "function PUBLIC() view returns (uint8)",
+      "function PUBLIC_MASK() view returns (bytes32)",
+      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
+      "function addGroup(address user, uint8 group)",
+      "function canCall(address caller, address target, bytes4 selector) view returns (bool)",
+      "function getGroupAdmins(uint8 group) view returns (bytes32)",
+      "function getGroups(address user) view returns (bytes32)",
+      "function getRequirements(address target, bytes4 selector) view returns (bytes32)",
+      "function initialize(address admin)",
+      "function multicall(bytes[] data) returns (bytes[] results)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function remGroup(address user, uint8 group)",
+      "function setGroupAdmins(uint8 group, uint8[] admins)",
+      "function setRequirements(address target, bytes4[] selectors, uint8[] groups)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": [
       "constructor(address messenger_, address wstETH_, address accountingOracle_, address tokenRateOracle_, uint32 l2GasLimitForPushingTokenRate_)",
@@ -5151,5 +5400,5 @@
     "tokens/SimpleMultisig": "0x73e5a8496e19740524ebce826192ac009f1f6f859bb8266c5ded33163da586b8",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0xec4ba2b837dc84f5c58220c5b6c2ed5a749a34d0528abfbed11a094270727924"
+  "permissionsConfigHash": "0x1a27bce9d420eeb1c305051fa4a829217da2f03ef0e2dd1e3c52e212b2f3bd05"
 }
