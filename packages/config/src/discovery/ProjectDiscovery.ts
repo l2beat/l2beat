@@ -13,7 +13,7 @@ import {
 import {
   assert,
   ChainSpecificAddress,
-  type EthereumAddress,
+  EthereumAddress,
   type LegacyTokenBridgedUsing,
   UnixTime,
   fromParts,
@@ -844,14 +844,20 @@ export class ProjectDiscovery {
 
   replaceAddressesWithNames(s: string): string {
     const ethereumAddressRegex = /\b(?:[a-zA-Z0-9]+:)?0x[a-fA-F0-9]{40}\b/g
-    const addresses = (s.match(ethereumAddressRegex) ?? []).map(
-      ChainSpecificAddress,
+    const addressStrings = s.match(ethereumAddressRegex) ?? []
+    const addresses = addressStrings.map((a) =>
+      a.includes(':')
+        ? rawAddress(ChainSpecificAddress(a))
+        : EthereumAddress(a),
     )
 
     for (const address of addresses) {
-      const contract = this.getContractByAddress(address)
+      const createdAddress = fromParts(getChainShortName(this.chain), address)
+      const contract = this.getContractByAddress(createdAddress)
       if (contract !== undefined && contract.name !== undefined) {
-        s = s.replace(address, contract.name)
+        s = s.replace(createdAddress, contract.name)
+      } else {
+        s = s.replace(createdAddress, rawAddress(createdAddress))
       }
     }
     return s
