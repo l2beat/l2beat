@@ -75,13 +75,14 @@
     "sharp": "^0.33.5",
     "sirv": "^3.0.1",
     "sqlite3": "5.1.7",
-    "tailwind-merge": "^2.3.0",
+    "tailwind-merge": "^3.3.1",
     "uuid": "^11.1.0",
     "vaul": "^0.9.1",
     "ws": "^8.18.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
+    "@tailwindcss/cli": "^4.1.11",
     "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/js-cookie": "^3.0.6",
@@ -97,7 +98,6 @@
     "mockdate": "^3.0.5",
     "postcss": "^8.4.38",
     "postcss-load-config": "^6.0.1",
-    "@tailwindcss/cli": "^4.1.11",
     "tailwindcss": "^4.1.11",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",

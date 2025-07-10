@@ -484,12 +484,6 @@ importers:
       '@resvg/resvg-js':
         specifier: ^2.6.2
         version: 2.6.2
-      '@tailwindcss/cli':
-        specifier: ^4.1.11
-        version: 4.1.11
-      '@tailwindcss/container-queries':
-        specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@4.1.11)
       '@tanstack/react-query':
         specifier: ^5.51.11
         version: 5.59.16(react@19.0.0)
@@ -590,8 +584,8 @@ importers:
         specifier: 5.1.7
         version: 5.1.7
       tailwind-merge:
-        specifier: ^2.3.0
-        version: 2.5.4
+        specifier: ^3.3.1
+        version: 3.3.1
       uuid:
         specifier: ^11.1.0
         version: 11.1.0
@@ -605,6 +599,9 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@tailwindcss/cli':
+        specifier: ^4.1.11
+        version: 4.1.11
       '@types/connect-timeout':
         specifier: ^1.9.0
         version: 1.9.0
@@ -3379,11 +3376,6 @@ packages:
   '@tailwindcss/cli@4.1.11':
     resolution: {integrity: sha512-7RAFOrVaXCFz5ooEG36Kbh+sMJiI2j4+Ozp71smgjnLfBRu7DTfoq8DsTvzse2/6nDeo2M3vS/FGaxfDgr3rtQ==}
     hasBin: true
-
-  '@tailwindcss/container-queries@0.1.1':
-    resolution: {integrity: sha512-p18dswChx6WnTSaJCSGx6lTmrGzNNvm2FtXmiO6AuA1V4U5REyoqwmT6kgAsIMdjo07QdAfYXHJ4hnMtfHzWgA==}
-    peerDependencies:
-      tailwindcss: '>=3.2.0'
 
   '@tailwindcss/node@4.1.11':
     resolution: {integrity: sha512-yzhzuGRmv5QyU9qLNg4GTlYI6STedBWRE7NjxP45CsFYYq9taI0zJXZBMqIC/c8fViNLhmrbpSFS57EoxUmD6Q==}
@@ -7192,6 +7184,9 @@ packages:
   tailwind-merge@2.5.4:
     resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
 
+  tailwind-merge@3.3.1:
+    resolution: {integrity: sha512-gBXpgUm/3rp1lMZZrM/w7D8GKqshif0zAymAhbCyIt8KMe+0v9DQ7cdYLR4FHH/cKpdTXb+A/tKKU3eolfsI+g==}
+
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
@@ -10289,10 +10284,6 @@ snapshots:
       enhanced-resolve: 5.18.2
       mri: 1.2.0
       picocolors: 1.1.1
-      tailwindcss: 4.1.11
-
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@4.1.11)':
-    dependencies:
       tailwindcss: 4.1.11
 
   '@tailwindcss/node@4.1.11':
@@ -14483,6 +14474,8 @@ snapshots:
   tailwind-merge@2.4.0: {}
 
   tailwind-merge@2.5.4: {}
+
+  tailwind-merge@3.3.1: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@4.1.11):
     dependencies:
