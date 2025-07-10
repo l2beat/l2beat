@@ -1480,5 +1480,5 @@
     "tokens/circle/USDC": "0xbe50fad150475d144499aa8bab3cb2d2e1795090cbbf93e2c6c239895a678b97",
     "tokens/Origin/wOETH": "0x03a04f3f570ec315570aed9d3e5c44a21e107d5cf9ec8a7acc41bf27e275971f"
   },
-  "permissionsConfigHash": "0x1a27bce9d420eeb1c305051fa4a829217da2f03ef0e2dd1e3c52e212b2f3bd05"
+  "permissionsConfigHash": "0xf6d0a5e9dd2b564d00b83568af4a83717281b38f5525ae76faeeabaf9b0a2cce"
 }

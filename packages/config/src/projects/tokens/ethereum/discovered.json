@@ -2,7 +2,7 @@
   "name": "tokens",
   "chain": "ethereum",
   "blockNumber": 22889418,
-  "configHash": "0xb7e1e4c078a213006201bf1019271a3ba10142403bdfd334486b9f8c4e0ca9de",
+  "configHash": "0x68fb6b439c2d7c6a9c62e208afe47188679e9a144df84ae26c6b6f5afb14151e",
   "entries": [
     {
       "address": "0x0000000000000000000000000000000000000001",
@@ -294,40 +294,6 @@
       "proxyType": "EOA"
     },
     {
-      "name": "PermissionManager",
-      "address": "0x344278aff344d6fb960705dc18a4912221608472",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
-        "0x775ec46d31d03f2687835380ad135abaab92a7ad5cd897280e4b1551244a01a9"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1713539075,
-      "sinceBlock": 19690257,
-      "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E",
-        "$pastUpgrades": [
-          [
-            "2024-04-19T15:04:35.000Z",
-            "0x4569df1f9ad212c285db5a8d04a6eb4d3ae879ad396bdaff9b6f970f07fe95ff",
-            ["0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "ADMIN": 0,
-        "ADMIN_MASK": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "PUBLIC": 255,
-        "PUBLIC_MASK": "0x8000000000000000000000000000000000000000000000000000000000000000",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "errors": { "proxiableUUID": "Processing error occurred." },
-      "implementationNames": {
-        "0x344278aff344d6fb960705dc18a4912221608472": "ERC1967Proxy",
-        "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E": "PermissionManager"
-      }
-    },
-    {
       "name": "SimpleMultiSig",
       "address": "0x38699d04656fF537ef8671b6b595402ebDBdf6f4",
       "type": "Contract",
@@ -538,32 +504,6 @@
       "address": "0x404335BcE530400a5814375E7Ec1FB55fAff3eA2",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "ERC2771Forwarder",
-      "address": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
-      "type": "Contract",
-      "sourceHashes": [
-        "0xd963334689b72982b22f867d721ae8835f1211822a60a265fd03620dc7262679"
-      ],
-      "proxyType": "immutable",
-      "sinceTimestamp": 1713539039,
-      "sinceBlock": 19690254,
-      "values": {
-        "$immutable": true,
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Forwarder",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        }
-      },
-      "implementationNames": {
-        "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3": "ERC2771Forwarder"
-      }
     },
     {
       "name": "LegacyOracle",
@@ -1571,54 +1511,6 @@
       "address": "0x9fCE35e475Fdd84DB06eEc4cbE65028d6F9C9d01",
       "type": "EOA",
       "proxyType": "EOA"
-    },
-    {
-      "name": "Token",
-      "address": "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80",
-      "type": "Contract",
-      "sourceHashes": [
-        "0x1b700e4f2cb900deab1fc07dc6cc38305b72bc7c6703d5313def15c56e809288",
-        "0x95ca38921467c82db81aa7581b20ab8104b4a24de3baf525a0bbf527a33511f3"
-      ],
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1713539123,
-      "sinceBlock": 19690261,
-      "values": {
-        "$admin": "0x0000000000000000000000000000000000000000",
-        "$implementation": "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74",
-        "$pastUpgrades": [
-          [
-            "2024-04-19T15:05:23.000Z",
-            "0xb2e107115e982912ef954fc10b23fa0bbc952cfe4e07e52d1494241a44cf0ba4",
-            ["0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74"]
-          ]
-        ],
-        "$upgradeCount": 1,
-        "authority": "0x344278aff344d6fb960705dc18a4912221608472",
-        "decimals": 5,
-        "DOMAIN_SEPARATOR": "0xfabbd99db0964438888bdd7f91124b4f6874282ee08abcb6a428a479b8e5545c",
-        "eip712Domain": {
-          "fields": "0x0f",
-          "name": "Spiko EU T-Bills Money Market Fund",
-          "version": "1",
-          "chainId": 1,
-          "verifyingContract": "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80",
-          "salt": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "extensions": []
-        },
-        "name": "Spiko EU T-Bills Money Market Fund",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "symbol": "EUTBL",
-        "totalSupply": 142386083810,
-        "trustedForwarder": "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3",
-        "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      },
-      "errors": { "proxiableUUID": "Processing error occurred." },
-      "implementationNames": {
-        "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": "ERC1967Proxy",
-        "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74": "Token"
-      }
     },
     {
       "address": "0xA32328DE1247d04CB929408D7e5cC8AcC33f48Cd",
@@ -2913,81 +2805,6 @@
       "function setOwners(uint256 threshold_, address[] owners_)",
       "constructor(uint256 threshold_, address[] owners_, uint256 chainId)"
     ],
-    "0x15EA0EC460a0E6847EC0AA8D50A84B3A51B95f74": [
-      "constructor(address _authority, address _trustedForwarder)",
-      "error AddressEmptyCode(address target)",
-      "error ECDSAInvalidSignature()",
-      "error ECDSAInvalidSignatureLength(uint256 length)",
-      "error ECDSAInvalidSignatureS(bytes32 s)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error ERC20InsufficientAllowance(address spender, uint256 allowance, uint256 needed)",
-      "error ERC20InsufficientBalance(address sender, uint256 balance, uint256 needed)",
-      "error ERC20InvalidApprover(address approver)",
-      "error ERC20InvalidReceiver(address receiver)",
-      "error ERC20InvalidSender(address sender)",
-      "error ERC20InvalidSpender(address spender)",
-      "error ERC2612ExpiredSignature(uint256 deadline)",
-      "error ERC2612InvalidSigner(address signer, address owner)",
-      "error EnforcedPause()",
-      "error ExpectedPause()",
-      "error FailedInnerCall()",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidInitialization()",
-      "error NotInitializing()",
-      "error OwnableInvalidOwner(address owner)",
-      "error OwnableUnauthorizedAccount(address account)",
-      "error RestrictedAccess(address caller, address target, bytes4 selector)",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "error UnauthorizedFrom(address token, address user)",
-      "error UnauthorizedTo(address token, address user)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event EIP712DomainChanged()",
-      "event Initialized(uint64 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function DOMAIN_SEPARATOR() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function approveAndCall(address spender, uint256 value) returns (bool)",
-      "function approveAndCall(address spender, uint256 value, bytes data) returns (bool)",
-      "function authority() view returns (address)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function burn(address from, uint256 amount)",
-      "function decimals() view returns (uint8)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function initialize(string _name, string _symbol, uint8 _decimals)",
-      "function isTrustedForwarder(address forwarder) view returns (bool)",
-      "function mint(address to, uint256 amount)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function name() view returns (string)",
-      "function nonces(address owner) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function setOwnership(address newOwner)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 value) returns (bool)",
-      "function transferAndCall(address to, uint256 value) returns (bool)",
-      "function transferAndCall(address to, uint256 value, bytes data) returns (bool)",
-      "function transferFrom(address from, address to, uint256 value) returns (bool)",
-      "function transferFromAndCall(address from, address to, uint256 value, bytes data) returns (bool)",
-      "function transferFromAndCall(address from, address to, uint256 value) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function trustedForwarder() view returns (address)",
-      "function unpause()",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x17144556fd3424EDC8Fc8A4C940B2D04936d17eb": [
       "function resume()",
       "function name() pure returns (string)",
@@ -3272,12 +3089,6 @@
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)",
       "event SetApp(bytes32 indexed namespace, bytes32 indexed appId, address app)"
     ],
-    "0x344278aff344d6fb960705dc18a4912221608472": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0x38699d04656fF537ef8671b6b595402ebDBdf6f4": [
       "function threshold() view returns (uint256)",
       "function execute(uint8[] sigV, bytes32[] sigR, bytes32[] sigS, address destination, uint256 value, bytes data, address executor, uint256 gasLimit)",
@@ -3449,25 +3260,6 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
-    "0x42DB5A5AF4D82E8eD42405dfA37278c360d923C3": [
-      "constructor(string name)",
-      "error AddressInsufficientBalance(address account)",
-      "error ERC2771ForwarderExpiredRequest(uint48 deadline)",
-      "error ERC2771ForwarderInvalidSigner(address signer, address from)",
-      "error ERC2771ForwarderMismatchedValue(uint256 requestedValue, uint256 msgValue)",
-      "error ERC2771UntrustfulTarget(address target, address forwarder)",
-      "error FailedInnerCall()",
-      "error InvalidAccountNonce(address account, uint256 currentNonce)",
-      "error InvalidShortString()",
-      "error StringTooLong(string str)",
-      "event EIP712DomainChanged()",
-      "event ExecutedForwardRequest(address indexed signer, uint256 nonce, bool success)",
-      "function eip712Domain() view returns (bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions)",
-      "function execute(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature) request) payable",
-      "function executeBatch(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature)[] requests, address refundReceiver) payable",
-      "function nonces(address owner) view returns (uint256)",
-      "function verify(tuple(address from, address to, uint256 value, uint256 gas, uint48 deadline, bytes data, bytes signature) request) view returns (bool)"
     ],
     "0x442af784A788A5bd6F42A01Ebe9F287a871243fb": [
       "function proxyType() pure returns (uint256 proxyTypeId)",
@@ -4504,12 +4296,6 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
-    "0xa0769f7A8fC65e47dE93797b4e21C073c117Fc80": [
-      "constructor(address _logic, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)"
-    ],
     "0xa29b819654cE6224A222bb5f586920105E2D7E0E": [
       "function hasInitialized() view returns (bool)",
       "function getVersion() view returns (uint256)",
@@ -4924,41 +4710,6 @@
       "function requestBurnSharesForCover(address _from, uint256 _sharesAmountToBurn)",
       "function revokeRole(bytes32 role, address account)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)"
-    ],
-    "0xd3f5f1524e1A472B51374A3ff41B8936EB5B658E": [
-      "constructor()",
-      "error AddressEmptyCode(address target)",
-      "error ERC1967InvalidImplementation(address implementation)",
-      "error ERC1967NonPayable()",
-      "error FailedInnerCall()",
-      "error InvalidInitialization()",
-      "error MissingPermissions(address user, bytes32 permissions, bytes32 restriction)",
-      "error NotInitializing()",
-      "error UUPSUnauthorizedCallContext()",
-      "error UUPSUnsupportedProxiableUUID(bytes32 slot)",
-      "event GroupAdded(address indexed user, uint8 indexed group)",
-      "event GroupAdmins(uint8 indexed group, bytes32 admins)",
-      "event GroupRemoved(address indexed user, uint8 indexed group)",
-      "event Initialized(uint64 version)",
-      "event Requirements(address indexed target, bytes4 indexed selector, bytes32 groups)",
-      "event Upgraded(address indexed implementation)",
-      "function ADMIN() view returns (uint8)",
-      "function ADMIN_MASK() view returns (bytes32)",
-      "function PUBLIC() view returns (uint8)",
-      "function PUBLIC_MASK() view returns (bytes32)",
-      "function UPGRADE_INTERFACE_VERSION() view returns (string)",
-      "function addGroup(address user, uint8 group)",
-      "function canCall(address caller, address target, bytes4 selector) view returns (bool)",
-      "function getGroupAdmins(uint8 group) view returns (bytes32)",
-      "function getGroups(address user) view returns (bytes32)",
-      "function getRequirements(address target, bytes4 selector) view returns (bytes32)",
-      "function initialize(address admin)",
-      "function multicall(bytes[] data) returns (bytes[] results)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function remGroup(address user, uint8 group)",
-      "function setGroupAdmins(uint8 group, uint8[] admins)",
-      "function setRequirements(address target, bytes4[] selectors, uint8[] groups)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xd54c1c6413caac3477AC14b2a80D5398E3c32FfE": [
       "constructor(address messenger_, address wstETH_, address accountingOracle_, address tokenRateOracle_, uint32 l2GasLimitForPushingTokenRate_)",
@@ -5400,5 +5151,5 @@
     "tokens/SimpleMultisig": "0x73e5a8496e19740524ebce826192ac009f1f6f859bb8266c5ded33163da586b8",
     "tokens/STRK": "0x9979d16113874eb421347478aae102736cd4055e0853e97e1c132d1f41506d1d"
   },
-  "permissionsConfigHash": "0x1a27bce9d420eeb1c305051fa4a829217da2f03ef0e2dd1e3c52e212b2f3bd05"
+  "permissionsConfigHash": "0xf6d0a5e9dd2b564d00b83568af4a83717281b38f5525ae76faeeabaf9b0a2cce"
 }
