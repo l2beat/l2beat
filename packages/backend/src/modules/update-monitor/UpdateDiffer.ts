@@ -5,7 +5,7 @@ import type {
   DiscoveryOutput,
   EntryParameters,
 } from '@l2beat/discovery'
-import { assert, rawAddress, type UnixTime } from '@l2beat/shared-pure'
+import { assert, type UnixTime, rawAddress } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {

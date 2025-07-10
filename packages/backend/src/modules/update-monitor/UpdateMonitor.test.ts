@@ -12,9 +12,9 @@ import {
   ChainConverter,
   ChainId,
   EthereumAddress,
-  fromParts,
   Hash256,
   UnixTime,
+  fromParts,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Clock } from '../../tools/Clock'

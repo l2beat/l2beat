@@ -8,7 +8,12 @@ import type {
   EntryParameters,
   ReceivedPermission,
 } from '@l2beat/discovery'
-import { EthereumAddress, fromParts, Hash256, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  Hash256,
+  UnixTime,
+  fromParts,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
