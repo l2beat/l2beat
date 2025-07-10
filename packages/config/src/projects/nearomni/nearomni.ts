@@ -1,9 +1,9 @@
 import {
-  ChainSpecificAddress,
+  type ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
-  rawAddress,
   UnixTime,
+  rawAddress,
 } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
