@@ -9,11 +9,11 @@ import { MainPageHeader } from '~/components/MainPageHeader'
 import { ChevronIcon } from '~/icons/Chevron'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
-import { VerifiedCountWithDetails } from '~/pages/zk-catalog/project/components/VerifiedCountWithDetails'
-import { DetailsItem } from '../components/DetailsItem'
-import { DetailsLink } from '../components/DetailsLink'
-import { VerifierCard } from '../components/VerifierCard'
-import type { ZkCatalogEntry } from '../utils/getZkCatalogEntries'
+import { DetailsItem } from './components/DetailsItem'
+import { DetailsLink } from './components/DetailsLink'
+import { VerifierCard } from './components/VerifierCard'
+import { VerifiedCountWithDetails } from './project/components/VerifiedCountWithDetails'
+import type { ZkCatalogEntry } from './utils/getZkCatalogV1Entries'
 
 interface Props extends AppLayoutProps {
   entries: ZkCatalogEntry[]

@@ -1,24 +1,22 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getVerifiers } from '~/server/features/zk-catalog/getVerifiers'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
-import type { Manifest } from '../../../utils/Manifest'
-import { getZkCatalogV1Entries } from './utils/getZkCatalogV1Entries'
+import type { Manifest } from '~/utils/Manifest'
+import { getZkCatalogEntries } from './utils/getZkCatalogEntries'
 
-export async function getZkCatalogV1Data(
+export async function getZkCatalogData(
   manifest: Manifest,
   url: string,
 ): Promise<RenderData> {
-  const [appLayoutProps, verifiers, projects] = await Promise.all([
+  const [appLayoutProps, zkCatalogProjects] = await Promise.all([
     getAppLayoutProps(),
-    getVerifiers(),
     ps.getProjects({
-      select: ['proofVerification'],
-      whereNot: ['archivedAt'],
+      select: ['proofSystem', 'display'],
     }),
   ])
-  const entries = getZkCatalogV1Entries(projects, verifiers)
+
+  const entries = getZkCatalogEntries(zkCatalogProjects)
 
   return {
     head: {
@@ -33,7 +31,7 @@ export async function getZkCatalogV1Data(
       }),
     },
     ssr: {
-      page: 'ZkCatalogPageV1',
+      page: 'ZkCatalogPage',
       props: {
         ...appLayoutProps,
         entries,

@@ -1,13 +1,12 @@
 import { v } from '@l2beat/validate'
 import express from 'express'
-import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import type { ICache } from '~/server/cache/ICache'
-import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderFunction } from '~/ssr/types'
 import { validateRoute } from '~/utils/validateRoute'
 import type { Manifest } from '../../utils/Manifest'
-import { getZkCatalogProjectData } from './project/getZkCatalogProjectData'
 import { getZkCatalogV1Data } from './v1/getZkCatalogV1Data'
+import { getZkCatalogProjectData } from './v1/project/getZkCatalogProjectData'
+import { getZkCatalogData } from './v2/getZkCatalogData'
 
 export function createZkCatalogRouter(
   manifest: Manifest,
@@ -17,30 +16,8 @@ export function createZkCatalogRouter(
   const router = express.Router()
 
   router.get('/zk-catalog', async (req, res) => {
-    const appLayoutProps = await getAppLayoutProps()
-
-    const html = render(
-      {
-        head: {
-          manifest,
-          metadata: getMetadata(manifest, {
-            title: 'ZK Catalog - L2BEAT',
-            description: 'A catalog of the ZK projects with detailed research.',
-            openGraph: {
-              url: req.originalUrl,
-              image: '/meta-images/zk-catalog/opengraph-image.png',
-            },
-          }),
-        },
-        ssr: {
-          page: 'ZkCatalogPage',
-          props: {
-            ...appLayoutProps,
-          },
-        },
-      },
-      req.originalUrl,
-    )
+    const data = await getZkCatalogData(manifest, req.originalUrl)
+    const html = render(data, req.originalUrl)
     res.status(200).send(html)
   })
 
