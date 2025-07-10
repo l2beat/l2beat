@@ -17,7 +17,13 @@
       "values": { "$immutable": true },
       "implementationNames": {
         "eth:0x6880f6Fd960D1581C2730a451A22EED1081cfD72": ""
-      }
+      },
+      "references": [
+        {
+          "text": "Source Code",
+          "href": "https://github.com/FuelLabs/fuel-v1-contracts/blob/master/src/Fuel.yulp"
+        }
+      ]
     }
   ],
   "abis": {},
