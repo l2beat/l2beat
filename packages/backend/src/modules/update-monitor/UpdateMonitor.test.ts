@@ -12,6 +12,7 @@ import {
   ChainConverter,
   ChainId,
   EthereumAddress,
+  fromParts,
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -1069,7 +1070,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address,
+    address: fromParts('eth', address),
     values: {
       $immutable: true,
     },

@@ -5,8 +5,7 @@ import type {
   DiscoveryOutput,
   EntryParameters,
 } from '@l2beat/discovery'
-import { type ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { assert, rawAddress, type UnixTime } from '@l2beat/shared-pure'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 
 export class UpdateDiffer {
@@ -152,7 +151,7 @@ export class UpdateDiffer {
         const index = Number.parseInt(indexString)
 
         const entry = latestContracts.find(
-          (e) => e.address === discoveryDiff.address,
+          (e) => rawAddress(e.address) === discoveryDiff.address,
         )
 
         return entry?.receivedPermissions?.[index]?.permission === 'upgrade'

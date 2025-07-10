@@ -19,7 +19,7 @@ import {
   type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
-import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
+import { assert, rawAddress, withoutUndefinedKeys } from '@l2beat/shared-pure'
 import isError from 'lodash/isError'
 import { Gauge } from 'prom-client'
 
@@ -319,7 +319,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => e.address === entry.address,
+      (e) => rawAddress(e.address) === entry.address,
     )
 
     if (!matchingEntry) {
