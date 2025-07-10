@@ -1,4 +1,5 @@
 import {
+  type ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
   formatSeconds,
@@ -23,11 +24,11 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('xterio')
 const genesisTimestamp = UnixTime(1716537433)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = discovery.getContractValue<EthereumAddress>(
+const sequencerInbox = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'sequencerInbox',
 )
-const sequencerAddress = discovery.getContractValue<EthereumAddress>(
+const sequencerAddress = discovery.getContractValue<ChainSpecificAddress>(
   'SystemConfig',
   'batcherHash',
 )
@@ -105,7 +106,7 @@ export const xterio: ScalingProject = opStackL2({
       query: {
         formula: 'transfer',
         from: EthereumAddress('0x7d6251D49A102a330CfB46d132982781620700Cb'), // old sequencer
-        to: sequencerInbox,
+        to: rawAddress(sequencerInbox),
         sinceTimestamp: genesisTimestamp,
         untilTimestamp: UnixTime(1743862115),
       },
@@ -117,8 +118,8 @@ export const xterio: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: sequencerAddress,
-        to: sequencerInbox,
+        from: rawAddress(sequencerAddress),
+        to: rawAddress(sequencerInbox),
         sinceTimestamp: UnixTime(1743862115),
       },
     },
