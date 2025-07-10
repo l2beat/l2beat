@@ -238,11 +238,6 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       }
     })
 
-    if (currentRange.length === 0) {
-      this.logger.debug('No anomalies detected', { projectId, subtype })
-      return { anomalies, stats: undefined }
-    }
-
     const latestPoint = UnixTime.toStartOf(
       currentRange[0].record.timestamp,
       'minute',
