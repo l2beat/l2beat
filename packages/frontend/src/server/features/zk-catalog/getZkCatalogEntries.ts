@@ -4,7 +4,10 @@ import { assert, type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import {
+  type SevenDayTvsBreakdown,
+  get7dTvsBreakdown,
+} from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 import { ps } from '~/server/projects'
@@ -35,60 +38,68 @@ export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
     get7dTvsBreakdown({ type: 'layer2' }),
   ])
 
-  return zkCatalogProjects.map((project) => {
-    const usedInVerifiers = uniq(
-      project.proofSystem.verifierHashes.flatMap((v) => v.usedBy),
-    )
-    const projectsForTvs = uniq(
-      usedInVerifiers.flatMap((vp) => {
-        const project = allProjects.find((p) => p.id === vp)
-        assert(project, `Project ${vp} not found`)
+  return zkCatalogProjects.map((project) =>
+    getZkCatalogEntry(project, allProjects, tvs),
+  )
+}
 
-        // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
-        if (project.daBridge) {
-          return project.daBridge.usedIn.flatMap((p) => p.id)
-        }
-        return vp
-      }),
-    )
+function getZkCatalogEntry(
+  project: Project<'proofSystem' | 'display' | 'statuses'>,
+  allProjects: Project<never, 'daBridge'>[],
+  tvs: SevenDayTvsBreakdown,
+): ZkCatalogEntry {
+  const usedInVerifiers = uniq(
+    project.proofSystem.verifierHashes.flatMap((v) => v.usedBy),
+  )
+  const projectsForTvs = uniq(
+    usedInVerifiers.flatMap((vp) => {
+      const project = allProjects.find((p) => p.id === vp)
+      assert(project, `Project ${vp} not found`)
 
-    const tvsForProject = projectsForTvs.reduce((acc, p) => {
-      const projectTvs = tvs.projects[p]?.breakdown.total
-      if (!projectTvs) {
-        return acc
+      // if project is a DA bridge we want to get summed TVS of all projects secured by this bridge
+      if (project.daBridge) {
+        return project.daBridge.usedIn.flatMap((p) => p.id)
       }
-      return acc + projectTvs
-    }, 0)
+      return vp
+    }),
+  )
 
-    return {
-      id: project.id,
-      slug: project.slug,
-      statuses: project.statuses,
-      name: project.name,
-      icon: getProjectIcon(project.slug),
-      creator: project.proofSystem.creator,
-      tvs: tvsForProject,
-      verifiers: {
-        successfulCount: project.proofSystem.verifierHashes.filter(
-          (v) => v.verificationStatus === 'successful',
-        ).length,
-        unsuccessfulCount: project.proofSystem.verifierHashes.filter(
-          (v) => v.verificationStatus === 'unsuccessful',
-        ).length,
-        notVerifiedCount: project.proofSystem.verifierHashes.filter(
-          (v) => v.verificationStatus === 'notVerified',
-        ).length,
-      },
-      attesters: uniqBy(
-        project.proofSystem.verifierHashes
-          .flatMap((v) => v.attesters)
-          .filter(notUndefined),
-        (a) => a?.id,
-      ),
-      trustedSetup: project.proofSystem.trustedSetup,
-      projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
+  const tvsForProject = projectsForTvs.reduce((acc, p) => {
+    const projectTvs = tvs.projects[p]?.breakdown.total
+    if (!projectTvs) {
+      return acc
     }
-  })
+    return acc + projectTvs
+  }, 0)
+
+  return {
+    id: project.id,
+    slug: project.slug,
+    statuses: project.statuses,
+    name: project.name,
+    icon: getProjectIcon(project.slug),
+    creator: project.proofSystem.creator,
+    tvs: tvsForProject,
+    verifiers: {
+      successfulCount: project.proofSystem.verifierHashes.filter(
+        (v) => v.verificationStatus === 'successful',
+      ).length,
+      unsuccessfulCount: project.proofSystem.verifierHashes.filter(
+        (v) => v.verificationStatus === 'unsuccessful',
+      ).length,
+      notVerifiedCount: project.proofSystem.verifierHashes.filter(
+        (v) => v.verificationStatus === 'notVerified',
+      ).length,
+    },
+    attesters: uniqBy(
+      project.proofSystem.verifierHashes
+        .flatMap((v) => v.attesters)
+        .filter(notUndefined),
+      (a) => a?.id,
+    ),
+    trustedSetup: project.proofSystem.trustedSetup,
+    projectsUsedIn: getProjectsUsedIn(usedInVerifiers, allProjects),
+  }
 }
 
 function getProjectsUsedIn(
