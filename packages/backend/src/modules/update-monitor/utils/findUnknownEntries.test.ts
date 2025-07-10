@@ -1,12 +1,12 @@
 import type { ConfigReader, EntryParameters } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, fromParts, rawAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { findUnknownEntries } from './findUnknownEntries'
 
-const A = { address: EthereumAddress.random() }
-const B = { address: EthereumAddress.random() }
-const C = { address: EthereumAddress.random() }
+const A = { address: fromParts('eth', EthereumAddress.random()) }
+const B = { address: fromParts('eth', EthereumAddress.random()) }
+const C = { address: fromParts('eth', EthereumAddress.random()) }
 
 describe(findUnknownEntries.name, () => {
   it('finds entries not present in discovered.json', () => {
@@ -18,7 +18,7 @@ describe(findUnknownEntries.name, () => {
 
     const entries = [A, B, C] as EntryParameters[]
     const result = findUnknownEntries('', entries, configReader, 'ethereum')
-    expect(result).toEqual([C.address])
+    expect(result).toEqual([rawAddress(C.address)])
   })
 
   it('works for empty arrays', () => {
