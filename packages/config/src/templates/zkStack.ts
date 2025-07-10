@@ -2,13 +2,12 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   ChainId,
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   formatSeconds,
   ProjectId,
   type UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -611,7 +610,7 @@ function getDaTracking(
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxDeploymentBlockNumber,
         inbox: validatorTimelock,
-        sequencers: validatorsVTL.map((a) => rawAddress(a)),
+        sequencers: validatorsVTL.map((a) => ChainSpecificAddress.address(a)),
       },
     ]
   }

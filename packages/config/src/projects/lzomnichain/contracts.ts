@@ -4,7 +4,6 @@ import {
   EthereumAddress,
   UnixTime,
   assertUnreachable,
-  fromParts,
 } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -85,7 +84,9 @@ export const OMNICHAIN_ESCROWS = escrows.map((escrow) => ({
   tokens: escrow.tokens,
   newVersion: true,
   useContractName: true,
-  contract: discovery.getContractDetails(fromParts('eth', escrow.address)),
+  contract: discovery.getContractDetails(
+    ChainSpecificAddress.from('eth', escrow.address),
+  ),
   chain: 'ethereum',
 }))
 

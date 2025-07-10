@@ -1,9 +1,8 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
@@ -122,13 +121,13 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: rawAddress(
+        from: ChainSpecificAddress.address(
           discovery.getContractValue<ChainSpecificAddress>(
             'SystemConfig',
             'batcherHash',
           ),
         ),
-        to: rawAddress(
+        to: ChainSpecificAddress.address(
           discovery.getContractValue<ChainSpecificAddress>(
             'SystemConfig',
             'sequencerInbox',
@@ -159,7 +158,7 @@ export const optimism: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: rawAddress(
+        address: ChainSpecificAddress.address(
           discovery.getContract('DisputeGameFactory').address,
         ),
         selector: '0x82ecf2f6',

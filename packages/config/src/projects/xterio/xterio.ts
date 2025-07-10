@@ -1,9 +1,8 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -106,7 +105,7 @@ export const xterio: ScalingProject = opStackL2({
       query: {
         formula: 'transfer',
         from: EthereumAddress('0x7d6251D49A102a330CfB46d132982781620700Cb'), // old sequencer
-        to: rawAddress(sequencerInbox),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: genesisTimestamp,
         untilTimestamp: UnixTime(1743862115),
       },
@@ -118,8 +117,8 @@ export const xterio: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: rawAddress(sequencerAddress),
-        to: rawAddress(sequencerInbox),
+        from: ChainSpecificAddress.address(sequencerAddress),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: UnixTime(1743862115),
       },
     },
@@ -130,7 +129,7 @@ export const xterio: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: rawAddress(l2OutputOracle.address),
+        address: ChainSpecificAddress.address(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',

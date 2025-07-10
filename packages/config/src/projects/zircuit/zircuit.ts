@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   ESCROW,
@@ -175,8 +174,8 @@ export const zircuit: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'transfer',
-        from: rawAddress(sequencerAddress),
-        to: rawAddress(sequencerInbox),
+        from: ChainSpecificAddress.address(sequencerAddress),
+        to: ChainSpecificAddress.address(sequencerInbox),
         sinceTimestamp: genesisTimestamp,
       },
     },

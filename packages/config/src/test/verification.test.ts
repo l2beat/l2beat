@@ -8,7 +8,6 @@ import {
   assert,
   ChainSpecificAddress,
   type EthereumAddress,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
@@ -97,8 +96,8 @@ function containsAllAddresses(
 
 function addressesInDiscovery(discovery: DiscoveryOutput): EthereumAddress[] {
   return discovery.entries.flatMap((c) => [
-    rawAddress(c.address),
-    ...getImplementations(c).map((a) => rawAddress(a)),
+    ChainSpecificAddress.address(c.address),
+    ...getImplementations(c).map((a) => ChainSpecificAddress.address(a)),
   ])
 }
 

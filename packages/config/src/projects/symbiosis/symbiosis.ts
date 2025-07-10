@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime, rawAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BRIDGE_RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { Bridge } from '../../internalTypes'
@@ -104,7 +104,9 @@ export const symbiosis: Bridge = {
   config: {
     escrows: [
       {
-        address: rawAddress(discovery.getContract('Portal').address), // Portal v2
+        address: ChainSpecificAddress.address(
+          discovery.getContract('Portal').address,
+        ), // Portal v2
         sinceTimestamp: UnixTime(1668373200),
         tokens: '*',
         chain: 'ethereum',

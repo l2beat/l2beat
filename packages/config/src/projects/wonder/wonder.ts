@@ -1,8 +1,8 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -57,7 +57,7 @@ export const wonder: ScalingProject = zkStackL2({
   diamondContract: discovery.getContract('zkVmDiamond'),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['ETH', 'USDC'],
       description:
         'Shared bridge for depositing tokens to Wonder and other ZK stack chains.',

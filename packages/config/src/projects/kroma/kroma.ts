@@ -6,7 +6,6 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -168,12 +167,12 @@ export const kroma: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: rawAddress(
+          from: ChainSpecificAddress.address(
             ChainSpecificAddress(
               discovery.getContractValue('SystemConfig', 'batcherHash'),
             ),
           ),
-          to: rawAddress(
+          to: ChainSpecificAddress.address(
             ChainSpecificAddress(
               discovery.getContractValue('SystemConfig', 'sequencerInbox'),
             ),

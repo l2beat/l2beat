@@ -1,8 +1,8 @@
 import {
   ChainId,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { ESCROW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -228,7 +228,7 @@ export const polygonzkevm: ScalingProject = polygonCDKStack({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: '*',
       sharedEscrow: {
         type: 'AggLayer',

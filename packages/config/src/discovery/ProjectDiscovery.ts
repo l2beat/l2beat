@@ -16,9 +16,7 @@ import {
   EthereumAddress,
   type LegacyTokenBridgedUsing,
   UnixTime,
-  fromParts,
   notUndefined,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isString from 'lodash/isString'
@@ -120,7 +118,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name ?? contract.address,
       isVerified: isEntryVerified(contract),
-      address: rawAddress(contract.address),
+      address: ChainSpecificAddress.address(contract.address),
       upgradeability: getUpgradeability(contract),
       chain: this.chain,
       references: contract.references?.map((x) => ({
@@ -167,7 +165,7 @@ export class ProjectDiscovery {
     untilTimestamp?: UnixTime
     sharedEscrow?: SharedEscrow
   }): ProjectEscrow {
-    const chainSpecificAddress = fromParts(
+    const chainSpecificAddress = ChainSpecificAddress.from(
       getChainShortName(this.chain),
       address,
     )
@@ -423,7 +421,7 @@ export class ProjectDiscovery {
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
       const isVerified = isEntryVerified(entry)
 
-      const raw = rawAddress(address)
+      const raw = ChainSpecificAddress.address(address)
       const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
       const explorerUrl = EXPLORER_URLS[this.chain]
       assert(
@@ -432,7 +430,13 @@ export class ProjectDiscovery {
       )
       const url = `${explorerUrl}/address/${raw}`
 
-      result.push({ address: rawAddress(address), type, isVerified, name, url })
+      result.push({
+        address: ChainSpecificAddress.address(address),
+        type,
+        isVerified,
+        name,
+        url,
+      })
     }
 
     return result
@@ -485,7 +489,7 @@ export class ProjectDiscovery {
       descriptionOrOptions = { description: descriptionOrOptions }
     }
     return {
-      address: rawAddress(contract.address),
+      address: ChainSpecificAddress.address(contract.address),
       isVerified: isEntryVerified(contract),
       name: contract.name ?? contract.address,
       upgradeability: getUpgradeability(contract),
@@ -847,17 +851,23 @@ export class ProjectDiscovery {
     const addressStrings = s.match(ethereumAddressRegex) ?? []
     const addresses = addressStrings.map((a) =>
       a.includes(':')
-        ? rawAddress(ChainSpecificAddress(a))
+        ? ChainSpecificAddress.address(ChainSpecificAddress(a))
         : EthereumAddress(a),
     )
 
     for (const address of addresses) {
-      const createdAddress = fromParts(getChainShortName(this.chain), address)
+      const createdAddress = ChainSpecificAddress.from(
+        getChainShortName(this.chain),
+        address,
+      )
       const contract = this.getContractByAddress(createdAddress)
       if (contract !== undefined && contract.name !== undefined) {
         s = s.replace(createdAddress, contract.name)
       } else {
-        s = s.replace(createdAddress, rawAddress(createdAddress))
+        s = s.replace(
+          createdAddress,
+          ChainSpecificAddress.address(createdAddress),
+        )
       }
     }
     return s
@@ -964,7 +974,7 @@ export class ProjectDiscovery {
       }
 
       const eoa = permissionedEoas.find(
-        (eoa) => rawAddress(eoa.address) === account.address,
+        (eoa) => ChainSpecificAddress.address(eoa.address) === account.address,
       )
       assert(eoa?.receivedPermissions !== undefined)
       const hasOnlyRole = eoa.receivedPermissions.every((p) =>
@@ -1017,7 +1027,10 @@ export class ProjectDiscovery {
       const entry = structuredClone(account)
 
       const discoveryName = this.getEntryByAddress(
-        fromParts(getChainShortName(this.chain), account.address),
+        ChainSpecificAddress.from(
+          getChainShortName(this.chain),
+          account.address,
+        ),
       )?.name
       if (discoveryName !== undefined) {
         entry.name = discoveryName
@@ -1077,9 +1090,11 @@ function getUpgradeability(
   }
   const upgradeability: ProjectContractUpgradeability = {
     proxyType: contract.proxyType,
-    admins: get$Admins(contract.values).map((a) => rawAddress(a)),
+    admins: get$Admins(contract.values).map((a) =>
+      ChainSpecificAddress.address(a),
+    ),
     implementations: get$Implementations(contract.values).map((a) =>
-      rawAddress(a),
+      ChainSpecificAddress.address(a),
     ),
   }
   if (contract.values?.$immutable !== undefined) {

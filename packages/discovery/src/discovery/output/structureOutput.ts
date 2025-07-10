@@ -1,6 +1,6 @@
 import {
+  ChainSpecificAddress,
   type Hash256,
-  fromParts,
   undefinedIfEmpty,
   withoutUndefinedKeys,
 } from '@l2beat/shared-pure'
@@ -55,7 +55,7 @@ export function processAnalysis(
       .map((x): EntryParameters => {
         return withoutUndefinedKeys({
           name: x.name,
-          address: fromParts(shortChainName, x.address),
+          address: ChainSpecificAddress.from(shortChainName, x.address),
           type: x.type,
           unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,

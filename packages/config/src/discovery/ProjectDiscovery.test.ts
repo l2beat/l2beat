@@ -2,7 +2,6 @@ import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
@@ -108,7 +107,7 @@ describe(ProjectDiscovery.name, () => {
       const sequencers = discovery.getPermissionsByRole('sequence')
       expect(sequencers).toEqual([
         {
-          address: rawAddress(contractStub.address),
+          address: ChainSpecificAddress.address(contractStub.address),
           type: 'Contract',
           isVerified: true,
           name: '0x0D4C…72ac',

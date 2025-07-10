@@ -1,5 +1,9 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { assert, type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  type EthereumAddress,
+} from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { dirname, posix } from 'path'
@@ -199,7 +203,7 @@ function remapNames(
     }
 
     const matchingEntry = discoveryOutput.entries.find(
-      (e) => rawAddress(e.address) === entry.address,
+      (e) => ChainSpecificAddress.address(e.address) === entry.address,
     )
 
     if (!matchingEntry) {

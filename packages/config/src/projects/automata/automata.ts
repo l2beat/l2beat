@@ -1,9 +1,8 @@
 import {
-  type ChainSpecificAddress,
+  ChainSpecificAddress,
   EthereumAddress,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { DA_LAYERS } from '../../common'
 import { REASON_FOR_BEING_OTHER } from '../../common'
@@ -24,13 +23,13 @@ import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
 const discovery = new ProjectDiscovery('automata')
 const genesisTimestamp = UnixTime(1721183063)
 const l2OutputOracle = discovery.getContract('L2OutputOracle')
-const sequencerInbox = rawAddress(
+const sequencerInbox = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
     'sequencerInbox',
   ),
 )
-const sequencerAddress = rawAddress(
+const sequencerAddress = ChainSpecificAddress.address(
   discovery.getContractValue<ChainSpecificAddress>(
     'SystemConfig',
     'batcherHash',
@@ -132,7 +131,7 @@ export const automata: ScalingProject = opStackL2({
       ],
       query: {
         formula: 'functionCall',
-        address: rawAddress(l2OutputOracle.address),
+        address: ChainSpecificAddress.address(l2OutputOracle.address),
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',

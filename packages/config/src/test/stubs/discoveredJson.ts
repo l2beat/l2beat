@@ -3,7 +3,6 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
   Hash256,
-  fromParts,
 } from '@l2beat/shared-pure'
 
 export const contractStub: EntryParameters = {
@@ -84,7 +83,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
     {
       type: 'EOA',
-      address: fromParts('eth', EthereumAddress.from('0xaa11')),
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0xaa11')),
       receivedPermissions: [
         {
           permission: 'validate',
@@ -96,7 +95,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
     },
     {
       type: 'EOA',
-      address: fromParts('eth', EthereumAddress.from('0xbb22')),
+      address: ChainSpecificAddress.from('eth', EthereumAddress.from('0xbb22')),
       receivedPermissions: [
         {
           permission: 'sequence',

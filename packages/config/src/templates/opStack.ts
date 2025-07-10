@@ -5,7 +5,6 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -306,7 +305,7 @@ function opStackCommon(
       escrows: [
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: rawAddress(portal.address),
+          address: ChainSpecificAddress.address(portal.address),
           tokens: optimismPortalTokens,
           premintedTokens: templateVars.optimismPortalPremintedTokens,
           description: `Main entry point for users depositing ${optimismPortalTokens.join(
@@ -316,7 +315,7 @@ function opStackCommon(
         }),
         templateVars.discovery.getEscrowDetails({
           includeInTotal: type === 'layer2',
-          address: rawAddress(l1StandardBridgeEscrow),
+          address: ChainSpecificAddress.address(l1StandardBridgeEscrow),
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
           premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           excludedTokens: templateVars.nonTemplateExcludedTokens,
@@ -392,8 +391,8 @@ function getDaTracking(
         type: 'ethereum',
         daLayer: ProjectId('ethereum'),
         sinceBlock: inboxStartBlock,
-        inbox: rawAddress(sequencerInbox),
-        sequencers: [rawAddress(sequencer)],
+        inbox: ChainSpecificAddress.address(sequencerInbox),
+        sequencers: [ChainSpecificAddress.address(sequencer)],
       },
     ]
   }
@@ -851,7 +850,7 @@ function getTechnology(
   explorerUrl: string | undefined,
   daProvider: DAProvider | undefined,
 ): ProjectScalingTechnology {
-  const sequencerInbox = rawAddress(
+  const sequencerInbox = ChainSpecificAddress.address(
     ChainSpecificAddress(
       templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
     ),
@@ -1159,12 +1158,12 @@ function getTrackedTxs(
   }
 
   const fraudProofType = getFraudProofType(templateVars)
-  const sequencerInbox = rawAddress(
+  const sequencerInbox = ChainSpecificAddress.address(
     ChainSpecificAddress(
       templateVars.discovery.getContractValue('SystemConfig', 'sequencerInbox'),
     ),
   )
-  const sequencerAddress = rawAddress(
+  const sequencerAddress = ChainSpecificAddress.address(
     ChainSpecificAddress(
       templateVars.discovery.getContractValue('SystemConfig', 'batcherHash'),
     ),
@@ -1196,7 +1195,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: rawAddress(l2OutputOracle.address),
+            address: ChainSpecificAddress.address(l2OutputOracle.address),
             selector: '0x9aaab648',
             functionSignature:
               'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
@@ -1233,7 +1232,7 @@ function getTrackedTxs(
           ],
           query: {
             formula: 'functionCall',
-            address: rawAddress(disputeGameFactory.address),
+            address: ChainSpecificAddress.address(disputeGameFactory.address),
             selector: '0x82ecf2f6',
             functionSignature:
               'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',

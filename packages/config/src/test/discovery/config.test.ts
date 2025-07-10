@@ -10,7 +10,11 @@ import {
   makeEntryStructureConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress, rawAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isDeepStrictEqual } from 'util'
 import { bridges } from '../../processing/bridges'
@@ -176,7 +180,7 @@ describe('discovery config.jsonc', () => {
           for (const entry of discovery.entries) {
             const fields = makeEntryStructureConfig(
               c.structure,
-              rawAddress(entry.address),
+              ChainSpecificAddress.address(entry.address),
             ).fields
             for (const [key, value] of Object.entries(fields)) {
               if (

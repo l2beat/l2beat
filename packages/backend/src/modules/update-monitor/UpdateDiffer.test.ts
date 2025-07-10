@@ -9,10 +9,10 @@ import type {
   ReceivedPermission,
 } from '@l2beat/discovery'
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   Hash256,
   UnixTime,
-  fromParts,
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
@@ -325,7 +325,7 @@ describe(UpdateDiffer.name, () => {
       const latestDiscovery = mockObject<DiscoveryOutput>({
         entries: [
           mockObject<EntryParameters>({
-            address: fromParts('eth', address),
+            address: ChainSpecificAddress.from('eth', address),
             receivedPermissions: [
               mockObject<ReceivedPermission>(),
               mockObject<ReceivedPermission>(),
@@ -422,7 +422,7 @@ function mockContract(name: string, address: EthereumAddress): EntryParameters {
   return {
     type: 'Contract',
     name,
-    address: fromParts('eth', address),
+    address: ChainSpecificAddress.from('eth', address),
     values: {
       $immutable: true,
     },

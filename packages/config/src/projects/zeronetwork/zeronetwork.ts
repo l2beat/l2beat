@@ -1,8 +1,8 @@
 import {
+  ChainSpecificAddress,
   EthereumAddress,
   ProjectId,
   UnixTime,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -152,7 +152,7 @@ export const zeronetwork: ScalingProject = zkStackL2({
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
-      address: rawAddress(bridge.address),
+      address: ChainSpecificAddress.address(bridge.address),
       tokens: ['ETH', 'USDC', 'WBTC', 'USDT'],
       description:
         'Shared bridge for depositing tokens to ZERϴ and other ZK stack chains.',

@@ -1,5 +1,5 @@
 import type { EntryParameters } from '@l2beat/discovery'
-import { type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
+import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
 import unionBy from 'lodash/unionBy'
 import { get$Implementations } from '../discovery/extractors'
 import type {
@@ -60,7 +60,7 @@ export function safeGetImplementation(entry: EntryParameters): EthereumAddress {
   if (!implementation) {
     throw new Error(`No implementation found for ${entry.name}`)
   }
-  return rawAddress(implementation)
+  return ChainSpecificAddress.address(implementation)
 }
 
 export function explorerReferences(

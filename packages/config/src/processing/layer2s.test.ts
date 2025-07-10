@@ -1,10 +1,11 @@
 import { getChainShortName } from '@l2beat/discovery'
 import {
   assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
   assertUnreachable,
-  fromParts,
   notUndefined,
-  rawAddress,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
@@ -95,7 +96,10 @@ describe('layer2s', () => {
               // try to resolve escrow by address
               // if it does not exist the assert will throw
               discovery.getContractByAddress(
-                fromParts(getChainShortName(discovery.chain), escrow.address),
+                ChainSpecificAddress.from(
+                  getChainShortName(discovery.chain),
+                  escrow.address,
+                ),
               )
             })
           }
@@ -250,7 +254,9 @@ describe('layer2s', () => {
 
             const discovery = new ProjectDiscovery(project.id.toString())
             addresses.forEach((a) => {
-              discovery.getContractByAddress(fromParts(discovery.chain, a))
+              discovery.getContractByAddress(
+                ChainSpecificAddress.from(discovery.chain, a),
+              )
             })
           }
         })
@@ -300,7 +306,9 @@ describe('layer2s', () => {
             .flatMap((chain) =>
               new ProjectDiscovery(layer2.id, chain).getTopLevelAddresses(),
             )
-            .map((address) => rawAddress(address).toString().toLowerCase()),
+            .map((address) =>
+              ChainSpecificAddress.address(address).toString().toLowerCase(),
+            ),
         )
 
         const referencedAddresses = new Set(

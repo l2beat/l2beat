@@ -1,4 +1,8 @@
-import { EthereumAddress, UnixTime, fromParts } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import type { AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -72,8 +76,8 @@ describe(processAnalysis.name, () => {
     name: 'C',
     proxyType: 'EIP1967 proxy',
     values: {
-      $admin: fromParts('eth', ADDRESS_D).toString(),
-      $implementation: fromParts('eth', ADDRESS_E).toString(),
+      $admin: ChainSpecificAddress.from('eth', ADDRESS_D).toString(),
+      $implementation: ChainSpecificAddress.from('eth', ADDRESS_E).toString(),
       foo: 'foo',
       bar: 'bar',
     },
@@ -98,9 +102,18 @@ describe(processAnalysis.name, () => {
 
     expect(result).toEqual({
       entries: [
-        { ...emptyOutputMeta, address: fromParts('eth', ADDRESS_A) },
-        { ...emptyOutputMeta, address: fromParts('eth', ADDRESS_B) },
-        { ...emptyOutputMeta, address: fromParts('eth', ADDRESS_C) },
+        {
+          ...emptyOutputMeta,
+          address: ChainSpecificAddress.from('eth', ADDRESS_A),
+        },
+        {
+          ...emptyOutputMeta,
+          address: ChainSpecificAddress.from('eth', ADDRESS_B),
+        },
+        {
+          ...emptyOutputMeta,
+          address: ChainSpecificAddress.from('eth', ADDRESS_C),
+        },
       ],
       abis: {},
     })
@@ -114,7 +127,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           name: CONTRACT_A.name,
-          address: fromParts('eth', ADDRESS_A),
+          address: ChainSpecificAddress.from('eth', ADDRESS_A),
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
@@ -133,7 +146,7 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           name: CONTRACT_B.name,
-          address: fromParts('eth', ADDRESS_B),
+          address: ChainSpecificAddress.from('eth', ADDRESS_B),
           proxyType: CONTRACT_B.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
@@ -156,13 +169,16 @@ describe(processAnalysis.name, () => {
         {
           type: 'Contract',
           name: CONTRACT_C.name,
-          address: fromParts('eth', ADDRESS_C),
+          address: ChainSpecificAddress.from('eth', ADDRESS_C),
           proxyType: CONTRACT_C.proxyType,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
           values: CONTRACT_C.values,
         },
-        { ...emptyOutputMeta, address: fromParts('eth', ADDRESS_D) },
+        {
+          ...emptyOutputMeta,
+          address: ChainSpecificAddress.from('eth', ADDRESS_D),
+        },
       ],
       abis: CONTRACT_C.abis,
     })
@@ -187,7 +203,7 @@ describe(processAnalysis.name, () => {
       entries: [
         {
           type: 'Contract',
-          address: fromParts('eth', ADDRESS_A),
+          address: ChainSpecificAddress.from('eth', ADDRESS_A),
           name: CONTRACT_A.name,
           unverified: true,
           proxyType: CONTRACT_A.proxyType,
@@ -196,7 +212,7 @@ describe(processAnalysis.name, () => {
         },
         {
           type: 'Contract',
-          address: fromParts('eth', ADDRESS_B),
+          address: ChainSpecificAddress.from('eth', ADDRESS_B),
           name: CONTRACT_B.name,
           proxyType: CONTRACT_B.proxyType,
           values: CONTRACT_B.values,
@@ -206,14 +222,17 @@ describe(processAnalysis.name, () => {
         },
         {
           type: 'Contract',
-          address: fromParts('eth', ADDRESS_C),
+          address: ChainSpecificAddress.from('eth', ADDRESS_C),
           name: CONTRACT_C.name,
           proxyType: CONTRACT_C.proxyType,
           values: CONTRACT_C.values,
           sinceBlock: baseContract.deploymentBlockNumber,
           sinceTimestamp: baseContract.deploymentTimestamp,
         },
-        { ...emptyOutputMeta, address: fromParts('eth', ADDRESS_D) },
+        {
+          ...emptyOutputMeta,
+          address: ChainSpecificAddress.from('eth', ADDRESS_D),
+        },
       ],
       abis: {
         ...CONTRACT_A.abis,
