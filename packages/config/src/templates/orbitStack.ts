@@ -7,6 +7,7 @@ import {
   ProjectId,
   UnixTime,
   formatSeconds,
+  fromParts,
   rawAddress,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -417,11 +418,11 @@ function orbitStackCommon(
     challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   const fastConfirmer =
-    templateVars.discovery.getContractValueOrUndefined<EthereumAddress>(
+    templateVars.discovery.getContractValueOrUndefined<ChainSpecificAddress>(
       'RollupProxy',
       'anyTrustFastConfirmer',
-    ) ?? EthereumAddress.ZERO
-  const existFastConfirmer = fastConfirmer !== EthereumAddress.ZERO
+    ) ?? fromParts('eth', EthereumAddress.ZERO)
+  const existFastConfirmer = rawAddress(fastConfirmer) !== EthereumAddress.ZERO
 
   // const validatorWhitelistDisabled =
   //   templateVars.discovery.getContractValue<boolean>(
