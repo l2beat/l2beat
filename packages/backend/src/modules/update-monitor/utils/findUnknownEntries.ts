@@ -1,5 +1,5 @@
 import type { ConfigReader, EntryParameters } from '@l2beat/discovery'
-import { rawAddress, type EthereumAddress } from '@l2beat/shared-pure'
+import { type EthereumAddress, rawAddress } from '@l2beat/shared-pure'
 
 export function findUnknownEntries(
   name: string,
