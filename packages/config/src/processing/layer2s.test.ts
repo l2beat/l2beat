@@ -1,3 +1,4 @@
+import { getChainShortName } from '@l2beat/discovery'
 import {
   assert,
   assertUnreachable,
@@ -17,7 +18,6 @@ import type { ProjectTechnologyChoice } from '../types'
 import { chains } from './chains'
 import { ecosystems } from './ecosystems'
 import { layer2s, milestonesLayer2s } from './layer2s'
-import { getChainShortName } from '@l2beat/discovery'
 
 const tokenList = getTokenList(chains)
 

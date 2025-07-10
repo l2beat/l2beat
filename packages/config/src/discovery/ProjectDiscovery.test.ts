@@ -1,4 +1,9 @@
-import { assert, ChainSpecificAddress, EthereumAddress, rawAddress } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainSpecificAddress,
+  EthereumAddress,
+  rawAddress,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -29,7 +34,9 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should throw an error if contract with given address does not exist', () => {
-      const nonExistingAddress = ChainSpecificAddress('eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575')
+      const nonExistingAddress = ChainSpecificAddress(
+        'eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575',
+      )
 
       expect(() => discovery.getContract(nonExistingAddress)).toThrow(
         `Assertion Error: No contract of ${nonExistingAddress} address found (${projectName})`,

@@ -9,7 +9,9 @@ import {
 export const contractStub: EntryParameters = {
   type: 'Contract',
   name: 'MockedContract',
-  address: ChainSpecificAddress('eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
+  address: ChainSpecificAddress(
+    'eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac',
+  ),
   proxyType: 'StarkWare diamond',
   receivedPermissions: [
     {
