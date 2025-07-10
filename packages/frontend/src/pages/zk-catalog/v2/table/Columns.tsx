@@ -9,8 +9,8 @@ import { getCommonProjectColumns } from '~/components/table/utils/common-project
 import { InfoIcon } from '~/icons/Info'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
+import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { VerifiedCountWithDetails } from '../components/VerifiedCountWithDetails'
-import type { ZkCatalogEntry } from '../utils/getZkCatalogEntries'
 
 const columnHelper = createColumnHelper<ZkCatalogEntry>()
 

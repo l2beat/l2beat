@@ -4,9 +4,10 @@ import { assert, type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
-import type { SevenDayTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
+import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
 import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
+import { ps } from '~/server/projects'
 
 export interface ZkCatalogEntry extends CommonProjectEntry {
   name: string
@@ -23,12 +24,18 @@ export interface ZkCatalogEntry extends CommonProjectEntry {
   trustedSetup: ProjectProofSystem['trustedSetup']
 }
 
-export function getZkCatalogEntries(
-  projects: Project<'proofSystem' | 'display' | 'statuses'>[],
-  allProjects: Project<never, 'daBridge'>[],
-  tvs: SevenDayTvsBreakdown,
-): ZkCatalogEntry[] {
-  return projects.map((project) => {
+export async function getZkCatalogEntries(): Promise<ZkCatalogEntry[]> {
+  const [zkCatalogProjects, allProjects, tvs] = await Promise.all([
+    ps.getProjects({
+      select: ['proofSystem', 'display', 'statuses'],
+    }),
+    ps.getProjects({
+      optional: ['daBridge'],
+    }),
+    get7dTvsBreakdown({ type: 'layer2' }),
+  ])
+
+  return zkCatalogProjects.map((project) => {
     const usedInVerifiers = uniq(
       project.proofSystem.verifierHashes.flatMap((v) => v.usedBy),
     )

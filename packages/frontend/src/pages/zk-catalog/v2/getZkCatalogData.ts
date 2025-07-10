@@ -1,28 +1,26 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { get7dTvsBreakdown } from '~/server/features/scaling/tvs/get7dTvsBreakdown'
-import { ps } from '~/server/projects'
+import type { ICache } from '~/server/cache/ICache'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
-import { getZkCatalogEntries } from './utils/getZkCatalogEntries'
+import { getZkCatalogEntries } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 
 export async function getZkCatalogData(
   manifest: Manifest,
   url: string,
+  cache: ICache,
 ): Promise<RenderData> {
-  const [appLayoutProps, zkCatalogProjects, allProjects, tvs] =
-    await Promise.all([
-      getAppLayoutProps(),
-      ps.getProjects({
-        select: ['proofSystem', 'display', 'statuses'],
-      }),
-      ps.getProjects({
-        optional: ['daBridge'],
-      }),
-      get7dTvsBreakdown({ type: 'layer2' }),
-    ])
-
-  const entries = getZkCatalogEntries(zkCatalogProjects, allProjects, tvs)
+  const [appLayoutProps, entries] = await Promise.all([
+    getAppLayoutProps(),
+    cache.get(
+      {
+        key: ['zk-catalog', 'v2'],
+        ttl: 5 * 60,
+        staleWhileRevalidate: 25 * 60,
+      },
+      getZkCatalogEntries,
+    ),
+  ])
 
   return {
     head: {

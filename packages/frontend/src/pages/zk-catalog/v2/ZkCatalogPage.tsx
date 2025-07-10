@@ -1,10 +1,10 @@
 import { env } from '~/env'
 import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
+import type { ZkCatalogEntry } from '../../../server/features/zk-catalog/getZkCatalogEntries'
 import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
 import { WorkInProgressNotice } from './components/WorkInProgressNotice'
 import { ZkCatalogTable } from './table/ZkCatalogTable'
-import type { ZkCatalogEntry } from './utils/getZkCatalogEntries'
 
 interface Props extends AppLayoutProps {
   entries: ZkCatalogEntry[]

@@ -2,7 +2,7 @@ import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
 import { useTable } from '~/hooks/useTable'
-import type { ZkCatalogEntry } from '../utils/getZkCatalogEntries'
+import type { ZkCatalogEntry } from '../../../../server/features/zk-catalog/getZkCatalogEntries'
 import { zkCatalogColumns } from './Columns'
 
 export function ZkCatalogTable({ entries }: { entries: ZkCatalogEntry[] }) {
