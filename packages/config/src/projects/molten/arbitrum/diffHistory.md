@@ -1,3 +1,402 @@
+Generated with discovered.json: 0xf79139165dc203d83770aa83f5d89787bb43af62
+
+# Diff at Wed, 09 Jul 2025 15:59:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 355528153
+- current block number: 355930087
+
+## Description
+
+There were many discovered updates of validEnclaveHashes and registeredSigners, ignored in watch mode for now although they should be able to update them less often imo.
+
+quoteVerifier is now source-available and matches an existing template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 355528153 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      unverified:
+-        true
+      values.P256_VERIFIER:
++        "0x0000000000000000000000000000000000000100"
+      values.pccsRouter:
++        "0x0d089B3fA00CBAD0a5098025519e9e4620622acF"
+      values.quoteVersion:
++        3
+      implementationNames.0x69523d25E25e5c78d828Df90459b75F189D40Cf7:
+-        ""
++        "V3QuoteVerifier"
+      template:
++        "espresso/Sequencing/QuoteVerifier"
+      sourceHashes:
++        ["0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"]
+      description:
++        "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified."
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      fieldMeta.validEnclaveHashes:
+-        {"severity":"HIGH"}
+    }
+```
+
+Generated with discovered.json: 0x2a3c83f2d4b8f55a06b89108a65cd478da50e260
+
+# Diff at Tue, 08 Jul 2025 14:25:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 353119902
+- current block number: 355528153
+
+## Description
+
+upgrade which adds a celestia + blobstream integration (celestia nitro 3.2.1) with standard contracts and an espresso integration with new contracts.
+
+[SequencerInbox](https://disco.l2beat.com/diff/arb1:0xF39c8d67B55Fef4851f9267304aA1A030E0DecAC/arb1:0x481863c96f949F5E13932ec2F65470C0CF83808d): 
+- replace the 'quote' (tee signature) with espressoMetadata consisting of (hotshotHeight, signature, teeType)
+- add TEE verification support for blobs `addSequencerL2BatchFromBlobs()` (not supported on arb obv)
+
+EspressoTEEVerifier([new](https://flat.l2beat.com/address/arb1:0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)):
+- gateway contract in front of the 2 different TEE verifiers
+- instead of attestations for every sig verification, registerSigner() allows to register an ephemeral signer with an attestation from the TEE. subsequent signatures can then be trivially verified to have come from that ephemeral signer inside the TEE without a formal TEE attestation.
+
+[EspressoSGXTEEVerifier](https://disco.l2beat.com/diff/arb1:0xEe8f0e3BC9c3965460B99D0D2DFBb05c508536fb/arb1:0xEA25045bC30ceE23A280c51020F0bBb78781A297):
+- was prev named EspressoTEEVerifier (cp Rari deployment)
+- rename mrEnclave -> enclaveHash, mrSigner -> signature
+- support for new `registerSigner()`
+- UNVERIFIED [quoteVerifier contract](https://arbiscan.io/address/0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+
+EspressoNitroTEEVerifier([new](https://flat.l2beat.com/address/arb1:0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)):
+- new contract with a similar usecase but vastly different source code to the SGX verifier, supposed to allow verifying AWS Nitro attestations (Amazon TEE) apparently based on https://github.com/base/nitro-validator
+- currently not used by molten
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia.
+      template:
+-        "orbitstack/SequencerInbox"
++        "orbitstack/SequencerInbox_Celestia_Espresso"
+      sourceHashes.1:
+-        "0x4030f12794a5a07697b98400d423a426b39fd6f2320b39ee377d700d4fafdc58"
++        "0xcdaa3b1ff5e1273f61b232e8a628be7cb2d01589513ea173153802912905243c"
+      description:
+-        "A sequencer (registered in this contract) can submit transaction batches or commitments here."
++        "The Espresso TEE sequencer (registered in this contract) can submit transaction batches or commitments here. This version of the SequencerInbox also supports commitments to data that is posted to Celestia."
+      values.$implementation:
+-        "0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607"
++        "0x481863c96f949F5E13932ec2F65470C0CF83808d"
+      values.$pastUpgrades.4:
++        ["2025-07-01T16:17:10.000Z","0x6e4d22b6b61eeffdbd42e8fe52446bb966dd46592ba723bc43edaf1a7cc4f678",["0x481863c96f949F5E13932ec2F65470C0CF83808d"]]
+      values.$upgradeCount:
+-        4
++        5
+      values.batchPosterManager:
+-        "0x0000000000000000000000000000000000000000"
++        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
+      values.batchPosters.0:
+-        "0x451f05C41BC5CC10d7D63ed88bA0A522FE183074"
++        "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"
+      values.setIsBatchPosterCount:
+-        1
++        3
+      values.BLOBSTREAM:
++        "0xa8973BDEf20fe4112C920582938EF2F022C911f5"
+      values.espressoTEEVerifier:
++        "0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3"
+      implementationNames.0x7A9A0974F98052dA2F10DC9a50E3e348CDc62607:
+-        "SequencerInbox"
+      implementationNames.0x481863c96f949F5E13932ec2F65470C0CF83808d:
++        "SequencerInbox"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CertManager (0x1A484E3f74984d29EBC39909535D45896502a3E7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EspressoTEEVerifier (0x7A7E3B3eB8c799360E65d4fE2f0e108dB78721c3)
+    +++ description: TEE gateway contract that can be used to 1) register signers that were generated inside a TEE and 2) verify the signatures of such signers. It supports both Intel SGX and AWS Nitro TEEs through modular contracts.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297)
+    +++ description: Verifies attestations of an Intel SGX TEE.
+```
+
+```diff
++   Status: CREATED
+    contract EspressoNitroTEEVerifier (0xf55BeB891B11084B923F3Fc8e6221Db1Ca61B7f5)
+    +++ description: Verifies attestations of an AWS Nitro TEE.
+```
+
+## Source code changes
+
+```diff
+.../projects/molten/arbitrum/.flat/CertManager.sol | 1966 ++++++++++++++++++++
+ .../arbitrum/.flat/EspressoNitroTEEVerifier.sol    | 1941 +++++++++++++++++++
+ .../arbitrum/.flat/EspressoSGXTEEVerifier.sol      |  697 +++++++
+ .../molten/arbitrum/.flat/EspressoTEEVerifier.sol  |  884 +++++++++
+ .../SequencerInbox/SequencerInbox.sol              |  269 ++-
+ 5 files changed, 5741 insertions(+), 16 deletions(-)
+```
+
+Generated with discovered.json: 0xfde13256afcb1bc645b9179bf78825e35680dfc3
+
+# Diff at Fri, 04 Jul 2025 12:19:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 353119902
+- current block number: 353119902
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 353119902 (main branch discovery), not current.
+
+```diff
+    EOA  (0x152FFeF04881BD1390D2A52009f42d56EaC7AA03) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+    }
+```
+
+```diff
+    EOA  (0x451f05C41BC5CC10d7D63ed88bA0A522FE183074) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+    }
+```
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.0.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.1.via.0.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.1.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      receivedPermissions.2.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.2.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.2.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+      receivedPermissions.3.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.3.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.3.from:
+-        "arbitrum:0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79"
+      receivedPermissions.4.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.4.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.4.from:
+-        "arbitrum:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      receivedPermissions.5.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.5.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.5.from:
+-        "arbitrum:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      receivedPermissions.6.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.6.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.6.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.7.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.7.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.7.from:
+-        "arbitrum:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
++        "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
+      receivedPermissions.8.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.8.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.8.from:
+-        "arbitrum:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      receivedPermissions.9.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.9.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.9.from:
+-        "arbitrum:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      receivedPermissions.10.via.1.address:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      receivedPermissions.10.via.0.address:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      receivedPermissions.10.from:
+-        "arbitrum:0xE1d32C985825562edAa906fAC39295370Db72195"
++        "arb1:0xE1d32C985825562edAa906fAC39295370Db72195"
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "arb1:0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "arb1:0x235000876bd58336C802B3546Fc0250f285fCc79"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "arb1:0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      directlyReceivedPermissions.3.from:
+-        "arbitrum:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "arb1:0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      directlyReceivedPermissions.4.from:
+-        "arbitrum:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "arb1:0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      directlyReceivedPermissions.5.from:
+-        "arbitrum:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
++        "arb1:0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
+      directlyReceivedPermissions.6.from:
+-        "arbitrum:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "arb1:0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      directlyReceivedPermissions.7.from:
+-        "arbitrum:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "arb1:0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      directlyReceivedPermissions.8.from:
+-        "arbitrum:0xE1d32C985825562edAa906fAC39295370Db72195"
++        "arb1:0xE1d32C985825562edAa906fAC39295370Db72195"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x92ff91308F5f1036435f23c2F4F136Bb7475425d) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
++        "arb1:0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
++        "arb1:0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0"
+    }
+```
+
+Generated with discovered.json: 0x42702605c43cc692752f03116b5d94878195927b
+
+# Diff at Tue, 01 Jul 2025 12:12:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 338999070
+- current block number: 353119902
+
+## Description
+
+caldera MS signer change.
+
+## Watched changes
+
+```diff
+    contract Caldera Multisig 1 (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$members.0:
+-        "0xD61640d06dC7A61C46d9515680b4DDd2AC51E9A9"
++        "0xEC114946E7213d113c9B9481028271B5E9e09371"
+    }
+```
+
+Generated with discovered.json: 0x46d60dcdfd95a01ee104626a4087ba445f836437
+
+# Diff at Wed, 18 Jun 2025 12:22:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 338999070
+- current block number: 338999070
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 338999070 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x5f9dc8d77cd066bf6f226a8b812825a070ad4be5
 
 # Diff at Tue, 27 May 2025 08:31:07 GMT:

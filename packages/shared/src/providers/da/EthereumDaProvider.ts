@@ -6,11 +6,11 @@ import type {
   EVMLog,
   RpcClient,
 } from '../../clients'
-import type { DaBlobProvider, LogsFilter } from './DaProvider'
+import type { DaBlobProvider } from './DaProvider'
 import type { EthereumBlob } from './types'
 
 // each blob is 128 KiB so 131,072 B
-const BLOB_SIZE_BYTES = 131072n
+export const ETHEREUM_BLOB_SIZE_BYTES = 131072n
 
 export class EthereumDaProvider implements DaBlobProvider {
   constructor(
@@ -19,25 +19,9 @@ export class EthereumDaProvider implements DaBlobProvider {
     readonly daLayer: string,
   ) {}
 
-  async getBlobs(
-    from: number,
-    to: number,
-    logFilters?: LogsFilter[],
-  ): Promise<EthereumBlob[]> {
+  async getBlobs(from: number, to: number): Promise<EthereumBlob[]> {
     // to be able to track internal call we need to get logs
-    let logs: EVMLog[] = []
-    if (logFilters) {
-      const addresses = []
-      const topics = []
-
-      for (const filter of logFilters) {
-        addresses.push(filter.address)
-        topics.push(...filter.topics)
-      }
-
-      logs = await this.rpcClient.getLogs(addresses, topics, from, to)
-    }
-
+    const logs = await this.rpcClient.getLogs(from, to)
     const getBlobs = []
 
     for (let blockNumber = from; blockNumber <= to; blockNumber++) {
@@ -91,17 +75,19 @@ export class EthereumDaProvider implements DaBlobProvider {
         continue
       }
 
-      const log = logs.find((l) => l.transactionHash === tx.hash)
+      const txLogs = logs.filter((l) => l.transactionHash === tx.hash)
+      const topics = txLogs.flatMap((log) => log.topics)
 
       tx.blobVersionedHashes.forEach(() =>
         blobs.push({
           type: 'ethereum',
           daLayer: this.daLayer,
           blockTimestamp: block.timestamp,
-          size: BLOB_SIZE_BYTES,
+          blockNumber: block.number,
+          size: ETHEREUM_BLOB_SIZE_BYTES,
           inbox: tx.to ?? '',
           sequencer: tx.from,
-          topics: log?.topics ?? [],
+          topics,
         }),
       )
     }

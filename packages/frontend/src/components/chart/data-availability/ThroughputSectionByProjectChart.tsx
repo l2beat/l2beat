@@ -7,9 +7,13 @@ import { Skeleton } from '~/components/core/Skeleton'
 import { ProjectChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { ChartTimeRangeControls } from '~/components/core/chart/ChartTimeRangeControls'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
-import { DaThroughputTimeRange } from '~/server/features/data-availability/throughput/utils/range'
+import {
+  type DaThroughputTimeRange,
+  DaThroughputTimeRangeValues,
+} from '~/server/features/data-availability/throughput/utils/range'
 import { api } from '~/trpc/React'
 import { DaThroughputByProjectChart } from './DaThroughputByProjectChart'
+import { EigenDataSourceInfo } from './EigenDataSourceInfo'
 
 const DEFAULT_PROJECTS_TO_SHOW = 5
 
@@ -70,7 +74,10 @@ export function ThroughputSectionByProjectChart({
   return (
     <div>
       <div className="mt-4 mb-3 flex flex-col justify-between gap-1">
-        <ProjectChartTimeRange range={chartRange} />
+        <div className="flex flex-wrap items-center justify-between gap-x-1">
+          <ProjectChartTimeRange range={chartRange} />
+          {daLayer === 'eigenda' && <EigenDataSourceInfo />}
+        </div>
         <div className="flex justify-between gap-1">
           {!data && isLoading ? (
             <Skeleton className="h-8 w-44" />
@@ -85,7 +92,7 @@ export function ThroughputSectionByProjectChart({
             name="Range"
             value={range}
             setValue={setRange}
-            options={Object.values(DaThroughputTimeRange.Enum).map((v) => ({
+            options={Object.values(DaThroughputTimeRangeValues).map((v) => ({
               value: v,
               label: v.toUpperCase(),
             }))}
@@ -93,6 +100,7 @@ export function ThroughputSectionByProjectChart({
         </div>
       </div>
       <DaThroughputByProjectChart
+        daLayer={daLayer}
         data={data}
         isLoading={isLoading}
         projectsToShow={projectsToShow}

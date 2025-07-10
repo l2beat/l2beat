@@ -7,7 +7,7 @@ import {
 } from 'fs'
 import path, { join } from 'path'
 import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import type { z } from 'zod'
+import type { Parser } from '@l2beat/validate'
 import {
   combineImplementationHashes,
   contractFlatteningHash,
@@ -38,7 +38,7 @@ export interface Shape {
 }
 
 export class TemplateService {
-  private loadedTemplates: Record<string, StructureContract> = {}
+  private loadedTemplates: Record<string, unknown> = {}
   private shapeHashes: Record<string, Shape> | undefined
   private allTemplateHashes: Record<string, Hash256> | undefined
   private hashIndex:
@@ -141,15 +141,15 @@ export class TemplateService {
     ]
   }
 
-  loadContractTemplateBase<T extends z.ZodTypeAny>(
+  loadContractTemplateBase<T>(
     template: string,
     keySuffix: string,
-    parser: T,
-  ): z.infer<T> {
+    parser: Parser<T>,
+  ): T {
     const key = `${template}.${keySuffix}`
     const loadedTemplate = this.loadedTemplates[key]
     if (loadedTemplate !== undefined) {
-      return loadedTemplate as z.infer<T>
+      return loadedTemplate as T
     }
 
     const templateJsonc = readJsonc(
@@ -267,16 +267,11 @@ export class TemplateService {
         contract.template !== undefined &&
         (allShapes[contract.template]?.hashes.length ?? 0) > 0
       ) {
-        if (
-          config.structure.overrides?.[contract.address.toString()]?.extends ===
-          undefined
-        ) {
-          if (matchingTemplates.length === 0) {
-            return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
-          }
-          if (contract.template !== matchingTemplates[0]) {
-            return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
-          }
+        if (matchingTemplates.length === 0) {
+          return `A contract "${contract.name}" with template "${contract.template}", no longer matches any template`
+        }
+        if (contract.template !== matchingTemplates[0]) {
+          return `A contract "${contract.name}" matches a different template: "${contract.template} -> ${matchingTemplates.join(', ')}"`
         }
       } else if (matchingTemplates.length > 0) {
         return `A contract "${contract.name}" without template now matches: "${matchingTemplates.join(', ')}"`
@@ -423,6 +418,12 @@ export class TemplateService {
     const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
     const filePath = join(templatePath, 'template.jsonc')
     return existsSync(filePath) ? readFileSync(filePath, 'utf8') : undefined
+  }
+
+  writeTemplateFile(templateId: string, template: string) {
+    const templatePath = join(this.rootPath, TEMPLATES_PATH, templateId)
+    const filePath = join(templatePath, 'template.jsonc')
+    writeFileSync(filePath, template)
   }
 
   readShapeFile(templateId: string) {

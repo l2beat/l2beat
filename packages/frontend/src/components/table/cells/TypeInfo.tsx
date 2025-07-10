@@ -2,6 +2,7 @@ import type { ProjectScalingStack } from '@l2beat/config'
 import type { JSX } from 'react'
 import { EM_DASH } from '~/consts/characters'
 import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
+import { CartesiIcon } from '~/icons/providers/CartesiIcon'
 import { LoopringIcon } from '~/icons/providers/LoopringIcon'
 import { OptimismIcon } from '~/icons/providers/OptimismIcon'
 import { OVMIcon } from '~/icons/providers/OvmIcon'
@@ -19,24 +20,27 @@ import {
 
 export interface TypeInfoProps {
   children: string | undefined
-  stack?: ProjectScalingStack
+  stacks?: ProjectScalingStack[]
 }
 
-export function TypeInfo({ stack, children }: TypeInfoProps) {
-  const providerProps = stack ? providerMap[stack] : undefined
-
+export function TypeInfo({ stacks, children }: TypeInfoProps) {
   return (
     <span>
       {children ?? EM_DASH}
-      {providerProps ? (
-        <TypeTooltip
-          Icon={providerProps.Icon}
-          text={
-            providerProps.text ??
-            `This project is based on ${stack}'s code base.`
-          }
-        />
-      ) : null}
+      {stacks &&
+        stacks.map((stack) => {
+          const providerProps = providerMap[stack]
+          if (!providerProps) return null
+          return (
+            <TypeTooltip
+              Icon={providerProps.Icon}
+              text={
+                providerProps.text ??
+                `This project is based on ${stack}'s code base.`
+              }
+            />
+          )
+        })}
     </span>
   )
 }
@@ -90,7 +94,10 @@ export const providerMap: Record<
     Icon: TaikoIcon,
     text: "This project is based on Taiko's code base.",
   },
-  'Cartesi Rollups': undefined,
+  'Cartesi Rollups': {
+    Icon: CartesiIcon,
+    text: "This project is based on Cartesi's code base.",
+  },
 }
 
 interface TypeTooltipProps {

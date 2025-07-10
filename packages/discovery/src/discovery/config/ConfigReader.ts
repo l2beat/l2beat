@@ -4,12 +4,11 @@ import path from 'path'
 import {
   assert,
   Hash160,
+  formatAsciiBorder,
   type json,
-  stripAnsiEscapeCodes,
 } from '@l2beat/shared-pure'
-import chalk from 'chalk'
+import { v } from '@l2beat/validate'
 import merge from 'lodash/merge'
-import { type ZodError, z } from 'zod'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'
@@ -17,10 +16,8 @@ import { ConfigRegistry } from './ConfigRegistry'
 
 const HASH_LINE_PREFIX = 'Generated with discovered.json: '
 
-type JustImport = z.infer<typeof JustImport>
-const JustImport = z
-  .object({ import: z.optional(z.array(z.string())) })
-  .passthrough()
+type JustImport = v.infer<typeof JustImport>
+const JustImport = v.object({ import: v.array(v.string()).optional() })
 
 export class ConfigReader {
   private importedCache = new Map<string, JustImport>()
@@ -28,6 +25,29 @@ export class ConfigReader {
   constructor(private rootPath: string) {}
 
   readConfig(name: string, chain: string): ConfigRegistry {
+    const rawConfig = this.readRawConfig(name)
+
+    const rawConfigForChain = {
+      chain,
+      name,
+      ...(rawConfig.archived ? { archived: true } : {}),
+      modelCrossChainPermissions: rawConfig.modelCrossChainPermissions,
+      ...merge(
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)['all'],
+        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        (rawConfig.chains as any)[chain],
+      ),
+    }
+
+    const config = new ConfigRegistry(rawConfigForChain)
+
+    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
+
+    return config
+  }
+
+  readRawConfig(name: string) {
     assert(
       fileExistsCaseSensitive(path.join(this.rootPath, name)),
       'Project not found, check if case matches',
@@ -40,15 +60,15 @@ export class ConfigReader {
     )
 
     const contents = readJsonc(path.join(basePath, 'config.jsonc'))
-    const parseResult = JustImport.safeParse(contents)
+    const parseResult = JustImport.safeValidate(contents)
     if (!parseResult.success) {
-      const message = formatZodParsingError(parseResult.error, 'config.jsonc')
-      console.log(message)
+      console.log(formatAsciiBorder([parseResult.message, 'config.jsonc']))
 
-      throw new Error(`Cannot parse file ${name}/${chain}/config.jsonc`)
+      throw new Error(`Cannot parse file ${name}/config.jsonc`)
     }
 
-    let rawConfig = parseResult.data
+    // biome-ignore lint/suspicious/noExplicitAny: hack that we are aware of
+    let rawConfig = parseResult.data as any
     if (rawConfig.import !== undefined) {
       const visited = new Set<string>()
       rawConfig = merge(
@@ -56,23 +76,7 @@ export class ConfigReader {
         rawConfig,
       )
     }
-
-    const chainRawConfig = {
-      chain,
-      name,
-      ...merge(
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        (rawConfig.chains as any)['all'],
-        // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-        (rawConfig.chains as any)[chain],
-      ),
-    }
-
-    const config = new ConfigRegistry(chainRawConfig)
-
-    assert(config.structure.chain === chain, 'Chain mismatch in config.jsonc')
-
-    return config
+    return rawConfig
   }
 
   readDiscovery(name: string, chain: string): DiscoveryOutput {
@@ -228,10 +232,9 @@ export class ConfigReader {
       let rawConfig = this.importedCache.get(resolvedPath)
       if (rawConfig === undefined) {
         const contents = readJsonc(resolvedPath)
-        const parseResult = JustImport.safeParse(contents)
+        const parseResult = JustImport.safeValidate(contents)
         if (!parseResult.success) {
-          const message = formatZodParsingError(parseResult.error, importPath)
-          console.log(message)
+          console.log(formatAsciiBorder([parseResult.message, importPath]))
 
           throw new Error(`Cannot parse file ${importPath}`)
         }
@@ -250,25 +253,4 @@ export class ConfigReader {
     }
     return result
   }
-}
-
-function formatZodParsingError(error: ZodError, fileName: string): string {
-  const errors = error.errors
-  const lines = [
-    `${chalk.red(' ERROR:')} reading ${fileName} encountered ${
-      errors.length
-    } issues:`,
-    ...errors.flatMap((x) => {
-      return [` ${chalk.yellow(x.message)}`, ` >    ${x.path.join('.')}`]
-    }),
-  ]
-
-  const maxLength = Math.max(
-    ...lines.map((x) => stripAnsiEscapeCodes(x).length),
-  )
-  return [
-    chalk.red(`╔${'═'.repeat(maxLength - 1)}╗`),
-    ...lines,
-    chalk.red(`╚${'═'.repeat(maxLength - 1)}╝`),
-  ].join('\n')
 }

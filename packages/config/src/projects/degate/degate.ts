@@ -21,6 +21,7 @@ import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('degate')
 
@@ -75,7 +76,7 @@ export const degate: ScalingProject = {
     description:
       'DeGate is an app-specific ZK Rollup that enables a trustless, fast and low-fee decentralized order book exchange, helping users to trade easy and sleep easy. DeGate smart contracts are forked from Loopring V3.',
     purposes: ['Exchange'],
-    stack: 'Loopring',
+    stacks: ['Loopring'],
     category: 'ZK Rollup',
 
     links: {
@@ -144,11 +145,11 @@ export const degate: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: null,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -325,4 +326,5 @@ export const degate: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

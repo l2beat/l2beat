@@ -36,12 +36,11 @@ export function ProjectActivityChart({
   const [showMainnet, setShowMainnet] = useState(true)
 
   const { data: chart, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: {
       type: 'projects',
       projectIds: [projectId],
     },
-    previewRecategorisation: false,
   })
 
   const type = getChartType(category)

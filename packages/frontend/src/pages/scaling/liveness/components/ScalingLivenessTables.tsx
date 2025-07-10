@@ -1,4 +1,3 @@
-import { useEffect, useMemo, useState } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -11,15 +10,11 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingLivenessEntry } from '~/server/features/scaling/liveness/getScalingLivenessEntries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compareStageAndTvs'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { useLivenessTimeRangeContext } from './LivenessTimeRangeContext'
 import { LivenessTimeRangeControls } from './LivenessTimeRangeControls'
 import { ScalingLivenessTable } from './table/ScalingLivenessTable'
@@ -28,50 +23,18 @@ type Props = TabbedScalingEntries<ScalingLivenessEntry>
 
 export function ScalingLivenessTables(props: Props) {
   const filterEntries = useFilterEntries()
-  const [tab, setTab] = useState('rollups')
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
-
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [
-            ...entries.rollups,
-            ...entries.validiumsAndOptimiums,
-            ...entries.others,
-          ]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, entries.others, entries.rollups, entries.validiumsAndOptimiums],
-  )
 
   const initialSort = {
     id: '#',
     desc: false,
   }
-
-  useEffect(() => {
-    if (!checked && tab === 'others' && entries.others.length === 0) {
-      setTab('rollups')
-    }
-  }, [checked, entries.others, tab])
-
-  const showOthers = entries.others.length > 0
 
   return (
     <>
@@ -82,7 +45,7 @@ export function ScalingLivenessTables(props: Props) {
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
+      <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
@@ -91,11 +54,9 @@ export function ScalingLivenessTables(props: Props) {
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -109,18 +70,12 @@ export function ScalingLivenessTables(props: Props) {
             <ScalingLivenessTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingLivenessTable entries={entries.others} />
-              <OtherMigrationTabNotice
-                projectsToBeMigrated={projectToBeMigratedToOthers}
-                className="mt-2"
-              />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingLivenessTable entries={entries.others} hideType />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

@@ -44,9 +44,6 @@ import { getLiveness } from '../liveness/getLiveness'
 import { get7dTvsBreakdown } from '../tvs/get7dTvsBreakdown'
 import { getTokensForProject } from '../tvs/tokens/getTokensForProject'
 import { getAssociatedTokenWarning } from '../tvs/utils/getAssociatedTokenWarning'
-import type { ProjectCountdownsWithContext } from '../utils/getCountdowns'
-import { getCountdowns } from '../utils/getCountdowns'
-import { isProjectOther } from '../utils/isProjectOther'
 import { getScalingDaSolution } from './getScalingDaSolution'
 import type { ScalingRosette } from './getScalingRosetteValues'
 import { getScalingRosette } from './getScalingRosetteValues'
@@ -64,6 +61,7 @@ export interface ProjectScalingEntry {
     warning?: string
     redWarning?: string
     emergencyWarning?: string
+    ongoingAnomaly?: 'single' | 'multiple'
     description?: string
     badges?: BadgeWithParams[]
     links: ProjectLink[]
@@ -99,7 +97,6 @@ export interface ProjectScalingEntry {
   }
   rosette: ScalingRosette
   sections: ProjectDetailsSection[]
-  countdowns: ProjectCountdownsWithContext
   reasonsForBeingOther?: ReasonForBeingInOther[]
   hostChainName: string
   stageConfig: ProjectScalingStage
@@ -146,15 +143,13 @@ export async function getScalingProjectEntry(
     getActivityProjectStats(project.id),
     get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
     helpers.tvs.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
       excludeAssociatedTokens: false,
-      previewRecategorisation: false,
     }),
     helpers.activity.chart.fetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'projects', projectIds: [project.id] },
-      previewRecategorisation: false,
     }),
     project.scalingInfo.layer === 'layer2'
       ? helpers.costs.projectChart.fetch({
@@ -167,17 +162,26 @@ export async function getScalingProjectEntry(
     getScalingDaSolution(project),
     getContractUtils(),
   ])
+  const projectLiveness = liveness[project.id]
+
+  const ongoingAnomalies = projectLiveness?.anomalies.filter(
+    (a) => a.end === undefined,
+  )
 
   const tvsProjectStats = tvsStats.projects[project.id]
-  const category = isProjectOther(project.scalingInfo)
-    ? 'Other'
-    : project.scalingInfo.type
   const header: ProjectScalingEntry['header'] = {
     description: project.display.description,
     warning: project.statuses.yellowWarning,
     redWarning: project.statuses.redWarning,
     emergencyWarning: project.statuses.emergencyWarning,
-    category,
+    ongoingAnomaly: ongoingAnomalies
+      ? ongoingAnomalies.length === 0
+        ? undefined
+        : ongoingAnomalies.length === 1
+          ? 'single'
+          : 'multiple'
+      : undefined,
+    category: project.scalingInfo.type,
     purposes: project.scalingInfo.purposes,
     activity: activityProjectStats,
     links: getProjectLinks(project.display.links),
@@ -235,12 +239,12 @@ export async function getScalingProjectEntry(
     isAppchain: project.scalingInfo.capability === 'appchain',
     header,
     reasonsForBeingOther: project.scalingInfo.reasonsForBeingOther,
-    countdowns: getCountdowns(project),
     rosette: getScalingRosette(project),
     hostChainName: project.scalingInfo.hostChain.name,
-    stageConfig: isProjectOther(project.scalingInfo)
-      ? { stage: 'NotApplicable' as const }
-      : project.scalingStage,
+    stageConfig:
+      project.scalingInfo.type === 'Other'
+        ? { stage: 'NotApplicable' as const }
+        : project.scalingStage,
     discoUiHref:
       project.statuses.reviewStatus === 'initialReview'
         ? undefined
@@ -343,7 +347,7 @@ export async function getScalingProjectEntry(
   const livenessSection = await getLivenessSection(
     helpers,
     project,
-    liveness[project.id],
+    projectLiveness,
     projectsChangeReport.projects[project.id],
   )
   if (livenessSection) {

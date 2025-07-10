@@ -1,4 +1,134 @@
-Generated with discovered.json: 0xec33f7777f72938f6d37df83337cc4ed93e9e43c
+Generated with discovered.json: 0x86e04d0f154d1a3fed8857314ba4feb9a7679626
+
+# Diff at Wed, 09 Jul 2025 15:10:15 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780026
+- current block number: 22882089
+
+## Description
+
+Moved SP1 verifier into shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780026 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xde10e28cf1f424ab44461783e9831f0b003510f4
+
+# Diff at Fri, 04 Jul 2025 12:18:55 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22780026
+- current block number: 22780026
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780026 (main branch discovery), not current.
+
+```diff
+    EOA  (0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
++        "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+    }
+```
+
+```diff
+    contract BlobstreamMultisig (0x8bF34D8df1eF0A8A7f27fC587202848E528018E6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
++        "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+      receivedPermissions.1.from:
+-        "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
++        "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+    }
+```
+
+```diff
+    EOA  (0x9c0B0dBBAe8a976CEeA8C2A96F6D00c53839afDC) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
++        "eth:0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+Generated with discovered.json: 0xb11ea8257080c573c50952b25dd02df3c3235b2b
+
+# Diff at Wed, 25 Jun 2025 07:41:07 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22643968
+- current block number: 22780026
+
+## Description
+
+selector 0x1b34fe11 and respective verifier frozen.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
+-        {"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs (v4.0.0-rc.3).
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1432 --------------------
+ .../SP1Verifier.sol}                               |    0
+ 2 files changed, 1432 deletions(-)
+```
+
+Generated with discovered.json: 0x37bae0bc8227eff9851f00de4d6fb05d039d364c
 
 # Diff at Fri, 06 Jun 2025 07:24:48 GMT:
 

@@ -1,7 +1,8 @@
 import { createHash } from 'crypto'
-import { readFileSync, unlinkSync, writeFileSync } from 'fs'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
-import { Hash256 } from '@l2beat/shared-pure'
+import { assert, Hash256 } from '@l2beat/shared-pure'
+import { getChainShortName } from '../../config/config.discovery'
 import type { TemplateService } from '../analysis/TemplateService'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { PermissionsConfig } from '../config/PermissionConfig'
@@ -19,27 +20,108 @@ import {
 } from './parseUltimatePermissionFact'
 import { runClingo } from './runClingo'
 
+export type DiscoveryBlockNumbers = {
+  [project: string]: {
+    [chain: string]: {
+      blockNumber: number
+    }
+  }
+}
+
+export class DiscoveryRegistry {
+  discoveries: { [name: string]: { [chain: string]: DiscoveryOutput } } = {}
+
+  get(project: string, chain: string): DiscoveryOutput {
+    assert(
+      this.discoveries[project]?.[chain],
+      `Discovery for ${project} on ${chain} is not set.`,
+    )
+    return this.discoveries[project][chain]
+  }
+
+  set(project: string, chain: string, discovery: DiscoveryOutput) {
+    this.discoveries[project] ??= {}
+    this.discoveries[project][chain] = discovery
+  }
+
+  getSortedProjects(): { project: string; chain: string }[] {
+    const result = []
+    const sortedProjects = Object.keys(this.discoveries).sort()
+    for (const project of sortedProjects) {
+      const sortedChains = Object.keys(this.discoveries[project] ?? {}).sort()
+      for (const chain of sortedChains) {
+        result.push({ project, chain })
+      }
+    }
+    return result
+  }
+
+  getBlockNumbers(
+    options: {
+      skip?: { project: string; chain: string }
+    } = {},
+  ) {
+    const result: DiscoveryBlockNumbers = {}
+    const skip = options.skip
+
+    for (const [project, chains] of Object.entries(this.discoveries)) {
+      for (const [chain, discovery] of Object.entries(chains)) {
+        if (skip && skip.project === project && skip.chain === chain) {
+          continue
+        }
+        result[project] ??= {}
+        result[project][chain] = {
+          blockNumber: discovery.blockNumber,
+        }
+      }
+    }
+
+    return result
+  }
+}
+
 export async function modelPermissions(
   project: string,
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
-  debug: boolean,
+  options: {
+    debug: boolean
+  },
 ): Promise<PermissionsOutput> {
   const { permissionFacts, permissionsConfigHash } =
     await modelPermissionFactsUsingClingo(
       project,
+      discoveries,
       configReader,
       templateService,
       paths,
-      debug,
+      options,
     )
-  return buildPermissionsOutput(permissionFacts, permissionsConfigHash)
+  return buildPermissionsOutput(
+    permissionFacts,
+    permissionsConfigHash,
+    discoveries,
+  )
+}
+
+export function getDependenciesToDiscoverForProject(
+  project: string,
+  configReader: ConfigReader,
+): { project: string; chain: string }[] {
+  // Currently, only instances of the same project on different chains are returned.
+  // In the future, we might want to return referenced shared-modules
+  // and recursively dependencies of those.
+  return configReader
+    .readAllDiscoveredChainsForProject(project)
+    .map((chain) => ({ project, chain }))
 }
 
 export function buildPermissionsOutput(
   permissionFacts: ClingoFact[],
   permissionsConfigHash: Hash256,
+  discoveries: DiscoveryRegistry,
 ): PermissionsOutput {
   const kb = new KnowledgeBase(permissionFacts)
   const modelIdRegistry = new ModelIdRegistry(kb)
@@ -56,6 +138,7 @@ export function buildPermissionsOutput(
     permissionsConfigHash,
     permissions: ultimatePermissions,
     eoasWithMajorityUpgradePermissions: eoaWithMajorityUpgradePermissions,
+    dependentBlockNumbers: discoveries.getBlockNumbers(),
   }
 }
 
@@ -76,34 +159,37 @@ export async function runClingoForSingleModel(clingoInput: string) {
 
 export async function modelPermissionFactsUsingClingo(
   project: string,
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
   paths: DiscoveryPaths,
-  debug: boolean,
+  options: {
+    debug: boolean
+  },
 ) {
-  const clingoForProject = generateClingoForProject(
-    project,
+  const clingoForProject = generateClingoForDiscoveries(
+    discoveries,
     configReader,
     templateService,
   )
   const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
   const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
-  const projectPath = configReader.getProjectPath(project)
 
+  const projectPath = configReader.getProjectPath(project)
   const inputFilePath = join(projectPath, 'clingo.input.lp')
-  writeFileSync(inputFilePath, combinedClingo)
+  const outputFilePath = join(projectPath, 'clingo.output.lp')
+
+  if (options.debug) {
+    writeFileSync(inputFilePath, combinedClingo)
+  }
 
   const facts = await runClingoForSingleModel(combinedClingo)
 
-  const outputFilePath = join(projectPath, 'clingo.output.lp')
-  writeFileSync(outputFilePath, facts.join('.\n'))
+  if (options.debug) {
+    writeFileSync(outputFilePath, facts.join('.\n'))
+  }
 
   const result = facts.map(parseClingoFact)
-
-  if (!debug) {
-    unlinkSync(inputFilePath)
-    unlinkSync(outputFilePath)
-  }
 
   const permissionsConfigHash = generatePermissionConfigHash(clingoForProject)
   return {
@@ -122,20 +208,16 @@ export function generatePermissionConfigHash(clingoInput: string) {
   return Hash256('0x' + hash)
 }
 
-export function generateClingoForProject(
-  project: string,
+export function generateClingoForDiscoveries(
+  discoveries: DiscoveryRegistry,
   configReader: ConfigReader,
   templateService: TemplateService,
 ): string {
   const generatedClingo: string[] = []
 
-  const chainConfigs = configReader
-    .readAllDiscoveredChainsForProject(project)
-    .sort((a, b) => a.localeCompare(b))
-    .flatMap((chain) => configReader.readConfig(project, chain))
-
-  for (const config of chainConfigs) {
-    const discovery = configReader.readDiscovery(config.name, config.chain)
+  for (const { project, chain } of discoveries.getSortedProjects()) {
+    const discovery = discoveries.get(project, chain)
+    const config = configReader.readConfig(project, chain)
     const permissionsInClingo = generateClingoForProjectOnChain(
       config.permission,
       discovery,
@@ -154,17 +236,15 @@ export function generateClingoForProjectOnChain(
 ) {
   const generatedClingo: string[] = []
 
-  const addressToNameMap = buildAddressToNameMap(
-    discovery.chain,
-    discovery.entries,
-  )
+  const shortChain = getChainShortName(discovery.chain)
+  const addressToNameMap = buildAddressToNameMap(shortChain, discovery.entries)
 
   discovery.entries
     .sort((a, b) => a.address.localeCompare(b.address))
     .forEach((entry) => {
       const clingoFromPermissions = generateClingoFromPermissionsConfig(
         entry,
-        discovery.chain,
+        shortChain,
         config,
         templateService,
         addressToNameMap,
@@ -172,7 +252,7 @@ export function generateClingoForProjectOnChain(
       generatedClingo.push(clingoFromPermissions)
       const clingoFromModelLp = generateClingoFromModelLp(
         entry,
-        discovery.chain,
+        shortChain,
         templateService,
         addressToNameMap,
       )
@@ -182,24 +262,4 @@ export function generateClingoForProjectOnChain(
     })
 
   return generatedClingo.join('\n')
-}
-
-// This function is a temporary solution for Update Monitor
-// which does discovery per single isolated project.
-export async function modelPermissionsForIsolatedDiscovery(
-  discovery: DiscoveryOutput,
-  permissionConfig: PermissionsConfig,
-  templateService: TemplateService,
-  paths: DiscoveryPaths,
-) {
-  const clingoForProject = generateClingoForProjectOnChain(
-    permissionConfig,
-    discovery,
-    templateService,
-  )
-  const modelPermissionsClingoFile = readModelPermissionsClingoFile(paths)
-  const combinedClingo = clingoForProject + '\n' + modelPermissionsClingoFile
-  const facts = await runClingoForSingleModel(combinedClingo)
-  const parsedFacts = facts.map(parseClingoFact)
-  return buildPermissionsOutput(parsedFacts, Hash256.ZERO) // hash for isolated discovery is incorrect anyway
 }

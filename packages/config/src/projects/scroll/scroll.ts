@@ -26,6 +26,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('scroll')
 const l2Discovery = new ProjectDiscovery('scroll', 'scroll')
@@ -75,6 +76,7 @@ export const scroll: ScalingProject = {
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
+        'https://scroll.blockscout.com/',
         'https://okx.com/web3/explorer/scroll',
       ],
       repositories: [
@@ -99,16 +101,6 @@ export const scroll: ScalingProject = {
       explanation:
         'Scroll is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1, but the owner can revert them if the corresponding root has not yet be confirmed.',
     },
-    finality: {
-      warnings: {
-        timeToInclusion: {
-          sentiment: 'warning',
-          value:
-            'Transaction data batches that have not yet been proven can be reverted.',
-        },
-      },
-      finalizationPeriod,
-    },
   },
   stage: getStage(
     {
@@ -117,11 +109,11 @@ export const scroll: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -355,13 +347,6 @@ export const scroll: ScalingProject = {
         to: 'proofSubmissions',
       },
     },
-    finality: {
-      lag: 0,
-      type: 'Scroll',
-      // Scroll L1 Chain Proxy deployment
-      minTimestamp: UnixTime(1696775129),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -385,7 +370,7 @@ export const scroll: ScalingProject = {
       references: [
         {
           title:
-            'ScrollChain.sol - Etherscan source code commitBatch() and commitBatchWithBlobProof() functions',
+            'ScrollChain.sol - Etherscan source code commitBatches() function',
           url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
         },
       ],
@@ -438,11 +423,11 @@ export const scroll: ScalingProject = {
     nodeSoftware:
       'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
     compressionScheme:
-      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
+      'Data batches are compressed using the [zstd](https://github.com/facebook/zstd) algorithm.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:
-      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/BatchHeaderV7Codec.sol#L7).',
+      'Blocks are grouped into chunks, chunks are grouped into batches, and batches are grouped into bundles. Chunk encoding format can be found [here](https://github.com/scroll-tech/scroll-contracts/blob/main/src/libraries/codec/ChunkCodecV0.sol#L5), and batch encoding format can be found [here](https://github.com/scroll-tech/da-codec/blob/main/encoding/codecv7_types.go#L20).',
   },
   stateValidation: {
     description:
@@ -456,7 +441,7 @@ export const scroll: ScalingProject = {
       {
         title: 'ZK Circuits',
         description:
-          'Scroll circuits are [openvm](https://book.openvm.dev/) based Guest Programs based on the Halo2 proof system. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
+          'Scroll circuits are [OpenVM](https://book.openvm.dev/)-based Guest Programs that use the OpenVM prover. The source code of the base circuits can be found [here](https://github.com/scroll-tech/zkvm-prover/tree/master/crates/circuits).',
       },
       {
         title: 'Verification Keys Generation',
@@ -469,7 +454,7 @@ export const scroll: ScalingProject = {
           {
             title:
               'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyBundleProof() calls',
-            url: 'https://etherscan.io/address/0x8f339292d2b3909574B2bEB051a613a987dB538f#code',
+            url: 'https://etherscan.io/address/0xb7c8833F5627a8a12558cAFa0d0EBD1ACBDce43f#code',
           },
         ],
       },
@@ -699,4 +684,5 @@ export const scroll: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery, l2Discovery]),
 }

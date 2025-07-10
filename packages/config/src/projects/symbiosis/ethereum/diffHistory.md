@@ -1,4 +1,43 @@
-Generated with discovered.json: 0xfb108c0ac44fa1d3abb7d621b493e8ce5dacc387
+Generated with discovered.json: 0x4423a6cc3bad8c1e93eb92146a30622dbf4c14a3
+
+# Diff at Fri, 04 Jul 2025 12:19:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22022451
+- current block number: 22022451
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22022451 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
++        "eth:0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+      receivedPermissions.1.from:
+-        "ethereum:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
++        "eth:0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
++        "eth:0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"
+    }
+```
+
+Generated with discovered.json: 0x72833549531659bed312bbd2cdbdb4f481b43837
 
 # Diff at Fri, 23 May 2025 09:41:06 GMT:
 

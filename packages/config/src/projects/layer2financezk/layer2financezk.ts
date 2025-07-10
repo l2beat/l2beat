@@ -12,6 +12,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getSHARPVerifierContracts } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('layer2financezk')
 
@@ -31,7 +32,7 @@ export const layer2financezk: ScalingProject = {
     description:
       'Celer’s ScalingProject.finance in ZK proofs Mode Built with StarkEx from StarkWare.',
     purposes: ['Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Validium',
     links: {
       websites: ['https://layer2.finance/'],
@@ -160,4 +161,5 @@ export const layer2financezk: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

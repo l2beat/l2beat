@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "ethereum",
   "blockNumber": 22438006,
-  "configHash": "0xb053aacece4d1347039da9d8f2679aa67fecf10567b04d6f547e5296e0288ce3",
+  "configHash": "0xa91a4117081f77235ce0c893b95a53721030149be586d75e367554d109a4d7be",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -263,7 +263,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
+          "from": "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
           "role": "admin"
         }
       ],
@@ -666,5 +666,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x60b8e3c7a1808a239aaacc5994e56a6262180ecfe7c5009bfb47cdcc341082e0"
+  "permissionsConfigHash": "0xc93f6cdc0695e479911dc83d951e813202dcf7461c7d53ef5819e94a67dd69a4"
 }

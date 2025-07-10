@@ -1,4 +1,60 @@
-Generated with discovered.json: 0xcf5f942de8101f50f8d36144d04817f4fb888066
+Generated with discovered.json: 0xbc068f6a48615c73e1343481bd748d3086a54c63
+
+# Diff at Fri, 04 Jul 2025 12:19:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22824302
+- current block number: 22824302
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22824302 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "eth:0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+      receivedPermissions.1.from:
+-        "ethereum:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
++        "eth:0x5290E9582B4FB706EaDf87BB1c129e897e04d06D"
+      receivedPermissions.2.from:
+-        "ethereum:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "eth:0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+    }
+```
+
+Generated with discovered.json: 0x857200b3e1340c1f65c3c2370017878a51a80b0c
+
+# Diff at Tue, 01 Jul 2025 12:11:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 22081893
+- current block number: 22824302
+
+## Description
+
+ms signer change.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.4:
+-        "0xfB42eb487835B01cbF266f66750a7a89a7247F06"
++        "0x45F9AfCf9565051344aFb36e665f4d7bb2d18415"
+    }
+```
+
+Generated with discovered.json: 0xf41ca879baf469b40df6a03dbfb6a5aba64b0fb3
 
 # Diff at Tue, 27 May 2025 08:30:31 GMT:
 

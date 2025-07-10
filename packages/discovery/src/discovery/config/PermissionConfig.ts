@@ -1,5 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { v } from '@l2beat/validate'
 
 export type PermissionConfiguration = RawPermissionConfiguration & {
   target: EthereumAddress
@@ -36,44 +36,46 @@ export const RolePermissionEntries = [
   'stateDeleterMetis',
   'hotValidatorHyperliquid',
   'coldValidatorHyperliquid',
+  'acrossPropose',
 ] as const
 
-export type Permission = z.infer<typeof Permission>
-export const Permission = z.enum([
+export type Permission = v.infer<typeof Permission>
+export const Permission = v.enum([
   ...RolePermissionEntries,
   ...BasePermissionEntries,
 ])
 
-export type RawPermissionConfiguration = z.infer<
+export type RawPermissionConfiguration = v.infer<
   typeof RawPermissionConfiguration
 >
-export const RawPermissionConfiguration = z.object({
+export const RawPermissionConfiguration = v.object({
   type: Permission,
-  delay: z.union([z.number(), z.string()]).default(0),
-  description: z.string().optional(),
-  condition: z.string().optional(),
-  role: z.string().optional(),
+  delay: v.union([v.number(), v.string()]).default(0),
+  description: v.string().optional(),
+  condition: v.string().optional(),
+  role: v.string().optional(),
 })
 
-export type ContractPermissionField = z.infer<typeof ContractPermissionField>
-export const ContractPermissionField = z.object({
-  permissions: z.array(RawPermissionConfiguration).optional(),
-})
+export type ContractPermissionField = v.infer<typeof ContractPermissionField>
+export const _ContractPermissionField = {
+  permissions: v.array(RawPermissionConfiguration).optional(),
+}
+export const ContractPermissionField = v.object(_ContractPermissionField)
 
-export type ContractPermission = z.infer<typeof ContractPermission>
-export const ContractPermission = z.object({
-  canActIndependently: z.optional(z.boolean()),
-  fields: z.record(z.string(), ContractPermissionField).default({}),
-})
+export type ContractPermission = v.infer<typeof ContractPermission>
+export const _ContractPermission = {
+  canActIndependently: v.boolean().optional(),
+  fields: v.record(v.string(), ContractPermissionField).default({}),
+}
+export const ContractPermission = v.object(_ContractPermission)
 
-export type PermissionsConfig = z.infer<typeof PermissionsConfig>
-export const PermissionsConfig = z.object({
-  overrides: z.optional(
-    z.record(
-      z.string().refine((key) => EthereumAddress.check(key), {
-        message: 'Invalid Ethereum address',
-      }),
+export type PermissionsConfig = v.infer<typeof PermissionsConfig>
+export const _PermissionsConfig = {
+  overrides: v
+    .record(
+      v.string().transform((v) => EthereumAddress(v).toString()),
       ContractPermission,
-    ),
-  ),
-})
+    )
+    .optional(),
+}
+export const PermissionsConfig = v.object(_PermissionsConfig)

@@ -1,6 +1,6 @@
 import type { ProjectValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,14 +15,22 @@ import {
 } from './utils/projectFilterUtils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
 
-export const TvsChartDataParams = z.object({
-  range: TvsChartRange,
+export const TvsChartDataParams = v.object({
+  range: v.union([
+    v.object({
+      type: TvsChartRange,
+    }),
+    v.object({
+      type: v.literal('custom'),
+      from: v.number(),
+      to: v.number(),
+    }),
+  ]),
   filter: TvsProjectFilter,
-  excludeAssociatedTokens: z.boolean(),
-  previewRecategorisation: z.boolean(),
+  excludeAssociatedTokens: v.boolean(),
 })
 
-export type TvsChartDataParams = z.infer<typeof TvsChartDataParams>
+export type TvsChartDataParams = v.infer<typeof TvsChartDataParams>
 
 type TvsChartDataPoint = readonly [
   timestamp: number,
@@ -46,31 +54,26 @@ export async function getTvsChart({
   range,
   excludeAssociatedTokens,
   filter,
-  previewRecategorisation,
 }: TvsChartDataParams): Promise<TvsChartData> {
   if (env.MOCK) {
     return getMockTvsChartData({
       range,
       excludeAssociatedTokens,
       filter,
-      previewRecategorisation,
     })
   }
 
-  const projectsFilter = createTvsProjectsFilter(
-    filter,
-    previewRecategorisation,
-  )
-  const tvsProjects = await getTvsProjects(
-    projectsFilter,
-    previewRecategorisation,
-  )
-  if (tvsProjects.length === 0) {
-    return []
-  }
   // NOTE: Quick fix for now, we should reinvestigate if this is the best way to handle this
   const forSummary =
     filter.type !== 'projects' || filter.projectIds.length !== 1
+
+  const projectsFilter = createTvsProjectsFilter(filter)
+  const tvsProjects = await getTvsProjects(projectsFilter, {
+    withoutArchivedAndUpcoming: forSummary,
+  })
+  if (tvsProjects.length === 0) {
+    return []
+  }
   const [ethPrices, values] = await Promise.all([
     getEthPrices(),
     getSummedTvsValues(
@@ -107,8 +110,9 @@ function getChartData(
 function getMockTvsChartData({ range }: TvsChartDataParams): TvsChartData {
   const resolution = rangeToResolution(range)
   const target = getTvsTargetTimestamp()
+  const adjustedTarget = range.type === 'custom' ? range.to : target
   const [from, to] = getRangeWithMax(range, resolution, {
-    now: target,
+    now: adjustedTarget,
   })
   const timestamps = generateTimestamps(
     [from ?? MIN_TIMESTAMPS.tvs, to],

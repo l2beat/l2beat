@@ -1,5 +1,5 @@
-import { assert, type EthereumAddress } from '@l2beat/shared-pure'
-import * as z from 'zod'
+import { assert, type EthereumAddress, unique } from '@l2beat/shared-pure'
+import { type Parser, type Validator, v } from '@l2beat/validate'
 
 import { isDeepStrictEqual } from 'util'
 import { type providers, utils } from 'ethers'
@@ -20,42 +20,45 @@ interface LogRow {
   value: ContractValue
 }
 
-const oneOrMany = <T extends z.ZodTypeAny>(schema: T) =>
-  z.union([schema, z.array(schema)])
-
-export const EventHandlerAction = z.object({
-  event: oneOrMany(z.string()),
-  where: z
-    .unknown()
-    .refine(validateBlip)
-    .transform((v): BlipSexp => v as BlipSexp)
-    .optional(),
-})
-export type EventHandlerAction = z.infer<typeof EventHandlerAction>
-
-const common = {
-  type: z.literal('event'),
-  select: z.string().or(z.array(z.string())).optional(),
-  groupBy: z.string().optional(),
-  ignoreRelative: z.boolean().optional(),
+function oneOrMany<T>(schema: Validator<T>): Validator<T | T[]>
+// @ts-ignore We allow this error for simplicity of use
+function oneOrMany<T>(schema: Parser<T>): Parser<T | T[]>
+function oneOrMany<T>(schema: Validator<T>): Validator<T | T[]> {
+  return v.union([schema, v.array(schema)])
 }
 
-const setOnlySchema = z.object({
+export const EventHandlerAction = v.object({
+  event: oneOrMany(v.string()),
+  where: v
+    .unknown()
+    .check((v): v is BlipSexp => validateBlip(v))
+    .optional(),
+})
+export type EventHandlerAction = v.infer<typeof EventHandlerAction>
+
+const common = {
+  type: v.literal('event'),
+  select: oneOrMany(v.string()).optional(),
+  groupBy: v.string().optional(),
+  ignoreRelative: v.boolean().optional(),
+}
+
+const setOnlySchema = v.object({
   ...common,
   set: oneOrMany(EventHandlerAction),
-  add: z.undefined(),
-  remove: z.undefined(),
+  add: v.undefined().optional(),
+  remove: v.undefined().optional(),
 })
 
-const addAndRemoveSchema = z.object({
+const addAndRemoveSchema = v.object({
   ...common,
-  set: z.undefined(),
+  set: v.undefined().optional(),
   add: oneOrMany(EventHandlerAction),
   remove: oneOrMany(EventHandlerAction).optional(),
 })
 
-export type EventHandlerDefinition = z.infer<typeof EventHandlerDefinition>
-export const EventHandlerDefinition = z.union([
+export type EventHandlerDefinition = v.infer<typeof EventHandlerDefinition>
+export const EventHandlerDefinition = v.union([
   setOnlySchema,
   addAndRemoveSchema,
 ])
@@ -98,9 +101,12 @@ export class EventHandler implements Handler {
       events.push(...actionEvents)
     }
 
-    const fragments = events.map((e) => getEventFragment(e, stringAbi))
-    this.abi = new utils.Interface(fragments)
-    this.topic0s = [...new Set(fragments.map((f) => this.abi.getEventTopic(f)))]
+    const fragments = events.map((e) => getEventFragment(e, unique(stringAbi)))
+    const uniqueFragments = unique(fragments, (f) => f.format())
+    this.abi = new utils.Interface(uniqueFragments)
+    this.topic0s = [
+      ...new Set(uniqueFragments.map((f) => this.abi.getEventTopic(f))),
+    ]
   }
 
   async execute(

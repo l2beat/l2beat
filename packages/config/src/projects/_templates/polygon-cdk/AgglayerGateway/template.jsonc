@@ -1,0 +1,100 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "A verifier gateway for pessimistic proofs. Manages a map of chains and their verifier keys and is used to route proofs based on the first 4 bytes of proofBytes data in a proof submission. The SP1 verifier is used for all proofs.",
+  "category": "shared",
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x131410eab1236cee2db19035b0e825c94e5ab705dffe23321dd53856da531617": "AGGCHAIN_DEFAULT_VKEY_ROLE",
+          "0x0fdc2a718b96bc741c7544001e3dd7c26730802c54781668fa78a120e622629b": "AL_ADD_PP_ROUTE_ROLE",
+          "0xca75ae4228cde6195f9fa3dbde8dc352fb30aa63780717a378ccfc50274355dd": "AL_FREEZE_PP_ROUTE_ROLE"
+        }
+      }
+    },
+    "aggchainDefaultVKeyAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x131410eab1236cee2db19035b0e825c94e5ab705dffe23321dd53856da531617": "AGGCHAIN_DEFAULT_VKEY_ROLE"
+        },
+        "pickRoleMembers": "AGGCHAIN_DEFAULT_VKEY_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add or update default aggchain verification keys (aggchainVkey) for any given selectors."
+        }
+      ]
+    },
+    "addPpRouteAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0x0fdc2a718b96bc741c7544001e3dd7c26730802c54781668fa78a120e622629b": "AL_ADD_PP_ROUTE_ROLE"
+        },
+        "pickRoleMembers": "AL_ADD_PP_ROUTE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "add new routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
+        }
+      ]
+    },
+    "freezePpRouteAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xca75ae4228cde6195f9fa3dbde8dc352fb30aa63780717a378ccfc50274355dd": "AL_FREEZE_PP_ROUTE_ROLE"
+        },
+        "pickRoleMembers": "AL_FREEZE_PP_ROUTE_ROLE"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "freeze routes from proof selector to verifier / pessimisticVkey for pessimistic proofs."
+        }
+      ]
+    },
+    // need two configs here to catch all aggchainVKey updates
+    "aggchainVKeys": {
+      "description": "The aggchainVkey is the second level vkey wrapping the op-succinct proofs and being wrapped by the pessimistic proof. It exists to allow a pessimistic cdk chain to define additional proofs on top of the PP. First 2 bytes of the 'selector' are the 'verification key identifier', the last 2 bytes are the aggchain type (ex: FEP, ECDSA). This map is e.g. used by AggchainFEP.getAggchainVKey().",
+      "handler": {
+        "type": "event",
+        "groupBy": "selector",
+        "add": {
+          "event": "AddDefaultAggchainVKey"
+        },
+        "remove": {
+          "event": "UnsetDefaultAggchainVKey"
+        }
+      }
+    },
+    "aggchainVKeysUpdated": {
+      "description": "emitted when an existing aggchainVKey in `aggchainVKeys` is updated.",
+      "handler": {
+        "type": "event",
+        "groupBy": "selector",
+        "set": {
+          "event": "UpdateDefaultAggchainVKey"
+        }
+      }
+    },
+    "routes": {
+      "description": "This map is used for routing in verifyPessimisticProof(). The pessimisticVkey is the top level vkey that is used by the onchain verifier. It wraps the aggchainVKey.",
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "groupBy": "selector",
+        "add": {
+          "event": "RouteAdded"
+        },
+        "remove": {
+          "event": "RouteFrozen"
+        }
+      }
+    }
+  }
+}

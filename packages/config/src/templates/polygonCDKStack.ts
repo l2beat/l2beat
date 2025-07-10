@@ -3,7 +3,7 @@ import {
   assert,
   EthereumAddress,
   ProjectId,
-  UnixTime,
+  type UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import {
@@ -55,6 +55,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 export interface DAProvider {
@@ -153,9 +154,9 @@ export function polygonCDKStack(
   )
   const bridge = shared.getContract('PolygonSharedBridge')
 
-  const finalizationPeriod =
-    templateVars.display.finality?.finalizationPeriod ?? 0
+  const finalizationPeriod = 0
 
+  const discoveries = [templateVars.discovery, shared]
   return {
     type: 'layer2',
     addedAt: templateVars.addedAt,
@@ -172,24 +173,18 @@ export function polygonCDKStack(
         'Universal',
         ...(templateVars.additionalPurposes ?? []),
       ],
-      category:
-        templateVars.daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      category: templateVars.reasonsForBeingOther
+        ? 'Other'
+        : templateVars.daProvider !== undefined
+          ? 'Validium'
+          : 'ZK Rollup',
       architectureImage:
         (templateVars.architectureImage ??
         templateVars.daProvider !== undefined)
           ? 'polygon-cdk-validium'
           : 'polygon-cdk-rollup',
-      stack: 'Agglayer CDK',
+      stacks: ['Agglayer CDK'],
       tvsWarning: templateVars.display.tvsWarning,
-      finality: templateVars.display.finality ?? {
-        finalizationPeriod,
-        warnings: {
-          timeToInclusion: {
-            sentiment: 'neutral',
-            value: 'Uniform block distribution is assumed for calculations.',
-          },
-        },
-      },
     },
     config: {
       associatedTokens: templateVars.associatedTokens,
@@ -210,15 +205,6 @@ export function polygonCDKStack(
         },
       },
       daTracking: getDaTracking(templateVars),
-      finality:
-        templateVars.daProvider !== undefined
-          ? undefined
-          : {
-              type: 'PolygonZkEvm',
-              minTimestamp: UnixTime(1679653163),
-              lag: 0,
-              stateUpdate: 'disabled',
-            },
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -252,11 +238,11 @@ export function polygonCDKStack(
                 stateRootsPostedToL1: true,
                 dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable: true,
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: null,
               },
               stage1: {
                 principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: {
@@ -353,7 +339,7 @@ export function polygonCDKStack(
             {
               title:
                 'Etherscan: PolygonRollupManager.sol - verifyPessimisticTrustedAggregator() function',
-              url: 'https://etherscan.io/address/0xa33619940bceb9be7c9679dd80fa2918c2476382#code#F1#L1046',
+              url: 'https://etherscan.io/address/0x9ab2cB2107d3E737f7977B2E5042C58dE98326ab#code#F1#L1210',
             },
           ],
         },
@@ -396,7 +382,7 @@ export function polygonCDKStack(
         {
           title: 'Pessimistic Proofs',
           description:
-            'The pessimistic proofs that are used to prove correct accounting in the shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
+            'The pessimistic proofs that are used to prove correct accounting in the Agglayer shared bridge are using the [SP1 zkVM by Succinct](https://github.com/succinctlabs/sp1).',
         },
         {
           ...STATE_VALIDATION.VALIDITY_PROOFS,
@@ -441,6 +427,7 @@ Furthermore, the PolygonAdminMultisig is permissioned to manage the shared trust
     customDa: templateVars.customDa,
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(discoveries),
   }
 }
 

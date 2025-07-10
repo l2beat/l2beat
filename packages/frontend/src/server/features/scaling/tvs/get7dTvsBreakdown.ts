@@ -1,9 +1,9 @@
 import type { Project } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import partition from 'lodash/partition'
 import pick from 'lodash/pick'
-import { z } from 'zod'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
@@ -37,24 +37,25 @@ export interface BreakdownSplit {
   native: number
 }
 
-export const TvsBreakdownProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum(['all', 'layer2', 'bridge']),
-  }),
-  z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const TvsBreakdownProjectFilter = v.union([
+  v.object({ type: v.enum(['all', 'layer2', 'bridge']) }),
+  v.object({ type: v.literal('projects'), projectIds: v.array(v.string()) }),
 ])
 
-type TvsBreakdownProjectFilter = z.infer<typeof TvsBreakdownProjectFilter>
+type TvsBreakdownProjectFilter = v.infer<typeof TvsBreakdownProjectFilter>
 
 export async function get7dTvsBreakdown(
   props: TvsBreakdownProjectFilter,
+  customTarget?: UnixTime,
 ): Promise<SevenDayTvsBreakdown> {
   if (env.MOCK) {
     return getMockTvsBreakdownData()
   }
 
   const db = getDb()
-  const target = getTvsTargetTimestamp()
+  const target = customTarget ?? getTvsTargetTimestamp()
 
   const projectIds = props.type === 'projects' ? props.projectIds : undefined
 

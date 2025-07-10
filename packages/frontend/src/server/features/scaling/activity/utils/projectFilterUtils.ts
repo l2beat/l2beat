@@ -1,11 +1,12 @@
 import type { Project } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { z } from 'zod'
-import { isProjectOther } from '../../utils/isProjectOther'
+import { v } from '@l2beat/validate'
 
-export const ActivityProjectFilter = z.discriminatedUnion('type', [
-  z.object({
-    type: z.enum([
+// NOTE(radomski): Was a discriminatedUnion but l2beat/validate does not
+// support it yet. It's a performance issue.
+export const ActivityProjectFilter = v.union([
+  v.object({
+    type: v.enum([
       'all',
       'rollups',
       'validiumsAndOptimiums',
@@ -13,72 +14,48 @@ export const ActivityProjectFilter = z.discriminatedUnion('type', [
       'withoutOthers',
     ]),
   }),
-  z.object({ type: z.literal('projects'), projectIds: z.array(z.string()) }),
+  v.object({ type: v.literal('projects'), projectIds: v.array(v.string()) }),
 ])
-export type ActivityProjectFilter = z.infer<typeof ActivityProjectFilter>
+export type ActivityProjectFilter = v.infer<typeof ActivityProjectFilter>
 
-export const ActivityProjectFilterType = z.enum([
+export const ActivityProjectFilterType = v.enum([
   'all',
   'rollups',
   'validiumsAndOptimiums',
   'others',
   'projects',
 ])
-export type ActivityProjectFilterType = z.infer<
+export type ActivityProjectFilterType = v.infer<
   typeof ActivityProjectFilterType
 >
 
 export function createActivityProjectsFilter(
   filter: ActivityProjectFilter,
-  previewRecategorisation: boolean,
 ): (project: Project<'scalingInfo' | 'statuses'>) => boolean {
   switch (filter.type) {
     case 'all':
-      return (project) =>
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+      return (project) => !(project.statuses.reviewStatus === 'initialReview')
     case 'rollups':
       return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) && // If previewRecategorisation is true, we exclude projects that are under initial review
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Optimistic Rollup' ||
           project.scalingInfo.type === 'ZK Rollup')
     case 'validiumsAndOptimiums':
       return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
+        !(project.statuses.reviewStatus === 'initialReview') &&
         (project.scalingInfo.type === 'Validium' ||
           project.scalingInfo.type === 'Optimium' ||
           project.scalingInfo.type === 'Plasma')
     case 'others':
       return (project) =>
-        isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        )
+        project.scalingInfo.type === 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     case 'projects':
       return (project) => new Set(filter.projectIds).has(project.id)
     case 'withoutOthers':
       return (project) =>
-        !isProjectOther(project.scalingInfo, previewRecategorisation) &&
-        !(
-          previewRecategorisation &&
-          project.statuses.reviewStatus === 'initialReview'
-        ) &&
-        (project.scalingInfo.type === 'Optimistic Rollup' ||
-          project.scalingInfo.type === 'ZK Rollup' ||
-          project.scalingInfo.type === 'Validium' ||
-          project.scalingInfo.type === 'Optimium' ||
-          project.scalingInfo.type === 'Plasma')
+        project.scalingInfo.type !== 'Other' &&
+        !(project.statuses.reviewStatus === 'initialReview')
     default:
       assertUnreachable(filter)
   }

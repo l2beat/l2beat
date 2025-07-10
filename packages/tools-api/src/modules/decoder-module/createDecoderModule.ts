@@ -34,6 +34,7 @@ export function createDecoderModule(
     etherscanClient,
     config.discovered,
     config.tokens,
+    config.chains,
   )
 
   const decoder = new Decoder(
@@ -41,6 +42,7 @@ export function createDecoderModule(
     signatureService,
     config.tokens,
     config.hashes,
+    config.chains,
   )
 
   const controller = new ApiController(decoder, alchemyClient, config.chains)

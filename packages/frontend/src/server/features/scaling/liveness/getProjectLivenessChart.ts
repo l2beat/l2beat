@@ -4,22 +4,22 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import { env } from 'process'
-import { z } from 'zod'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
 import { LivenessChartTimeRange, rangeToResolution } from './utils/chartRange'
 
-export type ProjectLivenessChartParams = z.infer<
+export type ProjectLivenessChartParams = v.infer<
   typeof ProjectLivenessChartParams
 >
-export const ProjectLivenessChartParams = z.object({
+export const ProjectLivenessChartParams = v.object({
   range: LivenessChartTimeRange,
   subtype: TrackedTxsConfigSubtype,
-  projectId: z.string(),
+  projectId: v.string(),
 })
 
 export type ProjectLivenessChartData = {
@@ -49,7 +49,7 @@ export async function getProjectLivenessChart({
   const target = UnixTime.toStartOf(UnixTime.now(), 'hour') - 2 * UnixTime.HOUR
 
   const resolution = rangeToResolution(range)
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
 
@@ -142,7 +142,7 @@ function calculateLivenessStats(entries: AggregatedLivenessRecord[]) {
 function getMockProjectLivenessChartData({
   range,
 }: ProjectLivenessChartParams): ProjectLivenessChartData {
-  const [from, to] = getRangeWithMax(range, 'daily')
+  const [from, to] = getRangeWithMax({ type: range }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? UnixTime.fromDate(new Date('2023-05-01T00:00:00Z')),
     to,

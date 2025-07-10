@@ -1,30 +1,30 @@
 import type { HttpClient } from '@l2beat/shared'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { segmentRange, starknetKeccak } from './utils'
 
-const StarknetRPCResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number(),
-  result: z.unknown(),
+const StarknetRPCResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number(),
+  result: v.unknown(),
 })
 
-const StarknetBlockNumberResponse = z.number()
+const StarknetBlockNumberResponse = v.number()
 
-export type StarknetEvent = z.infer<typeof StarknetEvent>
-const StarknetEvent = z.object({
-  block_hash: z.string(),
-  block_number: z.number(),
-  data: z.array(z.string()),
-  from_address: z.string(),
-  keys: z.array(z.string()),
-  transaction_hash: z.string(),
+export type StarknetEvent = v.infer<typeof StarknetEvent>
+const StarknetEvent = v.object({
+  block_hash: v.string(),
+  block_number: v.number(),
+  data: v.array(v.string()),
+  from_address: v.string(),
+  keys: v.array(v.string()),
+  transaction_hash: v.string(),
 })
 
-export type StarknetGetEventsResponse = z.infer<
+export type StarknetGetEventsResponse = v.infer<
   typeof StarknetGetEventsResponse
 >
-const StarknetGetEventsResponse = z.object({
-  events: z.array(StarknetEvent),
+const StarknetGetEventsResponse = v.object({
+  events: v.array(StarknetEvent),
 })
 
 export class StarknetClient {

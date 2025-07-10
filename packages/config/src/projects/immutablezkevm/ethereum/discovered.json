@@ -2,7 +2,7 @@
   "name": "immutablezkevm",
   "chain": "ethereum",
   "blockNumber": 21995404,
-  "configHash": "0x328e81c1dbc9daf1f236ae07a1246e6c20728722e2389f8a89999b4cfc668c06",
+  "configHash": "0xf22fc5d7e12a036f77c41f0852e1bc577ca74c1273a456a5a773f9f5a905de5a",
   "entries": [
     {
       "address": "0x000000000000000000000000000000000000007B",
@@ -224,25 +224,25 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
+            { "address": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
+          "from": "eth:0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
           "role": ".owner"
         }
       ],
@@ -295,12 +295,12 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "from": "eth:0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
+          "from": "eth:0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
           "role": "admin"
         }
       ],
@@ -600,5 +600,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x404ca0da000d34d279819c22691aded4e8cb899761fe1f0eb89529c32843572f"
+  "permissionsConfigHash": "0x8742a92382373db8dbbe3f091b6eb9045ec47524e1e90aeb8b1aa0c9e00daf50"
 }

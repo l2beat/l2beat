@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
@@ -8,7 +8,6 @@ import { getScalingActivityData } from './activity/getScalingActivityData'
 import { getScalingArchivedData } from './archived/getScalingArchivedData'
 import { getScalingCostsData } from './costs/getScalingCostsData'
 import { getScalingDataAvailabilityData } from './data-availability/getScalingDataAvailabilityData'
-import { getScalingFinalityData } from './finality/getScalingFinalityData'
 import { getScalingLivenessData } from './liveness/getScalingLivenessData'
 import { getScalingProjectData } from './project/getScalingProjectData'
 import { getScalingProjectTvsBreakdownData } from './project/tvs-breakdown/getScalingProjectTvsBreakdownData'
@@ -37,10 +36,10 @@ export function createScalingRouter(
   router.get(
     '/scaling/activity',
     validateRoute({
-      query: z.object({
-        tab: z
-          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
-          .catch('rollups'),
+      query: v.object({
+        tab: v
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
+          .default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -59,10 +58,10 @@ export function createScalingRouter(
   router.get(
     '/scaling/tvs',
     validateRoute({
-      query: z.object({
-        tab: z
-          .enum(['rollups', 'validiumsAndOptimiums', 'others'])
-          .catch('rollups'),
+      query: v.object({
+        tab: v
+          .enum(['rollups', 'validiumsAndOptimiums', 'others', 'notReviewed'])
+          .default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -84,17 +83,11 @@ export function createScalingRouter(
     res.status(200).send(html)
   })
 
-  router.get('/scaling/finality', async (req, res) => {
-    const data = await getScalingFinalityData(req, manifest, cache)
-    const html = render(data, req.originalUrl)
-    res.status(200).send(html)
-  })
-
   router.get(
     '/scaling/costs',
     validateRoute({
-      query: z.object({
-        tab: z.enum(['rollups', 'others']).catch('rollups'),
+      query: v.object({
+        tab: v.enum(['rollups', 'others']).default('rollups'),
       }),
     }),
     async (req, res) => {
@@ -119,7 +112,7 @@ export function createScalingRouter(
   router.get(
     '/scaling/projects/:slug',
     validateRoute({
-      params: z.object({ slug: z.string() }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(
@@ -142,7 +135,7 @@ export function createScalingRouter(
   router.get(
     '/scaling/projects/:slug/tvs-breakdown',
     validateRoute({
-      params: z.object({ slug: z.string() }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(

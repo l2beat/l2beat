@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x48fdfc5a27bd602ef4d7b3c343dc32195a22fd01
+Generated with discovered.json: 0x2c7846e1d38db7696eabbf984911bc2f434ce178
+
+# Diff at Fri, 04 Jul 2025 12:18:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22397507
+- current block number: 22397507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22397507 (main branch discovery), not current.
+
+```diff
+    contract EspressoMultisig (0x34F5af5158171Ffd2475d21dB5fc3B311F221982) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+      receivedPermissions.1.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+    }
+```
+
+```diff
+    EOA  (0x4fD0Ac6922Da5C96b6f94202EcE60E8fE3bF3947) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
++        "eth:0x95Ca91Cea73239b15E5D2e5A74d02d6b5E0ae458"
+    }
+```
+
+Generated with discovered.json: 0xe6f17bfb1401cba8392e891e4d98471a7a03a2e5
 
 # Diff at Fri, 23 May 2025 09:40:55 GMT:
 

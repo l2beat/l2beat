@@ -120,7 +120,8 @@ function SummaryThroughputBox({
     0,
   )
 
-  const total = latest.ethereum + latest.celestia + latest.avail
+  const total =
+    latest.ethereum + latest.celestia + latest.avail + latest.eigenda
 
   const breakdown: BreakdownItem[] = [
     {
@@ -130,16 +131,22 @@ function SummaryThroughputBox({
       percentage: round((latest.ethereum / total) * 100, 2),
     },
     {
+      label: 'Avail',
+      value: latest.avail,
+      className: 'bg-chart-sky',
+      percentage: round((latest.avail / total) * 100, 2),
+    },
+    {
       label: 'Celestia',
       value: latest.celestia,
-      className: 'bg-chart-da-celestia',
+      className: 'bg-chart-fuchsia',
       percentage: round((latest.celestia / total) * 100, 2),
     },
     {
-      label: 'Avail',
-      value: latest.avail,
-      className: 'bg-chart-emerald',
-      percentage: round((latest.avail / total) * 100, 2),
+      label: 'EigenDA',
+      value: latest.eigenda,
+      className: 'bg-chart-lime',
+      percentage: round((latest.eigenda / total) * 100, 2),
     },
   ]
 
@@ -197,9 +204,9 @@ function BreakdownWithTooltip({ items }: { items: BreakdownItem[] }) {
           >
             <div className="flex items-baseline gap-1">
               <div className={cn('size-2.5 rounded-sm', s.className)} />
-              <span className="label-value-14-medium">{s.label}</span>
+              <span className="font-medium text-label-value-14">{s.label}</span>
             </div>
-            <span className="label-value-15-medium">
+            <span className="font-medium text-label-value-15">
               {s.percentage.toFixed(1)}%
             </span>
           </div>

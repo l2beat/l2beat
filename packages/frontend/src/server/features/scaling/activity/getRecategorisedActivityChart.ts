@@ -4,7 +4,6 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRangeWithMax } from '~/utils/range/range'
 import { generateTimestamps } from '../../utils/generateTimestamps'
-import { isProjectOther } from '../utils/isProjectOther'
 import { aggregateActivityRecords } from './utils/aggregateActivityRecords'
 import { getActivityProjects } from './utils/getActivityProjects'
 import { getFullySyncedActivityRange } from './utils/getFullySyncedActivityRange'
@@ -31,39 +30,31 @@ export type RecategorisedActivityChartData = {
 export async function getRecategorisedActivityChart(
   filter: ActivityProjectFilter,
   range: ActivityTimeRange,
-  previewRecategorisation: boolean,
 ): Promise<RecategorisedActivityChartData> {
   if (env.MOCK) {
-    return getMockRecategorisedActivityChart(
-      filter,
-      range,
-      previewRecategorisation,
-    )
+    return getMockRecategorisedActivityChart(filter, range)
   }
 
   const db = getDb()
   const projects = (await getActivityProjects()).filter(
-    createActivityProjectsFilter(filter, previewRecategorisation),
+    createActivityProjectsFilter(filter),
   )
 
   const rollups = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'ZK Rollup' ||
-          p.scalingInfo.type === 'Optimistic Rollup') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        p.scalingInfo.type === 'ZK Rollup' ||
+        p.scalingInfo.type === 'Optimistic Rollup',
     )
     .map((p) => p.id)
   const validiumsAndOptimiums = projects
     .filter(
       (p) =>
-        (p.scalingInfo.type === 'Validium' ||
-          p.scalingInfo.type === 'Optimium') &&
-        !isProjectOther(p.scalingInfo, previewRecategorisation),
+        p.scalingInfo.type === 'Validium' || p.scalingInfo.type === 'Optimium',
     )
     .map((p) => p.id)
 
-  const adjustedRange = getFullySyncedActivityRange(range)
+  const adjustedRange = getFullySyncedActivityRange({ type: range })
   const [rollupsEntries, validiumsAndOptimiumsEntries, ethereumEntries] =
     await Promise.all([
       await db.activity.getByProjectsAndTimeRange(rollups, adjustedRange),
@@ -135,9 +126,8 @@ export async function getRecategorisedActivityChart(
 function getMockRecategorisedActivityChart(
   _: ActivityProjectFilter,
   timeRange: ActivityTimeRange,
-  __: boolean,
 ): RecategorisedActivityChartData {
-  const [from, to] = getRangeWithMax(timeRange, 'daily')
+  const [from, to] = getRangeWithMax({ type: timeRange }, 'daily')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? MIN_TIMESTAMPS.activity,
     to,

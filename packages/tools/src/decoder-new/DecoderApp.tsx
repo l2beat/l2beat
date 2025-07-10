@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import { useSearchParams } from 'react-router'
 import { Form } from './form/Form'
-import { callDecode } from './form/api'
+import { callDecode, getFullQueryUrl } from './form/api'
 import { CondensedView } from './view/CondensedView'
 import { ExpandedView } from './view/ExpandedView'
 
@@ -16,9 +16,14 @@ export function DecoderApp() {
 }
 
 function DecodedWrapper({ search }: { search: URLSearchParams }) {
+  const fullQuery = getFullQueryUrl(search.toString())
   const result = useQuery({
-    queryFn: () => callDecode(search.toString()),
-    queryKey: [search.toString()],
+    queryFn: () => callDecode(fullQuery),
+    queryKey: [fullQuery.toString()],
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
   const [condensed, setCondensed] = useState(
     localStorage.getItem('condensed') === 'true',

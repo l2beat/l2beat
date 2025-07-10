@@ -12,6 +12,7 @@ import { createEcosystemsRouter } from './ecosystems/EcosystemsRouter'
 import { createFaqRouter } from './faq/FaqRouter'
 import { createGlossaryRouter } from './glossary/GlossaryRouter'
 import { createGovernanceRouter } from './governance/GovernanceRouter'
+import { createMonthlyUpdatesRouter } from './monthly-updates/MonthlyUpdatesRouter'
 import { createMutlisigReportRouter } from './multisig-report/MutlisigReportRouter'
 import { createScalingRouter } from './scaling/ScalingRouter'
 import { createTermsOfServiceRouter } from './terms-of-service/TermsOfServiceRouter'
@@ -28,6 +29,7 @@ export function createServerPageRouter(
     const headers = new Headers({
       'Content-Type': 'text/html; charset=utf-8',
     })
+
     if (env.DEPLOYMENT_ENV === 'production') {
       headers.set('Cache-Control', 'public, max-age=300')
     }
@@ -54,6 +56,7 @@ export function createServerPageRouter(
     createDaRiskFrameworkRouter,
     createMutlisigReportRouter,
     createTermsOfServiceRouter,
+    createMonthlyUpdatesRouter,
   ]
 
   for (const createRouter of routers) {

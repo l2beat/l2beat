@@ -1,4 +1,333 @@
-Generated with discovered.json: 0x5921167fa1d36ec8f898fc9376ee3dcbef231eb9
+Generated with discovered.json: 0x582819c46777f619913faed86222a47108cbd7da
+
+# Diff at Fri, 04 Jul 2025 12:19:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22774371
+- current block number: 22774371
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22774371 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.0.from:
+-        "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
++        "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      receivedPermissions.1.from:
+-        "ethereum:0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+      receivedPermissions.2.from:
+-        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      receivedPermissions.3.from:
+-        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      receivedPermissions.4.from:
+-        "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
++        "eth:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+      receivedPermissions.5.from:
+-        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
++        "eth:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+      receivedPermissions.6.from:
+-        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "eth:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.7.from:
+-        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "eth:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.8.from:
+-        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "eth:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.9.via.0.address:
+-        "ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+      receivedPermissions.9.from:
+-        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      receivedPermissions.10.from:
+-        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "eth:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.11.from:
+-        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "eth:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.12.from:
+-        "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "eth:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
++        "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "eth:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "eth:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+    }
+```
+
+```diff
+    EOA  (0xaE4d46bD9117Cb017C5185844699c51107cB28a9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+    }
+```
+
+```diff
+    EOA  (0xDD6FFC7D9a4Fb420b637747edc6456340d12d377) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "eth:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+    }
+```
+
+```diff
+    EOA  (0xf3CEB4C2ef996CdBc95C4E18c6D0CA988CC09040) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x918778e825747a892b17C66fe7D24C618262867d"
++        "eth:0x918778e825747a892b17C66fe7D24C618262867d"
+    }
+```
+
+Generated with discovered.json: 0x4e028964bfbdf05a633872f5c0bd914532d79de2
+
+# Diff at Tue, 24 Jun 2025 12:44:56 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@165a3574e7a5112b92cf5b6d87a202235001fcdf block: 22739723
+- current block number: 22774371
+
+## Description
+
+Adds missing hardcoded values.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22739723 (main branch discovery), not current.
+
+```diff
+    EOA  (0x1A9da0aedA630dDf2748a453BF6d92560762D914) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"sequence","from":"ethereum:0x918778e825747a892b17C66fe7D24C618262867d","role":".txChainBatcher"}]
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.txChainBatcher:
+-        "0x1A9da0aedA630dDf2748a453BF6d92560762D914"
+      values.inboxAddress:
++        "0xFf00000000000000000000000000000000001088"
+    }
+```
+
+Generated with discovered.json: 0x1e232db2a1106231a47c3641020ffaf90c56ce7c
+
+# Diff at Fri, 20 Jun 2025 09:04:23 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d5c484ae81a750a81728eec4c46d10685ad38407 block: 22610669
+- current block number: 22739723
+
+## Description
+
+The game creator role is still permissioned. The DisputeGameFactory is updated to contain a disputeTimeout function. The function allows to transfer a bond from the new FaultProofLockingPool contract (through timeoutSlashs()) to the dispute creator (which created the dispute with dispute() on the DisputeGameFactory), should a game not be created within the DISPUTE_TIMEOUT_PERIOD (2 days from the dispute creation). Sequencers are supposed to deposit METIS tokens to this pool so that it can be slashed in case of successful dispute.
+In practice should a malicious state root be proposed and unchallenged by the Metis multisig, the user disputing gets partly compensated with a bond from the pool (currently an unknown amount as it depends on deposits), while the potential loss amounts to the full value in the bridge (~130m).
+
+## Watched changes
+
+```diff
+    contract DisputeGameFactory (0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3) {
+    +++ description: Factory contract for creating dispute games. Unlike in standard OP Stack chains, games are not created to propose state roots. Instead, games are created on demand by the permissioned `GameCreator` only should a dispute arise.
+      sourceHashes.1:
+-        "0x39144681962383da8221186c19e95a5cbb0d397751dceaab7cf7237aa369a892"
++        "0x45c38e69c9d8bca18eef505efeea8dfbe4deec90b00e915cedc1a2bb22743119"
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3"
++        "0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"
+      values.$pastUpgrades.1:
++        ["2025-06-19T02:52:35.000Z","0xfca0728fa948cf329424111232b2c80521c66bf13f49e9fff118a8de282f1cd5",["0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45"]]
+      values.$upgradeCount:
+-        1
++        2
+      values.DISPUTE_TIMEOUT_PERIOD:
++        172800
+      implementationNames.0xb864eEca2a047058Eb1e28e43FEAEBE8F38843B3:
+-        "DisputeGameFactory"
+      implementationNames.0xEc2EB7E045EB9D835a93113DABaa6Ae7a6776E45:
++        "DisputeGameFactory"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21)
+    +++ description: None
+```
+
+```diff
+    contract FaultProofLockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb) {
+    +++ description: The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS.
+      name:
+-        "LockingPool"
++        "FaultProofLockingPool"
+      sourceHashes.1:
+-        "0x2daed4f8b60d2e56f9557c3fb4a471cdc6259d6be64746b08106a3fedf37f18a"
++        "0x02c0d23b76bc8c0494b55f759d5d258315ed65ca85f13a0741bce12941ab0bb5"
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+      values.$implementation:
+-        "0x6d554097D5784a7184650B95ba7EA359d162Dbb7"
++        "0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"
+      values.$pastUpgrades.1:
++        ["2025-06-19T02:52:59.000Z","0x6e859980e53cbf8c232b3c491787274de2ec78c2af68069d0d910cd452fd99a5",["0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4"]]
+      values.$upgradeCount:
+-        1
++        2
+      implementationNames.0x6d554097D5784a7184650B95ba7EA359d162Dbb7:
+-        "LockingPool"
+      implementationNames.0xE141db3Ed25A58BB8BBd331AE373605108aaAAe4:
++        "LockingPool"
+      template:
++        "metis/FaultProofLockingPool"
+      description:
++        "The FaultProofLockingPool is a contract that allows sequencers to lock their funds for a certain period of time. The contract is used in the Metis protocol to ensure that sequencers have enough funds to cover the potential losses from disputes. It currently has a balance of 0 METIS."
+    }
+```
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd","role":"admin","via":[{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]}
+      receivedPermissions.9.from:
+-        "ethereum:0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
+      receivedPermissions.9.via:
+-        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.8.from:
+-        "ethereum:0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      receivedPermissions.8.via:
+-        [{"address":"ethereum:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8"}]
+      receivedPermissions.7.from:
+-        "ethereum:0x081D1101855bD523bA69A9794e0217F0DB6323ff"
++        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
+      receivedPermissions.6.from:
+-        "ethereum:0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      receivedPermissions.5.from:
+-        "ethereum:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b"
++        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+      receivedPermissions.4.from:
+-        "ethereum:0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+      receivedPermissions.3.from:
+-        "ethereum:0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      receivedPermissions.2.from:
+-        "ethereum:0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "ethereum:0x1C2f0A08762f0aD4598fB5de8f9D6626a4e4aeE3"
+    }
+```
+
+```diff
+    contract DelayedWMetis (0xfA947f70c3509d5b70A606e871aE0C85397D0738) {
+    +++ description: Delayed wrapped Metis token contract.
+      values.$admin:
+-        "0x280f9c9DF12431Aed70731D5CD3d192456606a21"
++        "0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21"
+    }
+```
+
+## Source code changes
+
+```diff
+.../DisputeGameFactory/DisputeGameFactory.sol      |  57 +++++++-
+ .../FaultProofLockingPool}/LockingPool.sol         |  76 +++++++++--
+ .../TransparentUpgradeableProxy.p.sol              |   0
+ .../LockingPool}/LockingPool.sol                   |   0
+ .../LockingPool}/TransparentUpgradeableProxy.p.sol |   0
+ .../dev/null                                       | 147 ---------------------
+ .../ProxyAdmin.sol}                                |   0
+ 7 files changed, 119 insertions(+), 161 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22610669 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x280f9c9DF12431Aed70731D5CD3d192456606a21) {
+    +++ description: None
+      directlyReceivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin"}
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
+    EOA  (0x5345fCDCF5449a40df030798C195603d27691502) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"upgrade","from":"ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738","role":"admin","via":[{"address":"ethereum:0x280f9c9DF12431Aed70731D5CD3d192456606a21"}]}
+      receivedPermissions.1.from:
+-        "ethereum:0xfA947f70c3509d5b70A606e871aE0C85397D0738"
++        "ethereum:0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: Contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+      values.FaultProofLockingPool:
++        "0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockingPool (0x2CA48fF3bBC59Bff859543E63233116ecdA3DCBb)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x03c87f9692339be57e9e0d17b4d449d3642ecc25
 
 # Diff at Mon, 16 Jun 2025 08:42:19 GMT:
 

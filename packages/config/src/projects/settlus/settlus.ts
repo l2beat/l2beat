@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -16,8 +16,7 @@ export const settlus: ScalingProject = opStackL2({
   display: {
     name: 'Settlus',
     slug: 'settlus',
-    category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     description:
       'Settlus is an OP stack L2 designed to provide transparent settlement system for the creator economy.',
     links: {
@@ -30,17 +29,6 @@ export const settlus: ScalingProject = opStackL2({
         'https://github.com/settlus',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 1,
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'settlus',

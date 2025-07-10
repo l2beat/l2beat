@@ -23,6 +23,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('zksync')
 
@@ -70,7 +71,7 @@ export const zksync: ScalingProject = {
     description:
       'ZKsync Lite (formerly ZKsync) is a ZK Rollup platform that supports payments, token swaps and NFT minting.',
     purposes: ['Payments', 'Exchange', 'NFT'],
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://zksync.io/'],
@@ -89,9 +90,6 @@ export const zksync: ScalingProject = {
     liveness: {
       explanation:
         'ZKsync Lite is a ZK rollup that posts state diffs to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -163,12 +161,6 @@ export const zksync: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'zkSyncLite',
-      minTimestamp: UnixTime(1592218708),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
@@ -206,11 +198,11 @@ export const zksync: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,
@@ -453,4 +445,5 @@ export const zksync: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,8 +1,8 @@
 {
   "name": "lzomnichain",
   "chain": "ethereum",
-  "blockNumber": 22567714,
-  "configHash": "0xf7895226e54ce1014dc1350811ec42498dfb05bce0e2342c1e6e5692c58a4046",
+  "blockNumber": 22882445,
+  "configHash": "0x104fa0d122566223c682cd34c2365275ec24fee6ac59a6b11b9074a61d0ca751",
   "entries": [
     {
       "name": "FPValidator",
@@ -28,12 +28,12 @@
       }
     },
     {
-      "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
+      "address": "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
-      "address": "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+      "address": "0x0D61C8b6CA9669A36F351De3AE335e9689dd9C5b",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -108,7 +108,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
+          "from": "eth:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982",
           "role": "admin"
         }
       ],
@@ -156,7 +156,7 @@
         "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
-        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
         "uln": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
         "zroEnabled": false,
         "zroFee": 0
@@ -164,6 +164,11 @@
       "implementationNames": {
         "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": "TreasuryV2"
       }
+    },
+    {
+      "address": "0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "0x3c1Cb7D4c0ce0dc72eDc7Ea06acC866e62a8f1d8",
@@ -1775,7 +1780,7 @@
         "layerZeroToken": "0x0000000000000000000000000000000000000000",
         "localChainId": 101,
         "nonceContract": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
         "supportedOutboundProof": {
           "2": [1],
           "12": [1],
@@ -1980,7 +1985,7 @@
       "sinceBlock": 15719673,
       "values": {
         "$immutable": true,
-        "circulatingSupply": "39983343718834830",
+        "circulatingSupply": "40826291560261683",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "NO_EXTRA_GAS": 0,
         "owner": "0x19565F4771843467aAD632d6B56c75396785b06C",
@@ -2080,6 +2085,11 @@
       }
     },
     {
+      "address": "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "GnosisSafe",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "type": "Contract",
@@ -2108,7 +2118,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 6 (50%)",
-        "nonce": 951,
+        "nonce": 974,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2147,7 +2157,7 @@
           "0xD231084BfB234C107D3eE2b22F97F3346fDAF705",
           "0x245B6e8FFE9ea5Fc301e32d16F66bD4C2123eEfC"
         ],
-        "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+        "owner": "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
       },
       "implementationNames": {
         "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675": "Endpoint"
@@ -2201,12 +2211,12 @@
       "values": {
         "$immutable": true,
         "cap": "100000000000000000000000",
-        "circulatingSupply": "61706202786491989268293",
+        "circulatingSupply": "27370026448024165110219",
         "DAY_INTERVAL": 86400,
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "enable": true,
-        "getQuota": "99999397513000000000000",
+        "getQuota": "100000000000000000000000",
         "lzEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "minter": "0xEc306E46549A7E8f4fCE823D3058f2D134133B17",
         "name": "StakeStone Ether",
@@ -2219,7 +2229,7 @@
         "PT_SET_ENABLE": 2,
         "symbol": "STONE",
         "token": "0x7122985656e38BDC0302Db86685bb972b145bD3C",
-        "totalSupply": "72124846268684645071533",
+        "totalSupply": "37141667243139164891002",
         "useCustomAdapterParams": false
       },
       "implementationNames": {
@@ -2340,7 +2350,7 @@
       "values": {
         "$immutable": true,
         "cap": "4761000000000000000000000000",
-        "circulatingSupply": "290032230950315332627653369",
+        "circulatingSupply": "285569700015767862019392337",
         "decimals": 18,
         "DEFAULT_PAYLOAD_SIZE_LIMIT": 10000,
         "GLOBAL_MAX_TOTAL_SUPPLY": "4761000000000000000000000000",
@@ -2370,12 +2380,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
+          "from": "eth:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5a54fe5234E811466D5366846283323c954310B2",
+          "from": "eth:0x5a54fe5234E811466D5366846283323c954310B2",
           "role": "admin"
         }
       ],
@@ -2388,11 +2398,6 @@
       "implementationNames": {
         "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": "ProxyAdmin"
       }
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "DVN",
@@ -2412,7 +2417,7 @@
         "paused": false,
         "priceFeed": "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113",
         "quorum": 1,
-        "signerSize": 3,
+        "signerSize": 4,
         "vid": 101,
         "workerFeeLib": "0xa7b5189bcA84Cd304D8553977c7C614329750d99"
       },
@@ -2431,12 +2436,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+          "from": "eth:0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x902F09715B6303d4173037652FA7377e5b98089E",
+          "from": "eth:0x902F09715B6303d4173037652FA7377e5b98089E",
           "role": "admin"
         }
       ],
@@ -2525,49 +2530,49 @@
       "proxyType": "EOA"
     },
     {
-      "address": "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "address": "0xB9d9BBB9087eE8996Ce24970a3a50924581291FF",
       "type": "EOA",
       "proxyType": "EOA"
     },
     {
       "name": "LayerZero Multisig",
-      "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
+      "address": "0xBe010A7e3686FdF65E93344ab664D065A0B02478",
       "type": "Contract",
-      "template": "GnosisSafe",
+      "template": "layerzero/OneSigMultisig",
       "sourceHashes": [
-        "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x6a2feeb0055614ee29c746b6052e64dc677ffa602b25dfeb74cbf948bc6d9b74"
       ],
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1648243585,
-      "sinceBlock": 14457816,
+      "proxyType": "immutable",
+      "description": "Custom multisignature contract allowing offchain signing and execution on multiple target chains.",
+      "sinceTimestamp": 1748566235,
+      "sinceBlock": 22592087,
       "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$immutable": true,
         "$members": [
-          "0xB981a2664f5f547291Df5F8dCD4505f7015912CF",
-          "0x112c737AeEbD2E52DEb9ff5c9c19497F1A1777b0",
+          "0x0cb72C1F6a36c225A7E2B21712E8853A4A1acc47",
+          "0x5bC6AA6ad117A8B50ABf9E1658971f5DA1968c5c",
+          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
           "0x771dcAcB96024d1e55Fd21Fe8a8187AA7EC9e77e",
-          "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-          "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+          "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7"
         ],
         "$threshold": 3,
-        "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
-        "getChainId": 1,
-        "GnosisSafe_modules": [],
-        "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 263,
-        "VERSION": "1.3.0"
+        "executorRequired": true,
+        "getExecutors": ["0x39f86ECef62c5bcE23428d6b7c7050D9Ecb0e346"],
+        "LEAF_ENCODING_VERSION": 1,
+        "nonce": 2,
+        "ONE_SIG_ID": 30101,
+        "seed": "0xa8c6099081c03ac4c11ed511690f296077e94d44cf99bebc8c349cf972f87340",
+        "totalExecutors": 1,
+        "totalSigners": 5,
+        "VERSION": "0.0.1"
+      },
+      "fieldMeta": {
+        "executorRequired": {
+          "description": "if true, only executor OR any signer can execute a correctly signed tx. else anyone can."
+        }
       },
       "implementationNames": {
-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "0xBe010A7e3686FdF65E93344ab664D065A0B02478": "OneSig"
       }
     },
     {
@@ -2625,7 +2630,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 161,
+        "nonce": 162,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2647,6 +2652,11 @@
       "implementationNames": {
         "0xdeA04ef31C4B4FDf31CB58923F37869739280d49": "VerifierFeeLib"
       }
+    },
+    {
+      "address": "0xe67DB04d7eFF4e9ec282eD929632D4FF058112d7",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "GnosisSafe",
@@ -3308,8 +3318,58 @@
       "function setTargetContract(address _proxyTarget)",
       "function transferProxyOwnership(address _newOwner)"
     ],
-    "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": [
-      "constructor(address _singleton)"
+    "0xBe010A7e3686FdF65E93344ab664D065A0B02478": [
+      "constructor(uint64 _oneSigId, address[] _signers, uint256 _threshold, address[] _executors, bool _executorRequired, bytes32 _seed)",
+      "error ECDSAInvalidSignature()",
+      "error ECDSAInvalidSignatureLength(uint256 length)",
+      "error ECDSAInvalidSignatureS(bytes32 s)",
+      "error ExecutionFailed(uint256 index)",
+      "error ExecutorAlreadyActive(address executor)",
+      "error ExecutorNotFound(address executor)",
+      "error InvalidExecutor()",
+      "error InvalidProofOrNonce()",
+      "error InvalidSigner()",
+      "error MerkleRootExpired()",
+      "error OnlyExecutorOrSigner()",
+      "error OnlySelfCall()",
+      "error ReentrancyGuardReentrantCall()",
+      "error SignatureError()",
+      "error SignerAlreadyAdded(address signer)",
+      "error SignerNotFound(address signer)",
+      "error TotalSignersLessThanThreshold(uint256 totalSigners, uint256 threshold)",
+      "error UnsortedSigners()",
+      "error ZeroThreshold()",
+      "event ExecutorRequiredSet(bool required)",
+      "event ExecutorSet(address indexed executor, bool active)",
+      "event SeedSet(bytes32 seed)",
+      "event SignerSet(address indexed signer, bool active)",
+      "event ThresholdSet(uint256 threshold)",
+      "event TransactionExecuted(bytes32 merkleRoot, uint256 nonce)",
+      "function LEAF_ENCODING_VERSION() view returns (uint8)",
+      "function ONE_SIG_ID() view returns (uint64)",
+      "function VERSION() view returns (string)",
+      "function canExecuteTransaction(address _sender) view returns (bool)",
+      "function encodeLeaf(uint64 _nonce, tuple(address to, uint256 value, bytes data)[] _calls) view returns (bytes32)",
+      "function executeTransaction(tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction, bytes32 _merkleRoot, uint256 _expiry, bytes _signatures) payable",
+      "function executorRequired() view returns (bool)",
+      "function getExecutors() view returns (address[])",
+      "function getSigners() view returns (address[])",
+      "function isExecutor(address _executor) view returns (bool)",
+      "function isSigner(address _signer) view returns (bool)",
+      "function nonce() view returns (uint64)",
+      "function seed() view returns (bytes32)",
+      "function setExecutor(address _executor, bool _active)",
+      "function setExecutorRequired(bool _executorRequired)",
+      "function setSeed(bytes32 _seed)",
+      "function setSigner(address _signer, bool _active)",
+      "function setThreshold(uint256 _threshold)",
+      "function threshold() view returns (uint256)",
+      "function totalExecutors() view returns (uint256)",
+      "function totalSigners() view returns (uint256)",
+      "function verifyMerkleRoot(bytes32 _merkleRoot, uint256 _expiry, bytes _signatures) view",
+      "function verifyNSignatures(bytes32 _digest, bytes _signatures, uint256 _threshold) view",
+      "function verifySignatures(bytes32 _digest, bytes _signatures) view",
+      "function verifyTransactionProof(bytes32 _merkleRoot, tuple(tuple(address to, uint256 value, bytes data)[] calls, bytes32[] proof) _transaction) view"
     ],
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": [
       "constructor(uint32 _vid, address[] _messageLibs, address _priceFeed, address[] _signers, uint64 _quorum, address[] _admins)",
@@ -3516,7 +3576,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
+    "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
+    "layerzero/OneSigMultisig": "0x5b6a1cdfdac9ee89ca501ba2b1e37107b88742d0892ae796ca27995c218ffcde"
   },
-  "permissionsConfigHash": "0xb51473f2f56293adb3b99b2d0d5f0d001b0e7fcc80e9a6ccd0243637f68fd07a"
+  "permissionsConfigHash": "0x173a0fdadda70ccaef0caf2169c457a55db6859a260420624b1afdf7f43b1e6c"
 }

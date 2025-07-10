@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, SOA } from '../../common'
 import { BADGES } from '../../common/badges'
 import { getStage } from '../../common/stages/getStage'
@@ -22,7 +22,7 @@ export const ink: ScalingProject = opStackL2({
     description:
       'Ink is an Optimistic Rollup built with the OP Stack by Kraken exchange.',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://inkonchain.com/en-US'],
       explorers: [
@@ -36,17 +36,6 @@ export const ink: ScalingProject = opStackL2({
         'https://t.me/inkonchain',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1733502012),
-    genesisTimestamp: UnixTime(1733498411),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('INK'),
@@ -69,11 +58,11 @@ export const ink: ScalingProject = opStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

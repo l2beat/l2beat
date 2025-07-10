@@ -1,25 +1,31 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
+import type { AppModule } from '../routing/utils'
 import { AddressSelectionPage } from './AddressSelectionPage'
 import { DiffPage } from './DiffPage'
 
-const router = createBrowserRouter([
-  {
-    path: '/diff',
-    element: <AddressSelectionPage />,
-  },
-  {
-    path: '/diff/:address1/:address2',
-    element: <DiffPage />,
-  },
-])
-
 const queryClient = new QueryClient()
 
-export function DiffoveryApp() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  )
+export const DiffoveryAppModule: AppModule = {
+  name: 'diff',
+  routes: [
+    {
+      path: '/diff',
+      element: (
+        <QueryClientProvider client={queryClient}>
+          <Outlet />
+        </QueryClientProvider>
+      ),
+      children: [
+        {
+          index: true,
+          element: <AddressSelectionPage />,
+        },
+        {
+          path: ':address1/:address2',
+          element: <DiffPage />,
+        },
+      ],
+    },
+  ],
 }

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const thanos: ScalingProject = upcomingL2({
       'Thanos is an upcoming Optimistic Rollup. By utilizing its native token within the L2 network, it aims to enable the creation of tailored Layer 2 environments where the token is used for transactions, offering a more efficient and cost-effective blockchain experience.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://tokamak.network/'],
       documentation: ['https://docs.tokamak.network/'],
@@ -26,5 +26,8 @@ export const thanos: ScalingProject = upcomingL2({
         'https://medium.com/tokamak-network',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

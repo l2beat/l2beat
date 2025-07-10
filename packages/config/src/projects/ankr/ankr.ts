@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 export const ankr: Bridge = {
   type: 'bridge',
@@ -54,4 +55,5 @@ export const ankr: Bridge = {
       'Mode',
     ],
   },
+  discoveryInfo: getDiscoveryInfo([]),
 }

@@ -1,5 +1,5 @@
+import { v } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import { env } from '~/env'
 import type { ICache } from '~/server/cache/ICache'
 import type { RenderFunction } from '~/ssr/types'
@@ -12,7 +12,7 @@ export function createEcosystemsRouter(
   render: RenderFunction,
   cache: ICache,
 ) {
-  if (!env.CLIENT_SIDE_ECOSYSTEMS) {
+  if (!env.CLIENT_SIDE_PARTNERS) {
     return undefined
   }
 
@@ -21,9 +21,7 @@ export function createEcosystemsRouter(
   router.get(
     '/ecosystems/:slug',
     validateRoute({
-      params: z.object({
-        slug: z.string(),
-      }),
+      params: v.object({ slug: v.string() }),
     }),
     async (req, res) => {
       const data = await cache.get(
@@ -35,7 +33,7 @@ export function createEcosystemsRouter(
         () =>
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
-      if (!data || !env.CLIENT_SIDE_ECOSYSTEMS) {
+      if (!data || !env.CLIENT_SIDE_PARTNERS) {
         res.status(404).send('Not found')
         return
       }

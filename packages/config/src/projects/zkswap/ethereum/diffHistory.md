@@ -1,4 +1,66 @@
-Generated with discovered.json: 0x08fe241a9ea4441593b56c962916e9899b23db33
+Generated with discovered.json: 0x657b878b2dbac6e33f1572c417925568efe723b0
+
+# Diff at Mon, 07 Jul 2025 07:27:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 20311131
+- current block number: 22865800
+
+## Description
+
+[This address](https://etherscan.io/address/0x728001a80a3657e886810daab9e796fefd66b6c7) is doing weird ['withdrawals'](https://app.blocksec.com/explorer/tx/eth/0x3755c1e01271133b4549d2c341a24acfd36baaabe0787fa02a5e9865d810abcb) (mints) of an iliquid token. zkswap diso now archived.
+
+## Watched changes
+
+```diff
+    contract ZkSync (0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad) {
+    +++ description: None
+      values.totalOpenPriorityRequests:
+-        0
++        2
+    }
+```
+
+Generated with discovered.json: 0xdb436c23ac272aa2c82e9087174835a9d8be64ea
+
+# Diff at Fri, 04 Jul 2025 12:19:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 20311131
+- current block number: 20311131
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311131 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x714B2D10210f2A3a7AA614F949259C87613689aB) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x02ecef526f806f06357659fFD14834fe82Ef4B04"
++        "eth:0x02ecef526f806f06357659fFD14834fe82Ef4B04"
+      receivedPermissions.1.from:
+-        "ethereum:0x27C229937745d697d28FC7853d1bFEA7331Edf56"
++        "eth:0x27C229937745d697d28FC7853d1bFEA7331Edf56"
+      receivedPermissions.2.from:
+-        "ethereum:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
++        "eth:0x661121AE41edE3f6FECDed922c59acC19A3ea9B3"
+      receivedPermissions.3.from:
+-        "ethereum:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
++        "eth:0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad"
+      receivedPermissions.4.from:
+-        "ethereum:0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
++        "eth:0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+    }
+```
+
+Generated with discovered.json: 0x73fade3481b9c74bc38ce3f48b2d8eb1aae18a75
 
 # Diff at Fri, 23 May 2025 09:41:09 GMT:
 

@@ -4,6 +4,7 @@
   "import": ["../globalConfig.jsonc"],
   "chains": {
     "arbitrum": {
+      "sharedModules": ["shared-sp1"],
       "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
       "names": {
         "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "Blobstream",
@@ -16,6 +17,7 @@
       "overrides": {}
     },
     "base": {
+      "sharedModules": ["shared-sp1"],
       "initialAddresses": ["0xa83ca7775bc2889825bcdedffa5b758cf69e8794"],
       "names": {
         "0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794": "Blobstream",
@@ -26,6 +28,7 @@
       "overrides": {}
     },
     "ethereum": {
+      "sharedModules": ["shared-sp1"],
       "initialAddresses": ["0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"],
       "names": {
         "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe": "Blobstream",

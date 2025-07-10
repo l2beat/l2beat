@@ -30,6 +30,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('starknet')
 
@@ -193,7 +194,7 @@ export const starknet: ScalingProject = {
   display: {
     name: 'Starknet',
     slug: 'starknet',
-    stack: 'SN Stack',
+    stacks: ['SN Stack'],
     description:
       'Starknet is a general purpose ZK Rollup based on STARKs and the Cairo VM.',
     purposes: ['Universal'],
@@ -221,9 +222,6 @@ export const starknet: ScalingProject = {
     liveness: {
       explanation:
         'Starknet is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
-    },
-    finality: {
-      finalizationPeriod,
     },
     costsWarning: {
       sentiment: 'warning',
@@ -268,11 +266,11 @@ export const starknet: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -562,12 +560,6 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
         ],
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1724856347),
-      stateUpdate: 'disabled',
-    },
     trackedTxs: [
       {
         uses: [
@@ -1064,4 +1056,5 @@ All bridge escrows allow enabling a withdrawal throttle of 5% of the locked fund
       },
     ],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

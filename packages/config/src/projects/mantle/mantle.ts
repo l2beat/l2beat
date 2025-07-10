@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -59,8 +59,8 @@ export const mantle: ScalingProject = opStackL2({
         callsPerMinute: 1500,
       },
       {
-        type: 'routescan',
-        url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
+        type: 'blockscout',
+        url: 'https://explorer.mantle.xyz/api',
       },
     ],
   },
@@ -96,4 +96,12 @@ export const mantle: ScalingProject = opStackL2({
     },
   ],
   nonTemplateOptimismPortalEscrowTokens: ['MNT'],
+  nonTemplateDaTracking: [
+    {
+      type: 'eigen-da',
+      customerId: '0x24f0a3716805e8973bf48eb908d6d4a2f34af785',
+      daLayer: ProjectId('eigenda'),
+      sinceTimestamp: UnixTime(1738821600),
+    },
+  ],
 })

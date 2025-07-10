@@ -1,5 +1,5 @@
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { getScalingProjectTvsBreakdownData as nextGetScalingProjectTvsBreakdownData } from '~/server/features/scaling/project/getScalingProjectTvsBreakdownData'
+import { getScalingProjectTvsBreakdown } from '~/server/features/scaling/project/getScalingProjectTvsBreakdown'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
 import { getSsrHelpers } from '~/trpc/server'
@@ -13,7 +13,7 @@ export async function getScalingProjectTvsBreakdownData(
   const helpers = getSsrHelpers()
   const [appLayoutProps, tvsBreakdownData] = await Promise.all([
     getAppLayoutProps(),
-    nextGetScalingProjectTvsBreakdownData(slug),
+    getScalingProjectTvsBreakdown(slug),
   ])
 
   if (!tvsBreakdownData) {
@@ -26,8 +26,7 @@ export async function getScalingProjectTvsBreakdownData(
       projectIds: [tvsBreakdownData.project.id.toString()],
     },
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
-    range: '1y',
+    range: { type: '1y' },
   })
 
   return {

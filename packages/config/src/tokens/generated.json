@@ -857,6 +857,20 @@
       "supply": "zero"
     },
     {
+      "name": "BTRST",
+      "coingeckoId": "braintrust",
+      "address": "0x799ebfABE77a6E34311eeEe9825190B9ECe32824",
+      "symbol": "BTRST",
+      "decimals": 18,
+      "deploymentTimestamp": 1628607475,
+      "coingeckoListingTimestamp": 1631664000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18100/large/braintrust.PNG?1696517605",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "BUSD",
       "coingeckoId": "binance-usd",
       "address": "0x4Fabb145d64652a948d72533023f6E7A623C7C53",
@@ -1934,6 +1948,20 @@
       "supply": "zero"
     },
     {
+      "name": "Euler",
+      "coingeckoId": "euler",
+      "address": "0xd9Fcd98c322942075A5C3860693e9f4f03AAE07b",
+      "symbol": "EUL",
+      "decimals": 18,
+      "deploymentTimestamp": 1640894681,
+      "coingeckoListingTimestamp": 1656028800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/26149/large/Coingecko_logo_%281%29.png?1706026067",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "EURA (previously agEUR)",
       "coingeckoId": "ageur",
       "address": "0x1a7e4e63778B4f12a199C062f3eFdD288afCBce8",
@@ -2882,62 +2910,6 @@
       "coingeckoListingTimestamp": 1709856000,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35824/large/k9_200_X_200.png?1709886958",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Katana Pre-Deposit USDC",
-      "coingeckoId": "usd-coin",
-      "address": "0x7B5A0182E400b241b317e781a4e9dEdFc1429822",
-      "symbol": "USDC.pdkatana",
-      "decimals": 6,
-      "deploymentTimestamp": 1747148987,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Katana Pre-Deposit USDT",
-      "coingeckoId": "tether",
-      "address": "0x48c03B6FfD0008460F8657Db1037C7e09dEedfcb",
-      "symbol": "USDT.pdkatana",
-      "decimals": 6,
-      "deploymentTimestamp": 1747148987,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Katana Pre-Deposit WBTC",
-      "coingeckoId": "wrapped-bitcoin",
-      "address": "0x92C82f5F771F6A44CfA09357DD0575B81BF5F728",
-      "symbol": "WBTC.pdkatana",
-      "decimals": 8,
-      "deploymentTimestamp": 1747148987,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "name": "Katana Pre-Deposit WETH",
-      "coingeckoId": "weth",
-      "address": "0xcc6a16Be713f6a714f68b0E1f4914fD3db15fBeF",
-      "symbol": "WETH.pdkatana",
-      "decimals": 18,
-      "deploymentTimestamp": 1747148987,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -5421,6 +5393,20 @@
       "supply": "zero"
     },
     {
+      "name": "Subsquid",
+      "coingeckoId": "subsquid",
+      "address": "0x1337420dED5ADb9980CFc35f8f2B054ea86f8aB1",
+      "symbol": "SQD",
+      "decimals": 18,
+      "deploymentTimestamp": 1711385735,
+      "coingeckoListingTimestamp": 1715904000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37869/large/New_Logo_SQD_Icon.png?1720048443",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "name": "Sui",
       "coingeckoId": "sui",
       "address": "0x84074EA631dEc7a4edcD5303d164D5dEa4c653D6",
@@ -6612,6 +6598,20 @@
       "supply": "zero"
     },
     {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xa1CDAb15bBA75a80dF4089CaFbA013e376957cF5",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729615,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 10,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "Cartesi Token",
       "coingeckoId": "cartesi",
       "address": "0xEc6adef5E1006bb305bB1975333e8fc4071295bf",
@@ -7309,6 +7309,28 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991708,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 130,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -7682,6 +7704,28 @@
       "chainId": 185,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739992037,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 252,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "name": "Renzo Restaked ETH",
@@ -8529,6 +8573,28 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739992219,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 1135,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Stargate USD₮0 (Bridged)",
       "coingeckoId": "usdt0",
       "address": "0x43F2376D5D03553aE72F4A8093bbe9de4336EB08",
@@ -8764,6 +8830,28 @@
       "chainId": 1868,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991845,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 1868,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
     },
     {
       "name": "Pipo",
@@ -9984,6 +10072,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "AWE Network",
+      "coingeckoId": "stp-network",
+      "address": "0x1B4617734C43F6159F3a70b7E06d883647512778",
+      "symbol": "AWE",
+      "decimals": 18,
+      "deploymentTimestamp": 1739509151,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/8713/large/awe-network.jpg?1747816016",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "B3",
       "coingeckoId": "b3",
       "address": "0xB3B32F9f8827D4634fE7d973Fa1034Ec9fdDB3B3",
@@ -10007,6 +10109,34 @@
       "coingeckoListingTimestamp": 1705363200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/34563/large/tybg.png?1705400778",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "Based Fartcoin",
+      "coingeckoId": "based-fartcoin",
+      "address": "0x2f6c17fa9f9bC3600346ab4e48C0701e1d5962AE",
+      "symbol": "Fartcoin",
+      "decimals": 18,
+      "deploymentTimestamp": 1734325313,
+      "coingeckoListingTimestamp": 1735171200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53113/large/farrtcoin_logo.png?1735241861",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "name": "BIM",
+      "coingeckoId": "bim-2",
+      "address": "0x555FFF48549C1A25a723Bd8e7eD10870D82E8379",
+      "symbol": "BIM",
+      "decimals": 18,
+      "deploymentTimestamp": 1741882223,
+      "coingeckoListingTimestamp": 1742169600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54860/large/bim-fi.jpg?1742179842",
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
@@ -10038,6 +10168,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Cookie",
+      "coingeckoId": "cookie",
+      "address": "0xC0041EF357B183448B235a8Ea73Ce4E4eC8c265F",
+      "symbol": "COOKIE",
+      "decimals": 18,
+      "deploymentTimestamp": 1717417289,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38450/large/cookie_token_logo_200x200.png?1733194528",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Dai Stablecoin",
@@ -10137,6 +10289,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Gains Network",
+      "coingeckoId": "gains-network",
+      "address": "0xFB1Aaba03c31EA98A3eEC7591808AcB1947ee7Ac",
+      "symbol": "GNS",
+      "decimals": 18,
+      "deploymentTimestamp": 1727111305,
+      "coingeckoListingTimestamp": 1635811200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/19737/large/logo.png?1696519161",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "name": "GAME by Virtuals",
       "coingeckoId": "game-by-virtuals",
       "address": "0x1C4CcA7C5DB003824208aDDA61Bd749e55F463a3",
@@ -10149,6 +10315,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "GoPlus Security",
+      "coingeckoId": "goplus-security",
+      "address": "0x0C1dC73159e30c4b06170F2593D3118968a0DCa5",
+      "symbol": "GPS",
+      "decimals": 18,
+      "deploymentTimestamp": 1736845641,
+      "coingeckoListingTimestamp": 1736985600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/53686/large/Separate_logo%EF%BC%88green%EF%BC%89.png?1737033911",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "KAITO",
@@ -10223,6 +10403,50 @@
       }
     },
     {
+      "name": "Liquid Staked ETH",
+      "coingeckoId": "liquid-staked-ethereum",
+      "address": "0xB29749498954A3A821ec37BdE86e386dF3cE30B6",
+      "symbol": "lsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1738837751,
+      "coingeckoListingTimestamp": 1678147200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28848/large/LsETH-receipt-token-circle.png?1696527824",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Lombard Staked Bitcoin",
+      "coingeckoId": "lombard-staked-btc",
+      "address": "0xecAc9C5F704e954931349Da37F60E39f515c11c1",
+      "symbol": "LBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1731342311,
+      "coingeckoListingTimestamp": 1724889600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39969/large/LBTC_Logo.png?1724959872",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
       "name": "Luna by Virtuals",
       "coingeckoId": "luna-by-virtuals",
       "address": "0x55cD6469F597452B5A7536e2CD98fDE4c1247ee4",
@@ -10235,6 +10459,20 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "MAG7.ssi",
+      "coingeckoId": "mag7-ssi",
+      "address": "0x9E6A46f294bB67c20F1D1E7AfB0bBEf614403B55",
+      "symbol": "MAG7.ssi",
+      "decimals": 8,
+      "deploymentTimestamp": 1734536499,
+      "coingeckoListingTimestamp": 1734825600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52962/large/mag7.png?1734863745",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Mister Miggles",
@@ -10265,6 +10503,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Non-Playable Coin",
+      "coingeckoId": "non-playable-coin",
+      "address": "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+      "symbol": "NPC",
+      "decimals": 18,
+      "deploymentTimestamp": 1703137809,
+      "coingeckoListingTimestamp": 1691107200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31193/large/NPC_200x200.png?1696530021",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Onyxcoin",
       "coingeckoId": "chain-2",
       "address": "0x9c632E6Aaa3eA73f91554f8A3cB2ED2F29605e0C",
@@ -10279,6 +10539,94 @@
       "supply": "zero"
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991629,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PancakeSwap Token",
+      "coingeckoId": "pancakeswap-token",
+      "address": "0x3055913c90Fcc1A6CE9a358911721eEb942013A1",
+      "symbol": "CAKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1692681477,
+      "coingeckoListingTimestamp": 1601337600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PARTI Token",
+      "coingeckoId": "particle-network",
+      "address": "0x59264f02D301281f3393e1385c0aEFd446Eb0F00",
+      "symbol": "PARTI",
+      "decimals": 18,
+      "deploymentTimestamp": 1742570595,
+      "coingeckoListingTimestamp": 1742860800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54955/large/parti-token-200.png?1742822558",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pocket Network",
+      "coingeckoId": "pocket-network",
+      "address": "0x764A726d9ceD0433A8D7643335919dEb03a9a935",
+      "symbol": "POKT",
+      "decimals": 6,
+      "deploymentTimestamp": 1721825189,
+      "coingeckoListingTimestamp": 1641945600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/22506/large/POKT.jpg?1703257310",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole (xERC-20)",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "Prefrontal Cortex Convo Agent by Virtuals",
       "coingeckoId": "prefrontal-cortex-convo-agent-by-virtuals",
       "address": "0xab964f7b7b6391bd6c4e8512eF00d01f255d9c0D",
@@ -10291,6 +10639,49 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Prime",
+      "coingeckoId": "echelon-prime",
+      "address": "0xfA980cEd6895AC314E7dE34Ef1bFAE90a5AdD21b",
+      "symbol": "PRIME",
+      "decimals": 18,
+      "deploymentTimestamp": 1692376907,
+      "coingeckoListingTimestamp": 1677715200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29053/large/prime-logo-small-border_%282%29.png?1696528020",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v1 OFT",
+            "slug": "omnichain"
+          }
+        ]
+      }
+    },
+    {
+      "name": "pumpBTC",
+      "coingeckoId": "pumpbtc",
+      "address": "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e",
+      "symbol": "pumpBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1726196405,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39232/large/200pxPumpBTCLogo.png?1721227861",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Free.tech (Express/Tunnel)"
+          }
+        ]
+      }
     },
     {
       "name": "Renzo Restaked ETH",
@@ -10377,6 +10768,28 @@
       "chainId": 8453,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "name": "Sign",
+      "coingeckoId": "sign-global",
+      "address": "0x868FCEd65edBF0056c4163515dD840e9f287A4c3",
+      "symbol": "SIGN",
+      "decimals": 18,
+      "deploymentTimestamp": 1744961803,
+      "coingeckoListingTimestamp": 1745798400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/55303/large/sign.jpg?1745303393",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "SmarDex",
@@ -10509,6 +10922,20 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Unit 00 - Rei",
+      "coingeckoId": "unit-00-rei",
+      "address": "0x6B2504A03ca4D43d0D73776F6aD46dAb2F2a4cFD",
+      "symbol": "REI",
+      "decimals": 18,
+      "deploymentTimestamp": 1732224451,
+      "coingeckoListingTimestamp": 1732233600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/52005/large/TIAutjcd_400x400.jpg?1741519600",
+      "chainId": 8453,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "UnlockProtocolToken",
       "coingeckoId": "unlockprotocoltoken",
       "address": "0xaC27fa800955849d6D17cC8952Ba9dD6EAA66187",
@@ -10585,6 +11012,50 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "WorldMobileToken",
+      "coingeckoId": "world-mobile-token",
+      "address": "0x3e31966d4f81C72D2a55310A6365A56A4393E98D",
+      "symbol": "WMTX",
+      "decimals": 6,
+      "deploymentTimestamp": 1713552365,
+      "coingeckoListingTimestamp": 1640217600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/17333/large/Token_icon_round_1024.png?1741247846",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Chainlink CCIP",
+            "slug": "transporter"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221517,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped eETH",
@@ -10832,6 +11303,28 @@
       }
     },
     {
+      "name": "OpenUSDT",
+      "coingeckoId": "openusdt",
+      "address": "0x1217BfE6c773EEC6cc4A38b5Dc45B92292B6E189",
+      "symbol": "oUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1739991941,
+      "coingeckoListingTimestamp": 1741824000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/54815/large/ousdt.jpg?1741848258",
+      "chainId": 34443,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Hyperlane (xERC-20)",
+            "slug": "hyperlane"
+          }
+        ]
+      }
+    },
+    {
       "name": "Renzo Restaked ETH",
       "coingeckoId": "renzo-restaked-eth",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
@@ -11034,6 +11527,28 @@
       "supply": "circulatingSupply"
     },
     {
+      "name": "Arbitrum tBTC v2",
+      "coingeckoId": "tbtc",
+      "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
+      "symbol": "tBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1680261615,
+      "coingeckoListingTimestamp": 1600819200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11224/large/0x18084fba666a33d37592fa2633fd49a74dd93a88.png?1696511155",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
       "name": "beefy.finance",
       "coingeckoId": "beefy-finance",
       "address": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
@@ -11076,6 +11591,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "BlackRock USD Institutional Digital Liquidity Fund",
+      "coingeckoId": "blackrock-usd-institutional-digital-liquidity-fund",
+      "address": "0xA6525Ae43eDCd03dC08E775774dCAbd3bb925872",
+      "symbol": "BUIDL",
+      "decimals": 6,
+      "deploymentTimestamp": 1730729689,
+      "coingeckoListingTimestamp": 1739318400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36291/large/blackrock.png?1711013223",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Boop",
@@ -11592,6 +12121,20 @@
       }
     },
     {
+      "name": "KIMA",
+      "coingeckoId": "kima",
+      "address": "0x94fCD9c18f99538C0f7C61c5500cA79F0D5C4dab",
+      "symbol": "KIMA",
+      "decimals": 18,
+      "deploymentTimestamp": 1727889773,
+      "coingeckoListingTimestamp": 1732579200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/50764/large/K-logo-01.png?1729053099",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "LayerZero",
       "coingeckoId": "layerzero",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
@@ -11648,6 +12191,20 @@
           }
         ]
       }
+    },
+    {
+      "name": "MiL.k",
+      "coingeckoId": "milk-alliance",
+      "address": "0x374c5FB7979d5fDBAAd2d95409e235e5CBdfD43C",
+      "symbol": "MLK",
+      "decimals": 8,
+      "deploymentTimestamp": 1740829785,
+      "coingeckoListingTimestamp": 1617580800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/11978/large/2.png?1696511836",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "name": "Molten",
@@ -11748,6 +12305,50 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Ondo U.S. Dollar Yield",
+      "coingeckoId": "ondo-us-dollar-yield",
+      "address": "0x35e050d3C0eC2d29D269a8EcEa763a183bDF9A9D",
+      "symbol": "USDY",
+      "decimals": 18,
+      "deploymentTimestamp": 1723057357,
+      "coingeckoListingTimestamp": 1699401600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31700/large/usdy_%281%29.png?1696530524",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PancakeSwap Token",
+      "coingeckoId": "pancakeswap-token",
+      "address": "0x1b896893dfc86bb67Cf57767298b9073D2c1bA2c",
+      "symbol": "CAKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1686816267,
+      "coingeckoListingTimestamp": 1601337600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/12632/large/pancakeswap-cake-logo_%281%29.png?1696512440",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Layer Zero v2 OFT",
+            "slug": "layerzerov2oft"
+          }
+        ]
+      }
     },
     {
       "name": "Pepe",
@@ -11884,8 +12485,16 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 42161,
-      "source": "native",
-      "supply": "zero"
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
+          }
+        ]
+      }
     },
     {
       "name": "SPARTA",
@@ -11900,6 +12509,34 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Spiko EU T-Bills Money Market Fund",
+      "coingeckoId": "eutbl",
+      "address": "0xCBeb19549054CC0a6257A77736FC78C367216cE7",
+      "symbol": "EUTBL",
+      "decimals": 5,
+      "deploymentTimestamp": 1729851160,
+      "coingeckoListingTimestamp": 1723680000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39657/large/EUTBL.png?1723517425",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Spiko US T-Bills Money Market Fund",
+      "coingeckoId": "spiko-us-t-bills-money-market-fund",
+      "address": "0x021289588cd81dC1AC87ea91e91607eEF68303F5",
+      "symbol": "USTBL",
+      "decimals": 5,
+      "deploymentTimestamp": 1729851183,
+      "coingeckoListingTimestamp": 1724112000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39666/large/USTB.png?1723541269",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "name": "Staked FRAX",
@@ -12148,6 +12785,20 @@
       "supply": "totalSupply"
     },
     {
+      "name": "UXLINK Token",
+      "coingeckoId": "uxlink",
+      "address": "0x1A6B3A62391ECcaaa992ade44cd4AFe6bEC8CfF1",
+      "symbol": "UXLINK",
+      "decimals": 18,
+      "deploymentTimestamp": 1717814584,
+      "coingeckoListingTimestamp": 1721174400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39229/large/uxlink.jpg?1721201390",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "name": "VelaToken",
       "coingeckoId": "vela-token",
       "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
@@ -12174,6 +12825,28 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "name": "Wormhole Token",
+      "coingeckoId": "wormhole",
+      "address": "0xB0fFa8000886e57F86dd5264b9582b2Ad87b2b91",
+      "symbol": "W",
+      "decimals": 18,
+      "deploymentTimestamp": 1713221460,
+      "coingeckoListingTimestamp": 1712102400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35087/large/womrhole_logo_full_color_rgb_2000px_72ppi_fb766ac85a.png?1708688954",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Wormhole",
+            "slug": "portal"
+          }
+        ]
+      }
     },
     {
       "name": "Wrapped BTC",
@@ -12321,6 +12994,28 @@
           {
             "name": "Wormhole NTT",
             "slug": "portal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "xSolvBTC",
+      "coingeckoId": "solv-protocol-solvbtc-bbn",
+      "address": "0x346c574C56e1A4aAa8dc88Cda8F7EB12b39947aB",
+      "symbol": "xSolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719476222,
+      "coingeckoListingTimestamp": 1722556800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39384/large/xSolvBTC.png?1744170824",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "CCIP (via free.tech and solv.finance)",
+            "slug": "transporter"
           }
         ]
       }
@@ -13989,6 +14684,125 @@
           {
             "name": "Layer Zero",
             "slug": "stargate"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AUSD",
+      "coingeckoId": "agora-ausd-katana",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "symbol": "AUSD",
+      "decimals": 6,
+      "deploymentTimestamp": 1748541168,
+      "coingeckoListingTimestamp": 1751587200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/67047/large/ausd.png?1751587801",
+      "chainId": 747474,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
+      "name": "Vault Bridge ETH",
+      "coingeckoId": "ethereum",
+      "address": "0xEE7D8BCFb72bC1880D0Cf19822eB0A2e6577aB62",
+      "symbol": "vbETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1748344157,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDC",
+      "coingeckoId": "usd-coin",
+      "address": "0x203A662b0BD271A6ed5a60EdFbd04bFce608FD36",
+      "symbol": "vbUSDC",
+      "decimals": 6,
+      "deploymentTimestamp": 1748343387,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDS",
+      "coingeckoId": "usds",
+      "address": "0x62D6A123E8D19d06d68cf0d2294F9A3A0362c6b3",
+      "symbol": "vbUSDS",
+      "decimals": 18,
+      "deploymentTimestamp": 1748347232,
+      "coingeckoListingTimestamp": 1727136000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39926/large/usds.webp?1726666683",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge USDT",
+      "coingeckoId": "tether",
+      "address": "0x2DCa96907fde857dd3D816880A0df407eeB2D2F2",
+      "symbol": "vbUSDT",
+      "decimals": 6,
+      "deploymentTimestamp": 1748354917,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vault Bridge WBTC",
+      "coingeckoId": "wrapped-bitcoin",
+      "address": "0x0913DA6Da4b42f538B445599b46Bb4622342Cf52",
+      "symbol": "vbWBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1748346847,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 747474,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Agglayer shared bridge (custom L2 contract)"
           }
         ]
       }

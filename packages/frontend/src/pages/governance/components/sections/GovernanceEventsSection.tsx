@@ -12,7 +12,9 @@ interface Props {
 export function GovernanceEventsSection({ events, className }: Props) {
   return (
     <GovernanceCard mobileFull className={className}>
-      <div className="heading-24 md:heading-32">Governance events</div>
+      <div className="text-heading-24 md:text-heading-32">
+        Governance events
+      </div>
       <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {events.map((event, i) => (
           <Event event={event} key={i} />
@@ -35,7 +37,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         {event.title && (
           <p
             className={cn(
-              'subtitle-12 text-brand uppercase',
+              'text-brand text-subtitle-12 uppercase',
               event.highlighted && 'text-white',
             )}
           >
@@ -44,7 +46,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         )}
         <p
           className={cn(
-            'heading-18 line-clamp-3 text-primary',
+            'line-clamp-3 text-heading-18 text-primary',
             event.highlighted && 'text-white',
           )}
         >
@@ -57,7 +59,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
         <div>
           <p
             className={cn(
-              'subtitle-12 text-secondary',
+              'text-secondary text-subtitle-12',
               event.highlighted && 'text-white',
             )}
           >
@@ -69,7 +71,7 @@ function Event({ event }: { event: GovernanceEventEntry }) {
           <div>
             <p
               className={cn(
-                'subtitle-12 text-secondary',
+                'text-secondary text-subtitle-12',
                 event.highlighted && 'text-white',
               )}
             >

@@ -25,7 +25,10 @@ import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
 import { EthereumLineIcon } from '~/icons/EthereumLineIcon'
 import { ActivityTimeRangeControls } from '~/pages/scaling/activity/components/ActivityTimeRangeControls'
-import type { EcosystemEntry } from '~/server/features/ecosystems/getEcosystemEntry'
+import type {
+  EcosystemEntry,
+  EcosystemMilestone,
+} from '~/server/features/ecosystems/getEcosystemEntry'
 import type { ActivityTimeRange } from '~/server/features/scaling/activity/utils/range'
 import { api } from '~/trpc/React'
 import { formatActivityCount } from '~/utils/number-format/formatActivityCount'
@@ -38,11 +41,13 @@ export function EcosystemsActivityChart({
   entries,
   allScalingProjectsUops,
   className,
+  ecosystemMilestones,
 }: {
   name: string
-  entries: EcosystemEntry['projects']
+  entries: EcosystemEntry['liveProjects']
   allScalingProjectsUops: number
   className?: string
+  ecosystemMilestones: EcosystemMilestone[]
 }) {
   const isClient = useIsClient()
   const [timeRange, setTimeRange] = useState<ActivityTimeRange>('1y')
@@ -52,12 +57,11 @@ export function EcosystemsActivityChart({
   )
 
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: {
       type: 'projects',
       projectIds: entries.map((project) => project.id),
     },
-    previewRecategorisation: false,
   })
 
   const chartMeta = useMemo(() => {
@@ -102,6 +106,7 @@ export function EcosystemsActivityChart({
         meta={chartMeta}
         isLoading={isLoading}
         className="!h-44 !min-h-44"
+        milestones={ecosystemMilestones}
       >
         <AreaChart accessibilityLayer data={chartData} margin={{ top: 20 }}>
           <ChartLegend content={<ChartLegendContent />} />
@@ -123,9 +128,6 @@ export function EcosystemsActivityChart({
             data: chartData,
             isLoading,
             yAxis: {
-              tick: {
-                width: 100,
-              },
               scale: 'lin',
               unit: ' UOPS',
             },
@@ -180,7 +182,7 @@ function Header({
   stats: { latestUops: number; marketShare: number } | undefined
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">Activity</div>
         <div className="font-medium text-secondary text-xs">

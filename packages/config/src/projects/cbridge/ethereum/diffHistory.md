@@ -1,4 +1,55 @@
-Generated with discovered.json: 0xf0048e6a1b7d256ce30aff3e03ee84981094162e
+Generated with discovered.json: 0xd4b45f8c094600657730f5662dde9b615a9ec81f
+
+# Diff at Fri, 04 Jul 2025 12:18:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21628437
+- current block number: 21628437
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21628437 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
++        "eth:0x4066D196A423b2b3B8B054f4F40efB47a74E200C"
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+    }
+```
+
+```diff
+    contract SimpleGovernance (0xF380166F8490F24AF32Bf47D1aA217FBA62B6575) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
++        "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+      receivedPermissions.0.from:
+-        "ethereum:0xF140024969F6c76494a78518D9a99c8776B55f70"
++        "eth:0xF140024969F6c76494a78518D9a99c8776B55f70"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
++        "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
+    }
+```
+
+Generated with discovered.json: 0x3ea31486c0f0a7c3f44b4f925f5cbf059721c51a
 
 # Diff at Fri, 23 May 2025 09:40:54 GMT:
 

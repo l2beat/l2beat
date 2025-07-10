@@ -13,6 +13,7 @@ export const BACKSPACE_KEY = 'Backspace'
 export const HEADER_HEIGHT = 32
 export const FIELD_HEIGHT = 18
 export const BOTTOM_PADDING = 8
+export const HIDDEN_FIELDS_FOOTER_HEIGHT = 20
 
 export const NODE_WIDTH = 200
 

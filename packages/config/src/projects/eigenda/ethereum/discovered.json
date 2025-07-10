@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 22625202,
-  "configHash": "0xa5506cb2528e467c43b3f4090275fa86f6afe8354ab201f88960fba15179bb2a",
+  "blockNumber": 22823842,
+  "configHash": "0xf9be199e2be071c3bf7513d5c97bd6d628e2cf22fcb8dc7d7fb3e678676ee767",
   "sharedModules": ["shared-eigenlayer"],
   "entries": [
     {
@@ -18,109 +18,109 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can add and remove strategies",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can transfer ownership of the contract, update the metadata URI, set reward initiator and set batch confirmer",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
+            { "address": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x8247EF5705d3345516286B72bFE6D690197C2E99",
+          "from": "eth:0x8247EF5705d3345516286B72bFE6D690197C2E99",
           "role": ".owner"
         }
       ],
@@ -144,7 +144,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 8,
+        "nonce": 15,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -330,22 +330,16 @@
           "0x4af3dac73046df0094622345c6546dafd0125ac82675783c76939c70c90c3583",
           "0xa4a276a179a448bb62e32a82dafe3993b3766e4356d14d48ff4b71ac43eb510c",
           "0x571acc1fd08b9f09262d7c3bcd1f92045e6632f62c1010776baec5e71f8f0714",
-          "0x2a5ccd8075a6e252f1448cd3fdbcde296d2f56aaf2d757c5863db608ae41b02e",
           "0xdae28f1990cf3b9624990b150b9fdc900263c94398b54139807ece31cedcf02a",
-          "0x0824ab32bfcda7b4e253823f2421891fe791cc95e3de2e55a310de6f4b2b1269",
-          "0xcf4cc1f05f4170ef53fde71a959613b16e62c0c342f277631867a342a4ed7e00",
           "0xf4d2e74aefcf9a4201e7fcd300f93faf1628fdf83397a950dd49c48cc5113aaf",
           "0x2b8ecfbc8ddc1cf0fd356e16eb1e4c4b36df5e35fd6fa1f5b1c36ee5b3c23cb5",
           "0x74e99d8b01a4e92c6c37961c04d1956cab258a9dd036696515961e751101b7db",
-          "0x2aa77dfcccd51126c0affefa1235a2c53905fe864fccfd93ffe4d8d4f8912a8a",
-          "0xa690a40ebd66ce38902c677e02aae0ead0211e7c3fa39ea7b3f2abd1e97cef53",
           "0x57279ee111eae047c50148a1828b367aab0de682a8b2f871773b7ceedfec0ccf",
           "0x2770a27e7c93d6eb0ae83ec2cae237cd4252ed2a3ad766be30783570d3195240",
           "0xb8da985da602277762b88bf534754cde59fc01f1dbbb780c76a2725d4e63e83d",
           "0x155ffb09581c003557d6614d7764b3a594a9a689ca705ec6ea5e9dcf29ea9e56",
           "0x512ddcdcd4e5969911b89a5b7673fa11c18669f13f5d227fbfa4fe74452809b5",
           "0x6f6bb4800c7f533bbbfd0887c4e0c6b5dc30c3161a07b9d93f79e7351cc76d99",
-          "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
           "0x45511e592e63f31ee9d590d400a88fea67d774959e8311c60e80c5dd8007821b",
           "0xcd20267af3ab10d4f8ba356d3b2ee2479d47214c981074ba8dd5852d10f67e37",
           "0x8feaa592bbd5699a73eddcfcafc7fc264f210145a0a24d63979d6be2e6a5c0c3",
@@ -359,15 +353,9 @@
           "0xd5606d3d6ab8f66f5e03ce91f661497136715da9de0592c73101542b761c9f05",
           "0x77d378ff087228faca307142fb29c9c6b488e21749e3439e7fb2b8d7b712df7f",
           "0xb0c2ad4df99ac14cc0859092c6391b88036a8d9940adfa1e091367999c50543b",
-          "0x68e3e78729b3a2687532f41a7ddd80a5f384d2e1342b7e34e5920cc388e69154",
-          "0x0a65b09f4cc1527b6dcf4dbf071cd42b941a1aa634d1a02c6a47c5324b345654",
           "0x55f105d6dfe2844e16072e5e2b41e98c58629d170019dfab872b9f4edd31c8e1",
-          "0xe8f5cbf6ef8179b14b6378206d1006a38d9f749351955d4738cd515aa8559e5e",
           "0x8c116c11dd8d60869c764125e296cb1d748dc0faf65010403e2df0b051de267f",
           "0xfdaa0fe4307b2e9f18c1211f08ba2613a2ec3002eaad3e2d61f87b9cb25e305d",
-          "0xb523e0b4efdc2c267da48e837e419fda92085151dea3d59834da2dc153dc157c",
-          "0x4b4c68dd8324d92c733fd9e8571b59a88e28f417b8e8d90a580c8d70eac650d0",
-          "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759",
           "0x495069623e95f02bcc9e1d2b3648723d7f41ea7d675d7627e1bf5a61016f4836",
           "0xf5cb5ed8b9977a41406e89704eb1e0d06cad740a6cde74857036f17e0a01b4a9",
           "0x4e69818bbb7112a75a417a8da67ba346b541bc18a4fcd78897cf0d20d5573f14",
@@ -375,23 +363,18 @@
           "0x0496a1c5a3f9d2350177e1d3fc810b61acfcfd24e1d40e1d716524fd379e858a",
           "0x298a5d7f39ddadc4ea6ec53dfe8f53da3bcb79f78959d6f0b052db493af7a750",
           "0x3de65d5688bab111480ec6fbc980b0de1bdda1c812df51db1e3c677f085553a7",
-          "0xeb1e8a9a0cc314d9ebb782fd565febeff180eae541796ce5222209ed97b3c9b2",
           "0x3a552b77ef1900fb007ad48c8d3c350381872ed1364a590b34ac3ce717c1fe8d",
           "0xc9b5d442ddc595b864aa084df07b9916eb8f0cdd5db35b3bb31ee0d92f3f87a7",
-          "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0x5daadb1375f140b8fc46467900d9fdf9bc1102865f14cd03b97828dca7370f5d",
           "0xc821b71eedeb24dc5b0da3644bfecea1aadfb73ec66ee09f7ecb76165232cd77",
           "0xe2a7aca3a4a60407b3faf5aeb525404c583d39336e7fcb00328fa9d5ae8ab2ce",
-          "0x5a3cb349f8416f06020994e9d0288283b70b432b049ddc0d6cd88823a1238f54",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
           "0x475ca3b08b5861bb0f8e49ebc14775847cf531c6c16a1473d4610d6f609f179c",
           "0xb5dd0e179a31ff0dcd1db1362118aab11586e8e42c713e154295a9effa4ab738",
-          "0x5d74f63c8e2caeabd1a496ca30d3b767e0c061411010c631392e363d8db39ae3",
           "0x1d4a7b4c590e8caae1f8e026fffe978b77e1dd3c4cd238951b0753fc724fb6d0",
           "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
-          "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
           "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
           "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
           "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
@@ -404,7 +387,6 @@
           "0x3ceb264831fd0409c2be704857d44726a904ffb020c199cc0e965c076104d170",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x8d4e5576c75115b4f0206d4af8bcbf5fb807607b9ad204a0884ad269981132f3",
-          "0x3bada6b94153d886dd48ea93946e83779a9e338cdd138b81106584a94ef6b247",
           "0x3278d7a1fc5f9f6a342007f6efd5fba9f8713169ed4c448f39884925422552f7",
           "0x7020be1384be2be43386e97a3b5b332027a86df13dd684a5b2c6f109b560e0af",
           "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
@@ -421,7 +403,6 @@
           "0x3e004bd28aa1b94a6f7a19d48007bb8211d9f7edb4a655653d8db5e1784fd76d",
           "0x3f6034d69a0aca29b330208a3946345f238844578025d459262ce882bec85ed9",
           "0xab8f5fb53d5b1a01f560a22700bc55f71807b21523a25ff674837245dab433a8",
-          "0x37826de7eefbbb8ede0f1b634eb5029b2fa1788c1fe47d7b6182c3533f0d07d1",
           "0x6bcf80c24889dce79c2b7c281d9e9a116df2e31b38066875709f44261919b086",
           "0xcffa72ad95f4b22f0b12c07e366fc907973a362e59408f2cf4c9cf64afcf4b59",
           "0x9ed4b5f7ad2113b70a23a5ec75b886e57615567c75892ddca019ff995941681c",
@@ -440,7 +421,6 @@
           "0x6b9d91f76e2c7d4fa17b0c498144cc857b43c1488f6f7a0cc7ed4a5f4c1fed5a",
           "0xea61fbbb7f1348ee997d00f89fa83c92ede1d2f2b4962b30e29e46ca39b40e35",
           "0x832c0fae231eb044c5f7ceb2f72a77caef174f46e60c8c257aab5160603b05b3",
-          "0x958ebc7061e9c6b6f55330547d053587e465f1b17d3d29c9e0ff7fced335b1fc",
           "0x13cb0150a640902f3d32e152e340384441e1c0bcfd3b34cf17b3f76c6030ab82",
           "0xfcc1afb1aadb7986d6482feb6cf5542fcca50d8bc92bf5e481a94d27374d24e2",
           "0x903031a70695f8c94aed1a36044804a65be3da21523663c5e44d95bce12bb261",
@@ -456,30 +436,29 @@
           "0x43dda608c71270a62bb2ef064f4866902da95538e2d98d20be1a9b2a8142f2dd",
           "0xfcaffb0c80a3202d233f2b2b037a17528706afb73b1ac21194b3708177c8f301",
           "0x52cdf25657d146c979e43ac697ed359fc5efb203895b5ed797b3c534e6354eb0",
-          "0xa5ed4323be04f277e312a5924bd6028e843d2948f646eb540b73ed8ee23379b8",
           "0xc0cfa2a72cc4eb8e33a6a76fb2a5e4c89b5dc28151a0e072cdbb509abdfb7d82",
-          "0x1c110f1cd7a151472377c5576c61825dec9d057ab1d188fe02b77900ab890424",
           "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
-          "0x8482ab441df56bd6332c29b019b37eb8810cda09a7011316f9d8f1448a77b52b",
           "0x442a057849f7fa68f8c34dc8b9475c6f8e50ee48b1f7e83e0229833761a7d6e3",
           "0x0829918a46aff7252363b23e89864ad2c81effad8c6f877e53ecd30b5192e2dc",
-          "0x9289a68c8990de394bdd809795157db1fd533359ecca479dfe650079cfad7c80",
           "0xa7c993401ecdaacd73e1db1bc2072602f12a88c59f3ea03b138d9589bc5cd900",
-          "0xafa52dc954a63d64a5f5226cc23a879200a4eb72dcddc260dc6c5a8856f542b6",
           "0x57309111be2293fbcfd77e8479a4f2570f8956aae8cd2ba3bcc0c58d65823fcb",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x4825931d12cb01526583db450d5d10fa99f02b12ceec5eedef81de95d0f4abd4",
           "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
-          "0x1147eac85c25bdcb35a3818f2fa98f753458208db9d7ec0753af3f0feaba49a3",
           "0x0bab77e7b94af273411482782c1999adfc91b7d76af43eb60b4802278b8204d0",
           "0x12bbc1398d50485699592d0d1c05bc358714095a1d4d9971becfa9f1b48806b2",
-          "0xd22fce558d2330f8020d4e9e79e044af282d72062247d7e7a8461a9ca942ded1",
           "0x0caff7e91769a74c203b21a099a9095df26726a888c8ae50ec29c661a698d5d5",
           "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
           "0x567f5cd99014498aee2e719ee1a87c7120a16205b724e4ac1b20e90864474174",
-          "0xe53ff57b72c0ea3dc215523a33d43340a5d1aadb25f8395de0bce768f17a84c5",
           "0x1d32e0504112b36c7a6a366f240377b60afea521d5395183530ae19c200e3d65",
-          "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245"
+          "0x7006189839df958671661d84cedb0e276a8789df594cff325d6ace5bb2ae3245",
+          "0x1c110f1cd7a151472377c5576c61825dec9d057ab1d188fe02b77900ab890424",
+          "0xafa52dc954a63d64a5f5226cc23a879200a4eb72dcddc260dc6c5a8856f542b6",
+          "0x464b61c015e525b442183ad5937f63d3757ec4503323f50f4df568dcb30abbb7",
+          "0x8482ab441df56bd6332c29b019b37eb8810cda09a7011316f9d8f1448a77b52b",
+          "0x68e3e78729b3a2687532f41a7ddd80a5f384d2e1342b7e34e5920cc388e69154",
+          "0xab5716b1b46c8c1d6eef9e2ba828f33fbbee735966f0d0e449c77727808154ba",
+          "0xe5f9b527a2b5ace562d7ad9e3e8ed8baa162ae5bd92ea66cdf7215c6b1b19759"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -532,7 +511,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can pause the DA bridge",
           "role": ".pauserRegistry"
         }
@@ -595,7 +574,8 @@
         "ejectionRateLimitWindow": [604800, 259200],
         "ejectors": [
           "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8",
-          "0x8642473a123FE33b0aaE90bD8604eA1029417236"
+          "0x8642473a123FE33b0aaE90bD8604eA1029417236",
+          "0x338477FfaF63c04AC06048787f910671eC914B34"
         ],
         "owner": "0x002721B4790d97dC140a049936aA710152Ba92D5",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
@@ -627,7 +607,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can create rewards submissions.",
           "role": ".rewardsInitiator"
         }
@@ -650,7 +630,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 16,
+        "nonce": 17,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -669,6 +649,58 @@
       "proxyType": "EOA"
     },
     {
+      "name": "EigenDA Multisig",
+      "address": "0x338477FfaF63c04AC06048787f910671eC914B34",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      ],
+      "proxyType": "gnosis safe",
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "description": "can eject DA operators from a quorum.",
+          "role": ".ejectors"
+        }
+      ],
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1732035611,
+      "sinceBlock": 21223132,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
+        "$members": [
+          "0x9308319e3988843f36BC6682Ffa571525E56a125",
+          "0x5262498E7D4fbbb08425b2a06D91157acDC50aDA",
+          "0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F",
+          "0xA38372470ed4c3C4bb5123CC7f335212950e350A",
+          "0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904",
+          "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
+          "0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31",
+          "0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E"
+        ],
+        "$threshold": 3,
+        "domainSeparator": "0xb275f718748b2886efc03d27cd8cea3aea053abbff55bedb1c9cadbd3e792da7",
+        "getChainId": 1,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 8 (38%)",
+        "nonce": 3,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "0x338477FfaF63c04AC06048787f910671eC914B34": "SafeProxy",
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
+      }
+    },
+    {
+      "address": "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x3f64654ec71d806F8d91AF285A6c34Df818E3aC3",
       "type": "EOA",
       "proxyType": "EOA"
@@ -679,13 +711,18 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x44aC63d4e18c0d24d0EDe1C058D5A93Fc2fbB904",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x454Ef2f69f91527856E06659f92a66f464C1ca4e",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
@@ -693,6 +730,16 @@
     },
     {
       "address": "0x4985238672d91Baed43dF1B2431F67bc332A1753",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x5262498E7D4fbbb08425b2a06D91157acDC50aDA",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x542aC639c0DeF0a468aed462B474FF9B7858Bd7E",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -738,7 +785,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
@@ -801,57 +848,57 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
+          "from": "eth:0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
+          "from": "eth:0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
+          "from": "eth:0x5a3eD432f2De9645940333e4474bBAAB8cf64cf2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
+          "from": "eth:0xb2e7ef419a2A399472ae22ef5cFcCb8bE97A4B05",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
+          "from": "eth:0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
+          "from": "eth:0xdb4c89956eEa6F606135E7d366322F2bDE609F15",
           "role": "admin"
         }
       ],
@@ -872,7 +919,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "description": "can eject DA operators from a quorum.",
           "role": ".ejectors"
         }
@@ -939,7 +986,7 @@
           "0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED",
           "0x454Ef2f69f91527856E06659f92a66f464C1ca4e"
         ],
-        "batchId": 102526,
+        "batchId": 108239,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -975,7 +1022,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 102526,
+        "taskNumber": 108239,
         "THRESHOLD_DENOMINATOR": 100
       },
       "fieldMeta": {
@@ -1017,14 +1064,34 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
+          "from": "eth:0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
           "description": "can confirm batches to the DA bridge.",
           "role": ".batchConfirmers"
         }
       ]
     },
     {
+      "address": "0x9308319e3988843f36BC6682Ffa571525E56a125",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x995152ee7BB6304565Fbe04465d2c4D1BdD5683F",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA38372470ed4c3C4bb5123CC7f335212950e350A",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xA3e302a6Ea0cf79B8580d94e92Eb5514292daacE",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xA4f7168cEa82877B23Bc55a7fd7557D546F4dD31",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1156,7 +1223,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
+          "from": "eth:0x130d8EA0052B45554e4C99079B84df292149Bd5E",
           "description": "can eject DA operators from a quorum.",
           "role": ".ejectors"
         }
@@ -1218,7 +1285,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
+          "from": "eth:0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
           "description": "can approve the replacement of churned operators from a quorum",
           "role": ".churnApprover"
         }
@@ -1231,7 +1298,7 @@
       "receivedPermissions": [
         {
           "permission": "relayDA",
-          "from": "ethereum:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
+          "from": "eth:0xD160e6C1543f562fc2B0A5bf090aED32640Ec55B",
           "role": ".relayers"
         }
       ]
@@ -1248,7 +1315,7 @@
       "receivedPermissions": [
         {
           "permission": "disperse",
-          "from": "ethereum:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
+          "from": "eth:0x78cb05379a3b66E5227f2C1496432D7FFE794Fad",
           "role": ".dispersers"
         }
       ]
@@ -1436,6 +1503,9 @@
       "function updateOperators(address[] operators)",
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function updateSocket(string socket)"
+    ],
+    "0x338477FfaF63c04AC06048787f910671eC914B34": [
+      "constructor(address _singleton)"
     ],
     "0x41675C099F32341bf84BFc5382aF534df5C7461a": [
       "constructor()",
@@ -1850,5 +1920,5 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x8f849f98638d0a59ec6045196a986fcf0406a2bca0b82e548beae6dc3d02f904"
+  "permissionsConfigHash": "0x3c03d309a99d09d708d0b7c3ce1b670485d30c0938cb46c55e992d01c1796ecf"
 }

@@ -18,6 +18,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { zkswap } from '../zkswap/zkswap'
 
 const discovery = new ProjectDiscovery('zkspace')
@@ -47,7 +48,7 @@ export const zkspace: ScalingProject = {
     description:
       'ZKBase is an infrastructure protocol based on Zero-Knowledge (ZK) proof technology. It aims to support various projects across the Bitcoin and Ethereum networks.',
     purposes: ['NFT', 'Exchange', 'Payments'],
-    stack: 'ZKsync Lite',
+    stacks: ['ZKsync Lite'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://zkbase.org/'],
@@ -65,9 +66,6 @@ export const zkspace: ScalingProject = {
     liveness: {
       explanation:
         'ZK Space is a ZK rollup based on ZKsync Lite’s code base that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   config: {
@@ -132,11 +130,11 @@ export const zkspace: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: false,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -240,4 +238,5 @@ export const zkspace: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

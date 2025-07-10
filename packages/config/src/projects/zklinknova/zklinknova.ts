@@ -19,6 +19,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -98,7 +99,7 @@ export const zklinknova: ScalingProject = {
     description:
       'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
     purposes: ['Universal', 'Interoperability'],
-    category: 'Validium',
+    category: 'Other',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
       bridges: [
@@ -819,4 +820,16 @@ export const zklinknova: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([
+    optimismDiscovery,
+    arbitrumDiscovery,
+    baseDiscovery,
+    mantapacificDiscovery,
+    mantleDiscovery,
+    scrollDiscovery,
+    blastDiscovery,
+    zksync2Discovery,
+    ethereumDiscovery,
+    lineaDiscovery,
+  ]),
 }

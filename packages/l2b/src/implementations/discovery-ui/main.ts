@@ -5,9 +5,8 @@ import {
   TemplateService,
   getDiscoveryPaths,
 } from '@l2beat/discovery'
-import { assert } from '@l2beat/shared-pure'
+import { v as z } from '@l2beat/validate'
 import express from 'express'
-import { z } from 'zod'
 import { DiffoveryController } from './diffovery/DiffoveryController'
 import { attachDiffoveryRouter } from './diffovery/router'
 import { executeTerminalCommand } from './executeTerminalCommand'
@@ -23,15 +22,17 @@ import {
 
 const safeStringSchema = z
   .string()
-  .min(1, { message: 'Input cannot be empty.' })
-  .regex(/^[a-zA-Z0-9_-]+$/, {
-    message:
-      'Input must be alphanumeric and can contain underscores or hyphens.',
-  })
+  .check(
+    (v) => v.length > 0 && /^[a-zA-Z0-9_-]+$/.test(v),
+    'Input cannot be empty and must be alphanumeric and can contain underscores or hyphens.',
+  )
 
-const ethereumAddressSchema = z.string().regex(/^[\w\d]+:0x[a-fA-F0-9]{40}$/, {
-  message: 'Invalid address format. Must be chainId:0x...',
-})
+const ethereumAddressSchema = z
+  .string()
+  .check(
+    (v) => /^[\w\d]+:0x[a-fA-F0-9]{40}$/.test(v),
+    'Invalid address format. Must be chainId:0x...',
+  )
 
 const projectParamsSchema = z.object({
   project: safeStringSchema,
@@ -51,35 +52,25 @@ const projectSearchTermParamsSchema = z.object({
 const discoverQuerySchema = z.object({
   project: safeStringSchema,
   chain: safeStringSchema,
-  devMode: z
-    .enum(['true', 'false'], {
-      errorMap: () => ({ message: "devMode must be 'true' or 'false'." }),
-    })
-    .transform((val) => val === 'true'),
+  devMode: z.enum(['true', 'false']).transform((val) => val === 'true'),
 })
 
 const matchFlatQuerySchema = z.object({
   project: safeStringSchema,
   address: ethereumAddressSchema,
-  against: z.enum(['templates', 'projects'], {
-    errorMap: () => ({ message: "against must be 'templates' or 'projects'." }),
-  }),
+  against: z.enum(['templates', 'projects']),
 })
 
-export function runDiscoveryUi({
-  readonly,
-  explorerApiKey,
-}: { readonly: boolean; explorerApiKey: string | undefined }) {
+export function runDiscoveryUi({ readonly }: { readonly: boolean }) {
   const app = express()
   const port = process.env.PORT ?? 2021
 
   const STATIC_ROOT = join(__dirname, '../../../../protocolbeat/build')
-  assert(explorerApiKey, 'explorerApiKey is required')
 
   const paths = getDiscoveryPaths()
   const configReader = new ConfigReader(paths.discovery)
   const templateService = new TemplateService(paths.discovery)
-  const diffoveryController = new DiffoveryController(explorerApiKey)
+  const diffoveryController = new DiffoveryController()
 
   app.use(express.json())
 
@@ -91,7 +82,7 @@ export function runDiscoveryUi({
   app.get('/api/projects/:project', (req, res) => {
     const paramsValidation = projectParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project } = paramsValidation.data
@@ -103,7 +94,7 @@ export function runDiscoveryUi({
   app.get('/api/projects/:project/preview', (req, res) => {
     const paramsValidation = projectParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project } = paramsValidation.data
@@ -112,23 +103,22 @@ export function runDiscoveryUi({
     res.json(response)
   })
 
-  app.get('/', (_req, res) => {
-    res.redirect('/ui')
-  })
-
-  app.get(['/ui', '/ui/*', '/diff', '/diff/*'], (_req, res) => {
-    res.sendFile(join(STATIC_ROOT, 'index.html'))
-  })
-
   app.get('/api/projects/:project/code/:address', (req, res) => {
     const paramsValidation = projectAddressParamsSchema.safeParse(req.params)
     if (!paramsValidation.success) {
-      res.status(400).json({ errors: paramsValidation.error.flatten() })
+      res.status(400).json({ errors: paramsValidation.message })
       return
     }
     const { project, address } = paramsValidation.data
 
-    const response = getCode(paths, configReader, project, address)
+    const checkFlatCode = readonly === false
+    const response = getCode(
+      paths,
+      configReader,
+      project,
+      address,
+      checkFlatCode,
+    )
     res.json(response)
   })
 
@@ -136,7 +126,7 @@ export function runDiscoveryUi({
     const query = listTemplateFilesSchema.safeParse(req.query)
 
     if (!query.success) {
-      res.status(400).json({ errors: query.error.flatten() })
+      res.status(400).json({ errors: query.message })
       return
     }
 
@@ -172,7 +162,7 @@ export function runDiscoveryUi({
       })
 
       if (!paramsValidation.success) {
-        res.status(400).json({ errors: paramsValidation.error.flatten() })
+        res.status(400).json({ errors: paramsValidation.message })
         return
       }
       const { project, searchTerm, address } = paramsValidation.data
@@ -190,7 +180,7 @@ export function runDiscoveryUi({
     app.get('/api/terminal/discover', (req, res) => {
       const queryValidation = discoverQuerySchema.safeParse(req.query)
       if (!queryValidation.success) {
-        res.status(400).json({ errors: queryValidation.error.flatten() })
+        res.status(400).json({ errors: queryValidation.message })
         return
       }
       const { project, chain, devMode } = queryValidation.data
@@ -204,7 +194,7 @@ export function runDiscoveryUi({
     app.get('/api/terminal/match-flat', (req, res) => {
       const queryValidation = matchFlatQuerySchema.safeParse(req.query)
       if (!queryValidation.success) {
-        res.status(400).json({ errors: queryValidation.error.flatten() })
+        res.status(400).json({ errors: queryValidation.message })
         return
       }
       const { project, address, against } = queryValidation.data
@@ -230,6 +220,10 @@ export function runDiscoveryUi({
       )
     })
   }
+
+  app.get('*', (_req, res) => {
+    res.sendFile(join(STATIC_ROOT, 'index.html'))
+  })
 
   const server = app.listen(port, () => {
     console.log(`Discovery UI live on http://localhost:${port}/ui`)

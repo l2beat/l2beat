@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -33,9 +33,6 @@ export const thebinaryholdings: ScalingProject = opStackL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   chainConfig: {
     name: 'thebinaryholdings',
     chainId: 624,
@@ -48,14 +45,6 @@ export const thebinaryholdings: ScalingProject = opStackL2({
     ],
   },
   genesisTimestamp: UnixTime(1719397465),
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1719397463),
-    minTimestamp: UnixTime(1719397465),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   isNodeAvailable: 'UnderReview',
   milestones: [],
   nonTemplateOptimismPortalEscrowTokens: ['BNRY'],

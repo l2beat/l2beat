@@ -48,6 +48,7 @@ const schema = {
   customDa: 'TEXT',
 
   proofVerification: 'TEXT',
+  proofSystem: 'TEXT',
 
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
@@ -56,8 +57,6 @@ const schema = {
   livenessConfig: 'TEXT',
   costsInfo: 'TEXT',
   trackedTxsConfig: 'TEXT',
-  finalityInfo: 'TEXT',
-  finalityConfig: 'TEXT',
   daTrackingConfig: 'TEXT',
   ecosystemInfo: 'TEXT',
   ecosystemConfig: 'TEXT',

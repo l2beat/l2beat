@@ -9,6 +9,8 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { v } from '@l2beat/validate'
+import type { TrackedTxProject } from '../../config/Config'
 import type { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
@@ -22,13 +24,23 @@ import { transformFunctionCallsQueryResult } from './utils/transformFunctionCall
 import { transformTransfersQueryResult } from './utils/transformTransfersQueryResult'
 
 export class TrackedTxsClient {
-  constructor(private readonly bigquery: BigQueryClient) {}
+  constructor(
+    private readonly bigquery: BigQueryClient,
+    private readonly projects: TrackedTxProject[],
+  ) {}
 
   async getData(
     configurations: Configuration<TrackedTxConfigEntry>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxResult[]> {
+    // we need to filter out configurations from projects that are archived
+    // it has to be done here otherwise indexer would delete data from inactive configurations/projects
+    configurations = configurations.filter((c) => {
+      const project = this.projects.find((p) => p.id === c.properties.projectId)
+      return project && !project.isArchived
+    })
+
     const transfersConfig = configurations.filter(
       (
         c,
@@ -88,7 +100,7 @@ export class TrackedTxsClient {
     )
 
     const queryResult = await this.bigquery.query(query)
-    const parsedResult = BigQueryTransferResult.array().parse(queryResult)
+    const parsedResult = v.array(BigQueryTransferResult).parse(queryResult)
     return transformTransfersQueryResult(transfersConfig, parsedResult)
   }
 
@@ -126,7 +138,7 @@ export class TrackedTxsClient {
     const queryResult = await this.bigquery.query(query)
     // function calls and sharp submissions need the same fields for the later transform logic
     // this is why we parse all the results with the same parser
-    const parsedResult = BigQueryFunctionCallResult.array().parse(queryResult)
+    const parsedResult = v.array(BigQueryFunctionCallResult).parse(queryResult)
 
     // this will find matching configs based on different criteria for function calls and sharp submissions
     // hence this is the place where "unbatching" happens

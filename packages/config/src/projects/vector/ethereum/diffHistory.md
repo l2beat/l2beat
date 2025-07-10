@@ -1,4 +1,194 @@
-Generated with discovered.json: 0x8e11dfb77ae767fbc09e1af32c58e262adb083f6
+Generated with discovered.json: 0xf66dae769acb818d1676f99aaceffd4713363fa1
+
+# Diff at Wed, 09 Jul 2025 15:10:16 GMT:
+
+- author: Sergey Shemyakov (<sergeyshemyakov@gmx.de>)
+- comparing to: main@b0f260a09a1907b9753f327752a82a61cb1f520e block: 22780010
+- current block number: 22882091
+
+## Description
+
+Moved SP1 verifier into shared module.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780010 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459)
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e)
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+```
+
+```diff
+-   Status: DELETED
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x52dffbe8086134d943ce439f8f66d5c05da5d124
+
+# Diff at Fri, 04 Jul 2025 12:19:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22780010
+- current block number: 22780010
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22780010 (main branch discovery), not current.
+
+```diff
+    contract Avail Multisig 2 (0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x36194271a00dBBBae314E83dA56d0FF75fDa367B) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+    }
+```
+
+```diff
+    contract TimelockController (0x45828180bbE489350D621d002968A0585406d487) {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+    }
+```
+
+```diff
+    contract Avail Multisig 1 (0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.1.from:
+-        "ethereum:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      receivedPermissions.2.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.3.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.4.via.0.address:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.4.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.5.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.6.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.7.from:
+-        "ethereum:0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+      receivedPermissions.8.via.1.address:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
++        "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B"
+      receivedPermissions.8.from:
+-        "ethereum:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
++        "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x45828180bbE489350D621d002968A0585406d487"
++        "eth:0x45828180bbE489350D621d002968A0585406d487"
+    }
+```
+
+```diff
+    EOA  (0xC2ADCfccEE33A417064d1A45D3b202DE6d9fA474) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x02993cdC11213985b9B13224f3aF289F03bf298d"
++        "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d"
+    }
+```
+
+```diff
+    contract SP1VerifierGatewayMultisig (0xCafEf00d348Adbd57c37d1B77e0619C6244C6878) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
++        "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e"
+    }
+```
+
+Generated with discovered.json: 0xccefe72bba270d6cd83a92ea14867fe8e6fcc1ff
+
+# Diff at Wed, 25 Jun 2025 07:40:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22631743
+- current block number: 22780010
+
+## Description
+
+selector 0x1b34fe11 and respective verifier frozen.
+
+## Watched changes
+
+```diff
+    contract SP1VerifierGateway (0x3B6041173B80E77f038f3F2C0f9744f04837185e) {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
++++ description: Verifiers that are routed to by their selector and not frozen.
+      values.activeVerifiers.1:
+-        {"selector":"0x1b34fe11","verifier":"0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SP1Verifier (0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63)
+    +++ description: Verifier contract for SP1 proofs (v4.0.0-rc.3).
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1432 --------------------
+ .../SP1Verifier.sol}                               |    0
+ 2 files changed, 1432 deletions(-)
+```
+
+Generated with discovered.json: 0x3a2bf01a71949636bfe439e03ed22f95a8ea2ac0
 
 # Diff at Fri, 06 Jun 2025 07:24:46 GMT:
 

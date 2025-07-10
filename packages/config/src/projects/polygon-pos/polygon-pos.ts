@@ -11,6 +11,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('polygon-pos')
 
@@ -118,6 +119,24 @@ export const polygonpos: ScalingProject = {
       type: 'block',
       startBlock: 5000000,
     },
+    trackedTxs: [
+      {
+        uses: [
+          // checkpoint submission counts both as data submission and state update
+          { type: 'liveness', subtype: 'batchSubmissions' },
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: discovery.getContract('RootChain').address,
+          selector: '0x4e43e495',
+          functionSignature:
+            'function submitCheckpoint(bytes data, uint256[3][] sigs)',
+          sinceTimestamp: UnixTime(1590850580),
+        },
+      },
+    ],
   },
   chainConfig: {
     name: 'polygonpos',
@@ -288,4 +307,5 @@ export const polygonpos: ScalingProject = {
       ],
     },
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

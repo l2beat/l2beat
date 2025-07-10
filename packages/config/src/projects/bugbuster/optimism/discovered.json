@@ -2,7 +2,7 @@
   "name": "bugbuster",
   "chain": "optimism",
   "blockNumber": 125928338,
-  "configHash": "0x9d0722961cc07d491208c11cc550cefc9350323e3c198778eeb99864da53d971",
+  "configHash": "0xd0e4126c8f04e3344633cf33e742f0775bd166ffd3009db420b6987c65ac7090",
   "entries": [
     {
       "name": "History",
@@ -178,5 +178,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0xa76af1255573b8046883c2756602773efed29abefc48fa9d72ee6c3d5aa0d5fa"
+  "permissionsConfigHash": "0xa8a6e08c8dc4545a33bf0166cab4b561a73c68d20dfa0e28595fb790a32e1b8c"
 }

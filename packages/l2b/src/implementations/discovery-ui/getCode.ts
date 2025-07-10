@@ -1,8 +1,11 @@
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
+import { isDeepStrictEqual } from 'util'
 import {
   type ConfigReader,
   type DiscoveryPaths,
+  combineImplementationHashes,
+  flatteningHash,
   get$Implementations,
   getChainFullName,
   getChainShortName,
@@ -32,11 +35,45 @@ export function addFlattenerNote(code: string): string {
   return note.join('\n') + code
 }
 
+interface CodePathResult {
+  entryName: string | undefined
+  codePaths: { name: string; path: string }[]
+}
+
+function isFlatCodeCurrent(
+  configReader: ConfigReader,
+  project: string,
+  address: string,
+  codePaths: CodePathResult['codePaths'],
+): boolean {
+  const [chainShortName, simpleAddress] = address.split(':')
+  const chain = getChainFullName(chainShortName)
+
+  const discoHashes =
+    configReader
+      .readDiscovery(project, chain)
+      .entries.find((e) => e.address === simpleAddress)?.sourceHashes ?? []
+
+  const flatHashes = codePaths.map(({ path }) =>
+    flatteningHash(readFileSync(path, 'utf-8')),
+  )
+  const [proxy, ...implementations] = flatHashes
+  const calculatedHashes = [proxy]
+  if (implementations.length === 1) {
+    calculatedHashes.push(implementations[0])
+  } else if (implementations.length > 1) {
+    calculatedHashes.push(combineImplementationHashes(implementations))
+  }
+
+  return isDeepStrictEqual(discoHashes.sort(), calculatedHashes.sort())
+}
+
 export function getCode(
   paths: DiscoveryPaths,
   configReader: ConfigReader,
   project: string,
   address: string,
+  checkFlatCode: boolean = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
     paths,
@@ -44,6 +81,12 @@ export function getCode(
     project,
     address,
   )
+
+  if (checkFlatCode) {
+    if (!isFlatCodeCurrent(configReader, project, address, codePaths)) {
+      throw new Error('Flat code is outdated')
+    }
+  }
 
   return {
     entryName,
@@ -110,10 +153,7 @@ export function getCodePaths(
   configReader: ConfigReader,
   project: string,
   address: string,
-): {
-  entryName: string | undefined
-  codePaths: { name: string; path: string }[]
-} {
+): CodePathResult {
   const [chainShortName, simpleAddress] = address.split(':')
   const chain = getChainFullName(chainShortName)
   const discoveries = getProjectDiscoveries(configReader, project, chain)

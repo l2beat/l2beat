@@ -1,4 +1,109 @@
-Generated with discovered.json: 0x107244303e039edfd48316c400ae19823c580671
+Generated with discovered.json: 0x0c16cca970c2f405cc5b14fb962be0448786ffdb
+
+# Diff at Fri, 04 Jul 2025 12:19:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22593197
+- current block number: 22593197
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2526B437560CF8dC1a706A87494996D48eDFb701) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    EOA  (0x27251a0185F0354C7D5BF0aF5fAA1A384712C6bd) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
++        "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0x742A28e22277945BBAAa34810393bf6e8512576C"
++        "eth:0x742A28e22277945BBAAa34810393bf6e8512576C"
+    }
+```
+
+```diff
+    contract Safe (0x916cdc02EE1b48df87049EC764f0BDEa594B3AbE) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
++        "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+      receivedPermissions.0.from:
+-        "ethereum:0x742A28e22277945BBAAa34810393bf6e8512576C"
++        "eth:0x742A28e22277945BBAAa34810393bf6e8512576C"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
++        "eth:0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD"
+    }
+```
+
+```diff
+    contract ChainAdminOwnable (0xc4F79BAb04664229eAEf3dBbc528Dd982df81EdD) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x742A28e22277945BBAAa34810393bf6e8512576C"
++        "eth:0x742A28e22277945BBAAa34810393bf6e8512576C"
+    }
+```
+
+```diff
+    EOA  (0xE18316BfDDE4e8893F41F94B3439183CfB81A5d1) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+Generated with discovered.json: 0xf28d51dcc473b3cde5e6f0fe229692e48ffeed92
+
+# Diff at Wed, 25 Jun 2025 07:17:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593197
+- current block number: 22593197
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    contract zkVmDiamond (0x742A28e22277945BBAAa34810393bf6e8512576C) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0x7b00dabe412407b47c26d2bf2c37513bf49d0bfa
 
 # Diff at Fri, 30 May 2025 04:34:07 GMT:
 

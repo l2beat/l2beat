@@ -23,6 +23,7 @@ import { PROOFS } from '../../common/proofSystems'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('loopring')
 const forcedWithdrawalDelay = discovery.getContractValue<{
@@ -56,7 +57,7 @@ export const loopring: ScalingProject = {
     description:
       'Loopring is a ZK Rollup exchange protocol for trading and payments.',
     purposes: ['NFT', 'Exchange'],
-    stack: 'Loopring',
+    stacks: ['Loopring'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://loopring.org'],
@@ -81,9 +82,6 @@ export const loopring: ScalingProject = {
     liveness: {
       explanation:
         'Loopring is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. ',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -179,12 +177,6 @@ export const loopring: ScalingProject = {
         to: 'proofSubmissions',
       },
     },
-    finality: {
-      lag: 0,
-      type: 'Loopring',
-      minTimestamp: UnixTime(1616396742),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_CALLDATA,
@@ -212,11 +204,11 @@ export const loopring: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -499,4 +491,5 @@ export const loopring: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

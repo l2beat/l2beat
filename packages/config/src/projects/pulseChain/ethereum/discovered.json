@@ -2,7 +2,7 @@
   "name": "pulseChain",
   "chain": "ethereum",
   "blockNumber": 22431228,
-  "configHash": "0xfc6496c03e94b2e222bf46fcb3694e990b484e81c4fe501e8fc9f1284e8817e9",
+  "configHash": "0xf1d1d18cd34006291d917dfc0726943df940d2608a09081efdd18f586964af64",
   "entries": [
     {
       "address": "0x0Fb17ADb94627EeA37BB7EF12f85aB4590e3805F",
@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x1715a3E4A142d8b698131108995174F37aEBA10D",
+          "from": "eth:0x1715a3E4A142d8b698131108995174F37aEBA10D",
           "role": "admin"
         }
       ]
@@ -138,7 +138,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "from": "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
         }
@@ -289,12 +289,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "from": "eth:0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
+          "from": "eth:0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
           "role": "admin"
         }
       ]
@@ -563,5 +563,5 @@
   "usedTemplates": {
     "gnosisbridge/BridgeValidators": "0x2078291b872b03be29e501894a76cdf4bbeb226ee9793e794d55e47477829019"
   },
-  "permissionsConfigHash": "0x66e32d3d952657f2934e6c452b62e990390adb4502d2019fbf28751bfe79cb0e"
+  "permissionsConfigHash": "0x03d138962567f4331ef16f0ad35d0b037cfb8086e5d4eb3fffa8b67772bf4be2"
 }

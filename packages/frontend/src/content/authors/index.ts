@@ -1,12 +1,12 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 import { defineCollection } from '../defineCollections'
 
 export const authorsCollection = defineCollection({
   type: 'data',
-  schema: z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    role: z.string(),
+  schema: v.object({
+    firstName: v.string(),
+    lastName: v.string(),
+    role: v.string(),
   }),
 })

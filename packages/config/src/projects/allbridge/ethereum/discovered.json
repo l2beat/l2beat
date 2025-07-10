@@ -2,7 +2,7 @@
   "name": "allbridge",
   "chain": "ethereum",
   "blockNumber": 22593366,
-  "configHash": "0x3a8e3287f1c3891bbcf6bbb86c510f9b17ba333696c97f57d75557a1eef2b190",
+  "configHash": "0x41f335bdaa71d6f9c40b014907267119ab9db3efc17656f6ba5a06ab41883aea",
   "entries": [
     {
       "address": "0x01a494079DCB715f622340301463cE50cd69A4D0",
@@ -712,5 +712,5 @@
   "usedTemplates": {
     "allbridge/pool": "0x94bdaf7fc9fbaf2bb00cc10c613ffa3d5071237ca06484553d2fc8ebb80a8289"
   },
-  "permissionsConfigHash": "0x8e7aca4fdaba415533c353faed9c5c24e49a8d74c03437cd13dfe04098698099"
+  "permissionsConfigHash": "0x98930cd06165d162900b90801422090472b3878e2dad9ab1fb22e533cf790248"
 }

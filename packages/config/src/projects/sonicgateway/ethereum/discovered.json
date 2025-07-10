@@ -2,7 +2,7 @@
   "name": "sonicgateway",
   "chain": "ethereum",
   "blockNumber": 22431552,
-  "configHash": "0xc16c347079d176790712db19d55861d22b015c4ad27a3cb2a049d0428e2c8ade",
+  "configHash": "0xaf121cf9d2bcefd9c88b2b02ff9e67bb8fd8a958564972648c8e0929d088ec8b",
   "entries": [
     {
       "address": "0x11b0E7Bef4046dD43b09489926F30514584B1161",
@@ -11,7 +11,7 @@
       "receivedPermissions": [
         {
           "permission": "relay",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "role": ".acRelay"
         }
       ]
@@ -23,7 +23,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -40,7 +40,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -52,7 +52,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -64,7 +64,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -76,7 +76,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -144,7 +144,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+          "from": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
           "description": "call `withdrawWhileDead()` to withdraw escrowed tokens when the bridge liveness self-check has failed.",
           "role": ".exitAdministrator"
         }
@@ -172,19 +172,19 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set permissioned relayers.",
           "role": ".acRelayAdmin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set the fast lane fee.",
           "role": ".acFeeSetter"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "set the number of blocks (Sonic L1 blocks) at which periodic state root updates to Ethereum are expected (heartbeat).",
           "role": ".acHeartbeat"
         }
@@ -225,7 +225,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -253,7 +253,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -271,37 +271,37 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+          "from": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
           "description": "set the proof verifier and the exit administrator.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "description": "manage all access control roles.",
           "role": ".acAdmin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+          "from": "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "add tokens to the whitelist.",
           "role": ".acRegister"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+          "from": "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "manage access control roles.",
           "role": ".acAdmin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
+          "from": "eth:0xf2b1510c2709072C88C5b14db90Ec3b6297193e4",
           "description": "remove tokens from the whitelist.",
           "role": ".acUnregister"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
+          "from": "eth:0xa1E2481a9CD0Cb0447EeB1cbc26F1b3fff3bec20",
           "role": "admin"
         }
       ],
@@ -394,7 +394,7 @@
       "receivedPermissions": [
         {
           "permission": "relay",
-          "from": "ethereum:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
+          "from": "eth:0xB0bECf0fBfE431D42bA0FbD8dFBFbB0DCFd62Da4",
           "role": ".acRelay"
         }
       ]
@@ -417,7 +417,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
+          "from": "eth:0xB7e8CC3F5FeA12443136f0cc13D81F109B2dEd7f",
           "description": "update the state root.",
           "role": ".owner"
         }
@@ -529,7 +529,7 @@
       "receivedPermissions": [
         {
           "permission": "validateBridge",
-          "from": "ethereum:0x72965045A6691E5A74299D1e878f303264D4D910",
+          "from": "eth:0x72965045A6691E5A74299D1e878f303264D4D910",
           "role": ".validatorAddress"
         }
       ]
@@ -895,5 +895,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x7978e4a04cb2bc032296bf525b857f5df373011886f3c36e5a283c0e7499fa6b"
+  "permissionsConfigHash": "0xc95f45bbf57b0704f19a25d5e3b5a391da2de6ef5fee6c5fe5e46dce24366266"
 }

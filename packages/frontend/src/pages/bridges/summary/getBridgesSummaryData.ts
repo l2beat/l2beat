@@ -15,10 +15,9 @@ export async function getBridgesSummaryData(
     getAppLayoutProps(),
     getBridgesSummaryEntries(),
     helpers.tvs.chart.prefetch({
-      range: '1y',
+      range: { type: '1y' },
       filter: { type: 'bridge' },
       excludeAssociatedTokens: false,
-      previewRecategorisation: false,
     }),
   ])
 

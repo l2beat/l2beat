@@ -166,6 +166,7 @@ describe(RpcClient.name, () => {
               blockNumber: `0x${mockFromBlock.toString(16)}`,
               transactionHash:
                 '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+              data: '0xdata',
             },
           ],
         }),
@@ -173,10 +174,10 @@ describe(RpcClient.name, () => {
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLogs(
-        mockAdresses,
-        mockTopics,
         mockFromBlock,
         mockToBlock,
+        mockAdresses,
+        mockTopics,
       )
 
       expect(result).toEqual([
@@ -186,6 +187,7 @@ describe(RpcClient.name, () => {
           blockNumber: mockFromBlock,
           transactionHash:
             '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+          data: '0xdata',
         },
       ])
 

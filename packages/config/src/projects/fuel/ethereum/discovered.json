@@ -2,7 +2,7 @@
   "name": "fuel",
   "chain": "ethereum",
   "blockNumber": 21630407,
-  "configHash": "0xeacbb3c5f83f58f4f35f5a6c85122e91c6e2d7eb5b6cd9c4a72b4c31f30769ad",
+  "configHash": "0xabfdea4584a777a7c77010c90ba20d534144e2f0d51194d740f7523800e1d411",
   "entries": [
     {
       "name": "Fuel Security Council",
@@ -721,5 +721,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xcb337aac9d90ca6d3c57306797c22f6a34bf23c0efb95f50a3bee0e7726ccf17"
+  "permissionsConfigHash": "0xf6e6659fb48d223058e9865800e5c61a674f13c94d9db04df8de4e55ec0ebb87"
 }

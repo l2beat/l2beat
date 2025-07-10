@@ -30,6 +30,7 @@ import { brine } from '../projects/brine/brine'
 import { camp } from '../projects/camp/camp'
 import { canvasconnect } from '../projects/canvasconnect/canvasconnect'
 import { capx } from '../projects/capx/capx'
+import { cartesiprthoneypot } from '../projects/cartesi-prt-honeypot/cartesi-prt-honeypot'
 import { celo } from '../projects/celo/celo'
 import { corn } from '../projects/corn/corn'
 import { coti } from '../projects/coti/coti'
@@ -42,7 +43,6 @@ import { dcamonster } from '../projects/dcamonster/dcamonster'
 import { degate } from '../projects/degate/degate'
 import { degate2 } from '../projects/degate2/degate2'
 import { degate3 } from '../projects/degate3/degate3'
-import { degenlayer } from '../projects/degenlayer/degenlayer'
 import { destra } from '../projects/destra/destra'
 import { deversifi } from '../projects/deversifi/deversifi'
 import { dydx } from '../projects/dydx/dydx'
@@ -83,7 +83,6 @@ import { immutablex } from '../projects/immutablex/immutablex'
 import { immutablezkevm } from '../projects/immutablezkevm/immutablezkevm'
 import { ink } from '../projects/ink/ink'
 import { intmax } from '../projects/intmax/intmax'
-import { kakarotzkevm } from '../projects/kakarotzkevm/kakarotzkevm'
 import { karak } from '../projects/karak/karak'
 import { katana } from '../projects/katana/katana'
 import { kinto } from '../projects/kinto/kinto'
@@ -121,6 +120,7 @@ import { move } from '../projects/move/move'
 import { myria } from '../projects/myria/myria'
 import { myshell } from '../projects/myshell/myshell'
 import { nal } from '../projects/nal/nal'
+import { namechain } from '../projects/namechain/namechain'
 import { network3 } from '../projects/network3/network3'
 import { neva } from '../projects/neva/neva'
 import { nil } from '../projects/nil/nil'
@@ -181,7 +181,6 @@ import { soon } from '../projects/soon/soon'
 import { sophon } from '../projects/sophon/sophon'
 import { sorare } from '../projects/sorare/sorare'
 import { sovrun } from '../projects/sovrun/sovrun'
-import { specular } from '../projects/specular/specular'
 import { spire } from '../projects/spire/spire'
 import { starknet } from '../projects/starknet/starknet'
 import { status } from '../projects/status/status'
@@ -258,6 +257,7 @@ export const layer2s: ScalingProject[] = [
   camp,
   canvasconnect,
   capx,
+  cartesiprthoneypot,
   celo,
   corn,
   coti,
@@ -270,7 +270,6 @@ export const layer2s: ScalingProject[] = [
   degate,
   degate2,
   degate3,
-  degenlayer,
   destra,
   dydx,
   ebichain,
@@ -310,7 +309,6 @@ export const layer2s: ScalingProject[] = [
   immutablezkevm,
   ink,
   intmax,
-  kakarotzkevm,
   karak,
   katana,
   kinto,
@@ -348,6 +346,7 @@ export const layer2s: ScalingProject[] = [
   myria,
   myshell,
   nal,
+  namechain,
   network3,
   neva,
   nil,
@@ -409,7 +408,6 @@ export const layer2s: ScalingProject[] = [
   sophon,
   sorare,
   sovrun,
-  specular,
   spire,
   starknet,
   status,

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v as z } from '@l2beat/validate'
 
 const coerceBoolean = z.string().transform((val) => {
   return val !== 'false' && val !== '0'
@@ -17,12 +17,12 @@ const CLIENT_CONFIG = {
     .enum(['development', 'test', 'production'])
     .default('development'),
   DEPLOYMENT_ENV: z.enum(['preview', 'production']).optional(),
-  CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING: featureFlag.default('false'),
-  CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
+  CLIENT_SIDE_FEATURE_FLAG_STAGE_SORTING: featureFlag.default(false),
+  CLIENT_SIDE_GITCOIN_ROUND_LIVE: featureFlag.default(false),
   CLIENT_SIDE_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
   CLIENT_SIDE_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
-  CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default('false'),
-  CLIENT_SIDE_ECOSYSTEMS: coerceBoolean.default('false'),
+  CLIENT_SIDE_SHOW_HIRING_BADGE: featureFlag.default(false),
+  CLIENT_SIDE_PARTNERS: coerceBoolean.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -30,12 +30,15 @@ const SERVER_CONFIG = {
   ...CLIENT_CONFIG,
   DATABASE_URL: z
     .string()
-    .url()
+    .check((v) => !!new URL(v))
     .default('postgresql://postgres:password@localhost:5432/l2beat_local'),
-  DATABASE_LOG_ENABLED: coerceBoolean.default('false'),
-  DISABLE_CACHE: coerceBoolean.default('false'),
-  ETHEREUM_RPC_URL: z.string().url().default('https://cloudflare-eth.com'),
-  MOCK: coerceBoolean.default('false'),
+  DATABASE_LOG_ENABLED: coerceBoolean.default(false),
+  DISABLE_CACHE: coerceBoolean.default(false),
+  ETHEREUM_RPC_URL: z
+    .string()
+    .check((v) => !!new URL(v))
+    .default('https://cloudflare-eth.com'),
+  MOCK: coerceBoolean.default(false),
   CRON_SECRET: z.string().optional(),
   EXCLUDED_ACTIVITY_PROJECTS: stringArray.optional(),
   EXCLUDED_TVS_PROJECTS: stringArray.optional(),
@@ -44,11 +47,17 @@ const SERVER_CONFIG = {
   HEROKU_APP_NAME: z.string().optional(),
 
   // Elastic Search
-  ES_ENABLED: coerceBoolean.default('false'),
-  ES_NODE: z.string().url().optional(),
+  ES_ENABLED: coerceBoolean.default(false),
+  ES_NODE: z
+    .string()
+    .check((v) => !!new URL(v))
+    .optional(),
   ES_API_KEY: z.string().optional(),
   ES_INDEX_PREFIX: z.string().optional(),
-  ES_FLUSH_INTERVAL: z.coerce.number().optional(),
+  ES_FLUSH_INTERVAL: z
+    .unknown()
+    .transform((v) => Number(v))
+    .optional(),
 }
 const ServerEnv = z.object(SERVER_CONFIG)
 
@@ -111,6 +120,6 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     CLIENT_SIDE_PLAUSIBLE_DOMAIN: process.env.CLIENT_SIDE_PLAUSIBLE_DOMAIN,
     CLIENT_SIDE_PLAUSIBLE_ENABLED: process.env.CLIENT_SIDE_PLAUSIBLE_ENABLED,
     CLIENT_SIDE_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
-    CLIENT_SIDE_ECOSYSTEMS: process.env.CLIENT_SIDE_ECOSYSTEMS,
+    CLIENT_SIDE_PARTNERS: process.env.CLIENT_SIDE_PARTNERS,
   }
 }

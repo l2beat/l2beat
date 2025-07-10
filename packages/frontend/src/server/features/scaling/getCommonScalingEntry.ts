@@ -10,7 +10,7 @@ import { getProjectIcon } from '../utils/getProjectIcon'
 export interface CommonScalingEntry
   extends CommonProjectEntry,
     FilterableEntry {
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview'
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed'
   /** 0 - n/a, 1 - stage0, 2 - stage1&2, 3 - ethereum */
   stageOrder: number
 }
@@ -19,10 +19,12 @@ export function getCommonScalingEntry({
   project,
   changes,
   syncWarning,
+  ongoingAnomaly,
 }: {
   project: Project<'scalingInfo' | 'statuses' | 'display'>
   changes: ProjectChanges | undefined
   syncWarning?: string
+  ongoingAnomaly?: boolean
 }): CommonScalingEntry {
   return {
     id: project.id,
@@ -47,18 +49,16 @@ export function getCommonScalingEntry({
       }),
       syncWarning,
       emergencyWarning: project.statuses.emergencyWarning,
-      countdowns: {
-        otherMigration: project.statuses.otherMigration,
-      },
+      ongoingAnomaly,
     },
     tab: getScalingTab(project),
     stageOrder: getStageOrder(project.scalingInfo.stage),
     filterable: [
       { id: 'type', value: project.scalingInfo.type },
-      {
-        id: 'stack',
-        value: project.scalingInfo.stack ?? 'No stack',
-      },
+      ...(project.scalingInfo.stacks ?? ['No stack']).map((stack) => ({
+        id: 'stack' as const,
+        value: stack,
+      })),
       { id: 'stage', value: project.scalingInfo.stage },
       ...project.scalingInfo.purposes.map((purpose) => ({
         id: 'purpose' as const,
@@ -97,14 +97,14 @@ export function getCommonScalingEntry({
 
 export function getScalingTab(
   project: Project<'scalingInfo' | 'statuses'>,
-): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'underReview' {
+): 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' {
   const isRollup =
     project.scalingInfo.type === 'Optimistic Rollup' ||
     project.scalingInfo.type === 'ZK Rollup'
 
   return project.statuses.reviewStatus === 'initialReview'
-    ? 'underReview'
-    : project.scalingInfo.isOther
+    ? 'notReviewed'
+    : project.scalingInfo.type === 'Other'
       ? 'others'
       : isRollup
         ? 'rollups'

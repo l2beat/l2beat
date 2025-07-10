@@ -13,7 +13,7 @@ export async function getScalingTvsData(
     unknown,
     unknown,
     unknown,
-    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' }
+    { tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed' }
   >,
   manifest: Manifest,
   cache: ICache,
@@ -53,7 +53,7 @@ export async function getScalingTvsData(
 
 async function getCachedData(
   cache: ICache,
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
   const [entries, queryState] = await Promise.all([
     getScalingTvsEntries(),
@@ -74,17 +74,21 @@ async function getCachedData(
 }
 
 async function getQueryState(
-  tab: 'rollups' | 'validiumsAndOptimiums' | 'others',
+  tab: 'rollups' | 'validiumsAndOptimiums' | 'others' | 'notReviewed',
 ) {
   const helpers = getSsrHelpers()
+
+  // Skip prefetching for underReview tab as it doesn't have chart data
+  if (tab === 'notReviewed') {
+    return helpers.dehydrate()
+  }
 
   await helpers.tvs.chart.prefetch({
     filter: {
       type: tab,
     },
-    range: '1y',
+    range: { type: '1y' },
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
   })
   return helpers.dehydrate()
 }

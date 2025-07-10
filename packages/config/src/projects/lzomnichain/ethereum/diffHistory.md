@@ -1,4 +1,140 @@
-Generated with discovered.json: 0x36d511903e96142a80b9eab96647685ddee04a57
+Generated with discovered.json: 0x16e3366b112a92c6930315628ec239f056545bcc
+
+# Diff at Wed, 09 Jul 2025 15:13:27 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 22824232
+- current block number: 22882445
+
+## Description
+
+Update LZ Multisig to a custom multisig contract that allows offchain signing with multichain onchain execution.
+
+## Watched changes
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+## Source code changes
+
+```diff
+.../LayerZero Multisig/GnosisSafe.sol => /dev/null |  953 -------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../ethereum/.flat/LayerZero Multisig.sol          | 1396 ++++++++++++++++++++
+ 3 files changed, 1396 insertions(+), 988 deletions(-)
+```
+
+Generated with discovered.json: 0x70b28918e9981910ba86532dfa0cc69d54649a9f
+
+# Diff at Fri, 04 Jul 2025 12:19:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22824232
+- current block number: 22824232
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22824232 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1D941EF0D3Bba4ad67DBfBCeE5262F4CEE53A32b) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982"
++        "eth:0x4Fa745FCCC04555F2AFA8874cd23961636CdF982"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
++        "eth:0x4Bc7eDc45dF6F225a67680Bc2345fa9B516Aa034"
+      receivedPermissions.1.from:
+-        "ethereum:0x5a54fe5234E811466D5366846283323c954310B2"
++        "eth:0x5a54fe5234E811466D5366846283323c954310B2"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
++        "eth:0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+      receivedPermissions.1.from:
+-        "ethereum:0x902F09715B6303d4173037652FA7377e5b98089E"
++        "eth:0x902F09715B6303d4173037652FA7377e5b98089E"
+    }
+```
+
+Generated with discovered.json: 0x957e8da9e671b7cfdf1d6f270a5fa3770f8b3d4b
+
+# Diff at Tue, 01 Jul 2025 11:56:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@835b5bf291c209782da0924189d08305334497d4 block: 22567714
+- current block number: 22824232
+
+## Description
+
+add one signer to the LZ v1 DVN (quorum still 1).
+
+## Watched changes
+
+```diff
+    contract DVN (0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5) {
+    +++ description: None
+      values.signerSize:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x4ca0e4d3b0e5a52e5fe650e54226de379750d1d0
 
 # Diff at Mon, 26 May 2025 15:00:00 GMT:
 

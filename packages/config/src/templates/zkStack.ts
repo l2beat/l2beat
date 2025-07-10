@@ -39,7 +39,6 @@ import type {
   ProjectDaTrackingConfig,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
   ProjectPermissions,
   ProjectScalingCapability,
   ProjectScalingPurpose,
@@ -56,6 +55,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { mergeBadges, mergePermissions } from './utils'
 
 export interface DAProvider {
@@ -81,7 +81,6 @@ export interface ZkStackConfigCommon {
   diamondContract: EntryParameters
   activityConfig?: ProjectActivityConfig
   nonTemplateTrackedTxs?: Layer2TxConfig[]
-  finality?: ProjectFinalityConfig
   l2OutputOracle?: EntryParameters
   portal?: EntryParameters
   milestones?: Milestone[]
@@ -261,12 +260,16 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
         ...(templateVars.additionalPurposes ?? []),
       ],
       upgradesAndGovernanceImage: 'zkstack',
-      stack: 'ZK Stack',
+      stacks: ['ZK Stack'],
       architectureImage:
         templateVars.daProvider !== undefined
           ? 'zkstack-validium'
           : 'zkstack-rollup',
-      category: daProvider !== undefined ? 'Validium' : 'ZK Rollup',
+      category: templateVars.reasonsForBeingOther
+        ? 'Other'
+        : daProvider !== undefined
+          ? 'Validium'
+          : 'ZK Rollup',
       liveness: {
         explanation: executionDelay
           ? `${templateVars.display.name} is a ${
@@ -275,16 +278,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 : 'ZK rollup that posts state diffs'
             } to the L1. Transactions within a state diff can be considered final when proven on L1 using a ZK proof, except that an operator can revert them if not executed yet. Currently, there is at least a ${executionDelay} delay between state diffs verification and the execution of the corresponding state actions.`
           : undefined,
-      },
-      finality: {
-        finalizationPeriod: executionDelayS,
-        warnings: {
-          timeToInclusion: {
-            sentiment: 'warning',
-            value:
-              'Proven but not executed batches can be reverted by the validator(s) or the StateTransitionManager.',
-          },
-        },
       },
       tvsWarning: templateVars.display.tvsWarning,
       ...templateVars.display,
@@ -306,7 +299,6 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
       ),
       daTracking: getDaTracking(templateVars),
       trackedTxs: templateVars.nonTemplateTrackedTxs, // difficult to templatize as upgrades are not synced
-      finality: daProvider !== undefined ? undefined : templateVars.finality,
     },
     chainConfig: templateVars.chainConfig && {
       ...templateVars.chainConfig,
@@ -351,11 +343,11 @@ export function zkStackL2(templateVars: ZkStackConfigCommon): ScalingProject {
                 stateRootsPostedToL1: true,
                 dataAvailabilityOnL1: true,
                 rollupNodeSourceAvailable: true,
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: null,
               },
               stage1: {
                 principle: false,
-                stateVerificationOnL1: true,
-                fraudProofSystemAtLeast5Outsiders: null,
                 usersHave7DaysToExit: false,
                 usersCanExitWithoutCooperation: false,
                 securityCouncilProperlySetUp: null,
@@ -579,6 +571,7 @@ ZKsync Era's Chain Admin differs from the others as it also has the above *ZK cl
     milestones: templateVars.milestones ?? [],
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 

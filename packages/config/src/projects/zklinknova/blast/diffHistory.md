@@ -1,4 +1,52 @@
-Generated with discovered.json: 0x3e60a3047cbf7db6bdd3c6d27d800e07c71b0a03
+Generated with discovered.json: 0x93a68943b669522577113ccb8863b9243952db5e
+
+# Diff at Fri, 04 Jul 2025 12:19:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 16435499
+- current block number: 16435499
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16435499 (main branch discovery), not current.
+
+```diff
+    contract BlastOwner (0x730200f698cc8Ff16C00F4E8520Fd780B916D50E) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "blast:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
++        "blastmainnet:0x29BA92Fe724beD5c5EBfd0099F2F64a6DC5078FD"
+      receivedPermissions.1.from:
+-        "blast:0x3f64e2e09732969813904a8473074CFADeE66AF1"
++        "blastmainnet:0x3f64e2e09732969813904a8473074CFADeE66AF1"
+      receivedPermissions.2.via.0.address:
+-        "blast:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+      receivedPermissions.2.from:
+-        "blast:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
++        "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+      directlyReceivedPermissions.0.from:
+-        "blast:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
++        "blastmainnet:0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19"
+    }
+```
+
+```diff
+    contract BlastProxyAdmin (0xB5111Bda1E59b220d0Cf8D519CEDac46cb3B4c19) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "blast:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
++        "blastmainnet:0x8Df0c2bA3916bF4789c50dEc5A79b2fc719F500b"
+    }
+```
+
+Generated with discovered.json: 0x13d6420aa5eb72feba2102a06ee896b9aca98e2d
 
 # Diff at Fri, 23 May 2025 09:41:21 GMT:
 

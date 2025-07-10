@@ -1,0 +1,14 @@
+{
+  "GenericVaultBridgeToken": {
+    "hash": "0xbae5ca8308e7ebc2f3f89d306b5fa59219afbb56103cc06937985534329887e5",
+    "address": "0xcC865B0324121b43728176024f58bdbB3afd6f29",
+    "chain": "ethereum",
+    "blockNumber": 22794595
+  },
+  "VbETH": {
+    "hash": "0x4988be5ea9a1e587b7ad36189901d0e442b1905a12fcfb0f0896de5d089234cd",
+    "address": "0x81c16F89222C32806Daf01f5129937dFE19D525e",
+    "chain": "ethereum",
+    "blockNumber": 22794595
+  }
+}

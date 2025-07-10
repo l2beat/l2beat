@@ -20,7 +20,7 @@ export const base: ScalingProject = opStackL2({
     slug: 'base',
     stateValidationImage: 'opfp',
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     description:
       'Base is an Optimistic Rollup built with the OP Stack. It offers a low-cost and builder-friendly way for anyone, anywhere, to build onchain.',
     links: {
@@ -42,9 +42,6 @@ export const base: ScalingProject = opStackL2({
       ],
       rollupCodes: 'https://rollup.codes/base',
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   nonTemplateExcludedTokens: ['SolvBTC', 'SolvBTC.BBN', 'rsETH'], // TODO: check
   nonTemplateEscrows: [
@@ -77,14 +74,6 @@ export const base: ScalingProject = opStackL2({
       sequencers: [discovery.getContractValue('SystemConfig', 'batcherHash')],
     },
   ],
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1710375515),
-    genesisTimestamp: UnixTime(1686789347),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateTrackedTxs: [
     {
       uses: [
@@ -170,11 +159,11 @@ export const base: ScalingProject = opStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

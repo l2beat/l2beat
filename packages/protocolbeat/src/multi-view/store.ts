@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { create } from 'zustand'
 
 export const PANEL_IDS = [
@@ -50,16 +50,16 @@ const DEFAULT_LAYOUT: Panel[] = [
 const MAX_LAYOUTS = 6
 
 function readStoredLayouts() {
-  const zPanel = z.object({
-    id: z.enum(PANEL_IDS),
-    size: z.number().gt(0),
+  const zPanel = v.object({
+    id: v.enum(PANEL_IDS),
+    size: v.number().check((v) => v > 0),
   })
 
   const layouts: Panel[][] = new Array(MAX_LAYOUTS).fill(DEFAULT_LAYOUT)
   const json = localStorage.getItem('multi-app/layouts') ?? '[]'
   try {
     const object = JSON.parse(json)
-    const items = z.array(z.array(zPanel)).parse(object)
+    const items = v.array(v.array(zPanel)).parse(object)
     for (let i = 0; i < layouts.length; i++) {
       layouts[i] = items[i] ?? DEFAULT_LAYOUT
     }

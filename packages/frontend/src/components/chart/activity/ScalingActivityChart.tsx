@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 
 import { RadioGroup, RadioGroupItem } from '~/components/core/RadioGroup'
 import { Skeleton } from '~/components/core/Skeleton'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { useTableFilterContext } from '~/components/table/filters/TableFilterContext'
 import { useIsClient } from '~/hooks/useIsClient'
 import { useLocalStorage } from '~/hooks/useLocalStorage'
@@ -38,7 +37,6 @@ export function ScalingActivityChart({
   hideScalingFactor,
   type,
 }: Props) {
-  const { checked } = useRecategorisationPreviewContext()
   const { timeRange, setTimeRange } = useActivityTimeRangeContext()
   const { metric } = useActivityMetricContext()
   const { state: filters } = useTableFilterContext()
@@ -64,12 +62,10 @@ export function ScalingActivityChart({
 
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: chartFilter,
-    previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: chartFilter,
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(

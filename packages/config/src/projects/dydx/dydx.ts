@@ -21,6 +21,7 @@ import { formatDelay, formatExecutionDelay } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 
 const discovery = new ProjectDiscovery('dydx')
@@ -97,7 +98,7 @@ export const dydx: ScalingProject = {
     description:
       'dYdX v3 aims to build a powerful and professional exchange for trading crypto assets where users can truly own their trades and, eventually, the exchange itself.',
     purposes: ['Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://dydx.exchange/'],
@@ -128,9 +129,6 @@ export const dydx: ScalingProject = {
     liveness: {
       explanation:
         'dYdX is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. The verification is done as part of the state update.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -279,11 +277,11 @@ export const dydx: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: null,
@@ -515,4 +513,5 @@ export const dydx: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

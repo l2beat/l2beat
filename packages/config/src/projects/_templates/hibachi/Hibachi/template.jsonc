@@ -1,0 +1,39 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "description": "Main contract handling deposits, withdrawals and state updates.",
+  "ignoreRelatives": ["nativeAssetInfo"],
+  "ignoreInWatchMode": [
+    "accountsRoot",
+    "contractsRoot",
+    "ordersRoot",
+    "stateVersion",
+    "systemTimestamp"
+  ],
+  "fields": {
+    "accessControl": {
+      "handler": {
+        "type": "accessControl"
+      }
+    },
+    "oracles": {
+      "handler": {
+        "type": "event",
+        "select": "oracleAddress",
+        "add": {
+          "event": "UpdateOracleRegistration",
+          "where": ["=", "#enabled", true]
+        },
+        "remove": {
+          "event": "UpdateOracleRegistration",
+          "where": ["!=", "#enabled", true]
+        }
+      }
+    },
+    "nativeAssetInfo": {
+      "handler": {
+        "type": "array",
+        "length": 5
+      }
+    }
+  }
+}

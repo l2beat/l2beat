@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import {
   OthersInfo,
   RollupsInfo,
@@ -11,46 +10,30 @@ import {
   DirectoryTabsList,
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingArchivedEntry } from '~/server/features/scaling/archived/getScalingArchivedEntries'
-import { compareStageAndTvs } from '~/server/features/scaling/utils/compareStageAndTvs'
-import { getRecategorisedEntries } from '../../utils/GetRecategorisedEntries'
 import { ScalingArchivedTable } from './table/ScalingArchivedTable'
 
 export function ScalingArchivedTables(
   props: TabbedScalingEntries<ScalingArchivedEntry>,
 ) {
   const filterEntries = useFilterEntries()
-  const [tab, setTab] = useState('rollups')
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
-
-  const entries = checked
-    ? getRecategorisedEntries(filteredEntries, compareStageAndTvs)
-    : filteredEntries
 
   const initialSort = {
     id: 'total',
     desc: true,
   }
 
-  useEffect(() => {
-    if (!checked && tab === 'others' && entries.others.length === 0) {
-      setTab('rollups')
-    }
-  }, [checked, entries.others, tab])
-
-  const showOthers = entries.others.length > 0
   return (
     <>
       <TableFilters
@@ -60,7 +43,7 @@ export function ScalingArchivedTables(
           ...props.others,
         ]}
       />
-      <DirectoryTabs value={tab} onValueChange={setTab} defaultValue="rollups">
+      <DirectoryTabs defaultValue="rollups">
         <DirectoryTabsList>
           <DirectoryTabsTrigger value="rollups">
             Rollups <CountBadge>{entries.rollups.length}</CountBadge>
@@ -69,11 +52,9 @@ export function ScalingArchivedTables(
             Validiums & Optimiums{' '}
             <CountBadge>{entries.validiumsAndOptimiums.length}</CountBadge>
           </DirectoryTabsTrigger>
-          {showOthers && (
-            <DirectoryTabsTrigger value="others">
-              Others <CountBadge>{entries.others.length}</CountBadge>
-            </DirectoryTabsTrigger>
-          )}
+          <DirectoryTabsTrigger value="others">
+            Others <CountBadge>{entries.others.length}</CountBadge>
+          </DirectoryTabsTrigger>
         </DirectoryTabsList>
         <TableSortingProvider initialSort={initialSort}>
           <DirectoryTabsContent value="rollups">
@@ -87,14 +68,12 @@ export function ScalingArchivedTables(
             <ScalingArchivedTable entries={entries.validiumsAndOptimiums} />
           </DirectoryTabsContent>
         </TableSortingProvider>
-        {showOthers && (
-          <TableSortingProvider initialSort={initialSort}>
-            <DirectoryTabsContent value="others">
-              <OthersInfo />
-              <ScalingArchivedTable entries={entries.others} />
-            </DirectoryTabsContent>
-          </TableSortingProvider>
-        )}
+        <TableSortingProvider initialSort={initialSort}>
+          <DirectoryTabsContent value="others">
+            <OthersInfo />
+            <ScalingArchivedTable entries={entries.others} hideType />
+          </DirectoryTabsContent>
+        </TableSortingProvider>
       </DirectoryTabs>
     </>
   )

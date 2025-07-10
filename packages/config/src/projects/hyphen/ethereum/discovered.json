@@ -2,7 +2,7 @@
   "name": "hyphen",
   "chain": "ethereum",
   "blockNumber": 20138492,
-  "configHash": "0xd3d9219c4f04e63cfd0031b3ca09f40be78fe64db67a9152a2aed3a0f5abcf8a",
+  "configHash": "0xaae96648697d2dfbd599701cebf8bf7da84bebcfd2f9179dec8d27f2dea6b7c5",
   "entries": [
     {
       "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7",
@@ -20,17 +20,17 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+          "from": "eth:0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+          "from": "eth:0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+          "from": "eth:0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
           "role": "admin"
         }
       ],
@@ -431,5 +431,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x8645762b68cc18194830245e3ddc4d1d798b3b21e5eb1c2db341f6c3e0a96348"
+  "permissionsConfigHash": "0xcb199c0e266cc35604d9d0cce70967f87dc245be371d5548abc4786cf83a9d40"
 }

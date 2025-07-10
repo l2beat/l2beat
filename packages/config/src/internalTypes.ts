@@ -20,8 +20,6 @@ import type {
   ProjectDiscoveryInfo,
   ProjectEcosystemInfo,
   ProjectEscrow,
-  ProjectFinalityConfig,
-  ProjectFinalityInfo,
   ProjectLinks,
   ProjectLivenessConfig,
   ProjectLivenessInfo,
@@ -49,7 +47,7 @@ export interface ScalingProject {
   id: ProjectId
   /** If the project is an L3, ProjectId that serves as the base layer */
   hostChain?: ProjectId
-  /** Is the project univeral or app specific (e.g. DEX) */
+  /** Is the project universal or app specific (e.g. DEX) */
   capability: ProjectScalingCapability
   /** Date of creation of the file (not the project) */
   addedAt: UnixTime
@@ -98,7 +96,7 @@ export interface ScalingProject {
   /** Things we have or haven't checked while assesing the stage */
   scopeOfAssessment?: ProjectScalingScopeOfAssessment
   /** Discodrive markers - shouldn't be configured by a user */
-  discoveryInfo?: ProjectDiscoveryInfo
+  discoveryInfo: ProjectDiscoveryInfo
   /** Upgrades and governance explained */
   upgradesAndGovernance?: string
 }
@@ -116,8 +114,6 @@ export interface ProjectScalingConfig {
   trackedTxs?: Layer2TxConfig[]
   /** Configuration for getting liveness data */
   liveness?: ProjectLivenessConfig
-  /** Configuration for getting finality data */
-  finality?: ProjectFinalityConfig
 }
 
 export interface ProjectScalingDisplay {
@@ -129,8 +125,8 @@ export interface ProjectScalingDisplay {
   slug: string
   /** Name of the category the scaling project belongs to */
   category: ProjectScalingCategory
-  /** Technological stack */
-  stack?: ProjectScalingStack
+  /** Technological stacks */
+  stacks?: ProjectScalingStack[]
   /** A warning displayed in the header of the project. Also will be displayed as yellow shield next to project name (table view) */
   headerWarning?: string
   /** Warning for TVL */
@@ -159,7 +155,6 @@ export interface ProjectScalingDisplay {
   sequencingImage?: string
   /** Tooltip contents for liveness tab for given project */
   liveness?: ProjectLivenessInfo
-  finality?: ProjectFinalityInfo
   /** Warning for Costs */
   costsWarning?: WarningWithSentiment
 }
@@ -193,7 +188,7 @@ export interface Layer2TrackedTxUse {
   type: TrackedTxsConfigType
   subtype: TrackedTxsConfigSubtype
 }
-
+/** This type is used to query GBQ and manual matching of transactions within a block */
 type TrackedTxQuery = FunctionCall | Transfer | SharpSubmission | SharedBridge
 
 interface FunctionCall {
@@ -201,6 +196,8 @@ interface FunctionCall {
   address: EthereumAddress
   selector: `0x${string}`
   functionSignature: `function ${string}`
+  /** Topics are used to filter logs and identify internal calls*/
+  topics?: string[]
   /** Inclusive */
   sinceTimestamp: UnixTime
   /** Inclusive */
@@ -254,8 +251,8 @@ export interface Bridge {
   contracts?: ProjectContracts
   permissions?: Record<string, ProjectPermissions>
   milestones?: Milestone[]
-  discoveryInfo?: ProjectDiscoveryInfo
   upgradesAndGovernance?: string
+  discoveryInfo: ProjectDiscoveryInfo
 }
 
 export interface BridgeDisplay {

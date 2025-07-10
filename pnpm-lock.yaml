@@ -83,6 +83,9 @@ importers:
       '@l2beat/uif':
         specifier: workspace:*
         version: link:../uif
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@polkadot/api':
         specifier: ^12.4.2
         version: 12.4.2
@@ -95,6 +98,9 @@ importers:
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
+      discord.js:
+        specifier: ^14.21.0
+        version: 14.21.0
       elastic-apm-node:
         specifier: ^4.11.2
         version: 4.11.2
@@ -143,12 +149,12 @@ importers:
       uuid:
         specifier: ^9.0.1
         version: 9.0.1
+      viem:
+        specifier: ^2.31.6
+        version: 2.31.6(typescript@5.6.3)(zod@3.23.8)
       ws:
         specifier: ^8.18.2
         version: 8.18.2
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -247,9 +253,6 @@ importers:
       sqlite3:
         specifier: 5.1.7
         version: 5.1.7
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/backend-tools':
         specifier: workspace:*
@@ -260,6 +263,9 @@ importers:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@types/diff':
         specifier: ^7.0.2
         version: 7.0.2
@@ -293,9 +299,6 @@ importers:
       p-limit:
         specifier: ^6.1.0
         version: 6.1.0
-      zod-to-json-schema:
-        specifier: ^3.24.4
-        version: 3.24.5(zod@3.23.8)
 
   packages/database:
     dependencies:
@@ -354,9 +357,12 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@mradomski/fast-solidity-parser':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.1.4
+        version: 0.1.4
       bignumber.js:
         specifier: ^9.1.2
         version: 9.1.2
@@ -369,9 +375,6 @@ importers:
       cmd-ts:
         specifier: ^0.13.0
         version: 0.13.0
-      deep-diff:
-        specifier: ^1.0.2
-        version: 1.0.2
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -402,16 +405,10 @@ importers:
       sqlite3:
         specifier: 5.1.7
         version: 5.1.7
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
-      '@types/deep-diff':
-        specifier: ^1.0.2
-        version: 1.0.5
       '@types/lodash':
         specifier: ^4.14.198
         version: 4.17.12
@@ -424,9 +421,6 @@ importers:
       mock-fs:
         specifier: ^5.2.0
         version: 5.4.0
-      zod-to-json-schema:
-        specifier: ^3.24.4
-        version: 3.24.5(zod@3.23.8)
 
   packages/frontend:
     dependencies:
@@ -448,6 +442,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@radix-ui/react-accordion':
         specifier: ^1.2.0
         version: 1.2.1(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -601,9 +598,6 @@ importers:
       ws:
         specifier: ^8.18.2
         version: 8.18.2
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -686,9 +680,12 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@mradomski/fast-solidity-parser':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.1.4
+        version: 0.1.4
       ansi-to-html:
         specifier: ^0.7.2
         version: 0.7.2
@@ -725,9 +722,6 @@ importers:
       viem:
         specifier: ^2.18.6
         version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -750,6 +744,9 @@ importers:
 
   packages/protocolbeat:
     dependencies:
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@radix-ui/react-dialog':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.0.4(@types/react@19.0.10))(@types/react@19.0.10)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -792,9 +789,6 @@ importers:
       react-router-dom:
         specifier: ^6.27.0
         version: 6.27.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
       zustand:
         specifier: ^5.0.0
         version: 5.0.0(@types/react@19.0.10)(react@19.0.0)(use-sync-external-store@1.2.2(react@19.0.0))
@@ -829,6 +823,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -844,9 +841,6 @@ importers:
       viem:
         specifier: ^2.21.36
         version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -863,15 +857,15 @@ importers:
 
   packages/shared-pure:
     dependencies:
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@mradomski/tinyerc55':
         specifier: ^0.1.3
         version: 0.1.3
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
-      zod:
-        specifier: ^3.22.2
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -882,6 +876,9 @@ importers:
       '@l2beat/tools-api':
         specifier: workspace:*
         version: link:../tools-api
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@tanstack/react-query':
         specifier: ^5.59.16
         version: 5.59.16(react@19.0.0)
@@ -912,9 +909,6 @@ importers:
       viem:
         specifier: ^2.18.6
         version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -952,6 +946,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       '@types/cors':
         specifier: ^2.8.17
         version: 2.8.17
@@ -970,9 +967,6 @@ importers:
       viem:
         specifier: ^2.8.14
         version: 2.21.36(typescript@5.6.3)(zod@3.23.8)
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1010,6 +1004,9 @@ importers:
       '@l2beat/shared-pure':
         specifier: workspace:*
         version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1034,9 +1031,6 @@ importers:
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1062,6 +1056,8 @@ importers:
       typescript:
         specifier: ^5
         version: 5.6.3
+
+  packages/validate: {}
 
 packages:
 
@@ -1211,6 +1207,34 @@ packages:
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
     engines: {node: '>=12'}
+
+  '@discordjs/builders@1.11.2':
+    resolution: {integrity: sha512-F1WTABdd8/R9D1icJzajC4IuLyyS8f3rTOz66JsSI3pKvpCAtsMBweu8cyNYsIyvcrKAVn9EPK+Psoymq+XC0A==}
+    engines: {node: '>=16.11.0'}
+
+  '@discordjs/collection@1.5.3':
+    resolution: {integrity: sha512-SVb428OMd3WO1paV3rm6tSjM4wC+Kecaa1EUGX7vc6/fddvw/6lg90z4QtCqm21zvVe92vMMDt9+DkIvjXImQQ==}
+    engines: {node: '>=16.11.0'}
+
+  '@discordjs/collection@2.1.1':
+    resolution: {integrity: sha512-LiSusze9Tc7qF03sLCujF5iZp7K+vRNEDBZ86FT9aQAv3vxMLihUvKvpsCWiQ2DJq1tVckopKm1rxomgNUc9hg==}
+    engines: {node: '>=18'}
+
+  '@discordjs/formatters@0.6.1':
+    resolution: {integrity: sha512-5cnX+tASiPCqCWtFcFslxBVUaCetB0thvM/JyavhbXInP1HJIEU+Qv/zMrnuwSsX3yWH2lVXNJZeDK3EiP4HHg==}
+    engines: {node: '>=16.11.0'}
+
+  '@discordjs/rest@2.5.1':
+    resolution: {integrity: sha512-Tg9840IneBcbrAjcGaQzHUJWFNq1MMWZjTdjJ0WS/89IffaNKc++iOvffucPxQTF/gviO9+9r8kEPea1X5J2Dw==}
+    engines: {node: '>=18'}
+
+  '@discordjs/util@1.1.1':
+    resolution: {integrity: sha512-eddz6UnOBEB1oITPinyrB2Pttej49M9FZQY8NxgEvc3tq6ZICZ19m70RsmzRdDHk80O9NoYN/25AqJl8vPVf/g==}
+    engines: {node: '>=18'}
+
+  '@discordjs/ws@1.2.3':
+    resolution: {integrity: sha512-wPlQDxEmlDg5IxhJPuxXr3Vy9AjYq5xCvFWGJyD7w7Np8ZGu+Mc+97LCoEc/+AYCo2IDpKioiH0/c/mj5ZR9Uw==}
+    engines: {node: '>=16.11.0'}
 
   '@elastic/ecs-helpers@2.1.1':
     resolution: {integrity: sha512-ItoNazMnYdlUCmkBYTXc3SG6PF7UlVTbvMdHPvXkfTMPdwGv2G1Xtp5CjDHaGHGOZSwaDrW4RSCXvA/lMSU+rg==}
@@ -1951,8 +1975,8 @@ packages:
   '@manypkg/get-packages@1.1.3':
     resolution: {integrity: sha512-fo+QhuU3qE/2TQMQmbVMqaQ6EWbMhi4ABWP+O4AM1NqPBuy0OrApV5LO6BrrgnhtAHS2NH6RrVk9OL181tTi8A==}
 
-  '@mradomski/fast-solidity-parser@0.1.1':
-    resolution: {integrity: sha512-BnX+UKswinYed/yFgH9zwYNNBvUXJu32vJkxwnkZuPcV/YR9TDzMgjAOhiq8Vj77wDcfHHhyA0/MdIMhkd92PQ==}
+  '@mradomski/fast-solidity-parser@0.1.4':
+    resolution: {integrity: sha512-xDQskrXD6SMluvjEiCghvL2ORdPu6nzc96DnNNa0NnFagM8w0wIlxll9cDs5+0sLbVSiET3lygGTJG1a/Of5vg==}
 
   '@mradomski/tinyerc55@0.1.3':
     resolution: {integrity: sha512-43EVFX8VdmAwSiqDt/s2AG1bdxSkurm8cH7A+SmH0ckeUJgeyDf3NYLfmtuCCaQbAf54vEQY17XZwKCt/lgOog==}
@@ -2012,12 +2036,24 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@noble/ciphers@1.3.0':
+    resolution: {integrity: sha512-2I0gnIVPtfnMw9ee9h1dJG7tp81+8Ob3OJb3Mv37rx5L40/b0i7djjCVvGOVqc9AEIQyvyu1i6ypKdFw8R8gQw==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@noble/curves@1.6.0':
     resolution: {integrity: sha512-TlaHRXDehJuRNR9TfZDNQ45mMEd5dwUwmicsafcIX4SsNiqnCHKjE/1alYPd/lDRVhxdhUAlv8uEhMCI5zjIJQ==}
     engines: {node: ^14.21.3 || >=16}
 
+  '@noble/curves@1.9.2':
+    resolution: {integrity: sha512-HxngEd2XUcg9xi20JkwlLCtYwfoFw4JGkuZpT+WlsPD4gB/cxkvTD8fSsoAnphGZhFdZYKeQIPCuFlWPm1uE0g==}
+    engines: {node: ^14.21.3 || >=16}
+
   '@noble/hashes@1.5.0':
     resolution: {integrity: sha512-1j6kQFb7QRru7eKN3ZDvRcP13rugwdxZqCjbiAVZfIJwgj2A65UmT4TgARXGlXgnRkORLTDTrO19ZErt7+QXgA==}
+    engines: {node: ^14.21.3 || >=16}
+
+  '@noble/hashes@1.8.0':
+    resolution: {integrity: sha512-jCs9ldd7NwzpgXDIf6P3+NrHh9/sD6CQdxHyjQI+h/6rDNo88ypBxxz45UDuZHz9r3tNz7N/VInSVoVdtXEI4A==}
     engines: {node: ^14.21.3 || >=16}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -3104,14 +3140,35 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@sapphire/async-queue@1.5.5':
+    resolution: {integrity: sha512-cvGzxbba6sav2zZkH8GPf2oGk9yYoD5qrNWdu9fRehifgnFZJMV+nuy2nON2roRO4yQQ+v7MK/Pktl/HgfsUXg==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
+  '@sapphire/shapeshift@4.0.0':
+    resolution: {integrity: sha512-d9dUmWVA7MMiKobL3VpLF8P2aeanRTu6ypG2OIaEv/ZHH/SUQ2iHOVyi5wAPjQ+HmnMuL0whK9ez8I/raWbtIg==}
+    engines: {node: '>=v16'}
+
+  '@sapphire/snowflake@3.5.3':
+    resolution: {integrity: sha512-jjmJywLAFoWeBi1W7994zZyiNWPIiqRRNAmSERxyg93xRGzNYvGjlZ0gR6x0F4gPRi2+0O6S71kOZYyr3cxaIQ==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
   '@scure/base@1.1.9':
     resolution: {integrity: sha512-8YKhl8GHiNI/pU2VMaofa2Tor7PJRAjwQLBBuilkJ9L5+13yVbC7JO/wS7piioAvPSwR3JKM1IJ/u4xQzbcXKg==}
+
+  '@scure/base@1.2.6':
+    resolution: {integrity: sha512-g/nm5FgUa//MCj1gV09zTJTaM6KBAHqLN907YVQqf7zC49+DcO4B1so4ZX07Ef10Twr6nuqYEH9GEggFXA4Fmg==}
 
   '@scure/bip32@1.5.0':
     resolution: {integrity: sha512-8EnFYkqEQdnkuGBVpCzKxyIwDCBLDVj3oiX0EKUFre/tOjL/Hqba1D6n/8RcmaQy4f95qQFrO2A8Sr6ybh4NRw==}
 
+  '@scure/bip32@1.7.0':
+    resolution: {integrity: sha512-E4FFX/N3f4B80AKWp5dP6ow+flD1LQZo/w8UnLGYZO674jS6YnYeepycOOksv+vLPSpgN35wgKgy+ybfTb2SMw==}
+
   '@scure/bip39@1.4.0':
     resolution: {integrity: sha512-BEEm6p8IueV/ZTfQLp/0vhw4NPnT9oWf5+28nvmeUICjP99f4vr2d+qc7AVGDDtwRep6ifR43Yed9ERVmiITzw==}
+
+  '@scure/bip39@1.6.0':
+    resolution: {integrity: sha512-+lF0BbLiJNwVlev4eKelw1WWLaiKXw7sSl8T6FvBlWkdX+94aGJ4o8XjUdlyhTCjd8c+B3KT3JfS8P0bLRNU6A==}
 
   '@shuding/opentype.js@1.4.0-beta.0':
     resolution: {integrity: sha512-3NgmNyH3l/Hv6EvsWJbsvpcpUba6R8IREQ83nH83cyakCw7uM1arZKNfHwv1Wz6jgqrF/j4x5ELvR6PnK9nTcA==}
@@ -3380,9 +3437,6 @@ packages:
   '@types/debug@4.1.8':
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
 
-  '@types/deep-diff@1.0.5':
-    resolution: {integrity: sha512-PQyNSy1YMZU1hgZA5tTYfHPpUAo9Dorn1PZho2/budQLfqLu3JIP37JAavnwYpR1S2yFZTXa3hxaE4ifGW5jaA==}
-
   '@types/diff@7.0.2':
     resolution: {integrity: sha512-JSWRMozjFKsGlEjiiKajUjIJVKuKdE3oVy2DNtK+fUo8q82nhFZ2CPQwicAIkXrofahDXrWJ7mjelvZphMS98Q==}
 
@@ -3564,6 +3618,10 @@ packages:
     peerDependencies:
       vite: ^4 || ^5
 
+  '@vladfrangu/async_event_emitter@2.4.6':
+    resolution: {integrity: sha512-RaI5qZo6D2CVS6sTHFKg1v5Ohq/+Bo2LZ5gzUEwZ/WkHhwtGTCB/sVLw8ijOkAUxasZ+WshN/Rzj4ywsABJ5ZA==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
+
   '@vue/reactivity@3.1.5':
     resolution: {integrity: sha512-1tdfLmNjWG6t/CsPldh+foumYFo3cpyCHgBYQ34ylaMsJ+SNHQ1kApMIa8jN+i593zQuaw3AdWH0nJTARzCFhg==}
 
@@ -3575,6 +3633,17 @@ packages:
 
   abitype@1.0.6:
     resolution: {integrity: sha512-MMSqYh4+C/aVqI2RQaWqbvI4Kxo5cQV40WQ4QFtDnNzCkqChm8MuENhElmynZlO0qUy/ObkEUaXtKqYnx1Kp3A==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+      zod: ^3 >=3.22.0
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+      zod:
+        optional: true
+
+  abitype@1.0.8:
+    resolution: {integrity: sha512-ZeiI6h3GnW06uYDLx0etQtX/p8E24UaHHBj57RSjK7YBFe7iuVn07EDpOeP451D06sF27VOz9JJPlIKJmXgkEg==}
     peerDependencies:
       typescript: '>=5.0.4'
       zod: ^3 >=3.22.0
@@ -4303,9 +4372,6 @@ packages:
     resolution: {integrity: sha512-aW35yZM6Bb/4oJlZncMH2LCoZtJXTRxES17vE3hoRiowU2kWHaJKFkSBDnDR+cm9J+9QhXmREyIfv0pji9ejCQ==}
     engines: {node: '>=10'}
 
-  deep-diff@1.0.2:
-    resolution: {integrity: sha512-aWS3UIVH+NPGCD1kki+DCU9Dua032iSsO43LqQpcs4R3+dVv7tX0qBGjiVHJHjplsoUM2XRO/KB92glqc68awg==}
-
   deep-equal@1.0.1:
     resolution: {integrity: sha512-bHtC0iYvWhyaTzvV3CZgPeZQqCOBGyGsVV7v4eevpdkLHfiSrXUdBG+qAuSz4RI70sszvjQ1QSZ98An1yNwpSw==}
 
@@ -4380,6 +4446,13 @@ packages:
   dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
     engines: {node: '>=8'}
+
+  discord-api-types@0.38.13:
+    resolution: {integrity: sha512-FELWJRgLVQuR7Az8RhdEZE0k6QNjSW9PCUcU1iyP2Gke8HrJmnMceSS9pD93UM64s3tvZzJPajpPLjWZJylf4g==}
+
+  discord.js@14.21.0:
+    resolution: {integrity: sha512-U5w41cEmcnSfwKYlLv5RJjB8Joa+QJyRwIJz5i/eg+v2Qvv6EYpCRhN9I2Rlf0900LuqSDg8edakUATrDZQncQ==}
+    engines: {node: '>=18'}
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
@@ -4603,6 +4676,9 @@ packages:
   external-editor@3.1.0:
     resolution: {integrity: sha512-hMQ4CX1p1izmuLYyZqLMO/qGNw10wSv9QDCPfzXfyFrOaCSSoRfqE1Kf1s5an66J5JZC62NewG+mK49jOCtQew==}
     engines: {node: '>=4'}
+
+  fast-deep-equal@3.1.3:
+    resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==}
 
   fast-equals@5.2.2:
     resolution: {integrity: sha512-V7/RktU11J3I36Nwq2JnZEM7tNm17eBJz+u25qdxBZeCKiX6BkVSZQjwWIr+IobgnZy+ag73tTZgZi7tr0LrBw==}
@@ -5200,6 +5276,11 @@ packages:
     peerDependencies:
       ws: '*'
 
+  isows@1.0.7:
+    resolution: {integrity: sha512-I1fSfDCZL5P0v33sVqeTDSpcstAg/N+wF5HS033mogOVIp4B+oHC7oOCsA3axAbBSGTJ8QubbNmnIRN/h8U7hg==}
+    peerDependencies:
+      ws: '*'
+
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
@@ -5344,6 +5425,9 @@ packages:
   lodash.isplainobject@4.0.6:
     resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
 
+  lodash.snakecase@4.1.1:
+    resolution: {integrity: sha512-QZ1d4xoBHYUeuouhEq3lk3Uq7ldgyFXGBhg04+oRLnIz8o9T65Eh+8YdroUwn846zchkA9yDsDl5CVVaV2nqYw==}
+
   lodash.sortby@4.7.0:
     resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
 
@@ -5383,6 +5467,9 @@ packages:
 
   lru_map@0.4.1:
     resolution: {integrity: sha512-I+lBvqMMFfqaV8CJCISjI3wbjmwVu/VyOoU7+qtu9d7ioW5klMgsTTiUOUp+DJvfTTzKXoPbyC6YfgkNcyPSOg==}
+
+  magic-bytes.js@1.12.1:
+    resolution: {integrity: sha512-ThQLOhN86ZkJ7qemtVRGYM+gRgR8GEXNli9H/PMvpnZsE44Xfh3wx9kGJaldg314v85m+bFW6WBMaVHJc/c3zA==}
 
   make-dir@3.1.0:
     resolution: {integrity: sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==}
@@ -5826,6 +5913,14 @@ packages:
 
   outdent@0.5.0:
     resolution: {integrity: sha512-/jHxFIzoMXdqPzTaCpFzAAWhpkSjZPF4Vsn6jAfNpmbH/ymsmd7Qc6VE9BGn0L6YMj6uwpQLxCECpus4ukKS9Q==}
+
+  ox@0.8.1:
+    resolution: {integrity: sha512-e+z5epnzV+Zuz91YYujecW8cF01mzmrUtWotJ0oEPym/G82uccs7q0WDHTYL3eiONbTUEvcZrptAKLgTBD3u2A==}
+    peerDependencies:
+      typescript: '>=5.4.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   p-filter@2.1.0:
     resolution: {integrity: sha512-ZBxxZ5sL2HghephhpGAQdoskxplTwr7ICaehZwLIlfL6acuVgZPm8yBNuRAFBGEqtD/hmUeq9eqLg2ys9Xr/yw==}
@@ -6925,6 +7020,9 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
+  ts-mixer@6.0.4:
+    resolution: {integrity: sha512-ufKpbmrugz5Aou4wcr5Wc1UUFWOLhq+Fm6qa6P0w0K5Qw2yhaUoiWszhCVuNQyNwrlGiscHOmqYoAox1PtvgjA==}
+
   ts-node-dev@2.0.0:
     resolution: {integrity: sha512-ywMrhCfH6M75yftYvrvNarLEY+SUXtUvU8/0Z6llrHQVBx12GiFk5sStF8UdfE/yfzk9IAq7O5EEbTQsxlBI8w==}
     engines: {node: '>=0.8.0'}
@@ -7066,6 +7164,10 @@ packages:
     resolution: {integrity: sha512-uROZWze0R0itiAKVPsYhFov9LxrPMHLMEQFszeI2gCN6bnIIZ8twzBCJcN2LJrBBLfrP0t1FW0g+JmKVl8Vk1g==}
     engines: {node: '>=18.17'}
 
+  undici@6.21.3:
+    resolution: {integrity: sha512-gBLkYIlEnSp8pFbT64yFgGE6UIB9tAkhukC23PmMDCe5Nd+cRqKxSjw5y54MK2AZMgZfJWMaNE4nYUHgi1XEOw==}
+    engines: {node: '>=18.17'}
+
   unicode-byte-truncate@1.0.0:
     resolution: {integrity: sha512-GQgHk6DodEoKddKQdjnv7xKS9G09XCfHWX0R4RKht+EbUMSiVEmtWHGFO8HUm+6NvWik3E2/DG4MxTitOLL64A==}
 
@@ -7176,6 +7278,14 @@ packages:
 
   viem@2.21.36:
     resolution: {integrity: sha512-rKQj4EiA/usM2bY1/lYGaiHg17T4By6vbFPiomtod4evi0IH91ZPFI5lDOz1dnUVqQTNOJhKkwQupN3ahuRhHQ==}
+    peerDependencies:
+      typescript: '>=5.0.4'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+
+  viem@2.31.6:
+    resolution: {integrity: sha512-2PPbXL/8bHQxUzaLFDk4R6WHifTcXxAqMC8/j6RBgXl/OexQ1HU8r9OukwfDTqrFoHtWWiYz5fktHATy7+U9nQ==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -7362,11 +7472,6 @@ packages:
   zip-stream@4.1.1:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
     engines: {node: '>= 10'}
-
-  zod-to-json-schema@3.24.5:
-    resolution: {integrity: sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==}
-    peerDependencies:
-      zod: ^3.24.1
 
   zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
@@ -7605,6 +7710,53 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
 
+  '@discordjs/builders@1.11.2':
+    dependencies:
+      '@discordjs/formatters': 0.6.1
+      '@discordjs/util': 1.1.1
+      '@sapphire/shapeshift': 4.0.0
+      discord-api-types: 0.38.13
+      fast-deep-equal: 3.1.3
+      ts-mixer: 6.0.4
+      tslib: 2.8.1
+
+  '@discordjs/collection@1.5.3': {}
+
+  '@discordjs/collection@2.1.1': {}
+
+  '@discordjs/formatters@0.6.1':
+    dependencies:
+      discord-api-types: 0.38.13
+
+  '@discordjs/rest@2.5.1':
+    dependencies:
+      '@discordjs/collection': 2.1.1
+      '@discordjs/util': 1.1.1
+      '@sapphire/async-queue': 1.5.5
+      '@sapphire/snowflake': 3.5.3
+      '@vladfrangu/async_event_emitter': 2.4.6
+      discord-api-types: 0.38.13
+      magic-bytes.js: 1.12.1
+      tslib: 2.8.1
+      undici: 6.21.3
+
+  '@discordjs/util@1.1.1': {}
+
+  '@discordjs/ws@1.2.3':
+    dependencies:
+      '@discordjs/collection': 2.1.1
+      '@discordjs/rest': 2.5.1
+      '@discordjs/util': 1.1.1
+      '@sapphire/async-queue': 1.5.5
+      '@types/ws': 8.18.1
+      '@vladfrangu/async_event_emitter': 2.4.6
+      discord-api-types: 0.38.13
+      tslib: 2.8.1
+      ws: 8.18.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+
   '@elastic/ecs-helpers@2.1.1': {}
 
   '@elastic/ecs-pino-format@1.5.0':
@@ -7634,7 +7786,7 @@ snapshots:
 
   '@emnapi/runtime@1.3.1':
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
     optional: true
 
   '@esbuild/aix-ppc64@0.21.5':
@@ -8328,7 +8480,7 @@ snapshots:
       globby: 11.1.0
       read-yaml-file: 1.1.0
 
-  '@mradomski/fast-solidity-parser@0.1.1': {}
+  '@mradomski/fast-solidity-parser@0.1.4': {}
 
   '@mradomski/tinyerc55@0.1.3': {}
 
@@ -8363,11 +8515,19 @@ snapshots:
   '@next/swc-win32-x64-msvc@15.0.1':
     optional: true
 
+  '@noble/ciphers@1.3.0': {}
+
   '@noble/curves@1.6.0':
     dependencies:
       '@noble/hashes': 1.5.0
 
+  '@noble/curves@1.9.2':
+    dependencies:
+      '@noble/hashes': 1.8.0
+
   '@noble/hashes@1.5.0': {}
+
+  '@noble/hashes@1.8.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
@@ -9620,7 +9780,18 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.3':
     optional: true
 
+  '@sapphire/async-queue@1.5.5': {}
+
+  '@sapphire/shapeshift@4.0.0':
+    dependencies:
+      fast-deep-equal: 3.1.3
+      lodash: 4.17.21
+
+  '@sapphire/snowflake@3.5.3': {}
+
   '@scure/base@1.1.9': {}
+
+  '@scure/base@1.2.6': {}
 
   '@scure/bip32@1.5.0':
     dependencies:
@@ -9628,10 +9799,21 @@ snapshots:
       '@noble/hashes': 1.5.0
       '@scure/base': 1.1.9
 
+  '@scure/bip32@1.7.0':
+    dependencies:
+      '@noble/curves': 1.9.2
+      '@noble/hashes': 1.8.0
+      '@scure/base': 1.2.6
+
   '@scure/bip39@1.4.0':
     dependencies:
       '@noble/hashes': 1.5.0
       '@scure/base': 1.1.9
+
+  '@scure/bip39@1.6.0':
+    dependencies:
+      '@noble/hashes': 1.8.0
+      '@scure/base': 1.2.6
 
   '@shuding/opentype.js@1.4.0-beta.0':
     dependencies:
@@ -9884,8 +10066,6 @@ snapshots:
     dependencies:
       '@types/ms': 0.7.34
 
-  '@types/deep-diff@1.0.5': {}
-
   '@types/diff@7.0.2': {}
 
   '@types/emscripten@1.40.0': {}
@@ -10094,6 +10274,8 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
+  '@vladfrangu/async_event_emitter@2.4.6': {}
+
   '@vue/reactivity@3.1.5':
     dependencies:
       '@vue/shared': 3.1.5
@@ -10104,6 +10286,11 @@ snapshots:
     optional: true
 
   abitype@1.0.6(typescript@5.6.3)(zod@3.23.8):
+    optionalDependencies:
+      typescript: 5.6.3
+      zod: 3.23.8
+
+  abitype@1.0.8(typescript@5.6.3)(zod@3.23.8):
     optionalDependencies:
       typescript: 5.6.3
       zod: 3.23.8
@@ -10865,8 +11052,6 @@ snapshots:
     dependencies:
       mimic-response: 3.1.0
 
-  deep-diff@1.0.2: {}
-
   deep-equal@1.0.1: {}
 
   deep-extend@0.6.0: {}
@@ -10928,6 +11113,27 @@ snapshots:
   dir-glob@3.0.1:
     dependencies:
       path-type: 4.0.0
+
+  discord-api-types@0.38.13: {}
+
+  discord.js@14.21.0:
+    dependencies:
+      '@discordjs/builders': 1.11.2
+      '@discordjs/collection': 1.5.3
+      '@discordjs/formatters': 0.6.1
+      '@discordjs/rest': 2.5.1
+      '@discordjs/util': 1.1.1
+      '@discordjs/ws': 1.2.3
+      '@sapphire/snowflake': 3.5.3
+      discord-api-types: 0.38.13
+      fast-deep-equal: 3.1.3
+      lodash.snakecase: 4.1.1
+      magic-bytes.js: 1.12.1
+      tslib: 2.8.1
+      undici: 6.21.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   dlv@1.1.3: {}
 
@@ -11349,6 +11555,8 @@ snapshots:
       chardet: 0.7.0
       iconv-lite: 0.4.24
       tmp: 0.0.33
+
+  fast-deep-equal@3.1.3: {}
 
   fast-equals@5.2.2: {}
 
@@ -12012,6 +12220,10 @@ snapshots:
     dependencies:
       ws: 8.18.0
 
+  isows@1.0.7(ws@8.18.2):
+    dependencies:
+      ws: 8.18.2
+
   jackspeak@3.4.3:
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -12170,6 +12382,8 @@ snapshots:
 
   lodash.isplainobject@4.0.6: {}
 
+  lodash.snakecase@4.1.1: {}
+
   lodash.sortby@4.7.0: {}
 
   lodash.startcase@4.4.0: {}
@@ -12207,6 +12421,8 @@ snapshots:
     optional: true
 
   lru_map@0.4.1: {}
+
+  magic-bytes.js@1.12.1: {}
 
   make-dir@3.1.0:
     dependencies:
@@ -12633,6 +12849,21 @@ snapshots:
   os-tmpdir@1.0.2: {}
 
   outdent@0.5.0: {}
+
+  ox@0.8.1(typescript@5.6.3)(zod@3.23.8):
+    dependencies:
+      '@adraffy/ens-normalize': 1.11.0
+      '@noble/ciphers': 1.3.0
+      '@noble/curves': 1.9.2
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.0.8(typescript@5.6.3)(zod@3.23.8)
+      eventemitter3: 5.0.1
+    optionalDependencies:
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - zod
 
   p-filter@2.1.0:
     dependencies:
@@ -13925,6 +14156,8 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
+  ts-mixer@6.0.4: {}
+
   ts-node-dev@2.0.0(@swc/core@1.7.40(@swc/helpers@0.5.15))(@types/node@22.8.2)(typescript@5.6.3):
     dependencies:
       chokidar: 3.6.0
@@ -14073,6 +14306,8 @@ snapshots:
 
   undici@6.21.2: {}
 
+  undici@6.21.3: {}
+
   unicode-byte-truncate@1.0.0:
     dependencies:
       is-integer: 1.0.7
@@ -14191,6 +14426,23 @@ snapshots:
       isows: 1.0.6(ws@8.18.0)
       webauthn-p256: 0.0.10
       ws: 8.18.0
+    optionalDependencies:
+      typescript: 5.6.3
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - zod
+
+  viem@2.31.6(typescript@5.6.3)(zod@3.23.8):
+    dependencies:
+      '@noble/curves': 1.9.2
+      '@noble/hashes': 1.8.0
+      '@scure/bip32': 1.7.0
+      '@scure/bip39': 1.6.0
+      abitype: 1.0.8(typescript@5.6.3)(zod@3.23.8)
+      isows: 1.0.7(ws@8.18.2)
+      ox: 0.8.1(typescript@5.6.3)(zod@3.23.8)
+      ws: 8.18.2
     optionalDependencies:
       typescript: 5.6.3
     transitivePeerDependencies:
@@ -14319,10 +14571,6 @@ snapshots:
       archiver-utils: 3.0.4
       compress-commons: 4.1.2
       readable-stream: 3.6.2
-
-  zod-to-json-schema@3.24.5(zod@3.23.8):
-    dependencies:
-      zod: 3.23.8
 
   zod@3.23.8: {}
 

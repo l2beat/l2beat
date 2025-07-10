@@ -115,6 +115,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       explorers: [
         'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
+        'https://arbitrum.blockscout.com/',
         'https://arbitrum.l2scan.co/',
       ],
       repositories: [
@@ -143,15 +144,6 @@ export const arbitrum: ScalingProject = orbitStackL2({
         challengeWindow * assumedBlockTime,
       )} after it has been posted.`,
     },
-    finality: { finalizationPeriod: challengeWindowSeconds },
-  },
-  finality: {
-    type: 'Arbitrum',
-    // First blob tx from arbitrum
-    // https://etherscan.io/tx/0x5969e9d520e138e6eeb5c020a75635fd2fdc15803f707dce7909c1bf062b32d0
-    minTimestamp: UnixTime(1710427823),
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   chainConfig: {
     name: 'arbitrum',
@@ -206,6 +198,7 @@ export const arbitrum: ScalingProject = orbitStackL2({
       tokens: '*',
       ...ESCROW.CANONICAL_EXTERNAL,
       excludedTokens: ['USDT'], // upgraded to USDT0 - tracked on L2
+      premintedTokens: ['SQD'],
       description:
         'Main entry point for users depositing ERC20 tokens that require minting custom tokens on L2.',
       ...upgradeExecutorUpgradeability,
@@ -279,11 +272,11 @@ export const arbitrum: ScalingProject = orbitStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: true,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,
@@ -316,6 +309,12 @@ export const arbitrum: ScalingProject = orbitStackL2({
     ],
   },
   milestones: [
+    {
+      title: 'Timeboost transaction ordering policy introduced',
+      url: 'https://www.tally.xyz/gov/arbitrum/proposal/14881197137069494959448952699217598923721993392617887469969318742509097999570?govId=eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9',
+      date: '2025-04-29T00:00:00Z',
+      type: 'general',
+    },
     {
       title: 'BoLD, permissionless proof system, deployed',
       url: 'https://x.com/arbitrum/status/1889710151332245837',

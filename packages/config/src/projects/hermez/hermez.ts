@@ -11,6 +11,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const upgradeDelay = 604800
 const discovery = new ProjectDiscovery('hermez')
@@ -32,7 +33,7 @@ export const hermez: ScalingProject = {
     category: 'ZK Rollup',
     // TODO: This is not correct. Research it.
 
-    stack: 'Agglayer CDK',
+    stacks: ['Agglayer CDK'],
     links: {
       websites: ['https://hermez.io/'],
       bridges: ['https://wallet.hermez.io/'],
@@ -193,4 +194,5 @@ export const hermez: ScalingProject = {
     },
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('7 days')],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

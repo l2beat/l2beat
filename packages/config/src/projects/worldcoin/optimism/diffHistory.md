@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x0a4cf79d68987a9c70b0c56f020f01df4b27506a
+Generated with discovered.json: 0xabcbd421b763e4fb3312b3651f4a3a2714393682
+
+# Diff at Fri, 04 Jul 2025 12:19:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 133912814
+- current block number: 133912814
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 133912814 (main branch discovery), not current.
+
+```diff
+    EOA  (0x96d55BD9c8C4706FED243c1e15825FF7854920fA) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
++        "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "optimism:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
++        "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611"
+    }
+```
+
+Generated with discovered.json: 0x3f2e690dcb1f40b036f0c45c73956c1d31536aa1
 
 # Diff at Fri, 23 May 2025 09:41:16 GMT:
 

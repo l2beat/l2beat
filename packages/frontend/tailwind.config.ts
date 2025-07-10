@@ -23,6 +23,189 @@ const config: Config = {
       '4xl': ['40px', '60px'],
       '5xl': ['48px', '60px'],
       '6xl': ['64px', '64px'],
+      // Custom
+      'heading-64': [
+        '64px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-48': [
+        '48px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-44': [
+        '44px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-40': [
+        '40px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-36': [
+        '36px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-32': [
+        '32px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-28': [
+        '28px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-24': [
+        '24px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-20': [
+        '20px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-18': [
+        '18px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'heading-16': [
+        '16px',
+        {
+          lineHeight: '115%',
+          fontWeight: '700',
+        },
+      ],
+      'subtitle-14': [
+        '14px',
+        {
+          lineHeight: '115%',
+          fontWeight: '600',
+        },
+      ],
+      'subtitle-12': [
+        '12px',
+        {
+          lineHeight: '115%',
+          fontWeight: '600',
+        },
+      ],
+      'subtitle-11': [
+        '11px',
+        {
+          lineHeight: '115%',
+          fontWeight: '600',
+        },
+      ],
+      'subtitle-10': [
+        '10px',
+        {
+          lineHeight: '115%',
+          fontWeight: '600',
+        },
+      ],
+      'label-value-20': [
+        '20px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-18': [
+        '18px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-16': [
+        '16px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-15': [
+        '15px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-14': [
+        '14px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-13': [
+        '13px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'label-value-12': [
+        '12px',
+        {
+          lineHeight: '100%',
+        },
+      ],
+      'paragraph-18': [
+        '18px',
+        {
+          lineHeight: '150%',
+          fontWeight: '400',
+        },
+      ],
+      'paragraph-16': [
+        '16px',
+        {
+          lineHeight: '150%',
+          fontWeight: '400',
+        },
+      ],
+      'paragraph-15': [
+        '15px',
+        {
+          lineHeight: '150%',
+          fontWeight: '400',
+        },
+      ],
+      'paragraph-14': [
+        '14px',
+        {
+          lineHeight: '145%',
+          fontWeight: '400',
+        },
+      ],
+      'paragraph-13': [
+        '13px',
+        {
+          lineHeight: '140%',
+          fontWeight: '400',
+        },
+      ],
     },
     fontWeight: {
       thin: '100',
@@ -122,6 +305,10 @@ const config: Config = {
         800: '#34762F',
         900: '#125D19',
       },
+      'n-green': {
+        450: '#50E35F',
+        700: '#007408',
+      },
       red: {
         100: '#FDD9D9',
         200: '#EE2C01',
@@ -146,6 +333,10 @@ const config: Config = {
         700: '#005DD7',
         900: '#112944',
         950: '#152A4B',
+      },
+      'n-blue': {
+        400: '#53A2FF',
+        700: '#2A5BD8',
       },
       slate: {
         600: '#525C6A',
@@ -191,8 +382,9 @@ const config: Config = {
       link: 'hsl(var(--link))',
       'link-stroke': 'hsl(var(--link-stroke))',
       'chart-ethereum': 'hsl(var(--chart-ethereum))',
-      'chart-da-celestia': 'hsl(var(--chart-da-celestia))',
-      'chart-emerald': 'hsl(var(--chart-emerald))',
+      'chart-fuchsia': 'hsl(var(--chart-fuchsia))',
+      'chart-lime': 'hsl(var(--chart-lime))',
+      'chart-sky': 'hsl(var(--chart-sky))',
       'chart-stacked-blue': 'hsl(var(--chart-stacked-blue))',
       'chart-stacked-yellow': 'hsl(var(--chart-stacked-yellow))',
       'chart-stacked-pink': 'hsl(var(--chart-stacked-pink))',

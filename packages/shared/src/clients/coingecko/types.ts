@@ -1,41 +1,41 @@
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export type CoinListEntry = z.infer<typeof CoinListEntry>
-export const CoinListEntry = z.object({
-  id: z.string().transform((x) => (x ? CoingeckoId(x) : undefined)),
-  symbol: z.string(),
-  name: z.string(),
+export type CoinListEntry = v.infer<typeof CoinListEntry>
+export const CoinListEntry = v.object({
+  id: v.string().transform((x) => (x ? CoingeckoId(x) : undefined)),
+  symbol: v.string(),
+  name: v.string(),
 })
 
-export type CoinListPlatformEntry = z.infer<typeof CoinListPlatformEntry>
-export const CoinListPlatformEntry = z.object({
-  id: z.string().transform((x) => (x ? CoingeckoId(x) : undefined)),
-  symbol: z.string(),
-  name: z.string(),
-  platforms: z.record(z.string(), z.union([z.string(), z.null()])),
+export type CoinListPlatformEntry = v.infer<typeof CoinListPlatformEntry>
+export const CoinListPlatformEntry = v.object({
+  id: v.string().transform((x) => (x ? CoingeckoId(x) : undefined)),
+  symbol: v.string(),
+  name: v.string(),
+  platforms: v.record(v.string(), v.union([v.string(), v.null()])),
 })
 
-export const CoinListResult = z.array(CoinListEntry)
-export const CoinListPlatformResult = z.array(CoinListPlatformEntry)
+export const CoinListResult = v.array(CoinListEntry)
+export const CoinListPlatformResult = v.array(CoinListPlatformEntry)
 
-export const CoinMetadata = z.object({
-  image: z.object({
-    thumb: z.string(),
-    small: z.string(),
-    large: z.string(),
+export const CoinMetadata = v.object({
+  image: v.object({
+    thumb: v.string(),
+    small: v.string(),
+    large: v.string(),
   }),
 })
 
-const NumberOrString = z.union([z.number(), z.string().transform(Number)])
+const NumberOrString = v.union([v.number(), v.string().transform(Number)])
 
-export type CoinMarketChartRangeResult = z.infer<
+export type CoinMarketChartRangeResult = v.infer<
   typeof CoinMarketChartRangeResult
 >
-export const CoinMarketChartRangeResult = z.object({
-  prices: z.array(z.tuple([NumberOrString, NumberOrString])),
-  market_caps: z.array(z.tuple([NumberOrString, NumberOrString])),
-  total_volumes: z.array(z.tuple([NumberOrString, NumberOrString])),
+export const CoinMarketChartRangeResult = v.object({
+  prices: v.array(v.tuple([NumberOrString, NumberOrString])),
+  market_caps: v.array(v.tuple([NumberOrString, NumberOrString])),
+  total_volumes: v.array(v.tuple([NumberOrString, NumberOrString])),
 })
 
 export interface CoinMarketChartRangeData {
@@ -43,19 +43,19 @@ export interface CoinMarketChartRangeData {
   marketCaps: { date: Date; value: number }[]
 }
 
-export const CoinsMarketResult = z.object({
-  id: z.string(),
-  symbol: z.string(),
-  name: z.string(),
-  image: z.string(),
-  current_price: z.number(),
-  circulating_supply: z.number(),
+export const CoinsMarketResult = v.object({
+  id: v.string(),
+  symbol: v.string(),
+  name: v.string(),
+  image: v.string(),
+  current_price: v.number(),
+  circulating_supply: v.number(),
 })
 
-export const CoinsMarketResultData = z.array(CoinsMarketResult)
-export type CoinsMarketResultData = z.infer<typeof CoinsMarketResultData>
+export const CoinsMarketResultData = v.array(CoinsMarketResult)
+export type CoinsMarketResultData = v.infer<typeof CoinsMarketResultData>
 
-export type CoingeckoError = z.infer<typeof CoingeckoError>
-export const CoingeckoError = z.object({
-  error: z.string(),
+export type CoingeckoError = v.infer<typeof CoingeckoError>
+export const CoingeckoError = v.object({
+  error: v.string(),
 })

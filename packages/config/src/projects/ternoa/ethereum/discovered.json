@@ -1,8 +1,8 @@
 {
   "name": "ternoa",
   "chain": "ethereum",
-  "blockNumber": 22208591,
-  "configHash": "0xf879cf6288c8d9297ba29c56adfa3cac07869a2d6966d391d16d5dbf5a6eef29",
+  "blockNumber": 22774947,
+  "configHash": "0x92a257d0623db862dcfa27e6749254777f09daa0397d5e185bb09f88f2cf71b6",
   "sharedModules": ["shared-polygon-cdk"],
   "entries": [
     {
@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
           "role": ".trustedSequencer"
         }
       ]
@@ -25,35 +25,35 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
           "description": "set core system parameters like the trusted sequencer and manage forced transactions/batches.",
           "role": ".admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
+          "from": "eth:0x7fF0B5fF6Eb8B789456639AC2A02487c338c1789",
           "description": "sole address that can force batches.",
           "role": ".forceBatchAddress"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "from": "eth:0xB408a216927d31A27fd96176dbF1B825630f0301",
           "description": "manage the members of the data availability committee and the threshold for valid commitments.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "from": "eth:0xB408a216927d31A27fd96176dbF1B825630f0301",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }
+            { "address": "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
+          "from": "eth:0xE390FB0dd0Ea7684F59210d791D63E7fc28BbF9b",
           "role": ".owner"
         }
       ]
@@ -107,7 +107,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xf26602fe5f0d1170faf995b0e5711551d1177f7addb180fc7b60b954db66cae3",
+        "lastAccInputHash": "0xc9f73b70afccd6f6f76a040f097e467bee3ee45c6dbfebc8da935ae246b4b523",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Ternoa",
@@ -205,7 +205,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB408a216927d31A27fd96176dbF1B825630f0301",
+          "from": "eth:0xB408a216927d31A27fd96176dbF1B825630f0301",
           "role": "admin"
         }
       ],
@@ -404,5 +404,5 @@
     "polygon-cdk/PolygonZkEVM": "0xa2596c05283672a30099f1a2f7bd977576034248251d6bee841e04719c186da6",
     "polygon-cdk/Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x8d48d23867b18cc37033d7370c3aecc3ffbc500635ccb0242b67d773b7f07b51"
+  "permissionsConfigHash": "0x1eb13db8ecf293e63168780a2f346ee32059a329b32549636479a9304e3ae030"
 }

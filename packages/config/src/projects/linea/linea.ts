@@ -29,6 +29,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { ProjectPermissionedAccount } from '../../types'
 
 const discovery = new ProjectDiscovery('linea')
@@ -86,7 +87,6 @@ export const linea: ScalingProject = {
   display: {
     name: 'Linea',
     slug: 'linea',
-    warning: 'The circuit of the program being proven is not public.',
     description:
       'Linea is a ZK Rollup powered by a zkEVM developed at Consensys, designed to scale the Ethereum network.',
     purposes: ['Universal'],
@@ -114,9 +114,6 @@ export const linea: ScalingProject = {
     liveness: {
       explanation:
         'Linea is a ZK rollup that posts transaction data to the L1. For a transaction to be considered final, it has to be posted on L1. Proofs and state roots are currently posted in the same transaction.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   config: {
@@ -337,12 +334,6 @@ export const linea: ScalingProject = {
         to: 'proofSubmissions',
       },
     },
-    finality: {
-      type: 'Linea',
-      lag: 0,
-      minTimestamp: UnixTime(1717588271),
-      stateUpdate: 'disabled',
-    },
   },
   chainConfig: {
     name: 'linea',
@@ -403,11 +394,11 @@ export const linea: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: {
@@ -620,4 +611,5 @@ export const linea: ScalingProject = {
     },
   ],
   badges: [BADGES.VM.EVM, BADGES.DA.EthereumBlobs],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

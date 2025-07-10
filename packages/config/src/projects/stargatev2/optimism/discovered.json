@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "optimism",
   "blockNumber": 136932647,
-  "configHash": "0x0d5445cb52d279dba83687f2ce3b26ef338bf513773366b524e7c62a471f9de8",
+  "configHash": "0xebdd92b73f4944d6a76c61fce515a85155557eea160ef4074c7138a605ff7f33",
   "entries": [
     {
       "name": "StargatePoolMigratable",
@@ -571,5 +571,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0xe196bd73ed03a687a9bc1c7e0216d6d52eecb7c7eecaf7e52492a3abb125d1ed"
+  "permissionsConfigHash": "0x263764165f1a35168ec6d501e1b1578bc8decbb983705c69e5d9fce1b7df3f0c"
 }

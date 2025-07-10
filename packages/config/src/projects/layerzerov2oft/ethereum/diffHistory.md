@@ -1,4 +1,144 @@
-Generated with discovered.json: 0xa400252e17f946362b86c0816721ab840e6ff5bb
+Generated with discovered.json: 0x06c12da1b3d86c99be7c6149525a92d60a49982f
+
+# Diff at Wed, 09 Jul 2025 15:14:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 22567567
+- current block number: 22882451
+
+## Description
+
+Update LZ Multisig to a custom multisig contract that allows offchain signing with multichain onchain execution.
+
+## Watched changes
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract Treasury (0x5ebB3f2feaA15271101a927869B3A56837e73056) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract ReadLib1002 (0x74F55Bc2a79A27A0bF1D1A35dB5d0Fc36b9FDB9D) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: None
+      values.owner:
+-        "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
++        "0xBe010A7e3686FdF65E93344ab664D065A0B02478"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LayerZero Multisig (0xBe010A7e3686FdF65E93344ab664D065A0B02478)
+    +++ description: Custom multisignature contract allowing offchain signing and execution on multiple target chains.
+```
+
+## Source code changes
+
+```diff
+.../LayerZero Multisig/GnosisSafe.sol => /dev/null |  953 -------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |   35 -
+ .../ethereum/.flat/LayerZero Multisig.sol          | 1396 ++++++++++++++++++++
+ 3 files changed, 1396 insertions(+), 988 deletions(-)
+```
+
+Generated with discovered.json: 0x2f433ba41facf1feb4301062b9f5fb65958748ea
+
+# Diff at Fri, 04 Jul 2025 12:19:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22567567
+- current block number: 22567567
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22567567 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
++        "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
+    }
+```
+
+```diff
+    contract Safe (0x4DFF9b5b0143E642a3F63a5bcf2d1C328e600bf8) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
++        "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
+      receivedPermissions.0.from:
+-        "ethereum:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
++        "eth:0x6C96dE32CEa08842dcc4058c14d3aaAD7Fa41dee"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
++        "eth:0x4de7096B2131E84Fd6b2042AD8cd9B4E43F728Fc"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x173272739Bd7Aa6e4e214714048a9fE699453059"
++        "eth:0x173272739Bd7Aa6e4e214714048a9fE699453059"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
++        "eth:0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"
+    }
+```
+
+Generated with discovered.json: 0x9c0ef060a34b43ddaa006405cc6fce2889bcaed4
 
 # Diff at Mon, 26 May 2025 14:31:03 GMT:
 

@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,11 +13,14 @@ export const zklighter: ScalingProject = upcomingL2({
       'zkLighter is an efficient order book Validium on Ethereum - low cost, low latency, verifiable matching.',
     purposes: ['Universal', 'Exchange'],
     category: 'Validium',
-    stack: 'ZK Stack',
+    stacks: ['ZK Stack'],
     links: {
       websites: ['https://zk.lighter.xyz'],
       documentation: ['https://zk.lighter.xyz/developers'],
       socialMedia: ['https://twitter.com/lighter_xyz'],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('the-elastic-network'),
   },
 })

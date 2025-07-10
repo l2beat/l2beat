@@ -1,88 +1,62 @@
 import { writeFileSync } from 'fs'
-import { z } from 'zod'
-import { zodToJsonSchema } from 'zod-to-json-schema'
+import { type Parser, toJsonSchema, v } from '@l2beat/validate'
 import {
-  ColorConfig,
-  ColorContract,
-  ColorContractField,
-  ContractValueType,
-  DiscoveryCategory,
-  ExternalReference,
+  _ColorConfig,
+  _ColorContract,
+  _ColorContractField,
 } from '../src/discovery/config/ColorConfig'
 import {
-  ContractPermission,
-  ContractPermissionField,
-  Permission,
-  PermissionsConfig,
-  RawPermissionConfiguration,
+  _ContractPermission,
+  _ContractPermissionField,
+  _PermissionsConfig,
 } from '../src/discovery/config/PermissionConfig'
 import {
-  ContractFieldSeverity,
   DiscoveryCustomType,
-  ManualProxyType,
-  StructureConfig,
-  StructureContract,
-  StructureContractField,
+  _StructureConfig,
+  _StructureContract,
+  _StructureContractField,
 } from '../src/discovery/config/StructureConfig'
-import { UserHandlerDefinition } from '../src/discovery/handlers/user'
 import { toPrettyJson } from '../src/discovery/output/toPrettyJson'
 
-async function generateAndSaveSchema(
-  // biome-ignore lint/suspicious/noExplicitAny: it's fine
-  baseSchema: z.ZodObject<any>,
+async function generateAndSaveSchema<T>(
+  baseSchema: Parser<T>,
   filename: string,
 ) {
-  const schemaWithMeta = z
-    .object({ $schema: z.string().optional() })
-    .merge(baseSchema)
-  const schema = zodToJsonSchema(schemaWithMeta, {
-    definitions: {
-      UserHandlerDefinition,
-      Permission,
-      RawPermissionConfiguration,
-      ContractValueType,
-      ContractFieldSeverity,
-      DiscoveryContractField: StructureContractField,
-      ColorContractField,
-      DiscoveryCustomType,
-      ExternalReference,
-      DiscoveryCategory,
-      ManualProxyType,
-      DiscoveryContract: StructureContract,
-      ColorContract,
-      MergedContract: z.union([StructureContract, ColorContract]),
-    } as const,
-  })
+  const schema = toJsonSchema(baseSchema)
   writeFileSync(filename, await toPrettyJson(schema))
 }
 
 async function main() {
-  const MergedField = ContractPermissionField.merge(ColorContractField).merge(
-    // special handling due to the .refine() call in StructureContractField
-    StructureContractField._def.schema,
-  )
-  const MergedContract = z.object({
-    ...StructureContract.omit({ fields: true }).shape,
-    ...ColorContract.omit({ fields: true }).shape,
-    ...ContractPermission.omit({ fields: true }).shape,
-    fields: z.record(MergedField).optional(),
+  const MergedField = v.object({
+    ..._ContractPermissionField,
+    ..._ColorContractField,
+    ..._StructureContractField,
   })
-  const ChainConfig = z.object({
-    ...StructureConfig.omit({ overrides: true, name: true, chain: true }).shape,
-    ...ColorConfig.omit({ overrides: true }).shape,
-    ...PermissionsConfig.omit({ overrides: true }).shape,
-    overrides: z.record(MergedContract).optional(),
-    types: z.optional(z.record(z.string(), DiscoveryCustomType)),
+
+  const MergedContract = v.object({
+    ..._StructureContract,
+    ..._ColorContract,
+    ..._ContractPermission,
+    fields: v.record(v.string(), MergedField).optional(),
+  })
+
+  const ChainConfig = v.object({
+    ..._StructureConfig,
+    ..._ColorConfig,
+    ..._PermissionsConfig,
+    overrides: v.record(v.string(), MergedContract).optional(),
+    types: v.record(v.string(), DiscoveryCustomType).optional(),
   })
 
   // Create the main config schema with chains structure
-  const MergedConfig = z.object({
+  const MergedConfig = v.object({
     // Global properties
-    name: z.string().min(1),
-    import: z.optional(z.array(z.string())),
-    sharedModules: z.array(z.string()).default([]),
+    name: v.string().check((x) => x.length > 0),
+    import: v.array(v.string()).optional(),
+    archived: v.boolean().optional(),
+    modelCrossChainPermissions: v.boolean().optional(),
     // Chain-specific configurations
-    chains: z.record(z.string(), ChainConfig),
+    chains: v.record(v.string(), ChainConfig),
   })
 
   await generateAndSaveSchema(MergedConfig, 'schemas/config.v2.schema.json')

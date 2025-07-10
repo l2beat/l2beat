@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 22630207,
-  "configHash": "0x0b3822a3838b1753c03712ef58b33a33b5e3b3017b5a096b919357ec109a6089",
+  "blockNumber": 22865648,
+  "configHash": "0xc4251cbc832bc6595f437d13052e02c6fd4d7d2459b106608094fa3413b0dca9",
   "entries": [
     {
       "name": "ERC1155Predicate",
@@ -135,7 +135,7 @@
       "sinceBlock": 10167763,
       "values": {
         "$immutable": true,
-        "counter": 3073355,
+        "counter": 3083251,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -560,13 +560,13 @@
         "CHECKPOINT_REWARD": "53870967741900000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 82795,
-        "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3449946198362918036688242426",
+        "currentEpoch": 84577,
+        "currentValidatorSetSize": 102,
+        "currentValidatorSetTotalStake": "3680938938225488028601145196",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 82795,
+        "epoch": 84577,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -594,20 +594,20 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "3183131428593900266875247",
+        "rewardPerStake": "3218082862885182508877136",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x455e53CBB86018Ac2B8092FdCd39d8444aFFC3F6",
         "tokenMatic": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "11028939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "136069778085638042906924302",
-        "totalStaked": "10481125482114679921761405",
+        "totalRewardsLiquidated": "137595619927264333781990500",
+        "totalStaked": "10496154756412261997447959",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3449946198362918036688242426",
-          "stakerCount": 105
+          "amount": "3680938938225488028601145196",
+          "stakerCount": 102
         },
         "validatorThreshold": 105,
         "WITHDRAWAL_DELAY": 80,
@@ -835,7 +835,7 @@
       "sinceTimestamp": 1590849960,
       "sinceBlock": 10167725,
       "values": {
-        "_nextHeaderBlock": 827950000,
+        "_nextHeaderBlock": 845770000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -844,8 +844,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 827940000,
-        "getLastChildBlock": 72346277,
+        "currentHeaderBlock": 845760000,
+        "getLastChildBlock": 73678501,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -1221,64 +1221,64 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x401F6c983eA34274ec46f84D70b31C151321188b",
+          "from": "eth:0x401F6c983eA34274ec46f84D70b31C151321188b",
           "description": "can update the root chain it references.",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
+          "from": "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
           "description": "can delete arbitrary checkpoints.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
+          "from": "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2d641867411650cd05dB93B59964536b1ED5b1B7",
+          "from": "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
+          "from": "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "from": "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
+          "from": "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
+          "from": "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
+          "from": "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
+          "from": "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
+          "from": "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
+          "from": "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
           "role": "admin"
         }
       ],
@@ -1527,7 +1527,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0xDB2382413bCb9c2F1B6b62B52238558266361D68",
+          "from": "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68",
           "role": "admin"
         }
       ],
@@ -1553,7 +1553,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 9 (56%)",
-        "nonce": 218,
+        "nonce": 219,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -2724,5 +2724,5 @@
     "polygonposbridge/StateSender": "0xeb9862ce79f45aeb62e0c88612fd64a3ce8a0ec8b3ec63a6f51b2dca893bbcbd",
     "polygonposbridge/WithdrawManager": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x230c83377bc103ce22cfde119fb852928573309c41bf515f71af26b2a93dbb82"
+  "permissionsConfigHash": "0xa969b05c9317a585c5f4b8b3faadf5e6a72f7080ff2861d8ee5146ab3028457b"
 }

@@ -1,40 +1,34 @@
-import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import z from 'zod'
+import type { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
 
-export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
-export type LivenessTimeRange = z.infer<typeof LivenessTimeRange>
+export type LivenessTimeRange = '30d' | '90d' | 'max'
 
-export const LivenessDataPoint = z.object({
-  averageInSeconds: z.number().positive().int(),
-  minimumInSeconds: z.number().positive().int(),
-  maximumInSeconds: z.number().positive().int(),
-})
-export type LivenessDataPoint = z.infer<typeof LivenessDataPoint>
+export interface LivenessDataPoint {
+  averageInSeconds: number
+  minimumInSeconds: number
+  maximumInSeconds: number
+}
 
-export const LivenessAnomaly = z.object({
-  timestamp: z.number(),
-  durationInSeconds: z.number().positive().int(),
-  type: TrackedTxsConfigSubtype,
-})
-export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
+export interface LivenessAnomaly {
+  start: UnixTime
+  end: UnixTime | undefined
+  durationInSeconds: number
+  subtype: TrackedTxsConfigSubtype
+  avgInterval: number
+  isApproved: boolean
+}
 
-const LivenessDetails = z
-  .record(LivenessTimeRange, LivenessDataPoint.optional())
-  .and(
-    z.object({
-      syncedUntil: z.number(),
-    }),
-  )
+export interface LivenessDetails {
+  '30d'?: LivenessDataPoint
+  '90d'?: LivenessDataPoint
+  max?: LivenessDataPoint
+  syncedUntil: number
+}
 
-export type LivenessDetails = z.infer<typeof LivenessDetails>
+export interface LivenessProject {
+  batchSubmissions?: LivenessDetails
+  stateUpdates?: LivenessDetails
+  proofSubmissions?: LivenessDetails
+  anomalies: LivenessAnomaly[]
+}
 
-export const LivenessProject = z.object({
-  batchSubmissions: LivenessDetails.optional(),
-  stateUpdates: LivenessDetails.optional(),
-  proofSubmissions: LivenessDetails.optional(),
-  anomalies: z.array(LivenessAnomaly),
-})
-export type LivenessProject = z.infer<typeof LivenessProject>
-
-export const LivenessResponse = z.record(z.string(), LivenessProject)
-export type LivenessResponse = z.infer<typeof LivenessResponse>
+export type LivenessResponse = Record<string, LivenessProject>

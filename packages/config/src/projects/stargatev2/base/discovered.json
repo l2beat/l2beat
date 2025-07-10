@@ -2,7 +2,7 @@
   "name": "stargatev2",
   "chain": "base",
   "blockNumber": 31337375,
-  "configHash": "0x6980bf7a897d1bb23297af54d37ccb808c47843650b8d125c5261218d53473e8",
+  "configHash": "0x872e8987eafc8dc1942ccc23168982bd25014a283bc7204effeed58b002c8786",
   "entries": [
     {
       "name": "StargatePoolUSDC",
@@ -431,5 +431,5 @@
     "stargate/StargatePoolNative": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c",
     "stargate/StargatePoolUSDC": "0xf992962a0e6c85ac3439b8137559fe0cdc61c4ca5a44eea762d7cd42dbfc358c"
   },
-  "permissionsConfigHash": "0xe196bd73ed03a687a9bc1c7e0216d6d52eecb7c7eecaf7e52492a3abb125d1ed"
+  "permissionsConfigHash": "0x263764165f1a35168ec6d501e1b1578bc8decbb983705c69e5d9fce1b7df3f0c"
 }

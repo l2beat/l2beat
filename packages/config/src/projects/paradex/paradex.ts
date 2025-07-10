@@ -28,6 +28,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('paradex')
 
@@ -74,7 +75,7 @@ export const paradex: ScalingProject = {
   display: {
     name: 'Paradex',
     slug: 'paradex',
-    stack: 'SN Stack',
+    stacks: ['SN Stack'],
     description:
       'Paradex is a high-performance crypto-derivatives exchange built on a Starknet Appchain.',
     purposes: ['Universal', 'Exchange'],
@@ -92,9 +93,6 @@ export const paradex: ScalingProject = {
     liveness: {
       explanation:
         'Paradex is a ZK rollup that posts state diffs to the L1. For a transaction to be considered final, the state diffs have to be submitted and validity proof should be generated, submitted, and verified. Proofs are aggregated with other projects using SHARP and state updates have to refer to proved claims.',
-    },
-    finality: {
-      finalizationPeriod,
     },
   },
   chainConfig: {
@@ -277,12 +275,6 @@ export const paradex: ScalingProject = {
         },
       },
     ],
-    finality: {
-      lag: 0,
-      type: 'Starknet',
-      minTimestamp: UnixTime(1725811667),
-      stateUpdate: 'disabled',
-    },
   },
   dataAvailability: {
     layer: DA_LAYERS.ETH_BLOBS_OR_CALLDATA,
@@ -306,11 +298,11 @@ export const paradex: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: null,
@@ -395,4 +387,5 @@ export const paradex: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -2,7 +2,7 @@
   "name": "everclearbridge",
   "chain": "ethereum",
   "blockNumber": 22397509,
-  "configHash": "0x0c147858e6ac7287f871d24b07f82c545823dd6a1464e52fd74e2240e3216bb4",
+  "configHash": "0xf2d7369cea2cddf868fdbb8cc4616b4cbd3c372d444147823ddc072d72f72ba0",
   "entries": [
     {
       "name": "Permit2",
@@ -127,12 +127,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
+          "from": "eth:0x9ADA72CCbAfe94248aFaDE6B604D1bEAacc899A7",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
+          "from": "eth:0xa05A3380889115bf313f1Db9d5f335157Be4D816",
           "role": "admin"
         }
       ],
@@ -526,5 +526,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xb72b3d399c322b88f0b38d5957a0350a0cb84f9f8bce4efee97fb643ff052179"
+  "permissionsConfigHash": "0xbe21026ad51732d7421ad94bd97c42fff43a798027757232394b65dc5b2de8d9"
 }

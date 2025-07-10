@@ -1,3 +1,635 @@
+Generated with discovered.json: 0x2f9089b9801de1c19a4007263a90c1fa6ef60000
+
+# Diff at Fri, 04 Jul 2025 12:19:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 350404779
+- current block number: 350404779
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 350404779 (main branch discovery), not current.
+
+```diff
+    EOA  (0x026919DbCFab70a2A45775088C933331A7B25Ac6) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x053970A9AA9638F54370764E6E9c7B2f5854Ef21) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x0C79a90C94E1C1091D7D3a188730105be00798f9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x1a8902780F37e0526788198Dee30b8375A0B24Bc) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
++        "arb1:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      receivedPermissions.1.via.0.address:
+-        "arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
++        "arb1:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
+      receivedPermissions.1.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      receivedPermissions.2.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x336dD5a1aB948058E4c699fD7732c2AA78C10d90) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x401eCb1D350407f13ba348573E5630B83638E30D) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x404922a9B29b4a5205a6074AbA31A7392BD28944"
++        "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944"
+    }
+```
+
+```diff
+    EOA  (0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    contract Conduit Multisig 2 (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      receivedPermissions.1.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.1.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.1.from:
+-        "arbitrum:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e"
++        "arb1:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e"
+      receivedPermissions.2.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.2.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.2.from:
+-        "arbitrum:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
++        "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
+      receivedPermissions.3.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.3.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.3.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+      receivedPermissions.4.via.0.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.4.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      receivedPermissions.5.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.5.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.5.from:
+-        "arbitrum:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
++        "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
+      receivedPermissions.6.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.6.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.6.from:
+-        "arbitrum:0x832CF28be3042b6F60D7225E393E924D7f0936F6"
++        "arb1:0x832CF28be3042b6F60D7225E393E924D7f0936F6"
+      receivedPermissions.7.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.7.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.7.from:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.8.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.8.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.8.from:
+-        "arbitrum:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6"
++        "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6"
+      receivedPermissions.9.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.9.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.9.from:
+-        "arbitrum:0xe41363751bd1C305384375F428585C20e3dF516A"
++        "arb1:0xe41363751bd1C305384375F428585C20e3dF516A"
+      receivedPermissions.10.via.1.address:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      receivedPermissions.10.via.0.address:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      receivedPermissions.10.from:
+-        "arbitrum:0xfbe537816d181888fAbE52338a5D921eE131E9Db"
++        "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db"
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+    }
+```
+
+```diff
+    EOA  (0x79F4b4f9103298460486EC644499Df9985E34170) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x7CD925c107dE5C06C100F2084bFA0422F21140f0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x83433d51B327392aA694455231D2db092eE2A5Db) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x8b2600BA65E7908D38Af906fbcafB2f62D395765) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
++        "arb1:0xd12478d6edD1db996313E2F4350F2FD99c118B6E"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0x936cCC684c091b20806fA3C6668F7F1fD2B3C772) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xa65100caA20c06Bd278D83C60475ec4F69b23dc1) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xB180d28c01D3248C3fa88d67154a5070e5039135) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xbE119cCc44373B15517e921e9a7D54362250662D) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xC929c820dC03C2a22e44F440721Af3c835e071fc) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd12478d6edD1db996313E2F4350F2FD99c118B6E) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e"
++        "arb1:0x20aD3d835e152F25Bf8c7B6fbC31adD32393559e"
+      directlyReceivedPermissions.1.from:
+-        "arbitrum:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
++        "arb1:0x4066F7e44B76Cd4b745C7c8913F21A19a32044a1"
+      directlyReceivedPermissions.2.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+      directlyReceivedPermissions.3.from:
+-        "arbitrum:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
++        "arb1:0x8098247EE48ee54ADD4Feda2F93b3bA0d014d4c7"
+      directlyReceivedPermissions.4.from:
+-        "arbitrum:0x832CF28be3042b6F60D7225E393E924D7f0936F6"
++        "arb1:0x832CF28be3042b6F60D7225E393E924D7f0936F6"
+      directlyReceivedPermissions.5.from:
+-        "arbitrum:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
++        "arb1:0x8b2600BA65E7908D38Af906fbcafB2f62D395765"
+      directlyReceivedPermissions.6.from:
+-        "arbitrum:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6"
++        "arb1:0xB1146A7eb098ECF46e8AAf695f4A960A963948d6"
+      directlyReceivedPermissions.7.from:
+-        "arbitrum:0xe41363751bd1C305384375F428585C20e3dF516A"
++        "arb1:0xe41363751bd1C305384375F428585C20e3dF516A"
+      directlyReceivedPermissions.8.from:
+-        "arbitrum:0xfbe537816d181888fAbE52338a5D921eE131E9Db"
++        "arb1:0xfbe537816d181888fAbE52338a5D921eE131E9Db"
+    }
+```
+
+```diff
+    EOA  (0xD327b75C2CA829835b2B5EA9535827e9a06a480B) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xD47FB043557CB2289B31d813dd4BC1223C91f872) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xD6433a681832BD2020fc6d984Efb5f57fe9ac155) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xd76a3aCEd4115B017301C54C211EC36aA5E37e05) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xD8B4a1Ab4c079C267f8bb4239cE5AE2627D07176) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "arbitrum:0x401eCb1D350407f13ba348573E5630B83638E30D"
++        "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D"
+      receivedPermissions.0.from:
+-        "arbitrum:0x404922a9B29b4a5205a6074AbA31A7392BD28944"
++        "arb1:0x404922a9B29b4a5205a6074AbA31A7392BD28944"
+      directlyReceivedPermissions.0.from:
+-        "arbitrum:0x401eCb1D350407f13ba348573E5630B83638E30D"
++        "arb1:0x401eCb1D350407f13ba348573E5630B83638E30D"
+    }
+```
+
+```diff
+    EOA  (0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
++        "arb1:0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68"
+    }
+```
+
+```diff
+    EOA  (0xe7685c09633B47Fe123ff47ebeA903C3763924a2) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xEBe1766201dd69A09a2953B08081829E90f4a8d3) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+```diff
+    EOA  (0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
++        "arb1:0x60DAdF13101C66F14C958E9141498b0C0eaE0773"
+    }
+```
+
+Generated with discovered.json: 0x75cc86bd6269ca3ffcc3cbd2adb15c21bb5a8af6
+
+# Diff at Mon, 23 Jun 2025 15:23:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 343817776
+- current block number: 350404779
+
+## Description
+
+Conduit: add 14 permissioned sequencers / validators.
+
+## Watched changes
+
+```diff
+    contract GnosisSafeL2 (0x1a8902780F37e0526788198Dee30b8375A0B24Bc) {
+    +++ description: None
+      values.$members.0:
+-        "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0"
++        "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
+    }
+```
+
+```diff
+    contract SequencerInbox (0x4cFe930c5B2F03Cf81B44D2e62297beb79222B68) {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.batchPosters.14:
++        "0x936cCC684c091b20806fA3C6668F7F1fD2B3C772"
+      values.batchPosters.13:
++        "0x54A51C10a3EF82Cb6B0fB6B1418882472e56Ff1a"
+      values.batchPosters.12:
++        "0x50E91cb65a605E1b8B73be1fD558Fe40aBE59A31"
+      values.batchPosters.11:
++        "0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"
+      values.batchPosters.10:
++        "0xE31C47980a005B6E6d6c93212388ff7e9721D2Fc"
+      values.batchPosters.9:
++        "0x79F4b4f9103298460486EC644499Df9985E34170"
+      values.batchPosters.8:
++        "0xCe957F6aFadFFA08dAa90cE5b47208C02a9b9B4F"
+      values.batchPosters.7:
++        "0x7CD925c107dE5C06C100F2084bFA0422F21140f0"
+      values.batchPosters.6:
++        "0xD6433a681832BD2020fc6d984Efb5f57fe9ac155"
+      values.batchPosters.5:
++        "0xbE119cCc44373B15517e921e9a7D54362250662D"
+      values.batchPosters.4:
++        "0xD327b75C2CA829835b2B5EA9535827e9a06a480B"
+      values.batchPosters.3:
++        "0x4e597125DB0aDC355F084d09B945DBfc6B8e9BE5"
+      values.batchPosters.2:
++        "0x336dD5a1aB948058E4c699fD7732c2AA78C10d90"
+      values.batchPosters.1:
++        "0xa65100caA20c06Bd278D83C60475ec4F69b23dc1"
+      values.batchPosters.0:
+-        "0xe5cf545d399B2a47Ef1f9b7619FB92e270220F8A"
++        "0x50A4EB12BFbf3B83FFb5c2a6378e35Cd83e6d885"
+      values.setIsBatchPosterCount:
+-        1
++        2
+    }
+```
+
+```diff
+    contract RollupProxy (0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
++++ description: Increments on each Validator change.
+      values.setValidatorCount:
+-        2
++        3
+      values.stakerCount:
+-        1
++        2
+      values.validators.15:
++        "0x053970A9AA9638F54370764E6E9c7B2f5854Ef21"
+      values.validators.14:
++        "0xB180d28c01D3248C3fa88d67154a5070e5039135"
+      values.validators.13:
++        "0xC929c820dC03C2a22e44F440721Af3c835e071fc"
+      values.validators.12:
++        "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0"
+      values.validators.11:
++        "0x0C79a90C94E1C1091D7D3a188730105be00798f9"
+      values.validators.10:
++        "0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
+      values.validators.9:
++        "0x1B15bb40898Ca818E28C0448Ebac4165d5Dd0b5E"
+      values.validators.8:
++        "0xD47FB043557CB2289B31d813dd4BC1223C91f872"
+      values.validators.7:
++        "0xe7685c09633B47Fe123ff47ebeA903C3763924a2"
+      values.validators.6:
++        "0xf8b74E847cCa2EfF5E939B9B948Bf889F3DC0822"
+      values.validators.5:
++        "0x026919DbCFab70a2A45775088C933331A7B25Ac6"
+      values.validators.4:
++        "0x83433d51B327392aA694455231D2db092eE2A5Db"
+      values.validators.3:
++        "0xEBe1766201dd69A09a2953B08081829E90f4a8d3"
+      values.validators.2:
++        "0x6963d94D76D5315158B47DE0B0Ce1fd6E0F61bcB"
+      values.validators.1:
+-        "0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0"
++        "0xd76a3aCEd4115B017301C54C211EC36aA5E37e05"
+      values.validators.0:
+-        "0x1a8902780F37e0526788198Dee30b8375A0B24Bc"
++        "0x7Be767aFca580360eBD3dAD924B4D688daBCdaD7"
+    }
+```
+
+```diff
+    EOA  (0x99f4EFAee70C9576f82c542E0Fe8B563e184Efb0) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"fastconfirm","from":"arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773","description":"Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.","role":".anyTrustFastConfirmer","via":[{"address":"arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]}
+      receivedPermissions.1:
+-        {"permission":"validate","from":"arbitrum:0x60DAdF13101C66F14C958E9141498b0C0eaE0773","description":"Can propose new state roots (called nodes) and challenge state roots on the host chain.","role":".validators","via":[{"address":"arbitrum:0x1a8902780F37e0526788198Dee30b8375A0B24Bc"}]}
+    }
+```
+
+Generated with discovered.json: 0x4c11f760aad83c3b3f1378fd2ab89d50c1baf118
+
+# Diff at Wed, 18 Jun 2025 12:22:01 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 343817776
+- current block number: 343817776
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 343817776 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x60DAdF13101C66F14C958E9141498b0C0eaE0773) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0x76b2e47cc9874ee7b38f58a5a10da539dface260
 
 # Diff at Wed, 04 Jun 2025 12:23:15 GMT:

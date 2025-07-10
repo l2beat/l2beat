@@ -2,7 +2,7 @@
   "name": "hyperliquid",
   "chain": "arbitrum",
   "blockNumber": 343418956,
-  "configHash": "0xcaf84de57786d04f58f2e4a0f8fd7b719af1f30b5efa86f95a8c93757cdd32c3",
+  "configHash": "0x5932216a52e3f1cdf48d9ceb505d673ecdfa6ce8f07228156e39ab7040416fce",
   "entries": [
     {
       "address": "0x263294039413B96D25E4173a5F7599F8b3801504",
@@ -11,18 +11,18 @@
       "receivedPermissions": [
         {
           "permission": "hotValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".hotAddresses"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "finalize withdrawals, finalize validator set updates.",
           "role": ".finalizers"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "vote for locking the bridge contract.",
           "role": ".lockers"
         }
@@ -117,12 +117,12 @@
         ]
       },
       "fieldMeta": {
-        "hotAddresses": {
-          "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update."
-        },
         "validatorSetUpdates": {
           "severity": "HIGH",
           "description": "Validator set updates. See config.jsonc and update the hardcoded validator addresses."
+        },
+        "hotAddresses": {
+          "description": "The hot valis can also change the cold valis by adding a finalizer they control and then proposing, finalizing a validator set update."
         }
       },
       "implementationNames": {
@@ -136,18 +136,18 @@
       "receivedPermissions": [
         {
           "permission": "hotValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".hotAddresses"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "finalize withdrawals, finalize validator set updates.",
           "role": ".finalizers"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "vote for locking the bridge contract.",
           "role": ".lockers"
         }
@@ -160,7 +160,7 @@
       "receivedPermissions": [
         {
           "permission": "coldValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".coldAddresses"
         }
       ]
@@ -172,7 +172,7 @@
       "receivedPermissions": [
         {
           "permission": "coldValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".coldAddresses"
         }
       ]
@@ -184,7 +184,7 @@
       "receivedPermissions": [
         {
           "permission": "coldValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".coldAddresses"
         }
       ]
@@ -196,18 +196,18 @@
       "receivedPermissions": [
         {
           "permission": "hotValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".hotAddresses"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "finalize withdrawals, finalize validator set updates.",
           "role": ".finalizers"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "vote for locking the bridge contract.",
           "role": ".lockers"
         }
@@ -220,7 +220,7 @@
       "receivedPermissions": [
         {
           "permission": "coldValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".coldAddresses"
         }
       ]
@@ -232,18 +232,18 @@
       "receivedPermissions": [
         {
           "permission": "hotValidatorHyperliquid",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "role": ".hotAddresses"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "finalize withdrawals, finalize validator set updates.",
           "role": ".finalizers"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "vote for locking the bridge contract.",
           "role": ".lockers"
         }
@@ -256,13 +256,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "finalize withdrawals, finalize validator set updates.",
           "role": ".finalizers"
         },
         {
           "permission": "interact",
-          "from": "arbitrum:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
+          "from": "arb1:0x2Df1c51E09aECF9cacB7bc98cB1742757f163dF7",
           "description": "vote for locking the bridge contract.",
           "role": ".lockers"
         }
@@ -325,5 +325,5 @@
   "usedTemplates": {
     "hyperliquid/HyperliquidBridge": "0x6349c4d94e64347ff4aa348ac6cfad812936cdf0f3ba72b0e7f12d0caf1574c3"
   },
-  "permissionsConfigHash": "0x2248379f690ddde9ea2911e47c30e9f3c6a5eb866e18af353da4fdcb3178cf93"
+  "permissionsConfigHash": "0xc7129a48a5b96a4882f037b24fd1775bfe9fe1b6e39d385e1401ea9c244b812d"
 }

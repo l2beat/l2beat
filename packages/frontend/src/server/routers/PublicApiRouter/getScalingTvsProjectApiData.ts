@@ -26,10 +26,9 @@ export async function getScalingTvsProjectApiData({
   }
 
   const data = await getTvsChart({
-    range,
+    range: { type: range },
     filter: { type: 'projects', projectIds: [project.id] },
     excludeAssociatedTokens,
-    previewRecategorisation: false,
   })
 
   const oldestTvsData = data.at(0)

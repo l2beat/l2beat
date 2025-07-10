@@ -14,13 +14,11 @@ export type ActivityChartStats = {
 
 export async function getActivityChartStats(
   filter: ActivityProjectFilter,
-  previewRecategorisation: boolean,
 ): Promise<ActivityChartStats> {
   // We should use the last 7 days but 30d is probably cached already so it's faster
   const { data: chartData } = await getActivityChart({
     filter,
-    range: '30d',
-    previewRecategorisation,
+    range: { type: '30d' },
   })
 
   const latestData = chartData.at(-1)

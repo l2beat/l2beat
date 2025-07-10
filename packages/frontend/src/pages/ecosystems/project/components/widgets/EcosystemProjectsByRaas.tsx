@@ -38,7 +38,7 @@ export function EcosystemProjectsByRaas({
             width={32}
             height={32}
           />
-          <span className="label-value-18-bold">{raas}</span>
+          <span className="font-bold text-label-value-18">{raas}</span>
         </div>
         <div className="flex items-center gap-2">
           <ArrowIcon
@@ -51,7 +51,7 @@ export function EcosystemProjectsByRaas({
               )
             }
           />
-          <span className="subtitle-10 text-secondary">{`${selectedRaas + 1} OF ${Object.keys(projectsByRaas).length}`}</span>
+          <span className="text-secondary text-subtitle-10">{`${selectedRaas + 1} OF ${Object.keys(projectsByRaas).length}`}</span>
           <ArrowIcon
             className="size-3 rotate-90 cursor-pointer fill-brand"
             onClick={() =>
@@ -64,7 +64,7 @@ export function EcosystemProjectsByRaas({
           />
         </div>
       </div>
-      <div className="subtitle-12 mt-4 mb-2 text-secondary uppercase">
+      <div className="mt-4 mb-2 text-secondary text-subtitle-12 uppercase">
         Used by
       </div>
       {projects.length <= 4 ? (

@@ -4,6 +4,7 @@ import { assert } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
 import { getTokenList } from '../tokens/tokens'
 import { chains } from './chains'
+import { ecosystems } from './ecosystems'
 import { layer2s } from './layer2s'
 import { layer3s } from './layer3s'
 
@@ -33,6 +34,33 @@ describe('layer3s', () => {
     })
   })
 
+  describe('others', () => {
+    for (const layer3 of layer3s) {
+      it(`every project with reasonsForBeingOther has Other category: ${layer3.display.name}`, () => {
+        if (layer3.reasonsForBeingOther) {
+          expect(layer3.display.category === 'Other').toEqual(true)
+        }
+      })
+
+      it(`every Other project has reasonsForBeingOther configured: ${layer3.display.name}`, () => {
+        if (layer3.display.category === 'Other') {
+          expect(!!layer3.reasonsForBeingOther).toEqual(true)
+        }
+      })
+    }
+  })
+
+  describe('ecosystems', () => {
+    const ecosystemIds = ecosystems.map((e) => e.id)
+    for (const layer3 of layer3s) {
+      it(`every project with ecosystemInfo has valid ecosystem configured: ${layer3.display.name}`, () => {
+        if (layer3.ecosystemInfo) {
+          expect(ecosystemIds).toInclude(layer3.ecosystemInfo.id)
+        }
+      })
+    }
+  })
+
   it('every layer3 has a valid config', () => {
     for (const layer3 of layer3s) {
       expect(layer3.hostChain).not.toBeNullish()
@@ -44,8 +72,6 @@ describe('layer3s', () => {
       expect(layer3.config.trackedTxs).toEqual(undefined)
       expect(layer3.config.liveness).toEqual(undefined)
       expect(layer3.display.liveness).toEqual(undefined)
-      expect(layer3.config.finality).toEqual(undefined)
-      expect(layer3.display.finality).toEqual(undefined)
     }
   })
 

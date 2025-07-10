@@ -2,7 +2,7 @@
   "name": "worldcoin",
   "chain": "optimism",
   "blockNumber": 133912814,
-  "configHash": "0x2a6fbd12c5da8c616f0a0d32e997b50b92c09f07e0f1d0b822f38df60110e633",
+  "configHash": "0xd1343007b6961eba0ebcddb3cae53a965153440cafec4bf1a077bce6a02b3890",
   "entries": [
     {
       "name": "GnosisSafe",
@@ -405,7 +405,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
+          "from": "oeth:0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
           "role": "admin"
         }
       ]
@@ -524,7 +524,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+          "from": "oeth:0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
           "role": "admin"
         }
       ],
@@ -1106,5 +1106,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x60b8e3c7a1808a239aaacc5994e56a6262180ecfe7c5009bfb47cdcc341082e0"
+  "permissionsConfigHash": "0xc93f6cdc0695e479911dc83d951e813202dcf7461c7d53ef5819e94a67dd69a4"
 }

@@ -1,9 +1,8 @@
 import type { Milestone } from '@l2beat/config'
-import { useMemo } from 'react'
 import {
+  NotReviewedInfo,
   OthersInfo,
   RollupsInfo,
-  UnderReviewInfo,
   ValidiumsAndOptimiumsInfo,
 } from '~/components/ScalingTabsInfo'
 import { CountBadge } from '~/components/badge/CountBadge'
@@ -15,12 +14,9 @@ import {
   DirectoryTabsTrigger,
 } from '~/components/core/DirectoryTabs'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
-import { OtherMigrationTabNotice } from '~/components/countdowns/other-migration/OtherMigrationTabNotice'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { TableFilters } from '~/components/table/filters/TableFilters'
 import { useFilterEntries } from '~/components/table/filters/UseFilterEntries'
 import { TableSortingProvider } from '~/components/table/sorting/TableSortingContext'
-import { getRecategorisedEntries } from '~/pages/scaling/utils/GetRecategorisedEntries'
 import type { TabbedScalingEntries } from '~/pages/scaling/utils/groupByScalingTabs'
 import type { ScalingActivityEntry } from '~/server/features/scaling/activity/getScalingActivityEntries'
 import { UopsExplorerLink } from '../../components/UopsExplorerLink'
@@ -32,33 +28,13 @@ type Props = TabbedScalingEntries<ScalingActivityEntry> & {
 
 export function ScalingActivityTabs(props: Props) {
   const filterEntries = useFilterEntries()
-  const { checked } = useRecategorisationPreviewContext()
 
-  const filteredEntries = {
+  const entries = {
     rollups: props.rollups.filter(filterEntries),
     validiumsAndOptimiums: props.validiumsAndOptimiums.filter(filterEntries),
     others: props.others.filter(filterEntries),
-    underReview: props.underReview.filter(filterEntries),
+    notReviewed: props.notReviewed.filter(filterEntries),
   }
-
-  const entries = checked
-    ? // No need to sort because it is done later by TPS/UOPS switch
-      getRecategorisedEntries(filteredEntries, undefined)
-    : filteredEntries
-
-  const projectToBeMigratedToOthers = useMemo(
-    () =>
-      checked
-        ? []
-        : [...props.rollups, ...props.validiumsAndOptimiums, ...props.others]
-            .filter((project) => project.statuses?.countdowns?.otherMigration)
-            .map((project) => ({
-              slug: project.slug,
-              name: project.name,
-              icon: project.icon,
-            })),
-    [checked, props.others, props.rollups, props.validiumsAndOptimiums],
-  )
 
   const initialSort = {
     id: 'data_pastDayCount',
@@ -73,7 +49,7 @@ export function ScalingActivityTabs(props: Props) {
             ...props.rollups,
             ...props.validiumsAndOptimiums,
             ...props.others,
-            ...props.underReview,
+            ...props.notReviewed,
           ]}
         />
         <UopsExplorerLink />
@@ -90,10 +66,10 @@ export function ScalingActivityTabs(props: Props) {
           <DirectoryTabsTrigger value="others">
             Others <CountBadge>{entries.others.length - 1}</CountBadge>
           </DirectoryTabsTrigger>
-          {entries.underReview.length > 0 && (
-            <DirectoryTabsTrigger value="underReview">
-              Under initial review
-              <CountBadge>{entries.underReview.length - 1}</CountBadge>
+          {entries.notReviewed.length > 0 && (
+            <DirectoryTabsTrigger value="notReviewed">
+              Not reviewed
+              <CountBadge>{entries.notReviewed.length - 1}</CountBadge>
             </DirectoryTabsTrigger>
           )}
         </DirectoryTabsList>
@@ -136,16 +112,12 @@ export function ScalingActivityTabs(props: Props) {
             />
             <HorizontalSeparator className="mt-5 mb-3" />
             <ScalingActivityTable entries={entries.others} />
-            <OtherMigrationTabNotice
-              projectsToBeMigrated={projectToBeMigratedToOthers}
-              className="mt-2"
-            />
           </DirectoryTabsContent>
         </TableSortingProvider>
         <TableSortingProvider initialSort={initialSort}>
-          <DirectoryTabsContent value="underReview" className="pt-4 sm:pt-3">
-            <UnderReviewInfo />
-            <ScalingActivityTable entries={entries.underReview} underReview />
+          <DirectoryTabsContent value="notReviewed" className="pt-4 sm:pt-3">
+            <NotReviewedInfo />
+            <ScalingActivityTable entries={entries.notReviewed} notReviewed />
           </DirectoryTabsContent>
         </TableSortingProvider>
       </DirectoryTabs>

@@ -2,7 +2,7 @@
   "name": "aztec",
   "chain": "ethereum",
   "blockNumber": 22466421,
-  "configHash": "0x6f4f69287a8a4a4880fc76f7159fb9a1b22ae55435005556f902ca0032ad002c",
+  "configHash": "0x9195f1997790303f7f535a2456ab2f89f144af4c924977dbb77b401200e74234",
   "entries": [
     {
       "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
@@ -362,5 +362,5 @@
     "aztecv1/TurboVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xc2e3832ed570930a85b7eea09b4be15fdbd6f6bd97bda26cc7514543f0c4e876"
+  "permissionsConfigHash": "0xec42ca9e55d51f2d749ad0d6b769728d534e506cc2457d461d66a2f1f74396f5"
 }

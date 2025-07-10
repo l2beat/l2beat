@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 22694475,
-  "configHash": "0xc1d6d463dea3b1cff74ea70dd19ffac0f6bdc5ec34bed29469145e8d6e1fc142",
+  "blockNumber": 22882688,
+  "configHash": "0xc440c4bf1624b7ad98b6c420162551b78f9cdf00b7d9bf72ecc90a6ccaeddefb",
   "entries": [
     {
       "name": "PEMCertChainLib",
@@ -360,68 +360,68 @@
           "ontakeForkHeight": 538304
         },
         "getLastSyncedTransition": {
-          "batchId_": 1203156,
-          "blockId_": 1203156,
+          "batchId_": 1253304,
+          "blockId_": 1253304,
           "ts_": {
-            "parentHash": "0x581fadcc7748d3c4a8696ee2e16e3c91b5c570b934cd3101e60541b52fe7dcea",
-            "blockHash": "0x3a3743cbf6ce552edce1ed8e315b6462d69c283cddc7b17e34bc1392ecc7e2ee",
-            "stateRoot": "0x8af58c3da756318e63de89b69b6f2e084f22ff68b1a6f7aabb42ff7043aaef9a",
-            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
+            "parentHash": "0x3b05c0afe0125aa4afc82844304d13fb257f9ea36295cc2260cb8e76b438c8e9",
+            "blockHash": "0xf02aec9ed3ae7fed59fe548641a9090ebf45841470928c093a6e2520de78b241",
+            "stateRoot": "0x92c23d7476bc3b398fd009b90a9b6e948c6f2ebe9dfecd945fe3eb45cbe0dd9f",
+            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
             "inProvingWindow": true,
-            "createdAt": 1749793451
+            "createdAt": 1752068483
           }
         },
         "getLastVerifiedBlock": {
-          "blockId_": 1203158,
-          "blockHash_": "0xdc369ccf824acdf883b66f9f72b3e498f70a6d58524bbd9027d1f55ec6664fd9",
+          "blockId_": 1253307,
+          "blockHash_": "0xda5057ec82655570ddb1e0c27cb452b7f9129d06a05f5f9483fa8004b3589c2c",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "verifiedAt_": 1739092055
+          "verifiedAt_": 1740299447
         },
         "getLastVerifiedTransition": {
-          "batchId_": 1203158,
-          "blockId_": 1203158,
+          "batchId_": 1253307,
+          "blockId_": 1253307,
           "ts_": {
-            "parentHash": "0x3f9b3c47c901f44dfca6bed2c19ec4df3b9bcf3bc3c42a17cf097589343d1e0e",
-            "blockHash": "0xdc369ccf824acdf883b66f9f72b3e498f70a6d58524bbd9027d1f55ec6664fd9",
+            "parentHash": "0xdc956e6903556c8767fbaf52495f26b88b25c1a8e8c9cc86c1d6c30143c62a5f",
+            "blockHash": "0xda5057ec82655570ddb1e0c27cb452b7f9129d06a05f5f9483fa8004b3589c2c",
             "stateRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "prover": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
+            "prover": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
             "inProvingWindow": true,
-            "createdAt": 1749793451
+            "createdAt": 1752068483
           }
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 1203156,
-            "lastSynecdAt": 1749803375
+            "lastSyncedBlockId": 1253304,
+            "lastSynecdAt": 1752076799
           },
           {
-            "numBlocks": 1203396,
-            "lastVerifiedBlockId": 1203158,
+            "numBlocks": 1253415,
+            "lastVerifiedBlockId": 1253307,
             "provingPaused": false,
-            "lastProposedIn": 22694473,
+            "lastProposedIn": 22882684,
             "lastUnpausedAt": 1716571955
           }
         ],
         "getStats1": {
           "genesisHeight": 19923613,
           "__reserved2": 1716358991,
-          "lastSyncedBatchId": 1203156,
-          "lastSyncedAt": 1749803375
+          "lastSyncedBatchId": 1253304,
+          "lastSyncedAt": 1752076799
         },
         "getStats2": {
-          "numBatches": 1203396,
-          "lastVerifiedBatchId": 1203158,
+          "numBatches": 1253415,
+          "lastVerifiedBatchId": 1253307,
           "paused": false,
-          "lastProposedIn": 22694473,
+          "lastProposedIn": 22882684,
           "lastUnpausedAt": 1716571955
         },
         "impl": "0x4e030b19135869F6fd926614754B7F9c184E2B83",
         "inboxWrapper": "0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
         "inNonReentrant": false,
         "isOnL1": true,
-        "lastProposedIn": 22694473,
+        "lastProposedIn": 22882684,
         "newFork": "0x497B13f9192B09244de9b5F0964830969FB26F07",
         "oldFork": "0x904Da4C5bD76f932fE09fF32Ae5D7E3d2A5D2264",
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -462,14 +462,14 @@
           "stats1": {
             "genesisHeight": 19923613,
             "__reserved2": 1716358991,
-            "lastSyncedBatchId": 1203156,
-            "lastSyncedAt": 1749803375
+            "lastSyncedBatchId": 1253304,
+            "lastSyncedAt": 1752076799
           },
           "stats2": {
-            "numBatches": 1203396,
-            "lastVerifiedBatchId": 1203158,
+            "numBatches": 1253415,
+            "lastVerifiedBatchId": 1253307,
             "paused": false,
-            "lastProposedIn": 22694473,
+            "lastProposedIn": 22882684,
             "lastUnpausedAt": 1716571955
           }
         },
@@ -601,7 +601,8 @@
         "impl": "0x5e46443bd131eB6d4c6Fb4849bAD29af9596dd72",
         "inNonReentrant": false,
         "mrEnclaves": [
-          "0xfda8bb1fc9938700c25353c0a5fabc96a238e69ce8e35f08e558831a20db33a6"
+          "0xfda8bb1fc9938700c25353c0a5fabc96a238e69ce8e35f08e558831a20db33a6",
+          "0x692c8624d30a327340b0dfbb67203e941175ac700d1a058c717e5269103d37e6"
         ],
         "mrSigners": [
           "0xca0583a715534a8c981b914589a7f0dc5d60959d9ae79fb5353299a4231673d5"
@@ -682,7 +683,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1749803687,
+        "clock": 1752076919,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -889,7 +890,7 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
@@ -897,26 +898,23 @@
       "sinceBlock": 19709707,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
-          "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
+          "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
           "0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438",
-          "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A",
-          "0xFa92ff698D57f7B875570D9F59501812B843CD44",
-          "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
         ],
-        "$threshold": 4,
+        "$threshold": 2,
         "domainSeparator": "0xb928db8cda7e0d8ed365dcdc0efbd2c664a02d405dc5a14d69af87929137db55",
         "getChainId": 1,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 97,
-        "VERSION": "1.3.0"
+        "multisigThreshold": "2 of 3 (67%)",
+        "nonce": 104,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -936,11 +934,6 @@
     },
     {
       "address": "0x3ffe3F16d47A54b1C6A3f47c9E6Ff5C2C1B32859",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "0x41F2F55571f9e8e3Ba511Adc48879Bd67626A2b6",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1350,12 +1343,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "from": "eth:0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "from": "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "role": "admin"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
           "role": "admin"
         }
       ],
@@ -1507,7 +1515,9 @@
           "0xdcd483d3406d9b1871bb92420f5a080c4372e0d6b8522a4a2cb91a0f736669c6",
           "0x3b589538b775ddbfc5fb028167ff846116159e6687aef9f849ca5a70a7871ea5",
           "0xb09f9005e4612526e378466b5c16ab6028478e81c085812d6ed37166c4cda10e",
-          "0x6e43c1d575b5b785d0f6259dfac44998c6f0c164864f9f98270fb740c14eb943"
+          "0x6e43c1d575b5b785d0f6259dfac44998c6f0c164864f9f98270fb740c14eb943",
+          "0x631778b0d420d2d0bba4c730b0fd74857afeefb3429371ae97ab450e40ca127e",
+          "0x482b06132c4306ea55bc34ff90d46532ff4151f473dbfe4d2cb2442af2ff288b"
         ],
         "mrSigners": [
           "0xca0583a715534a8c981b914589a7f0dc5d60959d9ae79fb5353299a4231673d5"
@@ -1646,7 +1656,7 @@
       "sinceTimestamp": 1715578067,
       "sinceBlock": 19859002,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
         "$pastUpgrades": [
           [
@@ -1665,7 +1675,7 @@
         "impl": "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64",
         "inNonReentrant": false,
         "lastUnpausedAt": 0,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "quotaPeriod": 86400,
@@ -1741,7 +1751,7 @@
         "minVetoPercent": "10",
         "minVetoRatio": 100000,
         "pluginType": 0,
-        "proposalCount": 19,
+        "proposalCount": 20,
         "proposalIds": [
           "594318504305273196926027118847304676812617940992",
           "594333808845007833054360677244409987180489867265",
@@ -1761,7 +1771,8 @@
           "595202819231391590334926314529761202858453106703",
           "595223403592331371744459256866956472219296858128",
           "595223436259438596154551751121806216745162113041",
-          "595300306046126036153418824792663965561388007442"
+          "595300306046126036153418824792663965561388007442",
+          "595517191137765700860044776076277647522733752339"
         ],
         "PROPOSER_PERMISSION_ID": "0x8513c2609a72007a81419055c80fdd2cf7e49f07dffbb28683bb4593636ce3b2",
         "taikoBridge": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
@@ -1865,147 +1876,132 @@
       "template": "GnosisSafe",
       "sourceHashes": [
         "0x81a7349eebb98ac33b0bc6842e3cb258034a8f2a4ba004570bb8e2e25947f9ff",
-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
+        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
       ],
       "proxyType": "gnosis safe",
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "description": "can add new instances without a DCAP attestation",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+          "from": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "description": "can update the program being verified",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "description": "can update the contract address for a given name",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
+          "from": "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "from": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+          "from": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
+          "from": "eth:0x5A982Fb1818c22744f5d7D36D0C4c9f61937b33a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "from": "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+          "from": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
+          "from": "eth:0x7e6409e9b6c5e2064064a6cC994f9a2e95680782",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "from": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
+          "from": "eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x91f67118DD47d502B1f0C354D0611997B022f29E",
+          "from": "eth:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "from": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9e322fC59b8f4A29e6b25c3a166ac1892AA30136",
+          "from": "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+          "from": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
-          "role": "admin"
-        },
-        {
-          "permission": "upgrade",
-          "from": "ethereum:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "from": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
           "role": "admin"
         }
       ],
@@ -2014,7 +2010,7 @@
       "sinceBlock": 19744335,
       "values": {
         "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$implementation": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
           "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a",
           "0x0aED2375549D1115e180bd0caea829C429Ea50B3",
@@ -2028,12 +2024,12 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 104,
-        "VERSION": "1.3.0"
+        "nonce": 110,
+        "VERSION": "1.4.1"
       },
       "implementationNames": {
         "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F": "GnosisSafeProxy",
-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": "GnosisSafe"
+        "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       }
     },
     {
@@ -2050,12 +2046,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
+          "from": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
+          "from": "eth:0xfC3C4ca95a8C4e5a587373f1718CD91301d6b2D3",
           "role": "admin"
         }
       ],
@@ -2105,7 +2101,7 @@
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
         "$pastUpgrades": [
           [
@@ -2152,7 +2148,7 @@
         "$upgradeCount": 8,
         "impl": "0x42Ec977eb6B09a8D78c6D486c3b0e63569bA851c",
         "inNonReentrant": false,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
@@ -2524,7 +2520,7 @@
       "sinceTimestamp": 1714550603,
       "sinceBlock": 19773963,
       "values": {
-        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$admin": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "$implementation": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "$pastUpgrades": [
           [
@@ -2595,8 +2591,8 @@
         "impl": "0x2705B12a971dA766A3f9321a743d61ceAD67dA2F",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 37334,
-        "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "nextMessageId": 37583,
+        "owner": "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT",
@@ -2642,7 +2638,7 @@
           "proposalExpirationPeriod": 1209600
         },
         "pluginType": 0,
-        "proposalCount": 10,
+        "proposalCount": 11,
         "UPDATE_MULTISIG_SETTINGS_PERMISSION_ID": "0xb1750e46d35a0069c8465b8643e7838d2149a842a2db8ee233d9835590040cad",
         "UPGRADE_PLUGIN_PERMISSION_ID": "0x821b6e3a557148015a918c89e5d092e878a69854a2d1a410635f771bd5a8a3f5"
       },
@@ -2835,11 +2831,6 @@
         "0x41675C099F32341bf84BFc5382aF534df5C7461a": "Safe"
       },
       "category": { "name": "Spam", "priority": -1 }
-    },
-    {
-      "address": "0xFa92ff698D57f7B875570D9F59501812B843CD44",
-      "type": "EOA",
-      "proxyType": "EOA"
     },
     {
       "name": "RiscZeroGroth16Verifier",
@@ -4463,55 +4454,6 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ],
-    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedFallbackHandler(address handler)",
-      "event ChangedGuard(address guard)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SafeReceived(address indexed sender, uint256 value)",
-      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeThreshold(uint256 _threshold)",
-      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
-      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getChainId() view returns (uint256)",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isModuleEnabled(address module) view returns (bool)",
-      "function isOwner(address owner) view returns (bool)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setGuard(address guard)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
-    ],
     "0xdb627bfD79e81fE42138Eb875287F94FAd5BBc64": [
       "error FUNC_NOT_IMPLEMENTED()",
       "error INVALID_PAUSE_STATUS()",
@@ -4795,5 +4737,5 @@
     "taiko/TaikoWrapper": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/VerifierGateway": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562"
   },
-  "permissionsConfigHash": "0xa72cf765281b93b4fe035b6353ccf21c2150be70a26fbb0cdaaa8e858564d83d"
+  "permissionsConfigHash": "0x15f0eb5f4c756361a84f9045bfdb47e9998247985d7bfb8fa2047c4a6c09dea0"
 }

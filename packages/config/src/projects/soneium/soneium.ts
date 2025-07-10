@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from '../../templates/opStack'
@@ -31,17 +31,6 @@ export const soneium = opStackL2({
     },
   },
   hasSuperchainScUpgrades: true,
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: UnixTime(1733134753),
-    genesisTimestamp: UnixTime(1733134753),
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   isNodeAvailable: 'UnderReview',
   stateDerivation: DERIVATION.OPSTACK('SONEIUM'),
   chainConfig: {

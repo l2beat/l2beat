@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x4a6221d85eb4c0ec789126de4cf48cbafead0071
+Generated with discovered.json: 0x2f39ea16436b43ca9f6f83508cb30b67e0a10ed6
+
+# Diff at Fri, 04 Jul 2025 12:18:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21041827
+- current block number: 21041827
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21041827 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xC5b735d05c26579B701Be9bED253Bb588503B26B) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
++        "eth:0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"
+    }
+```
+
+Generated with discovered.json: 0x4fe75869f6785f1444f5d1898b46ea0284f37815
 
 # Diff at Fri, 23 May 2025 09:40:53 GMT:
 

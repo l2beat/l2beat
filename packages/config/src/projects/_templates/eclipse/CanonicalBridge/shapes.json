@@ -1,0 +1,14 @@
+{
+  "CanonicalBridge_v2_0_0": {
+    "hash": "0x39cf355665c54bebc4ab239f0a40e776f0f1f3ab01a77a95830c90f9517c48ca",
+    "address": "0x2B08D7cF7EafF0f5f6623d9fB09b080726D4be11",
+    "chain": "ethereum",
+    "blockNumber": 22868281
+  },
+  "CanonicalBridge_v2_1_0": {
+    "hash": "0x3d55623cb35937b0b8f6a42b0dec9a7287f19e54ebca9af664a6215829b5df66",
+    "address": "0x867A8FcD5Bb6774d4d37fb342D669A35FF789a51",
+    "chain": "ethereum",
+    "blockNumber": 22868281
+  }
+}

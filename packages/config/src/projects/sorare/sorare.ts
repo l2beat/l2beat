@@ -25,6 +25,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { StarkexDAC } from '../../templates/starkex-template'
 
 const discovery = new ProjectDiscovery('sorare')
@@ -65,8 +66,8 @@ export const sorare: ScalingProject = {
     description:
       'Sorare is a global fantasy football game where you can play with officially licensed digital cards.',
     purposes: ['NFT', 'Exchange'],
-    stack: 'StarkEx',
-    category: 'Validium',
+    stacks: ['StarkEx'],
+    category: 'Other',
     links: {
       websites: ['https://sorare.com/'],
       documentation: ['https://docs.starkware.co/starkex/index.html'],
@@ -154,4 +155,5 @@ export const sorare: ScalingProject = {
     },
   ],
   customDa: StarkexDAC({ discovery }),
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

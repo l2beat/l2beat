@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xed4cb458b77f60759aa7f60341b185c600984700
+Generated with discovered.json: 0x530040c0e8239d66d75d114ba3de6d05219ba306
+
+# Diff at Fri, 04 Jul 2025 12:19:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22438006
+- current block number: 22438006
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22438006 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
++        "eth:0xf7134CE138832c1456F2a91D64621eE90c2bddEa"
+    }
+```
+
+Generated with discovered.json: 0x59b8e7c66c6178ae200c2bd8f47c9dfcfb3219de
 
 # Diff at Fri, 23 May 2025 09:41:16 GMT:
 

@@ -1,3 +1,191 @@
+Generated with discovered.json: 0xb5dea84377b48eb52ce8f34d25ca7f903ebc3edc
+
+# Diff at Fri, 04 Jul 2025 12:19:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22231616
+- current block number: 22231616
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231616 (main branch discovery), not current.
+
+```diff
+    EOA  (0x23b6bFACe63BFa288783b8344574c75b78FaEd59) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
++        "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+    }
+```
+
+```diff
+    contract Caldera Multisig 3 (0x2bf43034b9559643e986A2fE3cE015a18247b904) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.0.from:
+-        "ethereum:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
++        "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      receivedPermissions.1.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.1.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.1.from:
+-        "ethereum:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
++        "eth:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+      receivedPermissions.2.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.2.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.2.from:
+-        "ethereum:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
++        "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      receivedPermissions.3.via.0.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.3.from:
+-        "ethereum:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
++        "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      receivedPermissions.4.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.4.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.4.from:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.5.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.5.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.5.from:
+-        "ethereum:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
++        "eth:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      receivedPermissions.6.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.6.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.6.from:
+-        "ethereum:0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
++        "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      receivedPermissions.7.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.7.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.7.from:
+-        "ethereum:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
++        "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      receivedPermissions.8.via.1.address:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      receivedPermissions.8.via.0.address:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      receivedPermissions.8.from:
+-        "ethereum:0xe4F99a0734C87C298d73C161F54874225E416997"
++        "eth:0xe4F99a0734C87C298d73C161F54874225E416997"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
++        "eth:0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
++        "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
++        "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb6fbC59CF12d77C35d58B82Deee76cfc934F1235) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
++        "eth:0x2403Dd9dFa12255Be8f42bc1e644733c9b2d10Dd"
+      directlyReceivedPermissions.1.from:
+-        "ethereum:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
++        "eth:0x3401eafd7Ceb84265B2cC4252155e12B446E7c57"
+      directlyReceivedPermissions.2.from:
+-        "ethereum:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
++        "eth:0x566e4dA579fd344DF9fbC2Cbf4014faD41DCA0eA"
+      directlyReceivedPermissions.3.from:
+-        "ethereum:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
++        "eth:0x59F75d2730a6a505c3C12b797cE2e7Bdb0C11757"
+      directlyReceivedPermissions.4.from:
+-        "ethereum:0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
++        "eth:0x7EF9d2fe20307165599101e93Ea05b04d46Af159"
+      directlyReceivedPermissions.5.from:
+-        "ethereum:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
++        "eth:0xD5dD6114a5DC6d1352C0EE47Cbed6a1807F079c7"
+      directlyReceivedPermissions.6.from:
+-        "ethereum:0xe4F99a0734C87C298d73C161F54874225E416997"
++        "eth:0xe4F99a0734C87C298d73C161F54874225E416997"
+    }
+```
+
+```diff
+    EOA  (0xd4D2F3cB313e59A34089F6635c5c1c6145298640) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
++        "eth:0x3AAfe635FCfA0E5C19C9368ab5eb384277836006"
+    }
+```
+
+Generated with discovered.json: 0x4c2b4afac524138600af2584d1896ca6f2f67f90
+
+# Diff at Wed, 18 Jun 2025 12:23:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22231616
+- current block number: 22231616
+
+## Description
+
+config: wasmmoduleroot map updated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22231616 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x3AAfe635FCfA0E5C19C9368ab5eb384277836006) {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a:
++        "ArbOS v40 wasmModuleRoot"
+    }
+```
+
 Generated with discovered.json: 0xc65d8a43b443824634497d45a627464a5a14f755
 
 # Diff at Tue, 27 May 2025 08:28:06 GMT:

@@ -104,6 +104,10 @@ export class UpdateMonitor {
       )
 
       for (const projectConfig of projectConfigs) {
+        if (projectConfig.archived) {
+          continue
+        }
+
         const discovery = this.discoveryOutputCache.get(
           projectConfig.name,
           runner.chain,
@@ -162,6 +166,16 @@ export class UpdateMonitor {
         projectConfig.chain === runner.chain,
         `Discovery runner and project config chain mismatch in project ${projectConfig.name}. Update the config.json file or config.discovery.`,
       )
+
+      // Skip archived configurations as an additional safety measure
+      if (projectConfig.archived) {
+        this.logger.info('Skipping archived project', {
+          chain: runner.chain,
+          project: projectConfig.name,
+        })
+        continue
+      }
+
       this.logger.info('Project update started', {
         chain: runner.chain,
         project: projectConfig.name,
@@ -283,29 +297,36 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     projectConfig: ConfigRegistry,
   ): Promise<DiscoveryOutput | undefined> {
+    const projectPair = { chain: runner.chain, project: projectConfig.name }
+
     const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
       ChainId(this.chainConverter.toChainId(runner.chain)),
     )
-    let previousDiscovery: DiscoveryOutput
-    const dbEntryIsUpToDate =
-      databaseEntry?.configHash === hashJsonStable(projectConfig.structure)
+    const diskDiscovery = this.configReader.readDiscovery(
+      projectConfig.name,
+      runner.chain,
+    )
 
-    if (dbEntryIsUpToDate) {
-      this.logger.info('Using database record', {
-        chain: runner.chain,
-        project: projectConfig.name,
-      })
-      previousDiscovery = databaseEntry.discovery
+    const flatSourceEntry = await this.db.flatSources.get(
+      projectConfig.name,
+      ChainId(this.chainConverter.toChainId(runner.chain)),
+    )
+
+    const flatSourceBlockNumber = flatSourceEntry?.blockNumber ?? 0
+    const onDiskDiscoveryChanged =
+      diskDiscovery.blockNumber > flatSourceBlockNumber
+    const onDiskConfigChanged =
+      databaseEntry?.configHash !== hashJsonStable(projectConfig.structure)
+
+    let previousDiscovery: DiscoveryOutput
+
+    if (onDiskConfigChanged || onDiskDiscoveryChanged) {
+      this.logger.info('Using committed file', projectPair)
+      previousDiscovery = diskDiscovery
     } else {
-      this.logger.info('Using committed file', {
-        chain: runner.chain,
-        project: projectConfig.name,
-      })
-      previousDiscovery = this.configReader.readDiscovery(
-        projectConfig.name,
-        runner.chain,
-      )
+      this.logger.info('Using database record', projectPair)
+      previousDiscovery = databaseEntry.discovery
     }
 
     const { discovery, flatSources } = await runner.discoverWithRetry(
@@ -319,7 +340,12 @@ export class UpdateMonitor {
     // update could happen to the implementation of a contract. UpdateMonitor
     // will find it and write the _new_ implementation's source code to the
     // database.
-    if (!dbEntryIsUpToDate) {
+    //
+    // A project can update, have it's source changed and the config will stay
+    // the same. The only way to detect it is to check if the block number of
+    // the ondisk discovery is higher than the one in the flat source table
+    if (onDiskConfigChanged || onDiskDiscoveryChanged) {
+      this.logger.info('Upserting flat source', projectPair)
       await this.db.flatSources.upsert({
         projectId: projectConfig.name,
         chainId: ChainId(this.chainConverter.toChainId(runner.chain)),

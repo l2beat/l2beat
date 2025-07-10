@@ -16,6 +16,7 @@ import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('immutablezkevm')
 
@@ -157,4 +158,5 @@ Withdrawals to Ethereum can be delayed by a predefined time with a flow rate mec
     },
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -1,4 +1,5 @@
 import { notUndefined } from '@l2beat/shared-pure'
+import countBy from 'lodash/countBy'
 import uniq from 'lodash/uniq'
 import uniqBy from 'lodash/uniqBy'
 import {
@@ -134,11 +135,26 @@ function Content({
   entries: FilterableEntry[]
 }) {
   const { track } = useTracking()
+
+  // Count unique values for each filter
+  const counts = countBy(
+    uniqBy(
+      entries.flatMap((e) => e.filterable),
+      (e) => `${e?.id}-${e?.value}`,
+    ),
+    (e) => e?.id,
+  )
+
+  // Get unique filterable ids that have more than one value
   const uniqFilterablesIds = uniqBy(
     entries.flatMap((e) => e.filterable),
     'id',
   )
-    .filter(notUndefined)
+    .filter((e) => e !== undefined)
+    .filter((e) => {
+      const count = counts[e.id]
+      return count && count > 1
+    })
     .map((f) => f.id)
 
   const { selectedId, setSelectedId, search, setSearch } =

@@ -3,7 +3,6 @@ import type {
   ChainConfig,
   OnchainVerifier,
   ProjectActivityConfig,
-  ProjectFinalityConfig,
   TimestampDaTrackingConfig,
 } from '@l2beat/config'
 import type {
@@ -34,7 +33,6 @@ export interface Config {
   readonly health: HealthConfig
   readonly tvs: TvsConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
-  readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
@@ -51,6 +49,8 @@ export interface Config {
     readonly timeout: number
   }
   readonly da: DataAvailabilityTrackingConfig | false
+  readonly shared: SharedModuleConfig | false
+  readonly discord: DiscordWebhookConfig
 
   readonly flags: ResolvedFeatureFlag[]
 }
@@ -119,16 +119,6 @@ export interface TrackedTxsConfig {
         }
       | false
   }
-}
-
-export interface FinalityConfig {
-  readonly configurations: FinalityConfigProject[]
-}
-
-export type FinalityConfigProject = ProjectFinalityConfig & {
-  projectId: ProjectId
-  url?: string
-  callsPerMinute?: number
 }
 
 export interface BlockscoutChainConfig {
@@ -206,6 +196,11 @@ export interface DiscordConfig {
   readonly callsPerMinute: number
 }
 
+export interface DiscordWebhookConfig {
+  readonly anomaliesWebhookUrl?: string
+  readonly anomaliesMinDuration: number
+}
+
 export interface DaBeatConfig {
   /** Coingecko ids of tokens for economic security */
   readonly coingeckoIds: string[]
@@ -266,6 +261,7 @@ export type TimestampLayerDaTrackingConfig = {
   url: string
   callsPerMinute: number
   startingTimestamp: UnixTime
+  perProjectUrl?: string
 }
 
 export interface DataAvailabilityTrackingConfig {
@@ -273,4 +269,8 @@ export interface DataAvailabilityTrackingConfig {
   readonly timestampLayers: TimestampLayerDaTrackingConfig[]
   readonly blockProjects: BlockDaIndexedConfig[]
   readonly timestampProjects: TimestampDaIndexedConfig[]
+}
+
+export interface SharedModuleConfig {
+  ethereumWsUrl: string
 }

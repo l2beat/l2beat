@@ -87,10 +87,9 @@ export async function getBridgesProjectEntry(
       getProjectsChangeReport(),
       get7dTvsBreakdown({ type: 'projects', projectIds: [project.id] }),
       helpers.tvs.chart.fetch({
-        range: '1y',
+        range: { type: '1y' },
         filter: { type: 'projects', projectIds: [project.id] },
         excludeAssociatedTokens: false,
-        previewRecategorisation: false,
       }),
       getTokensForProject(project),
       getContractUtils(),

@@ -53,7 +53,7 @@ export const kinto: ScalingProject = orbitStackL2({
   capability: 'appchain',
   addedAt: UnixTime(1716336000), // 2024-05-22T00:00:00Z
   discovery,
-  additionalBadges: [BADGES.RaaS.Caldera],
+  additionalBadges: [BADGES.RaaS.Caldera, BADGES.VM.AppChain],
   overridingPurposes: ['KYC-ed DeFi'],
   additionalDiscoveries: { ['kinto']: l2discovery },
   display: {
@@ -139,11 +139,11 @@ export const kinto: ScalingProject = orbitStackL2({
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: true,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: true,
         usersHave7DaysToExit: true,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: true,

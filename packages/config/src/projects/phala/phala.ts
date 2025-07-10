@@ -24,6 +24,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { safeGetImplementation } from '../../templates/utils'
 
 const discovery = new ProjectDiscovery('phala')
@@ -81,7 +82,6 @@ export const phala: ScalingProject = {
         finalizationPeriod,
       )} after it has been posted.`,
     },
-    finality: { finalizationPeriod: finalizationPeriod },
   },
   chainConfig: {
     name: 'phala',
@@ -207,11 +207,11 @@ export const phala: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: false,
@@ -351,4 +351,5 @@ export const phala: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

@@ -28,7 +28,6 @@ import {
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getStrokeOverFillAreaComponents } from '~/components/core/chart/utils/GetStrokeOverFillAreaComponents'
 import { CustomLink } from '~/components/link/CustomLink'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
 import { ChevronIcon } from '~/icons/Chevron'
 import type { ActivityChartStats } from '~/server/features/scaling/activity/getActivityChartStats'
 import { countPerSecond } from '~/server/features/scaling/activity/utils/countPerSecond'
@@ -67,15 +66,12 @@ const chartMeta = {
 } satisfies ChartMeta
 
 export function ScalingSummaryActivityChart({ timeRange }: Props) {
-  const { checked } = useRecategorisationPreviewContext()
   const { data: stats } = api.activity.chartStats.useQuery({
     filter: { type: 'withoutOthers' },
-    previewRecategorisation: checked,
   })
   const { data, isLoading } = api.activity.recategorisedChart.useQuery({
     range: timeRange,
     filter: { type: 'all' },
-    previewRecategorisation: checked,
   })
 
   const chartData = useMemo(() => {
@@ -132,9 +128,6 @@ export function ScalingSummaryActivityChart({ timeRange }: Props) {
             isLoading,
             yAxis: {
               unit: ' UOPS',
-              tick: {
-                width: 100,
-              },
             },
           })}
         </AreaChart>
@@ -153,12 +146,12 @@ function CustomTooltip({
   return (
     <ChartTooltipWrapper>
       <div className="flex w-40 flex-col sm:w-60">
-        <div className="label-value-14-medium mb-3 whitespace-nowrap text-secondary">
+        <div className="mb-3 whitespace-nowrap font-medium text-label-value-14 text-secondary">
           {formatTimestamp(timestamp, {
             longMonthName: true,
           })}
         </div>
-        <span className="heading-16">Average UOPS</span>
+        <span className="text-heading-16">Average UOPS</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
@@ -174,11 +167,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </div>
-                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {syncedUntil && syncedUntil < timestamp
                     ? 'Not synced'
                     : formatActivityCount(entry.value)}
@@ -188,7 +181,7 @@ function CustomTooltip({
           })}
         </div>
 
-        <span className="heading-16 mt-3">Operations count</span>
+        <span className="mt-3 text-heading-16">Operations count</span>
         <HorizontalSeparator className="mt-1.5" />
         <div className="mt-2 flex flex-col gap-2">
           {payload.map((entry) => {
@@ -204,11 +197,11 @@ function CustomTooltip({
                     backgroundColor={config.color}
                     type={config.indicatorType}
                   />
-                  <span className="label-value-14-medium w-20 sm:w-fit">
+                  <span className="w-20 font-medium text-label-value-14 sm:w-fit">
                     {config.label}
                   </span>
                 </div>
-                <span className="label-value-15-medium whitespace-nowrap tabular-nums">
+                <span className="whitespace-nowrap font-medium text-label-value-15 tabular-nums">
                   {syncedUntil && syncedUntil < timestamp
                     ? 'Not synced'
                     : formatInteger(entry.value * UnixTime.DAY)}

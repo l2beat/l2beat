@@ -1,6 +1,6 @@
 import type { AggregatedL2CostRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getRange, getRangeWithMax } from '~/utils/range/range'
@@ -11,12 +11,11 @@ import { CostsTimeRange, rangeToResolution } from './utils/range'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
-export const CostsChartParams = z.object({
+export const CostsChartParams = v.object({
   range: CostsTimeRange,
   filter: CostsProjectsFilter,
-  previewRecategorisation: z.boolean(),
 })
-export type CostsChartParams = z.infer<typeof CostsChartParams>
+export type CostsChartParams = v.infer<typeof CostsChartParams>
 
 export type CostsChartDataPoint = readonly [
   timestamp: number,
@@ -43,23 +42,21 @@ export type CostsChartData = CostsChartDataPoint[]
 export async function getCostsChart({
   range: timeRange,
   filter,
-  previewRecategorisation,
 }: CostsChartParams): Promise<CostsChartData> {
   if (env.MOCK) {
     return getMockCostsChartData({
       range: timeRange,
       filter,
-      previewRecategorisation,
     })
   }
 
   const db = getDb()
-  const projects = await getCostsProjects(filter, previewRecategorisation)
+  const projects = await getCostsProjects(filter)
   if (projects.length === 0) {
     return []
   }
   const resolution = rangeToResolution(timeRange)
-  const range = getRangeWithMax(timeRange, resolution)
+  const range = getRangeWithMax({ type: timeRange }, resolution)
 
   const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projects.map((p) => p.id),
@@ -122,7 +119,10 @@ function getMockCostsChartData({
   range: timeRange,
 }: CostsChartParams): CostsChartData {
   const resolution = rangeToResolution(timeRange)
-  const range = getRange(timeRange === 'max' ? '1y' : timeRange, resolution)
+  const range = getRange(
+    timeRange === 'max' ? { type: '1y' } : { type: timeRange },
+    resolution,
+  )
 
   const timestamps = generateTimestamps(range, resolution)
 

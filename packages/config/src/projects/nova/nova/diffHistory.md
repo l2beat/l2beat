@@ -1,4 +1,190 @@
-Generated with discovered.json: 0x3f8305e53aec2ad3be4a2a51ba999860a666a61d
+Generated with discovered.json: 0x3b7ba7ee34a4fc483164cd3e1fcfd325cc7f9544
+
+# Diff at Fri, 04 Jul 2025 12:19:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 83594372
+- current block number: 83594372
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 83594372 (main branch discovery), not current.
+
+```diff
+    contract L2UpgradeExecutor (0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482) {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      directlyReceivedPermissions.0.from:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      directlyReceivedPermissions.1.from:
+-        "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+    }
+```
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      directlyReceivedPermissions.1.from:
+-        "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
++        "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      directlyReceivedPermissions.2.from:
+-        "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      directlyReceivedPermissions.3.from:
+-        "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilEmergency (0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3) {
+    +++ description: None
+      receivedPermissions.0.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.0.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.0.from:
+-        "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      receivedPermissions.1.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.1.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.1.from:
+-        "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
++        "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      receivedPermissions.2.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.2.via.0.address:
+-        "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      receivedPermissions.2.from:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.3.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.3.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.3.from:
+-        "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      receivedPermissions.4.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.4.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.4.from:
+-        "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+      receivedPermissions.5.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.5.via.0.address:
+-        "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      receivedPermissions.5.from:
+-        "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+      directlyReceivedPermissions.0.from:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      directlyReceivedPermissions.1.from:
+-        "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+    }
+```
+
+```diff
+    EOA L1Timelock (0xf7951D92B0C345144506576eC13Ecf5103aC905a) {
+    +++ description: None
+      receivedPermissions.0.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.0.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.0.from:
+-        "nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "arb-nova:0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+      receivedPermissions.1.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.1.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.1.from:
+-        "nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
++        "arb-nova:0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      receivedPermissions.2.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.2.via.0.address:
+-        "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      receivedPermissions.2.from:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.3.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.3.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.3.from:
+-        "nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
++        "arb-nova:0xbf544970E6BD77b21C6492C281AB60d0770451F4"
+      receivedPermissions.4.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.4.via.0.address:
+-        "nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
++        "arb-nova:0xada790b026097BfB36a5ed696859b97a96CEd92C"
+      receivedPermissions.4.from:
+-        "nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
++        "arb-nova:0xcF9bAb7e53DDe48A6DC4f286CB14e05298799257"
+      receivedPermissions.5.via.1.address:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+      receivedPermissions.5.via.0.address:
+-        "nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
++        "arb-nova:0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9"
+      receivedPermissions.5.from:
+-        "nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "arb-nova:0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+      directlyReceivedPermissions.0.from:
+-        "nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "arb-nova:0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+    }
+```
+
+Generated with discovered.json: 0x152d36c5cba23be16db515a771786d69ac717952
 
 # Diff at Mon, 26 May 2025 15:05:32 GMT:
 

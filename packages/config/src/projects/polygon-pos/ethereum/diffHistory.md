@@ -1,3 +1,141 @@
+Generated with discovered.json: 0xbb7650af53d46f3e6046799ec47229c546dc4df7
+
+# Diff at Mon, 07 Jul 2025 06:52:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 22767964
+- current block number: 22865648
+
+## Description
+
+minus 1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        103
++        102
+    }
+```
+
+Generated with discovered.json: 0x47bcc5055a83a369d3f7b794ff73f9c9839999ff
+
+# Diff at Fri, 04 Jul 2025 12:19:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22767964
+- current block number: 22767964
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22767964 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x401F6c983eA34274ec46f84D70b31C151321188b"
++        "eth:0x401F6c983eA34274ec46f84D70b31C151321188b"
+      receivedPermissions.1.from:
+-        "ethereum:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
++        "eth:0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287"
+      receivedPermissions.2.from:
+-        "ethereum:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "eth:0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+      receivedPermissions.3.from:
+-        "ethereum:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "eth:0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      receivedPermissions.4.from:
+-        "ethereum:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "eth:0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      receivedPermissions.5.from:
+-        "ethereum:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "eth:0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      receivedPermissions.6.from:
+-        "ethereum:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "eth:0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      receivedPermissions.7.from:
+-        "ethereum:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "eth:0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      receivedPermissions.8.from:
+-        "ethereum:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "eth:0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+      receivedPermissions.9.from:
+-        "ethereum:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "eth:0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      receivedPermissions.10.from:
+-        "ethereum:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "eth:0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      receivedPermissions.11.from:
+-        "ethereum:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "eth:0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+    }
+```
+
+```diff
+    contract PolygonMultisig (0xFa7D2a996aC6350f4b56C043112Da0366a59b74c) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
++        "eth:0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+    }
+```
+
+Generated with discovered.json: 0xd72e618e15f1e09891b28933bab5153388efe21c
+
+# Diff at Mon, 23 Jun 2025 15:16:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@399f5abaefa11c25467c604969aa558f53a49aa0 block: 22731100
+- current block number: 22767964
+
+## Description
+
+-1 vali.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        104
++        103
+    }
+```
+
+Generated with discovered.json: 0x5e95b68ff5024c9022f0447579fab6a8812767c3
+
+# Diff at Wed, 18 Jun 2025 11:34:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a8e4f22a1441bd5040898cc3d3d62b3582942b65 block: 22630207
+- current block number: 22731100
+
+## Description
+
+vali removed.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.currentValidatorSetSize:
+-        105
++        104
+    }
+```
+
 Generated with discovered.json: 0x899ddebb720a55c9671db41b05fb25d9da964532
 
 # Diff at Mon, 02 Jun 2025 08:08:59 GMT:

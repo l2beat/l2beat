@@ -42,7 +42,6 @@ import type {
   ProjectCustomDa,
   ProjectDaTrackingConfig,
   ProjectEscrow,
-  ProjectFinalityConfig,
   ProjectPermission,
   ProjectRisk,
   ProjectScalingCapability,
@@ -64,6 +63,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from './generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from './getDiscoveryInfo'
 import { explorerReferences, mergeBadges, safeGetImplementation } from './utils'
 
 type DAProvider = ProjectScalingDa & {
@@ -126,7 +126,6 @@ interface OrbitStackConfigCommon {
   }
   bridge: EntryParameters
   blockNumberOpcodeTimeSeconds?: number
-  finality?: ProjectFinalityConfig
   rollupProxy: EntryParameters
   sequencerInbox: EntryParameters
   nonTemplateTechnology?: Partial<ProjectScalingTechnology>
@@ -337,7 +336,7 @@ function orbitStackCommon(
     | 'stateValidationImage'
     | 'architectureImage'
     | 'purposes'
-    | 'stack'
+    | 'stacks'
     | 'category'
     | 'warning'
   >
@@ -472,10 +471,14 @@ function orbitStackCommon(
       ...templateVars.display,
       warning:
         'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
-      stack: 'Arbitrum',
+      stacks: ['Arbitrum'],
       category:
         templateVars.display.category ??
-        (postsToExternalDA ? 'Optimium' : 'Optimistic Rollup'),
+        (templateVars.reasonsForBeingOther
+          ? 'Other'
+          : postsToExternalDA
+            ? 'Optimium'
+            : 'Optimistic Rollup'),
     },
     riskView: getRiskView(templateVars, daProvider, isPostBoLD),
     stage: computedStage(templateVars),
@@ -614,7 +617,16 @@ function orbitStackCommon(
           ],
           risks: [],
         },
-        EXITS.AUTONOMOUS,
+        {
+          ...EXITS.AUTONOMOUS,
+          references: [
+            ...EXITS.AUTONOMOUS.references,
+            {
+              title: 'List of whitelisted Kinto validators',
+              url: 'https://docs.kinto.xyz/kinto-the-modular-exchange/security-kyc-aml/kinto-validators',
+            },
+          ],
+        },
       ],
       otherConsiderations:
         templateVars.nonTemplateTechnology?.otherConsiderations ??
@@ -689,6 +701,7 @@ function orbitStackCommon(
     reasonsForBeingOther: templateVars.reasonsForBeingOther,
     dataAvailability: extractDA(daProvider),
     scopeOfAssessment: templateVars.scopeOfAssessment,
+    discoveryInfo: getDiscoveryInfo(allDiscoveries),
   }
 }
 
@@ -782,7 +795,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     display: {
       ...common.display,
       ...templateVars.display,
-      finality: { finalizationPeriod: challengePeriodSeconds },
       liveness: ifPostsToEthereum(
         templateVars,
         templateVars.display.liveness ?? {
@@ -793,7 +805,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
             templateVars.display.name
           } is an ${common.display.category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
             selfSequencingDelaySeconds,
-          )}. The state root gets finalized ${formatSeconds(
+          )}. The state root is settled ${formatSeconds(
             challengePeriodSeconds,
           )} after it has been posted.`,
         },
@@ -802,7 +814,6 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): ScalingProject {
     config: {
       ...common.config,
       trackedTxs: getTrackedTxs(templateVars),
-      finality: templateVars.finality,
     },
     ecosystemInfo: {
       id: ProjectId('arbitrum-orbit'),
@@ -1144,6 +1155,20 @@ function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {
       query: {
         formula: 'functionCall',
         address: sequencerInbox.address,
+        selector: '0x37501551',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber, bytes data, uint256 afterDelayedMessagesRead, address gasRefunder, uint256 prevMessageCount, uint256 newMessageCount, bytes quote)',
+        sinceTimestamp: UnixTime(genesisTimestamp),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: sequencerInbox.address,
         selector: '0x3e5aa082',
         functionSignature:
           'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
@@ -1237,11 +1262,11 @@ function computedStage(
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable:
           templateVars.isNodeAvailable ?? 'UnderReview',
+        stateVerificationOnL1: true,
+        fraudProofSystemAtLeast5Outsiders: false,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: true,
-        fraudProofSystemAtLeast5Outsiders: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: true,
         securityCouncilProperlySetUp: false,

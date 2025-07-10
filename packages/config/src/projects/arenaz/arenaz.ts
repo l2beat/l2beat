@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -13,15 +13,11 @@ export const arenaz = opStackL2({
   additionalBadges: [BADGES.RaaS.Gelato],
   additionalPurposes: ['Gaming'],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Arena-Z',
     slug: 'arenaz',
     description:
       'Arena-Z is an OP stack Optimistic Rollup where studios and gamers, creators and players unite to pioneer the future of entertainment.',
-    category: 'Optimistic Rollup',
     links: {
       websites: ['https://arena-z.gg/'],
       bridges: [
@@ -43,14 +39,6 @@ export const arenaz = opStackL2({
         callsPerMinute: 1500,
       },
     ],
-  },
-  finality: {
-    type: 'OPStack',
-    minTimestamp: genesisTimestamp,
-    genesisTimestamp: genesisTimestamp,
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
   },
   genesisTimestamp,
   stateDerivation: DERIVATION.OPSTACK('ARENAZ'),

@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x03f1e57682217abd7970ce5849bc6bf0edfe420e
+Generated with discovered.json: 0x7bc5f160b64914eb447a9937561e6d114996da69
+
+# Diff at Fri, 04 Jul 2025 12:19:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22666223
+- current block number: 22666223
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22666223 (main branch discovery), not current.
+
+```diff
+    contract NebraOwner (0xb463603469Bf31f189E3F6625baf8378880Df14e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
++        "eth:0x3B946743DEB7B6C97F05B7a31B23562448047E3E"
+    }
+```
+
+Generated with discovered.json: 0x96cf1bc0666a46c471e5819eae9818d011fe36eb
 
 # Diff at Fri, 23 May 2025 09:41:00 GMT:
 

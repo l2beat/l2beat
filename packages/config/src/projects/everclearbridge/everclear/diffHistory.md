@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x4098933cc66cdfde708f925fc1b8293167499222
+Generated with discovered.json: 0x025d4eaf9069cba284986fdd844e5c47cf88ed8c
+
+# Diff at Mon, 07 Jul 2025 08:11:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1a6f89d35120c5c65bf077ab92a9ca72da48080d block: 1122116
+- current block number: 1846362
+
+## Description
+
+epochlength halved. problem with disco and the hub diamond. 
+
+## Watched changes
+
+```diff
+    contract EverclearHub (0xa05A3380889115bf313f1Db9d5f335157Be4D816) {
+    +++ description: None
+      values.epochLength:
+-        40
++        20
+    }
+```
+
+Generated with discovered.json: 0xfb89c3d6dd7de952bc2bc0a937843ed77b755668
 
 # Diff at Tue, 27 May 2025 08:31:37 GMT:
 

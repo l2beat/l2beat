@@ -1,7 +1,7 @@
 import type { ProjectValueRecord } from '@l2beat/database'
+import { v } from '@l2beat/validate'
 import groupBy from 'lodash/groupBy'
 import uniq from 'lodash/uniq'
-import { z } from 'zod'
 import { MIN_TIMESTAMPS } from '~/consts/minTimestamps'
 import { env } from '~/env'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -15,13 +15,12 @@ import {
 } from './utils/projectFilterUtils'
 import { TvsChartRange, rangeToResolution } from './utils/range'
 
-export const RecategorisedTvsChartDataParams = z.object({
+export const RecategorisedTvsChartDataParams = v.object({
   range: TvsChartRange,
   filter: TvsProjectFilter,
-  previewRecategorisation: z.boolean(),
 })
 
-export type RecategorisedTvsChartDataParams = z.infer<
+export type RecategorisedTvsChartDataParams = v.infer<
   typeof RecategorisedTvsChartDataParams
 >
 
@@ -41,21 +40,16 @@ export type RecategorisedTvsChartData = (readonly [
 export async function getRecategorisedTvsChart({
   range,
   filter,
-  previewRecategorisation,
 }: RecategorisedTvsChartDataParams): Promise<RecategorisedTvsChartData> {
   if (env.MOCK) {
-    return getMockTvsChartData({ range, filter, previewRecategorisation })
+    return getMockTvsChartData({ range, filter })
   }
 
-  const projectsFilter = createTvsProjectsFilter(
-    filter,
-    previewRecategorisation,
-  )
+  const projectsFilter = createTvsProjectsFilter(filter)
 
-  const tvsProjects = await getTvsProjects(
-    projectsFilter,
-    previewRecategorisation,
-  )
+  const tvsProjects = await getTvsProjects(projectsFilter, {
+    withoutArchivedAndUpcoming: true,
+  })
 
   if (tvsProjects.length === 0) {
     return []
@@ -69,9 +63,9 @@ export async function getRecategorisedTvsChart({
 
   const [rollupValues, validiumAndOptimiumsValues, othersValues] =
     await Promise.all([
-      getSummedTvsValues(rollups, range, 'SUMMARY'),
-      getSummedTvsValues(validiumsAndOptimiums, range, 'SUMMARY'),
-      getSummedTvsValues(others, range, 'SUMMARY'),
+      getSummedTvsValues(rollups, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(validiumsAndOptimiums, { type: range }, 'SUMMARY'),
+      getSummedTvsValues(others, { type: range }, 'SUMMARY'),
     ])
 
   return getChartData(rollupValues, validiumAndOptimiumsValues, othersValues)
@@ -123,9 +117,9 @@ function getChartData(
 function getMockTvsChartData({
   range,
 }: RecategorisedTvsChartDataParams): RecategorisedTvsChartData {
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
   const target = getTvsTargetTimestamp()
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: target,
   })
   const timestamps = generateTimestamps(

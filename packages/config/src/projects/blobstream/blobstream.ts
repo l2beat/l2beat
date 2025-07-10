@@ -10,6 +10,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const ethereumDiscovery = new ProjectDiscovery('blobstream')
@@ -123,6 +124,11 @@ export const blobstream: BaseProject = {
     },
   ],
   permissions: generateDiscoveryDrivenPermissions([
+    ethereumDiscovery,
+    arbitrumDiscovery,
+    baseDiscovery,
+  ]),
+  discoveryInfo: getDiscoveryInfo([
     ethereumDiscovery,
     arbitrumDiscovery,
     baseDiscovery,

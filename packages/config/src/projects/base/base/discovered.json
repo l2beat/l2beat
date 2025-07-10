@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "base",
   "blockNumber": 31338532,
-  "configHash": "0xb1dd9135205192b5a8e6713e5f38c54890c6d9153b0b66b801388af9712f3b64",
+  "configHash": "0x30535ca679720c27a7dddcaec1496da7dfe1a6e12aacaf2d8e24c259596f7940",
   "entries": [
     {
       "name": "FeeDisburser",
@@ -1298,5 +1298,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0x859d91146480f9afc7ee3001df20297fe50d8ac9013df1e2dfd7b13a5ae541fd"
+  "permissionsConfigHash": "0xff7dfdaabb5d00a22f0e3398ce7895b8c734de96a14bb79c2263d628fb9f9a58"
 }

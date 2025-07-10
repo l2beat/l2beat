@@ -1,4 +1,61 @@
-Generated with discovered.json: 0x8ee884e637648483321f41f8c203b94f2755769f
+Generated with discovered.json: 0x700957dd46ee6b1092cee792ff3594c6547c0538
+
+# Diff at Fri, 04 Jul 2025 12:19:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22615702
+- current block number: 22615702
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22615702 (main branch discovery), not current.
+
+```diff
+    contract Paradex Multisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+      receivedPermissions.1.from:
+-        "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+    }
+```
+
+```diff
+    EOA  (0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
++        "eth:0xF338cad020D506e8e3d9B4854986E0EcE6C23640"
+    }
+```
+
+```diff
+    contract Paradex Multisig 2 (0xFF57A3bB6465501c993acF8f3b29125a862661C0) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+      receivedPermissions.1.from:
+-        "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+      receivedPermissions.2.from:
+-        "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+      receivedPermissions.3.from:
+-        "ethereum:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
++        "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"
+    }
+```
+
+Generated with discovered.json: 0x06b8cb02e67eafa4cb374a7cf3e36f0be8d2ff96
 
 # Diff at Mon, 02 Jun 2025 08:07:03 GMT:
 

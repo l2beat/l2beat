@@ -4,5 +4,11 @@
     "address": "0x1F517f2bAb178AdD6e282297a4728bcc50E9F6CF",
     "chain": "ethereum",
     "blockNumber": 22423939
+  },
+  "L1VerifierFflonk_v28": {
+    "hash": "0xb5da71a3ae0b3e2d792830222a0478c730acc075103b898ec899436fcc04323b",
+    "address": "0xD5dBE903F5382B052317D326FA1a7B63710C6a5b",
+    "chain": "ethereum",
+    "blockNumber": 22775246
   }
 }

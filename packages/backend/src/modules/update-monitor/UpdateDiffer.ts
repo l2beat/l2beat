@@ -87,6 +87,8 @@ export class UpdateDiffer {
     ]
 
     const diff = diffDiscovery(onDiskContracts, latestContracts)
+    const diffBaseBlockNumber = onDiskDiscovery.blockNumber
+    const diffHeadBlockNumber = latestDiscovery.blockNumber
 
     const updateDiffs = this.getUpdateDiffs(
       diff,
@@ -94,6 +96,8 @@ export class UpdateDiffer {
       projectId,
       chain,
       timestamp,
+      diffBaseBlockNumber,
+      diffHeadBlockNumber,
     )
 
     if (updateDiffs.length === 0) {
@@ -123,6 +127,8 @@ export class UpdateDiffer {
     projectId: string,
     chain: string,
     timestamp: UnixTime,
+    diffBaseBlockNumber: number,
+    diffHeadBlockNumber: number,
   ) {
     const implementationChanges = diff.filter((discoveryDiff) =>
       discoveryDiff.diff?.some(
@@ -171,6 +177,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber,
+        diffHeadBlockNumber,
       })
     }
 
@@ -181,6 +189,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber,
+        diffHeadBlockNumber,
       })
     }
 
@@ -191,6 +201,8 @@ export class UpdateDiffer {
         address: address,
         chain,
         timestamp,
+        diffBaseBlockNumber,
+        diffHeadBlockNumber,
       })
     }
 
@@ -201,6 +213,8 @@ export class UpdateDiffer {
         address,
         chain,
         timestamp,
+        diffBaseBlockNumber,
+        diffHeadBlockNumber,
       })
     }
 

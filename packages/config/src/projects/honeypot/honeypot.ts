@@ -16,10 +16,12 @@ import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../../common/liveness'
 import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('honeypot')
 
 export const honeypot: ScalingProject = {
+  archivedAt: UnixTime(1751987762), // 2025-07-08T15:16:02Z
   type: 'layer2',
   id: ProjectId('honeypot'),
   capability: 'appchain',
@@ -32,14 +34,14 @@ export const honeypot: ScalingProject = {
   ],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
   display: {
-    name: 'Honeypot (Cartesi)',
-    shortName: 'Honeypot',
+    name: 'Cartesi Authority Honeypot',
+    shortName: 'Honeypot Authority',
     slug: 'cartesi-honeypot',
-    stack: 'Cartesi Rollups',
+    stacks: ['Cartesi Rollups'],
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
-    category: 'Optimistic Rollup',
+    category: 'Other',
 
     links: {
       websites: ['https://cartesi.io/'],
@@ -72,15 +74,15 @@ export const honeypot: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: true,
-      },
-      stage1: {
-        principle: false,
         stateVerificationOnL1: {
           satisfied: false,
           message: 'There is no onchain fraud proof system.',
           mode: 'replace',
         },
         fraudProofSystemAtLeast5Outsiders: null,
+      },
+      stage1: {
+        principle: false,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: null,
@@ -242,5 +244,13 @@ export const honeypot: ScalingProject = {
       description: 'Honeypot launched on mainnet.',
       type: 'general',
     },
+    {
+      title: 'Honeypot archived',
+      url: 'https://x.com/cartesiproject/status/1940757477844455765',
+      date: '2025-07-08T00:00:00Z',
+      description: 'Honeypot funds withdrawn, and validator turned off.',
+      type: 'general',
+    },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

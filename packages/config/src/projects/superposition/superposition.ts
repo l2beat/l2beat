@@ -22,8 +22,8 @@ export const superposition: ScalingProject = orbitStackL3({
     slug: 'superposition',
     description:
       'Superposition is a Layer 3 powered by Arbitrum Orbit AnyTrust. It is a yield centric blockchain that pays users and developers to use it. Superposition offers novel incentive mechanisms such as Utility Mining and Super Assets and a native onchain order book built using Stylus that provides shared liquidity for the ecosystem.',
-    category: 'Optimium',
-    stack: 'Arbitrum',
+    category: 'Other',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://superposition.so/'],
       bridges: ['https://bridge.superposition.so/'],

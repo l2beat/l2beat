@@ -1,6 +1,6 @@
 import type { ActivityRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 import { getProjectDaThroughputChart } from '../../data-availability/throughput/getProjectDaThroughputChart'
 import { getActivityForProjectAndRange } from '../activity/getActivityForProjectAndRange'
 import { getCostsChart } from './getCostsChart'
@@ -8,10 +8,10 @@ import { getCostsForProject } from './getCostsForProject'
 import type { LatestCostsProjectResponse } from './types'
 import { CostsTimeRange, rangeToResolution } from './utils/range'
 
-export type ProjectCostsChartParams = z.infer<typeof ProjectCostsChartParams>
-export const ProjectCostsChartParams = z.object({
+export type ProjectCostsChartParams = v.infer<typeof ProjectCostsChartParams>
+export const ProjectCostsChartParams = v.object({
   range: CostsTimeRange,
-  projectId: z.string(),
+  projectId: v.string(),
 })
 
 type ProjectLatestCosts = Omit<LatestCostsProjectResponse, 'syncedUntil'> & {
@@ -25,12 +25,14 @@ export type ProjectCostsChartResponse = Awaited<
 export async function getProjectCostsChart(params: ProjectCostsChartParams) {
   const [costsChart, costs, throughput, activityRecords] = await Promise.all([
     getCostsChart({
-      previewRecategorisation: false,
       filter: { type: 'projects', projectIds: [params.projectId] },
       range: params.range,
     }),
     getCostsForProject(params.projectId, params.range),
-    getProjectDaThroughputChart(params),
+    getProjectDaThroughputChart({
+      range: { type: params.range },
+      projectId: params.projectId,
+    }),
     getActivityForProjectAndRange(params.projectId, params.range),
   ])
 
@@ -59,11 +61,11 @@ export async function getProjectCostsChart(params: ProjectCostsChartParams) {
           : 'hour',
     )
     const posted = timestampedDaData[dailyTimestamp]
-    return [...cost, posted !== undefined ? posted : undefined] as const
+    return [...cost, posted] as const
   })
 
   const summedThroughput = throughput?.chart.reduce((acc, [_, throughput]) => {
-    return acc + throughput
+    return acc + (throughput ?? 0)
   }, 0)
   const total = withTotal({
     ...costs,

@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
 import {
@@ -53,9 +53,6 @@ export const redstone: ScalingProject = opStackL2({
         'https://discord.com/invite/latticexyz',
       ],
     },
-  },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
   },
   daProvider: DACHALLENGES_DA_PROVIDER(
     daChallengeWindow,

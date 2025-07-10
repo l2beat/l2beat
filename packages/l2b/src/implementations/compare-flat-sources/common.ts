@@ -1,4 +1,5 @@
 import { join, resolve } from 'path'
+import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type DiscoveryPaths,
@@ -7,7 +8,6 @@ import {
   estimateSimilarity,
   format,
 } from '@l2beat/discovery'
-import type { CliLogger } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'
@@ -25,7 +25,7 @@ interface FileId {
 }
 
 export async function computeStackSimilarity(
-  logger: CliLogger,
+  logger: Logger,
   paths: DiscoveryPaths,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
@@ -104,7 +104,7 @@ export function getMostSimilar(
 }
 
 export async function computeComparisonBetweenProjects(
-  logger: CliLogger,
+  logger: Logger,
   firstProjectPath: string,
   secondProjectPath: string,
   paths: DiscoveryPaths,
@@ -178,7 +178,7 @@ export function removeCommonPath(fileIds: FileId[]): FileId[] {
 }
 
 async function readProject(
-  logger: CliLogger,
+  logger: Logger,
   projectName: string,
   chain: string,
   paths: DiscoveryPaths,
@@ -188,7 +188,6 @@ async function readProject(
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
-    logger.updateStatus('readProject', `[ OK ] Reading ${projectName}`)
     return {
       name: projectName,
       chain,
@@ -200,7 +199,7 @@ async function readProject(
       sources,
     }
   } catch {
-    logger.logLine(
+    logger.info(
       `[${chalk.red('FAIL')}] Reading ${projectName} - ${chalk.magenta(
         'run discovery to generate flat files',
       )}`,

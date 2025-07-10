@@ -2,7 +2,7 @@
   "name": "skale-ima",
   "chain": "ethereum",
   "blockNumber": 21744185,
-  "configHash": "0xa2552ec1458a4fd0f0cc7d3cc410d78c08af0b3b31ba9f38aad36b6d94d89e66",
+  "configHash": "0x45b71abafa37ddb89fa9a749092eee3bba4d3dcc7d0e4940c83db3e1e833cf4b",
   "entries": [
     {
       "name": "ProxyAdminOwner",
@@ -626,42 +626,42 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
+          "from": "eth:0x3C02FdEe8E05B6dc4d44a6555b3ff5762D03871a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x49F583d263e4Ef938b9E09772D3394c71605Df94",
+          "from": "eth:0x49F583d263e4Ef938b9E09772D3394c71605Df94",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x588801cA36558310D91234aFC2511502282b1621",
+          "from": "eth:0x588801cA36558310D91234aFC2511502282b1621",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6ef406953bac772C2146389ED37846BA3b6086D1",
+          "from": "eth:0x6ef406953bac772C2146389ED37846BA3b6086D1",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
+          "from": "eth:0x7343d31eb99Fd31424bcca9f0a7EAFBc1F515f2d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+          "from": "eth:0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
+          "from": "eth:0x8fB1A35bB6fB9c47Fb5065BE5062cB8dC1687669",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
+          "from": "eth:0x9f8196D864ee9476bF8DBE68aD07cc555d6B7986",
           "role": "admin"
         }
       ],
@@ -1263,5 +1263,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xa427b901cb796788df610819fc664a8f0e313295285becdfa1e1f62097c68acf"
+  "permissionsConfigHash": "0xf943743e089980b8c8fc70d09b4d2ba946e2a2d58a53b1a19947e3ba6cd909af"
 }

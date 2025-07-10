@@ -2,7 +2,7 @@
   "name": "nearomni",
   "chain": "ethereum",
   "blockNumber": 22545890,
-  "configHash": "0x695c47a832822027e3fd3f0a840fd56d555e28ff54d9acddd574b4ff92895cfd",
+  "configHash": "0x8559943f024e13f57c52935d28909641fb77f1e226c893955ef46d8a98455117",
   "entries": [
     {
       "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
@@ -16,7 +16,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "validate bridge transactions (derived address of the MPC setup).",
           "role": ".nearBridgeDerivedAddress"
         }
@@ -35,13 +35,13 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "manage the pauser role and all pause flags (pause and unpause), manage token lists, claim ownership of token contracts and upgrade them, change the derived signer address for incoming message validation.",
           "role": ".defaultAdminAC"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "role": ".defaultAdminAC"
         }
       ],
@@ -115,7 +115,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
+          "from": "eth:0xe00c629aFaCCb0510995A2B95560E446A24c85B9",
           "description": "pause the bridge escrow for deposits and withdrawals.",
           "role": ".pauseAdminAC"
         }
@@ -374,5 +374,5 @@
     "nearomni/BridgeToken": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "nearomni/OmniBridge": "0x18c902c1d4452563624923642743a529e6b1fd2780490fa6d5c31164aee07141"
   },
-  "permissionsConfigHash": "0x2401e929d4cc9c3b824a323639a39e993e9424d1ace5c40583716659ab808743"
+  "permissionsConfigHash": "0xaaf0f7c03045014ce496531b01974781990bbb181b99de8ba0fa8872f309b211"
 }

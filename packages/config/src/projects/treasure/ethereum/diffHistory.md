@@ -1,4 +1,172 @@
-Generated with discovered.json: 0x2aa2795460e2ceaa79c53daa956fc0d581be9704
+Generated with discovered.json: 0x52d4695a9dbd75436b56fab6bdab08554807254f
+
+# Diff at Fri, 04 Jul 2025 12:19:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22593197
+- current block number: 22593197
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2572835e02b59078711aa0800490e80975e4169d) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract TreasureChainAdminMultisig (0x282370D1e925ee897CB29Cb3beC13aAe0743067C) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
++        "eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+      receivedPermissions.0.from:
+-        "ethereum:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
++        "eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+    }
+```
+
+```diff
+    EOA  (0x4131719fb0FA1CB3e3A052A4A309ea7575d8c283) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+    }
+```
+
+```diff
+    contract TreasureZkEvmAdmin (0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
++        "eth:0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879"
+    }
+```
+
+```diff
+    EOA  (0xdd2B80c477CF2f660A1Eda0FeCBD0291caE43216) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
++        "eth:0x97440Bf040f0dfA402cf5D4F1e0f574309Ace871"
+    }
+```
+
+Generated with discovered.json: 0x92ec27d55583885ea4e74b2f297d81bb46cee59f
+
+# Diff at Thu, 03 Jul 2025 10:57:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22593197
+- current block number: 22593197
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+Generated with discovered.json: 0x3f482d93f07132a52aebd9c106b011c6cbe37a9f
+
+# Diff at Wed, 25 Jun 2025 07:17:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593197
+- current block number: 22593197
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593197 (main branch discovery), not current.
+
+```diff
+    contract TreasureZkEvm (0x5e64D248Eab336AB3Fd0BeC0CFe31D4AAE32E879) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+```diff
+    contract ValidiumL1DAValidator (0x907b30407249949521Bf0c89A43558dae200146A) {
+    +++ description: Contract that 'verifies' the data availability for validiums. This implementation only checks the correct formatting and does not serve as a DA oracle. Can be used by ZK stack validiums as the L1 part of a DAValidator pair.
+      template:
+-        "shared-zk-stack/v26/ValidiumL1DAValidator"
++        "shared-zk-stack/ValidiumL1DAValidator"
+    }
+```
+
+```diff
+    contract Verifier (0xdb3300726556AFA413A11aF474a8cFDa4D7fc5a5) {
+    +++ description: Implements the ZK proof verification logic.
+      template:
+-        "shared-zk-stack/Verifier"
++        "shared-zk-stack/old/Verifier"
+    }
+```
+
+Generated with discovered.json: 0xfceecf6ccd5affa2ee8310a49cdcb06a02648dc8
 
 # Diff at Tue, 27 May 2025 08:30:47 GMT:
 

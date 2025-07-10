@@ -1,37 +1,36 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const DiscoLupeProject = z.object({
-  id: z.string(),
-  display: z.object({
-    name: z.string(),
-    slug: z.string(),
-    stack: z.string().optional(),
-    category: z.string(),
+export const DiscoLupeProject = v.object({
+  id: v.string(),
+  display: v.object({
+    name: v.string(),
+    slug: v.string(),
+    stack: v.string().optional(),
+    category: v.string(),
   }),
-  tvs: z.number(),
-  type: z.string(),
-  arePermissionsDiscoveryDriven: z.boolean(),
-  areContractsDiscoveryDriven: z.boolean(),
-  isArchived: z.boolean(),
-  isUpcoming: z.boolean(),
-  isUnderReview: z.boolean(),
+  tvs: v.number(),
+  type: v.string(),
+  arePermissionsDiscoveryDriven: v.boolean(),
+  areContractsDiscoveryDriven: v.boolean(),
+  isArchived: v.boolean(),
+  isUpcoming: v.boolean(),
+  isUnderReview: v.boolean(),
 
-  costsConfigured: z.boolean(),
-  livenessConfigured: z.boolean(),
-  finalityConfigured: z.boolean(),
-  milestonesConfigured: z.boolean(),
-  operatorConfigured: z.boolean(),
-  withdrawalsConfigured: z.boolean(),
-  otherConsiderationsConfigured: z.boolean(),
-  stateDerivationConfigured: z.boolean(),
-  stateValidationConfigured: z.boolean(),
-  upgradesAndGovernanceConfigured: z.boolean(),
+  costsConfigured: v.boolean(),
+  livenessConfigured: v.boolean(),
+  milestonesConfigured: v.boolean(),
+  operatorConfigured: v.boolean(),
+  withdrawalsConfigured: v.boolean(),
+  otherConsiderationsConfigured: v.boolean(),
+  stateDerivationConfigured: v.boolean(),
+  stateValidationConfigured: v.boolean(),
+  upgradesAndGovernanceConfigured: v.boolean(),
 })
-export type DiscoLupeProject = z.infer<typeof DiscoLupeProject>
+export type DiscoLupeProject = v.infer<typeof DiscoLupeProject>
 
-export const DiscoLupeModel = z.object({
-  success: z.boolean(),
-  data: z.object({
-    projects: z.array(DiscoLupeProject),
+export const DiscoLupeModel = v.object({
+  success: v.boolean(),
+  data: v.object({
+    projects: v.array(DiscoLupeProject),
   }),
 })

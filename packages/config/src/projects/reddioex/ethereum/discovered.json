@@ -2,7 +2,7 @@
   "name": "reddioex",
   "chain": "ethereum",
   "blockNumber": 19825385,
-  "configHash": "0x11ec0b0d9f473c89f6f97e16afc0e0069ec0fd9be768101e4a544c693c393b1c",
+  "configHash": "0x8f1c53a04201d47ea6938bd8597afe695206532e82ae10cd3514b727475e2f53",
   "sharedModules": ["shared-sharp-verifier"],
   "entries": [
     {
@@ -12,7 +12,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".operators"
         }
       ]
@@ -113,7 +113,7 @@
       "receivedPermissions": [
         {
           "permission": "operateStarkEx",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".operators"
         }
       ]
@@ -126,18 +126,18 @@
       "receivedPermissions": [
         {
           "permission": "governStarknet",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".$admin"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "description": "manage the token admin role.",
           "role": ".$admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "role": ".$admin"
         }
       ]
@@ -149,7 +149,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
+          "from": "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C",
           "description": "Can regsiter new tokens for deposits and withdrawals.",
           "role": ".tokenAdmins"
         }
@@ -677,5 +677,5 @@
     "starkex/OrderRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "starkex/StarkExchange": "0x27c9aa7e5669180c5228a095027bfb8426029450cd708a9277ac4bee945f699c"
   },
-  "permissionsConfigHash": "0x3dcf9334ad3967bcc7cf9c8d706d777b22c3b9c90630dc433f56d1b4e649e87c"
+  "permissionsConfigHash": "0x5362bb926c8e24a2fe094844abdc2069875752db5bf6668f315f145316161ee3"
 }

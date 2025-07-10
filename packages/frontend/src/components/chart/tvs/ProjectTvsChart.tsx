@@ -85,10 +85,9 @@ function DefaultChart({
   token,
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
-    range: timeRange,
+    range: { type: timeRange },
     filter: { type: 'projects', projectIds: [projectId] },
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
   })
 
   const chartData: TvsChartDataPoint[] | undefined = data?.map(

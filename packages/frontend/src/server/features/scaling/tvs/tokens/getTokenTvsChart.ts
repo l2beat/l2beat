@@ -1,6 +1,6 @@
 import type { TokenValueRecord } from '@l2beat/database'
-import { assert, TokenId, UnixTime, branded } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { assert, TokenId, UnixTime } from '@l2beat/shared-pure'
+import { v as z } from '@l2beat/validate'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { generateTimestamps } from '~/server/features/utils/generateTimestamps'
@@ -10,7 +10,7 @@ import { TvsChartRange, rangeToResolution } from '../utils/range'
 
 const TokenParams = z.object({
   projectId: z.string(),
-  tokenId: branded(z.string(), TokenId),
+  tokenId: z.string().transform((v) => TokenId(v)),
 })
 
 export const TokenTvsChartParams = z.object({
@@ -36,9 +36,9 @@ export async function getTokenTvsChart({
 
   const db = getDb()
   const targetTimestamp = getTvsTargetTimestamp()
-  const resolution = rangeToResolution(range)
+  const resolution = rangeToResolution({ type: range })
 
-  const [from, to] = getRangeWithMax(range, resolution, {
+  const [from, to] = getRangeWithMax({ type: range }, resolution, {
     now: targetTimestamp,
   })
 
@@ -73,8 +73,8 @@ export async function getTokenTvsChart({
 }
 
 function getMockTokenTvsChartData(params: TokenTvsChartParams): TokenTvsChart {
-  const resolution = rangeToResolution(params.range)
-  const [from, to] = getRangeWithMax(params.range, 'hourly')
+  const resolution = rangeToResolution({ type: params.range })
+  const [from, to] = getRangeWithMax({ type: params.range }, 'hourly')
   const adjustedRange: [UnixTime, UnixTime] = [
     from ?? to - 730 * UnixTime.DAY,
     to,

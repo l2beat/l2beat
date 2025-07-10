@@ -2,7 +2,7 @@
   "name": "optimism",
   "chain": "optimism",
   "blockNumber": 135717996,
-  "configHash": "0xc00c83bf0558900526f94402c503bedccce0b0aa196e19eee2732b9848c7789e",
+  "configHash": "0x22d4850d8ed52129d28452fdf31e7a0b53ba08d8f8ef08f70ddab79679960f6d",
   "entries": [
     {
       "address": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
@@ -22,7 +22,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "optimism:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+          "from": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
           "description": "change the OP token owner to a different MintManager and therefore change the inflation policy.",
           "role": ".owner"
         }
@@ -449,87 +449,87 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000002",
+          "from": "oeth:0x4200000000000000000000000000000000000002",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000007",
+          "from": "oeth:0x4200000000000000000000000000000000000007",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000000F",
+          "from": "oeth:0x420000000000000000000000000000000000000F",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000010",
+          "from": "oeth:0x4200000000000000000000000000000000000010",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000011",
+          "from": "oeth:0x4200000000000000000000000000000000000011",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000012",
+          "from": "oeth:0x4200000000000000000000000000000000000012",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000013",
+          "from": "oeth:0x4200000000000000000000000000000000000013",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000014",
+          "from": "oeth:0x4200000000000000000000000000000000000014",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000015",
+          "from": "oeth:0x4200000000000000000000000000000000000015",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000016",
+          "from": "oeth:0x4200000000000000000000000000000000000016",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000017",
+          "from": "oeth:0x4200000000000000000000000000000000000017",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000018",
+          "from": "oeth:0x4200000000000000000000000000000000000018",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000019",
+          "from": "oeth:0x4200000000000000000000000000000000000019",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000001A",
+          "from": "oeth:0x420000000000000000000000000000000000001A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000001b",
+          "from": "oeth:0x420000000000000000000000000000000000001b",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000020",
+          "from": "oeth:0x4200000000000000000000000000000000000020",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000021",
+          "from": "oeth:0x4200000000000000000000000000000000000021",
           "role": "admin"
         }
       ],
@@ -771,145 +771,145 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000002",
+          "from": "oeth:0x4200000000000000000000000000000000000002",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000007",
+          "from": "oeth:0x4200000000000000000000000000000000000007",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000000F",
+          "from": "oeth:0x420000000000000000000000000000000000000F",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000010",
+          "from": "oeth:0x4200000000000000000000000000000000000010",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000011",
+          "from": "oeth:0x4200000000000000000000000000000000000011",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000012",
+          "from": "oeth:0x4200000000000000000000000000000000000012",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000013",
+          "from": "oeth:0x4200000000000000000000000000000000000013",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000014",
+          "from": "oeth:0x4200000000000000000000000000000000000014",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000015",
+          "from": "oeth:0x4200000000000000000000000000000000000015",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000016",
+          "from": "oeth:0x4200000000000000000000000000000000000016",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000017",
+          "from": "oeth:0x4200000000000000000000000000000000000017",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000018",
+          "from": "oeth:0x4200000000000000000000000000000000000018",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000019",
+          "from": "oeth:0x4200000000000000000000000000000000000019",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000001A",
+          "from": "oeth:0x420000000000000000000000000000000000001A",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x420000000000000000000000000000000000001b",
+          "from": "oeth:0x420000000000000000000000000000000000001b",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000020",
+          "from": "oeth:0x4200000000000000000000000000000000000020",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "optimism:0x4200000000000000000000000000000000000021",
+          "from": "oeth:0x4200000000000000000000000000000000000021",
           "role": "admin",
           "via": [
-            { "address": "optimism:0x4200000000000000000000000000000000000018" }
+            { "address": "oeth:0x4200000000000000000000000000000000000018" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "optimism:0x4200000000000000000000000000000000000018",
+          "from": "oeth:0x4200000000000000000000000000000000000018",
           "role": ".owner"
         }
       ]
@@ -1523,5 +1523,5 @@
     "opstack/Layer2/SchemaRegistry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4"
   },
-  "permissionsConfigHash": "0xf0e8e8accede9a0855017ab16e6a5d7795709bfd2f0fe74b02ab1dc0271c74af"
+  "permissionsConfigHash": "0x640c0a2214ef866dc468b24970a6fea4d241ae174af85ba823d095be312dde12"
 }

@@ -165,7 +165,15 @@
       },
       "category": "stablecoin",
       "source": "native",
-      "isAssociated": false
+      "isAssociated": false,
+      "bridgedUsing": {
+        "bridges": [
+          {
+            "name": "Frax Ferry",
+            "slug": "fraxferry"
+          }
+        ]
+      }
     },
     {
       "mode": "auto",

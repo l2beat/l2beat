@@ -23,7 +23,7 @@ export async function getScalingTvsApiData({
   }
 
   const data = await getTvsChart({
-    range,
+    range: { type: range },
     filter:
       type === 'projects'
         ? {
@@ -32,7 +32,6 @@ export async function getScalingTvsApiData({
           }
         : { type: type ?? 'layer2' },
     excludeAssociatedTokens,
-    previewRecategorisation: false,
   })
 
   const latestTvsData = data.at(-1)

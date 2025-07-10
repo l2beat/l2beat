@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import type { ScalingProject } from '../../internalTypes'
 import { upcomingL2 } from '../../templates/upcoming'
 
@@ -13,7 +13,7 @@ export const lootchain: ScalingProject = upcomingL2({
       'Loot Chain is a high-performance, customizable L2 blockchain deployed with Caldera. It provides specialized support for builders on Lootverse and Autonomous Worlds.',
     purposes: ['NFT'],
     category: 'Optimistic Rollup',
-    stack: 'OP Stack',
+    stacks: ['OP Stack'],
     links: {
       websites: ['https://lootchain.com/'],
       bridges: ['https://mainnet.lootchain.com/bridge'],
@@ -26,5 +26,8 @@ export const lootchain: ScalingProject = upcomingL2({
         'https://x.com/AdventureLayer',
       ],
     },
+  },
+  ecosystemInfo: {
+    id: ProjectId('superchain'),
   },
 })

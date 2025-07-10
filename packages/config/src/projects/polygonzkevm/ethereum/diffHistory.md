@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x1c29bfc644ce144e5d909aaa990a14627ebd9523
+Generated with discovered.json: 0x0cde38f825e07fa5f7d4dbc20740139b49444fc1
+
+# Diff at Fri, 04 Jul 2025 12:19:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21744722
+- current block number: 21744722
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21744722 (main branch discovery), not current.
+
+```diff
+    EOA  (0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
++        "eth:0x519E42c24163192Dca44CD3fBDCEBF6be9130987"
+    }
+```
+
+```diff
+    contract Polygon zkEVM Multisig (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
++        "eth:0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+      receivedPermissions.1.from:
+-        "ethereum:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
++        "eth:0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      receivedPermissions.2.from:
+-        "ethereum:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
++        "eth:0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+    }
+```
+
+Generated with discovered.json: 0xad56041dbe39f802f559b94a10def855166cbfdc
 
 # Diff at Fri, 23 May 2025 09:41:02 GMT:
 

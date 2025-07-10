@@ -8,6 +8,7 @@ import {
 } from '../../common'
 import { linkByDA } from '../../common/linkByDA'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 
 const discovery = new ProjectDiscovery('eigenda')
@@ -100,6 +101,10 @@ export const eigenda: BaseProject = {
     },
     badges: [],
   },
+  colors: {
+    primary: '#6258FF',
+    secondary: '#6258FF',
+  },
   daLayer: {
     type: 'DA Service',
     systemCategory: 'public',
@@ -174,7 +179,7 @@ export const eigenda: BaseProject = {
       {
         size: 15728640, // 15 MB
         frequency: 1, // x second
-        sinceTimestamp: 1726095600, // 2024-09-12,
+        sinceTimestamp: 1719187200, // 2024-06-24
       },
     ],
     finality: 600, // ~10 minutes
@@ -292,4 +297,5 @@ An ejected operator can rejoin the quorum after ${formatSeconds(ejectionCooldown
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

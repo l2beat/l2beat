@@ -43,13 +43,14 @@
     --chart-cyan: 180deg 50.2% 42.5%;
     --chart-yellow: 44.9deg 100% 33.5%;
     --chart-emerald: 151deg 90% 48%;
+    --chart-fuchsia: 284deg 86.6% 67.8%;
+    --chart-lime: 97.7deg 78.8% 61.2%;
+    --chart-sky: 200deg 91.1% 64.9%;
 
     --chart-stacked-pink: 320deg 100% 63.7%;
     --chart-stacked-yellow: 45deg 100% 51.4%;
     --chart-stacked-purple: 266deg 57.7% 52.7%;
     --chart-stacked-blue: 220deg 100% 57.5%;
-
-    --chart-da-celestia: 284deg 100% 78%;
 
     /* Chart gradients */
 
@@ -70,6 +71,9 @@
     --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
 
     --chart-emerald-fill-gradient: 151deg 90.2% 64.1%;
+    --chart-lime-fill-gradient: 98.1deg 100% 44.5%;
+    --chart-fuchsia-fill-gradient: 302deg 100% 68.6%;
+    --chart-sky-fill-gradient: 200deg 91.1% 64.9%;
   }
 
   .dark {
@@ -98,19 +102,20 @@
     --row-highlight-no-opacity: 281deg 51.6% 25.1%;
 
     /* Chart colors */
-    --chart-ethereum: 212deg 100% 66.3%;
+    --chart-ethereum: 212deg 100% 56.1%;
     --chart-ethereum-secondary: 223deg 69% 50.6%;
     --chart-pink: 284deg 87.1% 75.7%;
     --chart-cyan: 190deg 73.6% 55.5%;
     --chart-yellow: 54.2deg 70.9% 56.9%;
     --chart-emerald: 151deg 90.2% 48%;
+    --chart-fuchsia: 285deg 62.7% 52.7%;
+    --chart-lime: 111deg 100% 37.8%;
+    --chart-sky: 200deg 91.6% 72%;
 
     --chart-stacked-pink: 320deg 100% 63.7%;
     --chart-stacked-yellow: 45deg 100% 51.4%;
     --chart-stacked-purple: 266deg 57.7% 52.7%;
     --chart-stacked-blue: 220deg 100% 57.5%;
-
-    --chart-da-celestia: 285deg 62.7% 52.7%;
 
     /* Chart gradients */
 
@@ -131,6 +136,9 @@
     --chart-yellow-stroke-gradient-2: 43deg 60% 45.1%;
 
     --chart-emerald-fill-gradient: 163deg 93.5% 24.3%;
+    --chart-lime-fill-gradient: 97.8deg 96.7% 64.3%;
+    --chart-fuchsia-fill-gradient: 313deg 40.1% 38.6%;
+    --chart-sky-fill-gradient: 200deg 91.6% 72%;
   }
 }
 
@@ -230,144 +238,5 @@
 
   .word-break-word {
     word-break: break-word;
-  }
-}
-
-@layer components {
-  /* Heading */
-  .heading-64 {
-    @apply text-6xl font-bold leading-[115%];
-  }
-
-  .heading-48 {
-    @apply text-5xl font-bold leading-[115%];
-  }
-
-  .heading-44 {
-    @apply text-[44px] font-bold leading-[115%];
-  }
-
-  .heading-40 {
-    @apply text-4xl font-bold leading-[115%];
-  }
-
-  .heading-32 {
-    @apply text-3xl font-bold leading-[115%];
-  }
-
-  .heading-28 {
-    @apply text-[28px] font-bold leading-[115%];
-  }
-
-  .heading-24 {
-    @apply text-2xl font-bold leading-[115%];
-  }
-
-  .heading-20 {
-    @apply text-xl font-bold leading-[115%];
-  }
-
-  .heading-18 {
-    @apply text-lg font-bold leading-[115%];
-  }
-
-  .heading-16 {
-    @apply text-base font-bold leading-[115%];
-  }
-
-  /* Subtitle */
-  .subtitle-14 {
-    @apply text-xs font-semibold leading-[115%] uppercase;
-  }
-
-  .subtitle-12 {
-    @apply text-2xs font-semibold leading-[115%] uppercase;
-  }
-
-  .subtitle-11 {
-    @apply text-[11px] font-semibold leading-[115%] uppercase;
-  }
-
-  .subtitle-10 {
-    @apply text-3xs font-semibold leading-[115%] uppercase;
-  }
-
-  /* Label value medium */
-  .label-value-20-medium {
-    @apply text-xl font-medium leading-[100%];
-  }
-
-  .label-value-18-medium {
-    @apply text-lg font-medium leading-[100%];
-  }
-
-  .label-value-16-medium {
-    @apply text-base font-medium leading-[100%];
-  }
-
-  .label-value-15-medium {
-    @apply text-sm font-medium leading-[100%];
-  }
-
-  .label-value-14-medium {
-    @apply text-xs font-medium leading-[100%];
-  }
-
-  .label-value-13-medium {
-    @apply text-[13px] font-medium leading-[100%];
-  }
-
-  .label-value-12-medium {
-    @apply text-2xs font-medium leading-[100%];
-  }
-
-  /* Label value bold */
-  .label-value-20-bold {
-    @apply text-xl font-bold leading-[100%];
-  }
-
-  .label-value-18-bold {
-    @apply text-lg font-bold leading-[100%];
-  }
-
-  .label-value-16-bold {
-    @apply text-base font-bold leading-[100%];
-  }
-
-  .label-value-15-bold {
-    @apply text-sm font-bold leading-[100%];
-  }
-
-  .label-value-14-bold {
-    @apply text-xs font-bold leading-[100%];
-  }
-
-  .label-value-13-bold {
-    @apply text-[13px] font-bold leading-[100%];
-  }
-
-  .label-value-12-bold {
-    @apply text-2xs font-bold leading-[100%];
-  }
-
-  /* Paragraph */
-  .paragraph-18 {
-    @apply text-base font-normal leading-[150%];
-  }
-
-  .paragraph-16 {
-    @apply text-base font-normal leading-[150%];
-  }
-
-  .paragraph-15 {
-    @apply text-sm font-normal leading-[150%];
-  }
-
-  .paragraph-14 {
-    @apply text-xs font-normal leading-[145%];
-  }
-
-  .paragraph-13 {
-    @apply text-[13px] font-normal leading-[140%];
   }
 }

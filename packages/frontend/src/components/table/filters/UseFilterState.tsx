@@ -1,19 +1,19 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { v } from '@l2beat/validate'
 import uniq from 'lodash/uniq'
 import { useEffect, useReducer } from 'react'
-import { z } from 'zod'
 import { useQueryParam } from '~/hooks/useQueryParam'
 import { useTracking } from '~/hooks/useTracking'
 import { FilterableValueId } from './filterableValue'
 
-export type FilterValue = z.infer<typeof FilterValue>
-export const FilterValue = z.object({
-  values: z.array(z.string()),
-  inversed: z.boolean().optional(),
+export type FilterValue = v.infer<typeof FilterValue>
+export const FilterValue = v.object({
+  values: v.array(v.string()),
+  inversed: v.boolean().optional(),
 })
 
 export type FilterState = Partial<Record<FilterableValueId, FilterValue>>
-export const FilterState = z.record(FilterableValueId, FilterValue)
+export const FilterState = v.record(FilterableValueId, FilterValue)
 
 type FilterAction =
   | AddFilterAction

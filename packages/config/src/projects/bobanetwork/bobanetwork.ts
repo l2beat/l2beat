@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { REASON_FOR_BEING_OTHER } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('bobanetwork')
 export const bobanetwork: ScalingProject = opStackL2({
   addedAt: UnixTime(1632469722), // 2021-09-24T07:48:42Z
   discovery,
-  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
+  reasonsForBeingOther: [REASON_FOR_BEING_OTHER.CLOSED_PROOFS],
   display: {
     name: 'Boba Network',
     shortName: 'Boba',
@@ -31,24 +31,11 @@ export const bobanetwork: ScalingProject = opStackL2({
       ],
     },
   },
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   activityConfig: {
     type: 'block',
     startBlock: 1,
     adjustCount: { type: 'SubtractOneSinceBlock', blockNumber: 1149019 }, // boba L2 bedrock upgrade block number
   },
-  // finality: {
-  //   type: 'OPStack-blob',
-  //   minTimestamp: UnixTime(1713303530),
-  //   genesisTimestamp: UnixTime(1635393439),
-  //   l2BlockTimeSeconds: 2,
-  //   lag: 0,
-  //   stateUpdate: 'disabled',
-  // },
-  // Explicitly set since we are getting weird results from the finality calculation
-  finality: undefined,
   genesisTimestamp: UnixTime(1713303530), // boba network anchorage upgrade + 3 timestamp
   associatedTokens: ['BOBA'],
   isNodeAvailable: 'UnderReview',
@@ -77,6 +64,7 @@ export const bobanetwork: ScalingProject = opStackL2({
         from: EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
         to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
         sinceTimestamp: UnixTime(1713303530),
+        untilTimestamp: UnixTime(1750959851),
       },
     },
     {
@@ -106,6 +94,34 @@ export const bobanetwork: ScalingProject = opStackL2({
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
         sinceTimestamp: UnixTime(1713303530),
+        untilTimestamp: UnixTime(1750959851),
+      },
+    },
+    // move to opfp / optiportal 2
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'transfer',
+        from: EthereumAddress('0xA4eD58737Fc5C4861C33410c29ECb1E2AF29d960'),
+        to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
+        sinceTimestamp: UnixTime(1750959851),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'stateUpdates' },
+        { type: 'l2costs', subtype: 'stateUpdates' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852'),
+        selector: '0x82ecf2f6',
+        functionSignature:
+          'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
+        sinceTimestamp: UnixTime(1750959851),
       },
     },
   ],

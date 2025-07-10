@@ -1,4 +1,64 @@
-Generated with discovered.json: 0xfa0522da979191c840fbc78f4f35361ae65bf9ec
+Generated with discovered.json: 0xb7a3eafc37e09a4cd97e61869106317a8974bee5
+
+# Diff at Fri, 04 Jul 2025 12:19:17 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 19825385
+- current block number: 19825385
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825385 (main branch discovery), not current.
+
+```diff
+    EOA  (0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+    }
+```
+
+```diff
+    EOA  (0x5751a83170BeA11fE7CdA5D599B04153C021f21A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+    }
+```
+
+```diff
+    EOA  (0x6b7763b749073e892c83E674c1EC4799D6f339Ef) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+      receivedPermissions.1.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+      receivedPermissions.2.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+    }
+```
+
+```diff
+    EOA  (0x6cE93f7A0F211A704Ed93C5500165b70D2F46Ef7) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
++        "eth:0xB62BcD40A24985f560b5a9745d478791d8F1945C"
+    }
+```
+
+Generated with discovered.json: 0x284ec9c70e7273d9ba449061b265250825acf1d1
 
 # Diff at Tue, 27 May 2025 08:28:35 GMT:
 

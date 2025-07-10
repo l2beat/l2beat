@@ -15,6 +15,7 @@ import { getStage } from '../../common/stages/getStage'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('bugbuster', 'optimism')
 
@@ -39,8 +40,8 @@ export const bugbuster: ScalingProject = {
     description:
       'Bug Buster is an open source bug bounty platform for web3, powered by Cartesi.',
     purposes: ['Bug bounty'],
-    category: 'Optimistic Rollup',
-    stack: 'Cartesi Rollups',
+    category: 'Other',
+    stacks: ['Cartesi Rollups'],
     redWarning:
       'Critical contract references can be changed by an EOA which could result in the loss of all funds.',
     links: {
@@ -74,11 +75,11 @@ export const bugbuster: ScalingProject = {
         stateRootsPostedToL1: true,
         dataAvailabilityOnL1: true,
         rollupNodeSourceAvailable: 'UnderReview',
+        stateVerificationOnL1: false,
+        fraudProofSystemAtLeast5Outsiders: null,
       },
       stage1: {
         principle: false,
-        stateVerificationOnL1: false,
-        fraudProofSystemAtLeast5Outsiders: null,
         usersHave7DaysToExit: false,
         usersCanExitWithoutCooperation: false,
         securityCouncilProperlySetUp: null,
@@ -217,4 +218,5 @@ export const bugbuster: ScalingProject = {
     },
     risks: [],
   },
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

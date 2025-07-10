@@ -29,7 +29,9 @@
     "db:inspect": "pnpm prisma studio",
     "dev": "pnpm build:dependencies && pnpm start:dev",
     "tvs:generate": "pnpm build:config && ts-node ./scripts/tvs/generate-config.ts",
-    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts"
+    "tvs:execute": "pnpm build:config && ts-node ./scripts/tvs/execute.ts",
+    "anomalies": "ts-node ./scripts/anomalies/anomalies.ts",
+    "bridges:cli": "ts-node ./scripts/bridges/cli.ts"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
@@ -42,10 +44,12 @@
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/uif": "workspace:*",
+    "@l2beat/validate": "workspace:*",
     "@polkadot/api": "^12.4.2",
     "@types/ws": "^8.18.1",
     "basic-auth": "^2.0.1",
     "chalk": "^4.1.2",
+    "discord.js": "^14.21.0",
     "elastic-apm-node": "^4.11.2",
     "ethers": "^5.7.2",
     "koa": "^2.14.1",
@@ -62,8 +66,8 @@
     "stream-chain": "^2.2.5",
     "stream-json": "^1.8.0",
     "uuid": "^9.0.1",
-    "ws": "^8.18.2",
-    "zod": "^3.22.2"
+    "viem": "^2.31.6",
+    "ws": "^8.18.2"
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",

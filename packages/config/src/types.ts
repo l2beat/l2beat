@@ -7,9 +7,9 @@ import {
   TokenId,
   type TrackedTxsConfigSubtype,
   type UnixTime,
-  stringAs,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
+import { type Parser, v } from '@l2beat/validate'
+import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -103,6 +103,9 @@ export interface BaseProject {
   // zk catalog data
   proofVerification?: ProjectProofVerification
 
+  // zk catalog v2 data
+  proofSystem?: ProjectProofSystem
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -111,8 +114,6 @@ export interface BaseProject {
   livenessConfig?: ProjectLivenessConfig
   costsInfo?: ProjectCostsInfo
   trackedTxsConfig?: Omit<TrackedTxConfigEntry, 'id'>[]
-  finalityInfo?: ProjectFinalityInfo
-  finalityConfig?: ProjectFinalityConfig
   daTrackingConfig?: ProjectDaTrackingConfig[]
   ecosystemInfo?: ProjectEcosystemInfo
   ecosystemConfig?: ProjectEcosystemConfig
@@ -144,12 +145,6 @@ export interface ProjectStatuses {
   emergencyWarning: string | undefined
   reviewStatus: ProjectReviewStatus | undefined
   unverifiedContracts: ProjectUnverifiedContract[]
-  // countdowns
-  otherMigration?: {
-    expiresAt: number
-    pretendingToBe: ProjectScalingCategory
-    reasons: ReasonForBeingInOther[]
-  }
 }
 
 export interface ProjectDisplay {
@@ -216,6 +211,13 @@ export type BadgeFilterId =
   | 'vm'
   | 'other'
 
+export interface ZkCatalogTag {
+  id: string
+  type: string
+  name: string
+  description: string
+}
+
 export interface Milestone {
   title: string
   url: string
@@ -266,6 +268,7 @@ export type ChainApiConfig =
   | ChainExplorerApi<'blockscout'>
   | ChainExplorerApi<'blockscoutV2'>
   | ChainExplorerApi<'routescan'>
+  | SourcifyApi
   | StarkexApi
   | EtherscanApi
 
@@ -291,6 +294,11 @@ export interface EtherscanApi {
   type: 'etherscan'
   chainId: number
   contractCreationUnsupported?: boolean
+}
+
+export interface SourcifyApi {
+  type: 'sourcify'
+  chainId: number
 }
 
 // #endregion
@@ -336,8 +344,6 @@ export interface ProjectScalingInfo {
   layer: 'layer2' | 'layer3'
   type: ProjectScalingCategory
   capability: ProjectScalingCapability
-  /** In the future this will be reflected as `type === 'Other'` */
-  isOther: boolean
   reasonsForBeingOther: ReasonForBeingInOther[] | undefined
   hostChain: {
     id: ProjectId
@@ -345,7 +351,7 @@ export interface ProjectScalingInfo {
     name: string
     shortName: string | undefined
   }
-  stack: ProjectScalingStack | undefined
+  stacks: ProjectScalingStack[] | undefined
   raas: string | undefined
   infrastructure: string | undefined
   vm: string[]
@@ -541,11 +547,11 @@ export interface ProjectScalingStateValidationCategory {
     | 'Verification Keys Generation'
     | 'Proven Program'
     | 'Validity proofs'
+    | 'Pessimistic Proofs'
     // Optimistic
     | 'State root proposals'
     | 'Challenges'
     | 'Fast confirmations'
-    | 'Pessimistic Proofs'
     | 'Fraud proofs'
     // Other
     | 'No state validation'
@@ -739,6 +745,31 @@ export interface RequiredTool {
 }
 // #endregion
 
+// #region zk catalog v2 data
+export interface ProjectProofSystem {
+  creator?: string
+  techStack: {
+    zkVM?: ZkCatalogTag[]
+    finalWrap?: ZkCatalogTag[]
+  }
+  proofSystemInfo: string
+  trustedSetup: {
+    risk: 'green' | 'yellow' | 'red'
+    shortDescription: string
+    longDescription: string
+  }
+  verifierHashes: {
+    hash: string
+    explorerLink: string
+    verificationStatus: 'successful' | 'unsuccessful' | 'notVerified'
+    usedBy: ProjectId[]
+    verificationSteps?: string
+    attesters?: ZkCatalogAttester[]
+  }[]
+}
+
+// #endregion
+
 // #region feature configs
 export interface ProjectTvsInfo {
   associatedTokens: string[]
@@ -826,56 +857,6 @@ export interface ProjectCostsInfo {
   warning?: WarningWithSentiment
 }
 
-export interface ProjectFinalityInfo {
-  /** Warning tooltip content for finality tab for given project */
-  warnings?: {
-    timeToInclusion?: WarningWithSentiment
-    stateUpdateDelay?: WarningWithSentiment
-  }
-  /** Finalization period displayed in table for given project (time in seconds) */
-  finalizationPeriod?: number
-}
-
-export type ProjectFinalityConfig =
-  // We require the minTimestamp to be set for all types that will be processed in FinalityIndexer
-  | {
-      type:
-        | 'Linea'
-        | 'zkSyncEra'
-        | 'Scroll'
-        | 'zkSyncLite'
-        | 'Starknet'
-        | 'Arbitrum'
-        | 'Loopring'
-        | 'Degate'
-        | 'PolygonZkEvm'
-
-      minTimestamp: UnixTime
-      lag: number
-      stateUpdate: StateUpdateMode
-    }
-  | {
-      type: 'OPStack'
-      minTimestamp: UnixTime
-      lag: number
-      // https://specs.optimism.io/protocol/holocene/derivation.html#span-batches
-      // you can get this values by calling the RPC method optimism_rollupConfig
-      // rollup config: curl -X POST -H "Content-Type: application/json" --data \
-      // '{"jsonrpc":"2.0","method":"optimism_rollupConfig","params":[],"id":1}'  \
-      // <rpc-url> | jq
-      genesisTimestamp: UnixTime
-      l2BlockTimeSeconds: number
-      stateUpdate: StateUpdateMode
-    }
-
-/**
- * Determines how the state update should be handled.
- * - `analyze`: The state update delay should be analyzed as a part of the update.
- * - `zeroed`: The state update delay should be zeroed, analyzer will not be run.
- * - `disabled`: The state update analyzer will not be run.
- */
-export type StateUpdateMode = 'analyze' | 'zeroed' | 'disabled'
-
 export type ProjectDaTrackingConfig =
   | BlockDaTrackingConfig
   | TimestampDaTrackingConfig
@@ -936,7 +917,7 @@ export interface ProjectEcosystemConfig {
   links: {
     buildOn: string
     learnMore: string
-    governanceTopDelegates: string
+    governanceDelegateToL2BEAT: string
     governanceProposals: string
     tools?: string[]
     grants?: string
@@ -1072,105 +1053,116 @@ export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
   contractsDiscoDriven: boolean
+  blockNumberPerChain: Record<string, number>
 }
 // #endregion
 
 // #region TVS
-export const BaseCalculationFormulaSchema = z.object({
-  type: z.literal('calculation'),
-  operator: z.enum(['sum', 'diff', 'max', 'min']),
-})
+const CalculationOperator = ['sum', 'diff', 'max', 'min'] as const
+const _BaseCalculationFormulaSchema = {
+  type: v.literal('calculation'),
+  operator: v.enum(CalculationOperator),
+}
+export const BaseCalculationFormulaSchema = v.object(
+  _BaseCalculationFormulaSchema,
+)
 
-// type hint needed due to zod limitations on recursive types
-export type CalculationFormula = z.infer<
-  typeof BaseCalculationFormulaSchema
-> & {
+export type CalculationFormula = {
+  type: 'calculation'
+  operator: (typeof CalculationOperator)[number]
   arguments: (CalculationFormula | ValueFormula | AmountFormula)[]
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: zod limitations on recursive types
-export const CalculationFormulaSchema: any =
-  BaseCalculationFormulaSchema.extend({
-    arguments: z.array(
-      z.union([
-        z.lazy(() => CalculationFormulaSchema),
-        z.lazy(() => ValueFormulaSchema),
-        z.lazy(() => AmountFormulaSchema),
-      ]),
-    ),
-  })
-
-export type ValueFormula = z.infer<typeof ValueFormulaSchema>
-export const ValueFormulaSchema = z.object({
-  type: z.literal('value'),
-  amount: z.union([
-    z.lazy(() => AmountFormulaSchema),
-    z.lazy(() => CalculationFormulaSchema),
-  ]),
-  priceId: z.string(),
+export const CalculationFormulaSchema: Parser<CalculationFormula> = v.object({
+  ..._BaseCalculationFormulaSchema,
+  arguments: v.array(
+    v.union([
+      v.lazy(() => CalculationFormulaSchema),
+      v.lazy(() => ValueFormulaSchema),
+      v.lazy(() => AmountFormulaSchema),
+    ]),
+  ),
 })
 
-export type BalanceOfEscrowAmountFormula = z.infer<
+export type ValueFormula = {
+  type: 'value'
+  amount: AmountFormula | CalculationFormula
+  priceId: string
+}
+
+export const ValueFormulaSchema: Parser<ValueFormula> = v.object({
+  type: v.literal('value'),
+  amount: v.union([
+    v.lazy(() => AmountFormulaSchema),
+    v.lazy(() => CalculationFormulaSchema),
+  ]),
+  priceId: v.string(),
+})
+
+export type BalanceOfEscrowAmountFormula = v.infer<
   typeof BalanceOfEscrowAmountFormulaSchema
 >
-export const BalanceOfEscrowAmountFormulaSchema = z.object({
-  type: z.literal('balanceOfEscrow'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: z.union([stringAs(EthereumAddress), z.literal('native')]),
-  decimals: z.number(),
-  escrowAddress: stringAs(EthereumAddress),
+export const BalanceOfEscrowAmountFormulaSchema = v.object({
+  type: v.literal('balanceOfEscrow'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.union([
+    v.string().transform(EthereumAddress),
+    v.literal('native'),
+  ]),
+  decimals: v.number(),
+  escrowAddress: v.string().transform(EthereumAddress),
 })
 
-export type TotalSupplyAmountFormula = z.infer<
+export type TotalSupplyAmountFormula = v.infer<
   typeof TotalSupplyAmountFormulaSchema
 >
-export const TotalSupplyAmountFormulaSchema = z.object({
-  type: z.literal('totalSupply'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: stringAs(EthereumAddress),
-  decimals: z.number(),
+export const TotalSupplyAmountFormulaSchema = v.object({
+  type: v.literal('totalSupply'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string().transform(EthereumAddress),
+  decimals: v.number(),
 })
 
-export type StarknetTotalSupplyAmountFormula = z.infer<
+export type StarknetTotalSupplyAmountFormula = v.infer<
   typeof StarknetTotalSupplyAmountFormulaSchema
 >
-export const StarknetTotalSupplyAmountFormulaSchema = z.object({
-  type: z.literal('starknetTotalSupply'),
-  chain: z.string(),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  address: z.string(),
-  decimals: z.number(),
+export const StarknetTotalSupplyAmountFormulaSchema = v.object({
+  type: v.literal('starknetTotalSupply'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.string(),
+  decimals: v.number(),
 })
 
-export type CirculatingSupplyAmountFormula = z.infer<
+export type CirculatingSupplyAmountFormula = v.infer<
   typeof CirculatingSupplyAmountFormulaSchema
 >
-export const CirculatingSupplyAmountFormulaSchema = z.object({
-  type: z.literal('circulatingSupply'),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  apiId: z.string(),
-  decimals: z.number(),
-  address: stringAs(EthereumAddress), // for frontend only
-  chain: z.string(), // for frontend only
+export const CirculatingSupplyAmountFormulaSchema = v.object({
+  type: v.literal('circulatingSupply'),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  apiId: v.string(),
+  decimals: v.number(),
+  address: v.string().transform(EthereumAddress), // for frontend only
+  chain: v.string(), // for frontend only
 })
 
-export type ConstAmountFormula = z.infer<typeof ConstAmountFormulaSchema>
-export const ConstAmountFormulaSchema = z.object({
-  type: z.literal('const'),
-  sinceTimestamp: z.number(),
-  untilTimestamp: z.number().optional(),
-  value: z.string(),
-  decimals: z.number(),
+export type ConstAmountFormula = v.infer<typeof ConstAmountFormulaSchema>
+export const ConstAmountFormulaSchema = v.object({
+  type: v.literal('const'),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  value: v.string(),
+  decimals: v.number(),
 })
 
-export type AmountFormula = z.infer<typeof AmountFormulaSchema>
-export const AmountFormulaSchema = z.union([
+export type AmountFormula = v.infer<typeof AmountFormulaSchema>
+export const AmountFormulaSchema = v.union([
   BalanceOfEscrowAmountFormulaSchema,
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
@@ -1199,28 +1191,39 @@ export function isOnchainAmountFormula(
 }
 
 // token deployed to single chain
-export type TvsToken = z.infer<typeof TvsTokenSchema>
-export const TvsTokenSchema = z.object({
-  mode: z.enum(['auto', 'custom']),
-  id: stringAs(TokenId),
-  priceId: z.string(),
-  symbol: z.string(),
-  displaySymbol: z.string().optional(),
-  name: z.string(),
-  iconUrl: z.string().optional(),
-  amount: z.union([CalculationFormulaSchema, AmountFormulaSchema]),
-  valueForProject: z
+export type TvsToken = v.infer<typeof TvsTokenSchema>
+export const TvsTokenSchema = v.object({
+  mode: v.enum(['auto', 'custom']),
+  id: v.string().transform(TokenId),
+  priceId: v.string(),
+  symbol: v.string(),
+  displaySymbol: v.string().optional(),
+  name: v.string(),
+  iconUrl: v.string().optional(),
+  amount: v.union([CalculationFormulaSchema, AmountFormulaSchema]),
+  valueForProject: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  valueForSummary: z
+  valueForSummary: v
     .union([CalculationFormulaSchema, ValueFormulaSchema])
     .optional(),
-  category: z.enum(['ether', 'stablecoin', 'other']),
-  source: z.enum(['canonical', 'external', 'native']),
-  isAssociated: z.boolean(),
+  category: v.enum(['ether', 'stablecoin', 'other']),
+  source: v.enum(['canonical', 'external', 'native']),
+  isAssociated: v.boolean(),
+  bridgedUsing: v
+    .object({
+      bridges: v.array(
+        v.object({
+          name: v.string(),
+          slug: v.string().optional(),
+        }),
+      ),
+      warning: v.string().optional(),
+    })
+    .optional(),
 })
 
-export const ProjectTvsConfigSchema = z.object({
-  projectId: z.string(),
-  tokens: z.array(TvsTokenSchema),
+export const ProjectTvsConfigSchema = v.object({
+  projectId: v.string(),
+  tokens: v.array(TvsTokenSchema),
 })

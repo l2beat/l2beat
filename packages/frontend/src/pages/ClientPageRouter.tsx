@@ -15,12 +15,12 @@ import { GlossaryPage } from './glossary/GlossaryPage'
 import { GovernancePage } from './governance/GovernancePage'
 import { GovernancePublicationPage } from './governance/publication/GovernancePublicationPage'
 import { GovernancePublicationsPage } from './governance/publications/GovernancePublicationsPage'
+import { MonthlyUpdatePage } from './monthly-updates/MonthlyUpdatePage'
 import { MultisigReportPage } from './multisig-report/MultisigReportPage'
 import { ScalingActivityPage } from './scaling/activity/ScalingActivityPage'
 import { ScalingArchivedPage } from './scaling/archived/ScalingArchivedPage'
 import { ScalingCostsPage } from './scaling/costs/ScalingCostsPage'
 import { ScalingDataAvailabilityPage } from './scaling/data-availability/ScalingDataAvailabilityPage'
-import { ScalingFinalityPage } from './scaling/finality/ScalingFinalityPage'
 import { ScalingLivenessPage } from './scaling/liveness/ScalingLivenessPage'
 import { ScalingProjectPage } from './scaling/project/ScalingProjectPage'
 import { ScalingProjectTvsBreakdownPage } from './scaling/project/tvs-breakdown/ScalingProjectTvsBreakdownPage'
@@ -49,7 +49,6 @@ const pages = {
   ScalingActivityPage,
   ScalingDataAvailabilityPage,
   ScalingLivenessPage,
-  ScalingFinalityPage,
   ScalingCostsPage,
   ScalingArchivedPage,
   ScalingUpcomingPage,
@@ -83,6 +82,8 @@ const pages = {
   DaRiskFrameworkPage,
   MultisigReportPage,
   TermsOfServicePage,
+  // Monthly Updates
+  MonthlyUpdatePage,
 }
 
 export function ClientPageRouter({ ssrData }: { ssrData: SsrData }) {

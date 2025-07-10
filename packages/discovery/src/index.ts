@@ -2,9 +2,10 @@ export { discover } from './cli/discoverCommand'
 export { modelPermissionsCommand } from './cli/modelPermissionsCommand'
 export { colorize } from './discovery/colorize/colorize'
 export {
+  DiscoveryRegistry,
+  getDependenciesToDiscoverForProject,
   modelPermissions,
-  modelPermissionsForIsolatedDiscovery,
-  generateClingoForProject,
+  generateClingoForDiscoveries,
   generatePermissionConfigHash,
 } from './discovery/modelling/modelPermissions'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
@@ -119,3 +120,5 @@ export { combineStructureAndColor } from './discovery/output/toDiscoveryOutput'
 export { makeEntryColorConfig } from './discovery/config/colorUtils'
 export { getShapeFromOutputEntry } from './discovery/analysis/findShape'
 export { readJsonc } from './discovery/utils/readJsonc'
+export { toPrettyJson } from './discovery/output/toPrettyJson'
+export { codeIsEOA } from './discovery/analysis/codeIsEOA'

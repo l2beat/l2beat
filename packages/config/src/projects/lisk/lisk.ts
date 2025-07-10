@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ESCROW, REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -14,9 +14,6 @@ export const lisk: ScalingProject = opStackL2({
   associatedTokens: ['LSK'],
   additionalBadges: [BADGES.RaaS.Gelato, BADGES.Other.MigratedFromL1],
   reasonsForBeingOther: [REASON_FOR_BEING_OTHER.NO_PROOFS],
-  ecosystemInfo: {
-    id: ProjectId('superchain'),
-  },
   display: {
     name: 'Lisk',
     slug: 'lisk',
@@ -54,14 +51,6 @@ export const lisk: ScalingProject = opStackL2({
   ],
   l1StandardBridgePremintedTokens: ['LSK'],
   nonTemplateExcludedTokens: ['USDC', 'wstETH'],
-  finality: {
-    type: 'OPStack',
-    genesisTimestamp: UnixTime(1714728791),
-    minTimestamp: UnixTime(1714746983), // first blob
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'analyze',
-  },
   // not ready yet, check this PR https://github.com/ethereum-optimism/superchain-registry/pull/234 or the prepared links in `DERIVATION.OPSTACK('LISK')`
   // stateDerivation: DERIVATION.OPSTACK('LISK'),
   isNodeAvailable: true,

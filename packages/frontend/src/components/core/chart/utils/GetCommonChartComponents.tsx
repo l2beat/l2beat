@@ -7,7 +7,7 @@ export interface CommonChartComponentsProps<
   },
 > {
   data: T[] | undefined
-  yAxis?: Omit<YAxisProps, 'scale'> & { scale?: 'log' | 'lin' }
+  yAxis?: Omit<YAxisProps, 'scale' | 'tick'> & { scale?: 'log' | 'lin' }
   isLoading: boolean | undefined
 }
 
@@ -38,6 +38,7 @@ export function getCommonChartComponents<T extends { timestamp: number }>({
       // it is supported cuz they are getting actual scale function from d3-scale by using this string as a key
       // https://github.com/recharts/recharts/blob/master/src/util/ChartUtils.ts#L772
       {...(scale === 'log' ? { scale: 'symlog' as ScaleType } : {})}
+      tick={{ width: 350 }}
       {...rest}
     />,
     <XAxis key={'x-axis'} {...getXAxisProps(data)} />,

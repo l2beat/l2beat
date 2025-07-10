@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "mantapacific",
   "blockNumber": 4745686,
-  "configHash": "0x32e7daa83288f6631d8b3f91d6697f4a77e7e8e102b2e168f69eca96f0c7037c",
+  "configHash": "0x31f7f43b2f6d8f61b798272cb98cec43ae574ad138c45ec01020f660d933532e",
   "entries": [
     {
       "name": "MantaProxyAdmin",
@@ -16,7 +16,7 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "from": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
           "role": "admin"
         }
       ],
@@ -86,29 +86,27 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "mantapacific:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
+          "from": "manta:0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
           "role": "admin",
           "via": [
-            {
-              "address": "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
-            }
+            { "address": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "mantapacific:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "from": "manta:0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "mantapacific:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+          "from": "manta:0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
           "role": "admin"
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "mantapacific:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+          "from": "manta:0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
           "role": ".owner"
         }
       ],
@@ -459,5 +457,5 @@
     "zklinknova/secondaryGateway": "0xbb75b9684098944bd77bd85c15a8667bb65ea57059ee5b9d2a376b0beba09908",
     "zklinknova/secondaryZkLink": "0xfae141812d13cd7dcbc2da491034c79c2ade14cd64e1792d222b8390730801ae"
   },
-  "permissionsConfigHash": "0xb125cdeb8d722e659d0ba569851ba2efa0134dd1fb737237bc39bc1a5050e791"
+  "permissionsConfigHash": "0xa7898e959e407f299e52f0942a8f63acd8acbc85e1473107ce0c48c037db5d2d"
 }

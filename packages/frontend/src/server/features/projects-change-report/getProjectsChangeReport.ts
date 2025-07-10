@@ -1,8 +1,9 @@
 import type { UpdateDiffRecord } from '@l2beat/database'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 
 export type ProjectsChangeReport = Awaited<
   ReturnType<typeof getProjectsChangeReportWithFns>
@@ -39,7 +40,24 @@ async function getProjectsChangeReportWithFns() {
 
   const byProject = groupBy(updateDiffs, (diff) => diff.projectId)
   for (const [projectId, diffs] of Object.entries(byProject)) {
-    const byChain = groupBy(diffs, (diff) => diff.chain)
+    const project = await ps.getProject({
+      id: ProjectId(projectId),
+      select: ['discoveryInfo'],
+      where: ['discoveryInfo'],
+    })
+
+    // NOTE(radomski): We're optimistically saying that diffs are only active
+    // if all inputs used to create them are older than the block number we
+    // used to build the project information.
+    const activeDiffs = diffs.filter((diff) => {
+      const baseBlockNumber =
+        project?.discoveryInfo.blockNumberPerChain[diff.chain]
+      if (baseBlockNumber === undefined) return true
+      const isDiffActive = baseBlockNumber <= diff.diffBaseBlockNumber
+      return isDiffActive
+    })
+
+    const byChain = groupBy(activeDiffs, (diff) => diff.chain)
     for (const [chain, changes] of Object.entries(byChain)) {
       const changesByType = groupByType(changes)
 

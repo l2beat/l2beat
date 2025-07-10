@@ -1,4 +1,40 @@
-Generated with discovered.json: 0xa4321b2b169c0483c3d039f39aaeee8fc0a5c662
+Generated with discovered.json: 0xfa5b5c733ea3067c1e469b23a5b135c17fc9a8f9
+
+# Diff at Fri, 04 Jul 2025 12:19:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 21937195
+- current block number: 21937195
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 21937195 (main branch discovery), not current.
+
+```diff
+    contract UpgradeBeaconController (0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
++        "eth:0x049b51e531Fd8f90da6d92EA83dC4125002F20EF"
+      receivedPermissions.1.from:
+-        "ethereum:0x3009C99D370B780304D2098196f1EBF779a4777a"
++        "eth:0x3009C99D370B780304D2098196f1EBF779a4777a"
+      receivedPermissions.2.from:
+-        "ethereum:0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
++        "eth:0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3"
+      receivedPermissions.3.from:
+-        "ethereum:0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
++        "eth:0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
+    }
+```
+
+Generated with discovered.json: 0x50e708c5cc9d60c2dd7795571edf496707c4598b
 
 # Diff at Fri, 23 May 2025 09:41:00 GMT:
 

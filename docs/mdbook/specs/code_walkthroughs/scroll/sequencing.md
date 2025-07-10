@@ -22,7 +22,7 @@ The block time is set at 3 seconds and maintained on a best-effort basis, not en
 
 ## Forced transactions
 
-Messages appended to the message queue (`L1MessageQueueV2`) are expected to be included into a bundle by the centralized operator. Messages in the queue cannot be skipped or dropped, but the sequencer can choose to finalize a bundle without processing any queued messaged. Should a permissioned sequencer not process any queued messages within the `SystemConfig.maxDelayMessageQueue`, anyone can include queue messages as commiting and finalizing bundles becomes permissionless.
+Messages appended to the message queue (`L1MessageQueueV2`) are expected to be included into a bundle by the centralized operator. Messages in the queue cannot be skipped or dropped, but the sequencer can choose to finalize a bundle without processing any queued messaged. Should a permissioned sequencer not process any queued messages within the `SystemConfig.maxDelayMessageQueue`, anyone can include queue messages as committing and finalizing bundles becomes permissionless.
 
 
 ### High-level flow

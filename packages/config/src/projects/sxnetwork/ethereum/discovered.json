@@ -2,7 +2,7 @@
   "name": "sxnetwork",
   "chain": "ethereum",
   "blockNumber": 22122792,
-  "configHash": "0xa668b0ed3d870a61fbbad32b85fcceb63edf7d309468e99b108c1761931823ba",
+  "configHash": "0xac2ef9d555b563a2afd37f77b7af9471815d63451b01f4c54a14d69b6415d61c",
   "entries": [
     {
       "name": "OneStepProverHostIo",
@@ -28,7 +28,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -73,25 +73,25 @@
       "receivedPermissions": [
         {
           "permission": "fastconfirm",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer",
           "via": [
-            { "address": "ethereum:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }
+            { "address": "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }
           ]
         },
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators",
           "via": [
-            { "address": "ethereum:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }
+            { "address": "eth:0xddb901e4E9A2e659aa1d6476d5D7A2833E7c3dFa" }
           ]
         },
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -148,7 +148,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -294,6 +294,7 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
@@ -315,18 +316,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
+          "from": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "role": "admin"
         }
       ],
@@ -468,7 +469,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -481,7 +482,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -730,125 +731,107 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+          "from": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5F00446D785421d65B50c192D7129e3C3906438A",
+          "from": "eth:0x5F00446D785421d65B50c192D7129e3C3906438A",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x73cfa0F6ae141212115657ad91Ad918E5d34d882",
+          "from": "eth:0x73cfa0F6ae141212115657ad91Ad918E5d34d882",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
+          "from": "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xa104C0426e95a5538e89131DbB4163d230C35f86",
+          "from": "eth:0xa104C0426e95a5538e89131DbB4163d230C35f86",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
+          "from": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+          "from": "eth:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
+          "from": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497"
-            },
-            { "address": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
+            { "address": "eth:0xe8606A55d105EF857F187C32Ae0E9a168aF8F497" },
+            { "address": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+          "from": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
           "role": ".executors"
         }
       ],
@@ -890,7 +873,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -903,7 +886,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -933,7 +916,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1039,13 +1022,13 @@
       "directlyReceivedPermissions": [
         {
           "permission": "fastconfirm",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
           "role": ".anyTrustFastConfirmer"
         },
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1077,7 +1060,7 @@
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "ethereum:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
+          "from": "eth:0x36c6C69A6186D4475fc5c21181CD980Bd6E5e11F",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -1095,47 +1078,47 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
+          "from": "eth:0x44Ec40D86b4643Bd5110ED07BE188F8473Ad2d3a",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x5F00446D785421d65B50c192D7129e3C3906438A",
+          "from": "eth:0x5F00446D785421d65B50c192D7129e3C3906438A",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x73cfa0F6ae141212115657ad91Ad918E5d34d882",
+          "from": "eth:0x73cfa0F6ae141212115657ad91Ad918E5d34d882",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
+          "from": "eth:0x9f1045201f8b9D0b12f6d1e40e8B8e6c047A81E3",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xa104C0426e95a5538e89131DbB4163d230C35f86",
+          "from": "eth:0xa104C0426e95a5538e89131DbB4163d230C35f86",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
+          "from": "eth:0xB360b2f57c645E847148d7C479b7468AbF6F707d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
+          "from": "eth:0xB4968C66BECc8fb4f73b50354301c1aDb2Abaa91",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
+          "from": "eth:0xEa83E8907C89Bc0D9517632f0ba081972E328631",
           "role": "admin"
         }
       ],
@@ -1198,7 +1181,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
+          "from": "eth:0xD80a805c86C14c879420eC6acb366D04D318fC0C",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -1918,5 +1901,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x01d4cc80bd98adf44a87c5ff40a7508754bbb0416502fa34e8fe0f82bcb59928"
+  "permissionsConfigHash": "0xb8adbade87a198472c1e96bb39947ec1b7cafe9c277859f3b6fe9bb9e61bff0f"
 }

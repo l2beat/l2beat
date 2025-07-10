@@ -96,9 +96,8 @@ function DefaultChart({
 }: DefaultChartProps) {
   const { data, isLoading } = api.tvs.chart.useQuery({
     filter: { type: 'projects', projectIds: [projectId] },
-    range: timeRange,
+    range: { type: timeRange },
     excludeAssociatedTokens: false,
-    previewRecategorisation: false,
   })
 
   const chartData = useMemo(

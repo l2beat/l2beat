@@ -1,8 +1,8 @@
 {
   "name": "portal",
   "chain": "ethereum",
-  "blockNumber": 20089055,
-  "configHash": "0xec86a3cc31e50a75e65af371faf9d213d3b32b4b5a954d2e0751141993955623",
+  "blockNumber": 22865659,
+  "configHash": "0x5683bd095b1934869a68d756f957533c6a8c374d5cd8a7f595ba26f405a51008",
   "entries": [
     {
       "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e",
@@ -21,23 +21,23 @@
       "sinceBlock": 15569178,
       "values": {
         "$immutable": true,
-        "chainId": 0,
-        "decimals": 0,
-        "DOMAIN_SEPARATOR": "0x0cf2c709fa7ea9acd67676f52f3dbf86e5aff34b6cdc82219ec4212ea2e0569f",
+        "chainId": 1,
+        "decimals": 8,
+        "DOMAIN_SEPARATOR": "0x1c8e76e5f40d08a95d7af41535ef711c3020f4c03c197e1c5c46b8d4295e427e",
         "eip712Domain": {
           "domainFields": "0x1f",
-          "domainName": "",
+          "domainName": "Wormhole",
           "domainVersion": "1",
           "domainChainId": 1,
           "domainVerifyingContract": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
-          "domainSalt": "0xbf53adb76067fdab0d008aef3ad8b28bbb63c2ce4c2b63394ede73f01a70c865",
+          "domainSalt": "0xc2e0a663467400f3348de72376f987f67f07ee0c9108ac366a3d1a6134ad0c68",
           "domainExtensions": []
         },
-        "name": "",
-        "nativeContract": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "owner": "0x0000000000000000000000000000000000000000",
-        "symbol": "",
-        "totalSupply": 0
+        "name": "Wormhole",
+        "nativeContract": "0x3ee18b2214aff97000d974cf647e7c347e8fa585000000000000000000000000",
+        "owner": "0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
+        "symbol": "WORM",
+        "totalSupply": 10000000
       },
       "implementationNames": {
         "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6": "TokenImplementation"
@@ -213,7 +213,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
+          "from": "eth:0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
           "role": "admin"
         }
       ]
@@ -481,6 +481,11 @@
     },
     {
       "address": "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xe00a8a3c66071B44C3aBdFd947Eaa1eA1D70dC6e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -915,5 +920,5 @@
     ]
   },
   "usedTemplates": {},
-  "permissionsConfigHash": "0x29c6fec5f8504a770b8c859e31bc46b98715605c4c82c5b49c40dfb17357dbc4"
+  "permissionsConfigHash": "0xd68a18f0c771b5ff25a5464badd2525d5a52129094f25084cb3a9430e95d8f5e"
 }

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
 export interface JsonRpcRequest {
   method: string
@@ -36,20 +36,20 @@ export class JsonRpcClient {
   }
 }
 
-const SuccessResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number(),
-  result: z.unknown(),
+const SuccessResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number(),
+  result: v.unknown(),
 })
 
-const ErrorResponse = z.object({
-  jsonrpc: z.literal('2.0'),
-  id: z.number(),
-  error: z.object({
-    code: z.number(),
-    message: z.string(),
-    data: z.unknown().optional(),
+const ErrorResponse = v.object({
+  jsonrpc: v.literal('2.0'),
+  id: v.number(),
+  error: v.object({
+    code: v.number(),
+    message: v.string(),
+    data: v.unknown().optional(),
   }),
 })
 
-const Response = z.union([SuccessResponse, ErrorResponse])
+const Response = v.union([SuccessResponse, ErrorResponse])

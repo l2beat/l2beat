@@ -5,9 +5,8 @@ import {
   SHARP_SUBMISSION_SELECTOR,
   type TrackedTxConfigEntry,
 } from '@l2beat/shared'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { badgesCompareFn } from '../common/badges'
-import { PROJECT_COUNTDOWNS } from '../global/countdowns'
 import type { Bridge, Layer2TxConfig, ScalingProject } from '../internalTypes'
 import {
   type BaseProject,
@@ -65,15 +64,6 @@ function layer2Or3ToProject(
       emergencyWarning: p.display.emergencyWarning,
       reviewStatus: p.reviewStatus,
       unverifiedContracts: getProjectUnverifiedContracts(p, daBridges),
-      // countdowns
-      otherMigration:
-        p.reasonsForBeingOther && p.display.category !== 'Other'
-          ? {
-              expiresAt: PROJECT_COUNTDOWNS.otherMigration,
-              pretendingToBe: p.display.category,
-              reasons: p.reasonsForBeingOther,
-            }
-          : undefined,
     },
     display: {
       description: p.display.description,
@@ -82,18 +72,14 @@ function layer2Or3ToProject(
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     scalingInfo: {
       layer: p.type,
       type: p.display.category,
       capability: p.capability,
-      isOther:
-        p.display.category === 'Other' ||
-        (PROJECT_COUNTDOWNS.otherMigration < UnixTime.now() &&
-          !!p.reasonsForBeingOther),
       hostChain: getHostChain(p.hostChain ?? ProjectId.ETHEREUM),
       reasonsForBeingOther: p.reasonsForBeingOther,
-      stack: p.display.stack,
+      stacks: p.display.stacks,
       raas: getRaas(p.badges),
       infrastructure: getInfrastructure(p.badges),
       vm: getVM(p.badges),
@@ -135,7 +121,6 @@ function layer2Or3ToProject(
     livenessInfo: getLivenessInfo(p),
     livenessConfig: p.type === 'layer2' ? p.config.liveness : undefined,
     costsInfo: getCostsInfo(p),
-    ...getFinality(p),
     trackedTxsConfig: toBackendTrackedTxsConfig(
       p.id,
       p.type === 'layer2' ? p.config.trackedTxs : undefined,
@@ -164,32 +149,13 @@ function getLivenessInfo(p: ScalingProject): ProjectLivenessInfo | undefined {
 function getCostsInfo(p: ScalingProject): ProjectCostsInfo | undefined {
   if (
     p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
+    p.dataAvailability?.layer.projectId === 'ethereum' &&
     p.config.trackedTxs !== undefined
   ) {
     return {
       warning: p.display.costsWarning,
     }
   }
-}
-
-function getFinality(
-  p: ScalingProject,
-): Pick<BaseProject, 'finalityConfig' | 'finalityInfo'> {
-  if (
-    p.type === 'layer2' &&
-    (p.display.category === 'Optimistic Rollup' ||
-      p.display.category === 'ZK Rollup') &&
-    p.config.trackedTxs !== undefined &&
-    p.config.finality !== undefined
-  ) {
-    return {
-      finalityInfo: p.display.finality ?? {},
-      finalityConfig: p.config.finality,
-    }
-  }
-  return {}
 }
 
 function bridgeToProject(p: Bridge): BaseProject {
@@ -224,7 +190,7 @@ function bridgeToProject(p: Bridge): BaseProject {
     },
     contracts: p.contracts,
     permissions: p.permissions,
-    discoveryInfo: getDiscoveryInfo(p),
+    discoveryInfo: adjustDiscoveryInfo(p),
     bridgeRisks: p.riskView,
     tvsInfo: {
       associatedTokens: p.config.associatedTokens ?? [],
@@ -268,6 +234,7 @@ function toBackendTrackedTxsConfig(
               address: config.query.address,
               selector: config.query.selector,
               signature: config.query.functionSignature,
+              topics: config.query.topics,
             },
           }
         }
@@ -309,7 +276,7 @@ function toBackendTrackedTxsConfig(
   )
 }
 
-export function getDiscoveryInfo(
+export function adjustDiscoveryInfo(
   project: ScalingProject | Bridge,
 ): ProjectDiscoveryInfo {
   const contractsDiscoDriven = areContractsDiscoveryDriven(project.contracts)
@@ -321,6 +288,7 @@ export function getDiscoveryInfo(
     contractsDiscoDriven,
     permissionsDiscoDriven,
     isDiscoDriven: contractsDiscoDriven && permissionsDiscoDriven,
+    blockNumberPerChain: project.discoveryInfo.blockNumberPerChain,
   }
 }
 
@@ -340,7 +308,7 @@ function getTvsConfig(
 
   if (!result.success) {
     throw new Error(
-      `Invalid TVS config for project ${project.id}: ${result.error.toString()}`,
+      `Invalid TVS config for project ${project.id}: ${result.path} : ${result.message}`,
     )
   }
 

@@ -2,7 +2,7 @@
   "name": "fuelv1",
   "chain": "ethereum",
   "blockNumber": 21594621,
-  "configHash": "0x6c87924e5cb4cee79c6181360ad19d777384e428396b710732cd28fb24a077cd",
+  "configHash": "0xe6c897e94d15b500ba4991ebe67a26eba166cc84a3a25290e626b35ee0ae72ca",
   "entries": [
     {
       "name": "Fuel",
@@ -28,5 +28,5 @@
   ],
   "abis": {},
   "usedTemplates": {},
-  "permissionsConfigHash": "0xdc035bb26f2e94c5c345da8e3a923285e2a2eb44a7766ae2c00a8485b2759887"
+  "permissionsConfigHash": "0xef3850fd805487db47ed4f1ce26c3fce17cdacce1b348ed6ed6b29617cc94c8d"
 }

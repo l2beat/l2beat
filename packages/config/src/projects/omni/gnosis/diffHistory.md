@@ -1,4 +1,94 @@
-Generated with discovered.json: 0x996a658687335bd0e5ffcc21584451bac70cd351
+Generated with discovered.json: 0xa040e0268b3aee5f8df9c2c4883af44cdcbe478d
+
+# Diff at Fri, 04 Jul 2025 12:19:12 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 40494132
+- current block number: 40494132
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40494132 (main branch discovery), not current.
+
+```diff
+    EOA  (0x30Fb61178F39c0452cED4AD9A7FEC3344CB10B2E) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
++        "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7a48Dac683DA91e4faa5aB13D91AB5fd170875bd) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
++        "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.1.from:
+-        "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
++        "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59"
+      receivedPermissions.2.from:
+-        "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
++        "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008"
+      receivedPermissions.3.from:
+-        "gnosis:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
++        "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
+    }
+```
+
+```diff
+    contract SafeL2 (0xb1F43dc8B57562e7FA48157D73102a8e4a94975A) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
++        "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E"
+    }
+```
+
+Generated with discovered.json: 0xd09165495e199bd225eb2bd2e7634fd70f7ad347
+
+# Diff at Thu, 03 Jul 2025 10:57:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 40494132
+- current block number: 40494132
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40494132 (main branch discovery), not current.
+
+```diff
+    contract HashiManager_Gnosis (0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E) {
+    +++ description: A hub contract for the Hashi protocol, an EVM Hash Oracle Aggregator.
+      fieldMeta.targetAddress.description:
+-        "Address of the target contract on GnosisChain"
++        "Address of the target contract on Ethereum"
+      fieldMeta.adapters.description:
+-        "Array of the adapters on GnosisChain"
++        "Array of the adapters on Ethereum"
+      fieldMeta.reporters.description:
+-        "Array of the reports on GnosisChain"
++        "Array of the reporters on Ethereum"
+      fieldMeta.threshold.description:
+-        "Threshold of the adapters on GnosisChain"
++        "Threshold of the adapters on Ethereum"
+    }
+```
+
+Generated with discovered.json: 0xd0a17c6a19cc3fa2116c6f1b8d55ecc3d5e82cd6
 
 # Diff at Wed, 04 Jun 2025 08:36:56 GMT:
 

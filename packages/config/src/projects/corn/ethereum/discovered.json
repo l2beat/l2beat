@@ -1,8 +1,8 @@
 {
   "name": "corn",
   "chain": "ethereum",
-  "blockNumber": 22437609,
-  "configHash": "0x15f18e3d35b43f8eed3842bf3e8e59e5f9314105f11449416d666e010b4e4b12",
+  "blockNumber": 22865583,
+  "configHash": "0x40f14d0f31d0e457b53be294cdc3b34890a4447c979c1f61995cea4f04d8d446",
   "entries": [
     {
       "name": "wBTC Escrow",
@@ -209,9 +209,12 @@
           ]
         ],
         "$upgradeCount": 2,
-        "batchCount": 516,
+        "batchCount": 640,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
-        "batchPosters": ["0x9298413c781c241aF6F6733b7df00De5D4A42D93"],
+        "batchPosters": [
+          "0x9298413c781c241aF6F6733b7df00De5D4A42D93",
+          "0xfFb9B41320a47FDE7c2939BA0c1f1d58E80648FB"
+        ],
         "bridge": "0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "dacKeyset": {
@@ -238,7 +241,7 @@
         "reader4844": "0x6c5c9E6c080a6C25f49DfFE85cfA71aaEAAfdE74",
         "rollup": "0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
         "sequencerVersion": "0x88",
-        "setIsBatchPosterCount": 1,
+        "setIsBatchPosterCount": 2,
         "totalDelayedMessagesRead": 14,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
@@ -378,8 +381,8 @@
         "outboxHistory": ["0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d"],
         "rollup": "0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
-        "sequencerMessageCount": 516,
-        "sequencerReportedSubMessageCount": 500551
+        "sequencerMessageCount": 640,
+        "sequencerReportedSubMessageCount": 695742
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -451,13 +454,13 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 324,
+        "firstUnresolvedNode": 444,
         "inbox": "0x37693F11f3D724E55D0B03D5F328D8202C913243",
         "isERC20Enabled": false,
         "isPostBoLD": false,
-        "lastStakeBlock": 21224759,
-        "latestConfirmed": 323,
-        "latestNodeCreated": 335,
+        "lastStakeBlock": 22839093,
+        "latestConfirmed": 443,
+        "latestNodeCreated": 456,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
@@ -466,12 +469,15 @@
         "rollupDeploymentBlock": 21221163,
         "rollupEventInbox": "0x6282197777e7c318C7209bd7059110886aa429C6",
         "sequencerInbox": "0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
-        "setValidatorCount": 1,
-        "stakerCount": 1,
+        "setValidatorCount": 2,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0xe9D1e89A73D7608a45F3cDb5a898dFd9E3A3Ba42"],
+        "validators": [
+          "0xe2F1D1E0ACc476455044a9D053B5d667C0a2D61c",
+          "0xe9D1e89A73D7608a45F3cDb5a898dFd9E3A3Ba42"
+        ],
         "validatorUtils": "0x84eA2523b271029FFAeB58fc6E6F1435a280db44",
         "validatorWalletCreator": "0x0A5eC2286bB15893d5b8f320aAbc823B2186BA09",
         "validatorWhitelistDisabled": false,
@@ -530,6 +536,7 @@
             "0xb0de9cb89e4d944ae6023a3b62276e54804c242fd8c4c2d8e6cc4450f5fa8b1b": "ArbOS v30 wasmModuleRoot",
             "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69": "ArbOS v31 wasmModuleRoot",
             "0x184884e1eb9fefdc158f6c8ac912bb183bf3cf83f0090317e0bc4ac5860baa39": "ArbOS v32 wasmModuleRoot",
+            "0xdb698a2576298f25448bc092e52cf13b1e24141c997135d70f217d674bbeb69a": "ArbOS v40 wasmModuleRoot",
             "0xe81f986823a85105c5fd91bb53b4493d38c0c26652d23f76a7405ac889908287": "Celestia Nitro 3.2.1 wasmModuleRoot",
             "0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3": "Celestia Nitro 3.3.2 wasmModuleRoot"
           }
@@ -568,18 +575,18 @@
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84",
+          "from": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84",
           "role": ".owner"
         },
         {
           "permission": "interact",
-          "from": "ethereum:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
           "role": "admin"
         }
       ],
@@ -628,7 +635,7 @@
       "receivedPermissions": [
         {
           "permission": "sequence",
-          "from": "ethereum:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
+          "from": "eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
         }
@@ -742,103 +749,89 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "ethereum:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
           "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
+          "from": "eth:0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x37693F11f3D724E55D0B03D5F328D8202C913243",
+          "from": "eth:0x37693F11f3D724E55D0B03D5F328D8202C913243",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
+          "from": "eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6282197777e7c318C7209bd7059110886aa429C6",
+          "from": "eth:0x6282197777e7c318C7209bd7059110886aa429C6",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
+          "from": "eth:0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
           "role": "admin",
           "via": [
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
+          "from": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8",
+          "from": "eth:0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8",
           "role": "admin",
           "via": [
-            {
-              "address": "ethereum:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84"
-            },
-            { "address": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
+            { "address": "eth:0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84" },
+            { "address": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA" }
           ]
         }
       ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",
-          "from": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
+          "from": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
           "role": ".executors"
         }
       ],
@@ -859,7 +852,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -868,13 +861,26 @@
       }
     },
     {
+      "address": "0xe2F1D1E0ACc476455044a9D053B5d667C0a2D61c",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "validate",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
+          "role": ".validators"
+        }
+      ]
+    },
+    {
       "address": "0xe9D1e89A73D7608a45F3cDb5a898dFd9E3A3Ba42",
       "type": "EOA",
       "proxyType": "EOA",
       "receivedPermissions": [
         {
           "permission": "validate",
-          "from": "ethereum:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
+          "from": "eth:0x828C71bc1D7A34F32FfA624240633b6B7272C3D6",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".validators"
         }
@@ -892,37 +898,37 @@
       "directlyReceivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
+          "from": "eth:0x2a3C554f212E3e0c78eaF0808f5313A10542dA2d",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x37693F11f3D724E55D0B03D5F328D8202C913243",
+          "from": "eth:0x37693F11f3D724E55D0B03D5F328D8202C913243",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
+          "from": "eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x6282197777e7c318C7209bd7059110886aa429C6",
+          "from": "eth:0x6282197777e7c318C7209bd7059110886aa429C6",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
+          "from": "eth:0x7E31f112d340a4D0cB0e4bD82f2853089d1bF10C",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
+          "from": "eth:0x8672705351C81f40B55b1ac2A1998de66166d0eA",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8",
+          "from": "eth:0xBb309FFFC24F77927d7C4eb86BaA67D8f9dC0EB8",
           "role": "admin"
         }
       ],
@@ -935,6 +941,19 @@
       "implementationNames": {
         "0xEE9924C5fd94601C80fF8010f577C9f7f3C20B84": "ProxyAdmin"
       }
+    },
+    {
+      "address": "0xfFb9B41320a47FDE7c2939BA0c1f1d58E80648FB",
+      "type": "EOA",
+      "proxyType": "EOA",
+      "receivedPermissions": [
+        {
+          "permission": "sequence",
+          "from": "eth:0x4ad144ea249A98F77e0b78104D3B6eB6cd3a76DA",
+          "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
+          "role": ".batchPosters"
+        }
+      ]
     }
   ],
   "abis": {
@@ -1637,5 +1656,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0x312dbfd4f11fb3826d9fea1cce8d0647e9c2516982dc180400afca26a8ec5ff2"
+  "permissionsConfigHash": "0xac34204508b88aa49c80ed255247db4743b54d8ff91108017a5cafe9ecf22063"
 }

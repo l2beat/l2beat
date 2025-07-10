@@ -424,7 +424,9 @@ export function formatNumber(value: string, transform?: string) {
   }
   if (transform === 'date') {
     try {
-      const iso = new Date(Number(value) * 1000).toISOString()
+      const timestamp = Number(value)
+      const dateValue = isMilliseconds(timestamp) ? timestamp : timestamp * 1000
+      const iso = new Date(dateValue).toISOString()
       return `${iso.slice(0, 10)} ${iso.slice(11, 19)} UTC`
     } catch {
       return 'Invalid date'
@@ -502,4 +504,9 @@ function Badge({ children }: { children: ReactNode }) {
       {children}
     </span>
   )
+}
+
+// ms will remain above until 33658 yr
+function isMilliseconds(timestamp: number): boolean {
+  return timestamp > 1e12
 }

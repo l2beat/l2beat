@@ -1,26 +1,26 @@
-import { z } from 'zod'
+import { v } from '@l2beat/validate'
 
-export const PlausibleEvents = z.object({
-  switchChanged: z.object({ name: z.string(), value: z.string() }),
-  checkboxChanged: z.object({ name: z.string(), value: z.string() }),
-  radioGroupChanged: z.object({ name: z.string(), value: z.string() }),
-  directoryTabsChanged: z.object({ value: z.string() }),
-  searchBarProjectSelected: z.object({ name: z.string() }),
-  uopsExplorerSelected: z.undefined().optional(),
+export const PlausibleEvents = v.object({
+  switchChanged: v.object({ name: v.string(), value: v.string() }),
+  checkboxChanged: v.object({ name: v.string(), value: v.string() }),
+  radioGroupChanged: v.object({ name: v.string(), value: v.string() }),
+  directoryTabsChanged: v.object({ value: v.string() }),
+  searchBarProjectSelected: v.object({ name: v.string() }),
+  uopsExplorerSelected: v.undefined().optional(),
 
   // Filters
-  filtersOpened: z.undefined().optional(),
-  filterIdSelected: z.object({ name: z.string() }),
-  filterValueSelected: z.object({
-    name: z.string(),
-    value: z.string(),
-    allValues: z.string().optional(),
-    additionalFilters: z.number(),
+  filtersOpened: v.undefined().optional(),
+  filterIdSelected: v.object({ name: v.string() }),
+  filterValueSelected: v.object({
+    name: v.string(),
+    value: v.string(),
+    allValues: v.string().optional(),
+    additionalFilters: v.number(),
   }),
-  filterRemoved: z.object({ name: z.string() }),
-  filterInversed: z.object({ name: z.string(), allValues: z.string() }),
+  filterRemoved: v.object({ name: v.string() }),
+  filterInversed: v.object({ name: v.string(), allValues: v.string() }),
 })
-export type PlausibleEvents = z.infer<typeof PlausibleEvents>
+export type PlausibleEvents = v.infer<typeof PlausibleEvents>
 
 export type Plausible = {
   <T extends keyof PlausibleEvents>(

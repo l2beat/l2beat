@@ -2,6 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW } from '../../common'
 import type { Bridge } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 export const wormholeV1: Bridge = {
   type: 'bridge',
@@ -50,4 +51,5 @@ export const wormholeV1: Bridge = {
     },
     destinationToken: BRIDGE_RISK_VIEW.WRAPPED,
   },
+  discoveryInfo: getDiscoveryInfo([]),
 }

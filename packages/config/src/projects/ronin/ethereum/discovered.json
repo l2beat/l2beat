@@ -1,8 +1,8 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 22346547,
-  "configHash": "0xa2249dde3ce55506d243662c29f31f3857cadfa4cc5e0273dcf81636e8c28548",
+  "blockNumber": 22824247,
+  "configHash": "0x9f8b46154d89d238dacebf27b853c64d7ffd9c295b2091b1a4c857b9c98b2830",
   "entries": [
     {
       "address": "0x020Dd9a5e318695A61DDa88DB7Ad077Ec306e3E9",
@@ -51,7 +51,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
+          "from": "eth:0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08",
           "role": "admin"
         }
       ],
@@ -179,7 +179,7 @@
         ],
         "required": 2,
         "spentToday": 0,
-        "transactionCount": 27
+        "transactionCount": 28
       },
       "implementationNames": {
         "0x2DA02aC5f19Ae362a4121718d990e655eB628D96": "MultiSigWalletWithDailyLimit"
@@ -248,7 +248,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
+          "from": "eth:0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
           "role": "admin"
         }
       ],
@@ -319,7 +319,7 @@
       "type": "Contract",
       "sourceHashes": [
         "0xdf743526ddd44d53db1ae516488019ca52e6b6434e33ad8fbd5b060c138653a2",
-        "0x05caa4ae4fc13e910efd2c6a0ae2a136990435283a1527cf1a5ccb577a91d52f"
+        "0x1ea2ab37dc26d77842ba453466e99a063069b27024d70703188763cc219ac268"
       ],
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["depositCount"],
@@ -328,7 +328,7 @@
       "values": {
         "_MAX_PERCENTAGE": 1000000,
         "$admin": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
-        "$implementation": "0x450032864C52Cb9210da8e30cE97CEaC8e215953",
+        "$implementation": "0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69",
         "$pastUpgrades": [
           [
             "2022-06-22T07:40:30.000Z",
@@ -364,9 +364,14 @@
             "2025-04-22T07:28:23.000Z",
             "0x234e508f2cf87b9d204402ded64d6fa13a65ac85e77b206b0be5718b9ce2a3b5",
             ["0x450032864C52Cb9210da8e30cE97CEaC8e215953"]
+          ],
+          [
+            "2025-06-27T07:06:23.000Z",
+            "0x4befaa551b1c1300d7476e827cf84165dcf444b2815576ea5003554bdfac1416",
+            ["0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69"]
           ]
         ],
-        "$upgradeCount": 7,
+        "$upgradeCount": 8,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -387,7 +392,7 @@
           }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "depositCount": 111277,
+        "depositCount": 111354,
         "DOMAIN_SEPARATOR": "0x2b00d883a78a8b8d324cfe3cc451d9550b8509512a316b5dba270df178853071",
         "emergencyPauser": "0xF184a6Cd470Cac2CF5cD4fBa34e20D482D6A6062",
         "getHighTierVoteWeightThreshold": [90, 100],
@@ -401,7 +406,7 @@
       },
       "implementationNames": {
         "0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08": "TransparentUpgradeableProxyV2",
-        "0x450032864C52Cb9210da8e30cE97CEaC8e215953": "MainchainGatewayV3"
+        "0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": "MainchainGatewayV3"
       }
     },
     {
@@ -500,7 +505,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2823083246601126011714542"
+        "totalSupply": "2698701732682237808787569"
       },
       "implementationNames": {
         "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -768,7 +773,7 @@
       "event OwnerRemoval(address indexed owner)",
       "event RequirementChange(uint256 required)"
     ],
-    "0x450032864C52Cb9210da8e30cE97CEaC8e215953": [
+    "0x5019d41B0737e39B51Fd6dA4859F3e27579E4e69": [
       "constructor()",
       "error ErrContractTypeNotFound(uint8 contractType)",
       "error ErrERC1155MintingFailed()",
@@ -829,6 +834,7 @@
       "function DOMAIN_SEPARATOR() view returns (bytes32)",
       "function WITHDRAWAL_UNLOCKER_ROLE() view returns (bytes32)",
       "function _MAX_PERCENTAGE() view returns (uint256)",
+      "function bulkSetApprovalForAll(address[] nfts, address[] operators, bool[] approveds)",
       "function checkHighTierVoteWeightThreshold(uint256 _voteWeight) view returns (bool)",
       "function checkThreshold(uint256 _voteWeight) view returns (bool)",
       "function dailyWithdrawalLimit(address) view returns (uint256)",
@@ -1001,5 +1007,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0xa72d95d6670e36e40f83cfb3cf9666d81275d93bd991d4d3c8cfa8b9a94b015b"
+  "permissionsConfigHash": "0xe2bae6780dd754cf1c3c4c467fab803a60f88af34b02a60888a2f9f437ebdd88"
 }

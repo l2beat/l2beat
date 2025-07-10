@@ -1,4 +1,67 @@
-Generated with discovered.json: 0x53b739cecc36a209bb1e3cccb406fe45d0cd732c
+Generated with discovered.json: 0x41c719a671d52cb8e276099b91ac094e7d8df909
+
+# Diff at Fri, 04 Jul 2025 12:18:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22796394
+- current block number: 22796394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22796394 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x9C07A72177c5A05410cA338823e790876E79D73B"
++        "eth:0x9C07A72177c5A05410cA338823e790876E79D73B"
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x54D7aE423Edb07282645e740C046B9373970a168"
++        "eth:0x54D7aE423Edb07282645e740C046B9373970a168"
+    }
+```
+
+Generated with discovered.json: 0xb3ebc1562bdf94963aedddd3799066185e0d1384
+
+# Diff at Fri, 27 Jun 2025 14:33:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0486f9e4c91d499528f32792e73e81ff4cc57d2c block: 21394291
+- current block number: 22796394
+
+## Description
+
+exchange shutdown, added headerwarn and milestone:
+
+A system **shutdown** [was triggered](https://etherscan.io/tx/0xa3a340cfebbdbf9999e61cc3838f67d21610944704f9b2546e2fe95435134d5c#eventlog) on 2025-06-27. This irreversible action freezes the L2 state and allows users to withdraw their funds with the help of the operator. Degate announced that they [will withdraw all funds automatically](https://medium.com/degate/announcement-sunsetting-of-orderbook-f9c0d3389e51). If the operator does not cooperate, a withdrawal mode can still be activated, allowing users to withdraw their funds on their own by providing merkle proofs.
+
+## Watched changes
+
+```diff
+    contract ExchangeV3 (0x9C07A72177c5A05410cA338823e790876E79D73B) {
+    +++ description: None
+      values.isShutdown:
+-        false
++        true
+      values.shutdownTriggered.0:
++        1750935659
+    }
+```
+
+Generated with discovered.json: 0x5761dd4b68fa462199c4ee8ee54884af117403f4
 
 # Diff at Fri, 23 May 2025 09:40:55 GMT:
 

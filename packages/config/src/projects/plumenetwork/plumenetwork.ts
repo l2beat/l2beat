@@ -17,8 +17,7 @@ export const plumenetwork: ScalingProject = orbitStackL2({
     slug: 'plumenetwork',
     description:
       'Plume is a modular L2 blockchain for real-world assets (RWAs) that integrates asset tokenization and compliance providers directly into the chain.',
-    category: 'Optimium',
-    stack: 'Arbitrum',
+    stacks: ['Arbitrum'],
     links: {
       websites: ['https://plume.org/'],
       bridges: ['https://portal.plume.org'],

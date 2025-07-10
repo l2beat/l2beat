@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import type { TooltipProps } from 'recharts'
 import { Bar, BarChart } from 'recharts'
 
+import { UnixTime } from '@l2beat/shared-pure'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import {
   ChartContainer,
@@ -21,18 +22,26 @@ import { getDaChartMeta } from './meta'
 interface Props {
   data: DaThroughputDataPoint[] | undefined
   isLoading: boolean
+  includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
 }
-export function DaPercentageThroughputChart({ data, isLoading }: Props) {
+export function DaPercentageThroughputChart({
+  data,
+  isLoading,
+  includeScalingOnly,
+  syncStatus,
+}: Props) {
   const chartMeta = getDaChartMeta({ shape: 'square' })
   const chartData = useMemo(() => {
-    return data?.map(([timestamp, ethereum, celestia, avail]) => {
-      const total = ethereum + celestia + avail
+    return data?.map(([timestamp, ethereum, celestia, avail, eigenda]) => {
+      const total = ethereum + celestia + avail + eigenda
       if (total === 0) {
         return {
           timestamp: timestamp,
           ethereum: 0,
           celestia: 0,
           avail: 0,
+          eigenda: 0,
         }
       }
       return {
@@ -40,6 +49,7 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
         ethereum: round((ethereum / total) * 100, 2),
         celestia: round((celestia / total) * 100, 2),
         avail: round((avail / total) * 100, 2),
+        eigenda: round((eigenda / total) * 100, 2),
       }
     })
   }, [data])
@@ -60,15 +70,21 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
           isAnimationActive={false}
         />
         <Bar
+          dataKey="avail"
+          stackId="a"
+          fill={chartMeta.avail.color}
+          isAnimationActive={false}
+        />
+        <Bar
           dataKey="celestia"
           stackId="a"
           fill={chartMeta.celestia.color}
           isAnimationActive={false}
         />
         <Bar
-          dataKey="avail"
+          dataKey="eigenda"
           stackId="a"
-          fill={chartMeta.avail.color}
+          fill={chartMeta.eigenda.color}
           isAnimationActive={false}
         />
         {getCommonChartComponents({
@@ -82,7 +98,14 @@ export function DaPercentageThroughputChart({ data, isLoading }: Props) {
             allowDataOverflow: true,
           },
         })}
-        <ChartTooltip content={<CustomTooltip />} />
+        <ChartTooltip
+          content={
+            <CustomTooltip
+              includeScalingOnly={includeScalingOnly}
+              syncStatus={syncStatus}
+            />
+          }
+        />
       </BarChart>
     </ChartContainer>
   )
@@ -92,13 +115,20 @@ function CustomTooltip({
   active,
   payload,
   label,
-}: TooltipProps<number, string>) {
+  includeScalingOnly,
+  syncStatus,
+}: TooltipProps<number, string> & {
+  includeScalingOnly: boolean
+  syncStatus?: Record<string, number>
+}) {
   const { meta } = useChart()
   if (!active || !payload || typeof label !== 'number') return null
 
+  const isCurrentDay = label >= UnixTime.toStartOf(UnixTime.now(), 'day')
+
   return (
     <ChartTooltipWrapper>
-      <div className="label-value-14-medium text-secondary">
+      <div className="font-medium text-label-value-14 text-secondary">
         {formatTimestamp(label, { longMonthName: true, mode: 'datetime' })}
       </div>
       <HorizontalSeparator className="my-1" />
@@ -106,6 +136,12 @@ function CustomTooltip({
         {payload.map((entry, index) => {
           const configEntry = entry.name ? meta[entry.name] : undefined
           if (!configEntry) return null
+
+          const projectSyncStatus = entry.name
+            ? syncStatus?.[entry.name]
+            : undefined
+
+          const isEstimated = projectSyncStatus && projectSyncStatus < label
 
           return (
             <div
@@ -117,17 +153,23 @@ function CustomTooltip({
                   backgroundColor={configEntry.color}
                   type={configEntry.indicatorType}
                 />
-                <span className="label-value-14-medium">
+                <span className="font-medium text-label-value-14">
                   {configEntry.label}
                 </span>
               </div>
-              <span className="label-value-15-medium text-primary tabular-nums">
-                {entry.value?.toFixed(2)}%
+              <span className="font-medium text-label-value-15 text-primary tabular-nums">
+                {isEstimated ? 'est. ' : ''} {entry.value?.toFixed(2)}%
               </span>
             </div>
           )
         })}
       </div>
+      {includeScalingOnly && isCurrentDay && (
+        <div className="mt-2 max-w-[230px] font-medium text-label-value-13 text-secondary leading-[130%]">
+          Scaling project usage data for EigenDA is only available for the past
+          day.
+        </div>
+      )}
     </ChartTooltipWrapper>
   )
 }

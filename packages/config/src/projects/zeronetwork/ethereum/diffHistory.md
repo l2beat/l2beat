@@ -1,4 +1,145 @@
-Generated with discovered.json: 0xc5960386885d6a4de7521e3ed78cc7d0c0d14191
+Generated with discovered.json: 0x2c7661d450d61e27cdb80ab2e9b8f3dab1f0e2e8
+
+# Diff at Fri, 04 Jul 2025 12:19:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f56dc47fe915564d4555300304da4d3bcbc087f block: 22593198
+- current block number: 22593198
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593198 (main branch discovery), not current.
+
+```diff
+    EOA  (0x0F9B807d5B0cE12450059B425Dc35C727D65CB2F) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract Zeronetwork Multisig (0x2e5BE1479cF661eeD9F526b7926eA87F6A5dD6a9) {
+    +++ description: None
+      receivedPermissions.0.via.0.address:
+-        "ethereum:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+      receivedPermissions.0.from:
+-        "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
++        "eth:0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3"
+    }
+```
+
+```diff
+    EOA  (0x479B7c95b9509E1A834C994fc94e3581aA8A73B9) {
+    +++ description: None
+      receivedPermissions.0.from:
+-        "ethereum:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
++        "eth:0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
+      receivedPermissions.1.from:
+-        "ethereum:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
++        "eth:0x8c0Bfc04AdA21fd496c55B8C50331f904306F564"
+    }
+```
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+    }
+```
+
+```diff
+    contract ValidatorTimelock (0x8c0Bfc04AdA21fd496c55B8C50331f904306F564) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      receivedPermissions.0.from:
+-        "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+    }
+```
+
+```diff
+    contract ZeroNetworkZkEvmAdmin (0xCA8faaF5BA885fEC8C2c8CD49bADAa7589D173b3) {
+    +++ description: None
+      directlyReceivedPermissions.0.from:
+-        "ethereum:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
++        "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9"
+    }
+```
+
+Generated with discovered.json: 0x6a79c7fd792d2cbc9e8abe2587a937a1e2940ae6
+
+# Diff at Thu, 03 Jul 2025 10:57:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@fa3b82adfb9dedeb2acea8fde7b79e65d59fb2b6 block: 22593198
+- current block number: 22593198
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593198 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock2 (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E) {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      category.name:
+-        "Shared Infrastructure"
++        "Spam"
+      category.priority:
+-        4
++        -1
+    }
+```
+
+Generated with discovered.json: 0x5bf8271731bedb716c8f8df607ff6311019dee64
+
+# Diff at Wed, 25 Jun 2025 07:17:48 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4bade41aedf0f9269688f2c05f04d2992bb2ca38 block: 22593198
+- current block number: 22593198
+
+## Description
+
+Config: rename, tidy template folders. unhide the L1NativeTokenVault.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 22593198 (main branch discovery), not current.
+
+```diff
+    contract ZeroNetworkZkEvm (0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9) {
+    +++ description: The main contract defining the Layer 2. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions.
+      template:
+-        "shared-zk-stack/v26/Diamond"
++        "shared-zk-stack/Diamond"
+    }
+```
+
+Generated with discovered.json: 0x63e32387f3b81ae03be8d848156b063cb9fbbf3f
 
 # Diff at Fri, 30 May 2025 04:34:28 GMT:
 

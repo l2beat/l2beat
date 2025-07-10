@@ -96,9 +96,10 @@ export async function getDaTrackingConfig(
       type: 'eigen-da' as const,
       name: 'eigenda',
       url: env.string('EIGEN_DA_API_URL'),
+      perProjectUrl: env.string('EIGEN_DA_PER_PROJECT_API_URL'),
       callsPerMinute: env.integer('EIGEN_DA_API_CALLS_PER_MINUTE', 2000),
       startingTimestamp: UnixTime.fromDate(
-        new Date('2024-06-24T00:00:00.000Z'),
+        new Date('2024-06-24T02:00:00.000Z'),
       ),
     })
     timestampProjectsForLayers.push({
@@ -106,7 +107,7 @@ export async function getDaTrackingConfig(
       projectId: ProjectId('eigenda'),
       type: 'baseLayer' as const,
       daLayer: 'eigenda',
-      sinceTimestamp: UnixTime.fromDate(new Date('2024-06-24T00:00:00.000Z')),
+      sinceTimestamp: UnixTime.fromDate(new Date('2024-06-24T02:00:00.000Z')),
     })
   }
 

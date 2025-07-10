@@ -2,7 +2,7 @@
   "name": "hermez",
   "chain": "ethereum",
   "blockNumber": 21778467,
-  "configHash": "0xd68bdbb9ec329a4d44a104bb08b5415fd4388b9b0738938260c4b9fb58a432f8",
+  "configHash": "0xdda3348fe5e9926bf644efb8e8fb882c98e8cd0274684b28b6f3fa6153b380c5",
   "entries": [
     {
       "name": "ProxyAdmin",
@@ -15,12 +15,12 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "ethereum:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
+          "from": "eth:0x15468b45eD46C8383F5c0b1b6Cf2EcF403C2AeC2",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "ethereum:0xA68D85dF56E733A06443306A095646317B5Fa633",
+          "from": "eth:0xA68D85dF56E733A06443306A095646317B5Fa633",
           "role": "admin"
         }
       ],
@@ -670,5 +670,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x880d7aa720d915451716cefc5ebfbfb518b800b6e38107cb974da479656a20bf"
+  "permissionsConfigHash": "0x0f48c1d840b0852726e08e1a2f13760574d28a9214f15bffa50798df1db61a94"
 }

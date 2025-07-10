@@ -27,6 +27,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import type { ScalingProject } from '../../internalTypes'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -72,7 +73,7 @@ export const reddioex: ScalingProject = {
     description:
       'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Validium',
     links: {
       websites: ['https://reddio.com/'],
@@ -189,4 +190,5 @@ export const reddioex: ScalingProject = {
       type: 'general',
     },
   ],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

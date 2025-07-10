@@ -1,14 +1,12 @@
+import { LiveIndicator } from '~/components/LiveIndicator'
 import {
   Tooltip,
   TooltipContent,
   TooltipPortal,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
-import { OtherMigrationTooltip } from '~/components/countdowns/other-migration/OtherMigrationTooltip'
 import { Markdown } from '~/components/markdown/Markdown'
 import { ProjectBadge } from '~/components/projects/ProjectBadge'
-import { useRecategorisationPreviewContext } from '~/components/recategorisation-preview/RecategorisationPreviewProvider'
-import { featureFlags } from '~/consts/featureFlags'
 import { useIsMobile } from '~/hooks/useIsMobile'
 import { ShieldIcon } from '~/icons/Shield'
 import { UnderReviewIcon } from '~/icons/UnderReview'
@@ -22,14 +20,15 @@ export interface ProjectCellProps {
   project: Omit<CommonProjectEntry, 'href' | 'slug' | 'id'>
   className?: string
   withInfoTooltip?: boolean
+  ignoreUnderReviewIcon?: boolean
 }
 
 export function ProjectNameCell({
   project,
   className,
   withInfoTooltip,
+  ignoreUnderReviewIcon,
 }: ProjectCellProps) {
-  const { checked } = useRecategorisationPreviewContext()
   return (
     <div className={className}>
       <div className="flex items-center gap-1.5">
@@ -57,7 +56,7 @@ export function ProjectNameCell({
             <TooltipContent>{project.statuses.redWarning}</TooltipContent>
           </Tooltip>
         )}
-        {project.statuses?.underReview && (
+        {project.statuses?.underReview && !ignoreUnderReviewIcon && (
           <Tooltip>
             <TooltipTrigger>
               <UnderReviewIcon className="size-3.5 md:size-4" />
@@ -82,18 +81,19 @@ export function ProjectNameCell({
         {project.statuses?.syncWarning && (
           <NotSyncedIcon content={project.statuses.syncWarning} />
         )}
-        {!checked &&
-          project.statuses?.countdowns?.otherMigration &&
-          !featureFlags.othersMigrated() && (
-            <OtherMigrationTooltip
-              {...project.statuses.countdowns.otherMigration}
-            />
-          )}
       </div>
       {project.nameSecondLine && (
         <span className="block font-medium text-[0.8125rem] text-secondary leading-[0.9375rem]">
           {project.nameSecondLine}
         </span>
+      )}
+      {project.statuses?.ongoingAnomaly && (
+        <div className="flex items-center justify-center gap-1 text-negative">
+          <LiveIndicator />
+          <span className="font-medium text-[11px] uppercase leading-none">
+            Ongoing anomaly
+          </span>
+        </div>
       )}
     </div>
   )
@@ -124,7 +124,7 @@ function NameWithProjectInfoTooltip({
       <TooltipTrigger>{projectName}</TooltipTrigger>
       <TooltipPortal>
         <TooltipContent className="flex flex-col gap-2">
-          <span className="heading-18">What is {projectName}?</span>
+          <span className="text-heading-18">What is {projectName}?</span>
           <p>{project.description}</p>
           <div className="!max-w-screen-xs flex flex-row flex-wrap">
             {project.badges?.map((badge, key) => (

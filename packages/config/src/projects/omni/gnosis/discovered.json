@@ -2,7 +2,7 @@
   "name": "omni",
   "chain": "gnosis",
   "blockNumber": 40494132,
-  "configHash": "0x038bb702c930415486685c73629df5cb476fa396948485ca464d7b8d7621598d",
+  "configHash": "0x731c6787867e7590a41cd8a07a3e341f5c578faaa849743ed9966e50ec70521a",
   "entries": [
     {
       "address": "0x0577FEC70907676039f7DAF961F8A44bda3Ea9Af",
@@ -99,7 +99,7 @@
       "receivedPermissions": [
         {
           "permission": "upgrade",
-          "from": "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
           "role": "admin"
         }
       ]
@@ -293,25 +293,25 @@
         "yaru": "0x153801d0B85D2FCAc6EA07446b6A709ce6720AC5"
       },
       "fieldMeta": {
-        "targetAddress": {
-          "severity": "HIGH",
-          "description": "Address of the target contract on GnosisChain"
-        },
-        "adapters": {
-          "severity": "HIGH",
-          "description": "Array of the adapters on GnosisChain"
-        },
-        "reporters": {
-          "severity": "HIGH",
-          "description": "Array of the reports on GnosisChain"
-        },
-        "threshold": {
-          "severity": "HIGH",
-          "description": "Threshold of the adapters on GnosisChain"
-        },
         "HASHI_IS_MANDATORY": {
           "severity": "HIGH",
           "description": "If true, Hashi validation is mandatory"
+        },
+        "targetAddress": {
+          "severity": "HIGH",
+          "description": "Address of the target contract on Ethereum"
+        },
+        "adapters": {
+          "severity": "HIGH",
+          "description": "Array of the adapters on Ethereum"
+        },
+        "reporters": {
+          "severity": "HIGH",
+          "description": "Array of the reporters on Ethereum"
+        },
+        "threshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the adapters on Ethereum"
         }
       },
       "implementationNames": {
@@ -453,23 +453,23 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "description": "change the threshold and manage signers.",
           "role": ".owner"
         },
         {
           "permission": "upgrade",
-          "from": "gnosis:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
+          "from": "gno:0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "gnosis:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
+          "from": "gno:0xA280feD8D7CaD9a76C8b50cA5c33c2534fFa5008",
           "role": "admin"
         },
         {
           "permission": "upgrade",
-          "from": "gnosis:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
+          "from": "gno:0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d",
           "role": "admin"
         }
       ],
@@ -721,7 +721,7 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "gnosis:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
+          "from": "gno:0x74CACae9801bA4Fe0027Ed6F58d53797CCa7296E",
           "description": "change critical configurations of the Hashi protocol like the validation contract addresses.",
           "role": ".owner"
         }
@@ -1617,5 +1617,5 @@
     "gnosisbridge/Yaru": "0xce05540016e0196c34fcc3433213c29d61e201069bda63bc542092c39cd76506",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
-  "permissionsConfigHash": "0x80692291dfff3df931a0798454ed5c46074c4123609dba450279fe12a6297c0a"
+  "permissionsConfigHash": "0xa8526f74efdadf863d02bdec1b1c960dffc3dd45c4574aec0dc9595d7c8d2fba"
 }

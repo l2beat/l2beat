@@ -21,6 +21,7 @@ import {
   generateDiscoveryDrivenContracts,
   generateDiscoveryDrivenPermissions,
 } from '../../templates/generateDiscoveryDrivenSections'
+import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('canvasconnect')
 const upgradeDelaySeconds = discovery.getContractValue<number>(
@@ -53,7 +54,7 @@ export const canvasconnect: ScalingProject = {
     description:
       'Canvas Connect is a Layer 2 solution based on StarkEx technology, specifically designed to provide centralized investment and trading services to financial institutions.',
     purposes: ['Privacy', 'Exchange'],
-    stack: 'StarkEx',
+    stacks: ['StarkEx'],
     category: 'Validium',
     links: {
       websites: ['https://canvas.co/'],
@@ -120,4 +121,5 @@ export const canvasconnect: ScalingProject = {
   },
   permissions: generateDiscoveryDrivenPermissions([discovery]),
   milestones: [],
+  discoveryInfo: getDiscoveryInfo([discovery]),
 }

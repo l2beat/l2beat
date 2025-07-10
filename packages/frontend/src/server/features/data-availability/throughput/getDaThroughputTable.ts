@@ -7,6 +7,7 @@ import round from 'lodash/round'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { ps } from '~/server/projects'
+import { THROUGHPUT_ENABLED_DA_LAYERS } from './utils/consts'
 import { sumByResolutionAndProject } from './utils/sumByResolutionAndProject'
 
 export async function getDaThroughputTable(
@@ -25,10 +26,10 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
   const db = getDb()
   const lastDay = UnixTime.toStartOf(UnixTime.now(), 'day')
   const [values, daLayers] = await Promise.all([
-    db.dataAvailability.getByDaLayersAndTimeRange(daLayerIds, [
-      lastDay - 7 * UnixTime.DAY,
-      lastDay,
-    ]),
+    db.dataAvailability.getByDaLayersAndTimeRange(
+      THROUGHPUT_ENABLED_DA_LAYERS,
+      [lastDay - 7 * UnixTime.DAY, lastDay],
+    ),
     ps.getProjects({
       ids: daLayerIds.map(ProjectId),
       select: ['daLayer'],
@@ -64,6 +65,9 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
     return Object.fromEntries(
       daLayers
         .map((daLayer) => {
+          const lastDaLayerTimestamp = daLayerValues.findLast(
+            (v) => v.daLayer === daLayer.id,
+          )?.timestamp
           const lastRecord = values[daLayer.id]?.at(-1)
 
           const latestThroughput = daLayer.daLayer.throughput
@@ -84,7 +88,7 @@ const getDaThroughputTableData = async (daLayerIds: string[]) => {
           return [
             daLayer.id,
             {
-              syncedUntil: lastRecord ? lastRecord.timestamp : undefined,
+              syncedUntil: lastDaLayerTimestamp,
               pastDayData: lastRecord
                 ? getPastDayData(
                     lastRecord,
@@ -170,9 +174,9 @@ function getMockDaThroughputTableData(
                 },
                 avgCapacityUtilization: 24,
                 totalPosted: 10312412,
-                avgThroughputPerSecond: 1.5,
+                avgThroughputPerSecond: 100000,
               },
-              maxThroughputPerSecond: 4.3,
+              maxThroughputPerSecond: 400000,
             },
           ] as const
         })
@@ -193,14 +197,14 @@ function getMockDaThroughputTableData(
                   totalPosted: 123123,
                   href: '/scaling/projects/base',
                 },
-                avgThroughputPerSecond: 1.0,
+                avgThroughputPerSecond: 100000,
               },
               syncedUntil:
                 daLayerId === 'avail'
                   ? UnixTime.toStartOf(UnixTime.now(), 'day') - 2 * UnixTime.DAY
                   : UnixTime.toStartOf(UnixTime.now(), 'day') -
                     1 * UnixTime.DAY,
-              maxThroughputPerSecond: 4.3,
+              maxThroughputPerSecond: 400000,
             },
           ] as const
         })
