@@ -1,4 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  ChainSpecificAddress,
+  EthereumAddress,
+  ProjectId,
+  rawAddress,
+  UnixTime,
+} from '@l2beat/shared-pure'
 
 import { BRIDGE_RISK_VIEW, CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -10,9 +16,11 @@ import {
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 
 const discovery = new ProjectDiscovery('nearomni')
-const nearBridgeDerivedAddress = discovery.getContractValue(
-  'OmniBridge',
-  'nearBridgeDerivedAddress',
+const nearBridgeDerivedAddress = rawAddress(
+  discovery.getContractValue<ChainSpecificAddress>(
+    'OmniBridge',
+    'nearBridgeDerivedAddress',
+  ),
 )
 
 export const nearomni: Bridge = {
