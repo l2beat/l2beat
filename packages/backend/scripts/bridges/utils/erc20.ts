@@ -19,15 +19,18 @@ export async function getTokenAmount(
   start: number,
 ) {
   try {
-    const decimals = await rpc.call(
-      {
-        to: EthereumAddress(decoded.token),
-        data: Bytes.fromHex(
-          encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
-        ),
-      },
-      start,
-    )
+    const decimals =
+      decoded.token !== EthereumAddress.ZERO
+        ? await rpc.call(
+            {
+              to: EthereumAddress(decoded.token),
+              data: Bytes.fromHex(
+                encodeFunctionData({ abi: ERC20, functionName: 'decimals' }),
+              ),
+            },
+            start,
+          )
+        : 18
 
     const dec = decodeFunctionResult({
       abi: ERC20,
@@ -49,6 +52,8 @@ export async function getTokenSymbol(
   decoded: BridgeTransfer,
   start: number,
 ) {
+  if (decoded.token === EthereumAddress.ZERO) return 'ETH'
+
   try {
     const symbol = await rpc.call(
       {
