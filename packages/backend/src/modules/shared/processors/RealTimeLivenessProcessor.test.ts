@@ -90,7 +90,7 @@ describe(RealTimeLivenessProcessor.prototype.constructor.name, () => {
               formula: 'functionCall' as const,
               address: to,
               selector,
-              signature: `function transfer(address,uint256)`,
+              signature: 'function transfer(address,uint256)',
               topics: [topic],
             },
           },

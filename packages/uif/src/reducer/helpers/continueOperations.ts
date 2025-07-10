@@ -93,7 +93,7 @@ export function continueOperations(
   if (shouldInvalidate) {
     if (state.invalidateBlocked || state.waiting || state.status !== 'idle') {
       return [state, effects]
-    } else {
+    }
       assert(state.parents.length > 0, 'Root indexer cannot invalidate')
       return [
         { ...state, status: 'invalidating', forceInvalidate: false },
@@ -102,19 +102,17 @@ export function continueOperations(
           { type: 'Invalidate', targetHeight: state.invalidateToHeight },
         ],
       ]
-    }
   }
 
   if (shouldUpdate) {
     if (state.updateBlocked || state.waiting || state.status !== 'idle') {
       return [state, effects]
-    } else {
+    }
       assert(state.parents.length > 0, 'Root indexer cannot update')
       return [
         { ...state, status: 'updating' },
         [...effects, { type: 'Update', targetHeight: parentHeight }],
       ]
-    }
   }
 
   return [state, effects]

@@ -2,9 +2,9 @@ import type { Logger } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   type ConfigRegistry,
-  TemplateService,
   getChainConfig,
   getDiscoveryPaths,
+  TemplateService,
 } from '@l2beat/discovery'
 import { asciiProgressBar, formatSeconds } from '@l2beat/shared-pure'
 import chalk from 'chalk'
@@ -182,23 +182,22 @@ function reportStatus(
 function colorMap(
   toColor: string,
   value: number,
-  multiplier: number = 1,
+  multiplier = 1,
 ): string {
   if (value < 0.125 * multiplier) {
     return chalk.grey(toColor)
-  } else if (value < 0.25 * multiplier) {
+  }if (value < 0.25 * multiplier) {
     return chalk.red(toColor)
-  } else if (value < 0.375 * multiplier) {
+  }if (value < 0.375 * multiplier) {
     return chalk.redBright(toColor)
-  } else if (value < 0.5 * multiplier) {
+  }if (value < 0.5 * multiplier) {
     return chalk.magenta(toColor)
-  } else if (value < 0.625 * multiplier) {
+  }if (value < 0.625 * multiplier) {
     return chalk.magentaBright(toColor)
-  } else if (value < 0.75 * multiplier) {
+  }if (value < 0.75 * multiplier) {
     return chalk.yellow(toColor)
-  } else if (value < 0.875 * multiplier) {
+  }if (value < 0.875 * multiplier) {
     return chalk.yellowBright(toColor)
-  } else {
-    return chalk.greenBright(toColor)
   }
+    return chalk.greenBright(toColor)
 }

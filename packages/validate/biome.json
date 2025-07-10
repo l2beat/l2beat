@@ -6,7 +6,6 @@
     "rules": {
       "nursery": {},
       "style": {
-        "noParameterAssign": "error",
         "useAsConstAssertion": "error",
         "useDefaultParameterLast": "error",
         "useEnumInitializers": "error",

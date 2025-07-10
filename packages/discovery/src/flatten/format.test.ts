@@ -1,6 +1,6 @@
-import { join } from 'path'
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
+import { join } from 'path'
 import { format } from './format'
 
 describe(format.name, () => {

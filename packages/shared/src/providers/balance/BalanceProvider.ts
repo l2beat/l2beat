@@ -35,7 +35,7 @@ export class BalanceProvider {
           const res = await client.multicall(calls, blockNumber)
           return res.map((r, i) => {
             if (r.success === false) {
-              this.logger.tag({ chain }).warn(`Issue with balance fetching`, {
+              this.logger.tag({ chain }).warn('Issue with balance fetching', {
                 token: queries[i].token,
                 blockNumber,
               })
@@ -43,7 +43,7 @@ export class BalanceProvider {
             }
             return BigInt(r.data.toString())
           })
-        } else {
+        }
           return Promise.all(
             queries.map(async (q) => {
               if (q.token === 'native') {
@@ -53,7 +53,7 @@ export class BalanceProvider {
                 } catch {
                   this.logger
                     .tag({ chain })
-                    .warn(`Issue with balance fetching`, {
+                    .warn('Issue with balance fetching', {
                       token: q.token,
                       blockNumber,
                     })
@@ -69,7 +69,7 @@ export class BalanceProvider {
                 } catch {
                   this.logger
                     .tag({ chain })
-                    .warn(`Issue with balance fetching`, {
+                    .warn('Issue with balance fetching', {
                       token: q.token,
                       blockNumber,
                     })
@@ -78,7 +78,6 @@ export class BalanceProvider {
               }
             }),
           )
-        }
       } catch (error) {
         if (index === clients.length - 1) throw error
       }

@@ -1,8 +1,7 @@
+import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
-
-import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
 import type { L2CostRecord } from './entity'
 import { L2CostRepository } from './repository'

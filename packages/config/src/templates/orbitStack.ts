@@ -2,9 +2,9 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isEmpty from 'lodash/isEmpty'
@@ -17,10 +17,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
   pickWorseRisk,
+  RISK_VIEW,
   sumRisk,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -196,9 +196,8 @@ function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
       delaySeconds: result[2],
       futureSeconds: result[3],
     }
-  } else {
-    return result
   }
+    return result
 }
 
 export function getNitroGovernance(
@@ -247,7 +246,7 @@ function defaultStateValidation(
   minimumAssertionPeriod: number,
   currentRequiredStake: number,
   challengePeriod: number,
-  existFastConfirmer: boolean = false,
+  existFastConfirmer = false,
 ): ProjectScalingStateValidation {
   const categories: ProjectScalingStateValidationCategory[] = [
     {
@@ -494,7 +493,7 @@ function orbitStackCommon(
               tokens: trackedGasTokens ?? ['ETH'],
               description: trackedGasTokens
                 ? `Contract managing Inboxes and Outboxes. It escrows ${trackedGasTokens?.join(', ')} sent to L2.`
-                : `Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.`,
+                : 'Contract managing Inboxes and Outboxes. It escrows ETH sent to L2.',
               ...upgradeability,
             }),
             ...(templateVars.nonTemplateEscrows ?? []),
@@ -536,7 +535,7 @@ function orbitStackCommon(
               references: [],
               risks: [],
             } as ProjectTechnologyChoice
-          } else {
+          }
             const buffer = templateVars.discovery.getContractValue<{
               bufferBlocks: number
               max: number
@@ -562,7 +561,6 @@ function orbitStackCommon(
               ],
               risks: [],
             } as ProjectTechnologyChoice
-          }
         })(),
       dataAvailability:
         templateVars.nonTemplateTechnology?.dataAvailability ??
@@ -901,7 +899,7 @@ function ifPostsToEthereum<T>(
 function getRiskView(
   templateVars: OrbitStackConfigCommon,
   daProvider: DAProvider,
-  isPostBoLD: boolean = false,
+  isPostBoLD = false,
 ): ProjectScalingRiskView {
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
@@ -1069,7 +1067,7 @@ function getDAProvider(
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge: BADGES.DA.Celestia,
       }
-    } else
+    }
       return {
         riskViewDA: RISK_VIEW.DATA_CELESTIA(true),
         riskViewExitWindow: pickWorseRisk(
@@ -1082,7 +1080,7 @@ function getDAProvider(
         mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
         badge: BADGES.DA.CelestiaBlobstream,
       }
-  } else {
+  }
     const DAC = templateVars.discovery.getContractValue<{
       membersCount: number
       requiredSignatures: number
@@ -1097,7 +1095,6 @@ function getDAProvider(
       mode: DA_MODES.TRANSACTION_DATA_COMPRESSED,
       badge: BADGES.DA.DAC,
     }
-  }
 }
 
 function getTrackedTxs(templateVars: OrbitStackConfigCommon): Layer2TxConfig[] {

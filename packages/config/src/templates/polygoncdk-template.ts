@@ -1,5 +1,5 @@
 import { DaUpgradeabilityRisk } from '../common'
-import type { DaTechnology, DacInfo, ProjectCustomDa } from '../types'
+import type { DacInfo, DaTechnology, ProjectCustomDa } from '../types'
 import { DAC } from './dac-template'
 
 interface TemplateVars {

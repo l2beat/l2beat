@@ -3,18 +3,18 @@ import {
   assert,
   // assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
   // formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
   CONTRACTS,
-  DATA_ON_CHAIN,
   DA_BRIDGES,
   DA_LAYERS,
   DA_MODES,
+  DATA_ON_CHAIN,
   REASON_FOR_BEING_OTHER,
   RISK_VIEW,
 } from '../../common'
@@ -305,7 +305,7 @@ export const taiko: ScalingProject = {
   type: 'layer2',
   riskView: {
     stateValidation: {
-      description: `A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.`,
+      description: 'A multi-proof system is used. There are four verifiers available: SGX (Geth), SGX (Reth), SP1 and RISC0. Two of them must be used to prove a block, and SGX (Geth) is mandatory. A block can be proved without providing a ZK proof as SGX (Geth) + SGX (Reth) is a valid combination.',
       sentiment: 'bad',
       value: 'Multi-proofs',
       secondLine: formatExecutionDelay(taikoChainConfig.cooldownWindow),
@@ -401,7 +401,7 @@ export const taiko: ScalingProject = {
       risks: [],
     },
     forceTransactions: {
-      name: `Users can force any transaction`,
+      name: 'Users can force any transaction',
       description: `The system is designed to allow users to propose L2 blocks directly on L1.
         Note that this would require the user to run two of the available proving systems, or forfeit half the liveness bond of ${livenessBond} TAIKO.
         Moreover, users can submit a blob containing a standalone transaction by calling the storeForcedInclusion() function on the ForcedInclusionStore contract. 
@@ -414,7 +414,7 @@ export const taiko: ScalingProject = {
       // TODO: double check exit mechanism
       {
         name: 'Regular exit',
-        description: `The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.`,
+        description: 'The user initiates the withdrawal by submitting a regular transaction on this chain. When the block containing that transaction is finalized the funds become available for withdrawal on L1. Finally the user submits an L1 transaction to claim the funds. This transaction requires a merkle proof.',
         risks: [],
         references: [],
       },

@@ -42,7 +42,7 @@ describe(CelestiaRpcClient.name, () => {
                 txs_results: [],
               },
             }
-          } else {
+          }
             return {
               result: {
                 block: {
@@ -52,7 +52,6 @@ describe(CelestiaRpcClient.name, () => {
                 },
               },
             }
-          }
         },
       })
       const rpc = mockClient({ http })
@@ -98,7 +97,7 @@ describe(CelestiaRpcClient.name, () => {
                 txs_results: [],
               },
             }
-          } else {
+          }
             return {
               result: {
                 block: {
@@ -108,7 +107,6 @@ describe(CelestiaRpcClient.name, () => {
                 },
               },
             }
-          }
         },
       })
       const rpc = mockClient({ http })

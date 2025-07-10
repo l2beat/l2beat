@@ -40,11 +40,10 @@ export class LimitedArrayHandler implements Handler {
       if (result.type === 'error') {
         error = result.error
         break
-      } else {
+      }
         if (result.value !== undefined) {
           values.push(toContractValue(result.value))
         }
-      }
     }
 
     if (!error) {
@@ -54,9 +53,8 @@ export class LimitedArrayHandler implements Handler {
           value: values,
           error: 'Too many values. Update configuration to explore fully',
         }
-      } else {
-        return { field: this.field, value: values }
       }
+        return { field: this.field, value: values }
     }
 
     return { field: this.field, error }

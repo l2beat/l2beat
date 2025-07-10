@@ -6,7 +6,7 @@ import type {
   L2CostPriceRecord,
   L2CostRecord,
 } from '@l2beat/database'
-import { type TrackedTxId, createTrackedTxId } from '@l2beat/shared'
+import { createTrackedTxId, type TrackedTxId } from '@l2beat/shared'
 import {
   EthereumAddress,
   Hash256,

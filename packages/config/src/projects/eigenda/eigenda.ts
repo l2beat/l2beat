@@ -1,4 +1,4 @@
-import { ProjectId, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { formatSeconds, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
@@ -23,19 +23,19 @@ const quorumThresholds = discovery.getContractValue<string>(
   'quorumConfirmationThresholdPercentages',
 )
 
-const quorum1Threshold = parseInt(quorumThresholds.substring(2, 4), 16)
-const quorum2Threshold = parseInt(quorumThresholds.substring(4, 6), 16)
+const quorum1Threshold = Number.parseInt(quorumThresholds.substring(2, 4), 16)
+const quorum2Threshold = Number.parseInt(quorumThresholds.substring(4, 6), 16)
 
 const quorumAdversaryThresholds = discovery.getContractValue<string>(
   'EigenDAServiceManager',
   'quorumAdversaryThresholdPercentages',
 )
 
-const quorum1AdversaryThreshold = parseInt(
+const quorum1AdversaryThreshold = Number.parseInt(
   quorumAdversaryThresholds.substring(2, 4),
   16,
 )
-const quorum2AdversaryThreshold = parseInt(
+const quorum2AdversaryThreshold = Number.parseInt(
   quorumAdversaryThresholds.substring(4, 6),
   16,
 )
@@ -54,7 +54,7 @@ const ejectableStakePercentParam = discovery.getContractValue<string>(
   'EjectionManager',
   'ejectableStakePercent',
 )
-const ejectableStakePercent = parseFloat(ejectableStakePercentParam) / 100
+const ejectableStakePercent = Number.parseFloat(ejectableStakePercentParam) / 100
 
 const operatorSetParamsQuorum1 = discovery.getContractValue<{
   maxOperatorCount: number

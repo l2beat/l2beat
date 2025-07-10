@@ -1,19 +1,18 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { CelestiaApiClient, type HttpClient, RpcClient } from '@l2beat/shared'
-import { BlobClient } from '@l2beat/shared'
+import { BlobClient, CelestiaApiClient, type HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import type { DiscoveryChainConfig } from '../../config/types'
 import { getExplorerClient } from '../../utils/IEtherscanClient'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { DiscoveryCache } from './DiscoveryCache'
+import { getBlockNumberTwoProviders } from './getBlockNumberTwoProviders'
 import { HighLevelProvider } from './HighLevelProvider'
 import type { IProvider, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
+import { MulticallClient } from './multicall/MulticallClient'
 import { ReorgAwareCache } from './ReorgAwareCache'
 import { type AllProviderStats, ProviderStats } from './Stats'
-import { getBlockNumberTwoProviders } from './getBlockNumberTwoProviders'
-import { MulticallClient } from './multicall/MulticallClient'
 
 export class AllProviders {
   private config: Map<

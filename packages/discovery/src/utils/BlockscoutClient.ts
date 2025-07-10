@@ -1,28 +1,24 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
+import type { HttpClient } from '@l2beat/shared'
 import {
   assert,
   EthereumAddress,
   Hash256,
-  UnixTime,
   type json,
+  UnixTime,
 } from '@l2beat/shared-pure'
-
-import type { ContractSource } from './IEtherscanClient'
-
-import type { HttpClient } from '@l2beat/shared'
 import {
   BlockscoutGetBlockNoByTime,
   ContractCreatorAndCreationTxHashResult,
   ContractSourceResult,
   OneTransactionListResult,
+  parseBlockscoutResponse,
   TransactionListResult,
   UnverifiedContractSourceResult,
-  parseBlockscoutResponse,
 } from './BlockscoutModels'
-import type {
+import type { ContractSource, 
   EtherscanUnsupportedMethods,
-  IEtherscanClient,
-} from './IEtherscanClient'
+  IEtherscanClient,} from './IEtherscanClient'
 import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class BlockscoutError extends Error {}
@@ -181,7 +177,7 @@ export class BlockscoutClient implements IEtherscanClient {
     const resp = OneTransactionListResult.parse(response)[0]
     assert(resp)
 
-    return UnixTime(parseInt(resp.timeStamp, 10))
+    return UnixTime(Number.parseInt(resp.timeStamp, 10))
   }
 
   async getAtMost10RecentOutgoingTxs(

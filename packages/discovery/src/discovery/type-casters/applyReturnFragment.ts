@@ -1,11 +1,10 @@
+import { assert } from '@l2beat/shared-pure'
 import type { utils } from 'ethers'
 import type { ContractValue } from '../output/types'
-
-import { assert } from '@l2beat/shared-pure'
 import {
+  getReturnType,
   type TupleType,
   type Type,
-  getReturnType,
 } from '../utils/parseReturnType'
 
 export function applyReturnFragment(
@@ -28,7 +27,7 @@ function reencodeWithReturnType(
     const firstElement = type.elements[0]
     assert(firstElement !== undefined)
     return reencodeType(value, firstElement.type)
-  } else {
+  }
     assert(Array.isArray(value))
     const names = type.elements.map((o) => o.name)
     const entries = names.map((name, i) => {
@@ -40,7 +39,6 @@ function reencodeWithReturnType(
     })
 
     return asObjectIfValidKeys(entries)
-  }
 }
 
 function reencodeType(value: ContractValue, paramType: Type): ContractValue {
@@ -102,7 +100,6 @@ function asObjectIfValidKeys(
 ): ContractValue {
   if (entries.every((e) => e[0] !== undefined)) {
     return Object.fromEntries(entries)
-  } else {
-    return entries.map((e) => e[1] as ContractValue)
   }
+    return entries.map((e) => e[1] as ContractValue)
 }

@@ -275,9 +275,8 @@ function WithExtra({ extra, children }: WithExtraProps) {
         <BytesDisplay value={extra} />
       </div>
     )
-  } else {
-    return <>{children}</>
   }
+    return <>{children}</>
 }
 
 interface DecodedDisplayProps {

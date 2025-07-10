@@ -5,7 +5,7 @@
     "rules": {
       "style": {
         "noDefaultExport": "off",
-        "noParameterAssign": "error",
+
         "useAsConstAssertion": "error",
         "useDefaultParameterLast": "error",
         "useEnumInitializers": "error",

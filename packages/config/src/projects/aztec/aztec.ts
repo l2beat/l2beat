@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   DA_BRIDGES,
@@ -229,7 +229,7 @@ export const aztec: ScalingProject = {
     operator: {
       name: 'No regular operators',
       risks: [],
-      description: `Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.`,
+      description: 'Only specific addresses appointed by the owner are permitted to propose new blocks during regular rollup operations. Since EOL, these operators are not regularly processing the rollup anymore.',
       references: [
         {
           title: 'RollupProcessor.sol#L97 - Etherscan source code',
@@ -276,7 +276,7 @@ export const aztec: ScalingProject = {
       },
       {
         name: 'EOL: Manual withdrawal using Aztec v2 Ejector',
-        description: `EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).`,
+        description: 'EOL: Ownership of the rollup contract is irrevocably renounced and operators are not processing the rollup. Assets in the escrow can be manually withdrawn with the [Aztec v2 Ejector](https://github.com/AztecProtocol/aztec-v2-ejector/).',
         risks: [],
         references: [
           {

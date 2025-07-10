@@ -20,7 +20,7 @@ import type {
 export function getEffectiveConfig(
   tokens: TvsToken[],
   timestamp: number,
-  includeStartingInFuture: boolean = true,
+  includeStartingInFuture = true,
 ): TvsToken[] {
   const tokensInRange = []
 
@@ -85,13 +85,13 @@ function isInRangeRecursive(
     return formula.operator === 'diff'
       ? argumentsInRange.length >= 2
       : argumentsInRange.length >= 1
-  } else if (formula.type === 'value') {
+  }if (formula.type === 'value') {
     return isInRangeRecursive(
       formula.amount,
       timestamp,
       includeStartingInFuture,
     )
-  } else {
+  }
     if (formula.untilTimestamp && formula.untilTimestamp <= timestamp) {
       return false
     }
@@ -105,5 +105,4 @@ function isInRangeRecursive(
     }
 
     return true
-  }
 }

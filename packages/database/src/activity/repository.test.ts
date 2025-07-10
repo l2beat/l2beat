@@ -376,10 +376,10 @@ describeDatabase(ActivityRepository.name, (db) => {
 function record(
   projectId: string,
   timestamp: UnixTime,
-  count: number = 1,
+  count = 1,
   uopsCount: number | null = null,
-  start: number = 1,
-  end: number = 2,
+  start = 1,
+  end = 2,
 ): ActivityRecord {
   return {
     projectId: ProjectId(projectId),

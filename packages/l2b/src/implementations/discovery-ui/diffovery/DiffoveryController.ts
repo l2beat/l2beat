@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
-  type IProvider,
-  SQLiteCache,
   codeIsEOA,
   flattenStartingFrom,
   getChainConfigs,
   getChainFullName,
   getDiscoveryPaths,
+  type IProvider,
+  SQLiteCache,
 } from '@l2beat/discovery'
 import type { ContractSource } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import { HttpClient } from '@l2beat/shared'
@@ -72,7 +72,7 @@ export class DiffoveryController {
         'L2BEAT-UNVERIFIED':
           '// NOTE: Source code for this address has not been verified',
       }
-    } else {
+    }
       const input = Object.entries(source.files)
         .map(([fileName, content]) => ({
           path: fileName,
@@ -91,7 +91,6 @@ export class DiffoveryController {
         includeAll: true,
       })
       return splitFlatSolidity(flat)
-    }
   }
 }
 

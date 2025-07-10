@@ -1,19 +1,16 @@
-import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
-import { RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
-import { ESCROW } from '../../common'
-import {
+import { EthereumAddress, formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { 
   DaEconomicSecurityRisk,
   DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
-} from '../../common'
+  DaUpgradeabilityRisk,ESCROW, RISK_VIEW, UPGRADE_MECHANISM, } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DAC } from '../../templates/dac-template'
 import {
-  WASMVM_OTHER_CONSIDERATIONS,
   getNitroGovernance,
   orbitStackL2,
+  WASMVM_OTHER_CONSIDERATIONS,
 } from '../../templates/orbitStack'
 
 const discovery = new ProjectDiscovery('nova')

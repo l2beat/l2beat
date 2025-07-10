@@ -1,9 +1,7 @@
-import { getChainConfig } from '@l2beat/discovery'
-import {
-  type ExplorerConfig,
-  type IEtherscanClient,
+import { 
+  type ExplorerConfig,getChainConfig, 
   getExplorerClient,
-} from '@l2beat/discovery'
+  type IEtherscanClient,} from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 
@@ -31,7 +29,7 @@ export function getExplorerConfig(
   if (config.chainName !== undefined) {
     const chainConfig = getChainConfig(config.chainName)
     return chainConfig.explorer
-  } else {
+  }
     assert(
       config.explorerType !== 'etherscan' ||
         config.explorerApiKey !== undefined,
@@ -48,5 +46,4 @@ export function getExplorerConfig(
       apiKey: config.explorerApiKey ?? 'YourApiKeyToken',
       chainId: config.explorerChainId ?? 1,
     }
-  }
 }

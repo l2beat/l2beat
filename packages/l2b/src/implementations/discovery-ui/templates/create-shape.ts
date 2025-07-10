@@ -1,7 +1,7 @@
 import {
-  type TemplateService,
   getChainConfig,
   getExplorerClient,
+  type TemplateService,
 } from '@l2beat/discovery'
 import { HttpClient } from '@l2beat/shared'
 import type { EthereumAddress } from '@l2beat/shared-pure'

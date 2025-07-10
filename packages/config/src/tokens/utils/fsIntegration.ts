@@ -1,10 +1,9 @@
-import { readFileSync, writeFileSync } from 'fs'
-import { type ParseError, parse } from 'jsonc-parser'
-
-import path from 'path'
 import { getDiscoveryPaths } from '@l2beat/discovery'
 import type { ChainConverter } from '@l2beat/shared-pure'
+import { readFileSync, writeFileSync } from 'fs'
+import { type ParseError, parse } from 'jsonc-parser'
 import groupBy from 'lodash/groupBy'
+import path from 'path'
 import { type GeneratedToken, Output, Source } from '../../../src/tokens/types'
 import type { ScriptLogger } from './ScriptLogger'
 

@@ -3,10 +3,10 @@ To send messages you need to create a Discord Bot first and give it appropriate 
 https://discord.com/developers/docs/getting-started#configuring-a-bot
 */
 
-import type { HttpClient } from '@l2beat/shared'
-import type { RequestInit } from 'node-fetch'
 
 import { RateLimiter } from '@l2beat/backend-tools'
+import type { HttpClient } from '@l2beat/shared'
+import type { RequestInit } from 'node-fetch'
 import type { DiscordConfig } from '../../config/Config'
 
 export const MAX_MESSAGE_LENGTH = 2000
@@ -32,7 +32,7 @@ export class DiscordClient {
 
   async sendMessage(message: string, channel: Channel) {
     if (message.length > MAX_MESSAGE_LENGTH) {
-      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+      throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
     if (channel === 'PUBLIC' && this.config.publicChannelId) {
       return await this.send(message, this.config.publicChannelId)
@@ -44,7 +44,7 @@ export class DiscordClient {
 
   private async send(message: string, channelId: string) {
     if (message.length > MAX_MESSAGE_LENGTH) {
-      throw new Error(`Discord error: Message size exceeded (2000 characters)`)
+      throw new Error('Discord error: Message size exceeded (2000 characters)')
     }
 
     const endpoint = `/channels/${channelId}/messages`

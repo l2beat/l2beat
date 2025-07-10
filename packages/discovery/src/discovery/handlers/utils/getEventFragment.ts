@@ -8,7 +8,7 @@ export function getEventFragment(
 ): utils.EventFragment {
   if (event.includes(' ')) {
     return toEventFragment(event)
-  } else {
+  }
     const fragment = abi
       .filter((x) => x.startsWith(`event ${event}(`))
       .map(toEventFragment)[0]
@@ -17,5 +17,4 @@ export function getEventFragment(
       throw new Error(`Cannot find a matching event for ${event}`)
     }
     return fragment
-  }
 }

@@ -1,4 +1,4 @@
-import { UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { notUndefined, UnixTime } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
 import type { QueryBuilder } from '../kysely'
 import type { DB } from '../kysely/generated/types'

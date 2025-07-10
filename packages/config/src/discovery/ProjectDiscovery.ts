@@ -6,17 +6,17 @@ import type {
 } from '@l2beat/discovery'
 import {
   ConfigReader,
-  RolePermissionEntries,
   getChainShortName,
   getDiscoveryPaths,
+  RolePermissionEntries,
 } from '@l2beat/discovery'
 import {
   assert,
   ChainSpecificAddress,
   EthereumAddress,
   type LegacyTokenBridgedUsing,
-  UnixTime,
   notUndefined,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import isString from 'lodash/isString'
@@ -33,10 +33,10 @@ import type {
   ReferenceLink,
   SharedEscrow,
 } from '../types'
-import type { PermissionRegistry } from './PermissionRegistry'
-import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
 import { RoleDescriptions } from './descriptions'
 import { get$Admins, get$Implementations, toAddressArray } from './extractors'
+import type { PermissionRegistry } from './PermissionRegistry'
+import { PermissionsFromDiscovery } from './PermissionsFromDiscovery'
 import {
   formatPermissionCondition,
   formatPermissionDelay,
@@ -408,7 +408,7 @@ export class ProjectDiscovery {
     for (const account of accounts) {
       assert(
         isString(account) && EthereumAddress.check(account),
-        `Values must be Ethereum addresses`,
+        'Values must be Ethereum addresses',
       )
       const address = EthereumAddress(account)
       const isEOA = this.isEOA(address)
@@ -535,7 +535,7 @@ export class ProjectDiscovery {
     contractIdentifier: string,
     index: number,
   ): T {
-    return this.getContractValue<T[]>(contractIdentifier, `constructorArgs`)[
+    return this.getContractValue<T[]>(contractIdentifier, 'constructorArgs')[
       index
     ]
   }
@@ -807,7 +807,7 @@ export class ProjectDiscovery {
 
   formatViaPath(
     path: ResolvedPermissionPath,
-    skipName: boolean = false,
+    skipName = false,
   ): string {
     const name =
       this.getContractByChainSpecificAddress(path.address)?.name ??
@@ -826,7 +826,7 @@ export class ProjectDiscovery {
 
   describeContractOrEoa(
     contractOrEoa: EntryParameters,
-    describeRoles: boolean = true,
+    describeRoles = true,
   ): string {
     return [
       contractOrEoa.description,

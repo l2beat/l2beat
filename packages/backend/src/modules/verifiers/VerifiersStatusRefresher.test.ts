@@ -1,5 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { ChainConfig, OnchainVerifier } from '@l2beat/config'
+import type { Database } from '@l2beat/database'
 import {
   type BlockscoutInternalTransaction,
   BlockscoutV2Client,
@@ -8,8 +9,6 @@ import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import type { Peripherals } from '../../peripherals/Peripherals'
-
-import type { Database } from '@l2beat/database'
 import type { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,

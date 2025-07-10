@@ -2,9 +2,9 @@ import type { EntryParameters } from '@l2beat/discovery'
 import {
   assert,
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import { formatEther } from 'ethers/lib/utils'
 import {
@@ -16,10 +16,10 @@ import {
   EXITS,
   FORCE_TRANSACTIONS,
   OPERATOR,
-  RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
   pickWorseRisk,
+  RISK_VIEW,
   sumRisk,
+  TECHNOLOGY_DATA_AVAILABILITY,
 } from '../common'
 import { BADGES } from '../common/badges'
 import { EXPLORER_URLS } from '../common/explorerUrls'
@@ -247,7 +247,7 @@ function opStackCommon(
       (templateVars.hasSuperchainScUpgrades
         ? ({
             category: 'Funds can be stolen if',
-            text: `a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.`,
+            text: 'a contract receives a malicious code upgrade. Both regular and emergency upgrades must be approved by both the Security Council and the Foundation. There is no delay on regular upgrades.',
           } satisfies ProjectRisk)
         : CONTRACTS.UPGRADE_NO_DELAY_RISK),
   ]
@@ -678,7 +678,7 @@ function describeOPFP({
       },
       {
         title: 'Challenges',
-        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${gameMaxDepth}, and reaching it therefore requires a cumulative stake of ${parseFloat(
+        description: `Challenges are opened to disprove invalid state roots using bisection games. Each bisection move requires a stake that increases expontentially with the depth of the bisection, with a factor of ${exponentialBondsFactor}. The maximum depth is ${gameMaxDepth}, and reaching it therefore requires a cumulative stake of ${Number.parseFloat(
           formatEther(permissionlessGameFullCost),
         ).toFixed(
           2,
@@ -753,7 +753,7 @@ function getRiskViewStateValidation(
         ...RISK_VIEW.STATE_FP_INT,
         description:
           RISK_VIEW.STATE_FP_INT.description +
-          ` Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.`,
+          ' Only one entity is currently allowed to propose and submit challenges, as only permissioned games are currently allowed.',
         sentiment: 'bad',
         secondLine: formatChallengePeriod(getChallengePeriod(templateVars)),
       }
@@ -1341,11 +1341,10 @@ function getFraudProofType(templateVars: OpStackConfigCommon): FraudProofType {
 
   if (respectedGameType === 0) {
     return 'Permissionless'
-  } else if (respectedGameType === 1) {
+  }if (respectedGameType === 1) {
     return 'Permissioned'
-  } else {
-    throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
   }
+    throw new Error(`Unexpected respectedGameType = ${respectedGameType}`)
 }
 
 function isPartOfSuperchain(templateVars: OpStackConfigCommon): boolean {

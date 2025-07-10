@@ -7,15 +7,14 @@ import type {
   Analysis,
 } from '../analysis/AddressAnalyzer'
 import type { StructureConfig } from '../config/StructureConfig'
-import { makeEntryStructureConfig } from '../config/structureUtils'
-import { buildSharedModuleIndex } from '../config/structureUtils'
+import { buildSharedModuleIndex, makeEntryStructureConfig } from '../config/structureUtils'
 import type { IProvider } from '../provider/IProvider'
 import { gatherReachableAddresses } from './gatherReachableAddresses'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 import { shouldSkip } from './shouldSkip'
 
 export class DiscoveryEngine {
-  private objectCount: number = 0
+  private objectCount = 0
 
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -164,7 +163,7 @@ export class DiscoveryEngine {
         logs.push(chalk.red(`E ${key} - ${value}`))
       }
       for (const [i, log] of logs.entries()) {
-        const prefix = i === logs.length - 1 ? `└─` : `├─`
+        const prefix = i === logs.length - 1 ? '└─' : '├─'
         const indent = ' '.repeat(6)
         this.logger.info(`${indent}${chalk.gray(prefix)} ${log}`)
       }

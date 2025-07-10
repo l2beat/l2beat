@@ -1,7 +1,6 @@
+import { createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../test/database'
 import type { LivenessRecord } from './entity'
 import { LivenessRepository } from './repository'

@@ -1,8 +1,7 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
-import type { ContractValue } from '../output/types'
-
 import { codeIsEIP7702, codeIsEOA } from '../analysis/codeIsEOA'
 import type { ManualProxyType } from '../config/StructureConfig'
+import type { ContractValue } from '../output/types'
 import type { ContractDeployment, IProvider } from '../provider/IProvider'
 import { get$Implementations } from '../utils/extractors'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
@@ -21,6 +20,7 @@ import { detectZeppelinOSProxy } from './auto/ZeppelinOSProxy'
 import { getCallImplementationProxy } from './manual/CallImplementationProxy'
 import { getEternalStorageProxy } from './manual/EthernalStorageProxy'
 import { getEverclearProxy } from './manual/EverclearProxy'
+import { getImmutableProxy } from './manual/immutableProxy'
 import { getLightLinkProxy } from './manual/LightLinkProxy'
 import { getNewArbitrumProxy } from './manual/NewArbitrumProxy'
 import { getOpticsBeaconProxy } from './manual/OpticsBeaconProxy'
@@ -28,7 +28,6 @@ import { getPolygonExtensionProxy } from './manual/PolygonExtensionProxy'
 import { gatTaikoForkProxy } from './manual/TaikoForkProxy'
 import { getZkSpaceProxy } from './manual/ZkSpaceProxy'
 import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
-import { getImmutableProxy } from './manual/immutableProxy'
 import type { ProxyDetails, ProxyResult } from './types'
 
 type Detector = (
@@ -108,9 +107,8 @@ export class ProxyDetector {
             $implementation: implementation.toString(),
           },
         }
-      } else {
-        return { type: 'EOA', values: {} }
       }
+        return { type: 'EOA', values: {} }
     }
   }
 

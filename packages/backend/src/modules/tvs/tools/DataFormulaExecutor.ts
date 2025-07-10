@@ -12,9 +12,9 @@ import { assert, CoingeckoId, type UnixTime } from '@l2beat/shared-pure'
 import {
   type AmountConfig,
   type CirculatingSupplyAmountConfig,
+  isOnchainAmountConfig,
   type OnchainAmountConfig,
   type PriceConfig,
-  isOnchainAmountConfig,
 } from '../types'
 import type { DBStorage } from './DBStorage'
 import type { LocalStorage } from './LocalStorage'
@@ -104,7 +104,7 @@ export class DataFormulaExecutor {
     )
 
     if (pricesToFetch.length > 0 || circulatingToFetch.length > 0) {
-      this.logger.info(`Fetching prices and circulating supplies...`)
+      this.logger.info('Fetching prices and circulating supplies...')
       this.logger.info(`\t prices (${pricesToFetch.length})`)
       this.logger.info(`\t circulating supplies (${circulatingToFetch.length})`)
 
@@ -123,7 +123,7 @@ export class DataFormulaExecutor {
     amounts: AmountConfig[],
   ) {
     assert(this.dbStorage)
-    this.logger.info(`Preloading prices and amounts from DB`)
+    this.logger.info('Preloading prices and amounts from DB')
 
     const storedPrices = await Promise.all(
       prices.map((price) => this.localStorage.getPrice(price.id, timestamp)),
@@ -348,7 +348,7 @@ export class DataFormulaExecutor {
           }
         })(),
       ]
-    } else {
+    }
       const pricesToFetch: PriceConfig[] = []
 
       await Promise.all(
@@ -378,7 +378,6 @@ export class DataFormulaExecutor {
         const v = await this.fetchPrice(price, timestamp)
         await this.localStorage.writePrice(price.id, timestamp, v)
       })
-    }
   }
 
   private async processCirculatingSupplies(
@@ -417,7 +416,7 @@ export class DataFormulaExecutor {
           }
         })(),
       ]
-    } else {
+    }
       const amountsToFetch: AmountConfig[] = []
 
       await Promise.all(
@@ -448,7 +447,6 @@ export class DataFormulaExecutor {
         const value = await this.fetchCirculatingSupply(amount, timestamp)
         await this.localStorage.writeAmount(amount.id, timestamp, value)
       })
-    }
   }
 
   private async fetchBlockNumber(

@@ -1,15 +1,14 @@
+import type { Logger } from '@l2beat/backend-tools'
+import type { Database } from '@l2beat/database'
 import {
   type DiscoveryChainConfig,
   type DiscoveryPaths,
+  getDiscoveryEngine,
   type DiscoveryCache as IDiscoveryCache,
   InMemoryCache,
   LeveledCache,
   TemplateService,
-  getDiscoveryEngine,
 } from '@l2beat/discovery'
-
-import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
 import type { HttpClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import type { Peripherals } from '../../peripherals/Peripherals'
@@ -59,9 +58,8 @@ export function createDiscoveryRunner(
 function decodeCacheUri(uri: string, database: Database): IDiscoveryCache {
   if (uri === 'postgres') {
     return new DatabaseCache(database)
-  } else if (uri.startsWith('redis')) {
+  }if (uri.startsWith('redis')) {
     return new RedisCache(uri)
-  } else {
-    assert(false, 'unsupported cache URI')
   }
+    assert(false, 'unsupported cache URI')
 }

@@ -241,7 +241,7 @@ describe(ManagedMultiIndexer.name, () => {
     it('finds range correctly for a value before the start', () => {
       const fromBeforeStart = 10
       expect(indexer.findRange(fromBeforeStart)).toEqual({
-        from: -Infinity,
+        from: Number.NEGATIVE_INFINITY,
         to: 99,
         configurations: [],
       })
@@ -278,7 +278,7 @@ describe(ManagedMultiIndexer.name, () => {
       const fromAfterStart = 250
       expect(indexer.findRange(fromAfterStart)).toEqual({
         from: 201,
-        to: Infinity,
+        to: Number.POSITIVE_INFINITY,
         configurations: [],
       })
     })

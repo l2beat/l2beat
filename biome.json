@@ -70,6 +70,7 @@
         "useForOf": "error",
         "noDefaultExport": "error",
         "noNamespace": "error",
+        "noParameterAssign": "off",
         "noNonNullAssertion": "error",
         "useAsConstAssertion": "error",
         "useLiteralEnumMembers": "error",

@@ -2,7 +2,7 @@ import { clsx } from 'clsx'
 import { useReducer } from 'react'
 import { useNavigate } from 'react-router'
 import { getQueryParams } from './api'
-import { INITIAL_STATE, SUPPORTED_CHAINS, reducer } from './state'
+import { INITIAL_STATE, reducer, SUPPORTED_CHAINS } from './state'
 
 export function Form() {
   const navigate = useNavigate()
@@ -116,7 +116,7 @@ export function Form() {
             id="chainId"
             value={state.values.chainId}
             onChange={(e) =>
-              dispatch({ type: 'set chainId', value: parseInt(e.target.value) })
+              dispatch({ type: 'set chainId', value: Number.parseInt(e.target.value) })
             }
           >
             {SUPPORTED_CHAINS.map((c) => (
@@ -127,7 +127,7 @@ export function Form() {
             <option value={0}>Other / Unknown</option>
           </select>
         </div>
-        <div className="mb-4 flex h-5 items-center gap-2 text-sm before:h-px before:w-full before:bg-zinc-600"></div>
+        <div className="mb-4 flex h-5 items-center gap-2 text-sm before:h-px before:w-full before:bg-zinc-600" />
         <input
           type="submit"
           value={state.submitting ? 'Decoding' : 'Decode'}
@@ -148,7 +148,7 @@ function hexToBytes(hex: string): Uint8Array {
 
   const bytes = new Uint8Array(cleanHex.length / 2)
   for (let i = 0; i < cleanHex.length; i += 2) {
-    bytes[i / 2] = parseInt(cleanHex.substring(i, i + 2), 16)
+    bytes[i / 2] = Number.parseInt(cleanHex.substring(i, i + 2), 16)
   }
   return bytes
 }

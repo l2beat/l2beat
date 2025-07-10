@@ -1,6 +1,5 @@
-import { expect, mockObject } from 'earl'
-
 import type { TrackedTxSharedBridgeConfig } from '@l2beat/shared'
+import { expect, mockObject } from 'earl'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,

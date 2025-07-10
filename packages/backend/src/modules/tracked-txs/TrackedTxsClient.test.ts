@@ -1,10 +1,3 @@
-import { readFileSync } from 'fs'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockFn, mockObject } from 'earl'
-
-import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { TrackedTxsClient } from './TrackedTxsClient'
-
 import type {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -12,8 +5,12 @@ import type {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { expect, mockFn, mockObject } from 'earl'
+import { readFileSync } from 'fs'
 import type { TrackedTxProject } from '../../config/Config'
+import type { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   agglayerSharedBridgeChainId,
   agglayerSharedBridgeVerifyBatchesInput,
@@ -25,6 +22,7 @@ import {
   elasticChainSharedBridgeCommitBatchesSignature,
 } from '../../test/sharedBridge'
 import type { Configuration } from '../../tools/uif/multi/types'
+import { TrackedTxsClient } from './TrackedTxsClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
@@ -109,7 +107,7 @@ const ADDRESS_3 = EthereumAddress.random()
 const TX_HASH = '0x123456'
 const BLOCK = 1
 
-const inputFile = `src/test/sharpVerifierInput.txt`
+const inputFile = 'src/test/sharpVerifierInput.txt'
 const sharpInput = readFileSync(inputFile, 'utf-8')
 const paradexProgramHash =
   '3258367057337572248818716706664617507069572185152472699066582725377748079373'

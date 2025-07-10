@@ -1,15 +1,15 @@
-import * as fs from 'fs'
 import {
   type Env,
-  LogFormatterPretty,
-  type LogLevel,
-  Logger,
   getEnv,
+  LogFormatterPretty,
+  Logger,
+  type LogLevel,
 } from '@l2beat/backend-tools'
 import { ProjectService, type TvsToken } from '@l2beat/config'
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
 import { assert, CoingeckoId, ProjectId } from '@l2beat/shared-pure'
 import { command, run } from 'cmd-ts'
+import * as fs from 'fs'
 
 const cmd = command({
   name: 'add-icon-url',

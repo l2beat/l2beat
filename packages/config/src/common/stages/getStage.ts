@@ -83,7 +83,7 @@ const getBlueprint = (opts?: GetStageOptions) =>
       },
       items: {
         usersCanExitWithoutCooperation: {
-          positive: `Users are able to exit without the help of the permissioned operators.`,
+          positive: 'Users are able to exit without the help of the permissioned operators.',
           negative: `Users' withdrawals can be censored by the permissioned operators.`,
         },
         usersHave7DaysToExit: {

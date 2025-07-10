@@ -1,8 +1,8 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
@@ -11,11 +11,10 @@ import {
   DA_MODES,
   EXITS,
   FORCE_TRANSACTIONS,
-  OPERATOR,
+  OPERATOR,REASON_FOR_BEING_OTHER, 
   RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
+  TECHNOLOGY_DATA_AVAILABILITY
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
 import { BADGES } from '../../common/badges'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'

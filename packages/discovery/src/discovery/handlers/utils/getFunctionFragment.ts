@@ -13,7 +13,7 @@ export function getFunctionFragment(
       throw new Error('Invalid method abi')
     }
     return fragment
-  } else {
+  }
     const fragment = abi
       .filter((x) => x.startsWith(`function ${method}`))
       .map(toFunctionFragment)
@@ -22,5 +22,4 @@ export function getFunctionFragment(
       throw new Error(`Cannot find a matching method for ${method}`)
     }
     return fragment
-  }
 }

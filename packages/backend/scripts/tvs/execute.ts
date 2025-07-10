@@ -1,10 +1,9 @@
-import * as fs from 'fs'
 import {
   type Env,
-  LogFormatterPretty,
-  type LogLevel,
-  Logger,
   getEnv,
+  LogFormatterPretty,
+  Logger,
+  type LogLevel,
 } from '@l2beat/backend-tools'
 import { ProjectService, type TvsToken } from '@l2beat/config'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
@@ -19,9 +18,10 @@ import {
   run,
   string,
 } from 'cmd-ts'
+import * as fs from 'fs'
+import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
 import { LocalExecutor } from '../../src/modules/tvs/tools/LocalExecutor'
 import { LocalStorage } from '../../src/modules/tvs/tools/LocalStorage'
-import { getEffectiveConfig } from '../../src/modules/tvs/tools/getEffectiveConfig'
 import type {
   TokenValue,
   TvsBreakdown,
@@ -81,7 +81,7 @@ const cmd = command({
 
       logger.info(`Found ${projects.length} TVS projects`)
 
-      logger.info(`Executing TVS config for projects`)
+      logger.info('Executing TVS config for projects')
       const tvs = await localExecutor.getTvs(
         projects
           .filter((p) => p.tvsConfig.length > 0)
@@ -133,7 +133,7 @@ const cmd = command({
       logger.info(
         `TVS for bridges ${toDollarString(projectBreakdown.bridgesTvs)}`,
       )
-      logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+      logger.info('Go to ./scripts/tvs/breakdown.json for more details')
 
       fs.writeFileSync(
         './scripts/tvs/breakdown.json',
@@ -193,7 +193,7 @@ const cmd = command({
       )
 
       logger.info(`TVS: ${tvsBreakdown.tvs}`)
-      logger.info(`Go to ./scripts/tvs/breakdown.json for more details`)
+      logger.info('Go to ./scripts/tvs/breakdown.json for more details')
 
       fs.writeFileSync(
         './scripts/tvs/breakdown.json',
@@ -430,14 +430,13 @@ function initLogger(env: Env) {
 function toDollarString(value: number) {
   if (value > 1e9) {
     return `$${(value / 1e9).toFixed(2)}B`
-  } else if (value > 1e6) {
+  }if (value > 1e6) {
     return `$${(value / 1e6).toFixed(2)}M`
-  } else {
+  }
     return `$${value.toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })}`
-  }
 }
 
 export function formatNumberWithCommas(value: number, precision = 2): string {

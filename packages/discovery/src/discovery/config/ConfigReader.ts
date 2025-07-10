@@ -1,14 +1,14 @@
-import { createHash } from 'crypto'
-import { existsSync, readFileSync, readdirSync } from 'fs'
-import path from 'path'
 import {
   assert,
-  Hash160,
   formatAsciiBorder,
+  Hash160,
   type json,
 } from '@l2beat/shared-pure'
 import { v } from '@l2beat/validate'
+import { createHash } from 'crypto'
+import { existsSync, readdirSync, readFileSync } from 'fs'
 import merge from 'lodash/merge'
+import path from 'path'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
 import type { DiscoveryOutput } from '../output/types'
 import { readJsonc } from '../utils/readJsonc'

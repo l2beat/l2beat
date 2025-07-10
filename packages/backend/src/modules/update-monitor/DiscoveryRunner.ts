@@ -5,18 +5,18 @@ import {
   type Analysis,
   ConfigReader,
   type ConfigRegistry,
+  combinePermissionsIntoDiscovery,
   type DiscoveryBlockNumbers,
   type DiscoveryEngine,
   type DiscoveryOutput,
   DiscoveryRegistry,
-  ProviderMeasurement,
-  type ProviderStats,
-  type TemplateService,
-  combinePermissionsIntoDiscovery,
   flattenDiscoveredSources,
   getDependenciesToDiscoverForProject,
   getDiscoveryPaths,
   modelPermissions,
+  ProviderMeasurement,
+  type ProviderStats,
+  type TemplateService,
   toRawDiscoveryOutput,
 } from '@l2beat/discovery'
 import { assert, withoutUndefinedKeys } from '@l2beat/shared-pure'
@@ -54,7 +54,7 @@ export class DiscoveryRunner {
     projectName: string,
     projectChain: string,
     discoveryBlockNumber: number,
-    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers = {},
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     logger: Logger,
     configReader?: ConfigReader,
   ): Promise<DiscoveryRunResult> {
@@ -73,9 +73,9 @@ export class DiscoveryRunner {
         projectName,
         configReader,
       )
-      logger.info(`Dependent project:`, toDiscover)
+      logger.info('Dependent project:', toDiscover)
       logger.info(
-        `Requested dependent block numbers:`,
+        'Requested dependent block numbers:',
         dependentDiscoveries ?? 'none',
       )
     } else {
@@ -133,7 +133,7 @@ export class DiscoveryRunner {
 
   private async discoverMany(
     toDiscover: { project: string; chain: string }[],
-    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers = {},
+    dependentDiscoveries: 'useCurrentBlockNumber' | DiscoveryBlockNumbers,
     configReader: ConfigReader,
     logger: Logger,
   ) {

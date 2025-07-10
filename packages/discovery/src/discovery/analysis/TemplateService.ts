@@ -1,26 +1,26 @@
+import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import type { Parser } from '@l2beat/validate'
 import {
   existsSync,
   mkdirSync,
-  readFileSync,
   readdirSync,
+  readFileSync,
   writeFileSync,
 } from 'fs'
 import path, { join } from 'path'
-import { assert, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import type { Parser } from '@l2beat/validate'
 import {
   combineImplementationHashes,
   contractFlatteningHash,
   getHashForMatchingFromSources,
 } from '../../flatten/utils'
-import type { ContractSource } from '../../utils/IEtherscanClient'
 import { fileExistsCaseSensitive } from '../../utils/fsLayer'
+import type { ContractSource } from '../../utils/IEtherscanClient'
 import { ColorContract } from '../config/ColorConfig'
 import type { ConfigRegistry } from '../config/ConfigRegistry'
+import { hashJsonStable } from '../config/hashJsonStable'
 import { ContractPermission } from '../config/PermissionConfig'
 import type { ShapeSchema } from '../config/ShapeSchema'
 import { StructureContract } from '../config/StructureConfig'
-import { hashJsonStable } from '../config/hashJsonStable'
 import { toPrettyJson } from '../output/toPrettyJson'
 import type { DiscoveryOutput } from '../output/types'
 import type { ContractSources } from '../source/SourceCodeService'

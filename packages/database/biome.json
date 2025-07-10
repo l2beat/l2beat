@@ -7,7 +7,6 @@
   "linter": {
     "rules": {
       "style": {
-        "noParameterAssign": "error",
         "useAsConstAssertion": "error",
         "useDefaultParameterLast": "error",
         "useEnumInitializers": "error",

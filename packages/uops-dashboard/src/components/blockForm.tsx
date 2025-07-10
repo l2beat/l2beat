@@ -1,3 +1,5 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
 import type {
   ApiError,
@@ -5,8 +7,6 @@ import type {
   CountedBlock,
   UserOperationsApiRequest,
 } from '@/types'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
 import { BlockNumberInput } from './blockNumberInput'
 import { ChainDropdown } from './chainDropdown'
 import { ErrorModal } from './errorModal'

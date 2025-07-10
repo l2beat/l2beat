@@ -12,11 +12,10 @@ export async function getProxyGovernance(
 ): Promise<EthereumAddress[]> {
   if (proxyVersion.major === 5) {
     return await getProxyGovernanceV5(provider, address)
-  } else if (proxyVersion.major <= 4) {
+  }if (proxyVersion.major <= 4) {
     return await getProxyGovernanceV4Down(provider, address)
-  } else {
-    throw new Error('Unsupported proxy version')
   }
+    throw new Error('Unsupported proxy version')
 }
 
 async function getProxyGovernanceV5(

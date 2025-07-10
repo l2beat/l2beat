@@ -1,22 +1,20 @@
 import {
   EthereumAddress,
+  formatSeconds,
   ProjectId,
   UnixTime,
-  formatSeconds,
 } from '@l2beat/shared-pure'
 import {
   CONTRACTS,
   DA_BRIDGES,
   DA_LAYERS,
-  DA_MODES,
+  DA_MODES,ESCROW, 
   EXITS,
   FORCE_TRANSACTIONS,
-  FRONTRUNNING_RISK,
+  FRONTRUNNING_RISK,REASON_FOR_BEING_OTHER, 
   RISK_VIEW,
-  TECHNOLOGY_DATA_AVAILABILITY,
+  TECHNOLOGY_DATA_AVAILABILITY
 } from '../../common'
-import { REASON_FOR_BEING_OTHER } from '../../common'
-import { ESCROW } from '../../common'
 import { BADGES } from '../../common/badges'
 import { formatChallengePeriod } from '../../common/formatDelays'
 import { getStage } from '../../common/stages/getStage'

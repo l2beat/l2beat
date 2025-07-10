@@ -1,15 +1,15 @@
-import { existsSync, readFileSync, readdirSync } from 'fs'
-import { join } from 'path'
-import { isDeepStrictEqual } from 'util'
 import {
   type ConfigReader,
-  type DiscoveryPaths,
   combineImplementationHashes,
+  type DiscoveryPaths,
   flatteningHash,
   get$Implementations,
   getChainFullName,
   getChainShortName,
 } from '@l2beat/discovery'
+import { existsSync, readdirSync, readFileSync } from 'fs'
+import { join } from 'path'
+import { isDeepStrictEqual } from 'util'
 import {
   getAllProjectDiscoveries,
   getProjectDiscoveries,
@@ -73,7 +73,7 @@ export function getCode(
   configReader: ConfigReader,
   project: string,
   address: string,
-  checkFlatCode: boolean = false,
+  checkFlatCode = false,
 ): ApiCodeResponse {
   const { entryName, codePaths } = getCodePaths(
     paths,
@@ -178,7 +178,7 @@ export function getCodePaths(
           { name: `${entry.name}.sol`, path: join(root, name + '.sol') },
         ],
       }
-    } else {
+    }
       const dir = readdirSync(join(root, name))
       const codePaths = dir
         .map((file) => ({
@@ -190,7 +190,6 @@ export function getCodePaths(
         entryName: entry.name,
         codePaths,
       }
-    }
   }
 
   return { entryName: undefined, codePaths: [] }
@@ -208,5 +207,5 @@ function fileNameToOrder(name: string) {
   if (ending === 'p') {
     return 0
   }
-  return /^\d+$/.test(ending) ? parseInt(ending) : 2
+  return /^\d+$/.test(ending) ? Number.parseInt(ending) : 2
 }

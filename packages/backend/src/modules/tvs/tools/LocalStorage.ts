@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, writeFileSync } from 'fs'
 import type { UnixTime } from '@l2beat/shared-pure'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import type { DataStorage } from './DataStorage'
 
 interface LocalStorageJSON {
@@ -112,14 +112,13 @@ export class LocalStorage implements DataStorage {
           ? new Map(Object.entries(data.addresses).map(([k, v]) => [k, v]))
           : new Map(),
       }
-    } else {
+    }
       return {
         prices: new Map(),
         amounts: new Map(),
         blocks: new Map(),
         addresses: new Map(),
       }
-    }
   }
 
   private saveToFile() {

@@ -118,7 +118,7 @@ export function MonitorApp() {
         <div ref={sentinelRef} className="flex justify-center py-4">
           {isLoadingMore ? (
             <div className="flex items-center gap-2">
-              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600"></div>
+              <div className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-blue-600" />
               <span className="text-gray-600 text-sm">Loading more...</span>
             </div>
           ) : (

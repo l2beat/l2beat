@@ -1,11 +1,11 @@
-import { CoingeckoId, UnixTime, getHourlyTimestamps } from '@l2beat/shared-pure'
+import { CoingeckoId, getHourlyTimestamps, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import type { CoingeckoClient } from '../../clients'
 import {
-  CoingeckoQueryService,
-  MAX_DAYS_FOR_HOURLY_PRECISION,
   approximateCirculatingSupply,
+  CoingeckoQueryService,
   generateRangesToCallHourly,
+  MAX_DAYS_FOR_HOURLY_PRECISION,
   pickClosestValues,
 } from './CoingeckoQueryService'
 

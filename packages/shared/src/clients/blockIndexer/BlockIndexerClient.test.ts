@@ -47,7 +47,7 @@ describe(BlockIndexerClient.name, () => {
           .resolvesToOnce({
             status: '1',
             message: 'NOTOK',
-            result: `Error! No closest block found`,
+            result: 'Error! No closest block found',
           })
           .resolvesToOnce({
             status: '1',
@@ -83,14 +83,14 @@ describe(BlockIndexerClient.name, () => {
       const gatewayError = {
         status: '1',
         message: 'NOTOK',
-        result: `Gateway error`,
+        result: 'Gateway error',
       }
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()
           .resolvesToOnce({
             status: '1',
             message: 'NOTOK',
-            result: `Error! No closest block found`,
+            result: 'Error! No closest block found',
           })
           .resolvesToOnce(gatewayError),
       })
@@ -125,7 +125,7 @@ describe(BlockIndexerClient.name, () => {
           .resolvesToOnce({
             status: '1',
             message: 'NOTOK',
-            result: `Error! No closest block found`,
+            result: 'Error! No closest block found',
           })
           .throwsOnce(errorString),
       })
@@ -159,7 +159,7 @@ describe(BlockIndexerClient.name, () => {
           .resolvesToOnce({
             status: '1',
             message: 'NOTOK',
-            result: `Error! No closest block found`,
+            result: 'Error! No closest block found',
           })
           .throwsOnce(1234),
       })
@@ -191,7 +191,7 @@ describe(BlockIndexerClient.name, () => {
       const NOT_OK = {
         status: '1',
         message: 'NOTOK',
-        result: `Error! No closest block found`,
+        result: 'Error! No closest block found',
       }
       const httpClient = mockObject<HttpClient>({
         fetch: mockFn()

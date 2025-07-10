@@ -1,13 +1,10 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
-
-import { DA_LAYERS, REASON_FOR_BEING_OTHER } from '../../common'
-import {
+import { formatSeconds, UnixTime } from '@l2beat/shared-pure'
+import { DA_LAYERS, 
   DaCommitteeSecurityRisk,
   DaEconomicSecurityRisk,
   DaFraudDetectionRisk,
   DaRelayerFailureRisk,
-  DaUpgradeabilityRisk,
-} from '../../common'
+  DaUpgradeabilityRisk,REASON_FOR_BEING_OTHER, } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { DACHALLENGES_DA_PROVIDER, opStackL2 } from '../../templates/opStack'
@@ -111,11 +108,11 @@ However, there is a mechanism that allows users to challenge unavailability of d
       risks: [
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability commitment and there are no challengers.`,
+          text: 'the sequencer posts an invalid data availability commitment and there are no challengers.',
         },
         {
           category: 'Funds can be lost if',
-          text: `the sequencer posts an invalid data availability commitment, and he is able to outspend the challengers.`,
+          text: 'the sequencer posts an invalid data availability commitment, and he is able to outspend the challengers.',
         },
       ],
     },
