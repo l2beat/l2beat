@@ -69,8 +69,8 @@ export const blast: ScalingProject = opStackL2({
         ...EXITS.FORCED_MESSAGING('all-messages'),
         references: [
           {
-            title: 'Forced withdrawal from an OP Stack blockchain',
-            url: 'https://stack.optimism.io/docs/security/forced-withdrawal/',
+            title: 'Forced transaction from an OP Stack blockchain',
+            url: 'https://docs.optimism.io/stack/transactions/forced-transaction',
           },
         ],
       },
