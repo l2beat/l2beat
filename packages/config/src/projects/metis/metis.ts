@@ -175,7 +175,7 @@ export const metis: ScalingProject = {
         ],
         query: {
           formula: 'transfer',
-          from: EthereumAddress(blobBatcher), // TODO(radomski): For some reason it does not have the chain prefix
+          from: rawAddress(ChainSpecificAddress(blobBatcher)),
           to: rawAddress(ChainSpecificAddress(inboxAddress)),
           sinceTimestamp: UnixTime(1747234799),
         },
