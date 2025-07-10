@@ -1,13 +1,13 @@
 Generated with discovered.json: 0xab188f78d2503d077764ec88a1786860064d36b4
 
-# Diff at Thu, 10 Jul 2025 15:32:02 GMT:
+# Diff at Thu, 10 Jul 2025 15:33:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - current block number: 356266883
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+add EUTBL token.
 
 ## Initial discovery
 
