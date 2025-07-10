@@ -423,13 +423,14 @@ export class ProjectDiscovery {
       assert(isNonNullable(entry), `Could not find ${address} in discovery`)
       const isVerified = isEntryVerified(entry)
 
-      const name = `${address.slice(0, 6)}…${address.slice(38, 42)}`
+      const raw = rawAddress(address)
+      const name = `${raw.slice(0, 6)}…${raw.slice(38, 42)}`
       const explorerUrl = EXPLORER_URLS[this.chain]
       assert(
         isNonNullable(explorerUrl),
         `Failed to find explorer url for chain [${this.chain}]`,
       )
-      const url = `${explorerUrl}/address/${address}`
+      const url = `${explorerUrl}/address/${raw}`
 
       result.push({ address: rawAddress(address), type, isVerified, name, url })
     }
@@ -843,10 +844,12 @@ export class ProjectDiscovery {
 
   replaceAddressesWithNames(s: string): string {
     const ethereumAddressRegex = /\b(?:[a-zA-Z0-9]+:)?0x[a-fA-F0-9]{40}\b/g
-    const addresses = s.match(ethereumAddressRegex) ?? []
+    const addresses = (s.match(ethereumAddressRegex) ?? []).map(
+      ChainSpecificAddress,
+    )
 
     for (const address of addresses) {
-      const contract = this.getContractByAddress(ChainSpecificAddress(address))
+      const contract = this.getContractByAddress(address)
       if (contract !== undefined && contract.name !== undefined) {
         s = s.replace(address, contract.name)
       }

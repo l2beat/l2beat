@@ -66,7 +66,7 @@ export const discoveredJsonStub: DiscoveryOutput = {
       type: 'Contract',
       name: 'DuplicatedNameContractMock',
       address: ChainSpecificAddress(
-        'eth:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
+        'arb1:0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3',
       ),
       values: {
         $immutable: true,
