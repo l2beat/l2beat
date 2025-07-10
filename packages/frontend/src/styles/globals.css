@@ -3,7 +3,6 @@
 @import "./markdown.css" layer(base);
 @import "./article.css" layer(base);
 
-@plugin "@tailwindcss/container-queries";
 @plugin "tailwindcss-animate";
 
 * {
@@ -31,6 +30,14 @@ body:has(.reading) {
     cursor: pointer;
   }
 }
+
+@custom-variant primary-card {
+  &:where(.primary-card *) {
+    @slot;
+  }
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --primary: 260deg 7.69% 7.65%;
@@ -163,6 +170,13 @@ body:has(.reading) {
 }
 
 @theme inline {
+  --breakpoint-\*: initial;
+  --breakpoint-xs: 400px;
+  --breakpoint-sm: 550px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  --breakpoint-xl: 1920px;
+
   --font-\*: initial;
   --font-roboto: "Roboto", "Arial", sans-serif;
   --font-roboto-serif: "Roboto Serif", serif;
@@ -438,12 +452,6 @@ body:has(.reading) {
   --color-chart-stacked-pink: hsl(var(--chart-stacked-pink));
   --color-chart-stacked-purple: hsl(var(--chart-stacked-purple));
 
-  --breakpoint-xs: 400px;
-  --breakpoint-sm: 550px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 1200px;
-  --breakpoint-xl: 1920px;
-
   --z-1: 1;
   --z-10: 10;
   --z-20: 20;
@@ -675,11 +683,4 @@ body:has(.reading) {
   }
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-/* Custom variants */
-@custom-variant primary-card {
-  &:where(.primary-card *) {
-    @slot;
-  }
 }
