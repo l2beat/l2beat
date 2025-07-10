@@ -59,7 +59,7 @@ function SheetContent({
 }: SheetContentProps) {
   return (
     <SheetPortal>
-      <SheetOverlay className="z-[998]" />
+      <SheetOverlay className="z-998" />
       <SheetPrimitive.Content
         className={cn(sheetVariants({ side }), className)}
         {...props}

@@ -147,7 +147,7 @@ function CustomTooltip({
   const isFullDay = UnixTime.isFull(UnixTime(label), 'day')
   return (
     <div className={tooltipContentVariants()}>
-      <div className="!w-[158px] [@media(min-width:600px)]:!w-60 flex flex-col">
+      <div className="flex w-[158px]! flex-col [@media(min-width:600px)]:w-60!">
         <div className="mb-3 font-medium text-label-value-14 text-secondary">
           {isFullDay
             ? formatTimestamp(label, { longMonthName: true })

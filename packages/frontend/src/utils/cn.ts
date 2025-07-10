@@ -1,16 +1,12 @@
 import type { ClassValue } from 'clsx'
 import { clsx } from 'clsx'
 import { extendTailwindMerge } from 'tailwind-merge'
-import resolveConfig from 'tailwindcss/resolveConfig'
-import tailwindConfig from '../../tailwind.config'
 
-const fullConfig = resolveConfig(tailwindConfig)
+const fullConfig = {}
 const customTwMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': Object.keys(fullConfig.theme.fontSize).map(
-        (key) => `text-${key}`,
-      ),
+      'font-size': Object.keys(fullConfig).map((key) => `text-${key}`),
     },
   },
 })

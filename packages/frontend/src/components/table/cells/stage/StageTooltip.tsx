@@ -70,7 +70,7 @@ export function StageTooltip({
           color="yellow"
           body={emergencyWarning}
           icon={<EmergencyIcon className="size-4" />}
-          className={cn('!gap-2 mb-3 px-3 py-2')}
+          className={cn('mb-3 gap-2! px-3 py-2')}
         />
       )}
       {stageConfig.stage === 'UnderReview' && (
@@ -129,7 +129,7 @@ export function StageTooltip({
         body="Please mind, stages do not reflect rollup security"
         icon={<InfoIcon className="mt-px size-4 fill-blue-600" />}
         className={cn(
-          '!gap-1 px-3 py-2',
+          'gap-1! px-3 py-2',
           stageConfig.stage !== 'Stage 2' && 'mt-3',
         )}
       />

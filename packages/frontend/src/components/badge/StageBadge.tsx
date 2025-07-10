@@ -28,7 +28,7 @@ export function StageBadge({
     <div className={cn(inline && 'flex items-center gap-1.5', className)}>
       <div
         className={cn(
-          '!leading-none inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase md:h-[22px] md:w-[66px] md:text-xs',
+          'inline-flex h-[18px] w-[60px] items-center justify-center rounded text-center font-medium text-[13px] uppercase leading-none! md:h-[22px] md:w-[66px] md:text-xs',
           getClassNames(stage),
         )}
       >
@@ -37,7 +37,7 @@ export function StageBadge({
       {isAppchain && (
         <div
           className={cn(
-            '!leading-none text-center font-medium text-[11px] md:text-2xs',
+            'text-center font-medium text-[11px] leading-none! md:text-2xs',
             getStageTextClassname(stage),
             inline && 'text-xs',
             appchainClassName,

@@ -75,7 +75,7 @@ function SummaryTvsBox({
 
   return (
     <PrimaryCard className="flex w-full flex-col pt-6 pb-0 md:w-1/2 md:pt-[21px] md:pb-[29px]">
-      <span className="!leading-6 font-bold text-base md:text-xl">
+      <span className="font-bold text-base leading-6! md:text-xl">
         Total Value Secured
       </span>
       <div className="mt-2.5 grid grid-cols-2 md:my-6">
@@ -153,7 +153,7 @@ function SummaryThroughputBox({
   return (
     <PrimaryCard className="flex w-full flex-col pt-4 pb-6 md:w-1/2 md:pt-4">
       <div className="flex items-end gap-2">
-        <span className="!leading-6 font-bold text-base md:text-xl">
+        <span className="font-bold text-base leading-6! md:text-xl">
           Past Day Data Size
         </span>
         <a
@@ -236,13 +236,13 @@ function ValueWithChange({
   return (
     <div className="flex flex-col gap-1.5 md:gap-2.5">
       <div className="flex items-center gap-1">
-        <span className="!leading-[normal] font-medium text-[13px] text-secondary md:text-xs">
+        <span className="font-medium text-[13px] text-secondary leading-[normal]! md:text-xs">
           {label}
         </span>
         <InfoTooltip text={tooltip} />
       </div>
       <div className="flex items-end gap-0.5 md:gap-1.5">
-        <span className="[@media(min-width:1000px)]:!leading-[32px] whitespace-pre font-semibold text-xl [@media(min-width:1000px)]:text-3xl">
+        <span className="whitespace-pre font-semibold text-xl [@media(min-width:1000px)]:text-3xl [@media(min-width:1000px)]:leading-[32px]!">
           {value}
         </span>
         <PercentChange

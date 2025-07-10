@@ -35,7 +35,7 @@ export function EcosystemBuildOnLink({
           <div className="font-medium text-2xs uppercase transition-opacity group-hover:opacity-0">
             Ready to join {name}?
           </div>
-          <div className="!leading-tight group-hover:-translate-y-2 origin-left text-balance font-bold text-lg transition-all ease-in-out will-change-transform group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
+          <div className="group-hover:-translate-y-2 origin-left text-balance font-bold text-lg leading-tight! transition-all ease-in-out will-change-transform group-hover:translate-x-4 group-hover:scale-125 sm:text-xl">
             Build own chain on {name}
           </div>
         </div>
