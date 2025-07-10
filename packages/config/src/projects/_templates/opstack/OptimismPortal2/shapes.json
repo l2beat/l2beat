@@ -28,5 +28,11 @@
     "address": "0xB443Da3e07052204A02d630a8933dAc05a0d6fB4",
     "chain": "ethereum",
     "blockNumber": 22346130
+  },
+  "OptimismPortal2_v3_14_0_celo": {
+    "hash": "0x61779e0cf81852e74f9420c1500237e5c588b39f95b03369daca20d2e624b741",
+    "address": "0x215A5fF85308A72A772F09B520dA71D3520e9aC7",
+    "chain": "ethereum",
+    "blockNumber": 22882513
   }
 }

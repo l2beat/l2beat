@@ -1,3 +1,98 @@
+Generated with discovered.json: 0x5062afcf00fa337bb7de1292f0f139b61536005a
+
+# Diff at Wed, 09 Jul 2025 16:02:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 22738242
+- current block number: 22882688
+
+## Description
+
+Enclave hashes updated. Safe Multisigs upgraded to newest version.
+
+Taiko Foundation Treasury Multisig 4/6 -> 2/3
+
+## Watched changes
+
+```diff
+    contract AutomataDcapV3Attestation (0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.1:
++        "0x692c8624d30a327340b0dfbb67203e941175ac700d1a058c717e5269103d37e6"
+    }
+```
+
+```diff
+    contract Taiko Foundation Treasury Multisig (0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.$members.0:
+-        "0xDC4ece5620659F4d5d1536Cab52BD5e5B15F8a0a"
++        "0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a"
+      values.$members.2:
+-        "0x1eE487CEdCe52c370DB11e62987F3ABe873E145A"
+      values.$members.3:
+-        "0xFa92ff698D57f7B875570D9F59501812B843CD44"
+      values.$members.4:
+-        "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+      values.$threshold:
+-        4
++        2
+      values.multisigThreshold:
+-        "4 of 6 (67%)"
++        "2 of 3 (67%)"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+```diff
+    contract AutomataDcapV3Attestation (0x8d7C954960a36a7596d7eA4945dDf891967ca8A3) {
+    +++ description: Contract managing SGX attestation certificates.
+      values.mrEnclaves.14:
++        "0x631778b0d420d2d0bba4c730b0fd74857afeefb3429371ae97ab450e40ca127e"
+      values.mrEnclaves.15:
++        "0x482b06132c4306ea55bc34ff90d46532ff4151f473dbfe4d2cb2442af2ff288b"
+    }
+```
+
+```diff
+    contract Taiko Multisig (0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F) {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x7d388119a66f3eae147d748f86136f073d907d6b36f7e87e9363c4c7a2899a8a"
+      values.$implementation:
+-        "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"
++        "0x41675C099F32341bf84BFc5382aF534df5C7461a"
+      values.VERSION:
+-        "1.3.0"
++        "1.4.1"
+      implementationNames.0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552:
+-        "GnosisSafe"
+      implementationNames.0x41675C099F32341bf84BFc5382aF534df5C7461a:
++        "Safe"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Taiko Foundation Treasury Multisig/Safe.sol}   | 685 ++++++++++++---------
+ .../Taiko Multisig/Safe.sol}                       | 685 ++++++++++++---------
+ 2 files changed, 820 insertions(+), 550 deletions(-)
+```
+
 Generated with discovered.json: 0x9d79c226a38e8b7e71e666a00a7718d663d81030
 
 # Diff at Fri, 04 Jul 2025 12:19:25 GMT:

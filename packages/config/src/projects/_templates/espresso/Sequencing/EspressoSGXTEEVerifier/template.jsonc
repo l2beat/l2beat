@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Verifies attestations of an Intel SGX TEE.",
+  "ignoreInWatchMode": ["registeredSigners", "validEnclaveHashes"],
   "fields": {
     "owner": {
       "severity": "HIGH",
@@ -24,7 +25,6 @@
       }
     },
     "validEnclaveHashes": {
-      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": "enclaveHash",

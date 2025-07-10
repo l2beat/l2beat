@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xf79139165dc203d83770aa83f5d89787bb43af62
+
+# Diff at Wed, 09 Jul 2025 15:59:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d05d4ec9af28b2df4e687d7b7676cddffcae6887 block: 355528153
+- current block number: 355930087
+
+## Description
+
+There were many discovered updates of validEnclaveHashes and registeredSigners, ignored in watch mode for now although they should be able to update them less often imo.
+
+quoteVerifier is now source-available and matches an existing template.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 355528153 (main branch discovery), not current.
+
+```diff
+    contract QuoteVerifier (0x69523d25E25e5c78d828Df90459b75F189D40Cf7) {
+    +++ description: The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.
+      unverified:
+-        true
+      values.P256_VERIFIER:
++        "0x0000000000000000000000000000000000000100"
+      values.pccsRouter:
++        "0x0d089B3fA00CBAD0a5098025519e9e4620622acF"
+      values.quoteVersion:
++        3
+      implementationNames.0x69523d25E25e5c78d828Df90459b75F189D40Cf7:
+-        ""
++        "V3QuoteVerifier"
+      template:
++        "espresso/Sequencing/QuoteVerifier"
+      sourceHashes:
++        ["0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"]
+      description:
++        "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified."
+    }
+```
+
+```diff
+    contract EspressoSGXTEEVerifier (0xEA25045bC30ceE23A280c51020F0bBb78781A297) {
+    +++ description: Verifies attestations of an Intel SGX TEE.
+      fieldMeta.validEnclaveHashes:
+-        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x2a3c83f2d4b8f55a06b89108a65cd478da50e260
 
 # Diff at Tue, 08 Jul 2025 14:25:15 GMT:
