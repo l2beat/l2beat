@@ -153,7 +153,7 @@ export const funki: ScalingProject = opStackL2({
       description: `
   ## Architecture
   ![gmnetworkDA layer](/images/da-layer-technology/gmnetworkda/architecture.png#center)
-
+  
   ## Data Availability Challenges
   The project relies on DA challenges for data availability. 
   The DA Provider submits an input commitment on Ethereum, and users can request the data behind the commitment off-chain from the DA Provider.
