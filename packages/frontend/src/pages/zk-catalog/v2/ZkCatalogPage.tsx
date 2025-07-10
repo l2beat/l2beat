@@ -3,6 +3,7 @@ import { AppLayout, type AppLayoutProps } from '~/layouts/AppLayout.tsx'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import { ZkCatalogHeader } from '../v1/components/ZkCatalogHeader'
 import { WorkInProgressNotice } from './components/WorkInProgressNotice'
+import { ZkCatalogTable } from './table/ZkCatalogTable'
 import type { ZkCatalogEntry } from './utils/getZkCatalogEntries'
 
 interface Props extends AppLayoutProps {
@@ -17,7 +18,7 @@ export function ZkCatalogPage({ ...props }: Props) {
         {!env.NEXT_PUBLIC_ZK_CATALOG_V2 ? (
           <WorkInProgressNotice />
         ) : (
-          <div>V2</div>
+          <ZkCatalogTable entries={props.entries} />
         )}
       </SideNavLayout>
     </AppLayout>

@@ -1,10 +1,11 @@
-import type { Project } from '@l2beat/config'
+import type { Project, ProjectProofSystem } from '@l2beat/config'
 import type { ZkCatalogAttester } from '@l2beat/config/build/common/zkCatalogAttesters'
 import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import uniqBy from 'lodash/uniqBy'
+import type { CommonProjectEntry } from '~/server/features/utils/getCommonProjectEntry'
 import { getProjectIcon } from '~/server/features/utils/getProjectIcon'
 
-export interface ZkCatalogEntry {
+export interface ZkCatalogEntry extends CommonProjectEntry {
   name: string
   icon: string
   creator?: string
@@ -15,6 +16,7 @@ export interface ZkCatalogEntry {
     notVerified: number
   }
   attesters: ZkCatalogAttester[]
+  trustedSetup: ProjectProofSystem['trustedSetup']
 }
 
 export function getZkCatalogEntries(
@@ -22,6 +24,9 @@ export function getZkCatalogEntries(
 ): ZkCatalogEntry[] {
   return projects.map((project) => {
     return {
+      id: project.id,
+      slug: project.slug,
+      statuses: {},
       name: project.name,
       icon: getProjectIcon(project.slug),
       creator: project.proofSystem.creator,
@@ -37,13 +42,13 @@ export function getZkCatalogEntries(
             v.verificationStatus === 'unsuccessful',
         ).length,
       },
-      attesters:
-        uniqBy(
-          project.proofSystem.verifierHashes
-            .flatMap((v) => v.attesters)
-            .filter(notUndefined),
-          (a) => a?.id,
-        ) ?? [],
+      attesters: uniqBy(
+        project.proofSystem.verifierHashes
+          .flatMap((v) => v.attesters)
+          .filter(notUndefined),
+        (a) => a?.id,
+      ),
+      trustedSetup: project.proofSystem.trustedSetup,
     }
   })
 }

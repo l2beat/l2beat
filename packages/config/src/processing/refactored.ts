@@ -11,6 +11,7 @@ import { near } from '../projects/near/near-da'
 import { nebraupa } from '../projects/nebraupa/nebraupa'
 import { payy } from '../projects/payy/payy-zk-catalog'
 import { risczero } from '../projects/risczero/risczero'
+import { sp1 } from '../projects/shared-sp1/sp1'
 import { soulwallet } from '../projects/soulwallet/soulwallet'
 import { sp1blobstream } from '../projects/sp1blobstream/sp1blobstream'
 import { sp1vector } from '../projects/sp1vector/sp1vector'
@@ -30,6 +31,8 @@ export const refactored: BaseProject[] = [
   sp1vector,
   worldcoinsemaphore,
   worldcoinsmtb,
+  // zk catalog v2
+  sp1,
   // da-beat
   ethereum,
   avail,
