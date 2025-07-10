@@ -5,8 +5,8 @@ import type {
   UsedInProject,
 } from '@l2beat/config'
 import { assert, ProjectId } from '@l2beat/shared-pure'
+import type { UsedInProjectWithIcon } from '~/components/ProjectsUsedIn'
 import type { RosetteValue } from '~/components/rosette/types'
-import type { UsedInProjectWithIcon } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import {
   mapBridgeRisksToRosetteValues,
   mapLayerRisksToRosetteValues,

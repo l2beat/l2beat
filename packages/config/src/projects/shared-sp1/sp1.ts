@@ -9,6 +9,13 @@ export const sp1: BaseProject = {
   name: 'SP1',
   shortName: undefined,
   addedAt: UnixTime.fromDate(new Date('2025-07-08')),
+  statuses: {
+    yellowWarning: undefined,
+    redWarning: undefined,
+    emergencyWarning: undefined,
+    reviewStatus: undefined,
+    unverifiedContracts: [],
+  },
   display: {
     description:
       'SP1 is a zk proving system for RISC-V programs built by Succinct.',

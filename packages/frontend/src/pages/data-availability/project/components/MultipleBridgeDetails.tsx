@@ -1,3 +1,4 @@
+import { ProjectsUsedIn } from '~/components/ProjectsUsedIn'
 import { Button, buttonVariants } from '~/components/core/Button'
 import {
   Drawer,
@@ -19,7 +20,6 @@ import { useRouter } from '~/hooks/useRouter'
 import { InfoIcon } from '~/icons/Info'
 import { UnverifiedIcon } from '~/icons/Unverified'
 import { UNVERIFIED_DA_CLASSNAME } from '~/pages/data-availability/summary/components/table/DaSummaryPublicTable'
-import { ProjectsUsedIn } from '~/pages/data-availability/summary/components/table/ProjectsUsedIn'
 import type { DaProjectPageEntry } from '~/server/features/data-availability/project/getDaProjectEntry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'

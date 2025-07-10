@@ -13,7 +13,7 @@ export interface ZkCatalogEntry extends ZkCatalogProofVerification {
   trustedSetup: TrustedSetup
 }
 
-export function getZkCatalogEntries(
+export function getZkCatalogV1Entries(
   projects: Project<'proofVerification'>[],
   verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogEntry[] {

@@ -23,6 +23,7 @@ const CLIENT_CONFIG = {
   NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
   NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default(false),
   NEXT_PUBLIC_PARTNERS: coerceBoolean.default(false),
+  NEXT_PUBLIC_ZK_CATALOG_V2: featureFlag.default(false),
 }
 const ClientEnv = z.object(CLIENT_CONFIG)
 
@@ -121,5 +122,6 @@ function getEnv(): Record<keyof z.infer<typeof ServerEnv>, string | undefined> {
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: process.env.NEXT_PUBLIC_PLAUSIBLE_ENABLED,
     NEXT_PUBLIC_SHOW_HIRING_BADGE: process.env.FEATURE_FLAG_HIRING,
     NEXT_PUBLIC_PARTNERS: process.env.NEXT_PUBLIC_PARTNERS,
+    NEXT_PUBLIC_ZK_CATALOG_V2: process.env.NEXT_PUBLIC_ZK_CATALOG_V2,
   }
 }
