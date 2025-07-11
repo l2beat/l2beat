@@ -288,24 +288,36 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         mockConfig(PROJECT_A),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         3,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         4,
         mockConfig(PROJECT_B),
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       // calls repository (and gets undefined)
       expect(updateMonitorRepository.findLatest).toHaveBeenCalledTimes(2)
@@ -506,12 +518,18 @@ describe(UpdateMonitor.name, () => {
         config,
         BLOCK_NUMBER - 1,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
       expect(discoveryRunner.discoverWithRetry).toHaveBeenNthCalledWith(
         2,
         config,
         BLOCK_NUMBER,
         LOGGER,
+        undefined,
+        undefined,
+        'useCurrentBlockNumber',
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
       expect(updateMonitorRepository.upsert).toHaveBeenCalledTimes(1)
@@ -794,6 +812,9 @@ describe(UpdateMonitor.name, () => {
         mockConfig(PROJECT_A),
         committed.blockNumber,
         LOGGER,
+        undefined,
+        undefined,
+        undefined,
       )
     })
   })

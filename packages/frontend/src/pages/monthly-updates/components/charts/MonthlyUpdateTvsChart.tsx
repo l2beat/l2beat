@@ -11,11 +11,11 @@ import {
   ChartLegendContent,
   ChartTooltip,
 } from '~/components/core/chart/Chart'
-import { ChartTimeRange } from '~/components/core/chart/ChartTimeRange'
 import { CustomFillGradientDef } from '~/components/core/chart/defs/CustomGradientDef'
 import { getCommonChartComponents } from '~/components/core/chart/utils/GetCommonChartComponents'
 import { getChartRange } from '~/components/core/chart/utils/getChartRangeFromColumns'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
+import { EcosystemChartTimeRange } from '~/pages/ecosystems/project/components/charts/EcosystemsChartTimeRange'
 import { api } from '~/trpc/React'
 import { formatCurrency } from '~/utils/number-format/formatCurrency'
 import { MarketShare } from './MonthlyUpdateMarketShare'
@@ -127,10 +127,10 @@ function Header({
   unit: string
 }) {
   return (
-    <div className="mb-3 flex items-center justify-between">
+    <div className="mb-3 flex items-start justify-between">
       <div>
         <div className="font-bold text-xl">TVS</div>
-        <ChartTimeRange range={range} />
+        <EcosystemChartTimeRange range={range} />
       </div>
       <div className="text-right">
         {stats?.total ? (

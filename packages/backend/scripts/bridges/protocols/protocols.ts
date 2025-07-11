@@ -1,11 +1,12 @@
 import type { Log } from 'viem'
-import type { BridgeTransfer } from '../types/BridgeTransfer'
-import { ACROSS_V2 } from './decoders/acrossv2'
-import { ACROSS_V3 } from './decoders/acrossv3'
+import type { Chain } from '../chains'
+import type { Receive } from '../types/Receive'
+import type { Send } from '../types/Send'
+import { ACROSS } from './decoders/across'
 
 interface Protocol {
   name: string
-  decoder: (chainName: string, log: Log) => BridgeTransfer | undefined
+  decoder: (chain: Chain, log: Log) => Send | Receive | undefined
 }
 
-export const PROTOCOLS: Protocol[] = [ACROSS_V2, ACROSS_V3]
+export const PROTOCOLS: Protocol[] = [ACROSS]

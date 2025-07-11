@@ -1,9 +1,14 @@
 {
   "name": "molten",
   "chain": "arbitrum",
-  "blockNumber": 355528153,
+  "blockNumber": 355930087,
   "configHash": "0x541049d8dc723e0542d850757b8a11078d540dd8ea9339772662ecc67172bbd0",
   "entries": [
+    {
+      "address": "0x0cc6aB203689bd8004511cC60f5b25DfB3A91431",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
     {
       "name": "RollupProxy",
       "address": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
@@ -58,12 +63,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1748,
+        "firstUnresolvedNode": 1750,
         "inbox": "0x235000876bd58336C802B3546Fc0250f285fCc79",
         "isERC20Enabled": false,
         "isPostBoLD": false,
         "lastStakeBlock": 19564823,
-        "latestConfirmed": 1747,
+        "latestConfirmed": 1749,
         "latestNodeCreated": 1759,
         "loserStakeEscrow": "0x37918579d1Ef6E5e7D8aF19375dF53c60d790ef6",
         "minimumAssertionPeriod": 75,
@@ -194,7 +199,7 @@
           ]
         ],
         "$upgradeCount": 5,
-        "batchCount": 92786,
+        "batchCount": 93001,
         "batchPosterManager": "0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738",
         "batchPosters": ["0x30ea093b14364f21Dd74D7Bd43e2FAB1279D3738"],
         "BLOBSTREAM": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
@@ -227,7 +232,7 @@
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerVersion": "0x63",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 40520,
+        "totalDelayedMessagesRead": 41521,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -393,6 +398,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0x50E3A4d4009317793156685c902D4B126A0e51A2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x5385dbedf0A337F0aA6Bf203736c69348C5eC6Ff",
       "type": "EOA",
       "proxyType": "EOA"
@@ -470,13 +480,22 @@
       "name": "QuoteVerifier",
       "address": "0x69523d25E25e5c78d828Df90459b75F189D40Cf7",
       "type": "Contract",
-      "unverified": true,
+      "template": "espresso/Sequencing/QuoteVerifier",
+      "sourceHashes": [
+        "0x2ce21f391e19a4d7b963b79fced06804cb79a44416a35e9e11b229a9a6957b2e"
+      ],
       "proxyType": "immutable",
+      "description": "The QuoteVerifier contract is used by the EspressoTEEVerifier to verify the validity of the TEE quote. It references a PCCSRouter (0x0d089B3fA00CBAD0a5098025519e9e4620622acF), an access point for Intel SGX 'collateral', crucial references of which some modular contracts are unverified.",
       "sinceTimestamp": 1742380160,
       "sinceBlock": 317291908,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "P256_VERIFIER": "0x0000000000000000000000000000000000000100",
+        "pccsRouter": "0x0d089B3fA00CBAD0a5098025519e9e4620622acF",
+        "quoteVersion": 3
+      },
       "implementationNames": {
-        "0x69523d25E25e5c78d828Df90459b75F189D40Cf7": ""
+        "0x69523d25E25e5c78d828Df90459b75F189D40Cf7": "V3QuoteVerifier"
       }
     },
     {
@@ -620,6 +639,16 @@
         "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": "GnosisSafeProxy",
         "0x3E5c63644E683549055b9Be8653de26E0B4CD36E": "GnosisSafeL2"
       }
+    },
+    {
+      "address": "0x7082E31C724d6BBcC778b292B45A4ba41f5593aF",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0x729Af2Ebd9D923ebE50d9883975beeD622AE9a8C",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "name": "EspressoTEEVerifier",
@@ -815,6 +844,11 @@
       }
     },
     {
+      "address": "0x8c461Ab56A1cf3abe420E67F98196bf058681dAc",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0x8Cde072E84932857262648C100d0A2227c495a55",
       "type": "EOA",
       "proxyType": "EOA",
@@ -961,7 +995,17 @@
       }
     },
     {
+      "address": "0xA63f3De629c7DA2989a1ae4429d48F98ad164e5B",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xa8973BDEf20fe4112C920582938EF2F022C911f5",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xAB766E099CfcaA636003aA118A6E190EA16dF325",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1059,6 +1103,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "0xc48afE1e5096C54e04b9A8Fca8834d9d16dffeC2",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "address": "0xD45Aa46e2496dFa1300305a705739FE5023b6f3A",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1113,7 +1162,7 @@
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
         ],
         "allowedOutboxList": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
-        "delayedMessageCount": 40523,
+        "delayedMessageCount": 41739,
         "inboxHistory": [
           "0x235000876bd58336C802B3546Fc0250f285fCc79",
           "0x9676D55Ccd46ce72235b16bA645008D1D3350B14"
@@ -1123,8 +1172,8 @@
         "outboxHistory": ["0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"],
         "rollup": "0x0f28D76Ec5c62b502625351726b4A3E3F54FF5F0",
         "sequencerInbox": "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2",
-        "sequencerMessageCount": 92786,
-        "sequencerReportedSubMessageCount": 54189739
+        "sequencerMessageCount": 93001,
+        "sequencerReportedSubMessageCount": 54968533
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1177,6 +1226,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifies attestations of an Intel SGX TEE.",
+      "ignoreInWatchMode": ["registeredSigners", "validEnclaveHashes"],
       "sinceTimestamp": 1750089457,
       "sinceBlock": 348001309,
       "values": {
@@ -1194,25 +1244,38 @@
           "0x59B66e87A7f7E512822cE7bfe68c9fFe81b002c7",
           "0xc1Cd231FB7C8744548603038b06104Ce0f7cc9F2",
           "0xd7d94B63F021ebD45d2ADd7E5DABf36C981e5878",
-          "0xD6F4Bd156D2099b91DBda1982016685f188083a0"
+          "0xD6F4Bd156D2099b91DBda1982016685f188083a0",
+          "0x50E3A4d4009317793156685c902D4B126A0e51A2",
+          "0xc48afE1e5096C54e04b9A8Fca8834d9d16dffeC2",
+          "0xAB766E099CfcaA636003aA118A6E190EA16dF325",
+          "0x7082E31C724d6BBcC778b292B45A4ba41f5593aF",
+          "0xA63f3De629c7DA2989a1ae4429d48F98ad164e5B",
+          "0xF09321073922307162C77CF4E30f07F75733AFac",
+          "0x729Af2Ebd9D923ebE50d9883975beeD622AE9a8C",
+          "0x8c461Ab56A1cf3abe420E67F98196bf058681dAc",
+          "0x0cc6aB203689bd8004511cC60f5b25DfB3A91431"
         ],
         "validEnclaveHashes": [
           "0x1b8a2dea9244fbc6465f287be7a0888fdee26dc7ed87d76a461da1696f9004c9",
           "0x1d51625c44bb173b9546b82e03483b12bb766ae89d9e071777da66509c738dad",
           "0x4572e4569ca2733f1503274cdc24f79f68e8130ddd41d3dade2566437dde38c7",
-          "0xae7a41441d0c4473390ebc33b9bb562af2d63806e36cbe8bfd01bbacff745d89"
+          "0xae7a41441d0c4473390ebc33b9bb562af2d63806e36cbe8bfd01bbacff745d89",
+          "0xd4f69de21042120d80e140818d8cf1498a0ad33215fa47d42930199b93e21f63",
+          "0xc8dd5aebddc59604fc32db75d721264c59bc8f50fd9ec05113d3c61d47f3e585"
         ]
       },
-      "fieldMeta": {
-        "owner": { "severity": "HIGH" },
-        "validEnclaveHashes": { "severity": "HIGH" }
-      },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "0xEA25045bC30ceE23A280c51020F0bBb78781A297": "EspressoSGXTEEVerifier"
       }
     },
     {
       "address": "0xEC114946E7213d113c9B9481028271B5E9e09371",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "0xF09321073922307162C77CF4E30f07F75733AFac",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -1615,6 +1678,14 @@
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function transferExitAndCall(uint256 _exitNum, address _initialDestination, address _newDestination, bytes _newData, bytes _data)",
       "function whitelist() view returns (address)"
+    ],
+    "0x69523d25E25e5c78d828Df90459b75F189D40Cf7": [
+      "constructor(address _ecdsaVerifier, address _router)",
+      "function P256_VERIFIER() view returns (address)",
+      "function pccsRouter() view returns (address)",
+      "function quoteVersion() view returns (uint16)",
+      "function verifyQuote(tuple(uint16 version, bytes2 attestationKeyType, bytes4 teeType, bytes2 qeSvn, bytes2 pceSvn, bytes16 qeVendorId, bytes20 userData) header, bytes rawQuote) view returns (bool success, bytes output)",
+      "function verifyZkOutput(bytes outputBytes) view returns (bool success, bytes output)"
     ],
     "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF": [
       "constructor(address _singleton)"
@@ -2061,8 +2132,9 @@
   },
   "usedTemplates": {
     "espresso/Sequencing/EspressoNitroTEEVerifier": "0xcfbcf143ae6576f201097bd2db629a4fbdc20ae286e1555faf44db61111d2eab",
-    "espresso/Sequencing/EspressoSGXTEEVerifier": "0xb68630d9063a61fc60fef06ed62b0405d30da56a34ab33892cccd6da35665639",
+    "espresso/Sequencing/EspressoSGXTEEVerifier": "0x62bb42822457b8146a3651a1d679d850d8a71b735dea0dd125493dd81cf1c23e",
     "espresso/Sequencing/EspressoTEEVerifier_gateway": "0x7d9c15aef19b3644fef05d35c978c01dce14e16ba55e9fd3c6326394607401e3",
+    "espresso/Sequencing/QuoteVerifier": "0xb7f636cfce72573f7409bc600a4b5d138f2dd0b21892e2f0b670471967df4837",
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
@@ -2082,5 +2154,5 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe",
     "orbitstack/ValidatorUtils": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "permissionsConfigHash": "0xa0dc32a70df89afa489c08aeb8190e4f651e836f20e2971a4661eb61231c3a01"
+  "permissionsConfigHash": "0xf4beb9434ebb40b2a001dc847327387a75b9bfcdea4e9dbe9889be54fe5bc65f"
 }

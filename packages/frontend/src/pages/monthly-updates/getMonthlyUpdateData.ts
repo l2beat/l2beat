@@ -17,7 +17,7 @@ export async function getMonthlyUpdateData(
   const publications = getCollection('monthly-updates')
 
   const monthlyUpdate = publications.find((p) => p.id === id)
-  if (!monthlyUpdate || !env.NEXT_PUBLIC_PARTNERS) {
+  if (!monthlyUpdate || !env.CLIENT_SIDE_PARTNERS) {
     return undefined
   }
 

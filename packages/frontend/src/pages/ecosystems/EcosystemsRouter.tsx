@@ -12,7 +12,7 @@ export function createEcosystemsRouter(
   render: RenderFunction,
   cache: ICache,
 ) {
-  if (!env.NEXT_PUBLIC_PARTNERS) {
+  if (!env.CLIENT_SIDE_PARTNERS) {
     return undefined
   }
 
@@ -33,7 +33,7 @@ export function createEcosystemsRouter(
         () =>
           getEcosystemProjectData(manifest, req.params.slug, req.originalUrl),
       )
-      if (!data || !env.NEXT_PUBLIC_PARTNERS) {
+      if (!data || !env.CLIENT_SIDE_PARTNERS) {
         res.status(404).send('Not found')
         return
       }

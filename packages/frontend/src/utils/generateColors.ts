@@ -19,7 +19,7 @@ const basePaletteHex = [
   '#F5C710', // orange, sky blue, bluish green, amber
   '#0072B2',
   '#D55E00',
-  '#CC79A7', // dark blue, vermillion, purple
+  '#CC79A7', // dark blue, vermilion, purple
   // Additional from CARTO Safe to extend to 11:
   '#88CCEE',
   '#DDCC77',

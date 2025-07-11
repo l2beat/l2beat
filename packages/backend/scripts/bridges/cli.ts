@@ -3,7 +3,8 @@ import { HttpClient, RpcClient } from '@l2beat/shared'
 import { command, number, option, optional, run, string } from 'cmd-ts'
 import { CHAINS } from './chains'
 import { PROTOCOLS } from './protocols/protocols'
-import type { BridgeTransfer } from './types/BridgeTransfer'
+import type { Receive } from './types/Receive'
+import type { Send } from './types/Send'
 import { getTokenAmount, getTokenSymbol } from './utils/erc20'
 import { logToViemLog } from './utils/viem'
 
@@ -64,7 +65,7 @@ const cmd = command({
 
     const decoders = protocols.map((p) => p.decoder)
 
-    const transfersByProtocolAndId: Record<string, BridgeTransfer[]> = {}
+    const transfersByProtocolAndId: Record<string, (Send | Receive)[]> = {}
 
     for (const r of rpcs) {
       const range = args.range ?? 100
@@ -76,27 +77,42 @@ const cmd = command({
 
       for (const l of logs) {
         for (const decoder of decoders) {
-          const decoded = decoder(r.name, logToViemLog(l))
+          const decoded = decoder(r, logToViemLog(l))
           if (decoded) {
             const tokenSymbol = await getTokenSymbol(r.rpc, decoded, start)
             const amount = await getTokenAmount(r.rpc, decoded, start)
 
-            logger.info(
-              `${decoded.protocol} on ${decoded.chain} (${decoded.type ?? ''})`,
-              {
-                origin: decoded.origin,
-                destination: decoded.destination,
-                token: tokenSymbol,
-                amount: amount,
-                ...(decoded.sender ? { sender: decoded.sender } : {}),
-                ...(decoded.receiver ? { receiver: decoded.receiver } : {}),
-                ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
-                ...(decoded.txHash
-                  ? { explorerLink: r.getTxUrl(decoded.txHash) }
-                  : {}),
-                ...(decoded.matchingId ? { id: decoded.matchingId } : {}),
-              },
-            )
+            if (decoded.direction === 'send') {
+              logger.info(
+                `${decoded.direction} via ${decoded.protocol} (${decoded.type ?? ''})`,
+                {
+                  token: decoded.token,
+                  symbol: tokenSymbol,
+                  amount: amount,
+                  destination: decoded.destination,
+                  ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
+                  ...(decoded.txHash
+                    ? { explorerLink: r.getTxUrl(decoded.txHash) }
+                    : {}),
+                },
+              )
+            }
+
+            if (decoded.direction === 'receive') {
+              logger.info(
+                `${decoded.direction} via ${decoded.protocol} (${decoded.type ?? ''})`,
+                {
+                  token: decoded.token,
+                  symbol: tokenSymbol,
+                  amount: amount,
+                  origin: decoded.origin,
+                  ...(decoded.txHash ? { txHash: decoded.txHash } : {}),
+                  ...(decoded.txHash
+                    ? { explorerLink: r.getTxUrl(decoded.txHash) }
+                    : {}),
+                },
+              )
+            }
 
             if (decoded.matchingId) {
               const key = `${decoded.protocol}:${decoded.matchingId}`
@@ -113,7 +129,6 @@ const cmd = command({
 
     const transfersCountByProtocol: Record<string, number> = {}
 
-    logger.info('--- Related transfers (same protocol and ID) ---')
     for (const [key, transfers] of Object.entries(transfersByProtocolAndId)) {
       if (transfers.length > 1) {
         const [protocol, id] = key.split(':')
@@ -122,23 +137,12 @@ const cmd = command({
         )
 
         transfers.forEach((transfer, index) => {
-          const getTxUrl = CHAINS.find(
-            (c) => c.name === transfer.chain,
-          )?.getTxUrl
-
           logger.info(
-            `  [${index + 1}] ${transfer.type} on ${transfer.chain}`,
+            `  [${index + 1}] ${transfer.direction} (${transfer.type})`,
             {
-              origin: transfer.origin,
-              destination: transfer.destination,
               token: transfer.token,
               amount: transfer.amount,
-              ...(transfer.sender ? { sender: transfer.sender } : {}),
-              ...(transfer.receiver ? { receiver: transfer.receiver } : {}),
               ...(transfer.txHash ? { txHash: transfer.txHash } : {}),
-              ...(transfer.txHash && getTxUrl
-                ? { explorerLink: getTxUrl(transfer.txHash) }
-                : {}),
             },
           )
         })
